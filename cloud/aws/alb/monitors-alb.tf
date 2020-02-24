@@ -12,29 +12,6 @@ resource "signalfx_detector" "ALB_no_healthy_instances" {
 		description = "Minimum < 1 for last 5m"
 		severity = "Critical"
 		detect_label = "CRIT"
-		parameterized_subject = "{{#if anomalous}}
-   Rule "{{ruleName}}" in detector "{{detectorName}}" triggered at {{timestamp}}.
-{{else}}
-   Rule "{{ruleName}}" in detector "{{detectorName}}" cleared at {{timestamp}}.
-{{/if}}
-
-{{#if anomalous}}
-Triggering condition: {{{readableRule}}}
-{{/if}}
-
-{{#if anomalous}}Signal value: {{inputs.A.value}}
-{{else}}Current signal value: {{inputs.A.value}}
-{{/if}}
-
-{{#notEmpty dimensions}}
-Signal details:
-{{{dimensions}}}
-{{/notEmpty}}
-
-{{#if anomalous}}
-{{#if runbookUrl}}Runbook: {{{runbookUrl}}}{{/if}}
-{{#if tip}}Tip: {{{tip}}}{{/if}}
-{{/if}}"
 	}
 
 }
