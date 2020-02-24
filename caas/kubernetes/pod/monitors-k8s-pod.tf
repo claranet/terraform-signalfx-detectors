@@ -19,11 +19,11 @@ resource "signalfx_detector" "error" {
 
 	program_text = <<-EOF
 		signal = data('kube_pod_container_status_waiting', filter=(not filter('reason', 'ContainerCreating'))).sum(by=['namespace', 'pod', 'reason']).min(over='15m')
-		detect(when(signal > 0.5)).publish('CRIT')
+		detect(when(signal > ${var.error_threshold_critical})).publish('CRIT')
 	EOF
 
 	rule {
-		description = "Minimum > 0.5 for last 15m"
+		description = "Minimum > ${var.error_threshold_critical} for last 15m"
 		severity = "Critical"
 		detect_label = "CRIT"
 	}
@@ -35,11 +35,11 @@ resource "signalfx_detector" "terminated" {
 
 	program_text = <<-EOF
 		signal = data('kube_pod_container_status_terminated', filter=(not filter('reason', 'ContainerCreating'))).sum(by=['namespace', 'pod', 'reason']).sum(over='10m')
-		detect(when(signal > 0.5)).publish('CRIT')
+		detect(when(signal > ${var.terminated_threshold_critical})).publish('CRIT')
 	EOF
 
 	rule {
-		description = "Sum > 0.5 for last 10m"
+		description = "Sum > ${var.terminated_threshold_critical} for last 10m"
 		severity = "Critical"
 		detect_label = "CRIT"
 	}
