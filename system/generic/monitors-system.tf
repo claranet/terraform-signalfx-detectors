@@ -32,7 +32,7 @@ resource "signalfx_detector" "disk_space" {
 	name = "Disk space usage"
 
 	program_text = <<-EOF
-		signal = data('disk.utilization').mean(by=['host']).max(over='5m')
+		signal = data('disk.utilization').max(by=['host']).max(over='5m')
 		detect(when(signal > ${var.disk_space_threshold_critical})).publish('CRIT')
 	EOF
 
