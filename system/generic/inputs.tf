@@ -12,6 +12,16 @@ variable "prefix_slug" {
 
 #####
 
+variable "system_heartbeat_disabled_flag" {
+	description = "(Optional) When true, notifications and events will not be generated for the detect label. false by default."
+	default = "false"
+}
+
+variable "system_heartbeat_timeframe" {
+	description = "Timeframe for system not reporting"
+	default = "20m"
+}
+
 variable "cpu_disabled_flag" {
 	description = "(Optional) When true, notifications and events will not be generated for the detect label. false by default."
 	default = "false"

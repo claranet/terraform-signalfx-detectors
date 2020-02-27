@@ -1,3 +1,20 @@
+resource "signalfx_detector" "system_heartbeat" {
+	name = "${var.prefix_slug == "" ? "" : "[${var.prefix_slug}]"}[${var.environment}] System Heartbeat Check"
+
+	program_text = <<-EOF
+		from signalfx.detectors.not_reporting import not_reporting
+		signal = data('cpu.utilization', filter=(not filter('aws_state', '*terminated}', '*stopped}')) and (not filter('gcp_status', '*TERMINATED}', '*STOPPING}')) and (not filter('azure_power_state', 'stop*', 'deallocat*')))
+		not_reporting.detector(stream=signal, resource_identifier=['host'], duration='${var.system_heartbeat_timeframe}').publish('CRIT')
+	EOF
+
+	rule {
+		description = "System has not reported in ${var.system_heartbeat_timeframe}"
+		severity = "Critical"
+		detect_label = "CRIT"
+		disabled = "${var.system_heartbeat_disabled_flag}"
+	}
+}
+
 resource "signalfx_detector" "cpu" {
 	name = "${var.prefix_slug == "" ? "" : "[${var.prefix_slug}]"}[${var.environment}] CPU usage"
 
