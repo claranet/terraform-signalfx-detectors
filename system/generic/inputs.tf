@@ -24,7 +24,12 @@ variable "system_heartbeat_timeframe" {
 
 #####
 
-variable "cpu_disabled_flag" {
+variable "cpu_critical_disabled_flag" {
+	description = "(Optional) When true, notifications and events will not be generated for the detect label. false by default."
+	default = "false"
+}
+
+variable "cpu_warning_disabled_flag" {
 	description = "(Optional) When true, notifications and events will not be generated for the detect label. false by default."
 	default = "false"
 }
@@ -56,7 +61,12 @@ variable "cpu_threshold_critical" {
 
 #####
 
-variable "load_disabled_flag" {
+variable "load_warning_disabled_flag" {
+	description = "(Optional) When true, notifications and events will not be generated for the detect label. false by default."
+	default = "false"
+}
+
+variable "load_critical_disabled_flag" {
 	description = "(Optional) When true, notifications and events will not be generated for the detect label. false by default."
 	default = "false"
 }
@@ -88,10 +98,15 @@ variable "load_threshold_critical" {
 
 #####
 
-variable "disk_space_disabled_flag" {
+variable "disk_space_warning_disabled_flag" {
 	description = "(Optional) When true, notifications and events will not be generated for the detect label. false by default."
 	default = "false"
 }
+		
+variable "disk_space_critical_disabled_flag" {
+	description = "(Optional) When true, notifications and events will not be generated for the detect label. false by default."
+	default = "false"
+}		
 
 variable "disk_space_aggregation_function" {
 	description = "(Optional) Disk Space aggregation function and group by.  Examples `mean(by=['host', 'plugin_instance']).` or `max().` 
@@ -120,7 +135,12 @@ variable "disk_space_threshold_critical" {
 
 #####
 
-variable "memory_disabled_flag" {
+variable "memory_warning_disabled_flag" {
+	description = "(Optional) When true, notifications and events will not be generated for the detect label. false by default."
+	default = "false"
+}
+
+variable "memory_critical_disabled_flag" {
 	description = "(Optional) When true, notifications and events will not be generated for the detect label. false by default."
 	default = "false"
 }
