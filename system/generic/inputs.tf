@@ -22,14 +22,26 @@ variable "system_heartbeat_timeframe" {
 	default = "20m"
 }
 
+#####
+
 variable "cpu_disabled_flag" {
 	description = "(Optional) When true, notifications and events will not be generated for the detect label. false by default."
 	default = "false"
 }
 
-variable "cpu_filter_aggregation" {
-	description = "CPU filter aggregation"
+variable "cpu_aggregation_function" {
+	description = "(Optional) CPU aggregation function and group by.  Examples `mean(by=['host']).` or `max().` 
 	default = ""
+}
+
+variable "cpu_transformation_function" {
+	description = "CPU transformation function.  Valid options mean, min, max"
+	default = "min"
+}
+
+variable "cpu_transformation_window" {
+	description = "CPU transformation window. Examples 5m, 20m, 1h, 1d"
+	default = "1h"
 }
 
 variable "cpu_threshold_warning" {
@@ -49,18 +61,18 @@ variable "load_disabled_flag" {
 	default = "false"
 }
 
-variable "load_filter_aggregation" {
-	description = "Load filter aggregation"
+variable "load_aggregation_function" {
+	description = "(Optional) Load aggregation function and group by.  Examples `mean(by=['host']).` or `max().` 
 	default = ""
 }
 
-variable "load_time_aggregator" {
-	description = "Monitor aggregator for CPU load ratio [available values: min, max or mean]"
+variable "load_transformation_function" {
+	description = "Load time transformation function.  Valid options mean, min, max"
 	default = "min"
 }
 
-variable "load_timeframe" {
-	description = "Monitor timeframe in Second(s), Minute(m), Hour(h), Day(d)"
+variable "load_transformation_window" {
+	description = "CPU time transformation window. Examples 5m, 20m, 1h, 1d"
 	default = "30m"
 }
 
@@ -81,18 +93,18 @@ variable "disk_space_disabled_flag" {
 	default = "false"
 }
 
-variable "disk_space_filter_aggregation" {
-	description = "Free disk space filter aggregation"
+variable "disk_space_aggregation_function" {
+	description = "(Optional) Disk Space aggregation function and group by.  Examples `mean(by=['host', 'plugin_instance']).` or `max().` 
 	default = ""
 }
 
-variable "disk_space_time_aggregator" {
-	description = "Monitor aggregator for Free diskspace [available values: min, max or mean]"
+variable "disk_space_transformation_function" {
+	description = "Disk space time transformation function.  Valid options mean, min, max"
 	default = "max"
 }
 
-variable "disk_space_timeframe" {
-	description = "Monitor timeframe in Second(s), Minute(m), Hour(h), Day(d)"
+variable "disk_space_transformation_window" {
+	description = "disk space time transformation window. Examples 5m, 20m, 1h, 1d"
 	default = "5m"
 }
 
@@ -113,18 +125,18 @@ variable "memory_disabled_flag" {
 	default = "false"
 }
 
-variable "memory_filter_aggregation" {
-	description = "Memory filter aggregation"
+variable "memory_aggregation_function" {
+	description = "(Optional) Memory aggregation function and group by.  Examples `mean(by=['host']).` or `max().` 
 	default = ""
 }
 
-variable "memory_time_aggregator" {
-	description = "Monitor aggregator for Free memory [available values: min, max or mean]"
+variable "memory_transformation_function" {
+	description = Memory time transformation function.  Valid options mean, min, max"
 	default = "max"
 }
 
-variable "memory_timeframe" {
-	description = "Monitor timeframe in Second(s), Minute(m), Hour(h), Day(d)"
+variable "memory_transformation_window" {
+	description = "Memory time transformation window. Examples 5m, 20m, 1h, 1d"
 	default = "5m"
 }
 
