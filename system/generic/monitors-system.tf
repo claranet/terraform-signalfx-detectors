@@ -11,7 +11,7 @@ resource "signalfx_detector" "system_heartbeat" {
 		description = "System has not reported in ${var.system_heartbeat_timeframe}"
 		severity = "Critical"
 		detect_label = "CRIT"
-		disabled = "${var.system_heartbeat_disabled_flag}"
+		disabled = var.system_heartbeat_disabled_flag
 	}
 }
 
@@ -28,14 +28,14 @@ resource "signalfx_detector" "cpu" {
 		description = "${var.cpu_transformation_function} CPU utilization over ${var.cpu_transformation_window} > ${var.cpu_threshold_critical}"
 		severity = "Critical"
 		detect_label = "CRIT"
-		disabled = "${var.cpu_critical_disabled_flag}"
+		disabled = var.cpu_critical_disabled_flag
 	}
 
 	rule {
 		description = "${var.cpu_transformation_function} CPU utilization over ${var.cpu_transformation_window} > ${var.cpu_threshold_warning}"
 		severity = "Warning"
 		detect_label = "WARN"
-		disabled = "${var.cpu_warning_disabled_flag}"
+		disabled = var.cpu_warning_disabled_flag
 	}
 }
 
@@ -52,14 +52,14 @@ resource "signalfx_detector" "load" {
 		description = "${var.load_transformation_function} load(5m) over ${var.load_transformation_window} > ${var.load_threshold_critical}"
 		severity = "Critical"
 		detect_label = "CRIT"
-		disabled = "${var.load_disabled_flag}"
+		disabled = var.load_critical_disabled_flag
 	}
 
 	rule {
 		description = "${var.load_transformation_function} load(5m) over ${var.load_transformation_window} > ${var.load_threshold_warning}"
 		severity = "Warning"
 		detect_label = "WARN"
-		disabled = "${var.load_warning_disabled_flag}"
+		disabled = var.load_warning_disabled_flag
 	}
 }
 
@@ -76,14 +76,14 @@ resource "signalfx_detector" "disk_space" {
 		description = "${var.disk_space_transformation_function} disk space over ${var.disk_space_transformation_window} > ${var.disk_space_threshold_critical}"
 		severity = "Critical"
 		detect_label = "CRIT"
-		disabled = "${var.disk_space_disabled_flag}"
+		disabled = var.disk_space_critical_disabled_flag
 	}
 
 	rule {
 		description = "${var.disk_space_transformation_function} disk space over ${var.disk_space_transformation_window} > ${var.disk_space_threshold_warning}"
 		severity = "Warning"
 		detect_label = "WARN"
-		disabled = "${var.disk_space_warning_disabled_flag}"
+		disabled = var.disk_space_warning_disabled_flag
 	}
 }
 
@@ -101,13 +101,13 @@ resource "signalfx_detector" "memory" {
 		description = "${var.memory_transformation_function} usable memory over ${var.memory_transformation_window} < ${var.memory_threshold_critical}"
 		severity = "Critical"
 		detect_label = "CRIT"
-		disabled = "${var.memory_disabled_flag}"
+		disabled = var.memory_critical_disabled_flag
 	}
 
 	rule {
 		description = "${var.memory_transformation_function} usable memory over ${var.memory_transformation_window} < ${var.memory_threshold_warning}"
 		severity = "Warning"
 		detect_label = "WARN"
-		disabled = "${var.memory_disabled_flag}"
+		disabled = var.memory_disabled_flag
 	}
 }
