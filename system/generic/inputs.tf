@@ -135,6 +135,48 @@ variable "disk_space_threshold_critical" {
 
 #####
 
+variable "disk_maximum_capacity" {
+	description = "When to consider disk full, defined as a percentage"
+	default = "95"
+}
+
+variable "disk__fire_hours_remaining" {
+	description = "How manuy hours before disk is projected to be full do you want to be alerted "
+	default = "72"
+}
+
+variable "disk_fire_lasting_time" {
+	description = "Time condition must be true to fire"
+	default = "30m"
+}
+
+variable "disk_fire_lasting_time_percent" {
+	description = "Percent of fire lasting time the conditon must be true.  Expressed as decimal"
+	default = ".9"
+}
+
+variable "disk_clear_hours_remaining" {
+	description = "With how many hours left till disk is full can the alert clear"
+	default = "96"
+}
+
+variable "disk_clear_lasting_time" {
+	description = "Time clear condition must be true to clear"
+	default = "30m"
+}
+
+variable "disk_clear_lasting_time_percent" {
+	description = "Percent of clear lasting time the conditon must be true.  Expressed as decimal"
+	default = ".9"
+}
+
+variable "disk_use_ewma" {
+	description = "Use Double EWMA"
+	default = "false"
+}
+
+#####
+
 variable "memory_warning_disabled_flag" {
 	description = "(Optional) When true, notifications and events will not be generated for the detect label. false by default."
 	default = "false"
