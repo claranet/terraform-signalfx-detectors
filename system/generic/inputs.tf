@@ -175,6 +175,11 @@ variable "disk_use_ewma" {
 	default = "false"
 }
 
+variable "disk_running_out_disabled_flag" {
+	description = "(Optional) When true, notifications and events will not be generated for the detect label. false by default."
+	default = "false"
+}
+
 #####
 
 variable "memory_warning_disabled_flag" {
