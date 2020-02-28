@@ -87,6 +87,23 @@ resource "signalfx_detector" "disk_space" {
 	}
 }
 
+resource "signalfx_detector" "disk_running_out" {
+	name = "${var.prefix_slug == "" ? "" : "[${var.prefix_slug}]"}[${var.environment}] Disk Space Running Out"
+
+	program_text = <<-EOF
+		from signalfx.detectors.countdown import countdown
+		signal = data('disk.utilization')
+		countdown.hours_left_stream_incr_detector(stream=signal, ${disk_maximum_capacity}, ${disk_hours_till_full}, fire_lasting=lasting('${disk_fire_lasting_time}', ${disk_fire_lasting_time_percent}), ${disk_clear_hours_remaining}, clear_lasting=lasting('${disk_clear_lasting_time}', ${disk_clear_lasting_time_percent}), use_doudisk_clear_lasting_time_percentble_ewma=${disk_use_ewma}).publish('disk space forecast')
+	EOF
+
+	rule {
+		description = "Disk will be at ${disk_maximum_capacity}% capacity in ${disk_hours_till_full}"
+		severity = "Critical"
+		detect_label = "CRIT"
+		disabled = var.disk_running_out_disabled_flag
+	}
+}
+
 resource "signalfx_detector" "memory" {
 	name = "${var.prefix_slug == "" ? "" : "[${var.prefix_slug}]"}[${var.environment}] Usable Memory"
 
