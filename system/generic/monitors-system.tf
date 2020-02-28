@@ -19,12 +19,12 @@ resource "signalfx_detector" "cpu" {
 	name = "${var.prefix_slug == "" ? "" : "[${var.prefix_slug}]"}[${var.environment}] CPU usage"
 
 	program_text = <<-EOF
-		signal = data('cpu.utilization')${cpu_filter_aggregation}
+		signal = data('cpu.utilization').${var.cpu_aggregation_function}${var.cpu_transformation_function}(over='${var.cpu_transformation_window}')
 		detect(when(signal > ${var.cpu_threshold_critical})).publish('CRIT')
 	EOF
 
 	rule {
-		description = "CPU utilization > ${var.cpu_threshold_critical}"
+		description = "${var.cpu_transformation_function} CPU utilization over ${var.cpu_transformation_window} > ${var.cpu_threshold_critical}"
 		severity = "Critical"
 		detect_label = "CRIT"
 		disabled = "${var.cpu_disabled_flag}"
@@ -35,12 +35,12 @@ resource "signalfx_detector" "load" {
 	name = "${var.prefix_slug == "" ? "" : "[${var.prefix_slug}]"}[${var.environment}] CPU load 5 ratio"
 
 	program_text = <<-EOF
-		signal = data('load.midterm')${load_filter_aggregation}.${var.load_time_aggregator}(over='${var.load_timeframe}')
+		signal = data('load.midterm').${load_aggregation_function}${var.load_transformation_function}(over='${var.load_transformation_window}')
 		detect(when(signal > ${var.load_threshold_critical})).publish('CRIT')
 	EOF
 
 	rule {
-		description = "${var.load_time_aggregator} > ${var.load_threshold_critical} for last ${var.load_timeframe}"
+		description = "${var.load_transformation_function} load(5m) over ${var.load_transformation_window} > ${var.load_threshold_critical}"
 		severity = "Critical"
 		detect_label = "CRIT"
 		disabled = "${var.load_disabled_flag}"
@@ -51,12 +51,12 @@ resource "signalfx_detector" "disk_space" {
 	name = "${var.prefix_slug == "" ? "" : "[${var.prefix_slug}]"}[${var.environment}] Disk space usage"
 
 	program_text = <<-EOF
-		signal = data('disk.utilization')${disk_space_filter_aggregation}.${var.disk_space_time_aggregator}(over='${var.disk_space_timeframe}')
+		signal = data('disk.utilization').${disk_space_aggregation_function}${var.disk_space_transformation_function}(over='${var.disk_space_transformation_window}')
 		detect(when(signal > ${var.disk_space_threshold_critical})).publish('CRIT')
 	EOF
 
 	rule {
-		description = "${var.disk_space_time_aggregator} > ${var.disk_space_threshold_critical} for last ${var.disk_space_timeframe}"
+		description = "${var.disk_space_transformation_function} disk space over ${var.disk_space_transformation_window} > ${var.disk_space_threshold_critical}"
 		severity = "Critical"
 		detect_label = "CRIT"
 		disabled = "${var.disk_space_disabled_flag}"
@@ -67,13 +67,13 @@ resource "signalfx_detector" "memory" {
 	name = "${var.prefix_slug == "" ? "" : "[${var.prefix_slug}]"}[${var.environment}] Usable Memory"
 
 	program_text = <<-EOF
-		A = data('memory.utilization')${memory_filter_aggregation}
-		signal = (100-A).${var.memory_time_aggregator}(over='${var.memory_timeframe}')
-		detect(when(signal > ${var.memory_threshold_critical})).publish('CRIT')
+		A = data('memory.utilization')${memory_aggregation_function}
+		signal = (100-A).${var.memory_transformation_function}(over='${var.memory_transformation_window}')
+		detect(when(signal < ${var.memory_threshold_critical})).publish('CRIT')
 	EOF
 
 	rule {
-		description = "${var.memory_time_aggregator} > ${var.memory_threshold_critical} for last ${var.memory_timeframe}"
+		description = "${var.memory_transformation_function} usable memory over ${var.memory_transformation_window} < ${var.memory_threshold_critical}"
 		severity = "Critical"
 		detect_label = "CRIT"
 		disabled = "${var.memory_disabled_flag}"
