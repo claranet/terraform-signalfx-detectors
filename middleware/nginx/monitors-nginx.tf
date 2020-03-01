@@ -16,17 +16,18 @@ resource "signalfx_detector" "nginx_heartbeat" {
 }
 
 resource "signalfx_detector" "nginx_dropped_connections" {
-	name = "Nginx dropped connections"
+	name = "${var.prefix_slug == "" ? "" : "[${var.prefix_slug}]"}[${var.environment}] Nginx dropped connections"
 
 	program_text = <<-EOF
-		signal = data('connections.failed', filter=filter('plugin', 'nginx')).mean(by=['host']).min(over='5m')
-		detect(when(signal > ${var.nginx_dropped_threshold_critical})).publish('CRIT')
+		signal = data('connections.failed'"${var.nginx_filter == "" ? "" : "${var.nginx_filter}"}")${var.nginx_aggregation_function}.${var.nginx_transformation_function}(over='${var.nginx_transformation_window}')
+		detect(when(signal > ${var.nginx_threshold_critical})).publish('CRIT')
 	EOF
 
 	rule {
-		description = "Min > ${var.nginx_dropped_threshold_critical} for last 5m"
+		description = "${var.nginx_transformation_function} nginx dropped over ${var.nginx_transformation_window} > ${var.nginx_threshold_critical}"
 		severity = "Critical"
 		detect_label = "CRIT"
+		disabled = var.nginx_critical_disabled_flag
 	}
-}
 
+}

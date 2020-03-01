@@ -16,18 +16,27 @@ resource "signalfx_detector" "kong_service_heartbeat" {
 }
 
 resource "signalfx_detector" "treatment_limit" {
-	name = "Kong exceeded its treatment limit"
+	name = "${var.prefix_slug == "" ? "" : "[${var.prefix_slug}]"}[${var.environment}] Kong exceeded its treatment limit"
 
 	program_text = <<-EOF
-		A = data('counter.kong.connections.handled', filter=filter('plugin', 'kong')).min(by=['host'])
-		B = data('counter.kong.connections.accepted', filter=filter('plugin', 'kong')).min(by=['host'])
-		signal = ((A-B)/A).scale(100).min(over='15m')
+		A = data('counter.kong.connections.handled'"${var.treatment_limit_filter == "" ? "" : "${var.treatment_limit_filter}"}")${var.treatment_limit_aggregation_function}
+		B = data('counter.kong.connections.accepted'"${var.treatment_limit_filter == "" ? "" : "${var.treatment_limit_filter}"}")${var.treatment_limit_aggregation_function}
+		signal = ((A-B)/A).scale(100).${var.treatment_limit_transformation_function}(over='${var.treatment_limit_transformation_window}')
 		detect(when(signal > ${var.treatment_limit_threshold_critical})).publish('CRIT')
+		detect(when(signal < ${var.treatment_limit_threshold_warning})).publish('WARN')
 	EOF
 
 	rule {
-		description = "Min > ${var.treatment_limit_threshold_critical} for last 15m"
+		description = "${var.treatment_limit_transformation_function} treatment limit over ${var.treatment_limit_transformation_window} > ${var.treatment_limit_threshold_critical}"
 		severity = "Critical"
 		detect_label = "CRIT"
+		disabled = var.treatment_limit_critical_disabled_flag
+	}
+
+	rule {
+		description = "${var.treatment_limit_transformation_function} treatment limit over ${var.treatment_limit_transformation_window} > ${var.treatment_limit_threshold_warning}"
+		severity = "Warning"
+		detect_label = "WARN"
+		disabled = var.treatment_limit_warning_disabled_flag
 	}
 }
