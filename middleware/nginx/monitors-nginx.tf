@@ -11,7 +11,7 @@ resource "signalfx_detector" "nginx_heartbeat" {
 		description = "System has not reported in ${var.nginx_heartbeat_timeframe}"
 		severity = "Critical"
 		detect_label = "CRIT"
-		disabled = "${var.nginx_heartbeat_disabled_flag}"
+		disabled = var.nginx_heartbeat_disabled_flag
 	}
 }
 
