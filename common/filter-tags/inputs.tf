@@ -1,26 +1,19 @@
 variable "filter_use_defaults" {
-  description = "Use default filter tags convention"
+  description = "Use default filtering convention"
   default     = "true"
 }
 
-variable "filter_custom_include" {
-  description = "Tags used for custom filtering when filter_tags_use_defaults is false (i.e. \"tag1:val1,tag2:val2\")"
-  default     = "*"
+variable "filter_defaults" {
+  description = Default filters to apply "
+  default     = "filter('env', '${var.environment}') and filter('claranet_monitored', 'true')"
 }
 
-variable "filter_custom_exclude" {
-  description = "Tags excluded for custom filtering when filter_tags_use_defaults is false (i.e. \"tag1:val1,tag2:val2\")"
+variable "filter_custom_include" {
+  description = "Tags to filter signals on when custom filtering is used.  Valid when var.filter_tags_use_defaults = false Example: "
   default     = ""
 }
 
-variable "extra_tags" {
-  description = "Extra optional tags added to include filtering in any case (i.e. [\"tag1:val1\", \"tag2:val2\"])"
-  type        = list(string)
-  default     = []
-}
-
-variable "extra_tags_excluded" {
-  description = "Extra optional tags added to exclude filtering in any case (i.e. [\"tag1:val1\", \"tag2:val2\"])"
-  type        = list(string)
-  default     = []
+variable "filter_custom_exclude" {
+  description = "Tags to exclude when using custom filtering.  Valid when filter_tags_use_defaults = false.  Example: "
+  default     = ""
 }
