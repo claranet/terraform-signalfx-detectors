@@ -2,7 +2,7 @@ output "filter_custom" {
   description = "The full filtering pattern to add to monitors"
   if var.filter_use_defaults = "true" 
     then  
-      value  = var.filter_defaults
+      value  = "filter('env', '${var.environment}') and filter('claranet_monitored', 'true')"
     else
       formatted_filter_custom_includes = replace(var.filter_custom_includes, ":", "', '")
       # "aws_state', 'stopped;aws_region', 'eu-west1"
