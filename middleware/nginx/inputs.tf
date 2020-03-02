@@ -12,6 +12,21 @@ variable "prefix_slug" {
 	default = ""
 }
 
+variable "filter_use_defaults" {
+  description = "Use default filter tags convention"
+  default     = "true"
+}
+
+variable "filter_custom_include" {
+  description = "Tags to filter signals on when custom filtering is used.  Valid when var.filter_tags_use_defaults = false Example: "
+  default     = ""
+}
+
+variable "filter_custom_exclude" {
+  description = "Tags to exclude when using custom filtering.  Valid when filter_tags_use_defaults = false.  Example: "
+  default     = ""
+}
+
 # Nginx Detector specific
 
 variable "nginx_heartbeat_disabled_flag" {
@@ -29,11 +44,6 @@ variable "nginx_heartbeat_timeframe" {
 variable "nginx_critical_disabled_flag" {
 	description = "(Optional) When true, notifications and events will not be generated for the detect label. false by default."
 	default = "false"
-}
-
-variable "nginx_filter" {
-	description = "(Optional) Nginx filter criteria. Examples `, filter=filter('plugin', 'kong')` 
-	default = ", filter=filter('plugin', 'nginx')"
 }
 
 variable "nginx_aggregation_function" {
