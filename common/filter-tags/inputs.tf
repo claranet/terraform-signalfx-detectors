@@ -5,7 +5,7 @@ variable "filter_use_defaults" {
 
 variable "filter_defaults" {
   description = "Default filters to apply "
-  default     = "filter('env', '${var.environment}') and filter('claranet_monitored', 'true')"
+  default     = ""
 }
 
 variable "filter_custom_includes" {
