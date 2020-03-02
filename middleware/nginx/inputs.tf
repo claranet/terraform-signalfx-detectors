@@ -13,7 +13,7 @@ variable "prefix_slug" {
 }
 
 variable "filter_use_defaults" {
-  description = "Use default filter tags convention"
+  description = "Use default filtering convention"
   default     = "true"
 }
 
