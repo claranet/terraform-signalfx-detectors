@@ -63,5 +63,5 @@ variable "nginx_transformation_window" {
 
 variable "nginx_threshold_critical" {
 	description = "Nginx critical threshold"
-	default = 0
+	default = "0"
 }
