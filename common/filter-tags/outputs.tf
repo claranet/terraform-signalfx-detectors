@@ -1,44 +1,33 @@
-locals {
-  including_default_list = compact(
-    concat(
-      split(
-        ",",
-        format(
-          "dd_monitoring:enabled,dd_%s:enabled,env:%s",
-          var.resource,
-          var.environment,
-        ),
-      ),
-      compact(var.extra_tags),
-    ),
-  )
-  including_custom_list = compact(
-    concat(split(",", var.filter_tags_custom), compact(var.extra_tags)),
-  )
-  excluding_list = compact(
-    split(
-      ",",
-      var.filter_tags_use_defaults == "true" ? join(",", compact(var.extra_tags_excluded)) : join(
-        ",",
-        concat(
-          split(",", var.filter_tags_custom_excluded),
-          compact(var.extra_tags_excluded),
-        ),
-      ),
-    ),
-  )
-
-  including_string = var.filter_tags_use_defaults == "true" ? join(",", local.including_default_list) : join(",", local.including_custom_list)
-  excluding_string = join(",", local.excluding_list)
-}
-
-
-
-
 output "filter_custom" {
   description = "The full filtering pattern to add to monitors"
   if var.filter_use_defaults = "true" 
     then  
       value  = var.filter_defaults
     else
+      formatted_filter_custom_includes = replace(var.filter_custom_includes, ":", "', '")
+      # "aws_state', 'stopped;aws_region', 'eu-west1"
+
+    list_filter_custom_includes = split(";", var.formatted_filter_custom_includes)
+    # ["aws_state', 'stopped", "aws_region', 'eu-west1"]
+
+    formatted_list_filter_custom_includes = formatlist("filter(', %s')", var.list_filter_custom_includes)
+    # ["filter('aws_state', 'stopped')", "filter('aws_region', 'eu-west1')"]
+        
+    formatted_filter_custom_excludes = replace(var.filter_custom_excludes, ":", "', '")
+    # "aws_state', 'stopped;aws_region', 'eu-west1"
+
+    list_filter_custom_excludes = split(";", var.formatted_filter_custom_excludes)
+    # ["aws_state', 'stopped", "aws_region', 'eu-west1"]
+
+    formatted_list_filter_custom_excludes = formatlist("(not filter(', %s'))", var.list_filter_custom_excludes)
+    # ["(not filter('aws_state', 'stopped'))", "(not filter('aws_region', 'eu-west1'))"]       
+
+    value = join(" and ", list(join(" and ", var.formatted_list_filter_custom_includes) , join(" and ", var.formatted_list_filter_custom_excludes))
       
+   }  
+
+  
+
+
+        
+        
