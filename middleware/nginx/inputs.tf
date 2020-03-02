@@ -52,7 +52,7 @@ variable "nginx_aggregation_function" {
 }
 
 variable "nginx_transformation_function" {
-	description = Nginx transformation function.  Valid options mean, min, max"
+	description = "Nginx transformation function.  Valid options mean, min, max"
 	default = "min"
 }
 
