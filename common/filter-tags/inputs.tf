@@ -9,11 +9,11 @@ variable "filter_defaults" {
 }
 
 variable "filter_custom_include" {
-  description = "Tags to filter signals on when custom filtering is used.  Valid when var.filter_tags_use_defaults = false Example: "
-  default     = ""
+  description = "Tags to filter signals on when custom filtering is used. i.e [\"tag1:val1\", \"tag2:val2\"] "
+  default     = []
 }
 
 variable "filter_custom_exclude" {
-  description = "Tags to exclude when using custom filtering.  Valid when filter_tags_use_defaults = false.  Example: "
-  default     = ""
+  description = "Tags to exclude when using custom filtering. i.e [\"tag1:val1\", \"tag2:val2\"] "
+  default     = []
 }
