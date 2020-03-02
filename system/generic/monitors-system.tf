@@ -3,7 +3,7 @@ resource "signalfx_detector" "system_heartbeat" {
 
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
-		signal = data('cpu.utilization', filter=(not filter('aws_state', '*terminated}', '*stopped}')) and (not filter('gcp_status', '*TERMINATED}', '*STOPPING}')) and (not filter('azure_power_state', 'stop*', 'deallocat*')))
+		signal = data('cpu.utilization', filter=((not filter('aws_state', '*terminated}', '*stopped}')) and (not filter('gcp_status', '*TERMINATED}', '*STOPPING}')) and (not filter('azure_power_state', 'stop*', 'deallocat*')))
 		not_reporting.detector(stream=signal, resource_identifier=['host'], duration='${var.system_heartbeat_timeframe}').publish('CRIT')
 	EOF
 
