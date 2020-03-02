@@ -1,10 +1,8 @@
   module "filter-tags" {
   source = "../../common/filter-tags"
 
-  environment                 = var.environment
-  resource                    = "dns"
-  filter_tags_defaults        =
-  filter_tags_use_defaults    = var.filter_tags_use_defaults
-  filter_tags_custom_include  = var.filter_tags_custom
-  filter_tags_custom_excluded = var.filter_tags_custom_excluded
+  filter_defaults             = "filter('env', '${var.environment}') and filter('claranet_monitored', 'true')"
+  filter_use_defaults         = var.filter_use_defaults
+  filter_custom_include       = var.filter_custom_include
+  filter_custom_excluded      = var.filter_custom_excluded
 }
