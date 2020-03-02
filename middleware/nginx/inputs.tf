@@ -47,7 +47,7 @@ variable "nginx_critical_disabled_flag" {
 }
 
 variable "nginx_aggregation_function" {
-	description = "(Optional) Nginx aggregation function and group by. Examples `.mean(by=['host']).` or `.max()` 
+	description = "(Optional) Nginx aggregation function and group by. Examples \".mean(by=['host']).\" or \".max()\""
 	default = ".mean(by=['host'])"
 }
 
