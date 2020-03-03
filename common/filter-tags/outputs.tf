@@ -23,7 +23,7 @@ output "filter_custom" {
     formatted_list_filter_custom_excludes = {${formatlist("(not filter(', %s'))", var.list_filter_custom_excludes)}}"
     /* ["(not filter('aws_state', 'stopped'))", "(not filter('aws_region', 'eu-west1'))"]   */    
     
-   custum_filter = '{${join(" and ", list(join(" and ", var.formatted_list_filter_custom_includes) , join(" and ", var.formatted_list_filter_custom_excludes))}}"
+   custum_filter = "{${join(" and ", list(join(" and ", var.formatted_list_filter_custom_includes) , join(" and ", var.formatted_list_filter_custom_excludes))}}"
    
          
         value = "${var.custom_filter}"
