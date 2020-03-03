@@ -26,12 +26,12 @@ output "filter_custom" {
    custum_filter = "${join(
      " and ", 
      list(
-       "join(
+       \"join(
           " and ", 
-           var.formatted_list_filter_custom_includes)", 
-        "join(
+           var.formatted_list_filter_custom_includes)\", 
+        \"join(
           " and ", 
-          var.formatted_list_filter_custom_excludes)"
+          var.formatted_list_filter_custom_excludes)"\
       )
 
      )}"
