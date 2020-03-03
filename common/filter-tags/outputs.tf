@@ -34,7 +34,7 @@ output "filter_custom" {
           )
        )
 
-     )}"}"
+     )}",}"
    
 }   
       
