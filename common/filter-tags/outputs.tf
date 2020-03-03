@@ -5,7 +5,7 @@ output "filter_custom" {
       value  = "${var.filter_defaults}"
     else
     
-   custum_filter = "${join(
+   custum_filter = join(
      " and ", 
      list(
        join(
@@ -37,7 +37,7 @@ output "filter_custom" {
           )
        )
 
-     )}"
+     )
    
 }   
         value = "${var.custom_filter}"
