@@ -14,13 +14,13 @@ output "filter_custom" {
     formatted_list_filter_custom_includes = "{${formatlist("filter(', %s')", var.list_filter_custom_includes)}}"
     /* ["filter('aws_state', 'stopped')", "filter('aws_region', 'eu-west1')"] */
         
-    formatted_filter_custom_excludes = {${replace(var.filter_custom_excludes, ":", "', '")}}"
+    formatted_filter_custom_excludes = "{${replace(var.filter_custom_excludes, ":", "', '")}}"
     /*  "aws_state', 'stopped;aws_region', 'eu-west1" */
 
-    list_filter_custom_excludes = {${split(";", var.formatted_filter_custom_excludes)}}"
+    list_filter_custom_excludes = "{${split(";", var.formatted_filter_custom_excludes)}}"
     /* ["aws_state', 'stopped", "aws_region', 'eu-west1"] */
 
-    formatted_list_filter_custom_excludes = {${formatlist("(not filter(', %s'))", var.list_filter_custom_excludes)}}"
+    formatted_list_filter_custom_excludes = "{${formatlist("(not filter(', %s'))", var.list_filter_custom_excludes)}}"
     /* ["(not filter('aws_state', 'stopped'))", "(not filter('aws_region', 'eu-west1'))"]   */    
     
    custum_filter = "{${join(" and ", list(join(" and ", var.formatted_list_filter_custom_includes) , join(" and ", var.formatted_list_filter_custom_excludes))}}"
