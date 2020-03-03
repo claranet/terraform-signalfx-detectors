@@ -2,7 +2,7 @@
 output "filter_custom" {
   description = "The full filtering pattern to add to monitors"
   value  = "${var.filter_use_defaults == "true" ? var.filter_defaults : 
-    {join(
+    join(
      " and ", 
      list(
        join(
