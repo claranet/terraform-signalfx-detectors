@@ -1,11 +1,8 @@
 
 output "filter_custom" {
   description = "The full filtering pattern to add to monitors"
-      if var.filter_use_defaults = "true"  
-      value  = "${var.filter_defaults}"
-    else
-    
-   custum_filter = join(
+  value  = var.filter_use defaults == "true" ? var.filter_defaults : 
+   join(
      " and ", 
      list(
        join(
@@ -40,7 +37,6 @@ output "filter_custom" {
      )
    
 }   
-        value = "${var.custom_filter}"
       
    
 
