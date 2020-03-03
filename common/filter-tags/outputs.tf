@@ -50,7 +50,7 @@ output "filter_custom" {
      ["filter('aws_state', 'stopped')", "filter('aws_region', 'eu-west1')"] 
         
     formatted_filter_custom_excludes = "{${replace(var.filter_custom_excludes, ":", "', '")}}"
-      "aws_state', 'stopped;aws_region', 'eu-west1" */
+      "aws_state', 'stopped;aws_region', 'eu-west1" 
 
     list_filter_custom_excludes = "{${split(";", var.formatted_filter_custom_excludes)}}"
      ["aws_state', 'stopped", "aws_region', 'eu-west1"] 
