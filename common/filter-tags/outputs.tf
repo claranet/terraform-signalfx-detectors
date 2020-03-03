@@ -1,7 +1,7 @@
 
 output "filter_custom" {
   description = "The full filtering pattern to add to monitors"
-  value  = var.filter_use_defaults == "true" ? var.filter_defaults : 
+  value  = "${var.filter_use_defaults == "true" ? var.filter_defaults : 
    "${join(
      " and ", 
      list(
@@ -34,11 +34,10 @@ output "filter_custom" {
           )
        )
 
-     )}"
+     )}"}"
    
 }   
       
-local.excluding_string == "" ? "" : " excluded_tags:${local.excluding_string}"
 
    /*formatted_filter_custom_includes = "{${replace(var.filter_custom_includes, ":", "', '")}}"
        # "aws_state', 'stopped;aws_region', 'eu-west1" 
