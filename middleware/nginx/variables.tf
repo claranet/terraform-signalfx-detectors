@@ -5,7 +5,7 @@ variable "environment" {
 	type = string
 }
 
-# SignalFx specific
+# SignalFx Module specific
 
 variable "prefix_slug" {
 	description = "Prefix string to prepend between brackets on every monitors names"
@@ -24,6 +24,11 @@ variable "filter_custom_includes" {
 
 variable "filter_custom_excludes" {
   description = "Tags to exclude when using custom filtering. Enter as string i.e \"tag1:val1;tag2:val2\""
+  default     = ""
+}
+
+variable "disable_detectors" {
+  description = "(Optional), set to /"true/" only if you want to disbale all detectors in this module"
   default     = ""
 }
 
