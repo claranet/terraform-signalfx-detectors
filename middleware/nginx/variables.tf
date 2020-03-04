@@ -32,7 +32,12 @@ variable "disable_detectors" {
   default     = "false"
 }
 
-# Nginx Detector specific
+variable "notifications" {
+  description = "(Required), notification recipients.  Example \"PagerDuty,credentialId\" or \"PagerDuty,credentialId;Slack,credentialId,channel\"
+  default     = ""
+}
+
+#Nginx Detector specific
 
 variable "nginx_heartbeat_disabled_flag" {
 	description = "(Optional) When true, heartbeat detector will be disabled"
@@ -42,6 +47,11 @@ variable "nginx_heartbeat_disabled_flag" {
 variable "nginx_heartbeat_timeframe" {
 	description = "Timeframe for system not reporting"
 	default = "20m"
+}
+
+variable "nginx_heartbeat_notifications" {
+  description = "(Optional), notification recipients.  Example \"PagerDuty,credentialId\" or \"PagerDuty,credentialId;Slack,credentialId,channel\"
+  default     = ""
 }
 
 #####
@@ -84,4 +94,14 @@ variable "nginx_threshold_critical" {
 variable "nginx_threshold_warning" {
 	description = "Nginx warning threshold"
 	default = "0"
+}
+
+variable "nginx_warning_notifications" {
+  description = "(Optional), notification recipients.  Example \"PagerDuty,credentialId\" or \"PagerDuty,credentialId;Slack,credentialId,channel\"
+ 	 default = ""
+}
+
+variable "nginx_critical_notifications" {
+  description = "(Optional), notification recipients.  Example \"PagerDuty,credentialId\" or \"PagerDuty,credentialId;Slack,credentialId,channel\"
+  	 default = ""
 }
