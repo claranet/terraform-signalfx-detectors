@@ -51,6 +51,11 @@ variable "nginx_critical_disabled_flag" {
 	default = "false"
 }
 
+variable "nginx_warning_disabled_flag" {
+	description = "(Optional) When true, notifications and events will not be generated for the detect label. false by default."
+	default = "false"
+}
+
 variable "nginx_aggregation_function" {
 	description = "(Optional) Nginx aggregation function and group by. Examples \".mean(by=['host']).\" or \".max()\""
 	default = ".mean(by=['host'])"
@@ -68,5 +73,10 @@ variable "nginx_transformation_window" {
 
 variable "nginx_threshold_critical" {
 	description = "Nginx critical threshold"
+	default = "1"
+}
+
+variable "nginx_threshold_warning" {
+	description = "Nginx warning threshold"
 	default = "0"
 }
