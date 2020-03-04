@@ -11,7 +11,7 @@ resource "signalfx_detector" "nginx_heartbeat" {
 		description = "System has not reported in ${var.nginx_heartbeat_timeframe}"
 		severity = "Critical"
 		detect_label = "CRIT"
-		disabled = var.nginx_heartbeat_disabled_flag
+		disabled = coalesce(var.nginx_heartbeat_disabled_flag,var.disable_detectors)
 	}
 }
 
@@ -27,7 +27,7 @@ resource "signalfx_detector" "nginx_dropped_connections" {
 		description = "${var.nginx_transformation_function} nginx dropped over ${var.nginx_transformation_window} > ${var.nginx_threshold_critical}"
 		severity = "Critical"
 		detect_label = "CRIT"
-		disabled = var.nginx_critical_disabled_flag
+		disabled = coalesce(var.nginx_critical_disabled_flag,var.disable_detectors)
 	}
 
 }
