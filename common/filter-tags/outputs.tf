@@ -8,9 +8,13 @@ output "filter_custom" {
             split(
               ";", 
               replace(
-                var.filter_custom_excludes,
-                ":",
-                "', '"
+                replace(
+                   var.filter_custom_excludes,
+                   ":",
+                   "', '"
+                ),
+                " ",
+                ""
               )
             )
           )
@@ -23,10 +27,14 @@ output "filter_custom" {
                split(
                  ";", 
                  replace(
-                   var.filter_custom_includes,
-                   ":",
-                   "', '"
-                 )
+                     replace(
+                       var.filter_custom_includes,
+                       ":",
+                       "', '"
+                     ),
+                     " ",
+                     ""
+                   )
                )
              )
           )
@@ -41,10 +49,14 @@ output "filter_custom" {
                   split(
                     ";", 
                     replace(
-                      var.filter_custom_includes,
-                      ":",
-                      "', '"
-                    )
+                     replace(
+                       var.filter_custom_includes,
+                       ":",
+                       "', '"
+                     ),
+                     " ",
+                     ""
+                   )
                   )
                )
              ), 
@@ -55,9 +67,13 @@ output "filter_custom" {
                  split(
                    ";", 
                    replace(
-                     var.filter_custom_excludes,
-                     ":",
-                     "', '"
+                     replace(
+                       var.filter_custom_excludes,
+                       ":",
+                       "', '"
+                     ),
+                     " ",
+                     ""
                    )
                  )
                )
@@ -66,4 +82,4 @@ output "filter_custom" {
       )}"
   }"
 }"
-}   
+}  
