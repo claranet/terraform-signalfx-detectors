@@ -28,7 +28,7 @@ variable "filter_custom_excludes" {
 }
 
 variable "disable_detectors" {
-  description = "(Optional), set to /"true/" only if you want to disbale all detectors in this module"
+  description = "(Optional), set string to true only if you want to disbale all detectors in this module"
   default     = ""
 }
 
