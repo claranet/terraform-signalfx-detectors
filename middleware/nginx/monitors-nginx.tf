@@ -12,7 +12,7 @@ resource "signalfx_detector" "nginx_heartbeat" {
 		severity = "Critical"
 		detect_label = "CRIT"
 		disabled = coalesce(var.nginx_heartbeat_disabled_flag,var.disable_detectors)
-                notifications = coalesce(split(";",var.nginx_heartbeat_notifications),split(";",var.nginx_notifications),split(";",var.notifications))
+                notifications = coalesce(split(";",var.nginx_heartbeat_notifications),split(";",var.notifications))
 	}
 }
 
