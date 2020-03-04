@@ -4,7 +4,7 @@ output "filter_custom" {
     "${var.filter_custom_includes == "" ? join(
           " and ", 
           formatlist(
-            "(not filter(' %s'))", 
+            "(not filter('%s'))", 
             split(
               ";", 
               replace(
@@ -19,7 +19,7 @@ output "filter_custom" {
       "${var.filter_custom_excludes == "" ? join(
             " and ", 
              formatlist(
-               "(not filter(' %s'))", 
+               "(not filter('%s'))", 
                split(
                  ";", 
                  replace(
@@ -37,7 +37,7 @@ output "filter_custom" {
              join(
                " and ", 
                formatlist(
-                 "filter(' %s')", 
+                 "filter('%s')", 
                   split(
                     ";", 
                     replace(
@@ -51,7 +51,7 @@ output "filter_custom" {
              join(
                " and ", 
                formatlist(
-                 "(not filter(' %s'))", 
+                 "(not filter('%s'))", 
                  split(
                    ";", 
                    replace(
