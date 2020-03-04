@@ -18,12 +18,12 @@ variable "filter_use_defaults" {
 }
 
 variable "filter_custom_includes" {
-  description = "Tags to filter signals on when custom filtering is used. Enter as string i.e \"tag1:val1, tag2:val2\"
+  description = "Tags to filter signals on when custom filtering is used. Enter as string i.e \"tag1:val1, tag2:val2\""
   default     = ""
 }
 
 variable "filter_custom_excludes" {
-  description = "Tags to exclude when using custom filtering. Enter as string i.e \"tag1:val1, tag2:val2\"
+  description = "Tags to exclude when using custom filtering. Enter as string i.e \"tag1:val1, tag2:val2\""
   default     = ""
 }
 
