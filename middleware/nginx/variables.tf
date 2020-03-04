@@ -34,7 +34,7 @@ variable "disable_detectors" {
 
 variable "notifications" {
   	description = "(Required), notification recipients.  Example \"PagerDuty,credentialId\" or \"PagerDuty,credentialId;Slack,credentialId,channel\""
-  	default = "PagerDuty,credentialId"
+  	default = ""
 }
 
 #Nginx Detector specific
@@ -94,6 +94,11 @@ variable "nginx_threshold_critical" {
 variable "nginx_threshold_warning" {
 	description = "Nginx warning threshold"
 	default = "0"
+}
+
+variable "nginx_notifications" {
+  	 description = "(Optional), notification recipients.  Example \"PagerDuty,credentialId\" or \"PagerDuty,credentialId;Slack,credentialId,channel\""
+ 	 default = ""
 }
 
 variable "nginx_warning_notifications" {
