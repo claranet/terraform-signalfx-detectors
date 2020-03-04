@@ -28,14 +28,14 @@ variable "filter_custom_excludes" {
 }
 
 variable "disable_detectors" {
-  description = "(Optional), set string to true only if you want to disbale all detectors in this module"
-  default     = ""
+  description = "(Optional), set string to true if you want to disbale all detectors in this module"
+  default     = "false"
 }
 
 # Nginx Detector specific
 
 variable "nginx_heartbeat_disabled_flag" {
-	description = "(Optional) When true, notifications and events will not be generated for the detect label. false by default."
+	description = "(Optional) When true, heartbeat detector will be disabled"
 	default = "false"
 }
 
@@ -46,13 +46,18 @@ variable "nginx_heartbeat_timeframe" {
 
 #####
 
-variable "nginx_critical_disabled_flag" {
+variable "disable_nginx_detector" {
 	description = "(Optional) When true, notifications and events will not be generated for the detect label. false by default."
+	default = ""
+}
+
+variable "nginx_critical_disabled_flag" {
+	description = "(Optional) When true, nginx critical rule will be disabled"
 	default = "false"
 }
 
 variable "nginx_warning_disabled_flag" {
-	description = "(Optional) When true, notifications and events will not be generated for the detect label. false by default."
+	description = "(Optional) When true, nginx warning rule be disabled"
 	default = "false"
 }
 
