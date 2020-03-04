@@ -12,7 +12,7 @@ resource "signalfx_detector" "nginx_heartbeat" {
 		severity = "Critical"
 		detect_label = "CRIT"
 		disabled = coalesce(var.nginx_heartbeat_disabled_flag,var.disable_detectors)
-                notifications = [coalesce(var.nginx_heartbeat_notifications,var.nginx_notifications,var.notifications)]
+                notifications = coalesce(split(";",var.nginx_heartbeat_notifications),split(";",var.nginx_notifications),split(";",var.notifications))
 	}
 }
 
@@ -30,7 +30,7 @@ resource "signalfx_detector" "nginx_dropped_connections" {
 		severity = "Critical"
 		detect_label = "CRIT"
 		disabled = coalesce(var.nginx_critical_disabled_flag,var.disable_nginx_detector,var.disable_detectors)
-		notifications = [coalesce(var.nginx_critical_notifications,var.nginx_notifications,var.notifications)]
+		notifications = coalesce(split(";",var.nginx_critical_notifications),split(";",var.nginx_notifications),split(";",var.notifications))
 	}
         
 		rule {
@@ -38,6 +38,6 @@ resource "signalfx_detector" "nginx_dropped_connections" {
 		severity = "Warning"
 		detect_label = "WARN"
 		disabled = coalesce(var.nginx_warning_disabled_flag,var.disable_nginx_detector,var.disable_detectors)
-		notifications = [coalesce(var.nginx_warning_notifications,var.nginx_notifications,var.notifications)]
+		notifications = coalesce(split(";",var.nginx_warning_notifications),split(";",var.nginx_notifications),split(";",var.notifications))
 	}
 }
