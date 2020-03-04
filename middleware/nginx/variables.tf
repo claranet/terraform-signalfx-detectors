@@ -33,7 +33,7 @@ variable "disable_detectors" {
 }
 
 variable "notifications" {
-  description = "(Required), notification recipients.  Example \"PagerDuty,credentialId\" or \"PagerDuty,credentialId;Slack,credentialId,channel\"
+  description = "(Required), notification recipients.  Example \"PagerDuty,credentialId\" or \"PagerDuty,credentialId;Slack,credentialId,channel\""
   default     = ""
 }
 
@@ -50,7 +50,7 @@ variable "nginx_heartbeat_timeframe" {
 }
 
 variable "nginx_heartbeat_notifications" {
-  description = "(Optional), notification recipients.  Example \"PagerDuty,credentialId\" or \"PagerDuty,credentialId;Slack,credentialId,channel\"
+  description = "(Optional), notification recipients.  Example \"PagerDuty,credentialId\" or \"PagerDuty,credentialId;Slack,credentialId,channel\""
   default     = ""
 }
 
@@ -97,11 +97,11 @@ variable "nginx_threshold_warning" {
 }
 
 variable "nginx_warning_notifications" {
-  description = "(Optional), notification recipients.  Example \"PagerDuty,credentialId\" or \"PagerDuty,credentialId;Slack,credentialId,channel\"
+  description = "(Optional), notification recipients.  Example \"PagerDuty,credentialId\" or \"PagerDuty,credentialId;Slack,credentialId,channel\""
  	 default = ""
 }
 
 variable "nginx_critical_notifications" {
-  description = "(Optional), notification recipients.  Example \"PagerDuty,credentialId\" or \"PagerDuty,credentialId;Slack,credentialId,channel\"
+  description = "(Optional), notification recipients.  Example \"PagerDuty,credentialId\" or \"PagerDuty,credentialId;Slack,credentialId,channel\""
   	 default = ""
 }
