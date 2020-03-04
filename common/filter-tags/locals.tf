@@ -16,6 +16,23 @@ output "filter_custom" {
           )
       )
           : 
+    "${var.filter_custom_excludes == "" ? join(
+        " and ", 
+          formatlist(
+            "(not filter(', %s'))", 
+            split(
+              ";", 
+              replace(
+                var.filter_custom_includes,
+                ":",
+                "', '"
+               )
+            )
+          )
+      )
+
+    :
+
     join(
      " and ", 
      list(
@@ -48,7 +65,8 @@ output "filter_custom" {
           )
        )
      )
-    )}" 
+    )}"
+  }"
 }"
    
 }   
