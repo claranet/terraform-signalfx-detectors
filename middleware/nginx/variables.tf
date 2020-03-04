@@ -13,28 +13,28 @@ variable "prefix_slug" {
 }
 
 variable "filter_use_defaults" {
-  description = "Use default filtering convention"
-  default     = "true"
+  	description = "Use default filtering convention"
+  	default     = "true"
 }
 
 variable "filter_custom_includes" {
-  description = "Tags to filter signals on when custom filtering is used. Enter as string i.e \"tag1:val1;tag2:val2\""
-  default     = ""
+  	description = "Tags to filter signals on when custom filtering is used. Enter as string i.e \"tag1:val1;tag2:val2\""
+  	default     = ""
 }
 
 variable "filter_custom_excludes" {
-  description = "Tags to exclude when using custom filtering. Enter as string i.e \"tag1:val1;tag2:val2\""
-  default     = ""
+  	description = "Tags to exclude when using custom filtering. Enter as string i.e \"tag1:val1;tag2:val2\""
+  	default = ""
 }
 
 variable "disable_detectors" {
-  description = "(Optional), set string to true if you want to disbale all detectors in this module"
-  default     = "false"
+  	description = "(Optional), set string to true if you want to disbale all detectors in this module"
+  	default = "false"
 }
 
 variable "notifications" {
-  description = "(Required), notification recipients.  Example \"PagerDuty,credentialId\" or \"PagerDuty,credentialId;Slack,credentialId,channel\""
-  default     = ""
+  	description = "(Required), notification recipients.  Example \"PagerDuty,credentialId\" or \"PagerDuty,credentialId;Slack,credentialId,channel\""
+  	default = "PagerDuty,credentialId"
 }
 
 #Nginx Detector specific
@@ -50,8 +50,8 @@ variable "nginx_heartbeat_timeframe" {
 }
 
 variable "nginx_heartbeat_notifications" {
-  description = "(Optional), notification recipients.  Example \"PagerDuty,credentialId\" or \"PagerDuty,credentialId;Slack,credentialId,channel\""
-  default     = ""
+  	description = "(Optional), notification recipients.  Example \"PagerDuty,credentialId\" or \"PagerDuty,credentialId;Slack,credentialId,channel\""
+  	default = ""
 }
 
 #####
@@ -97,11 +97,11 @@ variable "nginx_threshold_warning" {
 }
 
 variable "nginx_warning_notifications" {
-  description = "(Optional), notification recipients.  Example \"PagerDuty,credentialId\" or \"PagerDuty,credentialId;Slack,credentialId,channel\""
+  	 description = "(Optional), notification recipients.  Example \"PagerDuty,credentialId\" or \"PagerDuty,credentialId;Slack,credentialId,channel\""
  	 default = ""
 }
 
 variable "nginx_critical_notifications" {
-  description = "(Optional), notification recipients.  Example \"PagerDuty,credentialId\" or \"PagerDuty,credentialId;Slack,credentialId,channel\""
+  	 description = "(Optional), notification recipients.  Example \"PagerDuty,credentialId\" or \"PagerDuty,credentialId;Slack,credentialId,channel\""
   	 default = ""
 }
