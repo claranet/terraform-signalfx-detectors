@@ -3,7 +3,7 @@ resource "signalfx_detector" "system_heartbeat" {
 
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
-		signal = data('cpu.utilization', filter=((not filter('aws_state', '*terminated}', '*stopped}')) and (not filter('gcp_status', '*TERMINATED}', '*STOPPING}')) and (not filter('azure_power_state', 'stop*', 'deallocat*')))
+		signal = data('cpu.utilization', filter=(not filter('aws_state', '*terminated}', '*stopped}')) and (not filter('gcp_status', '*TERMINATED}', '*STOPPING}')) and (not filter('azure_power_state', 'stop*', 'deallocat*')) and ${module.filter-tags.filter_custom})
 		not_reporting.detector(stream=signal, resource_identifier=['host'], duration='${var.system_heartbeat_timeframe}').publish('CRIT')
 	EOF
 
@@ -11,7 +11,8 @@ resource "signalfx_detector" "system_heartbeat" {
 		description = "System has not reported in ${var.system_heartbeat_timeframe}"
 		severity = "Critical"
 		detect_label = "CRIT"
-		disabled = var.system_heartbeat_disabled_flag
+		disabled = coalesce(var.system_heartbeat_disabled_flag,var.disable_detectors)
+            notifications = coalesce(split(";",var.system_heartbeat_notifications),split(";",var.notifications))
 	}
 }
 
@@ -28,14 +29,16 @@ resource "signalfx_detector" "cpu" {
 		description = "${var.cpu_transformation_function} CPU utilization over ${var.cpu_transformation_window} > ${var.cpu_threshold_critical}"
 		severity = "Critical"
 		detect_label = "CRIT"
-		disabled = var.cpu_critical_disabled_flag
+		disabled = coalesce(var.cpu_critical_disabled_flag,var.disable_CPU_detector,var.disable_detectors)
+		notifications = coalesce(split(";",var.cpu_critical_notifications),split(";",var.cpu_notifications),split(";",var.notifications))
 	}
 
 	rule {
 		description = "${var.cpu_transformation_function} CPU utilization over ${var.cpu_transformation_window} > ${var.cpu_threshold_warning}"
 		severity = "Warning"
 		detect_label = "WARN"
-		disabled = var.cpu_warning_disabled_flag
+		disabled = coalesce(var.cpu_warning_disabled_flag,var.disable_CPU_detector,var.disable_detectors)
+		notifications = coalesce(split(";",var.cpu_warning_notifications),split(";",var.cpu_notifications),split(";",var.notifications))
 	}
 }
 
@@ -52,14 +55,16 @@ resource "signalfx_detector" "load" {
 		description = "${var.load_transformation_function} load(5m) over ${var.load_transformation_window} > ${var.load_threshold_critical}"
 		severity = "Critical"
 		detect_label = "CRIT"
-		disabled = var.load_critical_disabled_flag
+		disabled = coalesce(var.load_critical_disabled_flag,var.disable_load_detector,var.disable_detectors)
+		notifications = coalesce(split(";",var.load_critical_notifications),split(";",var.load_notifications),split(";",var.notifications))
 	}
 
 	rule {
 		description = "${var.load_transformation_function} load(5m) over ${var.load_transformation_window} > ${var.load_threshold_warning}"
 		severity = "Warning"
 		detect_label = "WARN"
-		disabled = var.load_warning_disabled_flag
+		disabled = coalesce(var.load_warning_disabled_flag,var.disable_load_detector,var.disable_detectors)
+		notifications = coalesce(split(";",var.load_warning_notifications),split(";",var.load_notifications),split(";",var.notifications))
 	}
 }
 
@@ -76,14 +81,16 @@ resource "signalfx_detector" "disk_space" {
 		description = "${var.disk_space_transformation_function} disk space over ${var.disk_space_transformation_window} > ${var.disk_space_threshold_critical}"
 		severity = "Critical"
 		detect_label = "CRIT"
-		disabled = var.disk_space_critical_disabled_flag
+		disabled = coalesce(var.disk_space_critical_disabled_flag,var.disable_disk_space_detector,var.disable_detectors)
+		notifications = coalesce(split(";",var.disk_space_critical_notifications),split(";",var.disk_space_notifications),split(";",var.notifications))
 	}
 
 	rule {
 		description = "${var.disk_space_transformation_function} disk space over ${var.disk_space_transformation_window} > ${var.disk_space_threshold_warning}"
 		severity = "Warning"
 		detect_label = "WARN"
-		disabled = var.disk_space_warning_disabled_flag
+		disabled = coalesce(var.disk_space_warning_disabled_flag,var.disable_disk_space_detector,var.disable_detectors)
+		notifications = coalesce(split(";",var.disk_space_warning_notifications),split(";",var.disk_space_notifications),split(";",var.notifications))
 	}
 }
 
@@ -100,7 +107,8 @@ resource "signalfx_detector" "disk_running_out" {
 		description = "Disk will be at ${disk_maximum_capacity}% capacity in ${disk_hours_till_full}"
 		severity = "Critical"
 		detect_label = "CRIT"
-		disabled = var.disk_running_out_disabled_flag
+		disabled = coalesce(var.disk_critical_disabled_flag,var.disable_disk_detector,var.disable_detectors)
+		notifications = coalesce(split(";",var.disk_critical_notifications),split(";",var.disk_notifications),split(";",var.notifications))
 	}
 }
 
@@ -118,13 +126,15 @@ resource "signalfx_detector" "memory" {
 		description = "${var.memory_transformation_function} usable memory over ${var.memory_transformation_window} < ${var.memory_threshold_critical}"
 		severity = "Critical"
 		detect_label = "CRIT"
-		disabled = var.memory_critical_disabled_flag
+		disabled = coalesce(var.memory_critical_disabled_flag,var.disable_memory_detector,var.disable_detectors)
+		notifications = coalesce(split(";",var.memory_critical_notifications),split(";",var.memory_notifications),split(";",var.notifications))
 	}
 
 	rule {
 		description = "${var.memory_transformation_function} usable memory over ${var.memory_transformation_window} < ${var.memory_threshold_warning}"
 		severity = "Warning"
 		detect_label = "WARN"
-		disabled = var.memory_disabled_flag
+		disabled = coalesce(var.memory_warning_disabled_flag,var.disable_memory_detector,var.disable_detectors)
+		notifications = coalesce(split(";",var.memory_warning_notifications),split(";",var.memory_notifications),split(";",var.notifications))
 	}
 }
