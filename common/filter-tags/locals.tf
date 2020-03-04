@@ -14,6 +14,7 @@ output "filter_custom" {
                )
             )
           )
+      )
           : 
     join(
      " and ", 
