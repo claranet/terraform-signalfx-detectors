@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-	name = "${upper(join("", formatlist("[%s]", var.prefixes_slug)))}[${upper(var.environment)}] System Heartbeat Check"
+	name = "${upper(join("", formatlist("[%s]", var.prefixes_slug)))}[${upper(var.environment)}] Nginx heartbeat"
 
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
@@ -8,11 +8,12 @@ resource "signalfx_detector" "heartbeat" {
 	EOF
 
 	rule {
-		description = "System has not reported in ${var.heartbeat_timeframe}"
+		description = "has not reported in ${var.heartbeat_timeframe}"
 		severity = "Critical"
 		detect_label = "CRIT"
 		disabled = coalesce(var.heartbeat_disabled,var.detectors_disabled)
-        notifications = split(";", coalesce(var.heartbeat_notifications, var.notifications))
+                notifications = split(";", coalesce(var.heartbeat_notifications, var.notifications))
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} on {{{dimensions}}}"
 	}
 }
 
@@ -26,18 +27,20 @@ resource "signalfx_detector" "dropped_connections_dropped_connections" {
 	EOF
 
 	rule {
-		description = "${var.dropped_connections_transformation_function} nginx dropped connections over ${var.dropped_connections_transformation_window} > ${var.dropped_connections_threshold_critical}"
+		description = "is to high > ${var.dropped_connections_threshold_critical}"
 		severity = "Critical"
 		detect_label = "CRIT"
 		disabled = coalesce(var.dropped_connections_critical_disabled,var.dropped_connections_disabled,var.detectors_disabled)
 		notifications = split(";", coalesce(var.dropped_connections_critical_notifications, var.dropped_connections_notifications, var.notifications))
+                parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
         
 		rule {
-		description = "${var.dropped_connections_transformation_function} nginx dropped connections over ${var.dropped_connections_transformation_window} > ${var.dropped_connections_threshold_warning}"
+		description = "is to high > ${var.dropped_connections_threshold_warning}"
 		severity = "Warning"
 		detect_label = "WARN"
 		disabled = coalesce(var.dropped_connections_warning_disabled,var.dropped_connections_disabled,var.detectors_disabled)
 		notifications = split(";", coalesce(var.dropped_connections_warning_notifications, var.dropped_connections_notifications, var.notifications))
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 }
