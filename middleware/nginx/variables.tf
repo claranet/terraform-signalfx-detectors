@@ -68,13 +68,13 @@ variable "dropped_connections_disabled" {
   default     = false
 }
 
-variable "dropped_connections_critical_disabled" {
+variable "dropped_connections_disabled_critical" {
   description = "Disable critical alerting rule for dropped connections detector"
   type        = bool
   default     = false
 }
 
-variable "dropped_connections_warning_disabled" {
+variable "dropped_connections_disabled_warning" {
   description = "Disable warning alerting rule for dropped connections detector"
   type        = bool
   default     = false
@@ -86,7 +86,7 @@ variable "dropped_connections_notifications" {
   default     = ""
 }
 
-variable "dropped_connections_warning_notifications" {
+variable "dropped_connections_notifications_warning" {
   description = "Notification recipients semicolon for warning alerting rule of dropped connections detector"
   type        = string
   default     = ""
