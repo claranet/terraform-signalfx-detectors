@@ -8,7 +8,7 @@ variable "environment" {
 # SignalFx module specific
 
 variable "notifications" {
-  description = "Notification recipients semicolon separated (i.e. \"PagerDuty,credentialId\" or \"PagerDuty,credentialId;Slack,credentialId,channel\")"
+  description = "Notification recipients semicolon separated (i.e. \"Email,my@mail.com;PagerDuty,credentialId\")"
   type        = string
 }
 
@@ -99,7 +99,7 @@ variable "dropped_connections_critical_notifications" {
 }
 
 variable "dropped_connections_aggregation_function" {
-  description = "Aggregation function and group by for dropped connections detector (i.e. \".mean(by=['host']).\" or \".max()\")"
+  description = "Aggregation function and group by for dropped connections detector (i.e. \".mean(by=['host']).\")"
   type        = string
   default     = ""
 }

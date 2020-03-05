@@ -24,7 +24,7 @@ Creates SignalFX detectors with the following checks:
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:-----:|
 | detectors\_disabled | Disable all detectors in this module | `bool` | `false` | no |
-| dropped\_connections\_aggregation\_function | Aggregation function and group by for dropped connections detector (i.e. ".mean(by=['host'])." or ".max()") | `string` | `""` | no |
+| dropped\_connections\_aggregation\_function | Aggregation function and group by for dropped connections detector (i.e. ".mean(by=['host']).") | `string` | `""` | no |
 | dropped\_connections\_critical\_disabled | Disable critical alerting rule for dropped connections detector | `bool` | `false` | no |
 | dropped\_connections\_critical\_notifications | Notification recipients semicolon for critical alerting rule of dropped connections detector | `string` | `""` | no |
 | dropped\_connections\_disabled | Disable all alerting rules for dropped connections detector | `bool` | `false` | no |
@@ -42,7 +42,7 @@ Creates SignalFX detectors with the following checks:
 | heartbeat\_disabled | Disable all alerting rules for heartbeat detector | `bool` | `false` | no |
 | heartbeat\_notifications | Notification recipients semicolon for every alerting rules of heartbeat detector | `string` | `""` | no |
 | heartbeat\_timeframe | Timeframe for system not reporting detector (i.e. "10m") | `string` | `"20m"` | no |
-| notifications | Notification recipients semicolon separated (i.e. "PagerDuty,credentialId" or "PagerDuty,credentialId;Slack,credentialId,channel") | `string` | n/a | yes |
+| notifications | Notification recipients semicolon separated (i.e. "Email,my@mail.com;PagerDuty,credentialId") | `string` | n/a | yes |
 | prefixes\_slug | Prefixes list to prepend between brackets on every monitors names before environment | `list` | `[]` | no |
 
 ## Outputs
