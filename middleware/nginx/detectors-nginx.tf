@@ -27,7 +27,7 @@ resource "signalfx_detector" "dropped_connections" {
 	EOF
 
   rule {
-    description           = "is to high > ${var.dropped_connections_threshold_critical}"
+    description           = "is too high > ${var.dropped_connections_threshold_critical}"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.dropped_connections_disabled_critical, var.dropped_connections_disabled, var.detectors_disabled)
@@ -36,7 +36,7 @@ resource "signalfx_detector" "dropped_connections" {
   }
 
   rule {
-    description           = "is to high > ${var.dropped_connections_threshold_warning}"
+    description           = "is too high > ${var.dropped_connections_threshold_warning}"
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.dropped_connections_disabled_warning, var.dropped_connections_disabled, var.detectors_disabled)
