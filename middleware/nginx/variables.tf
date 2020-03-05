@@ -7,9 +7,9 @@ variable "environment" {
 
 # SignalFx Module specific
 
-variable "prefix_slug" {
-	description = "Prefix string to prepend between brackets on every monitors names"
-	default = ""
+variable "prefixes_slug" {
+	description = "Prefixes list to prepend between brackets on every monitors names"
+	default = []
 }
 
 variable "filter_use_defaults" {
