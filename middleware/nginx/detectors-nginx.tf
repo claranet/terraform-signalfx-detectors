@@ -11,7 +11,7 @@ resource "signalfx_detector" "heartbeat" {
 		description = "System has not reported in ${var.heartbeat_timeframe}"
 		severity = "Critical"
 		detect_label = "CRIT"
-		disabled = coalesce(var.heartbeat_disabled,var.disable_detectors)
+		disabled = coalesce(var.heartbeat_disabled,var.detectors_disabled)
         notifications = coalesce(split(";",var.heartbeat_notifications),split(";",var.notifications))
 	}
 }
@@ -29,7 +29,7 @@ resource "signalfx_detector" "dropped_connections_dropped_connections" {
 		description = "${var.dropped_connections_transformation_function} nginx dropped connections over ${var.dropped_connections_transformation_window} > ${var.dropped_connections_threshold_critical}"
 		severity = "Critical"
 		detect_label = "CRIT"
-		disabled = coalesce(var.dropped_connections_critical_disabled,var.dropped_connections_disabled,var.disable_detectors)
+		disabled = coalesce(var.dropped_connections_critical_disabled,var.dropped_connections_disabled,var.detectors_disabled)
 		notifications = coalesce(split(";",var.dropped_connections_critical_notifications),split(";",var.dropped_connections_notifications),split(";",var.notifications))
 	}
         
@@ -37,7 +37,7 @@ resource "signalfx_detector" "dropped_connections_dropped_connections" {
 		description = "${var.dropped_connections_transformation_function} nginx dropped connections over ${var.dropped_connections_transformation_window} > ${var.dropped_connections_threshold_warning}"
 		severity = "Warning"
 		detect_label = "WARN"
-		disabled = coalesce(var.dropped_connections_warning_disabled,var.dropped_connections_disabled,var.disable_detectors)
+		disabled = coalesce(var.dropped_connections_warning_disabled,var.dropped_connections_disabled,var.detectors_disabled)
 		notifications = coalesce(split(";",var.dropped_connections_warning_notifications),split(";",var.dropped_connections_notifications),split(";",var.notifications))
 	}
 }
