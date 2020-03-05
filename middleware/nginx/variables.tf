@@ -36,7 +36,7 @@ variable "filter_custom_excludes" {
   	default = ""
 }
 
-variable "disable_detectors" {
+variable "detectors_disabled" {
   	description = "Disable all detectors in this module"
     type = bool
   	default = false
