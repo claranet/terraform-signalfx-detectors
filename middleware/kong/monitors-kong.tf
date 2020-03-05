@@ -1,18 +1,19 @@
-resource "signalfx_detector" "kong_service_heartbeat" {
-	name = "${var.prefix_slug == "" ? "" : "[${var.prefix_slug}]"}[${var.environment}] Kong Service Heartbeat Check"
+resource "signalfx_detector" "heartbeat" {
+	name = "${upper(join("", formatlist("[%s]", var.prefixes_slug)))}[${upper(var.environment)}] Kong Heartbeat"
 
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
 		signal = data('counter.kong.requests.count', filter=(not filter('aws_state', '*terminated}', '*stopped}')) and (not filter('gcp_status', '*TERMINATED}', '*STOPPING}')) and (not filter('azure_power_state', 'stop*', 'deallocat*')) and ${module.filter-tags.filter_custom})
-		not_reporting.detector(stream=signal, resource_identifier=['host'], duration='${var.kong_service_heartbeat_timeframe}').publish('CRIT')
+		not_reporting.detector(stream=signal, resource_identifier=['host'], duration='${var.heartbeat_timeframe}').publish('CRIT')
 	EOF
 
 	rule {
-		description = "Kong Server has not reported in ${var.kong_service_heartbeat_timeframe}"
+		description = "has not reported in ${var.heartbeat_timeframe}"
 		severity = "Critical"
 		detect_label = "CRIT"
-		disabled = coalesce(var.kong_heartbeat_disabled_flag,var.disable_detectors)
-            notifications = coalesce(split(";",var.kong_heartbeat_notifications),split(";",var.notifications))
+		disabled = coalesce(var.heartbeat_disabled,var.detectors.disabled)
+                notifications = split(";", coalesce(var.heartbeat_notifications, var.notifications))
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} on {{{dimensions}}}"
 	}
 }
 
