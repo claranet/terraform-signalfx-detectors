@@ -12,7 +12,7 @@ resource "signalfx_detector" "heartbeat" {
 		severity = "Critical"
 		detect_label = "CRIT"
 		disabled = coalesce(var.heartbeat_disabled,var.detectors_disabled)
-        notifications = coalesce(split(";",var.heartbeat_notifications),split(";",var.notifications))
+        notifications = split(";", coalesce(var.heartbeat_notifications, var.notifications))
 	}
 }
 
@@ -30,7 +30,7 @@ resource "signalfx_detector" "dropped_connections_dropped_connections" {
 		severity = "Critical"
 		detect_label = "CRIT"
 		disabled = coalesce(var.dropped_connections_critical_disabled,var.dropped_connections_disabled,var.detectors_disabled)
-		notifications = coalesce(split(";",var.dropped_connections_critical_notifications),split(";",var.dropped_connections_notifications),split(";",var.notifications))
+		notifications = split(";", coalesce(var.dropped_connections_critical_notifications, var.dropped_connections_notifications, var.notifications))
 	}
         
 		rule {
@@ -38,6 +38,6 @@ resource "signalfx_detector" "dropped_connections_dropped_connections" {
 		severity = "Warning"
 		detect_label = "WARN"
 		disabled = coalesce(var.dropped_connections_warning_disabled,var.dropped_connections_disabled,var.detectors_disabled)
-		notifications = coalesce(split(";",var.dropped_connections_warning_notifications),split(";",var.dropped_connections_notifications),split(";",var.notifications))
+		notifications = split(";", coalesce(var.dropped_connections_warning_notifications, var.dropped_connections_notifications, var.notifications))
 	}
 }
