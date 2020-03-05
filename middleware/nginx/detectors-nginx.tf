@@ -30,7 +30,7 @@ resource "signalfx_detector" "dropped_connections" {
     description           = "is to high > ${var.dropped_connections_threshold_critical}"
     severity              = "Critical"
     detect_label          = "CRIT"
-    disabled              = coalesce(var.dropped_connections_critical_disabled, var.dropped_connections_disabled, var.detectors_disabled)
+    disabled              = coalesce(var.dropped_connections_disabled_critical, var.dropped_connections_disabled, var.detectors_disabled)
     notifications         = split(";", coalesce(var.dropped_connections_critical_notifications, var.dropped_connections_notifications, var.notifications))
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
@@ -39,8 +39,8 @@ resource "signalfx_detector" "dropped_connections" {
     description           = "is to high > ${var.dropped_connections_threshold_warning}"
     severity              = "Warning"
     detect_label          = "WARN"
-    disabled              = coalesce(var.dropped_connections_warning_disabled, var.dropped_connections_disabled, var.detectors_disabled)
-    notifications         = split(";", coalesce(var.dropped_connections_warning_notifications, var.dropped_connections_notifications, var.notifications))
+    disabled              = coalesce(var.dropped_connections_disabled_warning, var.dropped_connections_disabled, var.detectors_disabled)
+    notifications         = split(";", coalesce(var.dropped_connections_notifications_warning, var.dropped_connections_notifications, var.notifications))
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
