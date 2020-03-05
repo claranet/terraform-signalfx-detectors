@@ -5,108 +5,126 @@ variable "environment" {
 	type = string
 }
 
-# SignalFx Module specific
+# SignalFx module specific
+
+variable "notifications" {
+  	description = "Notification recipients semicolon separated (i.e. \"PagerDuty,credentialId\" or \"PagerDuty,credentialId;Slack,credentialId,channel\")"
+	type = string
+}
 
 variable "prefixes_slug" {
-	description = "Prefixes list to prepend between brackets on every monitors names"
+	description = "Prefixes list to prepend between brackets on every monitors names before environment"
+	type = list
 	default = []
 }
 
 variable "filter_use_defaults" {
-  	description = "Use default filtering convention"
-  	default     = "true"
+  	description = "Use default filtering which follows tagging convention"
+    type = bool
+  	default     = true
 }
 
 variable "filter_custom_includes" {
-  	description = "Tags to filter signals on when custom filtering is used. Enter as string i.e \"tag1:val1;tag2:val2\""
+  	description = "Tags to filter signals on when custom filtering is used (i.e \"tag1:val1;tag2:val2\")"
+    type = string
   	default     = ""
 }
 
 variable "filter_custom_excludes" {
-  	description = "Tags to exclude when using custom filtering. Enter as string i.e \"tag1:val1;tag2:val2\""
+  	description = "Tags to exclude when using custom filtering (i.e \"tag1:val1;tag2:val2\")"
+    type = string
   	default = ""
 }
 
 variable "disable_detectors" {
-  	description = "(Optional), set string to true if you want to disbale all detectors in this module"
-  	default = "false"
+  	description = "Disable all detectors in this module"
+    type = bool
+  	default = false
 }
 
-variable "notifications" {
-  	description = "(Required), notification recipients.  Example \"PagerDuty,credentialId\" or \"PagerDuty,credentialId;Slack,credentialId,channel\""
+# Nginx detectors specific
+
+variable "heartbeat_disabled" {
+	description = "Disable all alerting rules for heartbeat detector"
+    type = bool
+	default = false
+}
+
+variable "heartbeat_notifications" {
+  	description = "Notification recipients semicolon for every alerting rules of heartbeat detector"
+    type = string
   	default = ""
 }
 
-#Nginx Detector specific
-
-variable "nginx_heartbeat_disabled_flag" {
-	description = "(Optional) When true, heartbeat detector will be disabled"
-	default = "false"
-}
-
-variable "nginx_heartbeat_timeframe" {
-	description = "Timeframe for system not reporting"
+variable "heartbeat_timeframe" {
+	description = "Timeframe for system not reporting detector (i.e. \"10m\")"
+    type = string
 	default = "20m"
 }
 
-variable "nginx_heartbeat_notifications" {
-  	description = "(Optional), notification recipients.  Example \"PagerDuty,credentialId\" or \"PagerDuty,credentialId;Slack,credentialId,channel\""
-  	default = ""
+variable "dropped_connections_disabled" {
+	description = "Disable all alerting rules for dropped connections detector"
+    type = bool
+	default = false
 }
 
-#####
+variable "dropped_connections_critical_disabled" {
+	description = "Disable critical alerting rule for dropped connections detector"
+    type = bool
+	default = false
+}
 
-variable "disable_nginx_detector" {
-	description = "(Optional) When true, notifications and events will not be generated for the detect label. false by default."
+variable "dropped_connections_warning_disabled" {
+	description = "Disable warning alerting rule for dropped connections detector"
+    type = bool
+	default = false
+}
+
+variable "dropped_connections_notifications" {
+  	description = "Notification recipients semicolon for every alerting rules of dropped connections detector"
+    type = string
+ 	 default = ""
+}
+
+variable "dropped_connections_warning_notifications" {
+  	description = "Notification recipients semicolon for warning alerting rule of dropped connections detector"
+    type = string
+ 	 default = ""
+}
+
+variable "dropped_connections_critical_notifications" {
+  	description = "Notification recipients semicolon for critical alerting rule of dropped connections detector"
+    type = string
+  	 default = ""
+}
+
+variable "dropped_connections_aggregation_function" {
+	description = "Aggregation function and group by for dropped connections detector (i.e. \".mean(by=['host']).\" or \".max()\")"
+    type = string
 	default = ""
 }
 
-variable "nginx_critical_disabled_flag" {
-	description = "(Optional) When true, nginx critical rule will be disabled"
-	default = "false"
-}
-
-variable "nginx_warning_disabled_flag" {
-	description = "(Optional) When true, nginx warning rule be disabled"
-	default = "false"
-}
-
-variable "nginx_aggregation_function" {
-	description = "(Optional) Nginx aggregation function and group by. Examples \".mean(by=['host']).\" or \".max()\""
-	default = ".mean(by=['host'])"
-}
-
-variable "nginx_transformation_function" {
-	description = "Nginx transformation function.  Valid options mean, min, max"
+variable "dropped_connections_transformation_function" {
+	description = "Transformation function for dropped connections detector (mean, min, max)"
+    type = string
 	default = "min"
 }
 
-variable "nginx_transformation_window" {
-	description = "Nginx transformation window. Examples 5m, 20m, 1h, 1d"
+variable "dropped_connections_transformation_window" {
+	description = "Transformation window for dropped connections detector (i.e. 5m, 20m, 1h, 1d)"
+    type = string
 	default = "5m"
 }
 
-variable "nginx_threshold_critical" {
-	description = "Nginx critical threshold"
-	default = "1"
+variable "dropped_connections_threshold_critical" {
+	description = "Critical threshold for dropped connections detector"
+    type = number
+	default = 1
 }
 
-variable "nginx_threshold_warning" {
-	description = "Nginx warning threshold"
-	default = "0"
+variable "dropped_connections_threshold_warning" {
+	description = "Warning threshold for dropped connections detector"
+    type = number
+	default = 0
 }
 
-variable "nginx_notifications" {
-  	 description = "(Optional), notification recipients.  Example \"PagerDuty,credentialId\" or \"PagerDuty,credentialId;Slack,credentialId,channel\""
- 	 default = ""
-}
-
-variable "nginx_warning_notifications" {
-  	 description = "(Optional), notification recipients.  Example \"PagerDuty,credentialId\" or \"PagerDuty,credentialId;Slack,credentialId,channel\""
- 	 default = ""
-}
-
-variable "nginx_critical_notifications" {
-  	 description = "(Optional), notification recipients.  Example \"PagerDuty,credentialId\" or \"PagerDuty,credentialId;Slack,credentialId,channel\""
-  	 default = ""
-}
