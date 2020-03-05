@@ -31,7 +31,7 @@ resource "signalfx_detector" "dropped_connections" {
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.dropped_connections_disabled_critical, var.dropped_connections_disabled, var.detectors_disabled)
-    notifications         = split(";", coalesce(var.dropped_connections_critical_notifications, var.dropped_connections_notifications, var.notifications))
+    notifications         = split(";", coalesce(var.dropped_connections_notifications_critical, var.dropped_connections_notifications, var.notifications))
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
