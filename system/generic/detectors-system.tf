@@ -1,0 +1,150 @@
+resource "signalfx_detector" "heartbeat" {
+	name = "${upper(join("", formatlist("[%s]", var.prefixes_slug)))}[${upper(var.environment)}] System heartbeat"
+
+	program_text = <<-EOF
+		from signalfx.detectors.not_reporting import not_reporting
+		signal = data('cpu.utilization', filter=(not filter('aws_state', '*terminated}', '*stopped}')) and (not filter('gcp_status', '*TERMINATED}', '*STOPPING}')) and (not filter('azure_power_state', 'stop*', 'deallocat*')) and ${module.filter-tags.filter_custom})
+		not_reporting.detector(stream=signal, resource_identifier=['host'], duration='${var.heartbeat_timeframe}').publish('CRIT')
+	EOF
+
+	rule {
+		description = "has not reported in ${var.heartbeat_timeframe}"
+		severity = "Critical"
+		detect_label = "CRIT"
+		disabled = coalesce(var.heartbeat_disabled, var.detectors_disabled)
+            	notifications = split(";", coalesce(var.heartbeat_notifications, var.notifications))
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} on {{{dimensions}}}"
+	}
+}
+
+resource "signalfx_detector" "cpu" {
+	name = "${upper(join("", formatlist("[%s]", var.prefixes_slug)))}[${upper(var.environment)}] CPU utilization"
+
+	program_text = <<-EOF
+		signal = data('cpu.utilization', filter=${module.filter-tags.filter_custom})${var.cpu_aggregation_function}.${var.cpu_transformation_function}(over='${var.cpu_transformation_window}')
+		detect(when(signal > ${var.cpu_threshold_critical})).publish('CRIT')
+		detect(when(signal > ${var.cpu_threshold_warning})).publish('WARN')
+	EOF
+
+	rule {
+		description = "is too high > ${var.cpu_threshold_critical}"
+		severity = "Critical"
+		detect_label = "CRIT"
+		disabled = coalesce(var.cpu_disabled_critical, var.cpu_disabled, var.detectors_disabled)
+		notifications = split(";", coalesce(var.cpu_notifications_critical, var.cpu_notifications, var.notifications))
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+	}
+
+	rule {
+		description = "is too high > ${var.cpu_threshold_warning}"
+		severity = "Warning"
+		detect_label = "WARN"
+		disabled = coalesce(var.cpu_disabled_warning, var.cpu_disabled, var.detectors_disabled)
+		notifications = split(";", coalesce(var.cpu_notifications_warning, var.cpu_notifications, var.notifications))
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+	}
+}
+
+resource "signalfx_detector" "load" {
+	name = "${upper(join("", formatlist("[%s]", var.prefixes_slug)))}[${upper(var.environment)}] CPU load 5m"
+
+	program_text = <<-EOF
+		signal = data('load.midterm', filter=${module.filter-tags.filter_custom})${load_aggregation_function}.${var.load_transformation_function}(over='${var.load_transformation_window}')
+		detect(when(signal > ${var.load_threshold_critical})).publish('CRIT')
+		detect(when(signal > ${var.load_threshold_warning})).publish('WARN')
+	EOF
+
+	rule {
+		description = "is too high > ${var.load_threshold_critical}"
+		severity = "Critical"
+		detect_label = "CRIT"
+		disabled = coalesce(var.load_disabled_critical,var.load_disabled,var.detectors_disabled)
+		notifications = split(";", coalesce(var.load_notifications_critical, var.load_notifications, var.notifications))
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+	}
+
+	rule {
+		description = "is too high > ${var.load_threshold_warning}"
+		severity = "Warning"
+		detect_label = "WARN"
+		disabled = coalesce(var.load_disabled_warning,var.load_disabled,var.detectors_disabled)
+		notifications = split(";", coalesce(var.load_notifications_warning, var.load_notifications, var.notifications))
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+	}
+}
+
+resource "signalfx_detector" "disk_space" {
+	name = "${upper(join("", formatlist("[%s]", var.prefixes_slug)))}[${upper(var.environment)}] Disk space utilization"
+
+	program_text = <<-EOF
+		signal = data('disk.utilization', filter=${module.filter-tags.filter_custom})${disk_space_aggregation_function}.${var.disk_space_transformation_function}(over='${var.disk_space_transformation_window}')
+		detect(when(signal > ${var.disk_space_threshold_critical})).publish('CRIT')
+		detect(when(signal > ${var.disk_space_threshold_warning})).publish('WARN')
+	EOF
+
+	rule {
+		description = "is too high > ${var.disk_space_threshold_critical}"
+		severity = "Critical"
+		detect_label = "CRIT"
+		disabled = coalesce(var.disk_space_disabled_critical,var.disk_space_disabled,var.detectors_disabled)
+		notifications = split(";", coalesce(var.disk_space_notifications_critical, var.disk_notifications, var.notifications))
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+	}
+
+	rule {
+		description = "is too high > ${var.disk_space_threshold_warning}"
+		severity = "Warning"
+		detect_label = "WARN"
+		disabled = coalesce(var.disk_space_disabled_warning,var.disk_space_disabled,var.detectors_disabled)
+		notifications = split(";", coalesce(var.disk_space_notifications_warning, var.disk_notifications, var.notifications))
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+	}
+}
+
+resource "signalfx_detector" "disk_running_out" {
+	name = "${upper(join("", formatlist("[%s]", var.prefixes_slug)))}[${upper(var.environment)}] Disk Space Running Out"
+
+	program_text = <<-EOF
+		from signalfx.detectors.countdown import countdown
+		signal = data('disk.utilization', filter=${module.filter-tags.filter_custom})
+		countdown.hours_left_stream_incr_detector(stream=signal, ${disk_running_out_maximum_capacity}, ${disk_running_out_hours_till_full}, fire_lasting=lasting('${disk_running_out_fire_lasting_time}', ${disk_running_out_fire_lasting_time_percent}), ${disk_running_out_clear_hours_remaining}, clear_lasting=lasting('${disk_running_out_clear_lasting_time}', ${disk_running_out_clear_lasting_time_percent}), use_double_ewma=${disk_running_out_use_ewma}).publish('CRIT')
+	EOF
+
+	rule {
+		description = "in ${disk_hours_till_full}"
+		severity = "Critical"
+		detect_label = "CRIT"
+		disabled = coalesce(var.disk_running_out_disabled,var.detectors_disabled)
+		notifications = split(";", coalesce(var.disk_running_out_notifications, var.notifications))
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} on {{{dimensions}}}"
+	}
+}
+
+resource "signalfx_detector" "memory" {
+	name = "${upper(join("", formatlist("[%s]", var.prefixes_slug)))}[${upper(var.environment)}] % of memory available"
+
+	program_text = <<-EOF
+		A = data('memory.utilization', filter=${module.filter-tags.filter_custom})${memory_aggregation_function}
+		signal = (100-A).${var.memory_transformation_function}(over='${var.memory_transformation_window}')
+		detect(when(signal < ${var.memory_threshold_critical})).publish('CRIT')
+		detect(when(signal < ${var.memory_threshold_warning})).publish('WARN')
+	EOF
+
+	rule {
+		description = "is too low < ${var.memory_threshold_critical}"
+		severity = "Critical"
+		detect_label = "CRIT"
+		disabled = coalesce(var.memory_disabled_critical, var.memory_disabled, var.detectors_disabled)
+    		notifications = split(";", coalesce(var.memory_critical_notifications, var.memory_notifications, var.notifications))
+   	        parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+	}
+
+	rule {
+		description = "is too low < ${var.memory_threshold_warning}"
+		severity = "Warning"
+		detect_label = "WARN"
+		disabled = coalesce(var.memory_disabled_warning, var.memory_disabled, var.detectors_disabled)
+    		notifications = split(";", coalesce(var.memory_warning_notifications, var.memory_notifications, var.notifications))
+   	        parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+	}
+}
