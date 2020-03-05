@@ -47,7 +47,7 @@ variable "detectors_disabled" {
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
   type        = bool
-  default     = false
+  default     = null
 }
 
 variable "heartbeat_notifications" {
@@ -65,19 +65,19 @@ variable "heartbeat_timeframe" {
 variable "dropped_connections_disabled" {
   description = "Disable all alerting rules for dropped connections detector"
   type        = bool
-  default     = false
+  default     = null
 }
 
 variable "dropped_connections_disabled_critical" {
   description = "Disable critical alerting rule for dropped connections detector"
   type        = bool
-  default     = false
+  default     = null
 }
 
 variable "dropped_connections_disabled_warning" {
   description = "Disable warning alerting rule for dropped connections detector"
   type        = bool
-  default     = false
+  default     = null
 }
 
 variable "dropped_connections_notifications" {
