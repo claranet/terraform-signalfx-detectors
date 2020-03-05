@@ -92,7 +92,7 @@ variable "dropped_connections_notifications_warning" {
   default     = ""
 }
 
-variable "dropped_connections_critical_notifications" {
+variable "dropped_connections_notifications_critical" {
   description = "Notification recipients semicolon for critical alerting rule of dropped connections detector"
   type        = string
   default     = ""
