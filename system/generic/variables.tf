@@ -295,7 +295,7 @@ variable "disk_running_out_fire_lasting_time" {
 variable "disk_running_out_fire_lasting_time_percent" {
 	description = "Percent of fire lasting time the conditon must be true.  Expressed as decimal"
 	type        = number
-	default     = .9
+	default     = 0.9
 }
 
 variable "disk_running_out_clear_hours_remaining" {
@@ -313,13 +313,13 @@ variable "disk_running_out_clear_lasting_time" {
 variable "disk_running_out_clear_lasting_time_percent" {
 	description = "Percent of clear lasting time the conditon must be true.  Expressed as decimal"
 	type        = number
-	default     = .9
+	default     = 0.9
 }
 
 variable "disk_running_out_use_ewma" {
 	description = "Use Double EWMA"
 	type        = bool
-	default     = "false"
+	default     = false
 }
 
 variable "disk_running_out_notifications" {
