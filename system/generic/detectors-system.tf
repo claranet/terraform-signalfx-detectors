@@ -87,7 +87,7 @@ resource "signalfx_detector" "disk_space" {
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.disk_space_disabled_critical,var.disk_space_disabled,var.detectors_disabled)
-		notifications         = split(";", coalesce(var.disk_space_notifications_critical, var.disk_notifications, var.notifications))
+		notifications         = split(";", coalesce(var.disk_space_notifications_critical, var.disk_space_notifications, var.notifications))
 		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 
@@ -96,7 +96,7 @@ resource "signalfx_detector" "disk_space" {
 		severity              = "Warning"
 		detect_label          = "WARN"
 		disabled              = coalesce(var.disk_space_disabled_warning,var.disk_space_disabled,var.detectors_disabled)
-		notifications         = split(";", coalesce(var.disk_space_notifications_warning, var.disk_notifications, var.notifications))
+		notifications         = split(";", coalesce(var.disk_space_notifications_warning, var.disk_space_notifications, var.notifications))
 		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 }
@@ -111,7 +111,7 @@ resource "signalfx_detector" "disk_running_out" {
 	EOF
 
 	rule {
-		description           = "in ${disk_running_out_hours_till_full}"
+		description           = "in ${var.disk_running_out_hours_till_full}"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.disk_running_out_disabled,var.detectors_disabled)
