@@ -154,8 +154,8 @@ resource "signalfx_detector" "memory" {
 
 	program_text = <<-EOF
 		signal = data('memory.utilization', filter=${module.filter-tags.filter_custom})${var.memory_aggregation_function}.${var.memory_transformation_function}(over='${var.memory_transformation_window}')
-		detect(when(signal < ${var.memory_threshold_critical})).publish('CRIT')
-		detect(when(signal < ${var.memory_threshold_warning})).publish('WARN')
+		detect(when(signal > ${var.memory_threshold_critical})).publish('CRIT')
+		detect(when(signal > ${var.memory_threshold_warning})).publish('WARN')
 	EOF
 
 	rule {
