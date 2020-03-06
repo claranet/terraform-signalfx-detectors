@@ -49,7 +49,7 @@ resource "signalfx_detector" "load" {
 	name = "${upper(join("", formatlist("[%s]", var.prefixes_slug)))}[${upper(var.environment)}] CPU load 5m"
 
 	program_text = <<-EOF
-		signal = data('load.midterm', filter=${module.filter-tags.filter_custom})${load_aggregation_function}.${var.load_transformation_function}(over='${var.load_transformation_window}')
+		signal = data('load.midterm', filter=${module.filter-tags.filter_custom})${var.load_aggregation_function}.${var.load_transformation_function}(over='${var.load_transformation_window}')
 		detect(when(signal > ${var.load_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.load_threshold_warning})).publish('WARN')
 	EOF
@@ -77,7 +77,7 @@ resource "signalfx_detector" "disk_space" {
 	name = "${upper(join("", formatlist("[%s]", var.prefixes_slug)))}[${upper(var.environment)}] Disk space utilization"
 
 	program_text = <<-EOF
-		signal = data('disk.utilization', filter=${module.filter-tags.filter_custom})${disk_space_aggregation_function}.${var.disk_space_transformation_function}(over='${var.disk_space_transformation_window}')
+		signal = data('disk.utilization', filter=${module.filter-tags.filter_custom})${var.disk_space_aggregation_function}.${var.disk_space_transformation_function}(over='${var.disk_space_transformation_window}')
 		detect(when(signal > ${var.disk_space_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.disk_space_threshold_warning})).publish('WARN')
 	EOF
@@ -107,7 +107,7 @@ resource "signalfx_detector" "disk_running_out" {
 	program_text = <<-EOF
 		from signalfx.detectors.countdown import countdown
 		signal = data('disk.utilization', filter=${module.filter-tags.filter_custom})
-		countdown.hours_left_stream_incr_detector(stream=signal, ${disk_running_out_maximum_capacity}, ${disk_running_out_hours_till_full}, fire_lasting=lasting('${disk_running_out_fire_lasting_time}', ${disk_running_out_fire_lasting_time_percent}), ${disk_running_out_clear_hours_remaining}, clear_lasting=lasting('${disk_running_out_clear_lasting_time}', ${disk_running_out_clear_lasting_time_percent}), use_double_ewma=${disk_running_out_use_ewma}).publish('CRIT')
+		countdown.hours_left_stream_incr_detector(stream=signal, ${var.disk_running_out_maximum_capacity}, ${var.disk_running_out_hours_till_full}, fire_lasting=lasting('${var.disk_running_out_fire_lasting_time}', ${var.disk_running_out_fire_lasting_time_percent}), ${var.disk_running_out_clear_hours_remaining}, clear_lasting=lasting('${var.disk_running_out_clear_lasting_time}', ${var.disk_running_out_clear_lasting_time_percent}), use_double_ewma=${var.disk_running_out_use_ewma}).publish('CRIT')
 	EOF
 
 	rule {
@@ -124,7 +124,7 @@ resource "signalfx_detector" "memory" {
 	name = "${upper(join("", formatlist("[%s]", var.prefixes_slug)))}[${upper(var.environment)}] % of memory available"
 
 	program_text = <<-EOF
-		A = data('memory.utilization', filter=${module.filter-tags.filter_custom})${memory_aggregation_function}
+		A = data('memory.utilization', filter=${module.filter-tags.filter_custom})${var.memory_aggregation_function}
 		signal = (100-A).${var.memory_transformation_function}(over='${var.memory_transformation_window}')
 		detect(when(signal < ${var.memory_threshold_critical})).publish('CRIT')
 		detect(when(signal < ${var.memory_threshold_warning})).publish('WARN')
@@ -135,7 +135,7 @@ resource "signalfx_detector" "memory" {
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.memory_disabled_critical, var.memory_disabled, var.detectors_disabled)
-		notifications         = split(";", coalesce(var.memory_critical_notifications, var.memory_notifications, var.notifications))
+		notifications         = split(";", coalesce(var.memory_notifications_critical, var.memory_notifications, var.notifications))
 		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 
@@ -144,7 +144,7 @@ resource "signalfx_detector" "memory" {
 		severity              = "Warning"
 		detect_label          = "WARN"
 		disabled              = coalesce(var.memory_disabled_warning, var.memory_disabled, var.detectors_disabled)
-		notifications         = split(";", coalesce(var.memory_warning_notifications, var.memory_notifications, var.notifications))
+		notifications         = split(";", coalesce(var.memory_notifications_warning, var.memory_notifications, var.notifications))
 		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 }
