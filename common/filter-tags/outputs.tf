@@ -1,85 +1,85 @@
 output "filter_custom" {
   description = "The full filtering pattern to use in detectors"
-  value  = "${var.filter_use_defaults == true ? var.filter_defaults : 
+  value = "${var.filter_use_defaults == true ? var.filter_defaults :
     "${var.filter_custom_includes == "" ? join(
-          " and ", 
-          formatlist(
-            "(not filter('%s'))", 
-            split(
-              ";", 
+      " and ",
+      formatlist(
+        "(not filter('%s'))",
+        split(
+          ";",
+          replace(
+            replace(
+              var.filter_custom_excludes,
+              ":",
+              "', '"
+            ),
+            " ",
+            ""
+          )
+        )
+      )
+      )
+      :
+      "${var.filter_custom_excludes == "" ? join(
+        " and ",
+        formatlist(
+          "(not filter('%s'))",
+          split(
+            ";",
+            replace(
               replace(
-                replace(
-                   var.filter_custom_excludes,
-                   ":",
-                   "', '"
-                ),
-                " ",
-                ""
-              )
+                var.filter_custom_includes,
+                ":",
+                "', '"
+              ),
+              " ",
+              ""
             )
           )
         )
-      : 
-      "${var.filter_custom_excludes == "" ? join(
-            " and ", 
-             formatlist(
-               "(not filter('%s'))", 
-               split(
-                 ";", 
-                 replace(
-                     replace(
-                       var.filter_custom_includes,
-                       ":",
-                       "', '"
-                     ),
-                     " ",
-                     ""
-                   )
-               )
-             )
-          )
+        )
         :
         join(
-          " and ", 
+          " and ",
           list(
-             join(
-               " and ", 
-               formatlist(
-                 "filter('%s')", 
-                  split(
-                    ";", 
+            join(
+              " and ",
+              formatlist(
+                "filter('%s')",
+                split(
+                  ";",
+                  replace(
                     replace(
-                     replace(
-                       var.filter_custom_includes,
-                       ":",
-                       "', '"
-                     ),
-                     " ",
-                     ""
-                   )
+                      var.filter_custom_includes,
+                      ":",
+                      "', '"
+                    ),
+                    " ",
+                    ""
                   )
-               )
-             ), 
-             join(
-               " and ", 
-               formatlist(
-                 "(not filter('%s'))", 
-                 split(
-                   ";", 
-                   replace(
-                     replace(
-                       var.filter_custom_excludes,
-                       ":",
-                       "', '"
-                     ),
-                     " ",
-                     ""
-                   )
-                 )
-               )
-             )
+                )
+              )
+            ),
+            join(
+              " and ",
+              formatlist(
+                "(not filter('%s'))",
+                split(
+                  ";",
+                  replace(
+                    replace(
+                      var.filter_custom_excludes,
+                      ":",
+                      "', '"
+                    ),
+                    " ",
+                    ""
+                  )
+                )
+              )
+            )
           )
       )}"
+    }"
   }"
-}"
-}  
+}
