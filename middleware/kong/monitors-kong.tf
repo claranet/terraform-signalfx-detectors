@@ -8,12 +8,12 @@ resource "signalfx_detector" "heartbeat" {
 	EOF
 
 	rule {
-		description		= "has not reported in ${var.heartbeat_timeframe}"
-		severity 		= "Critical"
-		detect_label 		= "CRIT"
-		disabled 		= coalesce(var.heartbeat_disabled, var.detectors_disabled)
-		notifications         	= split(";", coalesce(var.heartbeat_notifications, var.notifications))
-		parameterized_subject 	= "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} on {{{dimensions}}}"
+		description           = "has not reported in ${var.heartbeat_timeframe}"
+		severity              = "Critical"
+		detect_label          = "CRIT"
+		disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
+		notifications         = split(";", coalesce(var.heartbeat_notifications, var.notifications))
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} on {{{dimensions}}}"
 	}
 }
 
@@ -29,20 +29,20 @@ resource "signalfx_detector" "treatment_limit" {
 	EOF
 
 	rule {
-		description 		= "is too high > ${var.treatment_limit_threshold_critical}"
-		severity 		= "Critical"
-		detect_label 		= "CRIT"
-		disabled 		= coalesce(var.treatment_limit_disabled_critical, var.treatment_limit_disabled, var.detectors_disabled)
-		notifications		= split(";", coalesce(var.treatment_limit_notifications_critical, var.treatment_limit_notifications, var.notifications))
-		parameterized_subject 	= "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+		description           = "is too high > ${var.treatment_limit_threshold_critical}"
+		severity              = "Critical"
+		detect_label          = "CRIT"
+		disabled              = coalesce(var.treatment_limit_disabled_critical, var.treatment_limit_disabled, var.detectors_disabled)
+		notifications         = split(";", coalesce(var.treatment_limit_notifications_critical, var.treatment_limit_notifications, var.notifications))
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 
 	rule {
-		description 		= "is too high > ${var.treatment_limit_threshold_warning}"
-		severity 		= "Warning"
-		detect_label 		= "WARN"
-		disabled		= coalesce(var.treatment_limit_disabled_warning, var.treatment_limit_disabled, var.detectors_disabled)
-		notifications		= split(";", coalesce(var.treatment_limit_notifications_warning, var.treatment_limit_notifications, var.notifications))
-		parameterized_subject 	= "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+		description           = "is too high > ${var.treatment_limit_threshold_warning}"
+		severity              = "Warning"
+		detect_label          = "WARN"
+		disabled              = coalesce(var.treatment_limit_disabled_warning, var.treatment_limit_disabled, var.detectors_disabled)
+		notifications         = split(";", coalesce(var.treatment_limit_notifications_warning, var.treatment_limit_notifications, var.notifications))
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 }
