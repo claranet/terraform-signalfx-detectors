@@ -46,3 +46,4 @@ resource "signalfx_detector" "treatment_limit" {
 		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 }
+

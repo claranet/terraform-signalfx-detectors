@@ -44,3 +44,4 @@ resource "signalfx_detector" "dropped_connections" {
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
+

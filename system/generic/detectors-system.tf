@@ -148,3 +148,4 @@ resource "signalfx_detector" "memory" {
 		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 }
+
