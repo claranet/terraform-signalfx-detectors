@@ -395,3 +395,4 @@ variable "memory_threshold_warning" {
 	type        = number
 	default     = 10
 }
+
