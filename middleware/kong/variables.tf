@@ -103,7 +103,7 @@ variable "treatment_limit_notifications_critical" {
 variable "treatment_limit_aggregation_function" {
 	description = "Aggregation function and group by for treatment limit detector (i.e. \".mean(by=['host']).\")"
 	type        = string
-	default     = ".min(by=['host'])"
+	default     = ""
 }
 
 variable "treatment_limit_transformation_function" {
