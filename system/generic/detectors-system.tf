@@ -18,7 +18,7 @@ resource "signalfx_detector" "heartbeat" {
 }
 
 resource "signalfx_detector" "cpu" {
-	name = "${upper(join("", formatlist("[%s]", var.prefixes_slug)))}[${upper(var.environment)}] CPU utilization"
+	name = "${upper(join("", formatlist("[%s]", var.prefixes_slug)))}[${upper(var.environment)}] System cpu utilization"
 
 	program_text = <<-EOF
 		signal = data('cpu.utilization', filter=${module.filter-tags.filter_custom})${var.cpu_aggregation_function}.${var.cpu_transformation_function}(over='${var.cpu_transformation_window}')
@@ -46,7 +46,7 @@ resource "signalfx_detector" "cpu" {
 }
 
 resource "signalfx_detector" "load" {
-	name = "${upper(join("", formatlist("[%s]", var.prefixes_slug)))}[${upper(var.environment)}] CPU load 5m"
+	name = "${upper(join("", formatlist("[%s]", var.prefixes_slug)))}[${upper(var.environment)}] System load 5m ratio"
 
 	program_text = <<-EOF
 		signal = data('load.midterm', filter=${module.filter-tags.filter_custom})${var.load_aggregation_function}.${var.load_transformation_function}(over='${var.load_transformation_window}')
@@ -74,7 +74,7 @@ resource "signalfx_detector" "load" {
 }
 
 resource "signalfx_detector" "disk_space" {
-	name = "${upper(join("", formatlist("[%s]", var.prefixes_slug)))}[${upper(var.environment)}] Disk space utilization"
+	name = "${upper(join("", formatlist("[%s]", var.prefixes_slug)))}[${upper(var.environment)}] System disk space utilization"
 
 	program_text = <<-EOF
 		signal = data('disk.utilization', filter=${module.filter-tags.filter_custom})${var.disk_space_aggregation_function}.${var.disk_space_transformation_function}(over='${var.disk_space_transformation_window}')
@@ -102,7 +102,7 @@ resource "signalfx_detector" "disk_space" {
 }
 
 resource "signalfx_detector" "disk_inodes" {
-	name = "${upper(join("", formatlist("[%s]", var.prefixes_slug)))}[${upper(var.environment)}] Disk inodes utilization"
+	name = "${upper(join("", formatlist("[%s]", var.prefixes_slug)))}[${upper(var.environment)}] System disk inodes utilization"
 
 	program_text = <<-EOF
 		signal = data('percent_inodes.used', filter=${module.filter-tags.filter_custom})${var.disk_inodes_aggregation_function}.${var.disk_inodes_transformation_function}(over='${var.disk_inodes_transformation_window}')
@@ -131,7 +131,7 @@ resource "signalfx_detector" "disk_inodes" {
 
 
 resource "signalfx_detector" "disk_running_out" {
-	name = "${upper(join("", formatlist("[%s]", var.prefixes_slug)))}[${upper(var.environment)}] Disk Space Running Out"
+	name = "${upper(join("", formatlist("[%s]", var.prefixes_slug)))}[${upper(var.environment)}] System disk space running out"
 
 	program_text = <<-EOF
 		from signalfx.detectors.countdown import countdown
@@ -150,7 +150,7 @@ resource "signalfx_detector" "disk_running_out" {
 }
 
 resource "signalfx_detector" "memory" {
-	name = "${upper(join("", formatlist("[%s]", var.prefixes_slug)))}[${upper(var.environment)}] % of memory utilized"
+	name = "${upper(join("", formatlist("[%s]", var.prefixes_slug)))}[${upper(var.environment)}] System memory utilization"
 
 	program_text = <<-EOF
 		signal = data('memory.utilization', filter=${module.filter-tags.filter_custom})${var.memory_aggregation_function}.${var.memory_transformation_function}(over='${var.memory_transformation_window}')
