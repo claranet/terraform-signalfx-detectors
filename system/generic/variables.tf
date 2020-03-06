@@ -268,6 +268,74 @@ variable "disk_space_threshold_warning" {
 
 #####
 
+variable "disk_inodes_disabled" {
+	description = "Disable all alerting rules for disk_inodes detector"
+	type        = bool
+	default     = null
+}
+
+variable "disk_inodes_disabled_critical" {
+	description = "Disable critical alerting rule for disk_inodes detector"
+	type        = bool
+	default     = null
+}
+
+variable "disk_inodes_disabled_warning" {
+	description = "Disable warning alerting rule for dsik_inodes detector"
+	type        = bool
+	default     = null
+}
+
+variable "disk_inodes_notifications" {
+	description = "Notification recipients semicolon for every alerting rules of disk_inodes detector"
+	type        = string
+	default     = ""
+}
+
+variable "disk_inodes_notifications_warning" {
+	description = "Notification recipients semicolon for warning alerting rule of disk_inodes detector"
+	type        = string
+	default     = ""
+}
+
+variable "disk_inodes_notifications_critical" {
+	description = "Notification recipients semicolon for critical alerting rule of disk_inodes detector"
+	type        = string
+	default     = ""
+}
+
+variable "disk_inodes_aggregation_function" {
+	description = "Aggregation function and group by for disk_inodes detector (i.e. \".mean(by=['host']).\")"
+	type        = string
+	default     = ""
+}
+
+variable "disk_inodes_transformation_function" {
+	description = "Transformation function for disk_inodes detector (mean, min, max)"
+	type        = string
+	default     = "min"
+}
+
+variable "disk_inodes_transformation_window" {
+	description = "Transformation window for disk_inodes detector (i.e. 5m, 20m, 1h, 1d)"
+	type        = string
+	default     = "5m"
+}
+
+variable "disk_inodes_threshold_critical" {
+	description = "Critical threshold for disk_inodes detector"
+	type        = number
+	default     = 95
+}
+
+variable "disk_inodes_threshold_warning" {
+	description = "Warning threshold for disk_inodes detector"
+	type        = number
+	default     = 90
+}
+
+#####
+
 variable "disk_running_out_disabled" {
 	description = "Disable all alerting rules for disk running out detector"
 	type        = bool
@@ -375,7 +443,7 @@ variable "memory_aggregation_function" {
 variable "memory_transformation_function" {
 	description = "Transformation function for memory detector (mean, min, max)"
 	type        = string
-	default     = "max"
+	default     = "min"
 }
 
 variable "memory_transformation_window" {
@@ -385,14 +453,16 @@ variable "memory_transformation_window" {
 }
 
 variable "memory_threshold_critical" {
-	description = "Critical threshold for dropped connections detector"
+	description = "Critical threshold for memory detector"
 	type        = number
-	default     = 5
+	default     = 95
 }
 
 variable "memory_threshold_warning" {
-	description = "Warning threshold for dropped connections detector"
+	description = "Warning threshold for memory detector"
 	type        = number
-	default     = 10
+	default     = 90
 }
+
+
 
