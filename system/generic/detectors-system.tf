@@ -101,6 +101,35 @@ resource "signalfx_detector" "disk_space" {
 	}
 }
 
+resource "signalfx_detector" "disk_inodes" {
+	name = "${upper(join("", formatlist("[%s]", var.prefixes_slug)))}[${upper(var.environment)}] Disk inodes utilization"
+
+	program_text = <<-EOF
+		signal = data('percent_inodes.used', filter=${module.filter-tags.filter_custom})${var.disk_inodes_aggregation_function}.${var.disk_inodes_transformation_function}(over='${var.disk_inodes_transformation_window}')
+		detect(when(signal > ${var.disk_inodes_threshold_critical})).publish('CRIT')
+		detect(when(signal > ${var.disk_inodes_threshold_warning})).publish('WARN')
+	EOF
+
+	rule {
+		description           = "is too high > ${var.disk_inodes_threshold_critical}"
+		severity              = "Critical"
+		detect_label          = "CRIT"
+		disabled              = coalesce(var.disk_inodes_disabled_critical,var.disk_inodes_disabled,var.detectors_disabled)
+		notifications         = split(";", coalesce(var.disk_inodes_notifications_critical, var.disk_inodes_notifications, var.notifications))
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+	}
+
+	rule {
+		description           = "is too high > ${var.disk_space_threshold_warning}"
+		severity              = "Warning"
+		detect_label          = "WARN"
+		disabled              = coalesce(var.disk_space_disabled_warning,var.disk_space_disabled,var.detectors_disabled)
+		notifications         = split(";", coalesce(var.disk_space_notifications_warning, var.disk_space_notifications, var.notifications))
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+	}
+}
+
+
 resource "signalfx_detector" "disk_running_out" {
 	name = "${upper(join("", formatlist("[%s]", var.prefixes_slug)))}[${upper(var.environment)}] Disk Space Running Out"
 
@@ -121,17 +150,16 @@ resource "signalfx_detector" "disk_running_out" {
 }
 
 resource "signalfx_detector" "memory" {
-	name = "${upper(join("", formatlist("[%s]", var.prefixes_slug)))}[${upper(var.environment)}] % of memory available"
+	name = "${upper(join("", formatlist("[%s]", var.prefixes_slug)))}[${upper(var.environment)}] % of memory utilized"
 
 	program_text = <<-EOF
-		A = data('memory.utilization', filter=${module.filter-tags.filter_custom})${var.memory_aggregation_function}
-		signal = (100-A).${var.memory_transformation_function}(over='${var.memory_transformation_window}')
+		signal = data('memory.utilization', filter=${module.filter-tags.filter_custom})${var.memory_aggregation_function}.${var.memory_transformation_function}(over='${var.memory_transformation_window}')
 		detect(when(signal < ${var.memory_threshold_critical})).publish('CRIT')
 		detect(when(signal < ${var.memory_threshold_warning})).publish('WARN')
 	EOF
 
 	rule {
-		description           = "is too low < ${var.memory_threshold_critical}"
+		description           = "is too high > ${var.memory_threshold_critical}"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.memory_disabled_critical, var.memory_disabled, var.detectors_disabled)
@@ -140,7 +168,7 @@ resource "signalfx_detector" "memory" {
 	}
 
 	rule {
-		description           = "is too low < ${var.memory_threshold_warning}"
+		description           = "is too high > ${var.memory_threshold_warning}"
 		severity              = "Warning"
 		detect_label          = "WARN"
 		disabled              = coalesce(var.memory_disabled_warning, var.memory_disabled, var.detectors_disabled)
