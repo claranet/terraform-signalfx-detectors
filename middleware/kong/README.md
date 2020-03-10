@@ -4,7 +4,7 @@
 
 ```hcl
 module "signalfx-detectors-middleware-kong" {
-  source      = "git::ssh://git@github.com/claranet/terraform-signalfx-detectors.git//middleware/kong?ref={revision}"
+  source      = "github.com/claranet/terraform-signalfx-detectors.git//middleware/kong?ref={revision}"
 
   environment = var.environment
   notifications = var.notifications
