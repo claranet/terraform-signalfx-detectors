@@ -7,7 +7,7 @@ Here is a simple example but it is advisable to see how are created other existi
 
 ```hcl
 module "filter-tags" {
-  source = "../../common/filter-tags"
+  source                 = "github.com/claranet/terraform-signalfx-detectors.git//common/filter-tags?ref={revision}"
 
   filter_defaults        = "filter('env', '${var.environment}') and filter('claranet_monitored', 'true')"
   filter_use_defaults    = var.filter_use_defaults
