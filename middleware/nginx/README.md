@@ -35,7 +35,7 @@ Creates SignalFX detectors with the following checks:
 | dropped\_connections\_threshold\_warning | Warning threshold for dropped connections detector | `number` | `0` | no |
 | dropped\_connections\_transformation\_function | Transformation function for dropped connections detector (mean, min, max) | `string` | `"min"` | no |
 | dropped\_connections\_transformation\_window | Transformation window for dropped connections detector (i.e. 5m, 20m, 1h, 1d) | `string` | `"5m"` | no |
-| environment | Architecture Environment | `string` | n/a | yes |
+| environment | Infrastructure environment | `string` | n/a | yes |
 | filter\_custom\_excludes | Tags to exclude when using custom filtering (i.e "tag1:val1;tag2:val2") | `string` | `""` | no |
 | filter\_custom\_includes | Tags to filter signals on when custom filtering is used (i.e "tag1:val1;tag2:val2") | `string` | `""` | no |
 | filter\_use\_defaults | Use default filtering which follows tagging convention | `bool` | `true` | no |

@@ -24,7 +24,7 @@ Creates SignalFX detectors with the following checks:
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:-----:|
 | detectors\_disabled | Disable all detectors in this module | `bool` | `false` | no |
-| environment | Architecture Environment | `string` | n/a | yes |
+| environment | Infrastructure environment | `string` | n/a | yes |
 | filter\_custom\_excludes | Tags to exclude when using custom filtering (i.e "tag1:val1;tag2:val2") | `string` | `""` | no |
 | filter\_custom\_includes | Tags to filter signals on when custom filtering is used (i.e "tag1:val1;tag2:val2") | `string` | `""` | no |
 | filter\_use\_defaults | Use default filtering which follows tagging convention | `bool` | `true` | no |
