@@ -4,7 +4,7 @@
 
 ```hcl
 module "signalfx-detectors-system-generic" {
-  source      = "git::ssh://git@github.com/claranet/terraform-signalfx-detectors.git//system/generic?ref={revision}"
+  source      = "github.com/claranet/terraform-signalfx-detectors.git//system/generic?ref={revision}"
 
   environment = var.environment
   notifications = var.notifications

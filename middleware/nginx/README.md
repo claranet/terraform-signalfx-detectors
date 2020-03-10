@@ -4,7 +4,7 @@
 
 ```hcl
 module "signalfx-detectors-middleware-nginx" {
-  source      = "git::ssh://git@github.com/claranet/terraform-signalfx-detectors.git//middleware/nginx?ref={revision}"
+  source      = "github.com/claranet/terraform-signalfx-detectors.git//middleware/nginx?ref={revision}"
 
   environment = var.environment
   notifications = var.notifications
