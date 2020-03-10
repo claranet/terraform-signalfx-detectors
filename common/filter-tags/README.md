@@ -5,7 +5,7 @@
 This module usage should be transparent because it should be used inside each detectors modules directly.
 Here is a simple example but it is advisable to see how are created other existing detectors modules:
 
-```
+```hcl
 module "filter-tags" {
   source = "../../common/filter-tags"
 
@@ -34,13 +34,13 @@ It will allow to:
 | filter\_custom\_excludes | Semicolon separated string of filters to exclude when custom filtering is used (i.e "ex1:clude1;tag2:val2") | `string` | `""` | no |
 | filter\_custom\_includes | Semicolon separated string of filters to include when custom filtering is used (i.e "in1:clude1;tag2:val2") | `string` | `""` | no |
 | filter\_defaults | List of tags tu use as filters when using default filtering convention | `string` | `""` | no |
-| filter\_use\_defaults | Use default filtering convention | `string` | `"true"` | no |
+| filter\_use\_defaults | Use default filtering convention | `bool` | `true` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| filter\_custom | The full filtering pattern to add to detectors |
+| filter\_custom | The full filtering pattern to use in detectors |
 
 ## Related documentation
 
