@@ -1,7 +1,7 @@
 # Global
 
 variable "environment" {
-  description = "Architecture Environment"
+  description = "Infrastructure environment"
   type        = string
 }
 

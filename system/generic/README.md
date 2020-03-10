@@ -72,7 +72,7 @@ Creates SignalFX detectors with the following checks:
 | disk\_space\_threshold\_warning | Warning threshold for disk space detector | `number` | `80` | no |
 | disk\_space\_transformation\_function | Transformation function for disk space detector (mean, min, max) | `string` | `"max"` | no |
 | disk\_space\_transformation\_window | Transformation window for disk space detector (i.e. 5m, 20m, 1h, 1d) | `string` | `"5m"` | no |
-| environment | Architecture Environment | `string` | n/a | yes |
+| environment | Infrastructure environment | `string` | n/a | yes |
 | filter\_custom\_excludes | Tags to exclude when using custom filtering (i.e "tag1:val1;tag2:val2") | `string` | `""` | no |
 | filter\_custom\_includes | Tags to filter signals on when custom filtering is used (i.e "tag1:val1;tag2:val2") | `string` | `""` | no |
 | filter\_use\_defaults | Use default filtering which follows tagging convention | `bool` | `true` | no |
