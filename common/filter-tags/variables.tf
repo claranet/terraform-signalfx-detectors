@@ -5,7 +5,7 @@ variable "filter_use_defaults" {
 }
 
 variable "filter_defaults" {
-  description = "List of tags tu use as filters when using default filtering convention"
+  description = "List of tags to use as filters when using default filtering convention"
   type        = string
   default     = ""
 }
