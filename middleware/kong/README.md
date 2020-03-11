@@ -32,7 +32,7 @@ Creates SignalFX detectors with the following checks:
 | heartbeat\_notifications | Notification recipients semicolon for every alerting rules of heartbeat detector | `string` | `""` | no |
 | heartbeat\_timeframe | Timeframe for system not reporting detector (i.e. "10m") | `string` | `"20m"` | no |
 | notifications | Notification recipients semicolon separated (i.e. "Email,my@mail.com;PagerDuty,credentialId") | `string` | n/a | yes |
-| prefixes\_slug | Prefixes list to prepend between brackets on every monitors names before environment | `list` | `[]` | no |
+| prefixes | Prefixes list to prepend between brackets on every monitors names before environment | `list` | `[]` | no |
 | treatment\_limit\_aggregation\_function | Aggregation function and group by for treatment limit detector (i.e. ".mean(by=['host']).") | `string` | `""` | no |
 | treatment\_limit\_disabled | Disable all alerting rules for treatment limit detector | `bool` | n/a | yes |
 | treatment\_limit\_disabled\_critical | Disable critical alerting rule for treatment limit detector | `bool` | n/a | yes |

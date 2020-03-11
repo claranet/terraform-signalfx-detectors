@@ -102,7 +102,7 @@ Creates SignalFX detectors with the following checks:
 | memory\_transformation\_function | Transformation function for memory detector (mean, min, max) | `string` | `"min"` | no |
 | memory\_transformation\_window | Transformation window for memory detector (i.e. 5m, 20m, 1h, 1d) | `string` | `"5m"` | no |
 | notifications | Notification recipients semicolon separated (i.e. "Email,my@mail.com;PagerDuty,credentialId") | `string` | n/a | yes |
-| prefixes\_slug | Prefixes list to prepend between brackets on every monitors names before environment | `list` | `[]` | no |
+| prefixes | Prefixes list to prepend between brackets on every monitors names before environment | `list` | `[]` | no |
 
 ## Outputs
 

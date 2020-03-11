@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name = "${join("", formatlist("[%s]", var.prefixes_slug))}[${var.environment}] Kong heartbeat"
+  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Kong heartbeat"
 
   program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
@@ -18,7 +18,7 @@ resource "signalfx_detector" "heartbeat" {
 }
 
 resource "signalfx_detector" "treatment_limit" {
-  name = "${join("", formatlist("[%s]", var.prefixes_slug))}[${var.environment}] Kong treatment limit"
+  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Kong treatment limit"
 
   program_text = <<-EOF
 		A = data('counter.kong.connections.handled', filter=${module.filter-tags.filter_custom})${var.treatment_limit_aggregation_function}
