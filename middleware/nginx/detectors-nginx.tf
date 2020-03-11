@@ -5,7 +5,7 @@ resource "signalfx_detector" "heartbeat" {
 		from signalfx.detectors.not_reporting import not_reporting
 		signal = data('dropped_connections_requests', filter=filter('aws_state', 'running') and filter('gcp_status', '*RUNNING}') and filter('azure_power_state', 'PowerState/running') and ${module.filter-tags.filter_custom})
 		not_reporting.detector(stream=signal, resource_identifier=['host'], duration='${var.heartbeat_timeframe}').publish('CRIT')
-	EOF
+  EOF
 
   rule {
     description           = "has not reported in ${var.heartbeat_timeframe}"
@@ -24,7 +24,7 @@ resource "signalfx_detector" "dropped_connections" {
 		signal = data('connections.failed', filter=${module.filter-tags.filter_custom})${var.dropped_connections_aggregation_function}.${var.dropped_connections_transformation_function}(over='${var.dropped_connections_transformation_window}')
 		detect(when(signal > ${var.dropped_connections_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.dropped_connections_threshold_warning})).publish('WARN')
-	EOF
+  EOF
 
   rule {
     description           = "is too high > ${var.dropped_connections_threshold_critical}"
