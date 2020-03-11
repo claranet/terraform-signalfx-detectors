@@ -1,4 +1,4 @@
-# FILTER TAGS Datadog Generator
+# FILTER TAGS SignalFx Generator
 
 ## How to use this module
 
