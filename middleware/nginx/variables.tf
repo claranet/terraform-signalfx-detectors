@@ -12,7 +12,7 @@ variable "notifications" {
   type        = string
 }
 
-variable "prefixes_slug" {
+variable "prefixes" {
   description = "Prefixes list to prepend between brackets on every monitors names before environment"
   type        = list
   default     = []

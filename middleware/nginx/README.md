@@ -43,7 +43,7 @@ Creates SignalFX detectors with the following checks:
 | heartbeat\_notifications | Notification recipients semicolon for every alerting rules of heartbeat detector | `string` | `""` | no |
 | heartbeat\_timeframe | Timeframe for system not reporting detector (i.e. "10m") | `string` | `"20m"` | no |
 | notifications | Notification recipients semicolon separated (i.e. "Email,my@mail.com;PagerDuty,credentialId") | `string` | n/a | yes |
-| prefixes\_slug | Prefixes list to prepend between brackets on every monitors names before environment | `list` | `[]` | no |
+| prefixes | Prefixes list to prepend between brackets on every monitors names before environment | `list` | `[]` | no |
 
 ## Outputs
 
