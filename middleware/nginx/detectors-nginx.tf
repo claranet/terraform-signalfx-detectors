@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name = "${upper(join("", formatlist("[%s]", var.prefixes_slug)))}[${upper(var.environment)}] Nginx heartbeat"
+  name = "${join("", formatlist("[%s]", var.prefixes_slug))}[${var.environment}] Nginx heartbeat"
 
   program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
@@ -18,7 +18,7 @@ resource "signalfx_detector" "heartbeat" {
 }
 
 resource "signalfx_detector" "dropped_connections" {
-  name = "${upper(join("", formatlist("[%s]", var.prefixes_slug)))}[${upper(var.environment)}] Nginx dropped connections"
+  name = "${join("", formatlist("[%s]", var.prefixes_slug))}[${var.environment}] Nginx dropped connections"
 
   program_text = <<-EOF
 		signal = data('connections.failed', filter=${module.filter-tags.filter_custom})${var.dropped_connections_aggregation_function}.${var.dropped_connections_transformation_function}(over='${var.dropped_connections_transformation_window}')
