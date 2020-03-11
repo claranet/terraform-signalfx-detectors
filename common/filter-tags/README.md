@@ -13,6 +13,15 @@ module "filter-tags" {
   filter_use_defaults    = var.filter_use_defaults
   filter_custom_includes = var.filter_custom_includes
   filter_custom_excludes = var.filter_custom_excludes
+
+resource "signalfx_detector" "disk" {
+  name = "My awesome disk detector"
+
+  program_text = <<-EOF
+        A = data('disk.utilization', filter('myKey', 'myValue') and ${module.filter-tags.filter_custom}).max(over='5m').publish(label='A')
+        detect(when(A > 20)).publish('disk space too high')
+    EOF
+  #...
 }
 
 ```
