@@ -1,4 +1,4 @@
-# SYSTEM GENERIC SignalFX detectors
+# SYSTEM GENERIC SignalFx detectors
 
 ## How to use this module
 
@@ -14,7 +14,7 @@ module "signalfx-detectors-system-generic" {
 
 ## Purpose
 
-Creates SignalFX detectors with the following checks:
+Creates SignalFx detectors with the following checks:
 
 - System cpu utilization
 - System disk inodes utilization

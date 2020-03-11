@@ -1,4 +1,4 @@
-# MIDDLEWARE KONG SignalFX detectors
+# MIDDLEWARE KONG SignalFx detectors
 
 ## How to use this module
 
@@ -14,7 +14,7 @@ module "signalfx-detectors-middleware-kong" {
 
 ## Purpose
 
-Creates SignalFX detectors with the following checks:
+Creates SignalFx detectors with the following checks:
 
 - Kong heartbeat
 - Kong treatment limit

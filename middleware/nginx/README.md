@@ -1,4 +1,4 @@
-# MIDDLEWARE NGINX SignalFX detectors
+# MIDDLEWARE NGINX SignalFx detectors
 
 ## How to use this module
 
@@ -14,7 +14,7 @@ module "signalfx-detectors-middleware-nginx" {
 
 ## Purpose
 
-Creates SignalFX detectors with the following checks:
+Creates SignalFx detectors with the following checks:
 
 - Nginx dropped connections
 - Nginx heartbeat
