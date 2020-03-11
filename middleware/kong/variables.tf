@@ -8,8 +8,8 @@ variable "environment" {
 # SignalFx Module specific
 
 variable "notifications" {
-  description = "Notification recipients semicolon separated (i.e. \"Email,my@mail.com;PagerDuty,credentialId\")"
-  type        = string
+  description = "Notification recipients list (i.e. \"Email,my@mail.com;PagerDuty,credentialId\")"
+  type        = list
 }
 
 variable "prefixes" {
@@ -51,9 +51,9 @@ variable "heartbeat_disabled" {
 }
 
 variable "heartbeat_notifications" {
-  description = "Notification recipients semicolon for every alerting rules of heartbeat detector"
-  type        = string
-  default     = ""
+  description = "Notification recipients list for every alerting rules of heartbeat detector"
+  type        = list
+  default     = []
 }
 
 variable "heartbeat_timeframe" {
@@ -83,21 +83,21 @@ variable "treatment_limit_disabled_warning" {
 }
 
 variable "treatment_limit_notifications" {
-  description = "Notification recipients semicolon for every alerting rules of treatment limit detector"
-  type        = string
-  default     = ""
+  description = "Notification recipients list for every alerting rules of treatment limit detector"
+  type        = list
+  default     = []
 }
 
 variable "treatment_limit_notifications_warning" {
-  description = "Notification recipients semicolon for warning alerting rule of treatment limit detector"
-  type        = string
-  default     = ""
+  description = "Notification recipients list for warning alerting rule of treatment limit detector"
+  type        = list
+  default     = []
 }
 
 variable "treatment_limit_notifications_critical" {
-  description = "Notification recipients semicolon for critical alerting rule of treatment limit detector"
-  type        = string
-  default     = ""
+  description = "Notification recipients list for critical alerting rule of treatment limit detector"
+  type        = list
+  default     = []
 }
 
 variable "treatment_limit_aggregation_function" {
