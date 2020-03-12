@@ -380,8 +380,8 @@ variable "disk_running_out_clear_lasting_time_percent" {
 
 variable "disk_running_out_use_ewma" {
   description = "Use Double EWMA"
-  type        = bool
-  default     = false
+  type        = string
+  default     = "False"
 }
 
 variable "disk_running_out_notifications" {
