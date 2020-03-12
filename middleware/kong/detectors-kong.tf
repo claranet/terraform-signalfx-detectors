@@ -12,7 +12,7 @@ resource "signalfx_detector" "heartbeat" {
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
-    notifications         = split(";", coalesce(var.heartbeat_notifications, var.notifications))
+    notifications         = coalescelist(var.heartbeat_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} on {{{dimensions}}}"
   }
 }
@@ -33,7 +33,7 @@ resource "signalfx_detector" "treatment_limit" {
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.treatment_limit_disabled_critical, var.treatment_limit_disabled, var.detectors_disabled)
-    notifications         = split(";", coalesce(var.treatment_limit_notifications_critical, var.treatment_limit_notifications, var.notifications))
+    notifications         = coalescelist(var.treatment_limit_notifications_critical, var.treatment_limit_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
@@ -42,7 +42,7 @@ resource "signalfx_detector" "treatment_limit" {
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.treatment_limit_disabled_warning, var.treatment_limit_disabled, var.detectors_disabled)
-    notifications         = split(";", coalesce(var.treatment_limit_notifications_warning, var.treatment_limit_notifications, var.notifications))
+    notifications         = coalescelist(var.treatment_limit_notifications_warning, var.treatment_limit_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
