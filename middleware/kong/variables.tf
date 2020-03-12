@@ -8,7 +8,7 @@ variable "environment" {
 # SignalFx Module specific
 
 variable "notifications" {
-  description = "Notification recipients list (i.e. \"Email,my@mail.com;PagerDuty,credentialId\")"
+  description = "Notification recipients list for every detectors"
   type        = list
 }
 
@@ -18,20 +18,14 @@ variable "prefixes" {
   default     = []
 }
 
-variable "filter_defaults" {
-  description = "Default string to use as default filtering which follows tagging convention"
-  type        = string
-  default     = "filter('env', '${var.environment}') and filter('claranet_monitored', 'true')"
-}
-
-variable "filter_custom_excludes" {
-  description = "Filters list to include when using custom filtering"
+variable "filter_custom_includes" {
+  description = "List of tags to include when custom filtering is used"
   type        = list
   default     = []
 }
 
 variable "filter_custom_excludes" {
-  description = "Filters list to exclude when using custom filtering"
+  description = "List of tags to exclude when custom filtering is used"
   type        = list
   default     = []
 }
