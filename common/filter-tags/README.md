@@ -39,10 +39,9 @@ It will allow to:
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:-----:|
-| filter\_custom\_excludes | Semicolon separated string of filters to exclude when custom filtering is used (i.e "ex1:clude1;tag2:val2") | `string` | `""` | no |
-| filter\_custom\_includes | Semicolon separated string of filters to include when custom filtering is used (i.e "in1:clude1;tag2:val2") | `string` | `""` | no |
-| filter\_defaults | List of tags tu use as filters when using default filtering convention | `string` | `""` | no |
-| filter\_use\_defaults | Use default filtering convention | `bool` | `true` | no |
+| filter\_custom\_excludes | List of tags to exclude when custom filtering is used | `list` | `[]` | no |
+| filter\_custom\_includes | List of tags to include when custom filtering is used | `list` | `[]` | no |
+| filter\_defaults | Filters as SignalFlow string to use when using default filtering convention | `string` | `""` | no |
 
 ## Outputs
 

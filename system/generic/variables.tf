@@ -8,7 +8,7 @@ variable "environment" {
 # SignalFx Module specific
 
 variable "notifications" {
-  description = "Notification recipients list (i.e. \"Email,my@mail.com;PagerDuty,credentialId\")"
+  description = "Notification recipients list for every detectors"
   type        = list
 }
 
@@ -18,20 +18,14 @@ variable "prefixes" {
   default     = []
 }
 
-variable "filter_defaults" {
-  description = "Default string to use as default filtering which follows tagging convention"
-  type        = string
-  default     = "filter('env', '${var.environment}') and filter('claranet_monitored', 'true')"
-}
-
 variable "filter_custom_includes" {
-  description = "Filters list to include when using custom filtering"
+  description = "List of tags to include when custom filtering is used"
   type        = list
   default     = []
 }
 
 variable "filter_custom_excludes" {
-  description = "Filters list to exclude when using custom filtering"
+  description = "List of tags to exclude when custom filtering is used"
   type        = list
   default     = []
 }
@@ -287,49 +281,49 @@ variable "disk_inodes_disabled_warning" {
 }
 
 variable "disk_inodes_notifications" {
-  description = "Notification recipients list for every alerting rules of disk_inodes detector"
+  description = "Notification recipients list for every alerting rules of disk inodes detector"
   type        = list
   default     = []
 }
 
 variable "disk_inodes_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of disk_inodes detector"
+  description = "Notification recipients list for warning alerting rule of disk inodes detector"
   type        = list
   default     = []
 }
 
 variable "disk_inodes_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of disk_inodes detector"
+  description = "Notification recipients list for critical alerting rule of disk inodes detector"
   type        = list
   default     = []
 }
 
 variable "disk_inodes_aggregation_function" {
-  description = "Aggregation function and group by for disk_inodes detector (i.e. \".mean(by=['host']).\")"
+  description = "Aggregation function and group by for disk inodes detector (i.e. \".mean(by=['host']).\")"
   type        = string
   default     = ""
 }
 
 variable "disk_inodes_transformation_function" {
-  description = "Transformation function for disk_inodes detector (mean, min, max)"
+  description = "Transformation function for disk inodes detector (mean, min, max)"
   type        = string
   default     = "min"
 }
 
 variable "disk_inodes_transformation_window" {
-  description = "Transformation window for disk_inodes detector (i.e. 5m, 20m, 1h, 1d)"
+  description = "Transformation window for disk inodes detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
 }
 
 variable "disk_inodes_threshold_critical" {
-  description = "Critical threshold for disk_inodes detector"
+  description = "Critical threshold for disk inodes detector"
   type        = number
   default     = 95
 }
 
 variable "disk_inodes_threshold_warning" {
-  description = "Warning threshold for disk_inodes detector"
+  description = "Warning threshold for disk inodes detector"
   type        = number
   default     = 90
 }
