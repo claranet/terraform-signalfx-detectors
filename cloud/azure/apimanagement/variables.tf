@@ -97,7 +97,7 @@ variable "failed_requests_notifications_critical" {
 variable "failed_requests_aggregation_function" {
   description = "Aggregation function and group by for failed_requests detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_id','azure_resource_name'])"
+  default     = ".mean(by=['azure_region', 'azure_resource_id', 'azure_resource_name'])"
 }
 
 variable "failed_requests_transformation_function" {
@@ -165,7 +165,7 @@ variable "other_requests_notifications_critical" {
 variable "other_requests_aggregation_function" {
   description = "Aggregation function and group by for other_requests detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_id','azure_resource_name'])"
+  default     = ".mean(by=['azure_region', 'azure_resource_id', 'azure_resource_name'])"
 }
 
 variable "other_requests_transformation_function" {
@@ -233,7 +233,7 @@ variable "unauthorized_requests_notifications_critical" {
 variable "unauthorized_requests_aggregation_function" {
   description = "Aggregation function and group by for unauthorized_requests detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_id','azure_resource_name'])"
+  default     = ".mean(by=['azure_region', 'azure_resource_id', 'azure_resource_name'])"
 }
 
 variable "unauthorized_requests_transformation_function" {
@@ -301,7 +301,7 @@ variable "successful_requests_notifications_critical" {
 variable "successful_requests_aggregation_function" {
   description = "Aggregation function and group by for successful_requests detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_id','azure_resource_name'])"
+  default     = ".mean(by=['azure_region', 'azure_resource_id', 'azure_resource_name'])"
 }
 
 variable "successful_requests_transformation_function" {
