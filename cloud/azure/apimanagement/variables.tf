@@ -124,6 +124,18 @@ variable "failed_requests_threshold_warning" {
   default     = 50
 }
 
+variable "failed_requests_aperiodic_duration" {
+  description = "Duration for the failed_requests block"
+  type        = string
+  default     = "10m"
+}
+
+variable "failed_requests_aperiodic_percentage" {
+  description = "Percentage for the failed_requests block"
+  type        = number
+  default     = 0.9
+}
+
 # Other_requests detectors
 
 variable "other_requests_disabled" {
@@ -192,6 +204,18 @@ variable "other_requests_threshold_warning" {
   default     = 50
 }
 
+variable "other_requests_aperiodic_duration" {
+  description = "Duration for the other_requests block"
+  type        = string
+  default     = "10m"
+}
+
+variable "other_requests_aperiodic_percentage" {
+  description = "Percentage for the other_requests block"
+  type        = number
+  default     = 0.9
+}
+
 # Unauthorized_requests detectors
 
 variable "unauthorized_requests_disabled" {
@@ -258,6 +282,18 @@ variable "unauthorized_requests_threshold_warning" {
   description = "Warning threshold for unauthorized_requests detector"
   type        = number
   default     = 50
+}
+
+variable "unauthorized_requests_aperiodic_duration" {
+  description = "Duration for the unauthorized_requests block"
+  type        = string
+  default     = "10m"
+}
+
+variable "unauthorized_requests_aperiodic_percentage" {
+  description = "Percentage for the unauthorized_requests block"
+  type        = number
+  default     = 0.9
 }
 
 # successful_requests detectors
