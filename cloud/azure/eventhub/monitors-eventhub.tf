@@ -4,7 +4,7 @@ resource "signalfx_detector" "heartbeat" {
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
 		signal = data('SuccessfulRequests', filter=filter('resource_type', 'Microsoft.EventHub/namespace') and ${module.filter-tags.filter_custom})
-		not_reporting.detector(stream=signal, resource_identifier=['host'], duration='${var.heartbeat_timeframe}').publish('CRIT')
+		not_reporting.detector(stream=signal, resource_identifier=['EntityName'], duration='${var.heartbeat_timeframe}').publish('CRIT')
 	EOF
 
 	rule {
@@ -21,13 +21,15 @@ resource "signalfx_detector" "eventhub_errors" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure eventhub errors"
 
 	program_text = <<-EOF
+		from signalfx.detectors.aperiodic import aperiodic
 		A = data('ServerErrors', filter=filter('resource_type', 'Microsoft.EventHub/namespaces') and ${module.filter-tags.filter_custom})${var.eventhub_errors_aggregation_function}
 		B = data('UserErrors', filter=filter('resource_type', 'Microsoft.EventHub/namespaces') and ${module.filter-tags.filter_custom})${var.eventhub_errors_aggregation_function}
 		C = data('QuotaExceededErrors', filter=filter('resource_type', 'Microsoft.EventHub/namespaces') and ${module.filter-tags.filter_custom})${var.eventhub_errors_aggregation_function}
 		D = data('IncomingRequests', filter=filter('resource_type', 'Microsoft.EventHub/namespaces') and ${module.filter-tags.filter_custom})${var.eventhub_errors_aggregation_function}
 		signal = (((A+B+C)/D)*100).${var.eventhub_errors_transformation_function}(over='${var.eventhub_errors_transformation_window}')
-		detect(when(signal > ${var.eventhub_errors_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.eventhub_errors_threshold_warning})).publish('WARN')
+		above_or_below_detector(signal, ${var.eventhub_errors_threshold_critical}, ‘above’, lasting('${var.eventhub_errors_aperiodic_duration}', ${var.eventhub_errors_aperiodic_percentage})).publish('CRIT')
+		above_or_below_detector(signal, ${var.eventhub_errors_threshold_warning}, ‘above’, lasting('${var.eventhub_errors_aperiodic_duration}', ${var.eventhub_errors_aperiodic_percentage})).publish('WARN')
+
 	EOF
 
 	rule {
