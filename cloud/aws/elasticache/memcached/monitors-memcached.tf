@@ -3,8 +3,8 @@ resource "signalfx_detector" "get_hits" {
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
-		A = data('GetHits', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and ${module.filter-tags.filter_custom})${var.get_hits_aggregation_function}
-		B = data('GetMisses', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and ${module.filter-tags.filter_custom})${var.get_hits_aggregation_function}
+		A = data('GetHits', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.get_hits_aggregation_function}
+		B = data('GetMisses', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.get_hits_aggregation_function}
 		signal = (A/(A+B)).scale(100).{var.get_hits_transformation_function}(over='${var.get_hits_transformation_window}')
 		above_or_below_detector(signal, ${var.get_hits_threshold_critical}, 'below', lasting('${var.get_hits_aperiodic_duration}', ${var.get_hits_aperiodic_percentage})).publish('CRIT')
 		above_or_below_detector(signal, ${var.get_hits_threshold_warning}, ‘below’, lasting('${var.get_hits_aperiodic_duration}', ${var.get_hits_aperiodic_percentage})).publish('WARN')
@@ -34,7 +34,7 @@ resource "signalfx_detector" "cpu_high" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ElastiCache memcached CPU"
 
 	program_text = <<-EOF
-		signal = data('CPUUtilization', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and ${module.filter-tags.filter_custom})${var.cpu_high_aggregation_function}.${var.cpu_high_transformation_function}(over='${var.cpu_high_transformation_window}')
+		signal = data('CPUUtilization', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.cpu_high_aggregation_function}.${var.cpu_high_transformation_function}(over='${var.cpu_high_transformation_window}')
 		detect(when(signal > ${var.cpu_high_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.cpu_high_threshold_warning})).publish('WARN')
 	EOF

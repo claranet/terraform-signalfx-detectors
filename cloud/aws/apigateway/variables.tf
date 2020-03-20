@@ -97,7 +97,7 @@ variable "latency_notifications_critical" {
 variable "latency_aggregation_function" {
   description = "Aggregation function and group by for latency detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean()"
+  default     = ""
 }
 
 variable "latency_transformation_function" {
@@ -177,7 +177,7 @@ variable "httpcode_5xx_errors_notifications_critical" {
 variable "httpcode_5xx_errors_aggregation_function" {
   description = "Aggregation function and group by for httpcode_5xx_errors detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean()"
+  default     = ""
 }
 
 variable "httpcode_5xx_errors_transformation_function" {
@@ -251,7 +251,7 @@ variable "httpcode_4xx_errors_notifications_critical" {
 variable "httpcode_4xx_errors_aggregation_function" {
   description = "Aggregation function and group by for httpcode_4xx_errors detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean()"
+  default     = ""
 }
 
 variable "httpcode_4xx_errors_transformation_function" {

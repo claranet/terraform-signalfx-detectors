@@ -70,20 +70,8 @@ variable "vpn_status_disabled_critical" {
   default     = null
 }
 
-variable "vpn_status_disabled_warning" {
-  description = "Disable warning alerting rule for vpn_status detector"
-  type        = bool
-  default     = null
-}
-
 variable "vpn_status_notifications" {
   description = "Notification recipients list for every alerting rules of vpn_status detector"
-  type        = list
-  default     = []
-}
-
-variable "vpn_status_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of vpn_status detector"
   type        = list
   default     = []
 }
@@ -97,7 +85,7 @@ variable "vpn_status_notifications_critical" {
 variable "vpn_status_aggregation_function" {
   description = "Aggregation function and group by for vpn_status detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".min(by=['TunnelIpAddress'])"
+  default     = ""
 }
 
 variable "vpn_status_transformation_function" {
@@ -114,12 +102,6 @@ variable "vpn_status_transformation_window" {
 
 variable "vpn_status_threshold_critical" {
   description = "Critical threshold for vpn_status detector"
-  type        = number
-  default     = 1
-}
-
-variable "vpn_status_threshold_warning" {
-  description = "Warning threshold for vpn_status detector"
   type        = number
   default     = 1
 }

@@ -97,7 +97,7 @@ variable "no_healthy_instances_notifications_critical" {
 variable "no_healthy_instances_aggregation_function" {
   description = "Aggregation function and group by for no_healthy_instances detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['LoadBalancerName'])"
+  default     = ""
 }
 
 variable "no_healthy_instances_transformation_function" {
@@ -165,7 +165,7 @@ variable "too_much_4xx_notifications_critical" {
 variable "too_much_4xx_aggregation_function" {
   description = "Aggregation function and group by for too_much_4xx detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['LoadBalancerName'])"
+  default     = ""
 }
 
 variable "too_much_4xx_transformation_function" {
@@ -239,7 +239,7 @@ variable "too_much_5xx_notifications_critical" {
 variable "too_much_5xx_aggregation_function" {
   description = "Aggregation function and group by for too_much_5xx detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['LoadBalancerName'])"
+  default     = ""
 }
 
 variable "too_much_5xx_transformation_function" {
@@ -313,7 +313,7 @@ variable "too_much_4xx_backend_notifications_critical" {
 variable "too_much_4xx_backend_aggregation_function" {
   description = "Aggregation function and group by for too_much_4xx_backend detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['LoadBalancerName'])"
+  default     = ""
 }
 
 variable "too_much_4xx_backend_transformation_function" {
@@ -387,7 +387,7 @@ variable "too_much_5xx_backend_notifications_critical" {
 variable "too_much_5xx_backend_aggregation_function" {
   description = "Aggregation function and group by for too_much_5xx_backend detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['LoadBalancerName'])"
+  default     = ""
 }
 
 variable "too_much_5xx_backend_transformation_function" {
@@ -461,7 +461,7 @@ variable "backend_latency_notifications_critical" {
 variable "backend_latency_aggregation_function" {
   description = "Aggregation function and group by for backend_latency detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['LoadBalancerName'])"
+  default     = ""
 }
 
 variable "backend_latency_transformation_function" {

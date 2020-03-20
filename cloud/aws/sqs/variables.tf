@@ -97,7 +97,7 @@ variable "visible_messages_notifications_critical" {
 variable "visible_messages_aggregation_function" {
   description = "Aggregation function and group by for visible_messages detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['QueueName'])"
+  default     = ""
 }
 
 variable "visible_messages_transformation_function" {
@@ -165,7 +165,7 @@ variable "age_of_oldest_message_notifications_critical" {
 variable "age_of_oldest_message_aggregation_function" {
   description = "Aggregation function and group by for age_of_oldest_message detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['QueueName'])"
+  default     = ""
 }
 
 variable "age_of_oldest_message_transformation_function" {

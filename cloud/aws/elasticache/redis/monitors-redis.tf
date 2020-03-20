@@ -2,8 +2,8 @@ resource "signalfx_detector" "cache_hits" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ElastiCache redis cache hit ratio"
 
 	program_text = <<-EOF
-		A = data('CacheHits', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and ${module.filter-tags.filter_custom})${var.cache_hits_aggregation_function}
-		B = data('CacheMisses', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and ${module.filter-tags.filter_custom})${var.cache_hits_aggregation_function}
+		A = data('CacheHits', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.cache_hits_aggregation_function}
+		B = data('CacheMisses', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.cache_hits_aggregation_function}
 		signal = (A/(A+B)).scale(100).${var.cache_hits_transformation_function}(over='${var.cache_hits_transformation_window}')
 		detect(when(signal < ${var.cache_hits_threshold_critical})).publish('CRIT')
 		detect(when(signal < ${var.cache_hits_threshold_warning})).publish('WARN')
@@ -33,7 +33,7 @@ resource "signalfx_detector" "cpu_high" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ElastiCache redis CPU"
 
 	program_text = <<-EOF
-		signal = data('EngineCPUUtilization', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and ${module.filter-tags.filter_custom})${var.cpu_high_aggregation_function}.${var.cpu_high_transformation_function}(over='${var.cpu_high_transformation_window}')
+		signal = data('EngineCPUUtilization', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'upper') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.cpu_high_aggregation_function}.${var.cpu_high_transformation_function}(over='${var.cpu_high_transformation_window}')
 		detect(when(signal > ${var.cpu_high_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.cpu_high_threshold_warning})).publish('WARN')
 	EOF
@@ -62,7 +62,7 @@ resource "signalfx_detector" "replication_lag" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ElastiCache redis replication lag"
 
 	program_text = <<-EOF
-		signal = data('ReplicationLag', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and ${module.filter-tags.filter_custom})${var.replication_lag_aggregation_function}.${var.replication_lag_transformation_function}(over='${var.replication_lag_transformation_window}')
+		signal = data('ReplicationLag', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'upper') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.replication_lag_aggregation_function}.${var.replication_lag_transformation_function}(over='${var.replication_lag_transformation_window}')
 		detect(when(signal > ${var.replication_lag_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.replication_lag_threshold_warning})).publish('WARN')
 	EOF
@@ -91,15 +91,15 @@ resource "signalfx_detector" "commands" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ElastiCache redis commands"
 
 	program_text = <<-EOF
-		A = data('GetTypeCmds', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and ${module.filter-tags.filter_custom})${var.commands_aggregation_function}
-		B = data('SetTypeCmds', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and ${module.filter-tags.filter_custom})${var.commands_aggregation_function}
+		A = data('GetTypeCmds', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'lower') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.commands_aggregation_function}
+		B = data('SetTypeCmds', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'lower') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.commands_aggregation_function}
 		signal = (A + B).${var.commands_transformation_function}(over='${var.commands_transformation_window}')
 		detect(when(signal <= ${var.commands_threshold_critical})).publish('CRIT')
 		detect(when(signal <= ${var.commands_threshold_warning})).publish('WARN')
 	EOF
 
 	rule {
-		description           = "is too low <= ${var.commands_threshold_critical}"
+		description           = "are too low <= ${var.commands_threshold_critical}"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.commands_disabled_critical, var.commands_disabled, var.detectors_disabled)
@@ -108,7 +108,7 @@ resource "signalfx_detector" "commands" {
 	}
 
 	rule {
-		description           = "is too low <= ${var.commands_threshold_warning}"
+		description           = "are too low <= ${var.commands_threshold_warning}"
 		severity              = "Warning"
 		detect_label          = "WARN"
 		disabled              = coalesce(var.commands_disabled_warning, var.commands_disabled, var.detectors_disabled)
