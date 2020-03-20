@@ -4,7 +4,7 @@ resource "signalfx_detector" "heartbeat" {
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
 		signal = data('DeliverySuccessCount', filter=filter('resource_type', 'Microsoft.EventGrid/topics') and ${module.filter-tags.filter_custom})
-		not_reporting.detector(stream=signal, resource_identifier=['host'], duration='${var.heartbeat_timeframe}').publish('CRIT')
+		not_reporting.detector(stream=signal, resource_identifier=['EventSubscriptionName'], duration='${var.heartbeat_timeframe}').publish('CRIT')
 	EOF
 
 	rule {
@@ -40,12 +40,13 @@ resource "signalfx_detector" "failed_messages" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure eventgrid failed messages"
 
 	program_text = <<-EOF
+		from signalfx.detectors.aperiodic import aperiodic
 		A = data('PublishFailCount', filter=filter('resource_type', 'Microsoft.EventGrid/topics') and ${module.filter-tags.filter_custom})${var.failed_messages_aggregation_function}
 		B = data('PublishSuccessCount', filter=filter('resource_type', 'Microsoft.EventGrid/topics') and ${module.filter-tags.filter_custom})${var.failed_messages_aggregation_function}
 		C = data('UnmatchedEventCount', filter=filter('resource_type', 'Microsoft.EventGrid/topics') and ${module.filter-tags.filter_custom})${var.failed_messages_aggregation_function}
 		signal = ((A/(A+B+C))*100).${var.failed_messages_transformation_function}(over='${var.failed_messages_transformation_window}')
-		detect(when(signal > ${var.failed_messages_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.failed_messages_threshold_warning})).publish('WARN')
+		above_or_below_detector(signal, ${var.failed_messages_threshold_critical}, ‘above’, lasting('${var.failed_messages_aperiodic_duration}', ${var.failed_messages_aperiodic_percentage})).publish('CRIT')
+		above_or_below_detector(signal, ${var.failed_messages_threshold_warning}, ‘above’, lasting('${var.failed_messages_aperiodic_duration}', ${var.failed_messages_aperiodic_percentage})).publish('WARN')
 	EOF
 
 	rule {
@@ -71,12 +72,13 @@ resource "signalfx_detector" "unmatched_events" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure eventgrid unmatched events"
 
 	program_text = <<-EOF
+		from signalfx.detectors.aperiodic import aperiodic
 		A = data('UnmatchedEventCount', filter=filter('resource_type', 'Microsoft.EventGrid/topics') and ${module.filter-tags.filter_custom})${var.unmatched_events_aggregation_function}
 		B = data('PublishSuccessCount', filter=filter('resource_type', 'Microsoft.EventGrid/topics') and ${module.filter-tags.filter_custom})${var.unmatched_events_aggregation_function}
 		C = data('PublishFailCount', filter=filter('resource_type', 'Microsoft.EventGrid/topics') and ${module.filter-tags.filter_custom})${var.unmatched_events_aggregation_function}
 		signal = ((A/(A+B+C))*100).${var.unmatched_events_transformation_function}(over='${var.unmatched_events_transformation_window}')
-		detect(when(signal > ${var.unmatched_events_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.unmatched_events_threshold_warning})).publish('WARN')
+		above_or_below_detector(signal, ${var.lunmatched_events_threshold_critical}, ‘above’, lasting('${var.unmatched_events_aperiodic_duration}', ${var.unmatched_events_aperiodic_percentage})).publish('CRIT')
+		above_or_below_detector(signal, ${var.unmatched_events_threshold_warning}, ‘above’, lasting('${var.unmatched_events_aperiodic_duration}', ${var.unmatched_events_aperiodic_percentage})).publish('WARN')
 	EOF
 
 	rule {
