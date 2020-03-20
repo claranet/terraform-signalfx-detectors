@@ -97,7 +97,7 @@ variable "eventhub_errors_notifications_critical" {
 variable "eventhub_errors_aggregation_function" {
   description = "Aggregation function and group by for eventhub_errors detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_id','azure_resource_name'])"
+  default     = ".mean(by=['azure_resource_id','azure_resource_name'])"
 }
 
 variable "eventhub_errors_transformation_function" {
@@ -122,4 +122,16 @@ variable "eventhub_errors_threshold_warning" {
   description = "Warning threshold for eventhub_errors detector"
   type        = number
   default     = 50
+}
+
+variable "eventhub_errors_aperiodic_duration" {
+  description = "Duration for the eventhub_errors block"
+  type        = string
+  default     = "10m"
+}
+
+variable "eventhub_errors_aperiodic_percentage" {
+  description = "Percentage for the eventhub_errors block"
+  type        = number
+  default     = 0.9
 }
