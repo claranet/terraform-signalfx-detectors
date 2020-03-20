@@ -27,7 +27,7 @@ resource "signalfx_detector" "visible_messages" {
 	EOF
 
 	rule {
-		description           = "is too high > ${var.visible_messages_threshold_critical}"
+		description           = "are too high > ${var.visible_messages_threshold_critical}"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.visible_messages_disabled_critical, var.visible_messages_disabled, var.detectors_disabled)
@@ -36,7 +36,7 @@ resource "signalfx_detector" "visible_messages" {
 	}
 
 	rule {
-		description           = "is too high > ${var.visible_messages_threshold_warning}"
+		description           = "are too high > ${var.visible_messages_threshold_warning}"
 		severity              = "Warning"
 		detect_label          = "WARN"
 		disabled              = coalesce(var.visible_messages_disabled_warning, var.visible_messages_disabled, var.detectors_disabled)
@@ -56,7 +56,7 @@ resource "signalfx_detector" "age_of_oldest_message" {
 	EOF
 
 rule {
-		description           = "is too high > ${var.age_of_oldest_message_threshold_critical}"
+		description           = "is too old > ${var.age_of_oldest_message_threshold_critical}"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.age_of_oldest_message_disabled_critical, var.age_of_oldest_message_disabled, var.detectors_disabled)
@@ -65,7 +65,7 @@ rule {
 	}
 
 	rule {
-		description           = "is too high > ${var.age_of_oldest_message_threshold_warning}"
+		description           = "is too old > ${var.age_of_oldest_message_threshold_warning}"
 		severity              = "Warning"
 		detect_label          = "WARN"
 		disabled              = coalesce(var.age_of_oldest_message_disabled_warning, var.age_of_oldest_message_disabled, var.detectors_disabled)
