@@ -4,7 +4,7 @@ resource "signalfx_detector" "heartbeat" {
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
 		signal = data('Requests', filter=filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'false') and ${module.filter-tags.filter_custom})
-		not_reporting.detector(stream=signal, resource_identifier=['host'], duration='${var.heartbeat_timeframe}').publish('CRIT')
+		not_reporting.detector(stream=signal, resource_identifier=['Instance'], duration='${var.heartbeat_timeframe}').publish('CRIT')
 	EOF
 
 	rule {
@@ -21,9 +21,10 @@ resource "signalfx_detector" "response_time" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Services response time"
 
 	program_text = <<-EOF
+		from signalfx.detectors.aperiodic import aperiodic
 		signal = data('AverageResponseTime', filter=filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'false') and ${module.filter-tags.filter_custom})${var.response_time_aggregation_function}.${var.response_time_transformation_function}(over='${var.response_time_transformation_window}')
-		detect(when(signal > ${var.response_time_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.response_time_threshold_warning})).publish('WARN')
+		above_or_below_detector(signal, ${var.response_time_threshold_critical}, ‘above’, lasting('${var.response_time_aperiodic_duration}', ${var.response_time_aperiodic_percentage})).publish('CRIT')
+		above_or_below_detector(signal, ${var.response_time_threshold_warning}, ‘above’, lasting('${var.response_time_aperiodic_duration}', ${var.response_time_aperiodic_percentage})).publish('WARN')
 	EOF
 
 	rule {
@@ -79,11 +80,12 @@ resource "signalfx_detector" "http_5xx_errors_count" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Services HTTP 5xx errors"
 
 	program_text = <<-EOF
+		from signalfx.detectors.aperiodic import aperiodic
 		A = data('Http5xx', filter=filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'false') and ${module.filter-tags.filter_custom})${var.http_5xx_errors_count_aggregation_function}
 		B = data('Requests', filter=filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'false') and ${module.filter-tags.filter_custom})${var.http_5xx_errors_count_aggregation_function}
 		signal = ((A/B)*100).${var.http_5xx_errors_count_transformation_function}(over='${var.http_5xx_errors_count_transformation_window}')
-		detect(when(signal > ${var.http_5xx_errors_count_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.http_5xx_errors_count_threshold_warning})).publish('WARN')
+		above_or_below_detector(signal, ${var.http_5xx_errors_count_threshold_critical}, ‘above’, lasting('${var.http_5xx_errors_count_aperiodic_duration}', ${var.http_5xx_errors_count_aperiodic_percentage})).publish('CRIT')
+		above_or_below_detector(signal, ${var.http_5xx_errors_count_threshold_warning}, ‘above’, lasting('${var.http_5xx_errors_count_aperiodic_duration}', ${var.http_5xx_errors_count_aperiodic_percentage})).publish('WARN')
 	EOF
 
 	rule {
@@ -110,11 +112,12 @@ resource "signalfx_detector" "http_4xx_errors_count" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Services HTTP 4xx errors"
 
 	program_text = <<-EOF
+		from signalfx.detectors.aperiodic import aperiodic
 		A = data('Http4xx', filter=filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'false') and ${module.filter-tags.filter_custom})${var.http_4xx_errors_count_aggregation_function}
 		B = data('Requests', filter=filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'false') and ${module.filter-tags.filter_custom})${var.http_4xx_errors_count_aggregation_function}
 		signal = ((A/B)*100).${var.http_4xx_errors_count_transformation_function}(over='${var.http_4xx_errors_count_transformation_window}')
-		detect(when(signal > ${var.http_4xx_errors_count_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.http_4xx_errors_count_threshold_warning})).publish('WARN')
+		above_or_below_detector(signal, ${var.http_4xx_errors_count_threshold_critical}, ‘above’, lasting('${var.http_4xx_errors_count_aperiodic_duration}', ${var.http_4xx_errors_count_aperiodic_percentage})).publish('CRIT')
+		above_or_below_detector(signal, ${var.http_4xx_errors_count_threshold_warning}, ‘above’, lasting('${var.http_4xx_errors_count_aperiodic_duration}', ${var.http_4xx_errors_count_aperiodic_percentage})).publish('WARN')
 	EOF
 
 	rule {
@@ -140,11 +143,13 @@ resource "signalfx_detector" "http_success_status_rate" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Services HTTP successful responses"
 
 	program_text = <<-EOF
+		from signalfx.detectors.aperiodic import aperiodic
 		A = data('Http2xx', filter=filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'false') and ${module.filter-tags.filter_custom})${var.http_success_status_rate_aggregation_function}
 		B = data('Http3xx', filter=filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'false') and ${module.filter-tags.filter_custom})${var.http_success_status_rate_aggregation_function}
 		C = data('Requests', filter=filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'false') and ${module.filter-tags.filter_custom})${var.http_success_status_rate_aggregation_function}
 		signal = (((A+B)/C)*100).${var.http_success_status_rate_transformation_function}(over='${var.http_success_status_rate_transformation_window}')
-		detect(when(signal < 10)).publish('CRIT')
+		above_or_below_detector(signal, ${var.http_success_status_rate_threshold_critical}, ‘below’, lasting('${var.http_success_status_rate_aperiodic_duration}', ${var.http_success_status_rate_aperiodic_percentage})).publish('CRIT')
+		above_or_below_detector(signal, ${var.http_success_status_rate_threshold_warning}, ‘below’, lasting('${var.http_success_status_rate_aperiodic_duration}', ${var.http_success_status_rate_aperiodic_percentage})).publish('WARN')
 	EOF
 
 	rule {
