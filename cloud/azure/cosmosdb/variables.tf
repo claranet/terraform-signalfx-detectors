@@ -97,7 +97,7 @@ variable "4xx_requests_notifications_critical" {
 variable "4xx_requests_aggregation_function" {
   description = "Aggregation function and group by for 4xx_requests detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['azure_region', 'azure_resource_group_name', 'azure_resource_name', 'collectionname'])"
+  default     = ".sum(by=['azure_resource_group_name', 'azure_resource_name', 'collectionname'])"
 }
 
 variable "4xx_requests_transformation_function" {
@@ -122,6 +122,18 @@ variable "4xx_requests_threshold_warning" {
   description = "Warning threshold for 4xx_requests detector"
   type        = number
   default     = 50
+}
+
+variable "4xx_requests_aperiodic_duration" {
+  description = "Duration for the 4xx_requests block"
+  type        = string
+  default     = "10m"
+}
+
+variable "4xx_requests_aperiodic_percentage" {
+  description = "Percentage for the 4xx_requests block"
+  type        = number
+  default     = 0.9
 }
 
 # 5xx_requests detectors
@@ -165,7 +177,7 @@ variable "5xx_requests_notifications_critical" {
 variable "5xx_requests_aggregation_function" {
   description = "Aggregation function and group by for 5xx_requests detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['azure_region', 'azure_resource_group_name', 'azure_resource_name', 'collectionname'])"
+  default     = ".sum(by=['azure_resource_group_name', 'azure_resource_name', 'collectionname'])"
 }
 
 variable "5xx_requests_transformation_function" {
@@ -190,6 +202,18 @@ variable "5xx_requests_threshold_warning" {
   description = "Warning threshold for 5xx_requests detector"
   type        = number
   default     = 50
+}
+
+variable "5xx_requests_aperiodic_duration" {
+  description = "Duration for the 5xx_requests block"
+  type        = string
+  default     = "10m"
+}
+
+variable "5xx_requests_aperiodic_percentage" {
+  description = "Percentage for the 5xx_requests block"
+  type        = number
+  default     = 0.9
 }
 
 # Scaling detectors
@@ -233,7 +257,7 @@ variable "scaling_notifications_critical" {
 variable "scaling_aggregation_function" {
   description = "Aggregation function and group by for scaling detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['azure_region', 'azure_resource_group_name', 'azure_resource_name', 'databasename', 'collectionname'])"
+  default     = ".sum(by=['azure_resource_group_name', 'azure_resource_name', 'databasename', 'collectionname'])"
 }
 
 variable "scaling_transformation_function" {
@@ -258,4 +282,16 @@ variable "scaling_threshold_warning" {
   description = "Warning threshold for scaling detector"
   type        = number
   default     = 5
+}
+
+variable "scaling_aperiodic_duration" {
+  description = "Duration for the scaling block"
+  type        = string
+  default     = "10m"
+}
+
+variable "scaling_aperiodic_percentage" {
+  description = "Percentage for the scaling block"
+  type        = number
+  default     = 0.9
 }
