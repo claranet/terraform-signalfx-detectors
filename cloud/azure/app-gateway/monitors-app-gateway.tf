@@ -4,7 +4,7 @@ resource "signalfx_detector" "heartbeat" {
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
 		signal = data('ResponseStatus', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and ${module.filter-tags.filter_custom})
-		not_reporting.detector(stream=signal, resource_identifier=['host'], duration='${var.heartbeat_timeframe}').publish('CRIT')
+		not_reporting.detector(stream=signal, resource_identifier=['HttpStatusGroup'], duration='${var.heartbeat_timeframe}').publish('CRIT')
 	EOF
 
 	rule {
@@ -77,11 +77,12 @@ resource "signalfx_detector" "failed_requests" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Gateway failed requests"
 
 	program_text = <<-EOF
+		from signalfx.detectors.aperiodic import aperiodic
 		A = data('FailedRequests', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and ${module.filter-tags.filter_custom})${var.failed_requests_aggregation_function}
 		B = data('TotalRequests', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and ${module.filter-tags.filter_custom})${var.failed_requests_aggregation_function}
 		signal = ((A/B)*100).${var.failed_requests_transformation_function}(over='${var.failed_requests_transformation_window}')
-		detect(when(signal > ${var.failed_requests_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.failed_requests_threshold_warning})).publish('WARN')
+		above_or_below_detector(signal, ${var.failed_requests_threshold_critical}, ‘above’, lasting('${var.failed_requests_aperiodic_duration}', ${var.failed_requests_aperiodic_percentage})).publish('CRIT')
+		above_or_below_detector(signal, ${var.failed_requests_threshold_warning}, ‘above’, lasting('${var.failed_requests_aperiodic_duration}', ${var.failed_requests_aperiodic_percentage})).publish('WARN')
 	EOF
 
 	rule {
@@ -137,11 +138,12 @@ resource "signalfx_detector" "http_4xx_errors" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Gateway HTTP 4xx errors rate"
 
 	program_text = <<-EOF
+		from signalfx.detectors.aperiodic import aperiodic
 		A = data('ResponseStatus', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('httpstatusgroup', '4xx') and ${module.filter-tags.filter_custom})${var.http_4xx_errors_aggregation_function}
 		B = data('ResponseStatus', filter=filter('resource_type', 'Microsoft.Network/applicationGateways')and ${module.filter-tags.filter_custom})${var.http_4xx_errors_aggregation_function}
 		signal = ((A/B)*100).${var.http_4xx_errors_transformation_function}(over='${var.http_4xx_errors_transformation_window}')
-		detect(when(signal > ${var.http_4xx_errors_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.http_4xx_errors_threshold_warning})).publish('WARN')
+		above_or_below_detector(signal, ${var.http_4xx_errors_threshold_critical}, ‘above’, lasting('${var.http_4xx_errors_aperiodic_duration}', ${var.http_4xx_errors_aperiodic_percentage})).publish('CRIT')
+		above_or_below_detector(signal, ${var.http_4xx_errors_threshold_warning}, ‘above’, lasting('${var.http_4xx_errors_aperiodic_duration}', ${var.http_4xx_errors_aperiodic_percentage})).publish('WARN')
 	EOF
 
 	rule {
@@ -167,11 +169,12 @@ resource "signalfx_detector" "http_5xx_errors" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Gateway HTTP 5xx errors rate"
 
 	program_text = <<-EOF
+		from signalfx.detectors.aperiodic import aperiodic
 		A = data('ResponseStatus', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('httpstatusgroup', '5xx') and ${module.filter-tags.filter_custom})${var.http_5xx_errors_aggregation_function}
 		B = data('ResponseStatus', filter=filter('resource_type', 'Microsoft.Network/applicationGateways' and ${module.filter-tags.filter_custom})${var.http_5xx_errors_aggregation_function}
 		signal = ((A/B)*100).${var.http_5xx_errors_transformation_function}(over='${var.http_5xx_errors_transformation_window}')
-		detect(when(signal > ${var.http_5xx_errors_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.http_5xx_errors_threshold_warning})).publish('WARN')
+		above_or_below_detector(signal, ${var.http_5xx_errors_threshold_critical}, ‘above’, lasting('${var.http_5xx_errors_aperiodic_duration}', ${var.http_5xx_errors_aperiodic_percentage})).publish('CRIT')
+		above_or_below_detector(signal, ${var.http_5xx_errors_threshold_warning}, ‘above’, lasting('${var.http_5xx_errors_aperiodic_duration}', ${var.http_5xx_errors_aperiodic_percentage})).publish('WARN')
 	EOF
 
 	rule {
@@ -197,11 +200,12 @@ resource "signalfx_detector" "backend_http_4xx_errors" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Gateway backend HTTP 4xx errors rate"
 
 	program_text = <<-EOF
+		from signalfx.detectors.aperiodic import aperiodic
 		A = data('BackendResponseStatus', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('httpstatusgroup', '4xx') and ${module.filter-tags.filter_custom})${var.backend_http_4xx_errors_aggregation_function}
 		B = data('BackendResponseStatus', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and ${module.filter-tags.filter_custom})${var.backend_http_4xx_errors_aggregation_function}
 		signal = ((A/B)*100).${var.backend_http_4xx_errors_transformation_function}(over='${var.backend_http_4xx_errors_transformation_window}')
-		detect(when(signal > ${var.backend_http_4xx_errors_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.backend_http_4xx_errors_threshold_warning})).publish('WARN')
+		above_or_below_detector(signal, ${var.backend_http_4xx_errors_threshold_critical}, ‘above’, lasting('${var.backend_http_4xx_errors_aperiodic_duration}', ${var.backend_http_4xx_errors_aperiodic_percentage})).publish('CRIT')
+		above_or_below_detector(signal, ${var.backend_http_4xx_errors_threshold_warning}, ‘above’, lasting('${var.backend_http_4xx_errors_aperiodic_duration}', ${var.backend_http_4xx_errors_aperiodic_percentage})).publish('WARN')
 	EOF
 
 	rule {
@@ -227,11 +231,12 @@ resource "signalfx_detector" "backend_http_5xx_errors" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Gateway backend HTTP 5xx errors rate"
 
 	program_text = <<-EOF
+		from signalfx.detectors.aperiodic import aperiodic
 		A = data('BackendResponseStatus', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('httpstatusgroup', '5xx') and ${module.filter-tags.filter_custom})${var.backend_http_5xx_errors_aggregation_function}
 		B = data('BackendResponseStatus', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and ${module.filter-tags.filter_custom})${var.backend_http_5xx_errors_aggregation_function}
 		signal = ((A/B)*100).${var.backend_http_5xx_errors_transformation_function}(over='${var.backend_http_5xx_errors_transformation_window}')
-		detect(when(signal > ${var.backend_http_5xx_errors_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.backend_http_5xx_errors_threshold_warning})).publish('WARN')
+		above_or_below_detector(signal, ${var.backend_http_5xx_errors_threshold_critical}, ‘above’, lasting('${var.backend_http_5xx_errors_aperiodic_duration}', ${var.backend_http_5xx_errors_aperiodic_percentage})).publish('CRIT')
+		above_or_below_detector(signal, ${var.backend_http_5xx_errors_threshold_warning}, ‘above’, lasting('${var.backend_http_5xx_errors_aperiodic_duration}', ${var.backend_http_5xx_errors_aperiodic_percentage})).publish('WARN')
 	EOF
 
 	rule {
