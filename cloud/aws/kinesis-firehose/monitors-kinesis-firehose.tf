@@ -26,7 +26,7 @@ resource "signalfx_detector" "incoming_records" {
 	EOF
 
 	rule {
-		description           = "is too low <= ${var.incoming_records_threshold_critical}"
+		description           = "are too low <= ${var.incoming_records_threshold_critical}"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.incoming_records_disabled_critical, var.incoming_records_disabled, var.detectors_disabled)

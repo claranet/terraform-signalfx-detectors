@@ -29,7 +29,7 @@ resource "signalfx_detector" "no_healthy_instances" {
 	EOF
 
 	rule {
-		description           = "is too low < ${var.no_healthy_instances_threshold_critical}"
+		description           = "are too low < ${var.no_healthy_instances_threshold_critical}"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.no_healthy_instances_disabled_critical, var.no_healthy_instances_disabled, var.detectors_disabled)
@@ -38,7 +38,7 @@ resource "signalfx_detector" "no_healthy_instances" {
 	}
 
 	rule {
-		description           = "is too low < ${var.no_healthy_instances_threshold_warning}"
+		description           = "are too low < ${var.no_healthy_instances_threshold_warning}"
 		severity              = "Warning"
 		detect_label          = "WARN"
 		disabled              = coalesce(var.no_healthy_instances_disabled_warning, var.no_healthy_instances_disabled, var.detectors_disabled)
@@ -79,7 +79,7 @@ resource "signalfx_detector" "latency" {
 }
 
 resource "signalfx_detector" "httpcode_5xx" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ALB HTTP code 5xx"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ALB 5xx errors"
 
 	program_text = <<-EOF
 		A = data('HTTPCode_ELB_5XX_Count', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and ${module.filter-tags.filter_custom}, extrapolation='zero'){var.httpcode_5xx_aggregation_function}
@@ -90,7 +90,7 @@ resource "signalfx_detector" "httpcode_5xx" {
 	EOF
 
 	rule {
-		description           = "is too high > ${var.httpcode_5xx_threshold_critical}"
+		description           = "are too high > ${var.httpcode_5xx_threshold_critical}"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.httpcode_5xx_disabled_critical, var.httpcode_5xx_disabled, var.detectors_disabled)
@@ -99,7 +99,7 @@ resource "signalfx_detector" "httpcode_5xx" {
 	}
 
 	rule {
-		description           = "is too high > ${var.httpcode_5xx_threshold_warning}"
+		description           = "are too high > ${var.httpcode_5xx_threshold_warning}"
 		severity              = "Warning"
 		detect_label          = "WARN"
 		disabled              = coalesce(var.httpcode_5xx_disabled_warning, var.httpcode_5xx_disabled, var.detectors_disabled)
@@ -110,7 +110,7 @@ resource "signalfx_detector" "httpcode_5xx" {
 }
 
 resource "signalfx_detector" "httpcode_4xx" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ALB HTTP code 4xx"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ALB 4xx errors"
 
 	program_text = <<-EOF
 		A = data('HTTPCode_ELB_4XX_Count', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and ${module.filter-tags.filter_custom}, extrapolation='zero'){var.httpcode_4xx_aggregation_function}
@@ -121,7 +121,7 @@ resource "signalfx_detector" "httpcode_4xx" {
 	EOF
 
 	rule {
-		description           = "is too high > ${var.httpcode_4xx_threshold_critical}"
+		description           = "are too high > ${var.httpcode_4xx_threshold_critical}"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.httpcode_4xx_disabled_critical, var.httpcode_4xx_disabled, var.detectors_disabled)
@@ -130,7 +130,7 @@ resource "signalfx_detector" "httpcode_4xx" {
 	}
 
 	rule {
-		description           = "is too high > ${var.httpcode_4xx_threshold_warning}"
+		description           = "are too high > ${var.httpcode_4xx_threshold_warning}"
 		severity              = "Warning"
 		detect_label          = "WARN"
 		disabled              = coalesce(var.httpcode_4xx_disabled_warning, var.httpcode_4xx_disabled, var.detectors_disabled)
@@ -141,7 +141,7 @@ resource "signalfx_detector" "httpcode_4xx" {
 }
 
 resource "signalfx_detector" "httpcode_target_5xx" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ALB target HTTP code 5xx"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ALB target 5xx errors"
 
 	program_text = <<-EOF
 		A = data('HTTPCode_Target_5XX_Count', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and ${module.filter-tags.filter_custom}, extrapolation='zero'){var.httpcode_target_5xx_aggregation_function}
@@ -152,7 +152,7 @@ resource "signalfx_detector" "httpcode_target_5xx" {
 	EOF
 
 	rule {
-		description           = "is too high > ${var.httpcode_target_5xx_threshold_critical}"
+		description           = "are too high > ${var.httpcode_target_5xx_threshold_critical}"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.httpcode_target_5xx_disabled_critical, var.httpcode_target_5xx_disabled, var.detectors_disabled)
@@ -161,7 +161,7 @@ resource "signalfx_detector" "httpcode_target_5xx" {
 	}
 
 	rule {
-		description           = "is too high > ${var.httpcode_target_5xx_threshold_warning}"
+		description           = "are too high > ${var.httpcode_target_5xx_threshold_warning}"
 		severity              = "Warning"
 		detect_label          = "WARN"
 		disabled              = coalesce(var.httpcode_target_5xx_disabled_warning, var.httpcode_target_5xx_disabled, var.detectors_disabled)
@@ -172,7 +172,7 @@ resource "signalfx_detector" "httpcode_target_5xx" {
 }
 
 resource "signalfx_detector" "httpcode_target_4xx" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ALB target HTTP code 4xx"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ALB target 4xx errors"
 
 	program_text = <<-EOF
 		A = data('HTTPCode_Target_4XX_Count', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and ${module.filter-tags.filter_custom}, extrapolation='zero'){var.httpcode_target_4xx_aggregation_function}
@@ -183,7 +183,7 @@ resource "signalfx_detector" "httpcode_target_4xx" {
 	EOF
 
 	rule {
-		description           = "is too high > ${var.httpcode_target_4xx_threshold_critical}"
+		description           = "are too high > ${var.httpcode_target_4xx_threshold_critical}"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.httpcode_target_4xx_disabled_critical, var.httpcode_target_4xx_disabled, var.detectors_disabled)
@@ -192,7 +192,7 @@ resource "signalfx_detector" "httpcode_target_4xx" {
 	}
 
 	rule {
-		description           = "is too high > ${var.httpcode_target_4xx_threshold_warning}"
+		description           = "are too high > ${var.httpcode_target_4xx_threshold_warning}"
 		severity              = "Warning"
 		detect_label          = "WARN"
 		disabled              = coalesce(var.httpcode_target_4xx_disabled_warning, var.httpcode_target_4xx_disabled, var.detectors_disabled)
