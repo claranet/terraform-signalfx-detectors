@@ -97,7 +97,7 @@ variable "cpu_90_15min_notifications_critical" {
 variable "cpu_90_15min_aggregation_function" {
   description = "Aggregation function and group by for cpu_90_15min detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['aws_region'])"
+  default     = ".mean(by=['DBInstanceIdentifier'])"
 }
 
 variable "cpu_90_15min_transformation_function" {
@@ -165,7 +165,7 @@ variable "free_space_low_notifications_critical" {
 variable "free_space_low_aggregation_function" {
   description = "Aggregation function and group by for free_space_low detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['aws_region'])"
+  default     = ".mean(by=['DBInstanceIdentifier'])"
 }
 
 variable "free_space_low_transformation_function" {
@@ -183,13 +183,13 @@ variable "free_space_low_transformation_window" {
 variable "free_space_low_threshold_critical" {
   description = "Critical threshold for free_space_low detector"
   type        = number
-  default     = 10
+  default     = 20
 }
 
 variable "free_space_low_threshold_warning" {
   description = "Warning threshold for free_space_low detector"
   type        = number
-  default     = 20
+  default     = 40
 }
 
 # Replica_lag detectors
@@ -233,7 +233,7 @@ variable "replica_lag_notifications_critical" {
 variable "replica_lag_aggregation_function" {
   description = "Aggregation function and group by for replica_lag detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['aws_region'])"
+  default     = ".mean(by=['DBInstanceIdentifier'])"
 }
 
 variable "replica_lag_transformation_function" {

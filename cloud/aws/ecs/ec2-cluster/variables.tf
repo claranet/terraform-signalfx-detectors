@@ -97,7 +97,7 @@ variable "cpu_utilization_notifications_critical" {
 variable "cpu_utilization_aggregation_function" {
   description = "Aggregation function and group by for cpu_utilization detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['aws_region','ClusterName'])"
+  default     = ""
 }
 
 variable "cpu_utilization_transformation_function" {
@@ -165,7 +165,7 @@ variable "memory_reservation_notifications_critical" {
 variable "memory_reservation_aggregation_function" {
   description = "Aggregation function and group by for memory_reservation detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['aws_region','ClusterName'])"
+  default     = ""
 }
 
 variable "memory_reservation_transformation_function" {

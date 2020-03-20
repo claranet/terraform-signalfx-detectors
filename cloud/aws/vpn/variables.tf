@@ -97,7 +97,7 @@ variable "vpn_status_notifications_critical" {
 variable "vpn_status_aggregation_function" {
   description = "Aggregation function and group by for vpn_status detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".min(by=['aws_region','TunnelIpAddress'])"
+  default     = ".min(by=['TunnelIpAddress'])"
 }
 
 variable "vpn_status_transformation_function" {

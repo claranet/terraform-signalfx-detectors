@@ -97,7 +97,7 @@ variable "get_hits_notifications_critical" {
 variable "get_hits_aggregation_function" {
   description = "Aggregation function and group by for get_hits detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['aws_region','CacheClusterId','CacheNodeId'])"
+  default     = ".mean(by=['CacheClusterId', 'CacheNodeId'])"
 }
 
 variable "get_hits_transformation_function" {
@@ -177,7 +177,7 @@ variable "cpu_high_notifications_critical" {
 variable "cpu_high_aggregation_function" {
   description = "Aggregation function and group by for cpu_high detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['aws_region','CacheClusterId','CacheNodeId'])"
+  default     = ".mean(by=['CacheClusterId', 'CacheNodeId'])"
 }
 
 variable "cpu_high_transformation_function" {

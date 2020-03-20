@@ -117,7 +117,7 @@ resource "signalfx_detector" "free_memory" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ElastiCache free memory"
 
 	program_text = <<-EOF
-		signal = data('FreeableMemory', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and ${module.filter-tags.filter_custom})${var.free_memory_aggregation_function}.${var.free_memory_transformation_function}(over='${var.free_memory_transformation_window}')
+		signal = data('FreeableMemory', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and ${module.filter-tags.filter_custom}).rateofchange()${var.free_memory_aggregation_function}.${var.free_memory_transformation_function}(over='${var.free_memory_transformation_window}')
 		detect(when(signal < ${var.free_memory_threshold_critical})).publish('CRIT')
 		detect(when(signal < ${var.free_memory_threshold_warning})).publish('WARN')
 	EOF
@@ -146,7 +146,7 @@ resource "signalfx_detector" "evictions_growing" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ElastiCache evictions growing"
 
 	program_text = <<-EOF
-		signal = data('Evictions', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and ${module.filter-tags.filter_custom})${var.evictions_growing_aggregation_function}.${var.evictions_growing_transformation_function}(over='${var.evictions_growing_transformation_window}')
+		signal = data('Evictions', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and ${module.filter-tags.filter_custom}).rateofchange()${var.evictions_growing_aggregation_function}.${var.evictions_growing_transformation_function}(over='${var.evictions_growing_transformation_window}')
 		detect(when(signal > ${var.evictions_growing_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.evictions_growing_threshold_warning})).publish('WARN')
 	EOF
