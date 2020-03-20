@@ -3,8 +3,8 @@ resource "signalfx_detector" "heartbeat" {
 
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
-		signal = data('CPUUtilization', filter=filter('stat', 'mean') and filter('namespace', 'AWS/ECS') and ${module.filter-tags.filter_custom})
-		not_reporting.detector(stream=signal, resource_identifier=['host'], duration='${var.heartbeat_timeframe}').publish('CRIT')
+		signal = data('CPUReservation', filter=filter('stat', 'mean') and filter('namespace', 'AWS/ECS') and not filter('ServiceName', '*') and ${module.filter-tags.filter_custom})
+		not_reporting.detector(stream=signal, resource_identifier=['ClusterName'], duration='${var.heartbeat_timeframe}').publish('CRIT')
 	EOF
 
 	rule {
@@ -21,7 +21,7 @@ resource "signalfx_detector" "cpu_utilization" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ECS Cluster CPU utilization"
 
 	program_text = <<-EOF
-		signal = data('CPUUtilization', filter=filter('namespace', 'AWS/ECS')) and filter('stat', 'mean') and ${module.filter-tags.filter_custom})${var.cpu_utilization_aggregation_function}.${var.cpu_utilization_transformation_function}(over='${var.cpu_utilization_transformation_window}')
+		signal = data('CPUUtilization', filter=filter('namespace', 'AWS/ECS')) and filter('stat', 'mean') and not filter('ServiceName', '*') and ${module.filter-tags.filter_custom}).mean(by=['ClusterName'])${var.cpu_utilization_aggregation_function}.${var.cpu_utilization_transformation_function}(over='${var.cpu_utilization_transformation_window}')
 		detect(when(signal > ${var.cpu_utilization_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.cpu_utilization_threshold_warning})).publish('WARN')
 	EOF
@@ -50,7 +50,7 @@ resource "signalfx_detector" "memory_reservation" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ECS Cluster Memory reservation"
 
 	program_text = <<-EOF
-		signal = data('MemoryReservation', filter=filter('namespace', 'AWS/ECS') and filter('stat', 'mean') and ${module.filter-tags.filter_custom})${var.memory_reservation_aggregation_function}.${var.memory_reservation_transformation_function}(over='${var.memory_reservation_transformation_window}')
+		signal = data('MemoryReservation', filter=filter('namespace', 'AWS/ECS') and filter('stat', 'mean') and not filter('ServiceName', '*') and ${module.filter-tags.filter_custom}).mean(by=['ClusterName'])${var.memory_reservation_aggregation_function}.${var.memory_reservation_transformation_function}(over='${var.memory_reservation_transformation_window}')
 		detect(when(signal > ${var.memory_reservation_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.memory_reservation_threshold_warning})).publish('WARN')
 	EOF

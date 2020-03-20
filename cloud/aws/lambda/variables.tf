@@ -97,7 +97,7 @@ variable "pct_errors_notifications_critical" {
 variable "pct_errors_aggregation_function" {
   description = "Aggregation function and group by for pct_errors detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['aws_region','FunctionName'])"
+  default     = ".sum(by=['FunctionName'])"
 }
 
 variable "pct_errors_transformation_function" {
@@ -177,7 +177,7 @@ variable "errors_notifications_critical" {
 variable "errors_aggregation_function" {
   description = "Aggregation function and group by for errors detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['aws_region', 'FunctionName'])"
+  default     = ".sum(by=['FunctionName'])"
 }
 
 variable "errors_transformation_function" {
@@ -257,7 +257,7 @@ variable "throttles_notifications_critical" {
 variable "throttles_aggregation_function" {
   description = "Aggregation function and group by for throttles detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['aws_region', 'FunctionName'])"
+  default     = ".sum(by=['FunctionName'])"
 }
 
 variable "throttles_transformation_function" {
@@ -337,7 +337,7 @@ variable "invocations_notifications_critical" {
 variable "invocations_aggregation_function" {
   description = "Aggregation function and group by for invocations detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['aws_region', 'FunctionName'])"
+  default     = ".sum(by=['FunctionName'])"
 }
 
 variable "invocations_transformation_function" {

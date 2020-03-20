@@ -97,7 +97,7 @@ variable "no_healthy_instances_notifications_critical" {
 variable "no_healthy_instances_aggregation_function" {
   description = "Aggregation function and group by for No_healthy_instances detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['aws_region', 'LoadBalancer'])"
+  default     = ".sum(by=['LoadBalancer'])"
 }
 
 variable "no_healthy_instances_transformation_function" {
@@ -165,7 +165,7 @@ variable "latency_notifications_critical" {
 variable "latency_aggregation_function" {
   description = "Aggregation function and group by for latency detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['aws_region', 'LoadBalancer'])"
+  default     = ".mean(by=['LoadBalancer'])"
 }
 
 variable "latency_transformation_function" {
@@ -245,7 +245,7 @@ variable "httpcode_5xx_notifications_critical" {
 variable "httpcode_5xx_aggregation_function" {
   description = "Aggregation function and group by for httpcode_5xx detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['aws_region','LoadBalancer'])"
+  default     = ".mean(by=['LoadBalancer'])"
 }
 
 variable "httpcode_5xx_transformation_function" {
@@ -319,7 +319,7 @@ variable "httpcode_4xx_notifications_critical" {
 variable "httpcode_4xx_aggregation_function" {
   description = "Aggregation function and group by for httpcode_4xx detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['aws_region','LoadBalancer'])"
+  default     = ".mean(by=['LoadBalancer'])"
 }
 
 variable "httpcode_4xx_transformation_function" {
@@ -393,7 +393,7 @@ variable "httpcode_target_5xx_notifications_critical" {
 variable "httpcode_target_5xx_aggregation_function" {
   description = "Aggregation function and group by for httpcode_target_5xx detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['aws_region','LoadBalancer'])"
+  default     = ".mean(by=['LoadBalancer'])"
 }
 
 variable "httpcode_target_5xx_transformation_function" {
@@ -467,7 +467,7 @@ variable "httpcode_target_4xx_notifications_critical" {
 variable "httpcode_target_4xx_aggregation_function" {
   description = "Aggregation function and group by for httpcode_target_4xx detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['aws_region','LoadBalancer'])"
+  default     = ".mean(by=['LoadBalancer'])"
 }
 
 variable "httpcode_target_4xx_transformation_function" {

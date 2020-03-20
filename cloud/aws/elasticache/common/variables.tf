@@ -97,7 +97,7 @@ variable "evictions_notifications_critical" {
 variable "evictions_aggregation_function" {
   description = "Aggregation function and group by for evictions detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['aws_region','CacheClusterId','CacheNodeId'])"
+  default     = ".mean(by=['CacheClusterId', 'CacheNodeId'])"
 }
 
 variable "evictions_transformation_function" {
@@ -165,7 +165,7 @@ variable "max_connection_notifications_critical" {
 variable "max_connection_aggregation_function" {
   description = "Aggregation function and group by for max_connection detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['aws_region','CacheClusterId','CacheNodeId'])"
+  default     = ".mean(by=['CacheClusterId', 'CacheNodeId'])"
 }
 
 variable "max_connection_transformation_function" {
@@ -233,7 +233,7 @@ variable "no_connection_notifications_critical" {
 variable "no_connection_aggregation_function" {
   description = "Aggregation function and group by for no_connection detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['aws_region','CacheClusterId','CacheNodeId'])"
+  default     = ".mean(by=['CacheClusterId', 'CacheNodeId'])"
 }
 
 variable "no_connection_transformation_function" {
@@ -301,7 +301,7 @@ variable "swap_notifications_critical" {
 variable "swap_aggregation_function" {
   description = "Aggregation function and group by for swap detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['aws_region','CacheClusterId','CacheNodeId'])"
+  default     = ".mean(by=['CacheClusterId', 'CacheNodeId'])"
 }
 
 variable "swap_transformation_function" {
@@ -369,7 +369,7 @@ variable "free_memory_notifications_critical" {
 variable "free_memory_aggregation_function" {
   description = "Aggregation function and group by for free_memory detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['aws_region','CacheClusterId','CacheNodeId'])"
+  default     = ".mean(by=['CacheClusterId', 'CacheNodeId'])"
 }
 
 variable "free_memory_transformation_function" {
@@ -437,7 +437,7 @@ variable "evictions_growing_notifications_critical" {
 variable "evictions_growing_aggregation_function" {
   description = "Aggregation function and group by for evictions_growing detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['aws_region','CacheClusterId','CacheNodeId'])"
+  default     = ".mean(by=['CacheClusterId', 'CacheNodeId'])"
 }
 
 variable "evictions_growing_transformation_function" {

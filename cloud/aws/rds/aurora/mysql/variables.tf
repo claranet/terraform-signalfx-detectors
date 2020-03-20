@@ -36,26 +36,6 @@ variable "detectors_disabled" {
   default     = false
 }
 
-# AWS RDS detectors specific
-
-variable "heartbeat_disabled" {
-  description = "Disable all alerting rules for heartbeat detector"
-  type        = bool
-  default     = null
-}
-
-variable "heartbeat_notifications" {
-  description = "Notification recipients list for every alerting rules of heartbeat detector"
-  type        = list
-  default     = []
-}
-
-variable "heartbeat_timeframe" {
-  description = "Timeframe for system not reporting detector (i.e. \"10m\")"
-  type        = string
-  default     = "20m"
-}
-
 # Aurora_mysql_replica_lag detectors
 
 variable "aurora_mysql_replica_lag_disabled" {
@@ -97,7 +77,7 @@ variable "aurora_mysql_replica_lag_notifications_critical" {
 variable "aurora_mysql_replica_lag_aggregation_function" {
   description = "Aggregation function and group by for aurora_mysql_replica_lag detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['aws_region'])"
+  default     = ".mean(by=['DBInstanceIdentifier'])"
 }
 
 variable "aurora_mysql_replica_lag_transformation_function" {

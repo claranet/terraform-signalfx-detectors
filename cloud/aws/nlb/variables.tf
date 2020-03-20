@@ -97,7 +97,7 @@ variable "no_healthy_instances_notifications_critical" {
 variable "no_healthy_instances_aggregation_function" {
   description = "Aggregation function and group by for no_healthy_instances detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['aws_region','LoadBalancer'])"
+  default     = ".sum(by=['LoadBalancer'])"
 }
 
 variable "no_healthy_instances_transformation_function" {

@@ -23,14 +23,24 @@ resource "signalfx_detector" "incoming_records" {
 	program_text = <<-EOF
 		signal = data('IncomingRecords', filter=filter('namespace', 'AWS/Kinesis') and filter('stat', 'count') and ${module.filter-tags.filter_custom})${var.incoming_records_aggregation_function}.${var.incoming_records_transformation_function}(over='${var.incoming_records_transformation_window}')
 		detect(when(signal <= ${var.incoming_records_threshold_critical})).publish('CRIT')
+		detect(when(signal <= ${var.incoming_records_threshold_warning})).publish('WARN')
 	EOF
 
 	rule {
-		description           = "are too low <= ${var.incoming_records_threshold_critical}"
+		description           = "is too low <= ${var.incoming_records_threshold_critical}"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.incoming_records_disabled_critical, var.incoming_records_disabled, var.detectors_disabled)
 		notifications         = coalescelist(var.incoming_records_notifications_critical, var.incoming_records_notifications, var.notifications)
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+	}
+
+	rule {
+		description           = "is too low <= ${var.incoming_records_threshold_warning}"
+		severity              = "Warning"
+		detect_label          = "WARN"
+		disabled              = coalesce(var.incoming_records_disabled_warning, var.incoming_records_disabled, var.detectors_disabled)
+		notifications         = coalescelist(var.incoming_records_notifications_warning, var.incoming_records_notifications, var.notifications)
 		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 
