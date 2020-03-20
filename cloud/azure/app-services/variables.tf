@@ -97,7 +97,7 @@ variable "response_time_notifications_critical" {
 variable "response_time_aggregation_function" {
   description = "Aggregation function and group by for response_time detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_id', 'azure_resource_name', 'Instance'])"
+  default     = ".mean(by=['azure_resource_id', 'azure_resource_name', 'Instance'])"
 }
 
 variable "response_time_transformation_function" {
@@ -122,6 +122,18 @@ variable "response_time_threshold_warning" {
   description = "Warning threshold for response_time detector"
   type        = number
   default     = 5
+}
+
+variable "response_time_aperiodic_duration" {
+  description = "Duration for the response_time block"
+  type        = string
+  default     = "10m"
+}
+
+variable "response_time_aperiodic_percentage" {
+  description = "Percentage for the response_time block"
+  type        = number
+  default     = 0.9
 }
 
 # Memory_usage_count detectors
@@ -165,7 +177,7 @@ variable "memory_usage_count_notifications_critical" {
 variable "memory_usage_count_aggregation_function" {
   description = "Aggregation function and group by for memory_usage_count detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_id', 'azure_resource_name', 'Instance'])"
+  default     = ".mean(by=['azure_resource_id', 'azure_resource_name', 'Instance'])"
 }
 
 variable "memory_usage_count_transformation_function" {
@@ -233,7 +245,7 @@ variable "http_5xx_errors_count_notifications_critical" {
 variable "http_5xx_errors_count_aggregation_function" {
   description = "Aggregation function and group by for http_5xx_errors_count detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_id','azure_resource_name', 'Instance'])"
+  default     = ".mean(by=['azure_resource_id','azure_resource_name', 'Instance'])"
 }
 
 variable "http_5xx_errors_count_transformation_function" {
@@ -258,6 +270,18 @@ variable "http_5xx_errors_count_threshold_warning" {
   description = "Warning threshold for http_5xx_errors_count detector"
   type        = number
   default     = 50
+}
+
+variable "http_5xx_errors_count_aperiodic_duration" {
+  description = "Duration for the http_5xx_errors_count block"
+  type        = string
+  default     = "10m"
+}
+
+variable "http_5xx_errors_count_aperiodic_percentage" {
+  description = "Percentage for the http_5xx_errors_count block"
+  type        = number
+  default     = 0.9
 }
 
 # http_4xx_errors_count detectors
@@ -301,7 +325,7 @@ variable "http_4xx_errors_count_notifications_critical" {
 variable "http_4xx_errors_count_aggregation_function" {
   description = "Aggregation function and group by for http_4xx_errors_count detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_id','azure_resource_name', 'Instance'])"
+  default     = ".mean(by=['azure_resource_id','azure_resource_name', 'Instance'])"
 }
 
 variable "http_4xx_errors_count_transformation_function" {
@@ -326,6 +350,18 @@ variable "http_4xx_errors_count_threshold_warning" {
   description = "Warning threshold for http_4xx_errors_count detector"
   type        = number
   default     = 50
+}
+
+variable "http_4xx_errors_count_aperiodic_duration" {
+  description = "Duration for the http_4xx_errors_count block"
+  type        = string
+  default     = "10m"
+}
+
+variable "http_4xx_errors_count_aperiodic_percentage" {
+  description = "Percentage for the http_4xx_errors_count block"
+  type        = number
+  default     = 0.9
 }
 
 # Http_success_status_rate detectors
@@ -369,7 +405,7 @@ variable "http_success_status_rate_notifications_critical" {
 variable "http_success_status_rate_aggregation_function" {
   description = "Aggregation function and group by for http_success_status_rate detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_id','azure_resource_name', 'Instance'])"
+  default     = ".mean(by=['azure_resource_id','azure_resource_name', 'Instance'])"
 }
 
 variable "http_success_status_rate_transformation_function" {
@@ -394,6 +430,18 @@ variable "http_success_status_rate_threshold_warning" {
   description = "Warning threshold for http_success_status_rate detector"
   type        = number
   default     = 30
+}
+
+variable "http_success_status_rate_aperiodic_duration" {
+  description = "Duration for the http_success_status_rate block"
+  type        = string
+  default     = "10m"
+}
+
+variable "http_success_status_rate_aperiodic_percentage" {
+  description = "Percentage for the http_success_status_rate block"
+  type        = number
+  default     = 0.9
 }
 
 # Status detectors
@@ -437,7 +485,7 @@ variable "status_notifications_critical" {
 variable "status_aggregation_function" {
   description = "Aggregation function and group by for status detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_id','azure_resource_name', 'Instance'])"
+  default     = ".mean(by=['azure_resource_id','azure_resource_name', 'Instance'])"
 }
 
 variable "status_transformation_function" {
@@ -455,7 +503,7 @@ variable "status_transformation_window" {
 variable "status_threshold_critical" {
   description = "Critical threshold for status detector"
   type        = number
-  default     = 1
+  default     = 0
 }
 
 variable "status_threshold_warning" {
