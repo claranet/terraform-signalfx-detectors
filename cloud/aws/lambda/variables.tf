@@ -38,24 +38,6 @@ variable "detectors_disabled" {
 
 # AWS Lambda detectors specific
 
-variable "heartbeat_disabled" {
-  description = "Disable all alerting rules for heartbeat detector"
-  type        = bool
-  default     = null
-}
-
-variable "heartbeat_notifications" {
-  description = "Notification recipients list for every alerting rules of heartbeat detector"
-  type        = list
-  default     = []
-}
-
-variable "heartbeat_timeframe" {
-  description = "Timeframe for system not reporting detector (i.e. \"10m\")"
-  type        = string
-  default     = "20m"
-}
-
 # Pct_errors detectors
 
 variable "pct_errors_disabled" {

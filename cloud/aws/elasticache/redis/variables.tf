@@ -97,7 +97,7 @@ variable "cache_hits_notifications_critical" {
 variable "cache_hits_aggregation_function" {
   description = "Aggregation function and group by for cache_hits detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['CacheClusterId', 'CacheNodeId'])"
+  default     = ""
 }
 
 variable "cache_hits_transformation_function" {
@@ -165,7 +165,7 @@ variable "cpu_high_notifications_critical" {
 variable "cpu_high_aggregation_function" {
   description = "Aggregation function and group by for cpu_high detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['CacheClusterId', 'CacheNodeId'])"
+  default     = ""
 }
 
 variable "cpu_high_transformation_function" {
@@ -233,7 +233,7 @@ variable "replication_lag_notifications_critical" {
 variable "replication_lag_aggregation_function" {
   description = "Aggregation function and group by for replication_lag detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['CacheClusterId', 'CacheNodeId'])"
+  default     = ""
 }
 
 variable "replication_lag_transformation_function" {
@@ -301,7 +301,7 @@ variable "commands_notifications_critical" {
 variable "commands_aggregation_function" {
   description = "Aggregation function and group by for commands detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['CacheClusterId', 'CacheNodeId'])"
+  default     = ""
 }
 
 variable "commands_transformation_function" {

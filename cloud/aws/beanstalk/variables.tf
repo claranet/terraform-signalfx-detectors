@@ -97,7 +97,7 @@ variable "health_notifications_critical" {
 variable "health_aggregation_function" {
   description = "Aggregation function and group by for health detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".min(by=['elasticbeanstalk_environment-name'])"
+  default     = ""
 }
 
 variable "health_transformation_function" {
@@ -165,7 +165,7 @@ variable "latency_p90_notifications_critical" {
 variable "latency_p90_aggregation_function" {
   description = "Aggregation function and group by for latency_p90 detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".min(by=['elasticbeanstalk_environment-name'])"
+  default     = ".min(by=['EnvironmentName'])"
 }
 
 variable "latency_p90_transformation_function" {
@@ -233,7 +233,7 @@ variable "5xx_error_rate_notifications_critical" {
 variable "5xx_error_rate_aggregation_function" {
   description = "Aggregation function and group by for 5xx_error_rate detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['elasticbeanstalk_environment-name'])"
+  default     = ".sum(by=['EnvrionementName'])"
 }
 
 variable "5xx_error_rate_transformation_function" {
@@ -301,7 +301,7 @@ variable "root_filesystem_usage_notifications_critical" {
 variable "root_filesystem_usage_aggregation_function" {
   description = "Aggregation function and group by for root_filesystem_usage detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".min(by=['elasticbeanstalk_environment-name', 'host'])"
+  default     = ""
 }
 
 variable "root_filesystem_usage_transformation_function" {

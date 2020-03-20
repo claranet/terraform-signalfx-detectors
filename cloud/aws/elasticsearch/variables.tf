@@ -97,7 +97,7 @@ variable "cluster_status_notifications_critical" {
 variable "cluster_status_aggregation_function" {
   description = "Aggregation function and group by for cluster_status detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean()"
+  default     = ""
 }
 
 variable "cluster_status_transformation_function" {
@@ -115,7 +115,7 @@ variable "cluster_status_transformation_window" {
 variable "cluster_status_threshold_critical" {
   description = "Critical threshold for cluster_status detector"
   type        = number
-  default     = 2
+  default     = 1
 }
 
 variable "cluster_status_threshold_warning" {
@@ -171,7 +171,7 @@ variable "free_space_aggregation_function" {
 variable "free_space_transformation_function" {
   description = "Transformation function for free_space detector (mean, min, max)"
   type        = string
-  default     = "max"
+  default     = "min"
 }
 
 variable "free_space_transformation_window" {
@@ -239,7 +239,7 @@ variable "cpu_90_15min_aggregation_function" {
 variable "cpu_90_15min_transformation_function" {
   description = "Transformation function for cpu_90_15min detector (mean, min, max)"
   type        = string
-  default     = "min"
+  default     = "max"
 }
 
 variable "cpu_90_15min_transformation_window" {
