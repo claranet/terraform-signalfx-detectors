@@ -97,7 +97,7 @@ variable "current_connection_notifications_critical" {
 variable "current_connection_aggregation_function" {
   description = "Aggregation function and group by for current_connection detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_id', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_resource_id', 'azure_resource_name'])"
 }
 
 variable "current_connection_transformation_function" {
@@ -165,7 +165,7 @@ variable "backend_connect_time_notifications_critical" {
 variable "backend_connect_time_aggregation_function" {
   description = "Aggregation function and group by for backend_connect_time detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['azure_region', 'azure_resource_id', 'azure_resource_name', 'BackendHttpSetting', 'BackendPool', 'BackendServer'])"
+  default     = ".sum(by=['azure_resource_id', 'azure_resource_name', 'BackendHttpSetting', 'BackendPool', 'BackendServer'])"
 }
 
 variable "backend_connect_time_transformation_function" {
@@ -233,7 +233,7 @@ variable "failed_requests_notifications_critical" {
 variable "failed_requests_aggregation_function" {
   description = "Aggregation function and group by for failed_requests detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_id', 'azure_resource_name', 'BackendSettingsPool'])"
+  default     = ".mean(by=['azure_resource_id', 'azure_resource_name', 'BackendSettingsPool'])"
 }
 
 variable "failed_requests_transformation_function" {
@@ -258,6 +258,18 @@ variable "failed_requests_threshold_warning" {
   description = "Warning threshold for failed_requests detector"
   type        = number
   default     = 80
+}
+
+variable "failed_requests_aperiodic_duration" {
+  description = "Duration for the failed_requests block"
+  type        = string
+  default     = "10m"
+}
+
+variable "failed_requests_aperiodic_percentage" {
+  description = "Percentage for the failed_requests block"
+  type        = number
+  default     = 0.9
 }
 
 # Unhealthy_host_ratio detectors
@@ -301,7 +313,7 @@ variable "unhealthy_host_ratio_notifications_critical" {
 variable "unhealthy_host_ratio_aggregation_function" {
   description = "Aggregation function and group by for unhealthy_host_ratio detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['azure_region', 'azure_resource_id', 'azure_resource_name', 'BackendSettingsPool'])"
+  default     = ".sum(by=['azure_resource_id', 'azure_resource_name', 'BackendSettingsPool'])"
 }
 
 variable "unhealthy_host_ratio_transformation_function" {
@@ -369,7 +381,7 @@ variable "http_4xx_errors_notifications_critical" {
 variable "http_4xx_errors_aggregation_function" {
   description = "Aggregation function and group by for http_4xx_errors detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['azure_region', 'azure_resource_id', 'azure_resource_name'])"
+  default     = ".sum(by=['azure_resource_id', 'azure_resource_name'])"
 }
 
 variable "http_4xx_errors_transformation_function" {
@@ -394,6 +406,18 @@ variable "http_4xx_errors_threshold_warning" {
   description = "Warning threshold for http_4xx_errors detector"
   type        = number
   default     = 80
+}
+
+variable "http_4xx_errors_aperiodic_duration" {
+  description = "Duration for the http_4xx_errors block"
+  type        = string
+  default     = "10m"
+}
+
+variable "http_4xx_errors_aperiodic_percentage" {
+  description = "Percentage for the http_4xx_errors block"
+  type        = number
+  default     = 0.9
 }
 
 # Http_5xx_errors detectors
@@ -437,7 +461,7 @@ variable "http_5xx_errors_notifications_critical" {
 variable "http_5xx_errors_aggregation_function" {
   description = "Aggregation function and group by for http_5xx_errors detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['azure_region', 'azure_resource_id', 'azure_resource_name'])"
+  default     = ".sum(by=['azure_resource_id', 'azure_resource_name'])"
 }
 
 variable "http_5xx_errors_transformation_function" {
@@ -462,6 +486,18 @@ variable "http_5xx_errors_threshold_warning" {
   description = "Warning threshold for http_5xx_errors detector"
   type        = number
   default     = 80
+}
+
+variable "http_5xx_errors_aperiodic_duration" {
+  description = "Duration for the http_5xx_errors block"
+  type        = string
+  default     = "10m"
+}
+
+variable "http_5xx_errors_aperiodic_percentage" {
+  description = "Percentage for the http_5xx_errors block"
+  type        = number
+  default     = 0.9
 }
 
 # Backend_http_4xx_errors detectors
@@ -505,7 +541,7 @@ variable "backend_http_4xx_errors_notifications_critical" {
 variable "backend_http_4xx_errors_aggregation_function" {
   description = "Aggregation function and group by for backend_http_4xx_errors detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['azure_region', 'azure_resource_id', 'azure_resource_name', 'BackendHttpSetting', 'BackendPool', 'BackendServer'])"
+  default     = ".sum(by=['azure_resource_id', 'azure_resource_name', 'BackendHttpSetting', 'BackendPool', 'BackendServer'])"
 }
 
 variable "backend_http_4xx_errors_transformation_function" {
@@ -530,6 +566,18 @@ variable "backend_http_4xx_errors_threshold_warning" {
   description = "Warning threshold for backend_http_4xx_errors detector"
   type        = number
   default     = 80
+}
+
+variable "backend_http_4xx_errors_aperiodic_duration" {
+  description = "Duration for the backend_http_4xx_errors block"
+  type        = string
+  default     = "10m"
+}
+
+variable "backend_http_4xx_errors_aperiodic_percentage" {
+  description = "Percentage for the backend_http_4xx_errors block"
+  type        = number
+  default     = 0.9
 }
 
 # Backend_http_5xx_errors detectors
@@ -573,7 +621,7 @@ variable "backend_http_5xx_errors_notifications_critical" {
 variable "backend_http_5xx_errors_aggregation_function" {
   description = "Aggregation function and group by for backend_http_5xx_errors detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['azure_region', 'azure_resource_id', 'azure_resource_name', 'BackendHttpSetting', 'BackendPool', 'BackendServer'])"
+  default     = ".sum(by=['azure_resource_id', 'azure_resource_name', 'BackendHttpSetting', 'BackendPool', 'BackendServer'])"
 }
 
 variable "backend_http_5xx_errors_transformation_function" {
@@ -598,4 +646,16 @@ variable "backend_http_5xx_errors_threshold_warning" {
   description = "Warning threshold for backend_http_5xx_errors detector"
   type        = number
   default     = 80
+}
+
+variable "backend_http_5xx_errors_aperiodic_duration" {
+  description = "Duration for the backend_http_5xx_errors block"
+  type        = string
+  default     = "10m"
+}
+
+variable "backend_http_5xx_errors_aperiodic_percentage" {
+  description = "Percentage for the backend_http_5xx_errors block"
+  type        = number
+  default     = 0.9
 }
