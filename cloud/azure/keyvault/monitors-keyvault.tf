@@ -3,8 +3,8 @@ resource "signalfx_detector" "heartbeat" {
 
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
-		signal = data('Availability', filter=filter('resource_type', 'Microsoft.KeyVault/vaults'') and ${module.filter-tags.filter_custom})
-		not_reporting.detector(stream=signal, resource_identifier=['host'], duration='${var.heartbeat_timeframe}').publish('CRIT')
+		signal = data('Availability', filter=filter('resource_type', 'Microsoft.KeyVault/vaults') and ${module.filter-tags.filter_custom})
+		not_reporting.detector(stream=signal, resource_identifier=['ActivityName'], duration='${var.heartbeat_timeframe}').publish('CRIT')
 	EOF
 
 	rule {
@@ -23,7 +23,7 @@ resource "signalfx_detector" "api_result" {
 	program_text = <<-EOF
 		A = data('ServiceApiResult', filter=filter('resource_type', 'Microsoft.KeyVault/vaults') and filter('statuscode', '200') and ${module.filter-tags.filter_custom})${var.api_result_aggregation_function}
 		B = data('ServiceApiResult', filter=filter('resource_type', 'Microsoft.KeyVault/vaults') and ${module.filter-tags.filter_custom})${var.api_result_aggregation_function}
-		signal = ((A/B)*100).${var.api_result_transformation_function}(over='${var.api_result_transformation_window}')
+		signal = ((A/B)*100).fill(100).${var.api_result_transformation_function}(over='${var.api_result_transformation_window}')
 		detect(when(signal < ${var.api_result_threshold_critical})).publish('CRIT')
 		detect(when(signal < ${var.api_result_threshold_warning})).publish('WARN')
 	EOF
