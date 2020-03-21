@@ -4,7 +4,7 @@ resource "signalfx_detector" "heartbeat" {
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
 		signal = data('BytesReceived', filter=filter('resource_type', 'Microsoft.Web/sites') and ('is_Azure_Function', 'true') and ${module.filter-tags.filter_custom})
-		not_reporting.detector(stream=signal, resource_identifier=['host'], duration='${var.heartbeat_timeframe}').publish('CRIT')
+		not_reporting.detector(stream=signal, resource_identifier=['Instance'], duration='${var.heartbeat_timeframe}').publish('CRIT')
 	EOF
 
 	rule {
@@ -21,11 +21,12 @@ resource "signalfx_detector" "http_5xx_errors_rate" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure functions HTTP 5xx errors"
 
 	program_text = <<-EOF
+		from signalfx.detectors.aperiodic import aperiodic
 		A = data('Http5xx', filter=filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'true') and ${module.filter-tags.filter_custom})${var.http_5xx_errors_rate_aggregation_function}
 		B = data('FunctionExecutionCount', filter=filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'true') and ${module.filter-tags.filter_custom})${var.http_5xx_errors_rate_aggregation_function}
 		signal = ((A/B)*100).${var.http_5xx_errors_rate_transformation_function}(over='${var.http_5xx_errors_rate_transformation_window}')
-		detect(when(signal > ${var.http_5xx_errors_rate_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.http_5xx_errors_rate_threshold_warning})).publish('WARN')
+		above_or_below_detector(signal, ${var.http_5xx_errors_rate_threshold_critical}, ‘above’, lasting('${var.http_5xx_errors_rate_aperiodic_duration}', ${var.http_5xx_errors_rate_aperiodic_percentage})).publish('CRIT')
+		above_or_below_detector(signal, ${var.http_5xx_errors_rate_threshold_warning}, ‘above’, lasting('${var.http_5xx_errors_rate_aperiodic_duration}', ${var.http_5xx_errors_rate_aperiodic_percentage})).publish('WARN')
 	EOF
 
 	rule {
@@ -51,9 +52,10 @@ resource "signalfx_detector" "high_connections_count" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure functions connections count"
 
 	program_text = <<-EOF
+		from signalfx.detectors.aperiodic import aperiodic
 		signal = data('AppConnections', filter=filter('resource_type', 'Microsoft.Web/sites/slots') and ${module.filter-tags.filter_custom})${var.high_connections_count_aggregation_function}.${var.high_connections_count_transformation_function}(over='${var.high_connections_count_transformation_window}')
-		detect(when(signal > ${var.high_connections_count_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.high_connections_count_threshold_warning})).publish('WARN')
+		above_or_below_detector(signal, ${var.high_connections_count_threshold_critical}, ‘above’, lasting('${var.high_connections_count_aperiodic_duration}', ${var.high_connections_count_aperiodic_percentage})).publish('CRIT')
+		above_or_below_detector(signal, ${var.high_connections_count_threshold_warning}, ‘above’, lasting('${var.high_connections_count_aperiodic_duration}', ${var.high_connections_count_aperiodic_percentage})).publish('WARN')
 	EOF
 
 	rule {
@@ -79,9 +81,10 @@ resource "signalfx_detector" "high_threads_count" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure functions threads count"
 
 	program_text = <<-EOF
+		from signalfx.detectors.aperiodic import aperiodic
 		signal = data('Threads', filter=filter('resource_type', 'Microsoft.Web/sites/slots') and ${module.filter-tags.filter_custom})${var.high_threads_count_aggregation_function}.${var.high_threads_count_transformation_function}(over='${var.high_threads_count_transformation_window}')
-		detect(when(signal > ${var.high_threads_count_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.high_threads_count_threshold_warning})).publish('WARN')
+		above_or_below_detector(signal, ${var.high_threads_count_threshold_critical}, ‘above’, lasting('${var.high_threads_count_aperiodic_duration}', ${var.high_threads_count_aperiodic_percentage})).publish('CRIT')
+		above_or_below_detector(signal, ${var.high_threads_count_threshold_warning}, ‘above’, lasting('${var.high_threads_count_aperiodic_duration}', ${var.high_threads_count_aperiodic_percentage})).publish('WARN')
 	EOF
 
 	rule {
