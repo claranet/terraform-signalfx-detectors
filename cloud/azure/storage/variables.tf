@@ -124,6 +124,18 @@ variable "blobservices_requests_error_threshold_warning" {
   default     = 70
 }
 
+variable "blobservices_requests_error_aperiodic_duration" {
+  description = "Duration for the blobservices_requests_error block"
+  type        = string
+  default     = "10m"
+}
+
+variable "blobservices_requests_error_aperiodic_percentage" {
+  description = "Percentage for the blobservices_requests_error block"
+  type        = number
+  default     = 0.9
+}
+
 # Fileservices_requests_error detectors
 
 variable "fileservices_requests_error_disabled" {
@@ -190,6 +202,18 @@ variable "fileservices_requests_error_threshold_warning" {
   description = "Warning threshold for fileservices_requests_error detector"
   type        = number
   default     = 70
+}
+
+variable "fileservices_requests_error_aperiodic_duration" {
+  description = "Duration for the fileservices_requests_error block"
+  type        = string
+  default     = "10m"
+}
+
+variable "fileservices_requests_error_aperiodic_percentage" {
+  description = "Percentage for the fileservices_requests_error block"
+  type        = number
+  default     = 0.9
 }
 
 # Queueservices_requests_error detectors
@@ -260,6 +284,18 @@ variable "queueservices_requests_error_threshold_warning" {
   default     = 70
 }
 
+variable "queueservices_requests_error_aperiodic_duration" {
+  description = "Duration for the queueservices_requests_error block"
+  type        = string
+  default     = "10m"
+}
+
+variable "queueservices_requests_error_aperiodic_percentage" {
+  description = "Percentage for the queueservices_requests_error block"
+  type        = number
+  default     = 0.9
+}
+
 # Tableservices_requests_error detectors
 
 variable "tableservices_requests_error_disabled" {
@@ -326,6 +362,18 @@ variable "tableservices_requests_error_threshold_warning" {
   description = "Warning threshold for tableservices_requests_error detector"
   type        = number
   default     = 70
+}
+
+variable "tableservices_requests_error_aperiodic_duration" {
+  description = "Duration for the tableservices_requests_error block"
+  type        = string
+  default     = "10m"
+}
+
+variable "tableservices_requests_error_aperiodic_percentage" {
+  description = "Percentage for the tableservices_requests_error block"
+  type        = number
+  default     = 0.9
 }
 
 # Blobservices_latency detectors
@@ -396,6 +444,18 @@ variable "blobservices_latency_threshold_warning" {
   default     = 1000
 }
 
+variable "Blobservices_latency_aperiodic_duration" {
+  description = "Duration for the Blobservices_latency block"
+  type        = string
+  default     = "10m"
+}
+
+variable "Blobservices_latency_aperiodic_percentage" {
+  description = "Percentage for the Blobservices_latency block"
+  type        = number
+  default     = 0.9
+}
+
 # fileservices_latency detectors
 
 variable "fileservices_latency_disabled" {
@@ -462,6 +522,18 @@ variable "fileservices_latency_threshold_warning" {
   description = "Warning threshold for fileservices_latency detector"
   type        = number
   default     = 1000
+}
+
+variable "fileservices_latency_aperiodic_duration" {
+  description = "Duration for the fileservices_latency block"
+  type        = string
+  default     = "10m"
+}
+
+variable "fileservices_latency_aperiodic_percentage" {
+  description = "Percentage for the fileservices_latency block"
+  type        = number
+  default     = 0.9
 }
 
 # Queueservices_latency detectors
@@ -532,6 +604,18 @@ variable "queueservices_latency_threshold_warning" {
   default     = 1000
 }
 
+variable "queueservices_latency_aperiodic_duration" {
+  description = "Duration for the queueservices_latency block"
+  type        = string
+  default     = "10m"
+}
+
+variable "queueservices_latency_aperiodic_percentage" {
+  description = "Percentage for the queueservices_latency block"
+  type        = number
+  default     = 0.9
+}
+
 # Tableservices_latency detectors
 
 variable "tableservices_latency_disabled" {
@@ -598,6 +682,18 @@ variable "tableservices_latency_threshold_warning" {
   description = "Warning threshold for tableservices_latency detector"
   type        = number
   default     = 1000
+}
+
+variable "tableservices_latency_aperiodic_duration" {
+  description = "Duration for the tableservices_latency block"
+  type        = string
+  default     = "10m"
+}
+
+variable "tableservices_latency_aperiodic_percentage" {
+  description = "Percentage for the tableservices_latency block"
+  type        = number
+  default     = 0.9
 }
 
 # Blob_timeout_error_requests detectors
@@ -668,6 +764,18 @@ variable "blob_timeout_error_requests_threshold_warning" {
   default     = 50
 }
 
+variable "blob_timeout_error_requests_aperiodic_duration" {
+  description = "Duration for the blob_timeout_error_requests block"
+  type        = string
+  default     = "10m"
+}
+
+variable "blob_timeout_error_requests_aperiodic_percentage" {
+  description = "Percentage for the blob_timeout_error_requests block"
+  type        = number
+  default     = 0.9
+}
+
 # File_timeout_error_requests detectors
 
 variable "file_timeout_error_requests_disabled" {
@@ -734,6 +842,18 @@ variable "file_timeout_error_requests_threshold_warning" {
   description = "Warning threshold for file_timeout_error_requests detector"
   type        = number
   default     = 50
+}
+
+variable "file_timeout_error_requests_aperiodic_duration" {
+  description = "Duration for the file_timeout_error_requests block"
+  type        = string
+  default     = "10m"
+}
+
+variable "file_timeout_error_requests_aperiodic_percentage" {
+  description = "Percentage for the file_timeout_error_requests block"
+  type        = number
+  default     = 0.9
 }
 
 # Queue_timeout_error_requests detectors
@@ -804,6 +924,18 @@ variable "queue_timeout_error_requests_threshold_warning" {
   default     = 50
 }
 
+variable "queue_timeout_error_requests_aperiodic_duration" {
+  description = "Duration for the queue_timeout_error_requests block"
+  type        = string
+  default     = "10m"
+}
+
+variable "queue_timeout_error_requests_aperiodic_percentage" {
+  description = "Percentage for the queue_timeout_error_requests block"
+  type        = number
+  default     = 0.9
+}
+
 # Table_timeout_error_requests detectors
 
 variable "table_timeout_error_requests_disabled" {
@@ -870,6 +1002,18 @@ variable "table_timeout_error_requests_threshold_warning" {
   description = "Warning threshold for table_timeout_error_requests detector"
   type        = number
   default     = 50
+}
+
+variable "table_timeout_error_requests_aperiodic_duration" {
+  description = "Duration for the table_timeout_error_requests block"
+  type        = string
+  default     = "10m"
+}
+
+variable "table_timeout_error_requests_aperiodic_percentage" {
+  description = "Percentage for the table_timeout_error_requests block"
+  type        = number
+  default     = 0.9
 }
 
 # Blob_network_error_requests detectors
@@ -940,6 +1084,18 @@ variable "blob_network_error_requests_threshold_warning" {
   default     = 50
 }
 
+variable "blob_network_error_requests_aperiodic_duration" {
+  description = "Duration for the blob_network_error_requests block"
+  type        = string
+  default     = "10m"
+}
+
+variable "blob_network_error_requests_aperiodic_percentage" {
+  description = "Percentage for the blob_network_error_requests block"
+  type        = number
+  default     = 0.9
+}
+
 # File_network_error_requests detectors
 
 variable "file_network_error_requests_disabled" {
@@ -1006,6 +1162,18 @@ variable "file_network_error_requests_threshold_warning" {
   description = "Warning threshold for file_network_error_requests detector"
   type        = number
   default     = 50
+}
+
+variable "file_network_error_requests_aperiodic_duration" {
+  description = "Duration for the file_network_error_requests block"
+  type        = string
+  default     = "10m"
+}
+
+variable "file_network_error_requests_aperiodic_percentage" {
+  description = "Percentage for the file_network_error_requests block"
+  type        = number
+  default     = 0.9
 }
 
 # Queue_network_error_requests detectors
@@ -1076,6 +1244,18 @@ variable "queue_network_error_requests_threshold_warning" {
   default     = 50
 }
 
+variable "queue_network_error_requests_aperiodic_duration" {
+  description = "Duration for the queue_network_error_requests block"
+  type        = string
+  default     = "10m"
+}
+
+variable "queue_network_error_requests_aperiodic_percentage" {
+  description = "Percentage for the queue_network_error_requests block"
+  type        = number
+  default     = 0.9
+}
+
 # Table_network_error_requests detectors
 
 variable "table_network_error_requests_disabled" {
@@ -1142,6 +1322,18 @@ variable "table_network_error_requests_threshold_warning" {
   description = "Warning threshold for table_network_error_requests detector"
   type        = number
   default     = 50
+}
+
+variable "table_network_error_requests_aperiodic_duration" {
+  description = "Duration for the table_network_error_requests block"
+  type        = string
+  default     = "10m"
+}
+
+variable "table_network_error_requests_aperiodic_percentage" {
+  description = "Percentage for the table_network_error_requests block"
+  type        = number
+  default     = 0.9
 }
 
 # Blob_throttling_error_requests detectors
@@ -1212,6 +1404,18 @@ variable "blob_throttling_error_requests_threshold_warning" {
   default     = 50
 }
 
+variable "blob_throttling_error_requests_aperiodic_duration" {
+  description = "Duration for the blob_throttling_error_requests block"
+  type        = string
+  default     = "10m"
+}
+
+variable "blob_throttling_error_requests_aperiodic_percentage" {
+  description = "Percentage for the blob_throttling_error_requests block"
+  type        = number
+  default     = 0.9
+}
+
 # File_throttling_error_requests detectors
 
 variable "file_throttling_error_requests_disabled" {
@@ -1278,6 +1482,18 @@ variable "file_throttling_error_requests_threshold_warning" {
   description = "Warning threshold for file_throttling_error_requests detector"
   type        = number
   default     = 50
+}
+
+variable "file_throttling_error_requests_aperiodic_duration" {
+  description = "Duration for the file_throttling_error_requests block"
+  type        = string
+  default     = "10m"
+}
+
+variable "file_throttling_error_requests_aperiodic_percentage" {
+  description = "Percentage for the file_throttling_error_requests block"
+  type        = number
+  default     = 0.9
 }
 
 # Queue_throttling_error_requests detectors
@@ -1348,6 +1564,18 @@ variable "queue_throttling_error_requests_threshold_warning" {
   default     = 50
 }
 
+variable "queue_throttling_error_requests_aperiodic_duration" {
+  description = "Duration for the queue_throttling_error_requests block"
+  type        = string
+  default     = "10m"
+}
+
+variable "queue_throttling_error_requests_aperiodic_percentage" {
+  description = "Percentage for the queue_throttling_error_requests block"
+  type        = number
+  default     = 0.9
+}
+
 # Table_throttling_error_requests detectors
 
 variable "table_throttling_error_requests_disabled" {
@@ -1414,6 +1642,18 @@ variable "table_throttling_error_requests_threshold_warning" {
   description = "Warning threshold for table_throttling_error_requests detector"
   type        = number
   default     = 50
+}
+
+variable "table_throttling_error_requests_aperiodic_duration" {
+  description = "Duration for the table_throttling_error_requests block"
+  type        = string
+  default     = "10m"
+}
+
+variable "table_throttling_error_requests_aperiodic_percentage" {
+  description = "Percentage for the table_throttling_error_requests block"
+  type        = number
+  default     = 0.9
 }
 
 # Blob_server_other_error_requests detectors
@@ -1484,6 +1724,18 @@ variable "blob_server_other_error_requests_threshold_warning" {
   default     = 50
 }
 
+variable "blob_server_other_error_requests_aperiodic_duration" {
+  description = "Duration for the blob_server_other_error_requests block"
+  type        = string
+  default     = "10m"
+}
+
+variable "blob_server_other_error_requests_aperiodic_percentage" {
+  description = "Percentage for the blob_server_other_error_requests block"
+  type        = number
+  default     = 0.9
+}
+
 # file_server_other_error_requests detectors
 
 variable "file_server_other_error_requests_disabled" {
@@ -1550,6 +1802,18 @@ variable "file_server_other_error_requests_threshold_warning" {
   description = "Warning threshold for file_server_other_error_requests detector"
   type        = number
   default     = 50
+}
+
+variable "file_server_other_error_requests_aperiodic_duration" {
+  description = "Duration for the file_server_other_error_requests block"
+  type        = string
+  default     = "10m"
+}
+
+variable "file_server_other_error_requests_aperiodic_percentage" {
+  description = "Percentage for the file_server_other_error_requests block"
+  type        = number
+  default     = 0.9
 }
 
 # Queue_server_other_error_requests detectors
@@ -1620,6 +1884,18 @@ variable "queue_server_other_error_requests_threshold_warning" {
   default     = 50
 }
 
+variable "queue_server_other_error_requests_aperiodic_duration" {
+  description = "Duration for the queue_server_other_error_requests block"
+  type        = string
+  default     = "10m"
+}
+
+variable "queue_server_other_error_requests_aperiodic_percentage" {
+  description = "Percentage for the queue_server_other_error_requests block"
+  type        = number
+  default     = 0.9
+}
+
 # Table_server_other_error_requests detectors
 
 variable "table_server_other_error_requests_disabled" {
@@ -1686,6 +1962,18 @@ variable "table_server_other_error_requests_threshold_warning" {
   description = "Warning threshold for table_server_other_error_requests detector"
   type        = number
   default     = 50
+}
+
+variable "table_server_other_error_requests_aperiodic_duration" {
+  description = "Duration for the table_server_other_error_requests block"
+  type        = string
+  default     = "10m"
+}
+
+variable "table_server_other_error_requests_aperiodic_percentage" {
+  description = "Percentage for the table_server_other_error_requests block"
+  type        = number
+  default     = 0.9
 }
 
 # Blob_client_other_error_requests detectors
@@ -1756,6 +2044,18 @@ variable "blob_client_other_error_requests_threshold_warning" {
   default     = 50
 }
 
+variable "blob_client_other_error_requests_aperiodic_duration" {
+  description = "Duration for the blob_client_other_error_requests block"
+  type        = string
+  default     = "10m"
+}
+
+variable "blob_client_other_error_requests_aperiodic_percentage" {
+  description = "Percentage for the blob_client_other_error_requests block"
+  type        = number
+  default     = 0.9
+}
+
 # File_client_other_error_requests detectors
 
 variable "file_client_other_error_requests_disabled" {
@@ -1822,6 +2122,18 @@ variable "file_client_other_error_requests_threshold_warning" {
   description = "Warning threshold for file_client_other_error_requests detector"
   type        = number
   default     = 50
+}
+
+variable "file_client_other_error_requests_aperiodic_duration" {
+  description = "Duration for the file_client_other_error_requests block"
+  type        = string
+  default     = "10m"
+}
+
+variable "file_client_other_error_requests_aperiodic_percentage" {
+  description = "Percentage for the file_client_other_error_requests block"
+  type        = number
+  default     = 0.9
 }
 
 # Queue_client_other_error_requests detectors
@@ -1892,6 +2204,18 @@ variable "queue_client_other_error_requests_threshold_warning" {
   default     = 50
 }
 
+variable "queue_client_other_error_requests_aperiodic_duration" {
+  description = "Duration for the queue_client_other_error_requests block"
+  type        = string
+  default     = "10m"
+}
+
+variable "queue_client_other_error_requests_aperiodic_percentage" {
+  description = "Percentage for the queue_client_other_error_requests block"
+  type        = number
+  default     = 0.9
+}
+
 # Table_client_other_error_requests detectors
 
 variable "table_client_other_error_requests_disabled" {
@@ -1958,6 +2282,18 @@ variable "table_client_other_error_requests_threshold_warning" {
   description = "Warning threshold for table_client_other_error_requests detector"
   type        = number
   default     = 50
+}
+
+variable "table_client_other_error_requests_aperiodic_duration" {
+  description = "Duration for the table_client_other_error_requests block"
+  type        = string
+  default     = "10m"
+}
+
+variable "table_client_other_error_requests_aperiodic_percentage" {
+  description = "Percentage for the table_client_other_error_requests block"
+  type        = number
+  default     = 0.9
 }
 
 # Blob_authorization_error_requests detectors
@@ -2028,6 +2364,18 @@ variable "blob_authorization_error_requests_threshold_warning" {
   default     = 50
 }
 
+variable "blob_authorization_error_requests_aperiodic_duration" {
+  description = "Duration for the blob_authorization_error_requests block"
+  type        = string
+  default     = "10m"
+}
+
+variable "blob_authorization_error_requests_aperiodic_percentage" {
+  description = "Percentage for the blob_authorization_error_requests block"
+  type        = number
+  default     = 0.9
+}
+
 # File_authorization_error_requests detectors
 
 variable "file_authorization_error_requests_disabled" {
@@ -2094,6 +2442,18 @@ variable "file_authorization_error_requests_threshold_warning" {
   description = "Warning threshold for file_authorization_error_requests detector"
   type        = number
   default     = 50
+}
+
+variable "file_authorization_error_requests_aperiodic_duration" {
+  description = "Duration for the file_authorization_error_requests block"
+  type        = string
+  default     = "10m"
+}
+
+variable "file_authorization_error_requests_aperiodic_percentage" {
+  description = "Percentage for the file_authorization_error_requests block"
+  type        = number
+  default     = 0.9
 }
 
 # Queue_authorization_error_requests detectors
@@ -2164,6 +2524,18 @@ variable "queue_authorization_error_requests_threshold_warning" {
   default     = 50
 }
 
+variable "queue_authorization_error_requests_aperiodic_duration" {
+  description = "Duration for the queue_authorization_error_requests block"
+  type        = string
+  default     = "10m"
+}
+
+variable "queue_authorization_error_requests_aperiodic_percentage" {
+  description = "Percentage for the queue_authorization_error_requests block"
+  type        = number
+  default     = 0.9
+}
+
 # Table_authorization_error_requests detectors
 
 variable "table_authorization_error_requests_disabled" {
@@ -2230,4 +2602,16 @@ variable "table_authorization_error_requests_threshold_warning" {
   description = "Warning threshold for table_authorization_error_requests detector"
   type        = number
   default     = 50
+}
+
+variable "table_authorization_error_requests_aperiodic_duration" {
+  description = "Duration for the table_authorization_error_requests block"
+  type        = string
+  default     = "10m"
+}
+
+variable "table_authorization_error_requests_aperiodic_percentage" {
+  description = "Percentage for the table_authorization_error_requests block"
+  type        = number
+  default     = 0.9
 }
