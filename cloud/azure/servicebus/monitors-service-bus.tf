@@ -4,7 +4,7 @@ resource "signalfx_detector" "heartbeat" {
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
 		signal = data('SuccessfulRequests', filter=filter('resource_type', 'Microsoft.ServiceBus/namespaces') and ${module.filter-tags.filter_custom})
-		not_reporting.detector(stream=signal, resource_identifier=['host'], duration='${var.heartbeat_timeframe}').publish('CRIT')
+		not_reporting.detector(stream=signal, resource_identifier=['EntityName'], duration='${var.heartbeat_timeframe}').publish('CRIT')
 	EOF
 
 	rule {
@@ -40,11 +40,12 @@ resource "signalfx_detector" "user_errors" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure servicebus user errors rate"
 
 	program_text = <<-EOF
+		from signalfx.detectors.aperiodic import aperiodic
 		A = data('UserErrors', filter=filter('resource_type', 'Microsoft.ServiceBus/namespaces') and ${module.filter-tags.filter_custom})${var.user_errors_aggregation_function}
 		B = data('IncomingRequests', filter=filter('resource_type', 'Microsoft.ServiceBus/namespaces') and ${module.filter-tags.filter_custom})${var.user_errors_aggregation_function}
 		signal = ((A/B)*100).${var.user_errors_transformation_function}(over='${var.user_errors_transformation_window}')
-		detect(when(signal > ${var.user_errors_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.user_errors_threshold_warning})).publish('WARN')
+		above_or_below_detector(signal, ${var.user_errors_threshold_critical}, ‘above’, lasting('${var.user_errors_aperiodic_duration}', ${var.user_errors_aperiodic_percentage})).publish('CRIT')
+		above_or_below_detector(signal, ${var.user_errors_threshold_warning}, ‘above’, lasting('${var.user_errors_aperiodic_duration}', ${var.user_errors_aperiodic_percentage})).publish('WARN')
 	EOF
 
 	rule {
@@ -70,11 +71,12 @@ resource "signalfx_detector" "server_errors" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure servicebus server errors rate"
 
 	program_text = <<-EOF
+		from signalfx.detectors.aperiodic import aperiodic
 		A = data('ServerErrors', filter=filter('resource_type', 'Microsoft.ServiceBus/namespaces') and ${module.filter-tags.filter_custom})${var.server_errors_aggregation_function}
 		B = data('IncomingRequests', filter=filter('resource_type', 'Microsoft.ServiceBus/namespaces') and ${module.filter-tags.filter_custom})${var.server_errors_aggregation_function}
 		signal = ((A/B)*100).${var.server_errors_transformation_function}(over='${var.server_errors_transformation_window}')
-		detect(when(signal > ${var.server_errors_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.server_errors_threshold_warning})).publish('WARN')
+		above_or_below_detector(signal, ${var.server_errors_threshold_critical}, ‘above’, lasting('${var.server_errors_aperiodic_duration}', ${var.server_errors_aperiodic_percentage})).publish('CRIT')
+		above_or_below_detector(signal, ${var.server_errors_threshold_warning}, ‘above’, lasting('${var.server_errors_aperiodic_duration}', ${var.server_errors_aperiodic_percentage})).publish('WARN')
 	EOF
 
 	rule {
