@@ -97,7 +97,7 @@ variable "jobs_failed_notifications_critical" {
 variable "jobs_failed_aggregation_function" {
   description = "Aggregation function and group by for jobs_failed detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_id', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_resource_id', 'azure_resource_name'])"
 }
 
 variable "jobs_failed_transformation_function" {
@@ -122,6 +122,18 @@ variable "jobs_failed_threshold_warning" {
   description = "Warning threshold for jobs_failed detector"
   type        = number
   default     = 50
+}
+
+variable "jobs_failed_aperiodic_duration" {
+  description = "Duration for the jobs_failed block"
+  type        = string
+  default     = "10m"
+}
+
+variable "jobs_failed_aperiodic_percentage" {
+  description = "Percentage for the jobs_failed block"
+  type        = number
+  default     = 0.9
 }
 
 # list_jobs_failed detectors
@@ -165,7 +177,7 @@ variable "list_jobs_failed_notifications_critical" {
 variable "list_jobs_failed_aggregation_function" {
   description = "Aggregation function and group by for list_jobs_failed detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_id', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_resource_id', 'azure_resource_name'])"
 }
 
 variable "list_jobs_failed_transformation_function" {
@@ -190,6 +202,18 @@ variable "list_jobs_failed_threshold_warning" {
   description = "Warning threshold for list_jobs_failed detector"
   type        = number
   default     = 50
+}
+
+variable "list_jobs_failed_aperiodic_duration" {
+  description = "Duration for the list_jobs_failed block"
+  type        = string
+  default     = "10m"
+}
+
+variable "list_jobs_failed_aperiodic_percentage" {
+  description = "Percentage for the list_jobs_failed block"
+  type        = number
+  default     = 0.9
 }
 
 # query_jobs_failed detectors
@@ -233,7 +257,7 @@ variable "query_jobs_failed_notifications_critical" {
 variable "query_jobs_failed_aggregation_function" {
   description = "Aggregation function and group by for query_jobs_failed detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_id', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_resource_id', 'azure_resource_name'])"
 }
 
 variable "query_jobs_failed_transformation_function" {
@@ -258,6 +282,18 @@ variable "query_jobs_failed_threshold_warning" {
   description = "Warning threshold for query_jobs_failed detector"
   type        = number
   default     = 50
+}
+
+variable "query_jobs_failed_aperiodic_duration" {
+  description = "Duration for the query_jobs_failed block"
+  type        = string
+  default     = "10m"
+}
+
+variable "query_jobs_failed_aperiodic_percentage" {
+  description = "Percentage for the query_jobs_failed block"
+  type        = number
+  default     = 0.9
 }
 
 # total_devices detectors
@@ -301,7 +337,7 @@ variable "total_devices_notifications_critical" {
 variable "total_devices_aggregation_function" {
   description = "Aggregation function and group by for total_devices detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_id', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_resource_id', 'azure_resource_name'])"
 }
 
 variable "total_devices_transformation_function" {
@@ -363,7 +399,7 @@ variable "c2d_methods_failed_notifications_critical" {
 variable "c2d_methods_failed_aggregation_function" {
   description = "Aggregation function and group by for c2d_methods_failed detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_id', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_resource_id', 'azure_resource_name'])"
 }
 
 variable "c2d_methods_failed_transformation_function" {
@@ -388,6 +424,18 @@ variable "c2d_methods_failed_threshold_warning" {
   description = "Warning threshold for c2d_methods_failed detector"
   type        = number
   default     = 50
+}
+
+variable "c2d_methods_failed_aperiodic_duration" {
+  description = "Duration for the c2d_methods_failed block"
+  type        = string
+  default     = "10m"
+}
+
+variable "c2d_methods_failed_aperiodic_percentage" {
+  description = "Percentage for the c2d_methods_failed block"
+  type        = number
+  default     = 0.9
 }
 
 # c2d_twin_read_failed detectors
@@ -431,7 +479,7 @@ variable "c2d_twin_read_failed_notifications_critical" {
 variable "c2d_twin_read_failed_aggregation_function" {
   description = "Aggregation function and group by for c2d_twin_read_failed detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_id', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_resource_id', 'azure_resource_name'])"
 }
 
 variable "c2d_twin_read_failed_transformation_function" {
@@ -456,6 +504,18 @@ variable "c2d_twin_read_failed_threshold_warning" {
   description = "Warning threshold for c2d_twin_read_failed detector"
   type        = number
   default     = 50
+}
+
+variable "c2d_twin_read_failed_aperiodic_duration" {
+  description = "Duration for the c2d_twin_read_failed block"
+  type        = string
+  default     = "10m"
+}
+
+variable "c2d_twin_read_failed_aperiodic_percentage" {
+  description = "Percentage for the c2d_twin_read_failed block"
+  type        = number
+  default     = 0.9
 }
 
 # c2d_twin_update_failed detectors
@@ -499,7 +559,7 @@ variable "c2d_twin_update_failed_notifications_critical" {
 variable "c2d_twin_update_failed_aggregation_function" {
   description = "Aggregation function and group by for c2d_twin_update_failed detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_id', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_resource_id', 'azure_resource_name'])"
 }
 
 variable "c2d_twin_update_failed_transformation_function" {
@@ -524,6 +584,18 @@ variable "c2d_twin_update_failed_threshold_warning" {
   description = "Warning threshold for c2d_twin_update_failed detector"
   type        = number
   default     = 50
+}
+
+variable "c2d_twin_update_failed_aperiodic_duration" {
+  description = "Duration for the c2d_twin_update_failed block"
+  type        = string
+  default     = "10m"
+}
+
+variable "c2d_twin_update_failed_aperiodic_percentage" {
+  description = "Percentage for the c2d_twin_update_failed block"
+  type        = number
+  default     = 0.9
 }
 
 # d2c_twin_read_failed detectors
@@ -567,7 +639,7 @@ variable "d2c_twin_read_failed_notifications_critical" {
 variable "d2c_twin_read_failed_aggregation_function" {
   description = "Aggregation function and group by for d2c_twin_read_failed detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_id', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_resource_id', 'azure_resource_name'])"
 }
 
 variable "d2c_twin_read_failed_transformation_function" {
@@ -592,6 +664,18 @@ variable "d2c_twin_read_failed_threshold_warning" {
   description = "Warning threshold for d2c_twin_read_failed detector"
   type        = number
   default     = 50
+}
+
+variable "d2c_twin_read_failed_aperiodic_duration" {
+  description = "Duration for the d2c_twin_read_failed block"
+  type        = string
+  default     = "10m"
+}
+
+variable "d2c_twin_read_failed_aperiodic_percentage" {
+  description = "Percentage for the d2c_twin_read_failed block"
+  type        = number
+  default     = 0.9
 }
 
 # d2c_twin_update_failed detectors
@@ -635,7 +719,7 @@ variable "d2c_twin_update_failed_notifications_critical" {
 variable "d2c_twin_update_failed_aggregation_function" {
   description = "Aggregation function and group by for d2c_twin_update_failed detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_id', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_resource_id', 'azure_resource_name'])"
 }
 
 variable "d2c_twin_update_failed_transformation_function" {
@@ -660,6 +744,18 @@ variable "d2c_twin_update_failed_threshold_warning" {
   description = "Warning threshold for d2c_twin_update_failed detector"
   type        = number
   default     = 50
+}
+
+variable "d2c_twin_update_failed_aperiodic_duration" {
+  description = "Duration for the d2c_twin_update_failed block"
+  type        = string
+  default     = "10m"
+}
+
+variable "d2c_twin_update_failed_aperiodic_percentage" {
+  description = "Percentage for the d2c_twin_update_failed block"
+  type        = number
+  default     = 0.9
 }
 
 # d2c_telemetry_egress_dropped detectors
@@ -703,7 +799,7 @@ variable "d2c_telemetry_egress_dropped_notifications_critical" {
 variable "d2c_telemetry_egress_dropped_aggregation_function" {
   description = "Aggregation function and group by for d2c_telemetry_egress_dropped detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_id', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_resource_id', 'azure_resource_name'])"
 }
 
 variable "d2c_telemetry_egress_dropped_transformation_function" {
@@ -728,6 +824,18 @@ variable "d2c_telemetry_egress_dropped_threshold_warning" {
   description = "Warning threshold for d2c_telemetry_egress_dropped detector"
   type        = number
   default     = 50
+}
+
+variable "d2c_telemetry_egress_dropped_aperiodic_duration" {
+  description = "Duration for the d2c_telemetry_egress_dropped block"
+  type        = string
+  default     = "10m"
+}
+
+variable "d2c_telemetry_egress_dropped_aperiodic_percentage" {
+  description = "Percentage for the d2c_telemetry_egress_dropped block"
+  type        = number
+  default     = 0.9
 }
 
 # d2c_telemetry_egress_orphaned detectors
@@ -771,7 +879,7 @@ variable "d2c_telemetry_egress_orphaned_notifications_critical" {
 variable "d2c_telemetry_egress_orphaned_aggregation_function" {
   description = "Aggregation function and group by for d2c_telemetry_egress_orphaned detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_id', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_resource_id', 'azure_resource_name'])"
 }
 
 variable "d2c_telemetry_egress_orphaned_transformation_function" {
@@ -796,6 +904,18 @@ variable "d2c_telemetry_egress_orphaned_threshold_warning" {
   description = "Warning threshold for d2c_telemetry_egress_orphaned detector"
   type        = number
   default     = 50
+}
+
+variable "d2c_telemetry_egress_orphaned_aperiodic_duration" {
+  description = "Duration for the d2c_telemetry_egress_orphaned block"
+  type        = string
+  default     = "10m"
+}
+
+variable "d2c_telemetry_egress_orphaned_aperiodic_percentage" {
+  description = "Percentage for the d2c_telemetry_egress_orphaned block"
+  type        = number
+  default     = 0.9
 }
 
 # d2c_telemetry_egress_invalid detectors
@@ -839,7 +959,7 @@ variable "d2c_telemetry_egress_invalid_notifications_critical" {
 variable "d2c_telemetry_egress_invalid_aggregation_function" {
   description = "Aggregation function and group by for d2c_telemetry_egress_invalid detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_id', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_resource_id', 'azure_resource_name'])"
 }
 
 variable "d2c_telemetry_egress_invalid_transformation_function" {
@@ -864,6 +984,18 @@ variable "d2c_telemetry_egress_invalid_threshold_warning" {
   description = "Warning threshold for d2c_telemetry_egress_invalid detector"
   type        = number
   default     = 50
+}
+
+variable "d2c_telemetry_egress_invalid_aperiodic_duration" {
+  description = "Duration for the d2c_telemetry_egress_invalid block"
+  type        = string
+  default     = "10m"
+}
+
+variable "d2c_telemetry_egress_invalid_aperiodic_percentage" {
+  description = "Percentage for the d2c_telemetry_egress_invalid block"
+  type        = number
+  default     = 0.9
 }
 
 # d2c_telemetry_ingress_nosent detectors
@@ -907,7 +1039,7 @@ variable "d2c_telemetry_ingress_nosent_notifications_critical" {
 variable "d2c_telemetry_ingress_nosent_aggregation_function" {
   description = "Aggregation function and group by for d2c_telemetry_ingress_nosent detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_id', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_resource_id', 'azure_resource_name'])"
 }
 
 variable "d2c_telemetry_ingress_nosent_transformation_function" {
@@ -932,4 +1064,16 @@ variable "d2c_telemetry_ingress_nosent_threshold_warning" {
   description = "Warning threshold for d2c_telemetry_ingress_nosent detector"
   type        = number
   default     = 10
+}
+
+variable "d2c_telemetry_ingress_nosent_aperiodic_duration" {
+  description = "Duration for the d2c_telemetry_ingress_nosent block"
+  type        = string
+  default     = "10m"
+}
+
+variable "d2c_telemetry_ingress_nosent_aperiodic_percentage" {
+  description = "Percentage for the d2c_telemetry_ingress_nosent block"
+  type        = number
+  default     = 0.9
 }
