@@ -97,7 +97,7 @@ variable "cpu_usage_notifications_critical" {
 variable "cpu_usage_aggregation_function" {
   description = "Aggregation function and group by for cpu_usage detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_group_name', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_resource_group_name', 'azure_resource_name'])"
 }
 
 variable "cpu_usage_transformation_function" {
@@ -165,7 +165,7 @@ variable "credit_cpu_notifications_critical" {
 variable "credit_cpu_aggregation_function" {
   description = "Aggregation function and group by for credit_cpu detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_group_name', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_resource_group_name', 'azure_resource_name'])"
 }
 
 variable "credit_cpu_transformation_function" {
