@@ -97,7 +97,7 @@ variable "cpu_usage_notifications_critical" {
 variable "cpu_usage_aggregation_function" {
   description = "Aggregation function and group by for cpu_usage detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_id', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_resource_id', 'azure_resource_name'])"
 }
 
 variable "cpu_usage_transformation_function" {
@@ -165,7 +165,7 @@ variable "free_storage_notifications_critical" {
 variable "free_storage_aggregation_function" {
   description = "Aggregation function and group by for free_storage detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_id', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_resource_id', 'azure_resource_name'])"
 }
 
 variable "free_storage_transformation_function" {
@@ -233,7 +233,7 @@ variable "io_consumption_notifications_critical" {
 variable "io_consumption_aggregation_function" {
   description = "Aggregation function and group by for io_consumption detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_id', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_resource_id', 'azure_resource_name'])"
 }
 
 variable "io_consumption_transformation_function" {
@@ -301,7 +301,7 @@ variable "memory_usage_notifications_critical" {
 variable "memory_usage_aggregation_function" {
   description = "Aggregation function and group by for memory_usage detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_id', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_resource_id', 'azure_resource_name'])"
 }
 
 variable "memory_usage_transformation_function" {
