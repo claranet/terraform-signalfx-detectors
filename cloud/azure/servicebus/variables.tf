@@ -97,7 +97,7 @@ variable "active_connections_notifications_critical" {
 variable "active_connections_aggregation_function" {
   description = "Aggregation function and group by for active_connections detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_id', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_resource_id', 'azure_resource_name', 'EntityName'])"
 }
 
 variable "active_connections_transformation_function" {
@@ -159,7 +159,7 @@ variable "user_errors_notifications_critical" {
 variable "user_errors_aggregation_function" {
   description = "Aggregation function and group by for user_errors detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_id', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_resource_id', 'azure_resource_name', 'EntityName'])"
 }
 
 variable "user_errors_transformation_function" {
@@ -184,6 +184,18 @@ variable "user_errors_threshold_warning" {
   description = "Warning threshold for user_errors detector"
   type        = number
   default     = 50
+}
+
+variable "user_errors_aperiodic_duration" {
+  description = "Duration for the user_errors block"
+  type        = string
+  default     = "10m"
+}
+
+variable "user_errors_aperiodic_percentage" {
+  description = "Percentage for the user_errors block"
+  type        = number
+  default     = 0.9
 }
 
 # Server_errors detectors
@@ -227,7 +239,7 @@ variable "server_errors_notifications_critical" {
 variable "server_errors_aggregation_function" {
   description = "Aggregation function and group by for server_errors detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_id', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_resource_id', 'azure_resource_name', 'EntityName'])"
 }
 
 variable "server_errors_transformation_function" {
@@ -252,4 +264,16 @@ variable "server_errors_threshold_warning" {
   description = "Warning threshold for server_errors detector"
   type        = number
   default     = 50
+}
+
+variable "server_errors_aperiodic_duration" {
+  description = "Duration for the server_errors block"
+  type        = string
+  default     = "10m"
+}
+
+variable "server_errors_aperiodic_percentage" {
+  description = "Percentage for the server_errors block"
+  type        = number
+  default     = 0.9
 }
