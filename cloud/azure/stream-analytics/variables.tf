@@ -97,7 +97,7 @@ variable "su_utilization_notifications_critical" {
 variable "su_utilization_aggregation_function" {
   description = "Aggregation function and group by for su_utilization detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_group_name', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_resource_group_name', 'azure_resource_name'])"
 }
 
 variable "su_utilization_transformation_function" {
@@ -165,7 +165,7 @@ variable "failed_requests_notifications_critical" {
 variable "failed_requests_aggregation_function" {
   description = "Aggregation function and group by for failed_requests detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_group_name', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_resource_group_name', 'azure_resource_name'])"
 }
 
 variable "failed_requests_transformation_function" {
@@ -190,6 +190,18 @@ variable "failed_requests_threshold_warning" {
   description = "Warning threshold for failed_requests detector"
   type        = number
   default     = 0
+}
+
+variable "failed_requests_aperiodic_duration" {
+  description = "Duration for the failed_requests block"
+  type        = string
+  default     = "10m"
+}
+
+variable "failed_requests_aperiodic_percentage" {
+  description = "Percentage for the failed_requests block"
+  type        = number
+  default     = 0.9
 }
 
 # Conversion_errors detectors
@@ -233,7 +245,7 @@ variable "conversion_errors_notifications_critical" {
 variable "conversion_errors_aggregation_function" {
   description = "Aggregation function and group by for conversion_errors detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_group_name', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_resource_group_name', 'azure_resource_name'])"
 }
 
 variable "conversion_errors_transformation_function" {
@@ -301,7 +313,7 @@ variable "runtime_errors_notifications_critical" {
 variable "runtime_errors_aggregation_function" {
   description = "Aggregation function and group by for runtime_errors detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_group_name', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_resource_group_name', 'azure_resource_name'])"
 }
 
 variable "runtime_errors_transformation_function" {
