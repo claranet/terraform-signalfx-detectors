@@ -97,7 +97,7 @@ variable "api_result_notifications_critical" {
 variable "api_result_aggregation_function" {
   description = "Aggregation function and group by for api_result detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_id', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_resource_id', 'azure_resource_name'])"
 }
 
 variable "api_result_transformation_function" {
@@ -165,7 +165,7 @@ variable "api_latency_notifications_critical" {
 variable "api_latency_aggregation_function" {
   description = "Aggregation function and group by for api_latency detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_id', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_resource_id', 'azure_resource_name'])"
 }
 
 variable "api_latency_transformation_function" {
