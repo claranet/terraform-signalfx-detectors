@@ -4,7 +4,7 @@ resource "signalfx_detector" "heartbeat" {
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
 		signal = data('InputEventsSourcesPerSecond', filter=filter('resource_type', 'Microsoft.StreamAnalytics/streamingjobs') and ${module.filter-tags.filter_custom})
-		not_reporting.detector(stream=signal, resource_identifier=['host'], duration='${var.heartbeat_timeframe}').publish('CRIT')
+		not_reporting.detector(stream=signal, resource_identifier=['PartitionId'], duration='${var.heartbeat_timeframe}').publish('CRIT')
 	EOF
 
 	rule {
@@ -49,11 +49,12 @@ resource "signalfx_detector" "failed_requests" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Stream Analytics failed requests"
 
 	program_text = <<-EOF
+		from signalfx.detectors.aperiodic import aperiodic
 		A = data('AMLCalloutFailedRequests', filter=filter('resource_type', 'Microsoft.StreamAnalytics/streamingjobs') and ${module.filter-tags.filter_custom})${var.failed_requests_aggregation_function}
 		B = data('AMLCalloutRequests', filter=filter('resource_type', 'Microsoft.StreamAnalytics/streamingjobs') and ${module.filter-tags.filter_custom})${var.failed_requests_aggregation_function}
 		signal = ((A/B)*100).${var.failed_requests_transformation_function}(over='${var.failed_requests_transformation_window}')
-		detect(when(signal > ${var.failed_requests_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.failed_requests_threshold_warning})).publish('WARN')
+		above_or_below_detector(signal, ${var.failed_requests_threshold_critical}, ‘above’, lasting('${var.failed_requests_aperiodic_duration}', ${var.failed_requests_aperiodic_percentage})).publish('CRIT')
+		above_or_below_detector(signal, ${var.failed_requests_threshold_warning}, ‘above’, lasting('${var.failed_requests_aperiodic_duration}', ${var.failed_requests_aperiodic_percentage})).publish('WARN')
 	EOF
 
 	rule {
