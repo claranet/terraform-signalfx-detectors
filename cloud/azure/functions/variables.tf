@@ -97,7 +97,7 @@ variable "http_5xx_errors_rate_notifications_critical" {
 variable "http_5xx_errors_rate_aggregation_function" {
   description = "Aggregation function and group by for http_5xx_errors_rate detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_id','azure_resource_name'])"
+  default     = ".mean(by=['azure_resource_id','azure_resource_name'])"
 }
 
 variable "http_5xx_errors_rate_transformation_function" {
@@ -122,6 +122,18 @@ variable "http_5xx_errors_rate_threshold_warning" {
   description = "Warning threshold for http_5xx_errors_rate detector"
   type        = number
   default     = 10
+}
+
+variable "http_5xx_errors_rate_aperiodic_duration" {
+  description = "Duration for the http_5xx_errors_rate block"
+  type        = string
+  default     = "10m"
+}
+
+variable "http_5xx_errors_rate_aperiodic_percentage" {
+  description = "Percentage for the http_5xx_errors_rate block"
+  type        = number
+  default     = 0.9
 }
 
 # High_connections_count detectors
@@ -165,7 +177,7 @@ variable "high_connections_count_notifications_critical" {
 variable "high_connections_count_aggregation_function" {
   description = "Aggregation function and group by for high_connections_count detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_id', 'azure_resource_name', 'Instance'])"
+  default     = ".mean(by=['azure_resource_id', 'azure_resource_name', 'Instance'])"
 }
 
 variable "high_connections_count_transformation_function" {
@@ -190,6 +202,18 @@ variable "high_connections_count_threshold_warning" {
   description = "Warning threshold for high_connections_count detector"
   type        = number
   default     = 550
+}
+
+variable "high_connections_count_aperiodic_duration" {
+  description = "Duration for the high_connections_count block"
+  type        = string
+  default     = "10m"
+}
+
+variable "high_connections_count_aperiodic_percentage" {
+  description = "Percentage for the high_connections_count block"
+  type        = number
+  default     = 0.9
 }
 
 # High_threads_count detectors
@@ -233,7 +257,7 @@ variable "high_threads_count_notifications_critical" {
 variable "high_threads_count_aggregation_function" {
   description = "Aggregation function and group by for high_threads_count detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_id', 'azure_resource_name', 'Instance'])"
+  default     = ".mean(by=['azure_resource_id', 'azure_resource_name', 'Instance'])"
 }
 
 variable "high_threads_count_transformation_function" {
@@ -258,4 +282,16 @@ variable "high_threads_count_threshold_warning" {
   description = "Warning threshold for high_threads_count detector"
   type        = number
   default     = 490
+}
+
+variable "high_threads_count_aperiodic_duration" {
+  description = "Duration for the high_threads_count block"
+  type        = string
+  default     = "10m"
+}
+
+variable "high_threads_count_aperiodic_percentage" {
+  description = "Percentage for the high_threads_count block"
+  type        = number
+  default     = 0.9
 }
