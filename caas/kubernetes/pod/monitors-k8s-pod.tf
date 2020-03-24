@@ -4,15 +4,16 @@ resource "signalfx_detector" "heartbeat" {
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
 		signal = data('kube_pod_status_ready' and ${module.filter-tags.filter_custom})
-		not_reporting.detector(stream=signal, resource_identifier=['namespace'], duration='${var.nginx_heartbeat_timeframe}').publish('CRIT')
+		not_reporting.detector(stream=signal, resource_identifier=['container_name'], duration='${var.heartbeat_timeframe}').publish('CRIT')
 	EOF
 
 	rule {
-		description = "System has not reported in ${var.k8_pod_heartbeat_timeframe}"
-		severity = "Critical"
-		detect_label = "CRIT"
-		disabled = coalesce(var.k8_pod_heartbeat_disabled_flag,var.disable_detectors)
-			notifications = coalesce(split(";",var.k8_pod_heartbeat_notifications),split(";",var.notifications))
+		description           = "has not reported in ${var.heartbeat_timeframe}"
+		severity              = "Critical"
+		detect_label          = "CRIT"
+		disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
+		notifications         = coalescelist(var.heartbeat_notifications, var.notifications)
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} on {{{dimensions}}}"
 	}
 }
 
