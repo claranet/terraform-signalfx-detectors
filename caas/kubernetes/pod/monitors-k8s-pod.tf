@@ -3,8 +3,8 @@ resource "signalfx_detector" "heartbeat" {
 
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
-		signal = data('nginx_requests', filter=(not filter('aws_state', '*terminated}', '*stopped}')) and (not filter('gcp_status', '*TERMINATED}', '*STOPPING}')) and (not filter('azure_power_state', 'stop*', 'deallocat*')) and ${module.filter-tags.filter_custom})
-		not_reporting.detector(stream=signal, resource_identifier=['host'], duration='${var.nginx_heartbeat_timeframe}').publish('CRIT')
+		signal = data('kube_pod_status_ready' and ${module.filter-tags.filter_custom})
+		not_reporting.detector(stream=signal, resource_identifier=['namespace'], duration='${var.nginx_heartbeat_timeframe}').publish('CRIT')
 	EOF
 
 	rule {
