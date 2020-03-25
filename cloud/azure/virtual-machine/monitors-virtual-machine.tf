@@ -3,7 +3,7 @@ resource "signalfx_detector" "heartbeat" {
 
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
-		signal = data('Inbound Flows', filter=filter('resource_type', 'Microsoft.Compute/virtualMachines') and ${module.filter-tags.filter_custom})
+		signal = data('Inbound Flows', filter=filter('resource_type', 'Microsoft.Compute/virtualMachines') and ${module.filter-tags.filter_custom}).publish('signal')
 		not_reporting.detector(stream=signal, resource_identifier=['azure_resource_id'], duration='${var.heartbeat_timeframe}').publish('CRIT')
 	EOF
 
@@ -21,7 +21,7 @@ resource "signalfx_detector" "cpu_usage" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure virtual machine CPU usage"
 
 	program_text = <<-EOF
-		signal = data('Percentage CPU', filter=filter('resource_type', 'Microsoft.Compute/virtualMachines') and ${module.filter-tags.filter_custom})${var.cpu_usage_aggregation_function}.${var.cpu_usage_transformation_function}(over='${var.cpu_usage_transformation_window}')
+		signal = data('Percentage CPU', filter=filter('resource_type', 'Microsoft.Compute/virtualMachines') and ${module.filter-tags.filter_custom})${var.cpu_usage_aggregation_function}.${var.cpu_usage_transformation_function}(over='${var.cpu_usage_transformation_window}').publish('signal')
 		detect(when(signal > ${var.cpu_usage_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.cpu_usage_threshold_warning})).publish('WARN')
 	EOF
@@ -51,7 +51,7 @@ resource "signalfx_detector" "credit_cpu" {
 	program_text = <<-EOF
 		A = data('CPU Credits Remaining', filter=filter('resource_type', 'Microsoft.Compute/virtualMachines') and ${module.filter-tags.filter_custom})${var.credit_cpu_aggregation_function}
 		B = data('CPU Credits Consumed', filter=filter('resource_type', 'Microsoft.Compute/virtualMachines') and ${module.filter-tags.filter_custom})${var.credit_cpu_aggregation_function}
-		signal = ((A/(A+B))*100).fill(100).${var.credit_cpu_transformation_function}(over='${var.credit_cpu_transformation_window}')
+		signal = ((A/(A+B))*100).fill(100).${var.credit_cpu_transformation_function}(over='${var.credit_cpu_transformation_window}').publish('signal')
 		detect(when(signal < ${var.credit_cpu_threshold_critical})).publish('CRIT')
 		detect(when(signal < ${var.credit_cpu_threshold_warning})).publish('WARN')
 	EOF
