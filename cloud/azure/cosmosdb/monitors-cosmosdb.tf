@@ -3,7 +3,7 @@ resource "signalfx_detector" "heartbeat" {
 
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
-		signal = data('TotalRequests', filter=filter('resource_type', 'Microsoft.DocumentDB/databaseAccounts') and ${module.filter-tags.filter_custom})
+		signal = data('TotalRequests', filter=filter('resource_type', 'Microsoft.DocumentDB/databaseAccounts') and ${module.filter-tags.filter_custom}).publish('signal')
 		not_reporting.detector(stream=signal, resource_identifier=['collectionname'], duration='${var.heartbeat_timeframe}').publish('CRIT')
 	EOF
 
@@ -33,7 +33,7 @@ resource "signalfx_detector" "4xx_requests" {
 		I = data('TotalRequests', filter=filter('resource_type', 'Microsoft.DocumentDb/databaseAccounts') and filter('statuscode', '429') and ${module.filter-tags.filter_custom})${var.4xx_requests_aggregation_function}
 		J = data('TotalRequests', filter=filter('resource_type', 'Microsoft.DocumentDb/databaseAccounts') and filter('statuscode', '449') and ${module.filter-tags.filter_custom})${var.4xx_requests_aggregation_function}
 		K = data('TotalRequests', filter=filter('resource_type', 'Microsoft.DocumentDb/databaseAccounts') and ${module.filter-tags.filter_custom})${var.4xx_requests_aggregation_function}
-		signal = (((A+B+C+D+E+F+G+H+I+J)/K)*100).${var.4xx_requests_transformation_function}(over='${var.4xx_requests_transformation_window}')
+		signal = (((A+B+C+D+E+F+G+H+I+J)/K)*100).${var.4xx_requests_transformation_function}(over='${var.4xx_requests_transformation_window}').publish('signal')
 		above_or_below_detector(signal, ${var.4xx_requests_threshold_critical}, ‘above’, lasting('${var.4xx_requests_aperiodic_duration}', ${var.4xx_requests_aperiodic_percentage})).publish('CRIT')
 		above_or_below_detector(signal, ${var.4xx_requests_threshold_warning}, ‘above’, lasting('${var.4xx_requests_aperiodic_duration}', ${var.4xx_requests_aperiodic_percentage})).publish('WARN')
 	EOF
@@ -65,7 +65,7 @@ resource "signalfx_detector" "5xx_requests" {
 		A = data('TotalRequests', filter=filter('resource_type', 'Microsoft.DocumentDb/databaseAccounts') and filter('statuscode', '500') and ${module.filter-tags.filter_custom})${var.5xx_requests_aggregation_function}
 		B = data('TotalRequests', filter=filter('resource_type', 'Microsoft.DocumentDb/databaseAccounts') and filter('statuscode', '503') and ${module.filter-tags.filter_custom})${var.5xx_requests_aggregation_function}
 		C = data('TotalRequests', filter=filter('resource_type', 'Microsoft.DocumentDb/databaseAccounts') and ${module.filter-tags.filter_custom})${var.5xx_requests_aggregation_function}
-		signal = (((A+B)/C)*100).${var.5xx_requests_transformation_function}(over='${var.5xx_requests_transformation_window}')
+		signal = (((A+B)/C)*100).${var.5xx_requests_transformation_function}(over='${var.5xx_requests_transformation_window}').publish('signal')
 		above_or_below_detector(signal, ${var.5xx_requests_threshold_critical}, ‘above’, lasting('${var.5xx_requests_aperiodic_duration}', ${var.5xx_requests_aperiodic_percentage})).publish('CRIT')
 		above_or_below_detector(signal, ${var.4xx_requests_threshold_warning}, ‘above’, lasting('${var.5xx_requests_aperiodic_duration}', ${var.5xx_requests_aperiodic_percentage})).publish('WARN')
 	EOF
@@ -96,7 +96,7 @@ resource "signalfx_detector" "scaling" {
 		from signalfx.detectors.aperiodic import aperiodic
 		A = data('TotalRequests', filter=filter('resource_type', 'Microsoft.DocumentDb/databaseAccounts') and filter('statuscode', '429') and ${module.filter-tags.filter_custom})${var.scaling_aggregation_function}
 		B = data('TotalRequests', filter=filter('resource_type', 'Microsoft.DocumentDb/databaseAccounts') and ${module.filter-tags.filter_custom})${var.scaling_aggregation_function}
-		signal = ((A/B)*100).${var.scaling_transformation_function}(over='${var.scaling_transformation_window}')
+		signal = ((A/B)*100).${var.scaling_transformation_function}(over='${var.scaling_transformation_window}').publish('signal')
 		above_or_below_detector(signal, ${var.scaling_threshold_critical}, ‘above’, lasting('${var.scaling_aperiodic_duration}', ${var.scaling_aperiodic_percentage})).publish('CRIT')
 		above_or_below_detector(signal, ${var.4xx_requests_threshold_warning}, ‘above’, lasting('${var.scaling_aperiodic_duration}', ${var.scaling_aperiodic_percentage})).publish('WARN')
 	EOF
