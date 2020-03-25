@@ -3,7 +3,7 @@ resource "signalfx_detector" "heartbeat" {
 
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
-		signal = data('connection_successful', filter=filter('resource_type', 'Microsoft.Sql/servers/databases') and ${module.filter-tags.filter_custom})
+		signal = data('connection_successful', filter=filter('resource_type', 'Microsoft.Sql/servers/databases') and ${module.filter-tags.filter_custom}).publish('signal')
 		not_reporting.detector(stream=signal, resource_identifier=['azure_resource_group_name'], duration='${var.heartbeat_timeframe}').publish('CRIT')
 	EOF
 
@@ -21,7 +21,7 @@ resource "signalfx_detector" cpu" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure sqldatabase CPU"
 
 	program_text = <<-EOF
-		signal = data('cpu_percent', filter=filter('resource_type', 'Microsoft.Sql/servers/databases') and ${module.filter-tags.filter_custom})${var.cpu_aggregation_function}.${var.cpu_transformation_function}(over='${var.cpu_transformation_window}')
+		signal = data('cpu_percent', filter=filter('resource_type', 'Microsoft.Sql/servers/databases') and ${module.filter-tags.filter_custom})${var.cpu_aggregation_function}.${var.cpu_transformation_function}(over='${var.cpu_transformation_window}').publish('signal')
 		detect(when(signal > ${var.cpu_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.cpu_threshold_warning})).publish('WARN')
 	EOF
@@ -49,7 +49,7 @@ resource "signalfx_detector" "free_space" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure sqldatabase disk usage"
 
 	program_text = <<-EOF
-		signal = data('storage_percent', filter=filter('resource_type', 'Microsoft.Sql/servers/databases') and ${module.filter-tags.filter_custom})${var.free_space_aggregation_function}.${var.free_space_transformation_function}(over='${var.free_space_transformation_window}')
+		signal = data('storage_percent', filter=filter('resource_type', 'Microsoft.Sql/servers/databases') and ${module.filter-tags.filter_custom})${var.free_space_aggregation_function}.${var.free_space_transformation_function}(over='${var.free_space_transformation_window}').publish('signal')
 		detect(when(signal > ${var.free_space_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.free_space_threshold_warning})).publish('WARN')
 	EOF
@@ -77,7 +77,7 @@ resource "signalfx_detector" "dtu_consumption" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure sqldatabase DTU Consumption"
 
 	program_text = <<-EOF
-		signal = data('dtu_consumption_percent', filter=filter('resource_type', 'Microsoft.Sql/servers/databases') and ${module.filter-tags.filter_custom})${var.dtu_consumption_aggregation_function}.${var.dtu_consumption_transformation_function}(over='${var.dtu_consumption_transformation_window}')
+		signal = data('dtu_consumption_percent', filter=filter('resource_type', 'Microsoft.Sql/servers/databases') and ${module.filter-tags.filter_custom})${var.dtu_consumption_aggregation_function}.${var.dtu_consumption_transformation_function}(over='${var.dtu_consumption_transformation_window}').publish('signal')
 		detect(when(signal > ${var.dtu_consumption_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.dtu_consumption_threshold_warning})).publish('WARN')
 	EOF
@@ -105,7 +105,7 @@ resource "signalfx_detector" "deadlocks_count" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure sqldatabase deadlocks count"
 
 	program_text = <<-EOF
-		signal = data('deadlock', filter=filter('resource_type', 'Microsoft.Sql/servers/databases') and ${module.filter-tags.filter_custom})${var.deadlocks_count_aggregation_function}.${var.deadlocks_count_transformation_function}(over='${var.deadlocks_count_transformation_window}')
+		signal = data('deadlock', filter=filter('resource_type', 'Microsoft.Sql/servers/databases') and ${module.filter-tags.filter_custom})${var.deadlocks_count_aggregation_function}.${var.deadlocks_count_transformation_function}(over='${var.deadlocks_count_transformation_window}').publish('signal')
 		detect(when(signal > ${var.deadlocks_count_threshold_critical})).publish('CRIT')
 	EOF
 
