@@ -3,7 +3,7 @@ resource "signalfx_detector" "heartbeat" {
 
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
-		signal = data('Availability', filter=filter('resource_type', 'Microsoft.KeyVault/vaults') and ${module.filter-tags.filter_custom})
+		signal = data('Availability', filter=filter('resource_type', 'Microsoft.KeyVault/vaults') and ${module.filter-tags.filter_custom}).publish('signal')
 		not_reporting.detector(stream=signal, resource_identifier=['ActivityName'], duration='${var.heartbeat_timeframe}').publish('CRIT')
 	EOF
 
@@ -23,7 +23,7 @@ resource "signalfx_detector" "api_result" {
 	program_text = <<-EOF
 		A = data('ServiceApiResult', filter=filter('resource_type', 'Microsoft.KeyVault/vaults') and filter('statuscode', '200') and ${module.filter-tags.filter_custom})${var.api_result_aggregation_function}
 		B = data('ServiceApiResult', filter=filter('resource_type', 'Microsoft.KeyVault/vaults') and ${module.filter-tags.filter_custom})${var.api_result_aggregation_function}
-		signal = ((A/B)*100).fill(100).${var.api_result_transformation_function}(over='${var.api_result_transformation_window}')
+		signal = ((A/B)*100).fill(100).${var.api_result_transformation_function}(over='${var.api_result_transformation_window}').publish('signal')
 		detect(when(signal < ${var.api_result_threshold_critical})).publish('CRIT')
 		detect(when(signal < ${var.api_result_threshold_warning})).publish('WARN')
 	EOF
@@ -51,7 +51,7 @@ resource "signalfx_detector" "api_latency" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure keyvault API latency"
 
 	program_text = <<-EOF
-		signal = data('ServiceApiLatency', filter=filter('resource_type', 'Microsoft.KeyVault/vaults') and filter('activityname', 'secretlist') and ${module.filter-tags.filter_custom})${var.api_latency_aggregation_function}.${var.api_latency_transformation_function}(over='${var.api_latency_transformation_window}')
+		signal = data('ServiceApiLatency', filter=filter('resource_type', 'Microsoft.KeyVault/vaults') and filter('activityname', 'secretlist') and ${module.filter-tags.filter_custom})${var.api_latency_aggregation_function}.${var.api_latency_transformation_function}(over='${var.api_latency_transformation_window}').publish('signal')
 		detect(when(signal > ${var.api_latency_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.api_latency_threshold_warning})).publish('WARN')
 	EOF
