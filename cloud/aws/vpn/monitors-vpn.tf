@@ -18,7 +18,7 @@ resource "signalfx_detector" "heartbeat" {
 }
 
 resource "signalfx_detector" "VPN_status" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] VPN tunnel state"
+ 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS VPN tunnel state"
 
 	program_text = <<-EOF
 		signal = data('TunnelState', filter=filter('namespace', 'AWS/VPN') and filter('stat', 'lower') and ${module.filter-tags.filter_custom})${var.vpn_status_aggregation_function}.${var.vpn_status_transformation_function}(over='${var.vpn_status_transformation_window}')

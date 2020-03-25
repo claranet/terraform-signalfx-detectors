@@ -182,7 +182,7 @@ variable "max_connection_transformation_window" {
 variable "max_connection_threshold_critical" {
   description = "Critical threshold for max_connection detector"
   type        = number
-  default     = 65000
+  default     = 64999
 }
 
 variable "max_connection_threshold_warning" {

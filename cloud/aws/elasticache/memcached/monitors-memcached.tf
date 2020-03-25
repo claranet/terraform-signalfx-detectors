@@ -1,5 +1,5 @@
 resource "signalfx_detector" "get_hits" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ElastiCache memcached hit ratio"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ElastiCache memcached hit ratio"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -31,7 +31,7 @@ resource "signalfx_detector" "get_hits" {
 }
 
 resource "signalfx_detector" "cpu_high" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ElastiCache memcached CPU"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ElastiCache memcached CPU"
 
 	program_text = <<-EOF
 		signal = data('CPUUtilization', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.cpu_high_aggregation_function}.${var.cpu_high_transformation_function}(over='${var.cpu_high_transformation_window}')
