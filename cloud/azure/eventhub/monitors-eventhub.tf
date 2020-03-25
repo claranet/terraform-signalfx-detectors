@@ -3,7 +3,7 @@ resource "signalfx_detector" "heartbeat" {
 
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
-		signal = data('SuccessfulRequests', filter=filter('resource_type', 'Microsoft.EventHub/namespace') and ${module.filter-tags.filter_custom})
+		signal = data('SuccessfulRequests', filter=filter('resource_type', 'Microsoft.EventHub/namespace') and ${module.filter-tags.filter_custom}).publish('signal')
 		not_reporting.detector(stream=signal, resource_identifier=['EntityName'], duration='${var.heartbeat_timeframe}').publish('CRIT')
 	EOF
 
@@ -26,7 +26,7 @@ resource "signalfx_detector" "eventhub_errors" {
 		B = data('UserErrors', filter=filter('resource_type', 'Microsoft.EventHub/namespaces') and ${module.filter-tags.filter_custom})${var.eventhub_errors_aggregation_function}
 		C = data('QuotaExceededErrors', filter=filter('resource_type', 'Microsoft.EventHub/namespaces') and ${module.filter-tags.filter_custom})${var.eventhub_errors_aggregation_function}
 		D = data('IncomingRequests', filter=filter('resource_type', 'Microsoft.EventHub/namespaces') and ${module.filter-tags.filter_custom})${var.eventhub_errors_aggregation_function}
-		signal = (((A+B+C)/D)*100).${var.eventhub_errors_transformation_function}(over='${var.eventhub_errors_transformation_window}')
+		signal = (((A+B+C)/D)*100).${var.eventhub_errors_transformation_function}(over='${var.eventhub_errors_transformation_window}').publish('signal')
 		above_or_below_detector(signal, ${var.eventhub_errors_threshold_critical}, ‘above’, lasting('${var.eventhub_errors_aperiodic_duration}', ${var.eventhub_errors_aperiodic_percentage})).publish('CRIT')
 		above_or_below_detector(signal, ${var.eventhub_errors_threshold_warning}, ‘above’, lasting('${var.eventhub_errors_aperiodic_duration}', ${var.eventhub_errors_aperiodic_percentage})).publish('WARN')
 
