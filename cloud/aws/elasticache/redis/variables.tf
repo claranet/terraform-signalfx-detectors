@@ -313,7 +313,7 @@ variable "commands_transformation_function" {
 variable "commands_transformation_window" {
   description = "Transformation window for commands detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
-  default     = "5m"
+  default     = "15m"
 }
 
 variable "commands_threshold_critical" {

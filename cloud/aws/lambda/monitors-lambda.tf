@@ -1,5 +1,5 @@
 resource "signalfx_detector" "pct_errors" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Lambda Percentage of errors"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS Lambda errors rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -31,7 +31,7 @@ resource "signalfx_detector" "pct_errors" {
 }
 
 resource "signalfx_detector" "errors" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Lambda Number of errors"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS Lambda errors"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -61,7 +61,7 @@ resource "signalfx_detector" "errors" {
 }
 
 resource "signalfx_detector" "throttles" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Lambda invocations throttled"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS Lambda invocations throttled"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -91,7 +91,7 @@ resource "signalfx_detector" "throttles" {
 }
 
 resource "signalfx_detector" "invocations" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Lambda number of invocations"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS Lambda invocations"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic

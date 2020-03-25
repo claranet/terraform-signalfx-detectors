@@ -1,24 +1,5 @@
-resource "signalfx_detector" "heartbeat" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ECS cluster heartbeat"
-
-	program_text = <<-EOF
-		from signalfx.detectors.not_reporting import not_reporting
-		signal = data('CPUReservation', filter=filter('stat', 'mean') and filter('namespace', 'AWS/ECS') and not filter('ServiceName', '*') and ${module.filter-tags.filter_custom})
-		not_reporting.detector(stream=signal, resource_identifier=['ClusterName'], duration='${var.heartbeat_timeframe}').publish('CRIT')
-	EOF
-
-	rule {
-		description           = "has not reported in ${var.heartbeat_timeframe}"
-		severity              = "Critical"
-		detect_label          = "CRIT"
-		disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
-		notifications         = coalescelist(var.heartbeat_notifications, var.notifications)
-		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} on {{{dimensions}}}"
-	}
-}
-
 resource "signalfx_detector" "cpu_utilization" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ECS Cluster CPU utilization"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ECS cluster CPU utilization"
 
 	program_text = <<-EOF
 		signal = data('CPUUtilization', filter=filter('namespace', 'AWS/ECS')) and filter('stat', 'mean') and not filter('ServiceName', '*') and ${module.filter-tags.filter_custom}).mean(by=['ClusterName'])${var.cpu_utilization_aggregation_function}.${var.cpu_utilization_transformation_function}(over='${var.cpu_utilization_transformation_window}')
@@ -47,7 +28,7 @@ resource "signalfx_detector" "cpu_utilization" {
 }
 
 resource "signalfx_detector" "memory_reservation" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ECS Cluster Memory reservation"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ECS cluster memory reservation"
 
 	program_text = <<-EOF
 		signal = data('MemoryReservation', filter=filter('namespace', 'AWS/ECS') and filter('stat', 'mean') and not filter('ServiceName', '*') and ${module.filter-tags.filter_custom}).mean(by=['ClusterName'])${var.memory_reservation_aggregation_function}.${var.memory_reservation_transformation_function}(over='${var.memory_reservation_transformation_window}')

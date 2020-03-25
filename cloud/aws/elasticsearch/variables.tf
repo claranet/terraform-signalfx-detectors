@@ -111,19 +111,6 @@ variable "cluster_status_transformation_window" {
   type        = string
   default     = "30m"
 }
-
-variable "cluster_status_threshold_critical" {
-  description = "Critical threshold for cluster_status detector"
-  type        = number
-  default     = 1
-}
-
-variable "cluster_status_threshold_warning" {
-  description = "Warning threshold for cluster_status detector"
-  type        = number
-  default     = 1
-}
-
 # Free_space detectors
 
 variable "free_space_disabled" {

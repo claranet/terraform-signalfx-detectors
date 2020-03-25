@@ -1,5 +1,5 @@
 resource "signalfx_detector" "cache_hits" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ElastiCache redis cache hit ratio"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ElastiCache redis cache hit ratio"
 
 	program_text = <<-EOF
 		A = data('CacheHits', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.cache_hits_aggregation_function}
@@ -30,7 +30,7 @@ resource "signalfx_detector" "cache_hits" {
 }
 
 resource "signalfx_detector" "cpu_high" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ElastiCache redis CPU"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ElastiCache redis CPU"
 
 	program_text = <<-EOF
 		signal = data('EngineCPUUtilization', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'upper') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.cpu_high_aggregation_function}.${var.cpu_high_transformation_function}(over='${var.cpu_high_transformation_window}')
@@ -59,7 +59,7 @@ resource "signalfx_detector" "cpu_high" {
 }
 
 resource "signalfx_detector" "replication_lag" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ElastiCache redis replication lag"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ElastiCache redis replication lag"
 
 	program_text = <<-EOF
 		signal = data('ReplicationLag', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'upper') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.replication_lag_aggregation_function}.${var.replication_lag_transformation_function}(over='${var.replication_lag_transformation_window}')
@@ -88,7 +88,7 @@ resource "signalfx_detector" "replication_lag" {
 }
 
 resource "signalfx_detector" "commands" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ElastiCache redis commands"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ElastiCache redis commands"
 
 	program_text = <<-EOF
 		A = data('GetTypeCmds', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'lower') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.commands_aggregation_function}

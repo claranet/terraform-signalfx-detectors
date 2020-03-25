@@ -18,7 +18,7 @@ resource "signalfx_detector" "heartbeat" {
 }
 
 resource "signalfx_detector" "incoming_records" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Kinesis incoming records"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS Kinesis incoming records"
 
 	program_text = <<-EOF
 		signal = data('IncomingRecords', filter=filter('namespace', 'AWS/Kinesis') and filter('stat', 'lower') and (not filter('ShardId', '*')) and ${module.filter-tags.filter_custom})${var.incoming_records_aggregation_function}.${var.incoming_records_transformation_function}(over='${var.incoming_records_transformation_window}')

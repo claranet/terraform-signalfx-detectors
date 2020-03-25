@@ -18,13 +18,13 @@ resource "signalfx_detector" "heartbeat" {
 }
 
 resource "signalfx_detector" "cluster_status" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ElasticSearch cluster status"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ElasticSearch cluster status"
 
 	program_text = <<-EOF
 		A = data('ClusterStatus.red', filter=filter('namespace', 'AWS/ES') and filter('stat', 'upper') and ${module.filter-tags.filter_custom})${var.cluster_status_aggregation_function}.${var.cluster_status_transformation_function}(over='${var.cluster_status_transformation_window}')
 		B = data('ClusterStatus.yellow', filter=filter('namespace', 'AWS/ES') and filter('stat', 'upper') and ${module.filter-tags.filter_custom})${var.cluster_status_aggregation_function}.${var.cluster_status_transformation_function}(over='${var.cluster_status_transformation_window}')
-		detect(when(A >= ${var.cluster_status_threshold_critical})).publish('CRIT')
-		detect(when(B >= ${var.cluster_status_threshold_warning})).publish('WARN')
+		detect(when(A >= 1)).publish('CRIT')
+		detect(when(B >= 1)).publish('WARN')
 	EOF
 
 	rule {
@@ -48,7 +48,7 @@ resource "signalfx_detector" "cluster_status" {
 }
 
 resource "signalfx_detector" "free_space" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ElasticSearch cluster free storage space"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ElasticSearch cluster free storage space"
 
 	program_text = <<-EOF
 		signal = data('FreeStorageSpace', filter=filter('namespace', 'AWS/ES') and filter('stat', 'lower') and (not filter('NodeId', '*')) and ${module.filter-tags.filter_custom}).sum(by=['Nodes'])${var.free_space_aggregation_function}.${var.free_space_transformation_function}(over='${var.free_space_transformation_window}')
@@ -77,7 +77,7 @@ resource "signalfx_detector" "free_space" {
 }
 
 resource "signalfx_detector" "cpu_90_15min" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ElasticSearch cluster CPU"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ElasticSearch cluster CPU"
 
 	program_text = <<-EOF
 		signal = data('CPUUtilization', filter=filter('namespace', 'AWS/ES') and filter('stat', 'upper') and filter('NodeId', '*') and ${module.filter-tags.filter_custom}).sum(by=['Nodes'])${var.cpu_90_15min_aggregation_function}.${var.cpu_90_15min_transformation_function}(over='${var.cpu_90_15min_transformation_window}')

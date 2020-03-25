@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS beanstalk heartbeat"
+ 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS Beanstalk heartbeat"
 
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
@@ -18,7 +18,7 @@ resource "signalfx_detector" "heartbeat" {
 }
 
 resource "signalfx_detector" "health" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS beanstalk health"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS Beanstalk environment health"
 
 	program_text = <<-EOF
 		signal = data('EnvironmentHealth', filter=filter('namespace', 'AWS/ElasticBeanstalk') and filter('stat', 'upper') and ${module.filter-tags.filter_custom})${var.health_aggregation_function}.${var.health_transformation_function}(over='${var.health_transformation_window}')
@@ -47,7 +47,7 @@ resource "signalfx_detector" "health" {
 }
 
 resource "signalfx_detector" "latency_p90" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS beanstalk applicaion latency p90"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS Beanstalk application latency p90"
 
 	program_text = <<-EOF
 		signal = data('ApplicationLatencyP90', filter=filter('namespace', 'AWS/ElasticBeanstalk') and filter('stat', 'lower') and filter('InstanceId', '*') and ${module.filter-tags.filter_custom})${var.latency_p90_aggregation_function}.${var.latency_p90_transformation_function}(over='${var.latency_p90_transformation_window}')
@@ -76,7 +76,7 @@ resource "signalfx_detector" "latency_p90" {
 }
 
 resource "signalfx_detector" "5xx_error_rate" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS beanstalk 5xx error rate"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS Beanstalk 5xx error rate"
 
 	program_text = <<-EOF
 		A = data('ApplicationRequests5xx', filter=filter('namespace', 'AWS/ElasticBeanstalk') and filter('stat', 'sum') and filter('InstanceId', '*') and ${module.filter-tags.filter_custom}){var.5xx_error_rate_aggregation_function}
@@ -107,7 +107,7 @@ resource "signalfx_detector" "5xx_error_rate" {
 }
 
 resource "signalfx_detector" "root_filesystem_usage" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Beanstalk Instance root file system usage"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS Beanstalk instance root filesystem usage"
 
 	program_text = <<-EOF
 		signal = data('RootFilesystemUtil', filter=filter('namespace', 'AWS/ElasticBeanstalk') and filter('stat', 'lower') and filter('InstanceId', '*') and ${module.filter-tags.filter_custom}){var.root_filesystem_usage_aggregation_function}.${var.root_filesystem_usage_transformation_function}(over='${var.root_filesystem_usage_transformation_window}')
