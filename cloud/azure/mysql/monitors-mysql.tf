@@ -49,7 +49,7 @@ resource "signalfx_detector" "free_storage" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure mysql server storage"
 
 	program_text = <<-EOF
-		A = data('storage_percent', filter=filter('resource_type', 'Microsoft.DBforMySQL/servers) and ${module.filter-tags.filter_custom})${var.free_storage_aggregation_function}
+		A = data('storage_percent', filter=filter('resource_type', 'Microsoft.DBforMySQL/servers') and ${module.filter-tags.filter_custom})${var.free_storage_aggregation_function}
 		signal = (100-A).${var.free_storage_transformation_function}(over='${var.free_storage_transformation_window}').publish('signal')
 		detect(when(signal < ${var.free_storage_threshold_critical})).publish('CRIT')
 		detect(when(signal < ${var.free_storage_threshold_warning})).publish('WARN')
@@ -78,7 +78,7 @@ resource "signalfx_detector" "io_consumption" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure mysql server IO consumption"
 
 	program_text = <<-EOF
-		signal = data('io_consumption_percent', filter=filter('resource_type', 'Microsoft.DBforMySQL/servers) and ${module.filter-tags.filter_custom})${var.io_consumption_aggregation_function}.${var.io_consumption_transformation_function}(over='${var.io_consumption_transformation_window}').publish('signal')
+		signal = data('io_consumption_percent', filter=filter('resource_type', 'Microsoft.DBforMySQL/servers') and ${module.filter-tags.filter_custom})${var.io_consumption_aggregation_function}.${var.io_consumption_transformation_function}(over='${var.io_consumption_transformation_window}').publish('signal')
 		detect(when(signal > ${var.io_consumption_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.io_consumption_threshold_warning})).publish('WARN')
 	EOF
@@ -106,7 +106,7 @@ resource "signalfx_detector" "memory_usage" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure mysql server memory usage"
 
 	program_text = <<-EOF
-		signal = data('memory_percent', filter=filter('resource_type', 'Microsoft.DBforMySQL/servers) and ${module.filter-tags.filter_custom})${var.memory_usage_aggregation_function}.${var.memory_usage_transformation_function}(over='${var.memory_usage_transformation_window}').publish('signal')
+		signal = data('memory_percent', filter=filter('resource_type', 'Microsoft.DBforMySQL/servers') and ${module.filter-tags.filter_custom})${var.memory_usage_aggregation_function}.${var.memory_usage_transformation_function}(over='${var.memory_usage_transformation_window}').publish('signal')
 		detect(when(signal > ${var.memory_usage_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.memory_usage_threshold_warning})).publish('WARN')
 	EOF
