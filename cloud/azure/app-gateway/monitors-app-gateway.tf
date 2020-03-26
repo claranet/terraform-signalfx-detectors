@@ -140,7 +140,7 @@ resource "signalfx_detector" "http_4xx_errors" {
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
 		A = data('ResponseStatus', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('httpstatusgroup', '4xx') and ${module.filter-tags.filter_custom})${var.http_4xx_errors_aggregation_function}
-		B = data('ResponseStatus', filter=filter('resource_type', 'Microsoft.Network/applicationGateways')and ${module.filter-tags.filter_custom})${var.http_4xx_errors_aggregation_function}
+		B = data('ResponseStatus', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and ${module.filter-tags.filter_custom})${var.http_4xx_errors_aggregation_function}
 		signal = ((A/B)*100).${var.http_4xx_errors_transformation_function}(over='${var.http_4xx_errors_transformation_window}').publish('signal')
 		aperiodic.above_or_below_detector(signal, ${var.http_4xx_errors_threshold_critical}, 'above', lasting('${var.http_4xx_errors_aperiodic_duration}', ${var.http_4xx_errors_aperiodic_percentage})).publish('CRIT')
 		aperiodic.above_or_below_detector(signal, ${var.http_4xx_errors_threshold_warning}, 'above', lasting('${var.http_4xx_errors_aperiodic_duration}', ${var.http_4xx_errors_aperiodic_percentage})).publish('WARN')
@@ -171,7 +171,7 @@ resource "signalfx_detector" "http_5xx_errors" {
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
 		A = data('ResponseStatus', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('httpstatusgroup', '5xx') and ${module.filter-tags.filter_custom})${var.http_5xx_errors_aggregation_function}
-		B = data('ResponseStatus', filter=filter('resource_type', 'Microsoft.Network/applicationGateways' and ${module.filter-tags.filter_custom})${var.http_5xx_errors_aggregation_function}
+		B = data('ResponseStatus', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and ${module.filter-tags.filter_custom})${var.http_5xx_errors_aggregation_function}
 		signal = ((A/B)*100).${var.http_5xx_errors_transformation_function}(over='${var.http_5xx_errors_transformation_window}').publish('signal')
 		aperiodic.above_or_below_detector(signal, ${var.http_5xx_errors_threshold_critical}, 'above', lasting('${var.http_5xx_errors_aperiodic_duration}', ${var.http_5xx_errors_aperiodic_percentage})).publish('CRIT')
 		aperiodic.above_or_below_detector(signal, ${var.http_5xx_errors_threshold_warning}, 'above', lasting('${var.http_5xx_errors_aperiodic_duration}', ${var.http_5xx_errors_aperiodic_percentage})).publish('WARN')
