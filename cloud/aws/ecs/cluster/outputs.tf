@@ -8,7 +8,7 @@ output "cpu_utilization_id" {
   value       = signalfx_detector.no_healthy_instances.*.id
 }
 
-output "memory_reservation_id" {
-  description = "id for detector memory_reservation"
-  value       = signalfx_detector.memory_reservation.*.id
+output "memory_utilization_id" {
+  description = "id for detector memory_utilization"
+  value       = signalfx_detector.memory_utilization.*.id
 }
