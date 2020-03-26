@@ -183,6 +183,7 @@ resource "signalfx_detector" "fileservices_latency" {
 		signal = data('SuccessE2ELatency', filter=filter('resource_type', 'Microsoft.Storage/storageAccounts/fileServices') and ${module.filter-tags.filter_custom})${var.fileservices_latency_aggregation_function}.${var.fileservices_latency_transformation_function}(over='${var.fileservices_latency_transformation_window}').publish('signal')
 		above_or_below_detector(signal, ${var.fileservices_latency_threshold_critical}, ‘above’, lasting('${var.fileservices_latency_aperiodic_duration}', ${var.fileservices_latency_aperiodic_percentage})).publish('CRIT')
 		above_or_below_detector(signal, ${var.fileservices_latency_threshold_warning}, ‘above’, lasting('${var.fileservices_latency_aperiodic_duration}', ${var.fileservices_latency_aperiodic_percentage})).publish('WARN')
+    EOF
 
 	rule {
 		description           = "is too high > ${var.fileservices_latency_threshold_critical}"
