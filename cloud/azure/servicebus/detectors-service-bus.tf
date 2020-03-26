@@ -44,8 +44,8 @@ resource "signalfx_detector" "user_errors" {
 		A = data('UserErrors', filter=filter('resource_type', 'Microsoft.ServiceBus/namespaces') and ${module.filter-tags.filter_custom})${var.user_errors_aggregation_function}
 		B = data('IncomingRequests', filter=filter('resource_type', 'Microsoft.ServiceBus/namespaces') and ${module.filter-tags.filter_custom})${var.user_errors_aggregation_function}
 		signal = ((A/B)*100).${var.user_errors_transformation_function}(over='${var.user_errors_transformation_window}').publish('signal')
-		above_or_below_detector(signal, ${var.user_errors_threshold_critical}, ‘above’, lasting('${var.user_errors_aperiodic_duration}', ${var.user_errors_aperiodic_percentage})).publish('CRIT')
-		above_or_below_detector(signal, ${var.user_errors_threshold_warning}, ‘above’, lasting('${var.user_errors_aperiodic_duration}', ${var.user_errors_aperiodic_percentage})).publish('WARN')
+		aperiodic.above_or_below_detector(signal, ${var.user_errors_threshold_critical}, 'above', lasting('${var.user_errors_aperiodic_duration}', ${var.user_errors_aperiodic_percentage})).publish('CRIT')
+		aperiodic.above_or_below_detector(signal, ${var.user_errors_threshold_warning}, 'above', lasting('${var.user_errors_aperiodic_duration}', ${var.user_errors_aperiodic_percentage})).publish('WARN')
 	EOF
 
 	rule {
@@ -75,8 +75,8 @@ resource "signalfx_detector" "server_errors" {
 		A = data('ServerErrors', filter=filter('resource_type', 'Microsoft.ServiceBus/namespaces') and ${module.filter-tags.filter_custom})${var.server_errors_aggregation_function}
 		B = data('IncomingRequests', filter=filter('resource_type', 'Microsoft.ServiceBus/namespaces') and ${module.filter-tags.filter_custom})${var.server_errors_aggregation_function}
 		signal = ((A/B)*100).${var.server_errors_transformation_function}(over='${var.server_errors_transformation_window}').publish('signal')
-		above_or_below_detector(signal, ${var.server_errors_threshold_critical}, ‘above’, lasting('${var.server_errors_aperiodic_duration}', ${var.server_errors_aperiodic_percentage})).publish('CRIT')
-		above_or_below_detector(signal, ${var.server_errors_threshold_warning}, ‘above’, lasting('${var.server_errors_aperiodic_duration}', ${var.server_errors_aperiodic_percentage})).publish('WARN')
+		aperiodic.above_or_below_detector(signal, ${var.server_errors_threshold_critical}, 'above', lasting('${var.server_errors_aperiodic_duration}', ${var.server_errors_aperiodic_percentage})).publish('CRIT')
+		aperiodic.above_or_below_detector(signal, ${var.server_errors_threshold_warning}, 'above', lasting('${var.server_errors_aperiodic_duration}', ${var.server_errors_aperiodic_percentage})).publish('WARN')
 	EOF
 
 	rule {
