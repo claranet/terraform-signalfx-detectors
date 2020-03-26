@@ -26,7 +26,7 @@ resource "signalfx_detector" "blobservices_requests_error" {
 		B = data('Transactions', filter=filter('resource_type', 'Microsoft.Storage/storageAccounts/blobServices') and (not filter('apiname', 'GetBlobProperties')) and (not filter('apiname', 'CreateContainer') and ${module.filter-tags.filter_custom})${var.blobservices_requests_error_aggregation_function}
 		signal = (100-(A/B)).scale(100).${var.blobservices_requests_error_transformation_function}(over='${var.blobservices_requests_error_transformation_window}').publish('signal')
 		above_or_below_detector(signal, ${var.blobservices_requests_error_threshold_critical}, ‘above’, lasting('${var.blobservices_requests_error_aperiodic_duration}', ${var.blobservices_requests_error_aperiodic_percentage})).publish('CRIT')
-		above_or_below_detector(signal, ${var.blobservices_requests_error_threshold_warning}, ‘above’, lasting('${var.lblobservices_requests_error_aperiodic_duration}', ${var.blobservices_requests_error_aperiodic_percentage})).publish('WARN')
+		above_or_below_detector(signal, ${var.blobservices_requests_error_threshold_warning}, ‘above’, lasting('${var.blobservices_requests_error_aperiodic_duration}', ${var.blobservices_requests_error_aperiodic_percentage})).publish('WARN')
 	EOF
 
 	rule {
