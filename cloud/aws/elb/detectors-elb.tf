@@ -60,7 +60,7 @@ resource "signalfx_detector" "too_much_4xx" {
 	EOF
 
 	rule {
-		description           = "is too high > ${var.too_much_4xx_threshold_critical}"
+		description           = "is too high > ${var.too_much_4xx_threshold_critical}%"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.too_much_4xx_disabled_critical, var.too_much_4xx_disabled, var.detectors_disabled)
@@ -69,7 +69,7 @@ resource "signalfx_detector" "too_much_4xx" {
 	}
 
 	rule {
-		description           = "is too high > ${var.too_much_4xx_threshold_warning}"
+		description           = "is too high > ${var.too_much_4xx_threshold_warning}%"
 		severity              = "Warning"
 		detect_label          = "WARN"
 		disabled              = coalesce(var.too_much_4xx_disabled_warning, var.too_much_4xx_disabled, var.detectors_disabled)
@@ -91,7 +91,7 @@ resource "signalfx_detector" "too_much_5xx" {
 	EOF
 
 	rule {
-		description           = "is too high > ${var.too_much_5xx_threshold_critical}"
+		description           = "is too high > ${var.too_much_5xx_threshold_critical}%"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.too_much_5xx_disabled_critical, var.too_much_5xx_disabled, var.detectors_disabled)
@@ -100,7 +100,7 @@ resource "signalfx_detector" "too_much_5xx" {
 	}
 
 	rule {
-		description           = "is too high > ${var.too_much_5xx_threshold_warning}"
+		description           = "is too high > ${var.too_much_5xx_threshold_warning}%"
 		severity              = "Warning"
 		detect_label          = "WARN"
 		disabled              = coalesce(var.too_much_5xx_disabled_warning, var.too_much_5xx_disabled, var.detectors_disabled)
@@ -122,7 +122,7 @@ resource "signalfx_detector" "too_much_4xx_backend" {
 	EOF
 
 	rule {
-		description           = "is too high > ${var.too_much_4xx_backend_threshold_critical}"
+		description           = "is too high > ${var.too_much_4xx_backend_threshold_critical}%"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.too_much_4xx_backend_disabled_critical, var.too_much_4xx_backend_disabled, var.detectors_disabled)
@@ -131,7 +131,7 @@ resource "signalfx_detector" "too_much_4xx_backend" {
 	}
 
 	rule {
-		description           = "is too high > ${var.too_much_4xx_backend_threshold_warning}"
+		description           = "is too high > ${var.too_much_4xx_backend_threshold_warning}%"
 		severity              = "Warning"
 		detect_label          = "WARN"
 		disabled              = coalesce(var.too_much_4xx_backend_disabled_warning, var.too_much_4xx_backend_disabled, var.detectors_disabled)
@@ -153,7 +153,7 @@ resource "signalfx_detector" "too_much_5xx_backend" {
 	EOF
 
 	rule {
-		description           = "is too high > ${var.too_much_5xx_backend_threshold_critical}"
+		description           = "is too high > ${var.too_much_5xx_backend_threshold_critical}%"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.too_much_5xx_backend_disabled_critical, var.too_much_5xx_backend_disabled, var.detectors_disabled)
@@ -162,7 +162,7 @@ resource "signalfx_detector" "too_much_5xx_backend" {
 	}
 
 	rule {
-		description           = "is too high > ${var.too_much_5xx_backend_threshold_warning}"
+		description           = "is too high > ${var.too_much_5xx_backend_threshold_warning}%"
 		severity              = "Warning"
 		detect_label          = "WARN"
 		disabled              = coalesce(var.too_much_5xx_backend_disabled_warning, var.too_much_5xx_backend_disabled, var.detectors_disabled)
@@ -183,7 +183,7 @@ resource "signalfx_detector" "backend_latency" {
 	EOF
 
 	rule {
-		description           = "is too high > ${var.backend_latency_threshold_critical}"
+		description           = "is too high > ${var.backend_latency_threshold_critical}s"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.backend_latency_disabled_critical, var.backend_latency_disabled, var.detectors_disabled)
@@ -192,7 +192,7 @@ resource "signalfx_detector" "backend_latency" {
 	}
 
 	rule {
-		description           = "is too high > ${var.backend_latency_threshold_warning}"
+		description           = "is too high > ${var.backend_latency_threshold_warning}s"
 		severity              = "Warning"
 		detect_label          = "WARN"
 		disabled              = coalesce(var.backend_latency_disabled_warning, var.backend_latency_disabled, var.detectors_disabled)
