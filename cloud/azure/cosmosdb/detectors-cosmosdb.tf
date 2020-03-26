@@ -34,8 +34,8 @@ resource "signalfx_detector" "4xx_requests" {
 		J = data('TotalRequests', filter=filter('resource_type', 'Microsoft.DocumentDb/databaseAccounts') and filter('statuscode', '449') and ${module.filter-tags.filter_custom})${var.4xx_requests_aggregation_function}
 		K = data('TotalRequests', filter=filter('resource_type', 'Microsoft.DocumentDb/databaseAccounts') and ${module.filter-tags.filter_custom})${var.4xx_requests_aggregation_function}
 		signal = (((A+B+C+D+E+F+G+H+I+J)/K)*100).${var.4xx_requests_transformation_function}(over='${var.4xx_requests_transformation_window}').publish('signal')
-		above_or_below_detector(signal, ${var.4xx_requests_threshold_critical}, ‘above’, lasting('${var.4xx_requests_aperiodic_duration}', ${var.4xx_requests_aperiodic_percentage})).publish('CRIT')
-		above_or_below_detector(signal, ${var.4xx_requests_threshold_warning}, ‘above’, lasting('${var.4xx_requests_aperiodic_duration}', ${var.4xx_requests_aperiodic_percentage})).publish('WARN')
+		aperiodic.above_or_below_detector(signal, ${var.4xx_requests_threshold_critical}, 'above', lasting('${var.4xx_requests_aperiodic_duration}', ${var.4xx_requests_aperiodic_percentage})).publish('CRIT')
+		aperiodic.above_or_below_detector(signal, ${var.4xx_requests_threshold_warning}, 'above', lasting('${var.4xx_requests_aperiodic_duration}', ${var.4xx_requests_aperiodic_percentage})).publish('WARN')
 	EOF
 
 	rule {
@@ -66,8 +66,8 @@ resource "signalfx_detector" "5xx_requests" {
 		B = data('TotalRequests', filter=filter('resource_type', 'Microsoft.DocumentDb/databaseAccounts') and filter('statuscode', '503') and ${module.filter-tags.filter_custom})${var.5xx_requests_aggregation_function}
 		C = data('TotalRequests', filter=filter('resource_type', 'Microsoft.DocumentDb/databaseAccounts') and ${module.filter-tags.filter_custom})${var.5xx_requests_aggregation_function}
 		signal = (((A+B)/C)*100).${var.5xx_requests_transformation_function}(over='${var.5xx_requests_transformation_window}').publish('signal')
-		above_or_below_detector(signal, ${var.5xx_requests_threshold_critical}, ‘above’, lasting('${var.5xx_requests_aperiodic_duration}', ${var.5xx_requests_aperiodic_percentage})).publish('CRIT')
-		above_or_below_detector(signal, ${var.4xx_requests_threshold_warning}, ‘above’, lasting('${var.5xx_requests_aperiodic_duration}', ${var.5xx_requests_aperiodic_percentage})).publish('WARN')
+		aperiodic.above_or_below_detector(signal, ${var.5xx_requests_threshold_critical}, 'above', lasting('${var.5xx_requests_aperiodic_duration}', ${var.5xx_requests_aperiodic_percentage})).publish('CRIT')
+		aperiodic.above_or_below_detector(signal, ${var.4xx_requests_threshold_warning}, 'above', lasting('${var.5xx_requests_aperiodic_duration}', ${var.5xx_requests_aperiodic_percentage})).publish('WARN')
 	EOF
 
 	rule {
@@ -97,8 +97,8 @@ resource "signalfx_detector" "scaling" {
 		A = data('TotalRequests', filter=filter('resource_type', 'Microsoft.DocumentDb/databaseAccounts') and filter('statuscode', '429') and ${module.filter-tags.filter_custom})${var.scaling_aggregation_function}
 		B = data('TotalRequests', filter=filter('resource_type', 'Microsoft.DocumentDb/databaseAccounts') and ${module.filter-tags.filter_custom})${var.scaling_aggregation_function}
 		signal = ((A/B)*100).${var.scaling_transformation_function}(over='${var.scaling_transformation_window}').publish('signal')
-		above_or_below_detector(signal, ${var.scaling_threshold_critical}, ‘above’, lasting('${var.scaling_aperiodic_duration}', ${var.scaling_aperiodic_percentage})).publish('CRIT')
-		above_or_below_detector(signal, ${var.4xx_requests_threshold_warning}, ‘above’, lasting('${var.scaling_aperiodic_duration}', ${var.scaling_aperiodic_percentage})).publish('WARN')
+		aperiodic.above_or_below_detector(signal, ${var.scaling_threshold_critical}, 'above', lasting('${var.scaling_aperiodic_duration}', ${var.scaling_aperiodic_percentage})).publish('CRIT')
+		aperiodic.above_or_below_detector(signal, ${var.4xx_requests_threshold_warning}, 'above', lasting('${var.scaling_aperiodic_duration}', ${var.scaling_aperiodic_percentage})).publish('WARN')
 	EOF
 
 	rule {
