@@ -106,70 +106,70 @@ variable "cpu_utilization_threshold_warning" {
   default     = 85
 }
 
-# Memory_reservation detectors
+# Memory_utilization detectors
 
-variable "memory_reservation_disabled" {
-  description = "Disable all alerting rules for memory_reservation detector"
+variable "memory_utilization_disabled" {
+  description = "Disable all alerting rules for memory_utilization detector"
   type        = bool
   default     = null
 }
 
-variable "memory_reservation_disabled_critical" {
-  description = "Disable critical alerting rule for memory_reservation detector"
+variable "memory_utilization_disabled_critical" {
+  description = "Disable critical alerting rule for memory_utilization detector"
   type        = bool
   default     = null
 }
 
-variable "memory_reservation_disabled_warning" {
-  description = "Disable warning alerting rule for memory_reservation detector"
+variable "memory_utilization_disabled_warning" {
+  description = "Disable warning alerting rule for memory_utilization detector"
   type        = bool
   default     = null
 }
 
-variable "memory_reservation_notifications" {
-  description = "Notification recipients list for every alerting rules of memory_reservation detector"
+variable "memory_utilization_notifications" {
+  description = "Notification recipients list for every alerting rules of memory_utilization detector"
   type        = list
   default     = []
 }
 
-variable "memory_reservation_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of memory_reservation detector"
+variable "memory_utilization_notifications_warning" {
+  description = "Notification recipients list for warning alerting rule of memory_utilization detector"
   type        = list
   default     = []
 }
 
-variable "memory_reservation_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of memory_reservation detector"
+variable "memory_utilization_notifications_critical" {
+  description = "Notification recipients list for critical alerting rule of memory_utilization detector"
   type        = list
   default     = []
 }
 
-variable "memory_reservation_aggregation_function" {
-  description = "Aggregation function and group by for memory_reservation detector (i.e. \".mean(by=['host'])\")"
+variable "memory_utilization_aggregation_function" {
+  description = "Aggregation function and group by for memory_utilization detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
 }
 
-variable "memory_reservation_transformation_function" {
-  description = "Transformation function for memory_reservation detector (mean, min, max)"
+variable "memory_utilization_transformation_function" {
+  description = "Transformation function for memory_utilization detector (mean, min, max)"
   type        = string
   default     = "min"
 }
 
-variable "memory_reservation_transformation_window" {
-  description = "Transformation window for memory_reservation detector (i.e. 5m, 20m, 1h, 1d)"
+variable "memory_utilization_transformation_window" {
+  description = "Transformation window for memory_utilization detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
 }
 
-variable "memory_reservation_threshold_critical" {
-  description = "Critical threshold for memory_reservation detector"
+variable "memory_utilization_threshold_critical" {
+  description = "Critical threshold for memory_utilization detector"
   type        = number
   default     = 90
 }
 
-variable "memory_reservation_threshold_warning" {
-  description = "Warning threshold for memory_reservation detector"
+variable "memory_utilization_threshold_warning" {
+  description = "Warning threshold for memory_utilization detector"
   type        = number
   default     = 85
 }
