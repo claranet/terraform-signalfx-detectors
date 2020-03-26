@@ -59,7 +59,7 @@ resource "signalfx_detector" "latency" {
 	EOF
 
 	rule {
-		description           = "is too high > ${var.latency_threshold_critical}"
+		description           = "is too high > ${var.latency_threshold_critical}s"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.latency_disabled_critical, var.latency_disabled, var.detectors_disabled)
@@ -68,7 +68,7 @@ resource "signalfx_detector" "latency" {
 	}
 
 	rule {
-		description           = "is too high > ${var.latency_threshold_warning}"
+		description           = "is too high > ${var.latency_threshold_warning}s"
 		severity              = "Warning"
 		detect_label          = "WARN"
 		disabled              = coalesce(var.latency_disabled_warning, var.latency_disabled, var.detectors_disabled)
@@ -90,7 +90,7 @@ resource "signalfx_detector" "httpcode_5xx" {
 	EOF
 
 	rule {
-		description           = "is too high > ${var.httpcode_5xx_threshold_critical}"
+		description           = "is too high > ${var.httpcode_5xx_threshold_critical}%"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.httpcode_5xx_disabled_critical, var.httpcode_5xx_disabled, var.detectors_disabled)
@@ -121,7 +121,7 @@ resource "signalfx_detector" "httpcode_4xx" {
 	EOF
 
 	rule {
-		description           = "is too high > ${var.httpcode_4xx_threshold_critical}"
+		description           = "is too high > ${var.httpcode_4xx_threshold_critical}%"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.httpcode_4xx_disabled_critical, var.httpcode_4xx_disabled, var.detectors_disabled)
@@ -130,7 +130,7 @@ resource "signalfx_detector" "httpcode_4xx" {
 	}
 
 	rule {
-		description           = "is too high > ${var.httpcode_4xx_threshold_warning}"
+		description           = "is too high > ${var.httpcode_4xx_threshold_warning}%"
 		severity              = "Warning"
 		detect_label          = "WARN"
 		disabled              = coalesce(var.httpcode_4xx_disabled_warning, var.httpcode_4xx_disabled, var.detectors_disabled)
@@ -161,7 +161,7 @@ resource "signalfx_detector" "httpcode_target_5xx" {
 	}
 
 	rule {
-		description           = "is too high > ${var.httpcode_target_5xx_threshold_warning}"
+		description           = "is too high > ${var.httpcode_target_5xx_threshold_warning}%"
 		severity              = "Warning"
 		detect_label          = "WARN"
 		disabled              = coalesce(var.httpcode_target_5xx_disabled_warning, var.httpcode_target_5xx_disabled, var.detectors_disabled)
@@ -183,7 +183,7 @@ resource "signalfx_detector" "httpcode_target_4xx" {
 	EOF
 
 	rule {
-		description           = "is too high > ${var.httpcode_target_4xx_threshold_critical}"
+		description           = "is too high > ${var.httpcode_target_4xx_threshold_critical}%"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.httpcode_target_4xx_disabled_critical, var.httpcode_target_4xx_disabled, var.detectors_disabled)
@@ -192,7 +192,7 @@ resource "signalfx_detector" "httpcode_target_4xx" {
 	}
 
 	rule {
-		description           = "is too high > ${var.httpcode_target_4xx_threshold_warning}"
+		description           = "is too high > ${var.httpcode_target_4xx_threshold_warning}%"
 		severity              = "Warning"
 		detect_label          = "WARN"
 		disabled              = coalesce(var.httpcode_target_4xx_disabled_warning, var.httpcode_target_4xx_disabled, var.detectors_disabled)
