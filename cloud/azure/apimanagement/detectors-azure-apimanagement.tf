@@ -25,8 +25,8 @@ resource "signalfx_detector" "failed_requests" {
 		A = data('EventHubTotalFailedEvents', filter=filter('resource_type', 'Microsoft.ApiManagement/service') and ${module.filter-tags.filter_custom})${var.failed_requests_aggregation_function}
 		B = data('EventHubTotalEvents', filter=filter('resource_type', 'Microsoft.ApiManagement/service') and ${module.filter-tags.filter_custom})${var.failed_requests_aggregation_function}
 		signal = ((A/B)*100).${var.failed_requests_transformation_function}(over='${var.failed_requests_transformation_window}')).publish('signal')
-		above_or_below_detector(signal, ${var.failed_requests_threshold_critical}, ‘above’, lasting('${var.failed_requests_aperiodic_duration}', ${var.failed_requests_aperiodic_percentage})).publish('CRIT')
-		above_or_below_detector(signal, ${var.failed_requests_threshold_warning}, ‘above’, lasting('${var.failed_requests_aperiodic_duration}', ${var.failed_requests_aperiodic_percentage})).publish('WARN')
+		aperiodic.above_or_below_detector(signal, ${var.failed_requests_threshold_critical}, 'above', lasting('${var.failed_requests_aperiodic_duration}', ${var.failed_requests_aperiodic_percentage})).publish('CRIT')
+		aperiodic.above_or_below_detector(signal, ${var.failed_requests_threshold_warning}, 'above', lasting('${var.failed_requests_aperiodic_duration}', ${var.failed_requests_aperiodic_percentage})).publish('WARN')
 	EOF
 
 	rule {
@@ -58,8 +58,8 @@ resource "signalfx_detector" "other_requests" {
 		C = data('EventHubDroppedEvents', filter=filter('resource_type', 'Microsoft.ApiManagement/service') and ${module.filter-tags.filter_custom})${var.other_requests_aggregation_function}
 		D = data('EventHubTotalEvents', filter=filter('resource_type', 'Microsoft.ApiManagement/service') and ${module.filter-tags.filter_custom})${var.other_requests_aggregation_function}
 		signal = (((A+B+C)/D)*100).${var.other_requests_transformation_function}(over='${var.other_requests_transformation_window}').publish('signal')
-		above_or_below_detector(signal, ${var.other_requests_threshold_critical}, ‘above’, lasting('${var.other_requests_aperiodic_duration}', ${var.other_requests_aperiodic_percentage})).publish('CRIT')
-		above_or_below_detector(signal, ${var.other_requests_threshold_warning}, ‘above’, lasting('${var.other_requests_aperiodic_duration}', ${var.other_requests_aperiodic_percentage})).publish('WARN')
+		aperiodic.above_or_below_detector(signal, ${var.other_requests_threshold_critical}, 'above', lasting('${var.other_requests_aperiodic_duration}', ${var.other_requests_aperiodic_percentage})).publish('CRIT')
+		aperiodic.above_or_below_detector(signal, ${var.other_requests_threshold_warning}, 'above', lasting('${var.other_requests_aperiodic_duration}', ${var.other_requests_aperiodic_percentage})).publish('WARN')
 	EOF
 
 	rule {
@@ -89,8 +89,8 @@ resource "signalfx_detector" "unauthorized_requests" {
 		A = data('EventHubRejectedEvents', filter=filter('resource_type', 'Microsoft.ApiManagement/service') and ${module.filter-tags.filter_custom})${var.unauthorized_requests_aggregation_function}
 		B = data('EventHubTotalEvents', filter=filter('resource_type', 'Microsoft.ApiManagement/service') and ${module.filter-tags.filter_custom})${var.unauthorized_requests_aggregation_function}
 		signal = ((A/B)*100).${var.unauthorized_requests_transformation_function}(over='${var.unauthorized_requests_transformation_window}').publish('signal')
-		above_or_below_detector(signal, ${var.unauthorized_requests_threshold_critical}, ‘above’, lasting('${var.unauthorized_requests_aperiodic_duration}', ${var.unauthorized_requests_aperiodic_percentage})).publish('CRIT')
-		above_or_below_detector(signal, ${var.unauthorized_requests_threshold_warning}, ‘above’, lasting('${var.unauthorized_requests_aperiodic_duration}', ${var.unauthorized_requests_aperiodic_percentage})).publish('WARN')
+		aperiodic.above_or_below_detector(signal, ${var.unauthorized_requests_threshold_critical}, 'above', lasting('${var.unauthorized_requests_aperiodic_duration}', ${var.unauthorized_requests_aperiodic_percentage})).publish('CRIT')
+		aperiodic.above_or_below_detector(signal, ${var.unauthorized_requests_threshold_warning}, 'above', lasting('${var.unauthorized_requests_aperiodic_duration}', ${var.unauthorized_requests_aperiodic_percentage})).publish('WARN')
 	EOF
 
 	rule {
