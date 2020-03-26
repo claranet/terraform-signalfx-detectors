@@ -240,7 +240,7 @@ resource "signalfx_detector" "tableservices_latency" {
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
-		signal = data('SuccessE2ELatency', filter=filter('resource_type', 'Microsoft.Storage/storageAccounts/tableServices') and ${module.filter-tags.filter_custom}){var.tableservices_latency_aggregation_function}.${var.tableservices_latency_transformation_function}(over='${var.tableservices_latency_transformation_window}').publish('signal')
+		signal = data('SuccessE2ELatency', filter=filter('resource_type', 'Microsoft.Storage/storageAccounts/tableServices') and ${module.filter-tags.filter_custom})${var.tableservices_latency_aggregation_function}.${var.tableservices_latency_transformation_function}(over='${var.tableservices_latency_transformation_window}').publish('signal')
 		aperiodic.above_or_below_detector(signal, ${var.tableservices_latency_threshold_critical}, 'above', lasting('${var.tableservices_latency_aperiodic_duration}', ${var.tableservices_latency_aperiodic_percentage})).publish('CRIT')
 		aperiodic.above_or_below_detector(signal, ${var.tableservices_latency_threshold_warning}, 'above', lasting('${var.tableservices_latency_aperiodic_duration}', ${var.tableservices_latency_aperiodic_percentage})).publish('WARN')
 	EOF
@@ -270,8 +270,8 @@ resource "signalfx_detector" "blob_timeout_error_requests" {
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
-		A = data('Transactions', filter=filter('resource_type', 'Microsoft.Storage/storageAccounts/blobServices') and filter('responsetype', 'ServerTimeoutError') and ${module.filter-tags.filter_custom}){var.blob_timeout_error_requests_aggregation_function}
-		B = data('Transactions', filter=filter('resource_type', 'Microsoft.Storage/storageAccounts/blobServices') and ${module.filter-tags.filter_custom}){var.blob_timeout_error_requests_aggregation_function}
+		A = data('Transactions', filter=filter('resource_type', 'Microsoft.Storage/storageAccounts/blobServices') and filter('responsetype', 'ServerTimeoutError') and ${module.filter-tags.filter_custom})${var.blob_timeout_error_requests_aggregation_function}
+		B = data('Transactions', filter=filter('resource_type', 'Microsoft.Storage/storageAccounts/blobServices') and ${module.filter-tags.filter_custom})${var.blob_timeout_error_requests_aggregation_function}
 		signal = (A/B).scale(100).${var.blob_timeout_error_requests_transformation_function}(over='${var.blob_timeout_error_requests_transformation_window}').publish('signal')
 		aperiodic.above_or_below_detector(signal, ${var.blob_timeout_error_requests_threshold_critical}, 'above', lasting('${var.blob_timeout_error_requests_aperiodic_duration}', ${var.blob_timeout_error_requests_aperiodic_percentage})).publish('CRIT')
 		aperiodic.above_or_below_detector(signal, ${var.blob_timeout_error_requests_threshold_warning}, 'above', lasting('${var.blob_timeout_error_requests_aperiodic_duration}', ${var.blob_timeout_error_requests_aperiodic_percentage})).publish('WARN')
@@ -302,8 +302,8 @@ resource "signalfx_detector" "file_timeout_error_requests" {
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
-		A = data('Transactions', filter=filter('resource_type', 'Microsoft.Storage/storageAccounts/fileServices') and filter('responsetype', 'ServerTimeoutError') and ${module.filter-tags.filter_custom}){var.file_timeout_error_requests_aggregation_function}
-		B = data('Transactions', filter=filter('resource_type', 'Microsoft.Storage/storageAccounts/fileServices') and filter('apiname', 'GetFileServiceProperties') and ${module.filter-tags.filter_custom}){var.file_timeout_error_requests_aggregation_function}
+		A = data('Transactions', filter=filter('resource_type', 'Microsoft.Storage/storageAccounts/fileServices') and filter('responsetype', 'ServerTimeoutError') and ${module.filter-tags.filter_custom})${var.file_timeout_error_requests_aggregation_function}
+		B = data('Transactions', filter=filter('resource_type', 'Microsoft.Storage/storageAccounts/fileServices') and filter('apiname', 'GetFileServiceProperties') and ${module.filter-tags.filter_custom})${var.file_timeout_error_requests_aggregation_function}
 		signal = (A/B).scale(100).${var.file_timeout_error_requests_transformation_function}(over='${var.file_timeout_error_requests_transformation_window}').publish('signal')
 		aperiodic.above_or_below_detector(signal, ${var.file_timeout_error_requests_threshold_critical}, 'above', lasting('${var.file_timeout_error_requests_aperiodic_duration}', ${var.file_timeout_error_requests_aperiodic_percentage})).publish('CRIT')
 		aperiodic.above_or_below_detector(signal, ${var.file_timeout_error_requests_threshold_warning}, 'above', lasting('${var.file_timeout_error_requests_aperiodic_duration}', ${var.file_timeout_error_requests_aperiodic_percentage})).publish('WARN')
