@@ -26,7 +26,7 @@ resource "signalfx_detector" "VPN_status" {
 	EOF
 
 	rule {
-		description           = "is reporting a state other then up"
+		description           = "is reporting a state other than up"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.vpn_status_disabled_critical, var.vpn_status_disabled, var.detectors_disabled)
