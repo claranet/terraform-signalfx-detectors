@@ -444,13 +444,13 @@ variable "blobservices_latency_threshold_warning" {
   default     = 1000
 }
 
-variable "Blobservices_latency_aperiodic_duration" {
+variable "blobservices_latency_aperiodic_duration" {
   description = "Duration for the Blobservices_latency block"
   type        = string
   default     = "10m"
 }
 
-variable "Blobservices_latency_aperiodic_percentage" {
+variable "blobservices_latency_aperiodic_percentage" {
   description = "Percentage for the Blobservices_latency block"
   type        = number
   default     = 0.9
