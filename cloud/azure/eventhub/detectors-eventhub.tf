@@ -27,8 +27,8 @@ resource "signalfx_detector" "eventhub_errors" {
 		C = data('QuotaExceededErrors', filter=filter('resource_type', 'Microsoft.EventHub/namespaces') and ${module.filter-tags.filter_custom})${var.eventhub_errors_aggregation_function}
 		D = data('IncomingRequests', filter=filter('resource_type', 'Microsoft.EventHub/namespaces') and ${module.filter-tags.filter_custom})${var.eventhub_errors_aggregation_function}
 		signal = (((A+B+C)/D)*100).${var.eventhub_errors_transformation_function}(over='${var.eventhub_errors_transformation_window}').publish('signal')
-		above_or_below_detector(signal, ${var.eventhub_errors_threshold_critical}, ‘above’, lasting('${var.eventhub_errors_aperiodic_duration}', ${var.eventhub_errors_aperiodic_percentage})).publish('CRIT')
-		above_or_below_detector(signal, ${var.eventhub_errors_threshold_warning}, ‘above’, lasting('${var.eventhub_errors_aperiodic_duration}', ${var.eventhub_errors_aperiodic_percentage})).publish('WARN')
+		aperiodic.above_or_below_detector(signal, ${var.eventhub_errors_threshold_critical}, 'above', lasting('${var.eventhub_errors_aperiodic_duration}', ${var.eventhub_errors_aperiodic_percentage})).publish('CRIT')
+		aperiodic.above_or_below_detector(signal, ${var.eventhub_errors_threshold_warning}, 'above', lasting('${var.eventhub_errors_aperiodic_duration}', ${var.eventhub_errors_aperiodic_percentage})).publish('WARN')
 
 	EOF
 
