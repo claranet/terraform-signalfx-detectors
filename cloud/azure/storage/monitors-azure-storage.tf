@@ -22,8 +22,8 @@ resource "signalfx_detector" "blobservices_requests_error" {
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
-		A = data('Transactions', filter=filter('resource_type', 'Microsoft.Storage/storageAccounts/blobServices') and filter('responsetype', 'Success') and (not filter('apiname', 'GetBlobProperties')) and (not filter('apiname', 'CreateContainer')) and ${module.filter-tags.filter_custom})${var.blobservices_requests_error_aggregation_function}
-		B = data('Transactions', filter=filter('resource_type', 'Microsoft.Storage/storageAccounts/blobServices') and (not filter('apiname', 'GetBlobProperties')) and (not filter('apiname', 'CreateContainer') and ${module.filter-tags.filter_custom})${var.blobservices_requests_error_aggregation_function}
+		A = data('Transactions', filter=filter('resource_type', 'Microsoft.Storage/storageAccounts/blobServices') and filter('responsetype', 'Success') and not filter('apiname', 'GetBlobProperties') and not filter('apiname', 'CreateContainer') and ${module.filter-tags.filter_custom})${var.blobservices_requests_error_aggregation_function}
+		B = data('Transactions', filter=filter('resource_type', 'Microsoft.Storage/storageAccounts/blobServices') and not filter('apiname', 'GetBlobProperties') and not filter('apiname', 'CreateContainer') and ${module.filter-tags.filter_custom})${var.blobservices_requests_error_aggregation_function}
 		signal = (100-(A/B)).scale(100).${var.blobservices_requests_error_transformation_function}(over='${var.blobservices_requests_error_transformation_window}').publish('signal')
 		aperiodic.above_or_below_detector(signal, ${var.blobservices_requests_error_threshold_critical}, 'above', lasting('${var.blobservices_requests_error_aperiodic_duration}', ${var.blobservices_requests_error_aperiodic_percentage})).publish('CRIT')
 		aperiodic.above_or_below_detector(signal, ${var.blobservices_requests_error_threshold_warning}, 'above', lasting('${var.blobservices_requests_error_aperiodic_duration}', ${var.blobservices_requests_error_aperiodic_percentage})).publish('WARN')
@@ -782,8 +782,8 @@ resource "signalfx_detector" "blob_client_other_error_requests" {
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
-		A = data('Transactions', filter=filter('resource_type', 'Microsoft.Storage/storageAccounts/blobServices') and filter('responsetype', 'ClientOtherError') and (not filter('apiname', 'GetBlobProperties')) and (not filter('apiname', 'CreateContainer')) and ${module.filter-tags.filter_custom})${var.blob_client_other_error_requests_aggregation_function}
-		B = data('Transactions', filter=filter('resource_type', 'Microsoft.Storage/storageAccounts/blobServices') and (not filter('apiname', 'GetBlobProperties')) and (not filter('apiname', 'CreateContainer')) and ${module.filter-tags.filter_custom})${var.blob_client_other_error_requests_aggregation_function}
+		A = data('Transactions', filter=filter('resource_type', 'Microsoft.Storage/storageAccounts/blobServices') and filter('responsetype', 'ClientOtherError') and not filter('apiname', 'GetBlobProperties') and not filter('apiname', 'CreateContainer') and ${module.filter-tags.filter_custom})${var.blob_client_other_error_requests_aggregation_function}
+		B = data('Transactions', filter=filter('resource_type', 'Microsoft.Storage/storageAccounts/blobServices') and not filter('apiname', 'GetBlobProperties') and not filter('apiname', 'CreateContainer') and ${module.filter-tags.filter_custom})${var.blob_client_other_error_requests_aggregation_function}
 		signal = (A/B).scale(100).${var.blob_client_other_error_requests_transformation_function}(over='${var.blob_client_other_error_requests_transformation_window}').publish('signal')
 		aperiodic.above_or_below_detector(signal, ${var.blob_client_other_error_requests_threshold_critical}, 'above', lasting('${var.blob_client_other_error_requests_aperiodic_duration}', ${var.blob_client_other_error_requests_aperiodic_percentage})).publish('CRIT')
 		aperiodic.above_or_below_detector(signal, ${var.blob_client_other_error_requests_threshold_warning}, 'above', lasting('${var.blob_client_other_error_requests_aperiodic_duration}', ${var.blob_client_other_error_requests_aperiodic_percentage})).publish('WARN')
