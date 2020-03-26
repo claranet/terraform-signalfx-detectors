@@ -61,7 +61,7 @@ variable "heartbeat_timeframe" {
 variable "visible_messages_disabled" {
   description = "Disable all alerting rules for visible_messages detector"
   type        = bool
-  default     = null
+  default     = true
 }
 
 variable "visible_messages_disabled_critical" {

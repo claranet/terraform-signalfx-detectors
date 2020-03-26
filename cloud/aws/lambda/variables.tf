@@ -123,7 +123,7 @@ variable "pct_errors_aperiodic_percentage" {
 variable "errors_disabled" {
   description = "Disable all alerting rules for errors detector"
   type        = bool
-  default     = null
+  default     = true
 }
 
 variable "errors_disabled_critical" {
@@ -283,7 +283,7 @@ variable "throttles_aperiodic_percentage" {
 variable "invocations_disabled" {
   description = "Disable all alerting rules for invocations detector"
   type        = bool
-  default     = null
+  default     = true
 }
 
 variable "invocations_disabled_critical" {
