@@ -24,8 +24,8 @@ resource "signalfx_detector" "latency" {
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
 		signal = data('Latency', filter=filter('namespace', 'AWS/ApiGateway') and filter('stat', 'mean')and (not filter('Stage', '*'))and (not filter('Method', '*'))and (not filter('Resource', '*')) and ${module.filter-tags.filter_custom})${var.latency_aggregation_function}.${var.latency_transformation_function}(over='${var.latency_transformation_window}')
-		above_or_below_detector(signal, ${var.latency_threshold_critical}, 'above', lasting('${var.latency_aperiodic_duration}', ${var.latency_aperiodic_percentage})).publish('CRIT')
-		above_or_below_detector(signal, ${var.latency_threshold_warning}, 'above', lasting('${var.latency_aperiodic_duration}', ${var.latency_aperiodic_percentage})).publish('WARN')
+		aperiodic.above_or_below_detector(signal, ${var.latency_threshold_critical}, 'above', lasting('${var.latency_aperiodic_duration}', ${var.latency_aperiodic_percentage})).publish('CRIT')
+		aperiodic.above_or_below_detector(signal, ${var.latency_threshold_warning}, 'above', lasting('${var.latency_aperiodic_duration}', ${var.latency_aperiodic_percentage})).publish('WARN')
 	EOF
 
 	rule {
