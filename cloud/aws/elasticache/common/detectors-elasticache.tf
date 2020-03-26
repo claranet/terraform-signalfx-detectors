@@ -146,9 +146,8 @@ resource "signalfx_detector" "evictions_growing" {
  	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ElastiCache evictions changing rate grows"
 
 	program_text = <<-EOF
-		A = data('Evictions', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom}).rateofchange()${var.evictions_growing_aggregation_function}.${var.evictions_growing_transformation_function}(over='${var.evictions_growing_transformation_window}')
-		B = (A).rateofchange()
-		signal = (B/A*100)
+		A = data('Evictions', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom}).rateofchange().${var.evictions_growing_transformation_function}(over='${var.evictions_growing_transformation_window}')
+		signal = (A*100)
 		detect(when(signal > ${var.evictions_growing_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.evictions_growing_threshold_warning})).publish('WARN')
 	EOF

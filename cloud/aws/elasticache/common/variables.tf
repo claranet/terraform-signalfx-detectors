@@ -433,12 +433,6 @@ variable "evictions_growing_notifications_critical" {
   default     = []
 }
 
-variable "evictions_growing_aggregation_function" {
-  description = "Aggregation function and group by for evictions_growing detector (i.e. \".mean(by=['host'])\")"
-  type        = string
-  default     = ""
-}
-
 variable "evictions_growing_transformation_function" {
   description = "Transformation function for evictions_growing detector (mean, min, max)"
   type        = string
