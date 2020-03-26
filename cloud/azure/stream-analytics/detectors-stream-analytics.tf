@@ -53,8 +53,8 @@ resource "signalfx_detector" "failed_requests" {
 		A = data('AMLCalloutFailedRequests', filter=filter('resource_type', 'Microsoft.StreamAnalytics/streamingjobs') and ${module.filter-tags.filter_custom})${var.failed_requests_aggregation_function}
 		B = data('AMLCalloutRequests', filter=filter('resource_type', 'Microsoft.StreamAnalytics/streamingjobs') and ${module.filter-tags.filter_custom})${var.failed_requests_aggregation_function}
 		signal = ((A/B)*100).${var.failed_requests_transformation_function}(over='${var.failed_requests_transformation_window}').publish('signal')
-		above_or_below_detector(signal, ${var.failed_requests_threshold_critical}, ‘above’, lasting('${var.failed_requests_aperiodic_duration}', ${var.failed_requests_aperiodic_percentage})).publish('CRIT')
-		above_or_below_detector(signal, ${var.failed_requests_threshold_warning}, ‘above’, lasting('${var.failed_requests_aperiodic_duration}', ${var.failed_requests_aperiodic_percentage})).publish('WARN')
+		aperiodic.above_or_below_detector(signal, ${var.failed_requests_threshold_critical}, 'above', lasting('${var.failed_requests_aperiodic_duration}', ${var.failed_requests_aperiodic_percentage})).publish('CRIT')
+		aperiodic.above_or_below_detector(signal, ${var.failed_requests_threshold_warning}, 'above', lasting('${var.failed_requests_aperiodic_duration}', ${var.failed_requests_aperiodic_percentage})).publish('WARN')
 	EOF
 
 	rule {
