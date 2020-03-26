@@ -183,27 +183,6 @@ resource "signalfx_detector" "fileservices_latency" {
 		signal = data('SuccessE2ELatency', filter=filter('resource_type', 'Microsoft.Storage/storageAccounts/fileServices') and ${module.filter-tags.filter_custom})${var.fileservices_latency_aggregation_function}.${var.fileservices_latency_transformation_function}(over='${var.fileservices_latency_transformation_window}').publish('signal')
 		aperiodic.above_or_below_detector(signal, ${var.fileservices_latency_threshold_critical}, 'above', lasting('${var.fileservices_latency_aperiodic_duration}', ${var.fileservices_latency_aperiodic_percentage})).publish('CRIT')
 		aperiodic.above_or_below_detector(signal, ${var.fileservices_latency_threshold_warning}, 'above', lasting('${var.fileservices_latency_aperiodic_duration}', ${var.fileservices_latency_aperiodic_percentage})).publish('WARN')
-    EOF
-
-  rule {
-    description           = "is too high > ${var.fileservices_latency_threshold_critical}"
-    severity              = "Critical"
-    detect_label          = "CRIT"
-    disabled              = coalesce(var.fileservices_latency_disabled_critical, var.fileservices_latency_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.fileservices_latency_notifications_critical, var.fileservices_latency_notifications, var.notifications)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-  }
-
-  rule {
-    description           = "is too high > ${var.fileservices_latency_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.fileservices_latency_disabled_warning, var.fileservices_latency_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.fileservices_latency_notifications_warning, var.fileservices_latency_notifications, var.notifications)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-  }
-
-}
 
 resource "signalfx_detector" "queueservices_latency" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure storage queue service latency"
@@ -223,7 +202,6 @@ resource "signalfx_detector" "queueservices_latency" {
     notifications         = coalescelist(var.queueservices_latency_notifications_critical, var.queueservices_latency_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
-
   rule {
     description           = "is too high > ${var.queueservices_latency_threshold_warning}"
     severity              = "Warning"
