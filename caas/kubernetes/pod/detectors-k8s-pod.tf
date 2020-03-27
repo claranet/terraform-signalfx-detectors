@@ -3,7 +3,7 @@ resource "signalfx_detector" "heartbeat" {
 
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
-		signal = data('kube_pod_status_ready' and ${module.filter-tags.filter_custom})
+		signal = data('kube_pod_status_ready' and ${module.filter-tags.filter_custom}).publish('signal')
 		not_reporting.detector(stream=signal, resource_identifier=['container_name'], duration='${var.heartbeat_timeframe}').publish('CRIT')
 	EOF
 
@@ -21,7 +21,7 @@ resource "signalfx_detector" "pod_phase_status" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Kubernetes POD phase failed status"
 
 	program_text = <<-EOF
-		signal = data('kube_pod_status_phase', filter=('phase', 'Failed') and ${module.filter-tags.filter_custom})${var.pod_phase_status_aggregation_function}.${var.pod_phase_status_transformation_function}(over='${var.pod_phase_status_transformation_window}')
+		signal = data('kube_pod_status_phase', filter=('phase', 'Failed') and ${module.filter-tags.filter_custom})${var.pod_phase_status_aggregation_function}.${var.pod_phase_status_transformation_function}(over='${var.pod_phase_status_transformation_window}').publish('signal')
 		detect(when(signal > ${var.pod_phase_status_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.pod_phase_status_threshold_warning})).publish('WARN')
 	EOF
@@ -50,7 +50,7 @@ resource "signalfx_detector" "error" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Kubernetes POD waiting errors"
 
 	program_text = <<-EOF
-		signal = data('kube_pod_container_status_waiting', filter=(not filter('reason', 'ContainerCreating')) and ${module.filter-tags.filter_custom})${var.error_aggregation_function}.${var.error_transformation_function}(over='${var.error_transformation_window}')
+		signal = data('kube_pod_container_status_waiting', filter=(not filter('reason', 'ContainerCreating')) and ${module.filter-tags.filter_custom})${var.error_aggregation_function}.${var.error_transformation_function}(over='${var.error_transformation_window}').publish('signal')
 		detect(when(signal > ${var.error_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.error_threshold_warning})).publish('WARN')
 	EOF
@@ -79,7 +79,7 @@ resource "signalfx_detector" "terminated" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Kubernetes POD terminated abnormally"
 
 	program_text = <<-EOF
-		signal = data('kube_pod_container_status_terminated', filter=(not filter('reason', 'ContainerCreating')) and ${module.filter-tags.filter_custom})${var.terminated_aggregation_function}.${var.terminated_transformation_function}(over='${var.terminated_transformation_window}')
+		signal = data('kube_pod_container_status_terminated', filter=(not filter('reason', 'ContainerCreating')) and ${module.filter-tags.filter_custom})${var.terminated_aggregation_function}.${var.terminated_transformation_function}(over='${var.terminated_transformation_window}').publish('signal')
 		detect(when(signal > ${var.terminated_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.terminated_threshold_warning})).publish('WARN')
 	EOF
