@@ -69,7 +69,7 @@ resource "signalfx_detector" "no_connection" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ElastiCache current connections"
 
 	program_text = <<-EOF
-		signal = data('CurrConnections', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'lower') filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.no_connection_aggregation_function}.${var.no_connection_transformation_function}(over='${var.no_connection_transformation_window}')
+		signal = data('CurrConnections', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'lower') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.no_connection_aggregation_function}.${var.no_connection_transformation_function}(over='${var.no_connection_transformation_window}')
 		detect(when(signal <= ${var.no_connection_threshold_critical})).publish('CRIT')
 	EOF
 

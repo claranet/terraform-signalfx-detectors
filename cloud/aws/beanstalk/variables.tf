@@ -192,69 +192,69 @@ variable "latency_p90_threshold_warning" {
   default     = 0.3
 }
 
-# 5xx_error_rate detectors
+# app_5xx_error_rate detectors
 
-variable "5xx_error_rate_disabled" {
+variable "app_5xx_error_rate_disabled" {
   description = "Disable all alerting rules for 5xx_error_rate detector"
   type        = bool
   default     = null
 }
 
-variable "5xx_error_rate_disabled_critical" {
+variable "app_5xx_error_rate_disabled_critical" {
   description = "Disable critical alerting rule for 5xx_error_rate detector"
   type        = bool
   default     = null
 }
 
-variable "5xx_error_rate_disabled_warning" {
+variable "app_5xx_error_rate_disabled_warning" {
   description = "Disable warning alerting rule for 5xx_error_rate detector"
   type        = bool
   default     = null
 }
 
-variable "5xx_error_rate_notifications" {
+variable "app_5xx_error_rate_notifications" {
   description = "Notification recipients list for every alerting rules of 5xx_error_rate detector"
   type        = list
   default     = []
 }
 
-variable "5xx_error_rate_notifications_warning" {
+variable "app_5xx_error_rate_notifications_warning" {
   description = "Notification recipients list for warning alerting rule of 5xx_error_rate detector"
   type        = list
   default     = []
 }
 
-variable "5xx_error_rate_notifications_critical" {
+variable "app_5xx_error_rate_notifications_critical" {
   description = "Notification recipients list for critical alerting rule of 5xx_error_rate detector"
   type        = list
   default     = []
 }
 
-variable "5xx_error_rate_aggregation_function" {
+variable "app_5xx_error_rate_aggregation_function" {
   description = "Aggregation function and group by for 5xx_error_rate detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ".sum(by=['EnvrionementName'])"
 }
 
-variable "5xx_error_rate_transformation_function" {
+variable "app_5xx_error_rate_transformation_function" {
   description = "Transformation function for 5xx_error_rate detector (mean, min, max)"
   type        = string
   default     = "sum"
 }
 
-variable "5xx_error_rate_transformation_window" {
+variable "app_5xx_error_rate_transformation_window" {
   description = "Transformation window for 5xx_error_rate detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "15m"
 }
 
-variable "5xx_error_rate_threshold_critical" {
+variable "app_5xx_error_rate_threshold_critical" {
   description = "Critical threshold for 5xx_error_rate detector"
   type        = number
   default     = 5
 }
 
-variable "5xx_error_rate_threshold_warning" {
+variable "app_5xx_error_rate_threshold_warning" {
   description = "Warning threshold for 5xx_error_rate detector"
   type        = number
   default     = 3
