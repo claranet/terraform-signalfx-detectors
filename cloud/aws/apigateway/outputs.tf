@@ -8,12 +8,12 @@ output "latency_id" {
   value       = signalfx_detector.latency.*.id
 }
 
-output "httpcode_5xx_errors_id" {
-  description = "id for detector httpcode_5xx_errors"
-  value       = signalfx_detector.httpcode_5xx_errors.*.id
+output "http_5xx_errors_id" {
+  description = "id for detector http_5xx_errors"
+  value       = signalfx_detector.http_5xx_errors.*.id
 }
 
-output "httpcode_4xx_errors_id" {
-  description = "id for detector httpcode_4xx_errors"
-  value       = signalfx_detector.httpcode_4xx_errors.*.id
+output "http_4xx_errors_id" {
+  description = "id for detector http_4xx_errors"
+  value       = signalfx_detector.http_4xx_errors.*.id
 }

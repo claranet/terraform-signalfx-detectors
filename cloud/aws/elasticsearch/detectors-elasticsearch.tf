@@ -28,21 +28,21 @@ resource "signalfx_detector" "cluster_status" {
 	EOF
 
 	rule {
-		description           = "is red > ${var.cluster_status_threshold_critical}"
+		description           = "is red > 1"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.cluster_status_disabled_critical, var.cluster_status_disabled, var.detectors_disabled)
 		notifications         = coalescelist(var.cluster_status_notifications_critical, var.cluster_status_notifications, var.notifications)
-		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.A.value}}) on {{{dimensions}}}"
 	}
 
 	rule {
-		description           = "is yellow > ${var.cluster_status_threshold_warning}"
+		description           = "is yellow > 1"
 		severity              = "Warning"
 		detect_label          = "WARN"
 		disabled              = coalesce(var.cluster_status_disabled_warning, var.cluster_status_disabled, var.detectors_disabled)
 		notifications         = coalescelist(var.cluster_status_notifications_warning, var.cluster_status_notifications, var.notifications)
-		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.B.value}}) on {{{dimensions}}}"
 	}
 
 }

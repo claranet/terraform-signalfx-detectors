@@ -13,9 +13,9 @@ output "latency_p90_id" {
   value       = signalfx_detector.atency_p90.*.id
 }
 
-output "5xx_error_rate_id" {
-  description = "id for detector 5xx_error_rate"
-  value       = signalfx_detector.5xx_error_rate.*.id
+output "app_5xx_error_rate_id" {
+  description = "id for detector app_5xx_error_rate"
+  value       = signalfx_detector.app_5xx_error_rate.*.id
 }
 
 output "root_filesystem_usage_id" {

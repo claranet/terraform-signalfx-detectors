@@ -75,32 +75,32 @@ resource "signalfx_detector" "latency_p90" {
 
 }
 
-resource "signalfx_detector" "5xx_error_rate" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS Beanstalk 5xx error rate"
+resource "signalfx_detector" "app_5xx_error_rate" {
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS Beanstalk application 5xx error rate"
 
 	program_text = <<-EOF
-		A = data('ApplicationRequests5xx', filter=filter('namespace', 'AWS/ElasticBeanstalk') and filter('stat', 'sum') and filter('InstanceId', '*') and ${module.filter-tags.filter_custom}){var.5xx_error_rate_aggregation_function}
-		B = data('ApplicationRequestsTotal', filter=filter('namespace', 'AWS/ElasticBeanstalk') and filter('stat', 'sum') and filter('InstanceId', '*') and ${module.filter-tags.filter_custom}){var.5xx_error_rate_aggregation_function}
-		signal = (A/B).scale(100).${var.5xx_error_rate_transformation_function}(over='${var.5xx_error_rate_transformation_window}')
-		detect(when(signal > ${var.5xx_error_rate_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.5xx_error_rate_threshold_warning})).publish('WARN')
+		A = data('ApplicationRequests5xx', filter=filter('namespace', 'AWS/ElasticBeanstalk') and filter('stat', 'sum') and filter('InstanceId', '*') and ${module.filter-tags.filter_custom})${var.app_5xx_error_rate_aggregation_function}
+		B = data('ApplicationRequestsTotal', filter=filter('namespace', 'AWS/ElasticBeanstalk') and filter('stat', 'sum') and filter('InstanceId', '*') and ${module.filter-tags.filter_custom})${var.app_5xx_error_rate_aggregation_function}
+		signal = (A/B).scale(100).${var.app_5xx_error_rate_transformation_function}(over='${var.app_5xx_error_rate_transformation_window}')
+		detect(when(signal > ${var.app_5xx_error_rate_threshold_critical})).publish('CRIT')
+		detect(when(signal > ${var.app_5xx_error_rate_threshold_warning})).publish('WARN')
 	EOF
 
 	rule {
-		description           = "is too high > ${var.5xx_error_rate_threshold_critical}"
+		description           = "is too high > ${var.app_5xx_error_rate_threshold_critical}"
 		severity              = "Critical"
 		detect_label          = "CRIT"
-		disabled              = coalesce(var.5xx_error_rate_disabled_critical, var.5xx_error_rate_disabled, var.detectors_disabled)
-		notifications         = coalescelist(var.5xx_error_rate_notifications_critical, var.5xx_error_rate_notifications, var.notifications)
+		disabled              = coalesce(var.app_5xx_error_rate_disabled_critical, var.app_5xx_error_rate_disabled, var.detectors_disabled)
+		notifications         = coalescelist(var.app_5xx_error_rate_notifications_critical, var.app_5xx_error_rate_notifications, var.notifications)
 		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 
 	rule {
-		description           = "is too high > ${var.5xx_error_rate_threshold_warning}"
+		description           = "is too high > ${var.app_5xx_error_rate_threshold_warning}"
 		severity              = "Warning"
 		detect_label          = "WARN"
-		disabled              = coalesce(var.5xx_error_rate_disabled_warning, var.5xx_error_rate_disabled, var.detectors_disabled)
-		notifications         = coalescelist(var.5xx_error_rate_notifications_warning, var.5xx_error_rate_notifications, var.notifications)
+		disabled              = coalesce(var.app_5xx_error_rate_disabled_warning, var.app_5xx_error_rate_disabled, var.detectors_disabled)
+		notifications         = coalescelist(var.app_5xx_error_rate_notifications_warning, var.app_5xx_error_rate_notifications, var.notifications)
 		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 
@@ -110,7 +110,7 @@ resource "signalfx_detector" "root_filesystem_usage" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS Beanstalk instance root filesystem usage"
 
 	program_text = <<-EOF
-		signal = data('RootFilesystemUtil', filter=filter('namespace', 'AWS/ElasticBeanstalk') and filter('stat', 'lower') and filter('InstanceId', '*') and ${module.filter-tags.filter_custom}){var.root_filesystem_usage_aggregation_function}.${var.root_filesystem_usage_transformation_function}(over='${var.root_filesystem_usage_transformation_window}')
+		signal = data('RootFilesystemUtil', filter=filter('namespace', 'AWS/ElasticBeanstalk') and filter('stat', 'lower') and filter('InstanceId', '*') and ${module.filter-tags.filter_custom})${var.root_filesystem_usage_aggregation_function}.${var.root_filesystem_usage_transformation_function}(over='${var.root_filesystem_usage_transformation_window}')
 		detect(when(signal > ${var.root_filesystem_usage_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.root_filesystem_usage_threshold_warning})).publish('WARN')
 	EOF

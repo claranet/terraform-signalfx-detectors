@@ -49,15 +49,15 @@ resource "signalfx_detector" "latency" {
 }
 
 # Monitoring API Gateway 5xx errors percent
-resource "signalfx_detector" "http_5xx_errors_count" {
+resource "signalfx_detector" "http_5xx_errors" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ApiGateway HTTP 5xx error rate"
 
 	program_text = <<-EOF
 		A = data('5XXError', filter=filter('namespace', 'AWS/ApiGateway') and filter('stat', 'sum') and (not filter('Stage', '*'))and (not filter('Method', '*'))and (not filter('Resource', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero')${var.http_5xx_errors_aggregation_function}
 		B = data('Count', filter=filter('namespace', 'AWS/ApiGateway') and filter('stat', 'sum') and ${module.filter-tags.filter_custom}, extrapolation='zero')${var.http_5xx_errors_aggregation_function}
 		signal = (A/B).scale(100).${var.http_5xx_errors_transformation_function}(over='${var.http_5xx_errors_transformation_window}')
-		detect(when(signal > ${var.http_5xx_errors_threshold_critical}) and when(B > ${var.httpcode_5xx_errors_threshold_number_requests})).publish('CRIT')
-		detect(when(signal > ${var.http_5xx_errors_threshold_warning}) and when(B > ${var.httpcode_5xx_errors_threshold_number_requests})).publish('WARN')
+		detect(when(signal > ${var.http_5xx_errors_threshold_critical}) and when(B > ${var.http_5xx_errors_threshold_number_requests})).publish('CRIT')
+		detect(when(signal > ${var.http_5xx_errors_threshold_warning}) and when(B > ${var.http_5xx_errors_threshold_number_requests})).publish('WARN')
 	EOF
 
 	rule {
@@ -81,15 +81,15 @@ resource "signalfx_detector" "http_5xx_errors_count" {
 }
 
 # Monitoring API Gateway 4xx errors percent
-resource "signalfx_detector" "http_4xx_errors_count" {
+resource "signalfx_detector" "http_4xx_errors" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ApiGateway HTTP 4xx error rate"
 
 	program_text = <<-EOF
 		A = data('4XXError', filter=filter('namespace', 'AWS/ApiGateway') and filter('stat', 'sum') and (not filter('Stage', '*'))and (not filter('Method', '*'))and (not filter('Resource', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero')${var.http_4xx_errors_aggregation_function}
 		B = data('Count', filter=filter('namespace', 'AWS/ApiGateway') and filter('stat', 'sum') and ${module.filter-tags.filter_custom}, extrapolation='zero')${var.http_4xx_errors_aggregation_function}
 		signal = (A/B).scale(100).${var.http_5xx_errors_transformation_function}(over='${var.http_5xx_errors_transformation_window}')
-		detect(when(signal > ${var.http_4xx_errors_threshold_critical}) and when(B > ${var.httpcode_4xx_errors_threshold_number_requests})).publish('CRIT')
-		detect(when(signal > ${var.http_4xx_errors_threshold_warning}) and when(B > ${var.httpcode_4xx_errors_threshold_number_requests})).publish('WARN')
+		detect(when(signal > ${var.http_4xx_errors_threshold_critical}) and when(B > ${var.http_4xx_errors_threshold_number_requests})).publish('CRIT')
+		detect(when(signal > ${var.http_4xx_errors_threshold_warning}) and when(B > ${var.http_4xx_errors_threshold_number_requests})).publish('WARN')
 	EOF
 
 	rule {

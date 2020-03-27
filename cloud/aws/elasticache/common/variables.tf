@@ -164,7 +164,8 @@ variable "max_connection_notifications_critical" {
 
 variable "max_connection_aggregation_function" {
   description = "Aggregation function and group by for max_connection detector (i.e. \".mean(by=['host'])\")"
-  type        = ""
+  type        = string
+  default     = ""
 }
 
 variable "max_connection_transformation_function" {
