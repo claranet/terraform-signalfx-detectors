@@ -3,14 +3,14 @@ output "heartbeat_id" {
   value       = signalfx_detector.heartbeat.*.id
 }
 
-output "4xx_requests_id" {
-  description = "id for detector 4xx_requests"
-  value       = signalfx_detector.4xx_requests.*.id
+output "db_4xx_requests_id" {
+  description = "id for detector db_4xx_requests"
+  value       = signalfx_detector.db_4xx_requests.*.id
 }
 
-output "5xx_requests_id" {
-  description = "id for detector 5xx_requests"
-  value       = signalfx_detector.5xx_requests.*.id
+output "db_5xx_requests_id" {
+  description = "id for detector db_5xx_requests"
+  value       = signalfx_detector.db_5xx_requests.*.id
 }
 
 output "scaling_id" {
