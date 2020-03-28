@@ -3,7 +3,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
-		signal = data('IncomingBytes', filter=filter('stat', 'mean') and filter('namespace', 'AWS/Kinesis') and ${module.filter-tags.filter_custom})
+		signal = data('IncomingBytes', filter=filter('stat', 'mean') and filter('namespace', 'AWS/Kinesis') and ${module.filter-tags.filter_custom}).publish('signal')
 		not_reporting.detector(stream=signal, resource_identifier=['StreamName'], duration='${var.heartbeat_timeframe}').publish('CRIT')
 	EOF
 
@@ -21,7 +21,7 @@ resource "signalfx_detector" "incoming_records" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS Kinesis incoming records"
 
   program_text = <<-EOF
-		signal = data('IncomingRecords', filter=filter('namespace', 'AWS/Kinesis') and filter('stat', 'lower') and (not filter('ShardId', '*')) and ${module.filter-tags.filter_custom})${var.incoming_records_aggregation_function}.${var.incoming_records_transformation_function}(over='${var.incoming_records_transformation_window}')
+		signal = data('IncomingRecords', filter=filter('namespace', 'AWS/Kinesis') and filter('stat', 'lower') and (not filter('ShardId', '*')) and ${module.filter-tags.filter_custom})${var.incoming_records_aggregation_function}.${var.incoming_records_transformation_function}(over='${var.incoming_records_transformation_window}').publish('signal')
 		detect(when(signal <= ${var.incoming_records_threshold_critical})).publish('CRIT')
 		detect(when(signal <= ${var.incoming_records_threshold_warning})).publish('WARN')
 	EOF

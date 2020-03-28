@@ -3,7 +3,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
-		signal = data('RequestCount', filter=filter('stat', 'sum') and filter('namespace', 'AWS/ApplicationELB') and ${module.filter-tags.filter_custom})
+		signal = data('RequestCount', filter=filter('stat', 'sum') and filter('namespace', 'AWS/ApplicationELB') and ${module.filter-tags.filter_custom}).publish('signal')
 		not_reporting.detector(stream=signal, resource_identifier=['LoadBalancer'], duration='${var.heartbeat_timeframe}').publish('CRIT')
 	EOF
 
@@ -23,7 +23,7 @@ resource "signalfx_detector" "no_healthy_instances" {
   program_text = <<-EOF
 		A = data('HealthyHostCount', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'lower') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom})${var.no_healthy_instances_aggregation_function}
 		B = data('UnHealthyHostCount', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'upper') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom})${var.no_healthy_instances_aggregation_function}
-		signal = (A/(A+B)).scale(100).${var.no_healthy_instances_transformation_function}(over='${var.no_healthy_instances_transformation_window}')
+		signal = (A/(A+B)).scale(100).${var.no_healthy_instances_transformation_function}(over='${var.no_healthy_instances_transformation_window}').publish('signal')
 		detect(when(signal < ${var.no_healthy_instances_threshold_critical})).publish('CRIT')
 		detect(when(signal < ${var.no_healthy_instances_threshold_warning})).publish('WARN')
 	EOF
@@ -53,7 +53,7 @@ resource "signalfx_detector" "latency" {
 
   program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
-		signal = data('TargetResponseTime', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'mean') and filter('TargetGroup', '*') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom})${var.latency_aggregation_function}.${var.latency_transformation_function}(over='${var.latency_transformation_window}')
+		signal = data('TargetResponseTime', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'mean') and filter('TargetGroup', '*') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom})${var.latency_aggregation_function}.${var.latency_transformation_function}(over='${var.latency_transformation_window}').publish('signal')
 		aperiodic.above_or_below_detector(signal, ${var.latency_threshold_critical}, 'above', lasting('${var.latency_aperiodic_duration}', ${var.latency_aperiodic_percentage})).publish('CRIT')
 		aperiodic.above_or_below_detector(signal, ${var.latency_threshold_warning}, 'above', lasting('${var.latency_aperiodic_duration}', ${var.latency_aperiodic_percentage})).publish('WARN')
 	EOF
@@ -84,7 +84,7 @@ resource "signalfx_detector" "httpcode_5xx" {
   program_text = <<-EOF
 		A = data('HTTPCode_ELB_5XX_Count', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero')${var.httpcode_5xx_aggregation_function}
 		B = data('RequestCount', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and ${module.filter-tags.filter_custom}, extrapolation='zero')${var.httpcode_5xx_aggregation_function}
-		signal = (A/B).scale(100).${var.httpcode_5xx_transformation_function}(over='${var.httpcode_5xx_transformation_window}')
+		signal = (A/B).scale(100).${var.httpcode_5xx_transformation_function}(over='${var.httpcode_5xx_transformation_window}').publish('signal')
 		detect(when(signal > ${var.httpcode_5xx_threshold_critical}) and when(B > ${var.httpcode_5xx_threshold_number_requests})).publish('CRIT')
 		detect(when(signal > ${var.httpcode_5xx_threshold_warning}) and when(B > ${var.httpcode_5xx_threshold_number_requests})).publish('WARN')
 	EOF
@@ -115,7 +115,7 @@ resource "signalfx_detector" "httpcode_4xx" {
   program_text = <<-EOF
 		A = data('HTTPCode_ELB_4XX_Count', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero')${var.httpcode_4xx_aggregation_function}
 		B = data('RequestCount', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and ${module.filter-tags.filter_custom}, extrapolation='zero')${var.httpcode_4xx_aggregation_function}
-		signal = (A/B).scale(100).${var.httpcode_4xx_transformation_function}(over='${var.httpcode_4xx_transformation_window}')
+		signal = (A/B).scale(100).${var.httpcode_4xx_transformation_function}(over='${var.httpcode_4xx_transformation_window}').publish('signal')
 		detect(when(signal > ${var.httpcode_4xx_threshold_critical}) and when(B > ${var.httpcode_4xx_threshold_number_requests})).publish('CRIT')
 		detect(when(signal > ${var.httpcode_4xx_threshold_warning}) and when(B > ${var.httpcode_4xx_threshold_number_requests})).publish('WARN')
 	EOF
@@ -146,7 +146,7 @@ resource "signalfx_detector" "httpcode_target_5xx" {
   program_text = <<-EOF
 		A = data('HTTPCode_Target_5XX_Count', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and ${module.filter-tags.filter_custom}, extrapolation='zero')${var.httpcode_target_5xx_aggregation_function}
 		B = data('RequestCount', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and filter('TargetGroup', '*') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero')${var.httpcode_target_5xx_aggregation_function}
-		signal = (A/B).scale(100).${var.httpcode_target_5xx_transformation_function}(over='${var.httpcode_target_5xx_transformation_window}')
+		signal = (A/B).scale(100).${var.httpcode_target_5xx_transformation_function}(over='${var.httpcode_target_5xx_transformation_window}').publish('signal')
 		detect(when(signal > ${var.httpcode_target_5xx_threshold_critical}) and when(B > ${var.httpcode_target_5xx_threshold_number_requests})).publish('CRIT')
 		detect(when(signal > ${var.httpcode_target_5xx_threshold_warning}) and when(B > ${var.httpcode_target_5xx_threshold_number_requests})).publish('WARN')
 	EOF
@@ -177,7 +177,7 @@ resource "signalfx_detector" "httpcode_target_4xx" {
   program_text = <<-EOF
 		A = data('HTTPCode_Target_4XX_Count', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and filter('TargetGroup', '*') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero')${var.httpcode_target_4xx_aggregation_function}
 		B = data('RequestCount', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and ${module.filter-tags.filter_custom}, extrapolation='zero')${var.httpcode_target_4xx_aggregation_function}
-		signal = (A/B).scale(100).${var.httpcode_target_4xx_transformation_function}(over='${var.httpcode_target_4xx_transformation_window}')
+		signal = (A/B).scale(100).${var.httpcode_target_4xx_transformation_function}(over='${var.httpcode_target_4xx_transformation_window}').publish('signal')
 		detect(when(signal > ${var.httpcode_target_4xx_threshold_critical}) and when(B > ${var.httpcode_target_4xx_threshold_number_requests})).publish('CRIT')
 		detect(when(signal > ${var.httpcode_target_4xx_threshold_warning}) and when(B > ${var.httpcode_target_4xx_threshold_number_requests})).publish('WARN')
 	EOF
