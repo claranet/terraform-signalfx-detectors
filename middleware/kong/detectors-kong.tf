@@ -3,7 +3,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
-		signal = data('counter.kong.requests.count', filter= filter('aws_state', 'running') and filter('gcp_status', '*RUNNING}') and filter('azure_power_state', 'PowerState/running') and ${module.filter-tags.filter_custom})
+		signal = data('counter.kong.requests.count', filter= filter('aws_state', 'running') and filter('gcp_status', '*RUNNING}') and filter('azure_power_state', 'PowerState/running') and ${module.filter-tags.filter_custom}).publish('signal')
 		not_reporting.detector(stream=signal, resource_identifier=['host'], duration='${var.heartbeat_timeframe}').publish('CRIT')
   EOF
 
@@ -23,7 +23,7 @@ resource "signalfx_detector" "treatment_limit" {
   program_text = <<-EOF
 		A = data('counter.kong.connections.handled', filter=${module.filter-tags.filter_custom})${var.treatment_limit_aggregation_function}
 		B = data('counter.kong.connections.accepted', filter=${module.filter-tags.filter_custom})${var.treatment_limit_aggregation_function}
-		signal = ((A-B)/A).scale(100).${var.treatment_limit_transformation_function}(over='${var.treatment_limit_transformation_window}')
+		signal = ((A-B)/A).scale(100).${var.treatment_limit_transformation_function}(over='${var.treatment_limit_transformation_window}').publish('signal')
 		detect(when(signal > ${var.treatment_limit_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.treatment_limit_threshold_warning})).publish('WARN')
   EOF
