@@ -12,12 +12,13 @@ module "filter-tags" {
   filter_defaults        = "filter('env', '${var.environment}') and filter('claranet_monitored', 'true')"
   filter_custom_includes = var.filter_custom_includes # should be `[]` to follow default tagging convention
   filter_custom_excludes = var.filter_custom_excludes # should be `[]` to follow default tagging convention
+}
 
 resource "signalfx_detector" "disk" {
   name = "My awesome disk detector"
 
   program_text = <<-EOF
-        signal = data('disk.utilization', filter=filter('myKey', 'myValue') and ${module.filter-tags.filter_custom}).max(over='5m') 
+        signal = data('disk.utilization', filter=filter('myKey', 'myValue') and ${module.filter-tags.filter_custom}).max(over='5m').publish('signal')
 		detect(when(signal > 80)).publish('disk space too high')
     EOF
   #...

@@ -3,7 +3,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
-		signal = data('dropped_connections_requests', filter=filter('aws_state', 'running') and filter('gcp_status', '*RUNNING}') and filter('azure_power_state', 'PowerState/running') and ${module.filter-tags.filter_custom})
+		signal = data('dropped_connections_requests', filter=filter('aws_state', 'running') and filter('gcp_status', '*RUNNING}') and filter('azure_power_state', 'PowerState/running') and ${module.filter-tags.filter_custom}).publish('signal')
 		not_reporting.detector(stream=signal, resource_identifier=['host'], duration='${var.heartbeat_timeframe}').publish('CRIT')
   EOF
 
@@ -21,7 +21,7 @@ resource "signalfx_detector" "dropped_connections" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Nginx dropped connections"
 
   program_text = <<-EOF
-		signal = data('connections.failed', filter=${module.filter-tags.filter_custom})${var.dropped_connections_aggregation_function}.${var.dropped_connections_transformation_function}(over='${var.dropped_connections_transformation_window}')
+		signal = data('connections.failed', filter=${module.filter-tags.filter_custom})${var.dropped_connections_aggregation_function}.${var.dropped_connections_transformation_function}(over='${var.dropped_connections_transformation_window}').publish('signal')
 		detect(when(signal > ${var.dropped_connections_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.dropped_connections_threshold_warning})).publish('WARN')
   EOF
