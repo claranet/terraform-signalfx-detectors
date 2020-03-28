@@ -56,162 +56,162 @@ variable "heartbeat_timeframe" {
   default     = "20m"
 }
 
-# 4xx_requests detectors
+# db_4xx_requests detectors
 
-variable "4xx_requests_disabled" {
-  description = "Disable all alerting rules for 4xx_requests detector"
+variable "db_4xx_requests_disabled" {
+  description = "Disable all alerting rules for db_4xx_requests detector"
   type        = bool
   default     = null
 }
 
-variable "4xx_requests_disabled_critical" {
-  description = "Disable critical alerting rule for 4xx_requests detector"
+variable "db_4xx_requests_disabled_critical" {
+  description = "Disable critical alerting rule for db_4xx_requests detector"
   type        = bool
   default     = null
 }
 
-variable "4xx_requests_disabled_warning" {
-  description = "Disable warning alerting rule for 4xx_requests detector"
+variable "db_4xx_requests_disabled_warning" {
+  description = "Disable warning alerting rule for db_4xx_requests detector"
   type        = bool
   default     = null
 }
 
-variable "4xx_requests_notifications" {
-  description = "Notification recipients list for every alerting rules of 4xx_requests detector"
+variable "db_4xx_requests_notifications" {
+  description = "Notification recipients list for every alerting rules of db_4xx_requests detector"
   type        = list
   default     = []
 }
 
-variable "4xx_requests_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of 4xx_requests detector"
+variable "db_4xx_requests_notifications_warning" {
+  description = "Notification recipients list for warning alerting rule of db_4xx_requests detector"
   type        = list
   default     = []
 }
 
-variable "4xx_requests_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of 4xx_requests detector"
+variable "db_4xx_requests_notifications_critical" {
+  description = "Notification recipients list for critical alerting rule of db_4xx_requests detector"
   type        = list
   default     = []
 }
 
-variable "4xx_requests_aggregation_function" {
-  description = "Aggregation function and group by for 4xx_requests detector (i.e. \".mean(by=['host'])\")"
+variable "db_4xx_requests_aggregation_function" {
+  description = "Aggregation function and group by for db_4xx_requests detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ".sum(by=['azure_resource_group_name', 'azure_resource_name', 'collectionname'])"
 }
 
-variable "4xx_requests_transformation_function" {
-  description = "Transformation function for 4xx_requests detector (mean, min, max)"
+variable "db_4xx_requests_transformation_function" {
+  description = "Transformation function for db_4xx_requests detector (mean, min, max)"
   type        = string
   default     = "min"
 }
 
-variable "4xx_requests_transformation_window" {
-  description = "Transformation window for 4xx_requests detector (i.e. 5m, 20m, 1h, 1d)"
+variable "db_4xx_requests_transformation_window" {
+  description = "Transformation window for db_4xx_requests detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
 }
 
-variable "4xx_requests_threshold_critical" {
-  description = "Critical threshold for 4xx_requests detector"
+variable "db_4xx_requests_threshold_critical" {
+  description = "Critical threshold for db_4xx_requests detector"
   type        = number
   default     = 80
 }
 
-variable "4xx_requests_threshold_warning" {
-  description = "Warning threshold for 4xx_requests detector"
+variable "db_4xx_requests_threshold_warning" {
+  description = "Warning threshold for db_4xx_requests detector"
   type        = number
   default     = 50
 }
 
-variable "4xx_requests_aperiodic_duration" {
-  description = "Duration for the 4xx_requests block"
+variable "db_4xx_requests_aperiodic_duration" {
+  description = "Duration for the db_4xx_requests block"
   type        = string
   default     = "10m"
 }
 
-variable "4xx_requests_aperiodic_percentage" {
-  description = "Percentage for the 4xx_requests block"
+variable "db_4xx_requests_aperiodic_percentage" {
+  description = "Percentage for the db_4xx_requests block"
   type        = number
   default     = 0.9
 }
 
-# 5xx_requests detectors
+# db_5xx_requests detectors
 
-variable "5xx_requests_disabled" {
-  description = "Disable all alerting rules for 5xx_requests detector"
+variable "db_5xx_requests_disabled" {
+  description = "Disable all alerting rules for db_5xx_requests detector"
   type        = bool
   default     = null
 }
 
-variable "5xx_requests_disabled_critical" {
-  description = "Disable critical alerting rule for 5xx_requests detector"
+variable "db_5xx_requests_disabled_critical" {
+  description = "Disable critical alerting rule for db_5xx_requests detector"
   type        = bool
   default     = null
 }
 
-variable "5xx_requests_disabled_warning" {
-  description = "Disable warning alerting rule for 5xx_requests detector"
+variable "db_5xx_requests_disabled_warning" {
+  description = "Disable warning alerting rule for db_5xx_requests detector"
   type        = bool
   default     = null
 }
 
-variable "5xx_requests_notifications" {
-  description = "Notification recipients list for every alerting rules of 5xx_requests detector"
+variable "db_5xx_requests_notifications" {
+  description = "Notification recipients list for every alerting rules of db_5xx_requests detector"
   type        = list
   default     = []
 }
 
-variable "5xx_requests_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of 5xx_requests detector"
+variable "db_5xx_requests_notifications_warning" {
+  description = "Notification recipients list for warning alerting rule of db_5xx_requests detector"
   type        = list
   default     = []
 }
 
-variable "5xx_requests_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of 5xx_requests detector"
+variable "db_5xx_requests_notifications_critical" {
+  description = "Notification recipients list for critical alerting rule of db_5xx_requests detector"
   type        = list
   default     = []
 }
 
-variable "5xx_requests_aggregation_function" {
-  description = "Aggregation function and group by for 5xx_requests detector (i.e. \".mean(by=['host'])\")"
+variable "db_5xx_requests_aggregation_function" {
+  description = "Aggregation function and group by for db_5xx_requests detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ".sum(by=['azure_resource_group_name', 'azure_resource_name', 'collectionname'])"
 }
 
-variable "5xx_requests_transformation_function" {
-  description = "Transformation function for 5xx_requests detector (mean, min, max)"
+variable "db_5xx_requests_transformation_function" {
+  description = "Transformation function for db_5xx_requests detector (mean, min, max)"
   type        = string
   default     = "min"
 }
 
-variable "5xx_requests_transformation_window" {
-  description = "Transformation window for 5xx_requests detector (i.e. 5m, 20m, 1h, 1d)"
+variable "db_5xx_requests_transformation_window" {
+  description = "Transformation window for db_5xx_requests detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
 }
 
-variable "5xx_requests_threshold_critical" {
-  description = "Critical threshold for 5xx_requests detector"
+variable "db_5xx_requests_threshold_critical" {
+  description = "Critical threshold for db_5xx_requests detector"
   type        = number
   default     = 80
 }
 
-variable "5xx_requests_threshold_warning" {
-  description = "Warning threshold for 5xx_requests detector"
+variable "db_5xx_requests_threshold_warning" {
+  description = "Warning threshold for db_5xx_requests detector"
   type        = number
   default     = 50
 }
 
-variable "5xx_requests_aperiodic_duration" {
-  description = "Duration for the 5xx_requests block"
+variable "db_5xx_requests_aperiodic_duration" {
+  description = "Duration for the db_5xx_requests block"
   type        = string
   default     = "10m"
 }
 
-variable "5xx_requests_aperiodic_percentage" {
-  description = "Percentage for the 5xx_requests block"
+variable "db_5xx_requests_aperiodic_percentage" {
+  description = "Percentage for the db_5xx_requests block"
   type        = number
   default     = 0.9
 }
