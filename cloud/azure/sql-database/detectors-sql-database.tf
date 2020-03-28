@@ -17,7 +17,7 @@ resource "signalfx_detector" "heartbeat" {
 	}
 }
 
-resource "signalfx_detector" cpu" {
+resource "signalfx_detector" "cpu" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure sqldatabase CPU"
 
 	program_text = <<-EOF
