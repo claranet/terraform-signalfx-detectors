@@ -77,7 +77,7 @@ resource "signalfx_detector" "unmatched_events" {
 		B = data('PublishSuccessCount', filter=filter('resource_type', 'Microsoft.EventGrid/topics') and ${module.filter-tags.filter_custom})${var.unmatched_events_aggregation_function}
 		C = data('PublishFailCount', filter=filter('resource_type', 'Microsoft.EventGrid/topics') and ${module.filter-tags.filter_custom})${var.unmatched_events_aggregation_function}
 		signal = ((A/(A+B+C))*100).${var.unmatched_events_transformation_function}(over='${var.unmatched_events_transformation_window}').publish('signal')
-		aperiodic.above_or_below_detector(signal, ${var.lunmatched_events_threshold_critical}, 'above', lasting('${var.unmatched_events_aperiodic_duration}', ${var.unmatched_events_aperiodic_percentage})).publish('CRIT')
+		aperiodic.above_or_below_detector(signal, ${var.unmatched_events_threshold_critical}, 'above', lasting('${var.unmatched_events_aperiodic_duration}', ${var.unmatched_events_aperiodic_percentage})).publish('CRIT')
 		aperiodic.above_or_below_detector(signal, ${var.unmatched_events_threshold_warning}, 'above', lasting('${var.unmatched_events_aperiodic_duration}', ${var.unmatched_events_aperiodic_percentage})).publish('WARN')
 	EOF
 
