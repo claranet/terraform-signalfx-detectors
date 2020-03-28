@@ -3,7 +3,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
-		signal = data('Nodes', filter=filter('namespace', 'AWS/ES') and filter('stat', 'mean') and ${module.filter-tags.filter_custom})
+		signal = data('Nodes', filter=filter('namespace', 'AWS/ES') and filter('stat', 'mean') and ${module.filter-tags.filter_custom}).publish('signal')
 		not_reporting.detector(stream=signal, resource_identifier=['DomainName'], duration='${var.heartbeat_timeframe}').publish('CRIT')
 	EOF
 
@@ -21,8 +21,8 @@ resource "signalfx_detector" "cluster_status" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ElasticSearch cluster status"
 
   program_text = <<-EOF
-		A = data('ClusterStatus.red', filter=filter('namespace', 'AWS/ES') and filter('stat', 'upper') and ${module.filter-tags.filter_custom})${var.cluster_status_aggregation_function}.${var.cluster_status_transformation_function}(over='${var.cluster_status_transformation_window}')
-		B = data('ClusterStatus.yellow', filter=filter('namespace', 'AWS/ES') and filter('stat', 'upper') and ${module.filter-tags.filter_custom})${var.cluster_status_aggregation_function}.${var.cluster_status_transformation_function}(over='${var.cluster_status_transformation_window}')
+		A = data('ClusterStatus.red', filter=filter('namespace', 'AWS/ES') and filter('stat', 'upper') and ${module.filter-tags.filter_custom})${var.cluster_status_aggregation_function}.${var.cluster_status_transformation_function}(over='${var.cluster_status_transformation_window}').publish('A')
+		B = data('ClusterStatus.yellow', filter=filter('namespace', 'AWS/ES') and filter('stat', 'upper') and ${module.filter-tags.filter_custom})${var.cluster_status_aggregation_function}.${var.cluster_status_transformation_function}(over='${var.cluster_status_transformation_window}').publish('B')
 		detect(when(A >= 1)).publish('CRIT')
 		detect(when(B >= 1)).publish('WARN')
 	EOF
@@ -51,7 +51,7 @@ resource "signalfx_detector" "free_space" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ElasticSearch cluster free storage space"
 
   program_text = <<-EOF
-		signal = data('FreeStorageSpace', filter=filter('namespace', 'AWS/ES') and filter('stat', 'lower') and (not filter('NodeId', '*')) and ${module.filter-tags.filter_custom}).sum(by=['Nodes'])${var.free_space_aggregation_function}.${var.free_space_transformation_function}(over='${var.free_space_transformation_window}')
+		signal = data('FreeStorageSpace', filter=filter('namespace', 'AWS/ES') and filter('stat', 'lower') and (not filter('NodeId', '*')) and ${module.filter-tags.filter_custom}).sum(by=['Nodes'])${var.free_space_aggregation_function}.${var.free_space_transformation_function}(over='${var.free_space_transformation_window}').publish('signal')
 		detect(when(signal < ${var.free_space_threshold_critical})).publish('CRIT')
 		detect(when(signal < ${var.free_space_threshold_warning})).publish('WARN')
 	EOF
@@ -80,7 +80,7 @@ resource "signalfx_detector" "cpu_90_15min" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ElasticSearch cluster CPU"
 
   program_text = <<-EOF
-		signal = data('CPUUtilization', filter=filter('namespace', 'AWS/ES') and filter('stat', 'upper') and filter('NodeId', '*') and ${module.filter-tags.filter_custom}).sum(by=['Nodes'])${var.cpu_90_15min_aggregation_function}.${var.cpu_90_15min_transformation_function}(over='${var.cpu_90_15min_transformation_window}')
+		signal = data('CPUUtilization', filter=filter('namespace', 'AWS/ES') and filter('stat', 'upper') and filter('NodeId', '*') and ${module.filter-tags.filter_custom}).sum(by=['Nodes'])${var.cpu_90_15min_aggregation_function}.${var.cpu_90_15min_transformation_function}(over='${var.cpu_90_15min_transformation_window}').publish('signal')
 		detect(when(signal > ${var.cpu_90_15min_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.cpu_90_15min_threshold_warning})).publish('WARN')
 	EOF
