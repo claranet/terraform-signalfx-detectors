@@ -17,7 +17,7 @@ resource "signalfx_detector" "heartbeat" {
 	}
 }
 
-resource "signalfx_detector" "4xx_requests" {
+resource "signalfx_detector" "db_4xx_requests" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure cosmodb 4xx requests rate"
 
 	program_text = <<-EOF
@@ -57,7 +57,7 @@ resource "signalfx_detector" "4xx_requests" {
 	}
 }
 
-resource "signalfx_detector" "5xx_requests" {
+resource "signalfx_detector" "db_5xx_requests" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure cosmodb 5xx requests rate"
 
 	program_text = <<-EOF
