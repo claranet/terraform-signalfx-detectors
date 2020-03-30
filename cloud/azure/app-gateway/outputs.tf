@@ -3,9 +3,9 @@ output "heartbeat_id" {
   value       = signalfx_detector.heartbeat.*.id
 }
 
-output "current_connection_id" {
-  description = "id for detector current_connection"
-  value       = signalfx_detector.current_connection.*.id
+output "total_requests_id" {
+  description = "id for detector total_requests"
+  value       = signalfx_detector.total_requests.*.id
 }
 
 output "backend_connect_time_id" {
