@@ -124,6 +124,18 @@ variable "pod_phase_status_threshold_warning" {
   default     = 0
 }
 
+variable "pod_phase_status_aperiodic_duration" {
+  description = "Duration for the pod_phase_status block"
+  type        = string
+  default     = "10m"
+}
+
+variable "pod_phase_status_aperiodic_percentage" {
+  description = "Percentage for the pod_phase_status block"
+  type        = number
+  default     = 0.9
+}
+
 # Error detectors
 
 variable "error_disabled" {
