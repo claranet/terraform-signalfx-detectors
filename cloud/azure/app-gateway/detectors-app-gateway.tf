@@ -17,30 +17,30 @@ resource "signalfx_detector" "heartbeat" {
 	}
 }
 
-resource "signalfx_detector" "current_connection" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] App Gateway current connection"
+resource "signalfx_detector" "total_requests" {
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] App Gateway requests"
 
 	program_text = <<-EOF
-		signal = data('CurrentConnections', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and ${module.filter-tags.filter_custom})${var.current_connection_aggregation_function}.${var.current_connection_transformation_function}(over='${var.current_connection_transformation_window}').publish('signal')
-		detect(when(signal < ${var.current_connection_threshold_critical})).publish('CRIT')
-		detect(when(signal < ${var.current_connection_threshold_warning})).publish('WARN')
+		signal = data('CurrentConnections', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and ${module.filter-tags.filter_custom})${var.total_requests_aggregation_function}.${var.total_requests_transformation_function}(over='${var.total_requests_transformation_window}').publish('signal')
+		detect(when(signal < ${var.total_requests_threshold_critical})).publish('CRIT')
+		detect(when(signal < ${var.total_requests_threshold_warning})).publish('WARN')
 	EOF
 
 	rule {
-		description           = "is too low < ${var.current_connection_threshold_critical}"
+		description           = "has fallen below critical capacity < ${var.total_requests_threshold_critical}"
 		severity              = "Critical"
 		detect_label          = "CRIT"
-		disabled              = coalesce(var.current_connection_disabled_critical, var.current_connection_disabled, var.detectors_disabled)
-		notifications         = coalescelist(var.current_connection_notifications_critical, var.current_connection_notifications, var.notifications)
+		disabled              = coalesce(var.total_requests_disabled_critical, var.total_requests_disabled, var.detectors_disabled)
+		notifications         = coalescelist(var.total_requests_notifications_critical, var.total_requests_notifications, var.notifications)
 		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 
 	rule {
-		description           = "is too low < ${var.current_connection_threshold_warning}"
+		description           = "is below nominal capacity < ${var.total_requests_threshold_warning}"
 		severity              = "Warning"
 		detect_label          = "WARN"
-		disabled              = coalesce(var.current_connection_disabled_warning, var.current_connection_disabled, var.detectors_disabled)
-		notifications         = coalescelist(var.current_connection_notifications_warning, var.current_connection_notifications, var.notifications)
+		disabled              = coalesce(var.total_requests_disabled_warning, var.total_requests_disabled, var.detectors_disabled)
+		notifications         = coalescelist(var.total_requests_notifications_warning, var.total_requests_notifications, var.notifications)
 		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 }
