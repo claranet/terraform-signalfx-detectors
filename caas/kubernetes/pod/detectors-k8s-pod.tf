@@ -21,9 +21,10 @@ resource "signalfx_detector" "pod_phase_status" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Kubernetes POD phase failed status"
 
 	program_text = <<-EOF
+		from signalfx.detectors.aperiodic import aperiodic
 		signal = data('kube_pod_status_phase', filter=('phase', 'Failed') and ${module.filter-tags.filter_custom})${var.pod_phase_status_aggregation_function}.${var.pod_phase_status_transformation_function}(over='${var.pod_phase_status_transformation_window}').publish('signal')
-		detect(when(signal > ${var.pod_phase_status_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.pod_phase_status_threshold_warning})).publish('WARN')
+		aperiodic.above_or_below_detector(signal, ${var.pod_phase_status_threshold_critical}, 'above', lasting('${var.pod_phase_status_aperiodic_duration}', ${var.pod_phase_status_aperiodic_percentage})).publish('CRIT')
+		aperiodic.above_or_below_detector(signal, ${var.pod_phase_status_threshold_warning}, 'above', lasting('${var.pod_phase_status_aperiodic_duration}', ${var.pod_phase_status_aperiodic_percentage})).publish('WARN')
 	EOF
 
 	rule {
