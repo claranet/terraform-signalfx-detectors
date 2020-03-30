@@ -56,70 +56,70 @@ variable "heartbeat_timeframe" {
   default     = "20m"
 }
 
-# Current_connection detectors
+# Total_requests detectors
 
-variable "current_connection_disabled" {
-  description = "Disable all alerting rules for current_connection detector"
+variable "total_requests_disabled" {
+  description = "Disable all alerting rules for total_requests detector"
   type        = bool
   default     = null
 }
 
-variable "current_connection_disabled_critical" {
-  description = "Disable critical alerting rule for current_connection detector"
+variable "total_requests_disabled_critical" {
+  description = "Disable critical alerting rule for total_requests detector"
   type        = bool
   default     = null
 }
 
-variable "current_connection_disabled_warning" {
-  description = "Disable warning alerting rule for current_connection detector"
+variable "total_requests_disabled_warning" {
+  description = "Disable warning alerting rule for total_requests detector"
   type        = bool
   default     = null
 }
 
-variable "current_connection_notifications" {
-  description = "Notification recipients list for every alerting rules of current_connection detector"
+variable "total_requests_notifications" {
+  description = "Notification recipients list for every alerting rules of total_requests detector"
   type        = list
   default     = []
 }
 
-variable "current_connection_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of current_connection detector"
+variable "total_requests_notifications_warning" {
+  description = "Notification recipients list for warning alerting rule of total_requests detector"
   type        = list
   default     = []
 }
 
-variable "current_connection_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of current_connection detector"
+variable "total_requests_notifications_critical" {
+  description = "Notification recipients list for critical alerting rule of total_requests detector"
   type        = list
   default     = []
 }
 
-variable "current_connection_aggregation_function" {
-  description = "Aggregation function and group by for current_connection detector (i.e. \".mean(by=['host'])\")"
+variable "total_requests_aggregation_function" {
+  description = "Aggregation function and group by for total_requests detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ".mean(by=['azure_resource_id', 'azure_resource_name'])"
 }
 
-variable "current_connection_transformation_function" {
-  description = "Transformation function for current_connection detector (mean, min, max)"
+variable "total_requests_transformation_function" {
+  description = "Transformation function for total_requests detector (mean, min, max)"
   type        = string
   default     = "max"
 }
 
-variable "current_connection_transformation_window" {
-  description = "Transformation window for current_connection detector (i.e. 5m, 20m, 1h, 1d)"
+variable "total_requests_transformation_window" {
+  description = "Transformation window for total_requests detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
 }
 
-variable "current_connection_threshold_critical" {
-  description = "Critical threshold for current_connection detector"
+variable "total_requests_threshold_critical" {
+  description = "Critical threshold for total_requests detector"
   type        = number
   default     = 1
 }
 
-variable "current_connection_threshold_warning" {
-  description = "Warning threshold for current_connection detector"
+variable "total_requests_threshold_warning" {
+  description = "Warning threshold for total_requests detector"
   type        = number
   default     = 1
 }
