@@ -97,7 +97,7 @@ variable "response_time_notifications_critical" {
 variable "response_time_aggregation_function" {
   description = "Aggregation function and group by for response_time detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_resource_id', 'azure_resource_name', 'Instance'])"
+  default     = ".mean(by=['azure_resource_name', 'Instance'])"
 }
 
 variable "response_time_transformation_function" {
@@ -177,7 +177,7 @@ variable "memory_usage_count_notifications_critical" {
 variable "memory_usage_count_aggregation_function" {
   description = "Aggregation function and group by for memory_usage_count detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_resource_id', 'azure_resource_name', 'Instance'])"
+  default     = ".mean(by=['azure_resource_name', 'Instance'])"
 }
 
 variable "memory_usage_count_transformation_function" {
@@ -245,7 +245,7 @@ variable "http_5xx_errors_count_notifications_critical" {
 variable "http_5xx_errors_count_aggregation_function" {
   description = "Aggregation function and group by for http_5xx_errors_count detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_resource_id','azure_resource_name', 'Instance'])"
+  default     = ".mean(by=['azure_resource_name', 'Instance'])"
 }
 
 variable "http_5xx_errors_count_transformation_function" {
@@ -325,7 +325,7 @@ variable "http_4xx_errors_count_notifications_critical" {
 variable "http_4xx_errors_count_aggregation_function" {
   description = "Aggregation function and group by for http_4xx_errors_count detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_resource_id','azure_resource_name', 'Instance'])"
+  default     = ".mean(by=['azure_resource_name', 'Instance'])"
 }
 
 variable "http_4xx_errors_count_transformation_function" {
@@ -405,7 +405,7 @@ variable "http_success_status_rate_notifications_critical" {
 variable "http_success_status_rate_aggregation_function" {
   description = "Aggregation function and group by for http_success_status_rate detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_resource_id','azure_resource_name', 'Instance'])"
+  default     = ".mean(by=['azure_resource_name', 'Instance'])"
 }
 
 variable "http_success_status_rate_transformation_function" {
@@ -458,20 +458,8 @@ variable "status_disabled_critical" {
   default     = null
 }
 
-variable "status_disabled_warning" {
-  description = "Disable warning alerting rule for status detector"
-  type        = bool
-  default     = null
-}
-
 variable "status_notifications" {
   description = "Notification recipients list for every alerting rules of status detector"
-  type        = list
-  default     = []
-}
-
-variable "status_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of status detector"
   type        = list
   default     = []
 }
@@ -485,7 +473,7 @@ variable "status_notifications_critical" {
 variable "status_aggregation_function" {
   description = "Aggregation function and group by for status detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_resource_id','azure_resource_name', 'Instance'])"
+  default     = ".mean(by=['azure_resource_name'])"
 }
 
 variable "status_transformation_function" {
@@ -503,11 +491,6 @@ variable "status_transformation_window" {
 variable "status_threshold_critical" {
   description = "Critical threshold for status detector"
   type        = number
-  default     = 0
-}
-
-variable "status_threshold_warning" {
-  description = "Warning threshold for status detector"
-  type        = number
   default     = 1
 }
+
