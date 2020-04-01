@@ -97,7 +97,7 @@ variable "su_utilization_notifications_critical" {
 variable "su_utilization_aggregation_function" {
   description = "Aggregation function and group by for su_utilization detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_resource_group_name', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_region', 'azure_resource_group_name', 'azure_resource_name'])"
 }
 
 variable "su_utilization_transformation_function" {
@@ -165,7 +165,7 @@ variable "failed_requests_notifications_critical" {
 variable "failed_requests_aggregation_function" {
   description = "Aggregation function and group by for failed_requests detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_resource_group_name', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_region', 'azure_resource_group_name', 'azure_resource_name'])"
 }
 
 variable "failed_requests_transformation_function" {
@@ -245,7 +245,7 @@ variable "conversion_errors_notifications_critical" {
 variable "conversion_errors_aggregation_function" {
   description = "Aggregation function and group by for conversion_errors detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_resource_group_name', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_region', 'azure_resource_group_name', 'azure_resource_name'])"
 }
 
 variable "conversion_errors_transformation_function" {
@@ -313,7 +313,7 @@ variable "runtime_errors_notifications_critical" {
 variable "runtime_errors_aggregation_function" {
   description = "Aggregation function and group by for runtime_errors detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_resource_group_name', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_region', 'azure_resource_group_name', 'azure_resource_name'])"
 }
 
 variable "runtime_errors_transformation_function" {
