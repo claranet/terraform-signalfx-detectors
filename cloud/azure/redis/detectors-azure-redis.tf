@@ -3,7 +3,7 @@ resource "signalfx_detector" "heartbeat" {
 
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
-		signal = data('connectedclients', filter=filter('resource_type', 'Microsoft.Cache/redis') and ${module.filter-tags.filter_custom}).publish('signal')
+		signal = data('connectedclients', filter=filter('resource_type', 'Microsoft.Cache/redis') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}).publish('signal')
 		not_reporting.detector(stream=signal, resource_identifier=['ShardId'], duration='${var.heartbeat_timeframe}').publish('CRIT')
 	EOF
 
@@ -21,7 +21,7 @@ resource "signalfx_detector" "evictedkeys" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure redis evictedkeys"
 
 	program_text = <<-EOF
-		signal = data('evictedkeys', filter=filter('resource_type', 'Microsoft.Cache/redis') and ${module.filter-tags.filter_custom})${var.evictedkeys_aggregation_function}.${var.evictedkeys_transformation_function}(over='${var.evictedkeys_transformation_window}').publish('signal')
+		signal = data('evictedkeys', filter=filter('resource_type', 'Microsoft.Cache/redis') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.evictedkeys_aggregation_function}.${var.evictedkeys_transformation_function}(over='${var.evictedkeys_transformation_window}').publish('signal')
 		detect(when(signal > ${var.evictedkeys_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.evictedkeys_threshold_warning})).publish('WARN')
 	EOF
@@ -49,7 +49,7 @@ resource "signalfx_detector" "percent_processor_time" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure redis processor time too high"
 
 	program_text = <<-EOF
-		signal = data('percentProcessorTime', filter=filter('resource_type', 'Microsoft.Cache/redis') and ${module.filter-tags.filter_custom})${var.percent_processor_time_aggregation_function}.${var.percent_processor_time_transformation_function}(over='${var.percent_processor_time_transformation_window}').publish('signal')
+		signal = data('percentProcessorTime', filter=filter('resource_type', 'Microsoft.Cache/redis') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.percent_processor_time_aggregation_function}.${var.percent_processor_time_transformation_function}(over='${var.percent_processor_time_transformation_window}').publish('signal')
 		detect(when(signal > ${var.percent_processor_time_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.percent_processor_time_threshold_warning})).publish('WARN')
 	EOF
@@ -77,7 +77,7 @@ resource "signalfx_detector" "load" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure redis load too"
 
 	program_text = <<-EOF
-		signal = data('serverLoad', filter=filter('resource_type', 'Microsoft.Cache/redis') and ${module.filter-tags.filter_custom})${var.load_aggregation_function}.${var.load_transformation_function}(over='${var.load_transformation_window}').publish('signal')
+		signal = data('serverLoad', filter=filter('resource_type', 'Microsoft.Cache/redis') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.load_aggregation_function}.${var.load_transformation_function}(over='${var.load_transformation_window}').publish('signal')
 		detect(when(signal > ${var.load_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.load_threshold_warning})).publish('WARN')
 	EOF
