@@ -97,7 +97,7 @@ variable "no_successful_message_notifications_critical" {
 variable "no_successful_message_aggregation_function" {
   description = "Aggregation function and group by for no_successful_message detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_resource_id','azure_resource_name'])"
+  default     = ".mean(by=['azure_region', 'azure_resource_group_name', 'azure_resource_name'])"
 }
 
 variable "no_successful_message_transformation_function" {
@@ -165,7 +165,7 @@ variable "failed_messages_notifications_critical" {
 variable "failed_messages_aggregation_function" {
   description = "Aggregation function and group by for failed_messages detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_resource_id','azure_resource_name'])"
+  default     = ".mean(by=['azure_region', 'azure_resource_group_name', 'azure_resource_name'])"
 }
 
 variable "failed_messages_transformation_function" {
@@ -245,7 +245,7 @@ variable "unmatched_events_notifications_critical" {
 variable "unmatched_events_aggregation_function" {
   description = "Aggregation function and group by for unmatched_events detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_resource_id','azure_resource_name'])"
+  default     = ".mean(by=['azure_region', 'azure_resource_group_name', 'azure_resource_name'])"
 }
 
 variable "unmatched_events_transformation_function" {
