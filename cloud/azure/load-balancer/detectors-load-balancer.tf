@@ -3,7 +3,7 @@ resource "signalfx_detector" "heartbeat" {
 
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
-		signal = data('ByteCount', filter=filter('resource_type', 'Microsoft.Network/loadBalancers') and ${module.filter-tags.filter_custom}).publish('signal')
+		signal = data('ByteCount', filter=filter('resource_type', 'Microsoft.Network/loadBalancers') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}).publish('signal')
 		not_reporting.detector(stream=signal, resource_identifier=['FrontendIPAddress'], duration='${var.heartbeat_timeframe}').publish('CRIT')
 	EOF
 
