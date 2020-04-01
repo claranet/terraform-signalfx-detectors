@@ -3,7 +3,7 @@ resource "signalfx_detector" "heartbeat" {
 
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
-		signal = data('BytesReceived', filter=filter('resource_type', 'Microsoft.Web/serverfarms') and ${module.filter-tags.filter_custom}).publish('signal')
+		signal = data('BytesReceived', filter=filter('resource_type', 'Microsoft.Web/serverfarms') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}).publish('signal')
 		not_reporting.detector(stream=signal, resource_identifier=['Instance'], duration='${var.heartbeat_timeframe}').publish('CRIT')
 	EOF
 
@@ -21,7 +21,7 @@ resource "signalfx_detector" "cpu_percentage" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure serverfarms CPU percentage"
 
 	program_text = <<-EOF
-		signal = data('CpuPercentage', filter=filter('resource_type', 'Microsoft.Web/serverfarms') and ${module.filter-tags.filter_custom})${var.cpu_percentage_aggregation_function}.${var.cpu_percentage_transformation_function}(over='${var.cpu_percentage_transformation_window}').publish('signal')
+		signal = data('CpuPercentage', filter=filter('resource_type', 'Microsoft.Web/serverfarms') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.cpu_percentage_aggregation_function}.${var.cpu_percentage_transformation_function}(over='${var.cpu_percentage_transformation_window}').publish('signal')
 		detect(when(signal > ${var.cpu_percentage_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.cpu_percentage_threshold_warning})).publish('WARN')
 	EOF
@@ -49,7 +49,7 @@ resource "signalfx_detector" "memory_percentage" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure serverfarms memory percentage"
 
 	program_text = <<-EOF
-		signal = data('MemoryPercentage', filter=filter('resource_type', 'Microsoft.Web/serverfarms') and ${module.filter-tags.filter_custom})${var.memory_percentage_aggregation_function}.${var.memory_percentage_transformation_function}(over='${var.memory_percentage_transformation_window}').publish('signal')
+		signal = data('MemoryPercentage', filter=filter('resource_type', 'Microsoft.Web/serverfarms') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.memory_percentage_aggregation_function}.${var.memory_percentage_transformation_function}(over='${var.memory_percentage_transformation_window}').publish('signal')
 		detect(when(signal > ${var.memory_percentage_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.memory_percentage_threshold_warning})).publish('WARN')
 	EOF
