@@ -3,7 +3,7 @@ resource "signalfx_detector" "heartbeat" {
 
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
-		signal = data('ResponseStatus', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and ${module.filter-tags.filter_custom}).publish('signal')
+		signal = data('ResponseStatus', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}).publish('signal')
 		not_reporting.detector(stream=signal, resource_identifier=['HttpStatusGroup'], duration='${var.heartbeat_timeframe}').publish('CRIT')
 	EOF
 
@@ -21,7 +21,7 @@ resource "signalfx_detector" "total_requests" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] App Gateway requests"
 
 	program_text = <<-EOF
-		signal = data('CurrentConnections', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and ${module.filter-tags.filter_custom})${var.total_requests_aggregation_function}.${var.total_requests_transformation_function}(over='${var.total_requests_transformation_window}').publish('signal')
+		signal = data('CurrentConnections', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.total_requests_aggregation_function}.${var.total_requests_transformation_function}(over='${var.total_requests_transformation_window}').publish('signal')
 		detect(when(signal < ${var.total_requests_threshold_critical})).publish('CRIT')
 		detect(when(signal < ${var.total_requests_threshold_warning})).publish('WARN')
 	EOF
@@ -49,7 +49,7 @@ resource "signalfx_detector" "backend_connect_time" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Gateway backend connect time"
 
 	program_text = <<-EOF
-		signal = data('BackendConnectTime', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and ${module.filter-tags.filter_custom})${var.backend_connect_time_aggregation_function}.${var.backend_connect_time_transformation_function}(over='${var.backend_connect_time_transformation_window}').publish('signal')
+		signal = data('BackendConnectTime', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.backend_connect_time_aggregation_function}.${var.backend_connect_time_transformation_function}(over='${var.backend_connect_time_transformation_window}').publish('signal')
 		detect(when(signal > ${var.backend_connect_time_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.backend_connect_time_threshold_warning})).publish('WARN')
 	EOF
@@ -78,8 +78,8 @@ resource "signalfx_detector" "failed_requests" {
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
-		A = data('FailedRequests', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and ${module.filter-tags.filter_custom})${var.failed_requests_aggregation_function}
-		B = data('TotalRequests', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and ${module.filter-tags.filter_custom})${var.failed_requests_aggregation_function}
+		A = data('FailedRequests', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.failed_requests_aggregation_function}
+		B = data('TotalRequests', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.failed_requests_aggregation_function}
 		signal = ((A/B)*100).${var.failed_requests_transformation_function}(over='${var.failed_requests_transformation_window}').publish('signal')
 		aperiodic.above_or_below_detector(signal, ${var.failed_requests_threshold_critical}, 'above', lasting('${var.failed_requests_aperiodic_duration}', ${var.failed_requests_aperiodic_percentage})).publish('CRIT')
 		aperiodic.above_or_below_detector(signal, ${var.failed_requests_threshold_warning}, 'above', lasting('${var.failed_requests_aperiodic_duration}', ${var.failed_requests_aperiodic_percentage})).publish('WARN')
@@ -108,8 +108,8 @@ resource "signalfx_detector" "unhealthy_host_ratio" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Gateway backend unhealthy host ratio"
 
 	program_text = <<-EOF
-		A = data('UnhealthyHostCount', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and ${module.filter-tags.filter_custom})${var.unhealthy_host_ratio_aggregation_function}
-		B = data('HealthyHostCount', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and ${module.filter-tags.filter_custom})${var.unhealthy_host_ratio_aggregation_function}
+		A = data('UnhealthyHostCount', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.unhealthy_host_ratio_aggregation_function}
+		B = data('HealthyHostCount', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.unhealthy_host_ratio_aggregation_function}
 		signal = ((A/(A+B))*100).${var.unhealthy_host_ratio_transformation_function}(over='${var.unhealthy_host_ratio_transformation_window}').publish('signal')
 		detect(when(signal > ${var.unhealthy_host_ratio_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.unhealthy_host_ratio_threshold_warning})).publish('WARN')
@@ -139,8 +139,8 @@ resource "signalfx_detector" "http_4xx_errors" {
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
-		A = data('ResponseStatus', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('httpstatusgroup', '4xx') and ${module.filter-tags.filter_custom})${var.http_4xx_errors_aggregation_function}
-		B = data('ResponseStatus', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and ${module.filter-tags.filter_custom})${var.http_4xx_errors_aggregation_function}
+		A = data('ResponseStatus', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('httpstatusgroup', '4xx') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.http_4xx_errors_aggregation_function}
+		B = data('ResponseStatus', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.http_4xx_errors_aggregation_function}
 		signal = ((A/B)*100).${var.http_4xx_errors_transformation_function}(over='${var.http_4xx_errors_transformation_window}').publish('signal')
 		aperiodic.above_or_below_detector(signal, ${var.http_4xx_errors_threshold_critical}, 'above', lasting('${var.http_4xx_errors_aperiodic_duration}', ${var.http_4xx_errors_aperiodic_percentage})).publish('CRIT')
 		aperiodic.above_or_below_detector(signal, ${var.http_4xx_errors_threshold_warning}, 'above', lasting('${var.http_4xx_errors_aperiodic_duration}', ${var.http_4xx_errors_aperiodic_percentage})).publish('WARN')
@@ -170,8 +170,8 @@ resource "signalfx_detector" "http_5xx_errors" {
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
-		A = data('ResponseStatus', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('httpstatusgroup', '5xx') and ${module.filter-tags.filter_custom})${var.http_5xx_errors_aggregation_function}
-		B = data('ResponseStatus', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and ${module.filter-tags.filter_custom})${var.http_5xx_errors_aggregation_function}
+		A = data('ResponseStatus', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('httpstatusgroup', '5xx') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.http_5xx_errors_aggregation_function}
+		B = data('ResponseStatus', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.http_5xx_errors_aggregation_function}
 		signal = ((A/B)*100).${var.http_5xx_errors_transformation_function}(over='${var.http_5xx_errors_transformation_window}').publish('signal')
 		aperiodic.above_or_below_detector(signal, ${var.http_5xx_errors_threshold_critical}, 'above', lasting('${var.http_5xx_errors_aperiodic_duration}', ${var.http_5xx_errors_aperiodic_percentage})).publish('CRIT')
 		aperiodic.above_or_below_detector(signal, ${var.http_5xx_errors_threshold_warning}, 'above', lasting('${var.http_5xx_errors_aperiodic_duration}', ${var.http_5xx_errors_aperiodic_percentage})).publish('WARN')
@@ -201,8 +201,8 @@ resource "signalfx_detector" "backend_http_4xx_errors" {
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
-		A = data('BackendResponseStatus', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('httpstatusgroup', '4xx') and ${module.filter-tags.filter_custom})${var.backend_http_4xx_errors_aggregation_function}
-		B = data('BackendResponseStatus', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and ${module.filter-tags.filter_custom})${var.backend_http_4xx_errors_aggregation_function}
+		A = data('BackendResponseStatus', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('httpstatusgroup', '4xx') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.backend_http_4xx_errors_aggregation_function}
+		B = data('BackendResponseStatus', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.backend_http_4xx_errors_aggregation_function}
 		signal = ((A/B)*100).${var.backend_http_4xx_errors_transformation_function}(over='${var.backend_http_4xx_errors_transformation_window}').publish('signal')
 		aperiodic.above_or_below_detector(signal, ${var.backend_http_4xx_errors_threshold_critical}, 'above', lasting('${var.backend_http_4xx_errors_aperiodic_duration}', ${var.backend_http_4xx_errors_aperiodic_percentage})).publish('CRIT')
 		aperiodic.above_or_below_detector(signal, ${var.backend_http_4xx_errors_threshold_warning}, 'above', lasting('${var.backend_http_4xx_errors_aperiodic_duration}', ${var.backend_http_4xx_errors_aperiodic_percentage})).publish('WARN')
@@ -232,8 +232,8 @@ resource "signalfx_detector" "backend_http_5xx_errors" {
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
-		A = data('BackendResponseStatus', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('httpstatusgroup', '5xx') and ${module.filter-tags.filter_custom})${var.backend_http_5xx_errors_aggregation_function}
-		B = data('BackendResponseStatus', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and ${module.filter-tags.filter_custom})${var.backend_http_5xx_errors_aggregation_function}
+		A = data('BackendResponseStatus', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('httpstatusgroup', '5xx') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.backend_http_5xx_errors_aggregation_function}
+		B = data('BackendResponseStatus', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.backend_http_5xx_errors_aggregation_function}
 		signal = ((A/B)*100).${var.backend_http_5xx_errors_transformation_function}(over='${var.backend_http_5xx_errors_transformation_window}').publish('signal')
 		aperiodic.above_or_below_detector(signal, ${var.backend_http_5xx_errors_threshold_critical}, 'above', lasting('${var.backend_http_5xx_errors_aperiodic_duration}', ${var.backend_http_5xx_errors_aperiodic_percentage})).publish('CRIT')
 		aperiodic.above_or_below_detector(signal, ${var.backend_http_5xx_errors_threshold_warning}, 'above', lasting('${var.backend_http_5xx_errors_aperiodic_duration}', ${var.backend_http_5xx_errors_aperiodic_percentage})).publish('WARN')
