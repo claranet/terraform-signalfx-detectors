@@ -97,7 +97,7 @@ variable "cpu_percentage_notifications_critical" {
 variable "cpu_percentage_aggregation_function" {
   description = "Aggregation function and group by for cpu_percentage detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_resource_id', 'azure_resource_name', 'Instance'])"
+  default     = ".mean(by=['azure_region', 'azure_resource_group_name', 'azure_resource_name'])"
 }
 
 variable "cpu_percentage_transformation_function" {
@@ -165,7 +165,7 @@ variable "memory_percentage_notifications_critical" {
 variable "memory_percentage_aggregation_function" {
   description = "Aggregation function and group by for memory_percentage detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_resource_id', 'azure_resource_name', 'Instance'])"
+  default     = ".mean(by=['azure_region', 'azure_resource_group_name', 'azure_resource_name'])"
 }
 
 variable "memory_percentage_transformation_function" {
