@@ -97,7 +97,7 @@ variable "cpu_notifications_critical" {
 variable "cpu_aggregation_function" {
   description = "Aggregation function and group by for cpu detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_resource_group_name', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_region', 'azure_resource_group_name', 'azure_resource_name'])"
 }
 
 variable "cpu_transformation_function" {
@@ -165,7 +165,7 @@ variable "free_space_notifications_critical" {
 variable "free_space_aggregation_function" {
   description = "Aggregation function and group by for free_space detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_resource_group_name', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_region', 'azure_resource_group_name', 'azure_resource_name'])"
 }
 
 variable "free_space_transformation_function" {
@@ -233,7 +233,7 @@ variable "dtu_consumption_notifications_critical" {
 variable "dtu_consumption_aggregation_function" {
   description = "Aggregation function and group by for dtu_consumption detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_resource_group_name', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_region', 'azure_resource_group_name', 'azure_resource_name'])"
 }
 
 variable "dtu_consumption_transformation_function" {
