@@ -97,7 +97,7 @@ variable "total_requests_notifications_critical" {
 variable "total_requests_aggregation_function" {
   description = "Aggregation function and group by for total_requests detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_resource_id', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_region', 'azure_resource_group_name', 'azure_resource_name'])"
 }
 
 variable "total_requests_transformation_function" {
@@ -165,7 +165,7 @@ variable "backend_connect_time_notifications_critical" {
 variable "backend_connect_time_aggregation_function" {
   description = "Aggregation function and group by for backend_connect_time detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['azure_resource_id', 'azure_resource_name', 'BackendHttpSetting', 'BackendPool', 'BackendServer'])"
+  default     = ".sum(by=['azure_region', 'azure_resource_group_name', 'azure_resource_name', 'BackendHttpSetting', 'BackendPool', 'BackendServer'])"
 }
 
 variable "backend_connect_time_transformation_function" {
@@ -233,7 +233,7 @@ variable "failed_requests_notifications_critical" {
 variable "failed_requests_aggregation_function" {
   description = "Aggregation function and group by for failed_requests detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_resource_id', 'azure_resource_name', 'BackendSettingsPool'])"
+  default     = ".mean(by=['azure_region', 'azure_resource_group_name', 'azure_resource_name', 'BackendSettingsPool'])"
 }
 
 variable "failed_requests_transformation_function" {
@@ -313,7 +313,7 @@ variable "unhealthy_host_ratio_notifications_critical" {
 variable "unhealthy_host_ratio_aggregation_function" {
   description = "Aggregation function and group by for unhealthy_host_ratio detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['azure_resource_id', 'azure_resource_name', 'BackendSettingsPool'])"
+  default     = ".sum(by=['azure_region', 'azure_resource_group_name', 'azure_resource_name', 'BackendSettingsPool'])"
 }
 
 variable "unhealthy_host_ratio_transformation_function" {
@@ -381,7 +381,7 @@ variable "http_4xx_errors_notifications_critical" {
 variable "http_4xx_errors_aggregation_function" {
   description = "Aggregation function and group by for http_4xx_errors detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['azure_resource_id', 'azure_resource_name'])"
+  default     = ".sum(by=['azure_region', 'azure_resource_group_name', 'azure_resource_name'])"
 }
 
 variable "http_4xx_errors_transformation_function" {
@@ -461,7 +461,7 @@ variable "http_5xx_errors_notifications_critical" {
 variable "http_5xx_errors_aggregation_function" {
   description = "Aggregation function and group by for http_5xx_errors detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['azure_resource_id', 'azure_resource_name'])"
+  default     = ".sum(by=['azure_region', 'azure_resource_group_name', 'azure_resource_name'])"
 }
 
 variable "http_5xx_errors_transformation_function" {
@@ -541,7 +541,7 @@ variable "backend_http_4xx_errors_notifications_critical" {
 variable "backend_http_4xx_errors_aggregation_function" {
   description = "Aggregation function and group by for backend_http_4xx_errors detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['azure_resource_id', 'azure_resource_name', 'BackendHttpSetting', 'BackendPool', 'BackendServer'])"
+  default     = ".sum(by=['azure_region', 'azure_resource_group_name', 'azure_resource_name', 'BackendHttpSetting', 'BackendPool', 'BackendServer'])"
 }
 
 variable "backend_http_4xx_errors_transformation_function" {
@@ -621,7 +621,7 @@ variable "backend_http_5xx_errors_notifications_critical" {
 variable "backend_http_5xx_errors_aggregation_function" {
   description = "Aggregation function and group by for backend_http_5xx_errors detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['azure_resource_id', 'azure_resource_name', 'BackendHttpSetting', 'BackendPool', 'BackendServer'])"
+  default     = ".sum(by=['azure_region', 'azure_resource_group_name', 'azure_resource_name', 'BackendHttpSetting', 'BackendPool', 'BackendServer'])"
 }
 
 variable "backend_http_5xx_errors_transformation_function" {
