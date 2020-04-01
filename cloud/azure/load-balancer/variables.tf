@@ -97,7 +97,7 @@ variable "status_notifications_critical" {
 variable "status_aggregation_function" {
   description = "Aggregation function and group by for status detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_resource_id', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_region', 'azure_resource_group_name', 'azure_resource_name'])"
 }
 
 variable "status_transformation_function" {
