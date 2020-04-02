@@ -13,7 +13,7 @@ resource "signalfx_detector" "heartbeat" {
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
 		notifications         = coalescelist(var.heartbeat_notifications, var.notifications)
-		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} on {{{dimensions}}}"
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} on {{{dimensions}}}"
 	}
 }
 
@@ -32,7 +32,7 @@ resource "signalfx_detector" "cpu_usage" {
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.cpu_usage_disabled_critical, var.cpu_usage_disabled, var.detectors_disabled)
 		notifications         = coalescelist(var.cpu_usage_notifications_critical, var.cpu_usage_notifications, var.notifications)
-		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 
 	rule {
@@ -41,7 +41,7 @@ resource "signalfx_detector" "cpu_usage" {
 		detect_label          = "WARN"
 		disabled              = coalesce(var.cpu_usage_disabled_warning, var.cpu_usage_disabled, var.detectors_disabled)
 		notifications         = coalescelist(var.cpu_usage_notifications_warning, var.cpu_usage_notifications, var.notifications)
-		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 }
 
@@ -62,7 +62,7 @@ resource "signalfx_detector" "credit_cpu" {
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.credit_cpu_disabled_critical, var.credit_cpu_disabled, var.detectors_disabled)
 		notifications         = coalescelist(var.credit_cpu_notifications_critical, var.credit_cpu_notifications, var.notifications)
-		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 
 	rule {
@@ -71,6 +71,6 @@ resource "signalfx_detector" "credit_cpu" {
 		detect_label          = "WARN"
 		disabled              = coalesce(var.credit_cpu_disabled_warning, var.credit_cpu_disabled, var.detectors_disabled)
 		notifications         = coalescelist(var.credit_cpu_notifications_warning, var.credit_cpu_notifications, var.notifications)
-		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 }

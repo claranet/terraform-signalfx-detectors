@@ -13,7 +13,7 @@ resource "signalfx_detector" "heartbeat" {
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
 		notifications         = coalescelist(var.heartbeat_notifications, var.notifications)
-		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} on {{{dimensions}}}"
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} on {{{dimensions}}}"
 	}
 }
 
@@ -35,7 +35,7 @@ resource "signalfx_detector" "jobs_failed" {
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.jobs_failed_disabled_critical, var.jobs_failed_disabled, var.detectors_disabled)
 		notifications         = coalescelist(var.jobs_failed_notifications_critical, var.jobs_failed_notifications, var.notifications)
-		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 
 	rule {
@@ -44,7 +44,7 @@ resource "signalfx_detector" "jobs_failed" {
 		detect_label          = "WARN"
 		disabled              = coalesce(var.jobs_failed_disabled_warning, var.jobs_failed_disabled, var.detectors_disabled)
 		notifications         = coalescelist(var.jobs_failed_notifications_warning, var.jobs_failed_notifications, var.notifications)
-		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 }
 
@@ -66,7 +66,7 @@ resource "signalfx_detector" "list_jobs_failed" {
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.list_jobs_failed_disabled_critical, var.list_jobs_failed_disabled, var.detectors_disabled)
 		notifications         = coalescelist(var.list_jobs_failed_notifications_critical, var.list_jobs_failed_notifications, var.notifications)
-		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 
 	rule {
@@ -75,7 +75,7 @@ resource "signalfx_detector" "list_jobs_failed" {
 		detect_label          = "WARN"
 		disabled              = coalesce(var.list_jobs_failed_disabled_warning, var.list_jobs_failed_disabled, var.detectors_disabled)
 		notifications         = coalescelist(var.list_jobs_failed_notifications_warning, var.list_jobs_failed_notifications, var.notifications)
-		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 }
 
@@ -97,7 +97,7 @@ resource "signalfx_detector" "query_jobs_failed" {
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.query_jobs_failed_disabled_critical, var.query_jobs_failed_disabled, var.detectors_disabled)
 		notifications         = coalescelist(var.query_jobs_failed_notifications_critical, var.query_jobs_failed_notifications, var.notifications)
-		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 
 	rule {
@@ -106,7 +106,7 @@ resource "signalfx_detector" "query_jobs_failed" {
 		detect_label          = "WARN"
 		disabled              = coalesce(var.query_jobs_failed_disabled_warning, var.query_jobs_failed_disabled, var.detectors_disabled)
 		notifications         = coalescelist(var.query_jobs_failed_notifications_warning, var.query_jobs_failed_notifications, var.notifications)
-		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 
 }
@@ -125,7 +125,7 @@ resource "signalfx_detector" "total_devices" {
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.total_devices_disabled_critical, var.total_devices_disabled, var.detectors_disabled)
 		notifications         = coalescelist(var.total_devices_notifications_critical, var.total_devices_notifications, var.notifications)
-		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 
 }
@@ -148,7 +148,7 @@ resource "signalfx_detector" "c2d_methods_failed" {
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.c2d_methods_failed_disabled_critical, var.c2d_methods_failed_disabled, var.detectors_disabled)
 		notifications         = coalescelist(var.c2d_methods_failed_notifications_critical, var.c2d_methods_failed_notifications, var.notifications)
-		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 
 	rule {
@@ -157,7 +157,7 @@ resource "signalfx_detector" "c2d_methods_failed" {
 		detect_label          = "WARN"
 		disabled              = coalesce(var.c2d_methods_failed_disabled_warning, var.c2d_methods_failed_disabled, var.detectors_disabled)
 		notifications         = coalescelist(var.c2d_methods_failed_notifications_warning, var.c2d_methods_failed_notifications, var.notifications)
-		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 }
 
@@ -179,7 +179,7 @@ resource "signalfx_detector" "c2d_twin_read_failed" {
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.c2d_twin_read_failed_disabled_critical, var.c2d_twin_read_failed_disabled, var.detectors_disabled)
 		notifications         = coalescelist(var.c2d_twin_read_failed_notifications_critical, var.c2d_twin_read_failed_notifications, var.notifications)
-		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 
 	rule {
@@ -188,7 +188,7 @@ resource "signalfx_detector" "c2d_twin_read_failed" {
 		detect_label          = "WARN"
 		disabled              = coalesce(var.c2d_twin_read_failed_disabled_warning, var.c2d_twin_read_failed_disabled, var.detectors_disabled)
 		notifications         = coalescelist(var.c2d_twin_read_failed_notifications_warning, var.c2d_twin_read_failed_notifications, var.notifications)
-		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 }
 
@@ -210,7 +210,7 @@ resource "signalfx_detector" "c2d_twin_update_failed" {
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.c2d_twin_update_failed_disabled_critical, var.c2d_twin_update_failed_disabled, var.detectors_disabled)
 		notifications         = coalescelist(var.c2d_twin_update_failed_notifications_critical, var.c2d_twin_update_failed_notifications, var.notifications)
-		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 
 	rule {
@@ -219,7 +219,7 @@ resource "signalfx_detector" "c2d_twin_update_failed" {
 		detect_label          = "WARN"
 		disabled              = coalesce(var.c2d_twin_update_failed_disabled_warning, var.c2d_twin_update_failed_disabled, var.detectors_disabled)
 		notifications         = coalescelist(var.c2d_twin_update_failed_notifications_warning, var.c2d_twin_update_failed_notifications, var.notifications)
-		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 }
 
@@ -241,7 +241,7 @@ resource "signalfx_detector" "d2c_twin_read_failed" {
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.d2c_twin_read_failed_disabled_critical, var.d2c_twin_read_failed_disabled, var.detectors_disabled)
 		notifications         = coalescelist(var.d2c_twin_read_failed_notifications_critical, var.d2c_twin_read_failed_notifications, var.notifications)
-		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 
 	rule {
@@ -250,7 +250,7 @@ resource "signalfx_detector" "d2c_twin_read_failed" {
 		detect_label          = "WARN"
 		disabled              = coalesce(var.d2c_twin_read_failed_disabled_warning, var.d2c_twin_read_failed_disabled, var.detectors_disabled)
 		notifications         = coalescelist(var.d2c_twin_read_failed_notifications_warning, var.d2c_twin_read_failed_notifications, var.notifications)
-		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 }
 
@@ -272,7 +272,7 @@ resource "signalfx_detector" "d2c_twin_update_failed" {
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.d2c_twin_update_failed_disabled_critical, var.d2c_twin_update_failed_disabled, var.detectors_disabled)
 		notifications         = coalescelist(var.d2c_twin_update_failed_notifications_critical, var.d2c_twin_update_failed_notifications, var.notifications)
-		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 
 	rule {
@@ -281,7 +281,7 @@ resource "signalfx_detector" "d2c_twin_update_failed" {
 		detect_label          = "WARN"
 		disabled              = coalesce(var.d2c_twin_update_failed_disabled_warning, var.d2c_twin_update_failed_disabled, var.detectors_disabled)
 		notifications         = coalescelist(var.d2c_twin_update_failed_notifications_warning, var.d2c_twin_update_failed_notifications, var.notifications)
-		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 }
 
@@ -305,7 +305,7 @@ resource "signalfx_detector" "d2c_telemetry_egress_dropped" {
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.d2c_telemetry_egress_dropped_disabled_critical, var.d2c_telemetry_egress_dropped_disabled, var.detectors_disabled)
 		notifications         = coalescelist(var.d2c_telemetry_egress_dropped_notifications_critical, var.d2c_telemetry_egress_dropped_notifications, var.notifications)
-		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 
 	rule {
@@ -314,7 +314,7 @@ resource "signalfx_detector" "d2c_telemetry_egress_dropped" {
 		detect_label          = "WARN"
 		disabled              = coalesce(var.d2c_telemetry_egress_dropped_disabled_warning, var.d2c_telemetry_egress_dropped_disabled, var.detectors_disabled)
 		notifications         = coalescelist(var.d2c_telemetry_egress_dropped_notifications_warning, var.d2c_telemetry_egress_dropped_notifications, var.notifications)
-		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 }
 
@@ -338,7 +338,7 @@ resource "signalfx_detector" "d2c_telemetry_egress_orphaned" {
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.d2c_telemetry_egress_orphaned_disabled_critical, var.d2c_telemetry_egress_orphaned_disabled, var.detectors_disabled)
 		notifications         = coalescelist(var.d2c_telemetry_egress_orphaned_notifications_critical, var.d2c_telemetry_egress_orphaned_notifications, var.notifications)
-		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 
 	rule {
@@ -347,7 +347,7 @@ resource "signalfx_detector" "d2c_telemetry_egress_orphaned" {
 		detect_label          = "WARN"
 		disabled              = coalesce(var.d2c_telemetry_egress_orphaned_disabled_warning, var.d2c_telemetry_egress_orphaned_disabled, var.detectors_disabled)
 		notifications         = coalescelist(var.d2c_telemetry_egress_orphaned_notifications_warning, var.d2c_telemetry_egress_orphaned_notifications, var.notifications)
-		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 }
 
@@ -371,7 +371,7 @@ resource "signalfx_detector" "d2c_telemetry_egress_invalid" {
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.d2c_telemetry_egress_invalid_disabled_critical, var.d2c_telemetry_egress_invalid_disabled, var.detectors_disabled)
 		notifications         = coalescelist(var.d2c_telemetry_egress_invalid_notifications_critical, var.d2c_telemetry_egress_invalid_notifications, var.notifications)
-		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 
 	rule {
@@ -380,7 +380,7 @@ resource "signalfx_detector" "d2c_telemetry_egress_invalid" {
 		detect_label          = "WARN"
 		disabled              = coalesce(var.d2c_telemetry_egress_invalid_disabled_warning, var.d2c_telemetry_egress_invalid_disabled, var.detectors_disabled)
 		notifications         = coalescelist(var.d2c_telemetry_egress_invalid_notifications_warning, var.d2c_telemetry_egress_invalid_notifications, var.notifications)
-		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 }
 
@@ -402,7 +402,7 @@ resource "signalfx_detector" "d2c_telemetry_ingress_nosent" {
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.d2c_telemetry_ingress_nosent_disabled_critical, var.d2c_telemetry_ingress_nosent_disabled, var.detectors_disabled)
 		notifications         = coalescelist(var.d2c_telemetry_ingress_nosent_notifications_critical, var.d2c_telemetry_ingress_nosent_notifications, var.notifications)
-		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 
 	rule {
@@ -411,6 +411,6 @@ resource "signalfx_detector" "d2c_telemetry_ingress_nosent" {
 		detect_label          = "WARN"
 		disabled              = coalesce(var.d2c_telemetry_ingress_nosent_disabled_warning, var.d2c_telemetry_ingress_nosent_disabled, var.detectors_disabled)
 		notifications         = coalescelist(var.d2c_telemetry_ingress_nosent_notifications_warning, var.d2c_telemetry_ingress_nosent_notifications, var.notifications)
-		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 }
