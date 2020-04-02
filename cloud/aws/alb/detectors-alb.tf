@@ -13,7 +13,7 @@ resource "signalfx_detector" "heartbeat" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
     notifications         = coalescelist(var.heartbeat_notifications, var.notifications)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} on {{{dimensions}}}"
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} on {{{dimensions}}}"
   }
 }
 
@@ -34,7 +34,7 @@ resource "signalfx_detector" "no_healthy_instances" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.no_healthy_instances_disabled_critical, var.no_healthy_instances_disabled, var.detectors_disabled)
     notifications         = coalescelist(var.no_healthy_instances_notifications_critical, var.no_healthy_instances_notifications, var.notifications)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
   rule {
@@ -43,7 +43,7 @@ resource "signalfx_detector" "no_healthy_instances" {
     detect_label          = "WARN"
     disabled              = coalesce(var.no_healthy_instances_disabled_warning, var.no_healthy_instances_disabled, var.detectors_disabled)
     notifications         = coalescelist(var.no_healthy_instances_notifications_warning, var.no_healthy_instances_notifications, var.notifications)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
 }
@@ -64,7 +64,7 @@ resource "signalfx_detector" "latency" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.latency_disabled_critical, var.latency_disabled, var.detectors_disabled)
     notifications         = coalescelist(var.latency_notifications_critical, var.latency_notifications, var.notifications)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
   rule {
@@ -73,7 +73,7 @@ resource "signalfx_detector" "latency" {
     detect_label          = "WARN"
     disabled              = coalesce(var.latency_disabled_warning, var.latency_disabled, var.detectors_disabled)
     notifications         = coalescelist(var.latency_notifications_warning, var.latency_notifications, var.notifications)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
 }
@@ -95,7 +95,7 @@ resource "signalfx_detector" "httpcode_5xx" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.httpcode_5xx_disabled_critical, var.httpcode_5xx_disabled, var.detectors_disabled)
     notifications         = coalescelist(var.httpcode_5xx_notifications_critical, var.httpcode_5xx_notifications, var.notifications)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
   rule {
@@ -104,7 +104,7 @@ resource "signalfx_detector" "httpcode_5xx" {
     detect_label          = "WARN"
     disabled              = coalesce(var.httpcode_5xx_disabled_warning, var.httpcode_5xx_disabled, var.detectors_disabled)
     notifications         = coalescelist(var.httpcode_5xx_notifications_warning, var.httpcode_5xx_notifications, var.notifications)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
 }
@@ -126,7 +126,7 @@ resource "signalfx_detector" "httpcode_4xx" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.httpcode_4xx_disabled_critical, var.httpcode_4xx_disabled, var.detectors_disabled)
     notifications         = coalescelist(var.httpcode_4xx_notifications_critical, var.httpcode_4xx_notifications, var.notifications)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
   rule {
@@ -135,7 +135,7 @@ resource "signalfx_detector" "httpcode_4xx" {
     detect_label          = "WARN"
     disabled              = coalesce(var.httpcode_4xx_disabled_warning, var.httpcode_4xx_disabled, var.detectors_disabled)
     notifications         = coalescelist(var.httpcode_4xx_notifications_warning, var.httpcode_4xx_notifications, var.notifications)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
 }
@@ -157,7 +157,7 @@ resource "signalfx_detector" "httpcode_target_5xx" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.httpcode_target_5xx_disabled_critical, var.httpcode_target_5xx_disabled, var.detectors_disabled)
     notifications         = coalescelist(var.httpcode_target_5xx_notifications_critical, var.httpcode_target_5xx_notifications, var.notifications)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
   rule {
@@ -166,7 +166,7 @@ resource "signalfx_detector" "httpcode_target_5xx" {
     detect_label          = "WARN"
     disabled              = coalesce(var.httpcode_target_5xx_disabled_warning, var.httpcode_target_5xx_disabled, var.detectors_disabled)
     notifications         = coalescelist(var.httpcode_target_5xx_notifications_warning, var.httpcode_target_5xx_notifications, var.notifications)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
 }
@@ -188,7 +188,7 @@ resource "signalfx_detector" "httpcode_target_4xx" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.httpcode_target_4xx_disabled_critical, var.httpcode_target_4xx_disabled, var.detectors_disabled)
     notifications         = coalescelist(var.httpcode_target_4xx_notifications_critical, var.httpcode_target_4xx_notifications, var.notifications)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
   rule {
@@ -197,7 +197,7 @@ resource "signalfx_detector" "httpcode_target_4xx" {
     detect_label          = "WARN"
     disabled              = coalesce(var.httpcode_target_4xx_disabled_warning, var.httpcode_target_4xx_disabled, var.detectors_disabled)
     notifications         = coalescelist(var.httpcode_target_4xx_notifications_warning, var.httpcode_target_4xx_notifications, var.notifications)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
 }

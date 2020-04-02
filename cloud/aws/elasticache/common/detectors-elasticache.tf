@@ -13,7 +13,7 @@ resource "signalfx_detector" "heartbeat" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
     notifications         = coalescelist(var.heartbeat_notifications, var.notifications)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} on {{{dimensions}}}"
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} on {{{dimensions}}}"
   }
 }
 
@@ -32,7 +32,7 @@ resource "signalfx_detector" "evictions" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.evictions_disabled_critical, var.evictions_disabled, var.detectors_disabled)
     notifications         = coalescelist(var.evictions_notifications_critical, var.evictions_notifications, var.notifications)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
   rule {
@@ -41,7 +41,7 @@ resource "signalfx_detector" "evictions" {
     detect_label          = "WARN"
     disabled              = coalesce(var.evictions_disabled_warning, var.evictions_disabled, var.detectors_disabled)
     notifications         = coalescelist(var.evictions_notifications_warning, var.evictions_notifications, var.notifications)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
 }
@@ -60,7 +60,7 @@ resource "signalfx_detector" "max_connection" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.max_connection_disabled_critical, var.max_connection_disabled, var.detectors_disabled)
     notifications         = coalescelist(var.max_connection_notifications_critical, var.max_connection_notifications, var.notifications)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
 }
@@ -79,7 +79,7 @@ resource "signalfx_detector" "no_connection" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.no_connection_disabled_critical, var.no_connection_disabled, var.detectors_disabled)
     notifications         = coalescelist(var.no_connection_notifications_critical, var.no_connection_notifications, var.notifications)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
 }
@@ -99,7 +99,7 @@ resource "signalfx_detector" "swap" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.swap_disabled_critical, var.swap_disabled, var.detectors_disabled)
     notifications         = coalescelist(var.swap_notifications_critical, var.swap_notifications, var.notifications)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
   rule {
@@ -108,7 +108,7 @@ resource "signalfx_detector" "swap" {
     detect_label          = "WARN"
     disabled              = coalesce(var.swap_disabled_warning, var.swap_disabled, var.detectors_disabled)
     notifications         = coalescelist(var.swap_notifications_warning, var.swap_notifications, var.notifications)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
 }
@@ -128,7 +128,7 @@ resource "signalfx_detector" "free_memory" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.free_memory_disabled_critical, var.free_memory_disabled, var.detectors_disabled)
     notifications         = coalescelist(var.free_memory_notifications_critical, var.free_memory_notifications, var.notifications)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
   rule {
@@ -137,7 +137,7 @@ resource "signalfx_detector" "free_memory" {
     detect_label          = "WARN"
     disabled              = coalesce(var.free_memory_disabled_warning, var.free_memory_disabled, var.detectors_disabled)
     notifications         = coalescelist(var.free_memory_notifications_warning, var.free_memory_notifications, var.notifications)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
 }
@@ -158,7 +158,7 @@ resource "signalfx_detector" "evictions_growing" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.evictions_growing_disabled_critical, var.evictions_growing_disabled, var.detectors_disabled)
     notifications         = coalescelist(var.evictions_growing_notifications_critical, var.evictions_growing_notifications, var.notifications)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
   rule {
@@ -167,7 +167,7 @@ resource "signalfx_detector" "evictions_growing" {
     detect_label          = "WARN"
     disabled              = coalesce(var.evictions_growing_disabled_warning, var.evictions_growing_disabled, var.detectors_disabled)
     notifications         = coalescelist(var.evictions_growing_notifications_warning, var.evictions_growing_notifications, var.notifications)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
 }

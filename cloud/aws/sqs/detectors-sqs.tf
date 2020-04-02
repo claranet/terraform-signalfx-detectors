@@ -13,7 +13,7 @@ resource "signalfx_detector" "heartbeat" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
     notifications         = coalescelist(var.heartbeat_notifications, var.notifications)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} on {{{dimensions}}}"
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} on {{{dimensions}}}"
   }
 }
 
@@ -32,7 +32,7 @@ resource "signalfx_detector" "visible_messages" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.visible_messages_disabled_critical, var.visible_messages_disabled, var.detectors_disabled)
     notifications         = coalescelist(var.visible_messages_notifications_critical, var.visible_messages_notifications, var.notifications)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
   rule {
@@ -41,7 +41,7 @@ resource "signalfx_detector" "visible_messages" {
     detect_label          = "WARN"
     disabled              = coalesce(var.visible_messages_disabled_warning, var.visible_messages_disabled, var.detectors_disabled)
     notifications         = coalescelist(var.visible_messages_notifications_warning, var.visible_messages_notifications, var.notifications)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
 }
@@ -61,7 +61,7 @@ resource "signalfx_detector" "age_of_oldest_message" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.age_of_oldest_message_disabled_critical, var.age_of_oldest_message_disabled, var.detectors_disabled)
     notifications         = coalescelist(var.age_of_oldest_message_notifications_critical, var.age_of_oldest_message_notifications, var.notifications)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
   rule {
@@ -70,7 +70,7 @@ resource "signalfx_detector" "age_of_oldest_message" {
     detect_label          = "WARN"
     disabled              = coalesce(var.age_of_oldest_message_disabled_warning, var.age_of_oldest_message_disabled, var.detectors_disabled)
     notifications         = coalescelist(var.age_of_oldest_message_notifications_warning, var.age_of_oldest_message_notifications, var.notifications)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
 }
