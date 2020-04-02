@@ -13,7 +13,7 @@ resource "signalfx_detector" "heartbeat" {
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
 		notifications         = coalescelist(var.heartbeat_notifications, var.notifications)
-		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} on {{{dimensions}}}"
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} on {{{dimensions}}}"
 	}
 }
 
@@ -44,7 +44,7 @@ resource "signalfx_detector" "db_4xx_requests" {
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.db_4xx_requests_disabled_critical, var.db_4xx_requests_disabled, var.detectors_disabled)
 		notifications         = coalescelist(var.db_4xx_requests_notifications_critical, var.db_4xx_requests_notifications, var.notifications)
-		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 
 	rule {
@@ -53,7 +53,7 @@ resource "signalfx_detector" "db_4xx_requests" {
 		detect_label          = "WARN"
 		disabled              = coalesce(var.db_4xx_requests_disabled_warning, var.db_4xx_requests_disabled, var.detectors_disabled)
 		notifications         = coalescelist(var.db_4xx_requests_notifications_warning, var.db_4xx_requests_notifications, var.notifications)
-		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 }
 
@@ -76,7 +76,7 @@ resource "signalfx_detector" "db_5xx_requests" {
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.db_5xx_requests_disabled_critical, var.db_5xx_requests_disabled, var.detectors_disabled)
 		notifications         = coalescelist(var.db_5xx_requests_notifications_critical, var.db_5xx_requests_notifications, var.notifications)
-		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 
 	rule {
@@ -85,7 +85,7 @@ resource "signalfx_detector" "db_5xx_requests" {
 		detect_label          = "WARN"
 		disabled              = coalesce(var.db_5xx_requests_disabled_warning, var.db_5xx_requests_disabled, var.detectors_disabled)
 		notifications         = coalescelist(var.db_5xx_requests_notifications_warning, var.db_5xx_requests_notifications, var.notifications)
-		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 }
 
@@ -107,7 +107,7 @@ resource "signalfx_detector" "scaling" {
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.scaling_disabled_critical, var.scaling_disabled, var.detectors_disabled)
 		notifications         = coalescelist(var.scaling_notifications_critical, var.scaling_notifications, var.notifications)
-		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 
 	rule {
@@ -116,6 +116,6 @@ resource "signalfx_detector" "scaling" {
 		detect_label          = "WARN"
 		disabled              = coalesce(var.scaling_disabled_warning, var.scaling_disabled, var.detectors_disabled)
 		notifications         = coalescelist(var.scaling_notifications_warning, var.scaling_notifications, var.notifications)
-		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{ruleName}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 }
