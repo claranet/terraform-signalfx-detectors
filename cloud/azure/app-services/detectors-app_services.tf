@@ -177,7 +177,6 @@ resource "signalfx_detector" "status" {
 	program_text = <<-EOF
 		signal = data('HealthCheckStatus', filter=filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'false') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.status_aggregation_function}.${var.status_transformation_function}(over='${var.status_transformation_window}').publish('signal')
 		detect(when(signal < ${var.status_threshold_critical})).publish('CRIT')
-		detect(when(signal < ${var.status_threshold_warning})).publish('WARN')
 	EOF
 
 	rule {
