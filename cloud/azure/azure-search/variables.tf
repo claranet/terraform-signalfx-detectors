@@ -97,7 +97,7 @@ variable "search_latency_notifications_critical" {
 variable "search_latency_aggregation_function" {
   description = "Aggregation function and group by for search_latency detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_group_name', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
 variable "search_latency_transformation_function" {
@@ -165,7 +165,7 @@ variable "search_throttled_queries_rate_notifications_critical" {
 variable "search_throttled_queries_rate_aggregation_function" {
   description = "Aggregation function and group by for search_throttled_queries_rate detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_group_name', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
 variable "search_throttled_queries_rate_transformation_function" {
