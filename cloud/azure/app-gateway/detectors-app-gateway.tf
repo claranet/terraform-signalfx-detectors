@@ -77,7 +77,7 @@ resource "signalfx_detector" "failed_requests" {
 	EOF
 
 	rule {
-		description           = "is too high > ${var.failed_requests_threshold_critical}"
+		description           = "are too high > ${var.failed_requests_threshold_critical}"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.failed_requests_disabled_critical, var.failed_requests_disabled, var.detectors_disabled)
@@ -86,7 +86,7 @@ resource "signalfx_detector" "failed_requests" {
 	}
 
 	rule {
-		description           = "is too high > ${var.failed_requests_threshold_warning}"
+		description           = "are too high > ${var.failed_requests_threshold_warning}"
 		severity              = "Warning"
 		detect_label          = "WARN"
 		disabled              = coalesce(var.failed_requests_disabled_warning, var.failed_requests_disabled, var.detectors_disabled)
@@ -126,7 +126,7 @@ resource "signalfx_detector" "unhealthy_host_ratio" {
 }
 
 resource "signalfx_detector" "http_4xx_errors" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Gateway HTTP 4xx errors rate"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Gateway HTTP 4xx error rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -157,7 +157,7 @@ resource "signalfx_detector" "http_4xx_errors" {
 }
 
 resource "signalfx_detector" "http_5xx_errors" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Gateway HTTP 5xx errors rate"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Gateway HTTP 5xx error rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -188,7 +188,7 @@ resource "signalfx_detector" "http_5xx_errors" {
 }
 
 resource "signalfx_detector" "backend_http_4xx_errors" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Gateway backend HTTP 4xx errors rate"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Gateway backend HTTP 4xx error rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -219,7 +219,7 @@ resource "signalfx_detector" "backend_http_4xx_errors" {
 }
 
 resource "signalfx_detector" "backend_http_5xx_errors" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Gateway backend HTTP 5xx errors rate"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Gateway backend HTTP 5xx error rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
