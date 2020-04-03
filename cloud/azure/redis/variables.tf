@@ -97,7 +97,7 @@ variable "evictedkeys_notifications_critical" {
 variable "evictedkeys_aggregation_function" {
   description = "Aggregation function and group by for evictedkeys detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_group_name', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
 variable "evictedkeys_transformation_function" {
@@ -165,7 +165,7 @@ variable "percent_processor_time_notifications_critical" {
 variable "percent_processor_time_aggregation_function" {
   description = "Aggregation function and group by for percent_processor_time detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_group_name', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
 variable "percent_processor_time_transformation_function" {
@@ -233,7 +233,7 @@ variable "load_notifications_critical" {
 variable "load_aggregation_function" {
   description = "Aggregation function and group by for load detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_group_name', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
 variable "load_transformation_function" {
