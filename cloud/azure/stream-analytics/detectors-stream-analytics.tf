@@ -23,7 +23,7 @@ resource "signalfx_detector" "su_utilization" {
 	program_text = <<-EOF
 		signal = data('ResourceUtilization', filter=filter('resource_type', 'Microsoft.StreamAnalytics/streamingjobs') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.su_utilization_aggregation_function}.${var.su_utilization_transformation_function}(over='${var.su_utilization_transformation_window}').publish('signal')
 		detect(when(signal > ${var.su_utilization_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.su_utilization_threshold_warning})).publish('WARN')
+		detect(when(signal > ${var.su_utilization_threshold_warning}) and when(signal < ${var.su_utilization_threshold_critical})).publish('WARN')
 	EOF
 
 	rule {
@@ -54,7 +54,7 @@ resource "signalfx_detector" "failed_requests" {
 		B = data('AMLCalloutRequests', filter=filter('resource_type', 'Microsoft.StreamAnalytics/streamingjobs') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.failed_requests_aggregation_function}
 		signal = ((A/B)*100).${var.failed_requests_transformation_function}(over='${var.failed_requests_transformation_window}').publish('signal')
 		aperiodic.above_or_below_detector(signal, ${var.failed_requests_threshold_critical}, 'above', lasting('${var.failed_requests_aperiodic_duration}', ${var.failed_requests_aperiodic_percentage})).publish('CRIT')
-		aperiodic.above_or_below_detector(signal, ${var.failed_requests_threshold_warning}, 'above', lasting('${var.failed_requests_aperiodic_duration}', ${var.failed_requests_aperiodic_percentage})).publish('WARN')
+		aperiodic.range_detector(signal, ${var.failed_requests_threshold_warning}, ${var.failed_requests_threshold_critical}, 'within_range', lasting('${var.failed_requests_aperiodic_duration}', ${var.failed_requests_aperiodic_percentage})).publish('WARN')
 	EOF
 
 	rule {
@@ -82,7 +82,7 @@ resource "signalfx_detector" "conversion_errors" {
 	program_text = <<-EOF
 		signal = data('ConversionErrors', filter=filter('resource_type', 'Microsoft.StreamAnalytics/streamingjobs') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.conversion_errors_aggregation_function}.${var.conversion_errors_transformation_function}(over='${var.conversion_errors_transformation_window}').publish('signal')
 		detect(when(signal > ${var.conversion_errors_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.conversion_errors_threshold_warning})).publish('WARN')
+		detect(when(signal > ${var.conversion_errors_threshold_warning}) and when(signal < ${var.conversion_errors_threshold_critical})).publish('WARN')
 	EOF
 
 	rule {
@@ -110,7 +110,7 @@ resource "signalfx_detector" "runtime_errors" {
 	program_text = <<-EOF
 		signal = data('Errors', filter=filter('resource_type', 'Microsoft.StreamAnalytics/streamingjobs') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.runtime_errors_aggregation_function}.${var.runtime_errors_transformation_function}(over='${var.runtime_errors_transformation_window}').publish('signal')
 		detect(when(signal > ${var.runtime_errors_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.runtime_errors_threshold_warning})).publish('WARN')
+		detect(when(signal > ${var.runtime_errors_threshold_warning}) and when(signal < ${var.runtime_errors_threshold_critical})).publish('WARN')
 	EOF
 
 	rule {
