@@ -120,7 +120,7 @@ resource "signalfx_detector" "successful_requests" {
 		B = data('EventHubTotalEvents', filter=filter('resource_type', 'Microsoft.ApiManagement/service') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.successful_requests_aggregation_function}
 		signal = ((A/B)*100).fill(100).${var.successful_requests_transformation_function}(over='${var.successful_requests_transformation_window}').publish('signal')
 		detect(when(signal < ${var.successful_requests_threshold_critical})).publish('CRIT')
-		detect(when(signal < ${var.successful_requests_threshold_warning}) AND when(signal > ${var.successful_requests_threshold_critical})).publish('WARN')
+		detect(when(signal < ${var.successful_requests_threshold_warning}) and when(signal > ${var.successful_requests_threshold_critical})).publish('WARN')
 	EOF
 
 	rule {
