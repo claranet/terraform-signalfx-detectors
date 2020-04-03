@@ -97,7 +97,7 @@ variable "cpu_usage_notifications_critical" {
 variable "cpu_usage_aggregation_function" {
   description = "Aggregation function and group by for cpu_usage detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_group_name', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
 variable "cpu_usage_transformation_function" {
@@ -165,7 +165,7 @@ variable "credit_cpu_notifications_critical" {
 variable "credit_cpu_aggregation_function" {
   description = "Aggregation function and group by for credit_cpu detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_group_name', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
 variable "credit_cpu_transformation_function" {
@@ -233,7 +233,7 @@ variable "ram_reserved_notifications_critical" {
 variable "ram_reserved_aggregation_function" {
   description = "Aggregation function and group by for ram_reserved detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_group_name', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
 variable "ram_reserved_transformation_function" {
@@ -301,7 +301,7 @@ variable "http_success_status_rate_notifications_critical" {
 variable "http_success_status_rate_aggregation_function" {
   description = "Aggregation function and group by for http_success_status_rate detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_group_name', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
 variable "http_success_status_rate_transformation_function" {
@@ -369,7 +369,7 @@ variable "status_notifications_critical" {
 variable "status_aggregation_function" {
   description = "Aggregation function and group by for status detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_group_name', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
 variable "status_transformation_function" {
