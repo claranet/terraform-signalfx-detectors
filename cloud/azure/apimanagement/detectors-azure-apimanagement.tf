@@ -18,7 +18,7 @@ resource "signalfx_detector" "heartbeat" {
 }
 
 resource "signalfx_detector" "failed_requests" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure API management failed requests"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure API management failed request rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -49,7 +49,7 @@ resource "signalfx_detector" "failed_requests" {
 }
 
 resource "signalfx_detector" "other_requests" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure API management other requests"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure API management other request request rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -82,7 +82,7 @@ resource "signalfx_detector" "other_requests" {
 }
 
 resource "signalfx_detector" "unauthorized_requests" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure API management unauthorized requests"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure API management unauthorized request rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -113,14 +113,14 @@ resource "signalfx_detector" "unauthorized_requests" {
 }
 
 resource "signalfx_detector" "successful_requests" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure API management successful requests rate"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure API management successful request rate"
 
 	program_text = <<-EOF
 		A = data('EventHubSuccessfulEvents', filter=filter('resource_type', 'Microsoft.ApiManagement/service') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.successful_requests_aggregation_function}
 		B = data('EventHubTotalEvents', filter=filter('resource_type', 'Microsoft.ApiManagement/service') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.successful_requests_aggregation_function}
 		signal = ((A/B)*100).fill(100).${var.successful_requests_transformation_function}(over='${var.successful_requests_transformation_window}').publish('signal')
 		detect(when(signal < ${var.successful_requests_threshold_critical})).publish('CRIT')
-		detect(when(signal < ${var.successful_requests_threshold_warning})).publish('WARN')
+		detect(when(signal < ${var.successful_requests_threshold_warning}) and when(signal > ${var.successful_requests_threshold_critical})).publish('WARN')
 	EOF
 
 	rule {
