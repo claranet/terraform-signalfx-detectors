@@ -97,7 +97,7 @@ variable "http_5xx_errors_rate_notifications_critical" {
 variable "http_5xx_errors_rate_aggregation_function" {
   description = "Aggregation function and group by for http_5xx_errors_rate detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_group_name', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
 variable "http_5xx_errors_rate_transformation_function" {
@@ -177,7 +177,7 @@ variable "high_connections_count_notifications_critical" {
 variable "high_connections_count_aggregation_function" {
   description = "Aggregation function and group by for high_connections_count detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_group_name', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
 variable "high_connections_count_transformation_function" {
@@ -257,7 +257,7 @@ variable "high_threads_count_notifications_critical" {
 variable "high_threads_count_aggregation_function" {
   description = "Aggregation function and group by for high_threads_count detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_group_name', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
 variable "high_threads_count_transformation_function" {
