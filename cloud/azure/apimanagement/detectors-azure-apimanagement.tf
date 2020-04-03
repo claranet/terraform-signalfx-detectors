@@ -18,7 +18,7 @@ resource "signalfx_detector" "heartbeat" {
 }
 
 resource "signalfx_detector" "failed_requests" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure API management failed request rate"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure API management failed requests"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -26,7 +26,7 @@ resource "signalfx_detector" "failed_requests" {
 		B = data('EventHubTotalEvents', filter=filter('resource_type', 'Microsoft.ApiManagement/service') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.failed_requests_aggregation_function}
 		signal = ((A/B)*100).${var.failed_requests_transformation_function}(over='${var.failed_requests_transformation_window}')).publish('signal')
 		aperiodic.above_or_below_detector(signal, ${var.failed_requests_threshold_critical}, 'above', lasting('${var.failed_requests_aperiodic_duration}', ${var.failed_requests_aperiodic_percentage})).publish('CRIT')
-		aperiodic.above_or_below_detector(signal, ${var.failed_requests_threshold_warning}, 'above', lasting('${var.failed_requests_aperiodic_duration}', ${var.failed_requests_aperiodic_percentage})).publish('WARN')
+		aperiodic.range_detector(signal, ${var.failed_requests_threshold_warning}, ${var.failed_requests_threshold_critical}, 'within_range', lasting('${var.failed_requests_aperiodic_duration}', ${var.failed_requests_aperiodic_percentage})).publish('WARN')
 	EOF
 
 	rule {
@@ -49,7 +49,7 @@ resource "signalfx_detector" "failed_requests" {
 }
 
 resource "signalfx_detector" "other_requests" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure API management other request request rate"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure API management other requests"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -59,7 +59,7 @@ resource "signalfx_detector" "other_requests" {
 		D = data('EventHubTotalEvents', filter=filter('resource_type', 'Microsoft.ApiManagement/service') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.other_requests_aggregation_function}
 		signal = (((A+B+C)/D)*100).${var.other_requests_transformation_function}(over='${var.other_requests_transformation_window}').publish('signal')
 		aperiodic.above_or_below_detector(signal, ${var.other_requests_threshold_critical}, 'above', lasting('${var.other_requests_aperiodic_duration}', ${var.other_requests_aperiodic_percentage})).publish('CRIT')
-		aperiodic.above_or_below_detector(signal, ${var.other_requests_threshold_warning}, 'above', lasting('${var.other_requests_aperiodic_duration}', ${var.other_requests_aperiodic_percentage})).publish('WARN')
+		aperiodic.range_detector(signal, ${var.other_requests_threshold_warning}, ${var.other_requests_threshold_critical}, 'within_range', lasting('${var.other_requests_aperiodic_duration}', ${var.other_requests_aperiodic_percentage})).publish('WARN')
 	EOF
 
 	rule {
@@ -82,7 +82,7 @@ resource "signalfx_detector" "other_requests" {
 }
 
 resource "signalfx_detector" "unauthorized_requests" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure API management unauthorized request rate"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure API management unauthorized requests"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -90,7 +90,7 @@ resource "signalfx_detector" "unauthorized_requests" {
 		B = data('EventHubTotalEvents', filter=filter('resource_type', 'Microsoft.ApiManagement/service') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.unauthorized_requests_aggregation_function}
 		signal = ((A/B)*100).${var.unauthorized_requests_transformation_function}(over='${var.unauthorized_requests_transformation_window}').publish('signal')
 		aperiodic.above_or_below_detector(signal, ${var.unauthorized_requests_threshold_critical}, 'above', lasting('${var.unauthorized_requests_aperiodic_duration}', ${var.unauthorized_requests_aperiodic_percentage})).publish('CRIT')
-		aperiodic.above_or_below_detector(signal, ${var.unauthorized_requests_threshold_warning}, 'above', lasting('${var.unauthorized_requests_aperiodic_duration}', ${var.unauthorized_requests_aperiodic_percentage})).publish('WARN')
+		aperiodic.range_detector(signal, ${var.unauthorized_requests_threshold_warning}, ${var.unauthorized_requests_threshold_critical}, 'within_range', lasting('${var.unauthorized_requests_aperiodic_duration}', ${var.unauthorized_requests_aperiodic_percentage})).publish('WARN')
 	EOF
 
 	rule {
@@ -113,7 +113,7 @@ resource "signalfx_detector" "unauthorized_requests" {
 }
 
 resource "signalfx_detector" "successful_requests" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure API management successful request rate"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure API management successful requests rate"
 
 	program_text = <<-EOF
 		A = data('EventHubSuccessfulEvents', filter=filter('resource_type', 'Microsoft.ApiManagement/service') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.successful_requests_aggregation_function}
