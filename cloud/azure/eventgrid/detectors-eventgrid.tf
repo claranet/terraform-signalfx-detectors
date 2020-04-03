@@ -46,7 +46,7 @@ resource "signalfx_detector" "failed_messages" {
 		C = data('UnmatchedEventCount', filter=filter('resource_type', 'Microsoft.EventGrid/topics') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.failed_messages_aggregation_function}
 		signal = ((A/(A+B+C))*100).${var.failed_messages_transformation_function}(over='${var.failed_messages_transformation_window}').publish('signal')
 		aperiodic.above_or_below_detector(signal, ${var.failed_messages_threshold_critical}, 'above', lasting('${var.failed_messages_aperiodic_duration}', ${var.failed_messages_aperiodic_percentage})).publish('CRIT')
-		aperiodic.above_or_below_detector(signal, ${var.failed_messages_threshold_warning}, 'above', lasting('${var.failed_messages_aperiodic_duration}', ${var.failed_messages_aperiodic_percentage})).publish('WARN')
+		aperiodic.range_detector(signal, ${var.failed_messages_threshold_warning}, ${var.failed_messages_threshold_critical}, 'within_range', lasting('${var.failed_messages_aperiodic_duration}', ${var.failed_messages_aperiodic_percentage})).publish('WARN')
 	EOF
 
 	rule {
@@ -78,7 +78,7 @@ resource "signalfx_detector" "unmatched_events" {
 		C = data('PublishFailCount', filter=filter('resource_type', 'Microsoft.EventGrid/topics') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.unmatched_events_aggregation_function}
 		signal = ((A/(A+B+C))*100).${var.unmatched_events_transformation_function}(over='${var.unmatched_events_transformation_window}').publish('signal')
 		aperiodic.above_or_below_detector(signal, ${var.unmatched_events_threshold_critical}, 'above', lasting('${var.unmatched_events_aperiodic_duration}', ${var.unmatched_events_aperiodic_percentage})).publish('CRIT')
-		aperiodic.above_or_below_detector(signal, ${var.unmatched_events_threshold_warning}, 'above', lasting('${var.unmatched_events_aperiodic_duration}', ${var.unmatched_events_aperiodic_percentage})).publish('WARN')
+		aperiodic.range_detector(signal, ${var.unmatched_events_threshold_warning}, ${var.unmatched_events_threshold_critical}, 'within_range', lasting('${var.unmatched_events_aperiodic_duration}', ${var.unmatched_events_aperiodic_percentage})).publish('WARN')
 	EOF
 
 	rule {
