@@ -53,7 +53,7 @@ resource "signalfx_detector" "error" {
 	program_text = <<-EOF
 		signal = data('kube_pod_container_status_waiting', filter=(not filter('reason', 'ContainerCreating')) and ${module.filter-tags.filter_custom})${var.error_aggregation_function}.${var.error_transformation_function}(over='${var.error_transformation_window}').publish('signal')
 		detect(when(signal > ${var.error_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.error_threshold_warning})).publish('WARN')
+		detect(when(signal > ${var.error_threshold_warning}) and when(signal < ${var.error_threshold_critical})).publish('WARN')
 	EOF
 
 	rule {
@@ -82,7 +82,7 @@ resource "signalfx_detector" "terminated" {
 	program_text = <<-EOF
 		signal = data('kube_pod_container_status_terminated', filter=(not filter('reason', 'ContainerCreating')) and ${module.filter-tags.filter_custom})${var.terminated_aggregation_function}.${var.terminated_transformation_function}(over='${var.terminated_transformation_window}').publish('signal')
 		detect(when(signal > ${var.terminated_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.terminated_threshold_warning})).publish('WARN')
+		detect(when(signal > ${var.terminated_threshold_warning}) and when(signal < ${var.terminated_threshold_critical})).publish('WARN')
 	EOF
 
 	rule {
