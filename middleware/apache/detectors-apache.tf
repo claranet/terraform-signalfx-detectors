@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
- 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ALB heartbeat"
+ 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Apache heartbeat"
 
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
