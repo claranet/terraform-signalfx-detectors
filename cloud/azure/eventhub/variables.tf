@@ -97,7 +97,7 @@ variable "eventhub_errors_notifications_critical" {
 variable "eventhub_errors_aggregation_function" {
   description = "Aggregation function and group by for eventhub_errors detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_group_name', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
 variable "eventhub_errors_transformation_function" {
