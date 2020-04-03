@@ -97,7 +97,7 @@ variable "active_connections_notifications_critical" {
 variable "active_connections_aggregation_function" {
   description = "Aggregation function and group by for active_connections detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_group_name', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
 variable "active_connections_transformation_function" {
@@ -159,7 +159,7 @@ variable "user_errors_notifications_critical" {
 variable "user_errors_aggregation_function" {
   description = "Aggregation function and group by for user_errors detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_group_name', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
 variable "user_errors_transformation_function" {
@@ -239,7 +239,7 @@ variable "server_errors_notifications_critical" {
 variable "server_errors_aggregation_function" {
   description = "Aggregation function and group by for server_errors detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_region', 'azure_resource_group_name', 'azure_resource_name'])"
+  default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
 variable "server_errors_transformation_function" {
