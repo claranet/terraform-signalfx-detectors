@@ -23,7 +23,6 @@ resource "signalfx_detector" "total_requests" {
 	program_text = <<-EOF
 		signal = data('CurrentConnections', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.total_requests_aggregation_function}.${var.total_requests_transformation_function}(over='${var.total_requests_transformation_window}').publish('signal')
 		detect(when(signal < ${var.total_requests_threshold_critical})).publish('CRIT')
-		detect(when(signal < ${var.total_requests_threshold_warning})).publish('WARN')
 	EOF
 
 	rule {
@@ -35,14 +34,6 @@ resource "signalfx_detector" "total_requests" {
 		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 
-	rule {
-		description           = "is below nominal capacity < ${var.total_requests_threshold_warning}"
-		severity              = "Warning"
-		detect_label          = "WARN"
-		disabled              = coalesce(var.total_requests_disabled_warning, var.total_requests_disabled, var.detectors_disabled)
-		notifications         = coalescelist(var.total_requests_notifications_warning, var.total_requests_notifications, var.notifications)
-		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-	}
 }
 
 resource "signalfx_detector" "backend_connect_time" {
@@ -51,7 +42,7 @@ resource "signalfx_detector" "backend_connect_time" {
 	program_text = <<-EOF
 		signal = data('BackendConnectTime', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.backend_connect_time_aggregation_function}.${var.backend_connect_time_transformation_function}(over='${var.backend_connect_time_transformation_window}').publish('signal')
 		detect(when(signal > ${var.backend_connect_time_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.backend_connect_time_threshold_warning})).publish('WARN')
+		detect(when(signal > ${var.backend_connect_time_threshold_warning}) and when(signal < ${var.backend_connect_time_threshold_critical})).publish('WARN')
 	EOF
 
 	rule {
@@ -86,7 +77,7 @@ resource "signalfx_detector" "failed_requests" {
 	EOF
 
 	rule {
-		description           = "is too high > ${var.failed_requests_threshold_critical}"
+		description           = "are too high > ${var.failed_requests_threshold_critical}"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.failed_requests_disabled_critical, var.failed_requests_disabled, var.detectors_disabled)
@@ -95,7 +86,7 @@ resource "signalfx_detector" "failed_requests" {
 	}
 
 	rule {
-		description           = "is too high > ${var.failed_requests_threshold_warning}"
+		description           = "are too high > ${var.failed_requests_threshold_warning}"
 		severity              = "Warning"
 		detect_label          = "WARN"
 		disabled              = coalesce(var.failed_requests_disabled_warning, var.failed_requests_disabled, var.detectors_disabled)
@@ -112,7 +103,7 @@ resource "signalfx_detector" "unhealthy_host_ratio" {
 		B = data('HealthyHostCount', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.unhealthy_host_ratio_aggregation_function}
 		signal = ((A/(A+B))*100).${var.unhealthy_host_ratio_transformation_function}(over='${var.unhealthy_host_ratio_transformation_window}').publish('signal')
 		detect(when(signal > ${var.unhealthy_host_ratio_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.unhealthy_host_ratio_threshold_warning})).publish('WARN')
+		detect(when(signal > ${var.unhealthy_host_ratio_threshold_warning}) and when(signal < ${var.unhealthy_host_ratio_threshold_critical})).publish('WARN')
 	EOF
 
 	rule {
@@ -135,7 +126,7 @@ resource "signalfx_detector" "unhealthy_host_ratio" {
 }
 
 resource "signalfx_detector" "http_4xx_errors" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Gateway HTTP 4xx errors rate"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Gateway HTTP 4xx error rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -166,7 +157,7 @@ resource "signalfx_detector" "http_4xx_errors" {
 }
 
 resource "signalfx_detector" "http_5xx_errors" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Gateway HTTP 5xx errors rate"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Gateway HTTP 5xx error rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -197,7 +188,7 @@ resource "signalfx_detector" "http_5xx_errors" {
 }
 
 resource "signalfx_detector" "backend_http_4xx_errors" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Gateway backend HTTP 4xx errors rate"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Gateway backend HTTP 4xx error rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -228,7 +219,7 @@ resource "signalfx_detector" "backend_http_4xx_errors" {
 }
 
 resource "signalfx_detector" "backend_http_5xx_errors" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Gateway backend HTTP 5xx errors rate"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Gateway backend HTTP 5xx error rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
