@@ -503,11 +503,5 @@ variable "status_transformation_window" {
 variable "status_threshold_critical" {
   description = "Critical threshold for status detector"
   type        = number
-  default     = 0
-}
-
-variable "status_threshold_warning" {
-  description = "Warning threshold for status detector"
-  type        = number
   default     = 1
 }
