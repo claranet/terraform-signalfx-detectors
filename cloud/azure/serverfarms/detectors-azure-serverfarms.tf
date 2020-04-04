@@ -23,7 +23,7 @@ resource "signalfx_detector" "cpu_percentage" {
 	program_text = <<-EOF
 		signal = data('CpuPercentage', filter=filter('resource_type', 'Microsoft.Web/serverfarms') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.cpu_percentage_aggregation_function}.${var.cpu_percentage_transformation_function}(over='${var.cpu_percentage_transformation_window}').publish('signal')
 		detect(when(signal > ${var.cpu_percentage_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.cpu_percentage_threshold_warning})).publish('WARN')
+		detect(when(signal > ${var.cpu_percentage_threshold_warning}) and when(signal <= ${var.cpu_percentage_threshold_critical})).publish('WARN')
 	EOF
 
 	rule {
@@ -51,7 +51,7 @@ resource "signalfx_detector" "memory_percentage" {
 	program_text = <<-EOF
 		signal = data('MemoryPercentage', filter=filter('resource_type', 'Microsoft.Web/serverfarms') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.memory_percentage_aggregation_function}.${var.memory_percentage_transformation_function}(over='${var.memory_percentage_transformation_window}').publish('signal')
 		detect(when(signal > ${var.memory_percentage_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.memory_percentage_threshold_warning})).publish('WARN')
+		detect(when(signal > ${var.memory_percentage_threshold_warning}) and when(signal <= ${var.memory_percentage_threshold_critical})).publish('WARN')
 	EOF
 
 	rule {
