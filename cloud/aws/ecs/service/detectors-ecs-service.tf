@@ -24,7 +24,7 @@ resource "signalfx_detector" "cpu_utilization" {
   program_text = <<-EOF
 		signal = data('CPUUtilization', filter=filter('namespace', 'AWS/ECS') and filter('stat', 'mean') and filter('ServiceName', '*') and ${module.filter-tags.filter_custom}).mean(by=['ServiceName'])${var.cpu_utilization_aggregation_function}.${var.cpu_utilization_transformation_function}(over='${var.cpu_utilization_transformation_window}').publish('signal')
 		detect(when(signal > ${var.cpu_utilization_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.cpu_utilization_threshold_warning}) and when(signal < ${var.cpu_utilization_threshold_critical})).publish('WARN')
+		detect(when(signal > ${var.cpu_utilization_threshold_warning}) and when(signal <= ${var.cpu_utilization_threshold_critical})).publish('WARN')
 	EOF
 
   rule {
@@ -53,7 +53,7 @@ resource "signalfx_detector" "memory_utilization" {
   program_text = <<-EOF
 		signal = data('Memoryutilization', filter=filter('namespace', 'AWS/ECS') and filter('stat', 'mean') and filter('ServiceName', '*') and ${module.filter-tags.filter_custom}).mean(by=['ServiceName'])${var.memory_utilization_aggregation_function}.${var.memory_utilization_transformation_function}(over='${var.memory_utilization_transformation_window}').publish('signal')
 		detect(when(signal > ${var.memory_utilization_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.memory_utilization_threshold_warning}) and when(signal < ${var.memory_utilization_threshold_critical})).publish('WARN')
+		detect(when(signal > ${var.memory_utilization_threshold_warning}) and when(signal <= ${var.memory_utilization_threshold_critical})).publish('WARN')
 	EOF
 
   rule {
