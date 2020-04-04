@@ -42,7 +42,7 @@ resource "signalfx_detector" "backend_connect_time" {
 	program_text = <<-EOF
 		signal = data('BackendConnectTime', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.backend_connect_time_aggregation_function}.${var.backend_connect_time_transformation_function}(over='${var.backend_connect_time_transformation_window}').publish('signal')
 		detect(when(signal > ${var.backend_connect_time_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.backend_connect_time_threshold_warning}) and when(signal < ${var.backend_connect_time_threshold_critical})).publish('WARN')
+		detect(when(signal > ${var.backend_connect_time_threshold_warning}) and when(signal <= ${var.backend_connect_time_threshold_critical})).publish('WARN')
 	EOF
 
 	rule {
@@ -103,7 +103,7 @@ resource "signalfx_detector" "unhealthy_host_ratio" {
 		B = data('HealthyHostCount', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.unhealthy_host_ratio_aggregation_function}
 		signal = ((A/(A+B))*100).${var.unhealthy_host_ratio_transformation_function}(over='${var.unhealthy_host_ratio_transformation_window}').publish('signal')
 		detect(when(signal > ${var.unhealthy_host_ratio_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.unhealthy_host_ratio_threshold_warning}) and when(signal < ${var.unhealthy_host_ratio_threshold_critical})).publish('WARN')
+		detect(when(signal > ${var.unhealthy_host_ratio_threshold_warning}) and when(signal <= ${var.unhealthy_host_ratio_threshold_critical})).publish('WARN')
 	EOF
 
 	rule {
