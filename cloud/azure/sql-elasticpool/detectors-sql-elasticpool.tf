@@ -23,7 +23,7 @@ resource "signalfx_detector" "cpu" {
 	program_text = <<-EOF
 		signal = data('cpu_percent', filter=filter('resource_type', 'Microsoft.Sql/servers/elasticPools') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.cpu_aggregation_function}.${var.cpu_transformation_function}(over='${var.cpu_transformation_window}').publish('signal')
 		detect(when(signal > ${var.cpu_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.cpu_threshold_warning})).publish('WARN')
+		detect(when(signal > ${var.cpu_threshold_warning}) and when(signal <= ${var.cpu_threshold_critical})).publish('WARN')
 	EOF
 
 	rule {
@@ -51,7 +51,7 @@ resource "signalfx_detector" "free_space" {
 	program_text = <<-EOF
 		signal = data('storage_percent', filter=filter('resource_type', 'Microsoft.Sql/servers/elasticPools') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.free_space_aggregation_function}.${var.free_space_transformation_function}(over='${var.free_space_transformation_window}').publish('signal')
 		detect(when(signal > ${var.free_space_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.free_space_threshold_warning})).publish('WARN')
+		detect(when(signal > ${var.free_space_threshold_warning}) and when(signal <= ${var.free_space_threshold_critical})).publish('WARN')
 	EOF
 
 	rule {
@@ -79,7 +79,7 @@ resource "signalfx_detector" "dtu_consumption" {
 	program_text = <<-EOF
 		signal = data('dtu_consumption_percent', filter=filter('resource_type', 'Microsoft.Sql/servers/elasticPools') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.dtu_consumption_aggregation_function}.${var.dtu_consumption_transformation_function}(over='${var.dtu_consumption_transformation_window}').publish('signal')
 		detect(when(signal > ${var.dtu_consumption_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.dtu_consumption_threshold_warning})).publish('WARN')
+		detect(when(signal > ${var.dtu_consumption_threshold_warning}) and when(signal <= ${var.dtu_consumption_threshold_critical})).publish('WARN')
 	EOF
 
 	rule {
