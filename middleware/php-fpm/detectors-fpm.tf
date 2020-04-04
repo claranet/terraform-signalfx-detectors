@@ -25,7 +25,7 @@ resource "signalfx_detector" "php_fpm_connect_idle" {
 		B = data('phpfpm_processes.total' and ${module.filter-tags.filter_custom})${var.php_fpm_connect_idle_aggregation_function}
 		signal = ((A/B)*100).${var.php_fpm_connect_idle_transformation_function}(over='${var.php_fpm_connect_idle_transformation_window}').publish('signal')
 		detect(when(signal > ${var.php_fpm_connect_idle_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.php_fpm_connect_idle_threshold_warning}) AND when(signal < ${var.php_fpm_connect_idle_threshold_critical})).publish('WARN')
+		detect(when(signal > ${var.php_fpm_connect_idle_threshold_warning}) AND when(signal <= ${var.php_fpm_connect_idle_threshold_critical})).publish('WARN')
 	EOF
 
 	rule {
