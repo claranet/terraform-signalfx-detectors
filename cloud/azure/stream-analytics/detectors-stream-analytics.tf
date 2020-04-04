@@ -23,7 +23,7 @@ resource "signalfx_detector" "su_utilization" {
 	program_text = <<-EOF
 		signal = data('ResourceUtilization', filter=filter('resource_type', 'Microsoft.StreamAnalytics/streamingjobs') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.su_utilization_aggregation_function}.${var.su_utilization_transformation_function}(over='${var.su_utilization_transformation_window}').publish('signal')
 		detect(when(signal > ${var.su_utilization_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.su_utilization_threshold_warning}) and when(signal < ${var.su_utilization_threshold_critical})).publish('WARN')
+		detect(when(signal > ${var.su_utilization_threshold_warning}) and when(signal <= ${var.su_utilization_threshold_critical})).publish('WARN')
 	EOF
 
 	rule {
@@ -82,7 +82,7 @@ resource "signalfx_detector" "conversion_errors" {
 	program_text = <<-EOF
 		signal = data('ConversionErrors', filter=filter('resource_type', 'Microsoft.StreamAnalytics/streamingjobs') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.conversion_errors_aggregation_function}.${var.conversion_errors_transformation_function}(over='${var.conversion_errors_transformation_window}').publish('signal')
 		detect(when(signal > ${var.conversion_errors_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.conversion_errors_threshold_warning}) and when(signal < ${var.conversion_errors_threshold_critical})).publish('WARN')
+		detect(when(signal > ${var.conversion_errors_threshold_warning}) and when(signal <= ${var.conversion_errors_threshold_critical})).publish('WARN')
 	EOF
 
 	rule {
@@ -110,7 +110,7 @@ resource "signalfx_detector" "runtime_errors" {
 	program_text = <<-EOF
 		signal = data('Errors', filter=filter('resource_type', 'Microsoft.StreamAnalytics/streamingjobs') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.runtime_errors_aggregation_function}.${var.runtime_errors_transformation_function}(over='${var.runtime_errors_transformation_window}').publish('signal')
 		detect(when(signal > ${var.runtime_errors_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.runtime_errors_threshold_warning}) and when(signal < ${var.runtime_errors_threshold_critical})).publish('WARN')
+		detect(when(signal > ${var.runtime_errors_threshold_warning}) and when(signal <= ${var.runtime_errors_threshold_critical})).publish('WARN')
 	EOF
 
 	rule {
