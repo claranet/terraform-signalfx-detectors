@@ -6,7 +6,7 @@ resource "signalfx_detector" "cache_hits" {
 		B = data('CacheMisses', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.cache_hits_aggregation_function}
 		signal = (A/(A+B)).scale(100).${var.cache_hits_transformation_function}(over='${var.cache_hits_transformation_window}').publish('signal')
 		detect(when(signal < ${var.cache_hits_threshold_critical})).publish('CRIT')
-		detect(when(signal < ${var.cache_hits_threshold_warning}) and when(signal > ${var.cache_hits_threshold_critical})).publish('WARN')
+		detect(when(signal < ${var.cache_hits_threshold_warning}) and when(signal >= ${var.cache_hits_threshold_critical})).publish('WARN')
 	EOF
 
   rule {
@@ -35,7 +35,7 @@ resource "signalfx_detector" "cpu_high" {
   program_text = <<-EOF
 		signal = data('EngineCPUUtilization', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'upper') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.cpu_high_aggregation_function}.${var.cpu_high_transformation_function}(over='${var.cpu_high_transformation_window}').publish('signal')
 		detect(when(signal > ${var.cpu_high_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.cpu_high_threshold_warning}) and when(signal < ${var.cpu_high_threshold_critical})).publish('WARN')
+		detect(when(signal > ${var.cpu_high_threshold_warning}) and when(signal <= ${var.cpu_high_threshold_critical})).publish('WARN')
 	EOF
 
   rule {
@@ -64,7 +64,7 @@ resource "signalfx_detector" "replication_lag" {
   program_text = <<-EOF
 		signal = data('ReplicationLag', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'upper') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.replication_lag_aggregation_function}.${var.replication_lag_transformation_function}(over='${var.replication_lag_transformation_window}').publish('signal')
 		detect(when(signal > ${var.replication_lag_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.replication_lag_threshold_warning}) and when(signal < ${var.replication_lag_threshold_critical})).publish('WARN')
+		detect(when(signal > ${var.replication_lag_threshold_warning}) and when(signal <= ${var.replication_lag_threshold_critical})).publish('WARN')
 	EOF
 
   rule {
@@ -95,7 +95,7 @@ resource "signalfx_detector" "commands" {
 		B = data('SetTypeCmds', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'lower') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.commands_aggregation_function}
 		signal = (A + B).${var.commands_transformation_function}(over='${var.commands_transformation_window}').publish('signal')
 		detect(when(signal <= ${var.commands_threshold_critical})).publish('CRIT')
-		detect(when(signal <= ${var.commands_threshold_warning}) and when(signal >= ${var.commands_threshold_critical})).publish('WARN')
+		detect(when(signal <= ${var.commands_threshold_warning}) and when(signal > ${var.commands_threshold_critical})).publish('WARN')
 	EOF
 
   rule {
