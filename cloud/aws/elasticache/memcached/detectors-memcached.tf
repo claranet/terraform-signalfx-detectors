@@ -36,7 +36,7 @@ resource "signalfx_detector" "cpu_high" {
   program_text = <<-EOF
 		signal = data('CPUUtilization', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.cpu_high_aggregation_function}.${var.cpu_high_transformation_function}(over='${var.cpu_high_transformation_window}').publish('signal')
 		detect(when(signal > ${var.cpu_high_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.cpu_high_threshold_warning}) and when(signal < ${var.cpu_high_threshold_critical})).publish('WARN')
+		detect(when(signal > ${var.cpu_high_threshold_warning}) and when(signal <= ${var.cpu_high_threshold_critical})).publish('WARN')
 	EOF
 
   rule {
