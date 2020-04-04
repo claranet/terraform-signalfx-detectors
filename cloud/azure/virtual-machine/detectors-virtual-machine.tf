@@ -23,7 +23,7 @@ resource "signalfx_detector" "cpu_usage" {
 	program_text = <<-EOF
 		signal = data('Percentage CPU', filter=filter('resource_type', 'Microsoft.Compute/virtualMachines') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.cpu_usage_aggregation_function}.${var.cpu_usage_transformation_function}(over='${var.cpu_usage_transformation_window}').publish('signal')
 		detect(when(signal > ${var.cpu_usage_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.cpu_usage_threshold_warning})).publish('WARN')
+		detect(when(signal > ${var.cpu_usage_threshold_warning}) and when(signal <= ${var.cpu_usage_threshold_critical})).publish('WARN')
 	EOF
 
 	rule {
@@ -53,7 +53,7 @@ resource "signalfx_detector" "credit_cpu" {
 		B = data('CPU Credits Consumed', filter=filter('resource_type', 'Microsoft.Compute/virtualMachines') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.credit_cpu_aggregation_function}
 		signal = ((A/(A+B))*100).fill(100).${var.credit_cpu_transformation_function}(over='${var.credit_cpu_transformation_window}').publish('signal')
 		detect(when(signal < ${var.credit_cpu_threshold_critical})).publish('CRIT')
-		detect(when(signal < ${var.credit_cpu_threshold_warning})).publish('WARN')
+		detect(when(signal < ${var.credit_cpu_threshold_warning}) and when(signal >= ${var.credit_cpu_threshold_critical})).publish('WARN')
 	EOF
 
 	rule {
