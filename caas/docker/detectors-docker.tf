@@ -24,7 +24,7 @@ resource "signalfx_detector" "memory_used" {
 		A = data('memory.usage.total', filter=filter('plugin', 'docker') and ${module.filter-tags.filter_custom})${var.memory_used_aggregation_function}
 		signal = (A*100).${var.memory_used_transformation_function}(over='${var.memory_used_transformation_window}').publish('signal')
 		detect(when(signal > ${var.memory_used_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.memory_used_threshold_warning}) AND when(signal < ${var.memory_used_threshold_critical})).publish('WARN')
+		detect(when(signal > ${var.memory_used_threshold_warning}) AND when(signal <= ${var.memory_used_threshold_critical})).publish('WARN')
 	EOF
 
 	rule {
