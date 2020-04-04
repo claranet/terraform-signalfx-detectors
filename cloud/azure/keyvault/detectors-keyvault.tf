@@ -25,7 +25,7 @@ resource "signalfx_detector" "api_result" {
 		B = data('ServiceApiResult', filter=filter('resource_type', 'Microsoft.KeyVault/vaults') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.api_result_aggregation_function}
 		signal = ((A/B)*100).fill(100).${var.api_result_transformation_function}(over='${var.api_result_transformation_window}').publish('signal')
 		detect(when(signal < ${var.api_result_threshold_critical})).publish('CRIT')
-		detect(when(signal < ${var.api_result_threshold_warning})).publish('WARN')
+		detect(when(signal < ${var.api_result_threshold_warning}) and when(signal >= ${var.api_result_threshold_critical})).publish('WARN')
 	EOF
 
 	rule {
@@ -53,7 +53,7 @@ resource "signalfx_detector" "api_latency" {
 	program_text = <<-EOF
 		signal = data('ServiceApiLatency', filter=filter('resource_type', 'Microsoft.KeyVault/vaults') and filter('activityname', 'secretlist') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.api_latency_aggregation_function}.${var.api_latency_transformation_function}(over='${var.api_latency_transformation_window}').publish('signal')
 		detect(when(signal > ${var.api_latency_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.api_latency_threshold_warning})).publish('WARN')
+		detect(when(signal > ${var.api_latency_threshold_warning}) and when(signal <= ${var.api_latency_threshold_critical})).publish('WARN')
 	EOF
 
 	rule {
