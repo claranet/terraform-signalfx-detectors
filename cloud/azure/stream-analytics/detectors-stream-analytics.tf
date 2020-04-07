@@ -46,7 +46,7 @@ resource "signalfx_detector" "su_utilization" {
 }
 
 resource "signalfx_detector" "failed_requests" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Stream Analytics failed requests"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Stream Analytics failed requests] rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -86,7 +86,7 @@ resource "signalfx_detector" "conversion_errors" {
 	EOF
 
 	rule {
-		description           = "is too high > ${var.conversion_errors_threshold_critical}"
+		description           = "are too high > ${var.conversion_errors_threshold_critical}"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.conversion_errors_disabled_critical, var.conversion_errors_disabled, var.detectors_disabled)
@@ -95,7 +95,7 @@ resource "signalfx_detector" "conversion_errors" {
 	}
 
 	rule {
-		description           = "is too high > ${var.conversion_errors_threshold_warning}"
+		description           = "are too high > ${var.conversion_errors_threshold_warning}"
 		severity              = "Warning"
 		detect_label          = "WARN"
 		disabled              = coalesce(var.conversion_errors_disabled_warning, var.conversion_errors_disabled, var.detectors_disabled)
@@ -114,7 +114,7 @@ resource "signalfx_detector" "runtime_errors" {
 	EOF
 
 	rule {
-		description           = "is too high > ${var.runtime_errors_threshold_critical}"
+		description           = "are too high > ${var.runtime_errors_threshold_critical}"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.runtime_errors_disabled_critical, var.runtime_errors_disabled, var.detectors_disabled)
@@ -123,7 +123,7 @@ resource "signalfx_detector" "runtime_errors" {
 	}
 
 	rule {
-		description           = "is too high > ${var.runtime_errors_threshold_warning}"
+		description           = "are too high > ${var.runtime_errors_threshold_warning}"
 		severity              = "Warning"
 		detect_label          = "WARN"
 		disabled              = coalesce(var.runtime_errors_disabled_warning, var.runtime_errors_disabled, var.detectors_disabled)
