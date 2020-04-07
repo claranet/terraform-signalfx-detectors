@@ -46,7 +46,7 @@ resource "signalfx_detector" "cpu_usage" {
 }
 
 resource "signalfx_detector" "credit_cpu" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure virtual machine credit CPU"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure virtual machine remaining credit CPU"
 
 	program_text = <<-EOF
 		A = data('CPU Credits Remaining', filter=filter('resource_type', 'Microsoft.Compute/virtualMachines') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.credit_cpu_aggregation_function}
