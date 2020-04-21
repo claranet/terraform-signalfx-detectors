@@ -18,7 +18,7 @@ resource "signalfx_detector" "heartbeat" {
 }
 
 resource "signalfx_detector" "http_5xx_errors_rate" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure functions HTTP 5xx errors"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure function HTTP 5xx error rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -78,7 +78,7 @@ resource "signalfx_detector" "high_connections_count" {
 }
 
 resource "signalfx_detector" "high_threads_count" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure functions threads count"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure functions thread count"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
