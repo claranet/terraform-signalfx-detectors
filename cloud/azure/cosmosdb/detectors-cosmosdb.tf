@@ -4,7 +4,7 @@ resource "signalfx_detector" "heartbeat" {
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
 		signal = data('TotalRequests', filter=filter('resource_type', 'Microsoft.DocumentDB/databaseAccounts') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}).publish('signal')
-		not_reporting.detector(stream=signal, resource_identifier=['collectionname'], duration='${var.heartbeat_timeframe}').publish('CRIT')
+		not_reporting.detector(stream=signal, resource_identifier=['databasename'], duration='${var.heartbeat_timeframe}').publish('CRIT')
 	EOF
 
 	rule {
@@ -18,7 +18,7 @@ resource "signalfx_detector" "heartbeat" {
 }
 
 resource "signalfx_detector" "db_4xx_requests" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure cosmodb 4xx requests rate"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Cosmo DB 4xx request rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -58,7 +58,7 @@ resource "signalfx_detector" "db_4xx_requests" {
 }
 
 resource "signalfx_detector" "db_5xx_requests" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure cosmodb 5xx requests rate"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Cosmo DB 5xx error rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -90,7 +90,7 @@ resource "signalfx_detector" "db_5xx_requests" {
 }
 
 resource "signalfx_detector" "scaling" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure cosmodb max scaling"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Cosmo DB too many requests error rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
