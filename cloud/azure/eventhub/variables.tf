@@ -56,6 +56,86 @@ variable "heartbeat_timeframe" {
   default     = "20m"
 }
 
+# Eventhub_failed_requests detectors
+
+variable "eventhub_failed_requests_disabled" {
+  description = "Disable all alerting rules for eventhub_failed_requests detector"
+  type        = bool
+  default     = null
+}
+
+variable "eventhub_failed_requests_disabled_critical" {
+  description = "Disable critical alerting rule for eventhub_failed_requests detector"
+  type        = bool
+  default     = null
+}
+
+variable "eventhub_failed_requests_disabled_warning" {
+  description = "Disable warning alerting rule for eventhub_failed_requests detector"
+  type        = bool
+  default     = null
+}
+
+variable "eventhub_failed_requests_notifications" {
+  description = "Notification recipients list for every alerting rules of eventhub_failed_requests detector"
+  type        = list
+  default     = []
+}
+
+variable "eventhub_failed_requests_notifications_warning" {
+  description = "Notification recipients list for warning alerting rule of eventhub_failed_requests detector"
+  type        = list
+  default     = []
+}
+
+variable "eventhub_failed_requests_notifications_critical" {
+  description = "Notification recipients list for critical alerting rule of eventhub_failed_requests detector"
+  type        = list
+  default     = []
+}
+
+variable "eventhub_failed_requests_aggregation_function" {
+  description = "Aggregation function and group by for eventhub_failed_requests detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+}
+
+variable "eventhub_failed_requests_transformation_function" {
+  description = "Transformation function for eventhub_failed_requests detector (mean, min, max)"
+  type        = string
+  default     = "min"
+}
+
+variable "eventhub_failed_requests_transformation_window" {
+  description = "Transformation window for eventhub_failed_requests detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "5m"
+}
+
+variable "eventhub_failed_requests_threshold_critical" {
+  description = "Critical threshold for eventhub_failed_requests detector"
+  type        = number
+  default     = 90
+}
+
+variable "eventhub_failed_requests_threshold_warning" {
+  description = "Warning threshold for eventhub_failed_requests detector"
+  type        = number
+  default     = 50
+}
+
+variable "eventhub_failed_requests_aperiodic_duration" {
+  description = "Duration for the eventhub_failed_requests block"
+  type        = string
+  default     = "10m"
+}
+
+variable "eventhub_failed_requests_aperiodic_percentage" {
+  description = "Percentage for the eventhub_failed_requests block"
+  type        = number
+  default     = 0.9
+}
+
 # Eventhub_errors detectors
 
 variable "eventhub_errors_disabled" {
