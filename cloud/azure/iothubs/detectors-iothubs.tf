@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Iothubs heartbeat"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Iot Hubs heartbeat"
 
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
@@ -18,7 +18,7 @@ resource "signalfx_detector" "heartbeat" {
 }
 
 resource "signalfx_detector" "jobs_failed" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Iothubs jobs failed"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure IoT Hubs jobs failed"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -30,7 +30,7 @@ resource "signalfx_detector" "jobs_failed" {
 	EOF
 
 	rule {
-		description           = "is too high > ${var.jobs_failed_threshold_critical}"
+		description           = "are too high > ${var.jobs_failed_threshold_critical}"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.jobs_failed_disabled_critical, var.jobs_failed_disabled, var.detectors_disabled)
@@ -39,7 +39,7 @@ resource "signalfx_detector" "jobs_failed" {
 	}
 
 	rule {
-		description           = "is too high > ${var.jobs_failed_threshold_warning}"
+		description           = "are too high > ${var.jobs_failed_threshold_warning}"
 		severity              = "Warning"
 		detect_label          = "WARN"
 		disabled              = coalesce(var.jobs_failed_disabled_warning, var.jobs_failed_disabled, var.detectors_disabled)
@@ -49,7 +49,7 @@ resource "signalfx_detector" "jobs_failed" {
 }
 
 resource "signalfx_detector" "list_jobs_failed" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Iothubs list jobs failure"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure IoT Hubs list job failures"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -61,7 +61,7 @@ resource "signalfx_detector" "list_jobs_failed" {
 	EOF
 
 	rule {
-		description           = "is too high > ${var.list_jobs_failed_threshold_critical}"
+		description           = "are too high > ${var.list_jobs_failed_threshold_critical}"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.list_jobs_failed_disabled_critical, var.list_jobs_failed_disabled, var.detectors_disabled)
@@ -70,7 +70,7 @@ resource "signalfx_detector" "list_jobs_failed" {
 	}
 
 	rule {
-		description           = "is too high > ${var.list_jobs_failed_threshold_warning}"
+		description           = "are too high > ${var.list_jobs_failed_threshold_warning}"
 		severity              = "Warning"
 		detect_label          = "WARN"
 		disabled              = coalesce(var.list_jobs_failed_disabled_warning, var.list_jobs_failed_disabled, var.detectors_disabled)
@@ -80,7 +80,7 @@ resource "signalfx_detector" "list_jobs_failed" {
 }
 
 resource "signalfx_detector" "query_jobs_failed" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Iothubs query jobs failed"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Iot Hubs query jobs failed"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -92,7 +92,7 @@ resource "signalfx_detector" "query_jobs_failed" {
 	EOF
 
 	rule {
-		description           = "is too high > ${var.query_jobs_failed_threshold_critical}"
+		description           = "are too high > ${var.query_jobs_failed_threshold_critical}"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.query_jobs_failed_disabled_critical, var.query_jobs_failed_disabled, var.detectors_disabled)
@@ -101,7 +101,7 @@ resource "signalfx_detector" "query_jobs_failed" {
 	}
 
 	rule {
-		description           = "is too high > ${var.query_jobs_failed_threshold_warning}"
+		description           = "are too high > ${var.query_jobs_failed_threshold_warning}"
 		severity              = "Warning"
 		detect_label          = "WARN"
 		disabled              = coalesce(var.query_jobs_failed_disabled_warning, var.query_jobs_failed_disabled, var.detectors_disabled)
@@ -112,7 +112,7 @@ resource "signalfx_detector" "query_jobs_failed" {
 }
 
 resource "signalfx_detector" "total_devices" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Iothubs total devices"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure IoT Hubs total device count"
 
 	program_text = <<-EOF
 		signal = data('totalDeviceCount', filter=filter('resource_type', 'Microsoft.Devices/IotHubs') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.total_devices_aggregation_function}.${var.total_devices_transformation_function}(over='${var.total_devices_transformation_window}').publish('signal')
@@ -131,7 +131,7 @@ resource "signalfx_detector" "total_devices" {
 }
 
 resource "signalfx_detector" "c2d_methods_failed" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Iothubs c2d methods failure"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure IoT Hubs c2d method failures"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -143,7 +143,7 @@ resource "signalfx_detector" "c2d_methods_failed" {
 	EOF
 
 	rule {
-		description           = "is too high > ${var.c2d_methods_failed_threshold_critical}"
+		description           = "are too high > ${var.c2d_methods_failed_threshold_critical}"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.c2d_methods_failed_disabled_critical, var.c2d_methods_failed_disabled, var.detectors_disabled)
@@ -152,7 +152,7 @@ resource "signalfx_detector" "c2d_methods_failed" {
 	}
 
 	rule {
-		description           = "is too high > ${var.c2d_methods_failed_threshold_warning}"
+		description           = "are too high > ${var.c2d_methods_failed_threshold_warning}"
 		severity              = "Warning"
 		detect_label          = "WARN"
 		disabled              = coalesce(var.c2d_methods_failed_disabled_warning, var.c2d_methods_failed_disabled, var.detectors_disabled)
@@ -162,7 +162,7 @@ resource "signalfx_detector" "c2d_methods_failed" {
 }
 
 resource "signalfx_detector" "c2d_twin_read_failed" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Iothubs c2d twin read failure"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure IoT Hubs c2d twin read failures"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -174,7 +174,7 @@ resource "signalfx_detector" "c2d_twin_read_failed" {
 	EOF
 
 	rule {
-		description           = "is too high > ${var.c2d_twin_read_failed_threshold_critical}"
+		description           = "are too high > ${var.c2d_twin_read_failed_threshold_critical}"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.c2d_twin_read_failed_disabled_critical, var.c2d_twin_read_failed_disabled, var.detectors_disabled)
@@ -183,7 +183,7 @@ resource "signalfx_detector" "c2d_twin_read_failed" {
 	}
 
 	rule {
-		description           = "is too high > ${var.c2d_twin_read_failed_threshold_warning}"
+		description           = "are too high > ${var.c2d_twin_read_failed_threshold_warning}"
 		severity              = "Warning"
 		detect_label          = "WARN"
 		disabled              = coalesce(var.c2d_twin_read_failed_disabled_warning, var.c2d_twin_read_failed_disabled, var.detectors_disabled)
@@ -193,7 +193,7 @@ resource "signalfx_detector" "c2d_twin_read_failed" {
 }
 
 resource "signalfx_detector" "c2d_twin_update_failed" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Iothubs c2d twin update failure"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure IoT Hubs c2d twin update failures"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -205,7 +205,7 @@ resource "signalfx_detector" "c2d_twin_update_failed" {
 	EOF
 
 	rule {
-		description           = "is too high > ${var.c2d_twin_update_failed_threshold_critical}"
+		description           = "are too high > ${var.c2d_twin_update_failed_threshold_critical}"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.c2d_twin_update_failed_disabled_critical, var.c2d_twin_update_failed_disabled, var.detectors_disabled)
@@ -214,7 +214,7 @@ resource "signalfx_detector" "c2d_twin_update_failed" {
 	}
 
 	rule {
-		description           = "is too high > ${var.c2d_twin_update_failed_threshold_warning}"
+		description           = "are too high > ${var.c2d_twin_update_failed_threshold_warning}"
 		severity              = "Warning"
 		detect_label          = "WARN"
 		disabled              = coalesce(var.c2d_twin_update_failed_disabled_warning, var.c2d_twin_update_failed_disabled, var.detectors_disabled)
@@ -224,7 +224,7 @@ resource "signalfx_detector" "c2d_twin_update_failed" {
 }
 
 resource "signalfx_detector" "d2c_twin_read_failed" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Iothubs d2c twin read failure"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure IoT Hubs d2c twin read failures"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -236,7 +236,7 @@ resource "signalfx_detector" "d2c_twin_read_failed" {
 	EOF
 
 	rule {
-		description           = "is too high > ${var.d2c_twin_read_failed_threshold_critical}"
+		description           = "are too high > ${var.d2c_twin_read_failed_threshold_critical}"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.d2c_twin_read_failed_disabled_critical, var.d2c_twin_read_failed_disabled, var.detectors_disabled)
@@ -245,7 +245,7 @@ resource "signalfx_detector" "d2c_twin_read_failed" {
 	}
 
 	rule {
-		description           = "is too high > ${var.d2c_twin_read_failed_threshold_warning}"
+		description           = "are too high > ${var.d2c_twin_read_failed_threshold_warning}"
 		severity              = "Warning"
 		detect_label          = "WARN"
 		disabled              = coalesce(var.d2c_twin_read_failed_disabled_warning, var.d2c_twin_read_failed_disabled, var.detectors_disabled)
@@ -255,7 +255,7 @@ resource "signalfx_detector" "d2c_twin_read_failed" {
 }
 
 resource "signalfx_detector" "d2c_twin_update_failed" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Iothubs d2c twin update failure"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure IoT Hubs d2c twin update failures"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -267,7 +267,7 @@ resource "signalfx_detector" "d2c_twin_update_failed" {
 	EOF
 
 	rule {
-		description           = "is too high > ${var.d2c_twin_update_failed_threshold_critical}"
+		description           = "are too high > ${var.d2c_twin_update_failed_threshold_critical}"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.d2c_twin_update_failed_disabled_critical, var.d2c_twin_update_failed_disabled, var.detectors_disabled)
@@ -276,7 +276,7 @@ resource "signalfx_detector" "d2c_twin_update_failed" {
 	}
 
 	rule {
-		description           = "is too high > ${var.d2c_twin_update_failed_threshold_warning}"
+		description           = "are too high > ${var.d2c_twin_update_failed_threshold_warning}"
 		severity              = "Warning"
 		detect_label          = "WARN"
 		disabled              = coalesce(var.d2c_twin_update_failed_disabled_warning, var.d2c_twin_update_failed_disabled, var.detectors_disabled)
@@ -286,7 +286,7 @@ resource "signalfx_detector" "d2c_twin_update_failed" {
 }
 
 resource "signalfx_detector" "d2c_telemetry_egress_dropped" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Iothubs d2c telemetry egress dropped"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure IoT Hubs d2c telemetry egress dropped"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -300,7 +300,7 @@ resource "signalfx_detector" "d2c_telemetry_egress_dropped" {
 	EOF
 
 	rule {
-		description           = "is too high > ${var.d2c_telemetry_egress_dropped_threshold_critical}"
+		description           = "are too high > ${var.d2c_telemetry_egress_dropped_threshold_critical}"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.d2c_telemetry_egress_dropped_disabled_critical, var.d2c_telemetry_egress_dropped_disabled, var.detectors_disabled)
@@ -309,7 +309,7 @@ resource "signalfx_detector" "d2c_telemetry_egress_dropped" {
 	}
 
 	rule {
-		description           = "is too high > ${var.d2c_telemetry_egress_dropped_threshold_warning}"
+		description           = "are too high > ${var.d2c_telemetry_egress_dropped_threshold_warning}"
 		severity              = "Warning"
 		detect_label          = "WARN"
 		disabled              = coalesce(var.d2c_telemetry_egress_dropped_disabled_warning, var.d2c_telemetry_egress_dropped_disabled, var.detectors_disabled)
@@ -319,7 +319,7 @@ resource "signalfx_detector" "d2c_telemetry_egress_dropped" {
 }
 
 resource "signalfx_detector" "d2c_telemetry_egress_orphaned" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Iothubs d2c telemetry egress orphaned"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure IoT Hubs d2c telemetry egress orphaned"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -333,7 +333,7 @@ resource "signalfx_detector" "d2c_telemetry_egress_orphaned" {
 	EOF
 
 	rule {
-		description           = "is too high > ${var.d2c_telemetry_egress_orphaned_threshold_critical}"
+		description           = "are too high > ${var.d2c_telemetry_egress_orphaned_threshold_critical}"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.d2c_telemetry_egress_orphaned_disabled_critical, var.d2c_telemetry_egress_orphaned_disabled, var.detectors_disabled)
@@ -342,7 +342,7 @@ resource "signalfx_detector" "d2c_telemetry_egress_orphaned" {
 	}
 
 	rule {
-		description           = "is too high > ${var.d2c_telemetry_egress_orphaned_threshold_warning}"
+		description           = "are too high > ${var.d2c_telemetry_egress_orphaned_threshold_warning}"
 		severity              = "Warning"
 		detect_label          = "WARN"
 		disabled              = coalesce(var.d2c_telemetry_egress_orphaned_disabled_warning, var.d2c_telemetry_egress_orphaned_disabled, var.detectors_disabled)
@@ -352,7 +352,7 @@ resource "signalfx_detector" "d2c_telemetry_egress_orphaned" {
 }
 
 resource "signalfx_detector" "d2c_telemetry_egress_invalid" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Iothubs d2c telemetry egress invalid"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure IoT Hubs d2c telemetry egress invalid"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -366,7 +366,7 @@ resource "signalfx_detector" "d2c_telemetry_egress_invalid" {
 	EOF
 
 	rule {
-		description           = "is too high > ${var.d2c_telemetry_egress_invalid_threshold_critical}"
+		description           = "are too high > ${var.d2c_telemetry_egress_invalid_threshold_critical}"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.d2c_telemetry_egress_invalid_disabled_critical, var.d2c_telemetry_egress_invalid_disabled, var.detectors_disabled)
@@ -375,7 +375,7 @@ resource "signalfx_detector" "d2c_telemetry_egress_invalid" {
 	}
 
 	rule {
-		description           = "is too high > ${var.d2c_telemetry_egress_invalid_threshold_warning}"
+		description           = "are too high > ${var.d2c_telemetry_egress_invalid_threshold_warning}"
 		severity              = "Warning"
 		detect_label          = "WARN"
 		disabled              = coalesce(var.d2c_telemetry_egress_invalid_disabled_warning, var.d2c_telemetry_egress_invalid_disabled, var.detectors_disabled)
@@ -385,7 +385,7 @@ resource "signalfx_detector" "d2c_telemetry_egress_invalid" {
 }
 
 resource "signalfx_detector" "d2c_telemetry_ingress_nosent" {
-	name = "IOT Hub Too many d2c telemetry ingress not sent"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] IoT Hubs d2c telemetry ingress not sent"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -397,7 +397,7 @@ resource "signalfx_detector" "d2c_telemetry_ingress_nosent" {
 	EOF
 
 	rule {
-		description           = "is too high > ${var.d2c_telemetry_ingress_nosent_threshold_critical}"
+		description           = "are too high > ${var.d2c_telemetry_ingress_nosent_threshold_critical}"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.d2c_telemetry_ingress_nosent_disabled_critical, var.d2c_telemetry_ingress_nosent_disabled, var.detectors_disabled)
@@ -406,7 +406,7 @@ resource "signalfx_detector" "d2c_telemetry_ingress_nosent" {
 	}
 
 	rule {
-		description           = "is too high > ${var.d2c_telemetry_ingress_nosent_threshold_warning}"
+		description           = "are too high > ${var.d2c_telemetry_ingress_nosent_threshold_warning}"
 		severity              = "Warning"
 		detect_label          = "WARN"
 		disabled              = coalesce(var.d2c_telemetry_ingress_nosent_disabled_warning, var.d2c_telemetry_ingress_nosent_disabled, var.detectors_disabled)
