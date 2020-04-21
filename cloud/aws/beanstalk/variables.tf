@@ -233,7 +233,7 @@ variable "app_5xx_error_rate_notifications_critical" {
 variable "app_5xx_error_rate_aggregation_function" {
   description = "Aggregation function and group by for 5xx_error_rate detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['EnvrionementName'])"
+  default     = ".sum(by=['EnvironmentName'])"
 }
 
 variable "app_5xx_error_rate_transformation_function" {
