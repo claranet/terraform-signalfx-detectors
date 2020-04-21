@@ -18,7 +18,7 @@ resource "signalfx_detector" "heartbeat" {
 }
 
 resource "signalfx_detector" "no_successful_message" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Event Grid successful message"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Event Grid no successful message"
 
 	program_text = <<-EOF
 		signal = data('PublishSuccessCount', filter=filter('resource_type', 'Microsoft.EventGrid/topics')and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.no_successful_message_aggregation_function}.${var.no_successful_message_transformation_function}(over='${var.no_successful_message_transformation_window}').publish('signal')
@@ -37,7 +37,7 @@ resource "signalfx_detector" "no_successful_message" {
 }
 
 resource "signalfx_detector" "failed_messages" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure eventgrid failed messages"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Event Grid failed message rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -69,7 +69,7 @@ resource "signalfx_detector" "failed_messages" {
 }
 
 resource "signalfx_detector" "unmatched_events" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure eventgrid unmatched events"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Event Grid unmatched event rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
