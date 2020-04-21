@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure eventgrid heartbeat"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Event Grid heartbeat"
 
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
@@ -18,7 +18,7 @@ resource "signalfx_detector" "heartbeat" {
 }
 
 resource "signalfx_detector" "no_successful_message" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure eventgrid successful message"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Event Grid successful message"
 
 	program_text = <<-EOF
 		signal = data('PublishSuccessCount', filter=filter('resource_type', 'Microsoft.EventGrid/topics')and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.no_successful_message_aggregation_function}.${var.no_successful_message_transformation_function}(over='${var.no_successful_message_transformation_window}').publish('signal')
