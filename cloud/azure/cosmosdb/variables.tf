@@ -97,7 +97,7 @@ variable "db_4xx_requests_notifications_critical" {
 variable "db_4xx_requests_aggregation_function" {
   description = "Aggregation function and group by for db_4xx_requests detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".sum(by=['databasename', 'collectionname', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
 variable "db_4xx_requests_transformation_function" {
@@ -177,7 +177,7 @@ variable "db_5xx_requests_notifications_critical" {
 variable "db_5xx_requests_aggregation_function" {
   description = "Aggregation function and group by for db_5xx_requests detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".sum(by=['databasename', 'collectionname', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
 variable "db_5xx_requests_transformation_function" {
@@ -257,7 +257,7 @@ variable "scaling_notifications_critical" {
 variable "scaling_aggregation_function" {
   description = "Aggregation function and group by for scaling detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".sum(by=['databasename', 'collectionname', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
 variable "scaling_transformation_function" {
