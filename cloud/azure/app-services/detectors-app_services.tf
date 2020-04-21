@@ -18,7 +18,7 @@ resource "signalfx_detector" "heartbeat" {
 }
 
 resource "signalfx_detector" "response_time" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Services response time"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Service response time"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -48,7 +48,7 @@ resource "signalfx_detector" "response_time" {
 }
 
 resource "signalfx_detector" "memory_usage_count" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Services memory usage"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Service memory usage"
 
 	program_text = <<-EOF
 		signal = data('MemoryWorkingSet', filter=filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'false') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.memory_usage_count_aggregation_function}.${var.memory_usage_count_transformation_function}(over='${var.memory_usage_count_transformation_window}').publish('signal')
@@ -77,7 +77,7 @@ resource "signalfx_detector" "memory_usage_count" {
 }
 
 resource "signalfx_detector" "http_5xx_errors_count" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Services HTTP 5xx error rate"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Service 5xx error rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -109,7 +109,7 @@ resource "signalfx_detector" "http_5xx_errors_count" {
 }
 
 resource "signalfx_detector" "http_4xx_errors_count" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Services HTTP 4xx error rate"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Service 4xx error rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -140,7 +140,7 @@ resource "signalfx_detector" "http_4xx_errors_count" {
 }
 
 resource "signalfx_detector" "http_success_status_rate" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Services HTTP successful response rate"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Service successful response rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -177,7 +177,6 @@ resource "signalfx_detector" "status" {
 	program_text = <<-EOF
 		signal = data('HealthCheckStatus', filter=filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'false') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.status_aggregation_function}.${var.status_transformation_function}(over='${var.status_transformation_window}').publish('signal')
 		detect(when(signal < ${var.status_threshold_critical})).publish('CRIT')
-		detect(when(signal < ${var.status_threshold_warning}) and when(signal >= ${var.status_threshold_critical})).publish('WARN')
 	EOF
 
 	rule {
