@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure search heartbeat"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Search heartbeat"
 
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
@@ -18,7 +18,7 @@ resource "signalfx_detector" "heartbeat" {
 }
 
 resource "signalfx_detector" "search_latency" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure search latency"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Search latency"
 
 	program_text = <<-EOF
 		signal = data('SearchLatency', filter=filter('resource_type', 'Microsoft.Search/searchServices') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.search_latency_aggregation_function}.${var.search_latency_transformation_function}(over='${var.search_latency_transformation_window}').publish('signal')
