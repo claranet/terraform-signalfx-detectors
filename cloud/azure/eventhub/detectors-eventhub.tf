@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure eventhub heartbeat"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Event Hubs heartbeat"
 
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
@@ -18,7 +18,7 @@ resource "signalfx_detector" "heartbeat" {
 }
 
 resource "signalfx_detector" "eventhub_failed_requests" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure eventhub failed requests"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Event Hubs failed request rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -51,7 +51,7 @@ resource "signalfx_detector" "eventhub_failed_requests" {
 }
 
 resource "signalfx_detector" "eventhub_errors" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure eventhub errors"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Eventh Hubs error rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
