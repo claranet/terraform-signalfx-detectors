@@ -46,7 +46,7 @@ resource "signalfx_detector" "cpu_usage" {
 }
 
 resource "signalfx_detector" "no_connection" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure PostgreSQL connections"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure PostgreSQL has no connection"
 
 	program_text = <<-EOF
 		signal = data('active_connections', filter=filter('resource_type', 'Microsoft.DBforPostgreSQL/servers') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.no_connection_aggregation_function}.${var.no_connection_transformation_function}(over='${var.no_connection_transformation_window}').publish('signal')
@@ -54,7 +54,7 @@ resource "signalfx_detector" "no_connection" {
 	EOF
 
 	rule {
-		description           = "are too low < ${var.no_connection_threshold_critical}"
+		description           = " < ${var.no_connection_threshold_critical}"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.no_connection_disabled_critical, var.no_connection_disabled, var.detectors_disabled)
