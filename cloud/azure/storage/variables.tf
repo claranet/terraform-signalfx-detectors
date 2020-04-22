@@ -97,7 +97,7 @@ variable "blobservices_requests_error_notifications_critical" {
 variable "blobservices_requests_error_aggregation_function" {
   description = "Aggregation function and group by for blobservices_requests_error detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name'])"
 }
 
 variable "blobservices_requests_error_transformation_function" {
@@ -177,7 +177,7 @@ variable "fileservices_requests_error_notifications_critical" {
 variable "fileservices_requests_error_aggregation_function" {
   description = "Aggregation function and group by for fileservices_requests_error detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name'])"
 }
 
 variable "fileservices_requests_error_transformation_function" {
@@ -257,7 +257,7 @@ variable "queueservices_requests_error_notifications_critical" {
 variable "queueservices_requests_error_aggregation_function" {
   description = "Aggregation function and group by for queueservices_requests_error detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name'])"
 }
 
 variable "queueservices_requests_error_transformation_function" {
@@ -337,7 +337,7 @@ variable "tableservices_requests_error_notifications_critical" {
 variable "tableservices_requests_error_aggregation_function" {
   description = "Aggregation function and group by for tableservices_requests_error detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name'])"
 }
 
 variable "tableservices_requests_error_transformation_function" {
@@ -417,7 +417,7 @@ variable "blobservices_latency_notifications_critical" {
 variable "blobservices_latency_aggregation_function" {
   description = "Aggregation function and group by for Blobservices_latency detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name'])"
 }
 
 variable "blobservices_latency_transformation_function" {
@@ -497,7 +497,7 @@ variable "fileservices_latency_notifications_critical" {
 variable "fileservices_latency_aggregation_function" {
   description = "Aggregation function and group by for fileservices_latency detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name'])"
 }
 
 variable "fileservices_latency_transformation_function" {
@@ -577,7 +577,7 @@ variable "queueservices_latency_notifications_critical" {
 variable "queueservices_latency_aggregation_function" {
   description = "Aggregation function and group by for queueservices_latency detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name'])"
 }
 
 variable "queueservices_latency_transformation_function" {
@@ -657,7 +657,7 @@ variable "tableservices_latency_notifications_critical" {
 variable "tableservices_latency_aggregation_function" {
   description = "Aggregation function and group by for tableservices_latency detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name'])"
 }
 
 variable "tableservices_latency_transformation_function" {
@@ -737,7 +737,7 @@ variable "blob_timeout_error_requests_notifications_critical" {
 variable "blob_timeout_error_requests_aggregation_function" {
   description = "Aggregation function and group by for blob_timeout_error_requests detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name'])"
 }
 
 variable "blob_timeout_error_requests_transformation_function" {
@@ -817,7 +817,7 @@ variable "file_timeout_error_requests_notifications_critical" {
 variable "file_timeout_error_requests_aggregation_function" {
   description = "Aggregation function and group by for file_timeout_error_requests detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name'f])"
 }
 
 variable "file_timeout_error_requests_transformation_function" {
@@ -897,7 +897,7 @@ variable "queue_timeout_error_requests_notifications_critical" {
 variable "queue_timeout_error_requests_aggregation_function" {
   description = "Aggregation function and group by for queue_timeout_error_requests detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name'])"
 }
 
 variable "queue_timeout_error_requests_transformation_function" {
@@ -977,7 +977,7 @@ variable "table_timeout_error_requests_notifications_critical" {
 variable "table_timeout_error_requests_aggregation_function" {
   description = "Aggregation function and group by for table_timeout_error_requests detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name'])"
 }
 
 variable "table_timeout_error_requests_transformation_function" {
@@ -1057,7 +1057,7 @@ variable "blob_network_error_requests_notifications_critical" {
 variable "blob_network_error_requests_aggregation_function" {
   description = "Aggregation function and group by for blob_network_error_requests detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name'])"
 }
 
 variable "blob_network_error_requests_transformation_function" {
@@ -1137,7 +1137,7 @@ variable "file_network_error_requests_notifications_critical" {
 variable "file_network_error_requests_aggregation_function" {
   description = "Aggregation function and group by for file_network_error_requests detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name'])"
 }
 
 variable "file_network_error_requests_transformation_function" {
@@ -1217,7 +1217,7 @@ variable "queue_network_error_requests_notifications_critical" {
 variable "queue_network_error_requests_aggregation_function" {
   description = "Aggregation function and group by for queue_network_error_requests detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name'])"
 }
 
 variable "queue_network_error_requests_transformation_function" {
@@ -1297,7 +1297,7 @@ variable "table_network_error_requests_notifications_critical" {
 variable "table_network_error_requests_aggregation_function" {
   description = "Aggregation function and group by for table_network_error_requests detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name'])"
 }
 
 variable "table_network_error_requests_transformation_function" {
@@ -1377,7 +1377,7 @@ variable "blob_throttling_error_requests_notifications_critical" {
 variable "blob_throttling_error_requests_aggregation_function" {
   description = "Aggregation function and group by for blob_throttling_error_requests detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name'])"
 }
 
 variable "blob_throttling_error_requests_transformation_function" {
@@ -1457,7 +1457,7 @@ variable "file_throttling_error_requests_notifications_critical" {
 variable "file_throttling_error_requests_aggregation_function" {
   description = "Aggregation function and group by for file_throttling_error_requests detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name'])"
 }
 
 variable "file_throttling_error_requests_transformation_function" {
@@ -1537,7 +1537,7 @@ variable "queue_throttling_error_requests_notifications_critical" {
 variable "queue_throttling_error_requests_aggregation_function" {
   description = "Aggregation function and group by for queue_throttling_error_requests detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name'])"
 }
 
 variable "queue_throttling_error_requests_transformation_function" {
@@ -1617,7 +1617,7 @@ variable "table_throttling_error_requests_notifications_critical" {
 variable "table_throttling_error_requests_aggregation_function" {
   description = "Aggregation function and group by for table_throttling_error_requests detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name'])"
 }
 
 variable "table_throttling_error_requests_transformation_function" {
@@ -1697,7 +1697,7 @@ variable "blob_server_other_error_requests_notifications_critical" {
 variable "blob_server_other_error_requests_aggregation_function" {
   description = "Aggregation function and group by for blob_server_other_error_requests detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name'])"
 }
 
 variable "blob_server_other_error_requests_transformation_function" {
@@ -1777,7 +1777,7 @@ variable "file_server_other_error_requests_notifications_critical" {
 variable "file_server_other_error_requests_aggregation_function" {
   description = "Aggregation function and group by for file_server_other_error_requests detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name'])"
 }
 
 variable "file_server_other_error_requests_transformation_function" {
@@ -1857,7 +1857,7 @@ variable "queue_server_other_error_requests_notifications_critical" {
 variable "queue_server_other_error_requests_aggregation_function" {
   description = "Aggregation function and group by for queue_server_other_error_requests detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name'])"
 }
 
 variable "queue_server_other_error_requests_transformation_function" {
@@ -1937,7 +1937,7 @@ variable "table_server_other_error_requests_notifications_critical" {
 variable "table_server_other_error_requests_aggregation_function" {
   description = "Aggregation function and group by for table_server_other_error_requests detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name'])"
 }
 
 variable "table_server_other_error_requests_transformation_function" {
@@ -2017,7 +2017,7 @@ variable "blob_client_other_error_requests_notifications_critical" {
 variable "blob_client_other_error_requests_aggregation_function" {
   description = "Aggregation function and group by for blob_client_other_error_requests detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name'])"
 }
 
 variable "blob_client_other_error_requests_transformation_function" {
@@ -2097,7 +2097,7 @@ variable "file_client_other_error_requests_notifications_critical" {
 variable "file_client_other_error_requests_aggregation_function" {
   description = "Aggregation function and group by for file_client_other_error_requests detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name'])"
 }
 
 variable "file_client_other_error_requests_transformation_function" {
@@ -2177,7 +2177,7 @@ variable "queue_client_other_error_requests_notifications_critical" {
 variable "queue_client_other_error_requests_aggregation_function" {
   description = "Aggregation function and group by for queue_client_other_error_requests detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name'])"
 }
 
 variable "queue_client_other_error_requests_transformation_function" {
@@ -2257,7 +2257,7 @@ variable "table_client_other_error_requests_notifications_critical" {
 variable "table_client_other_error_requests_aggregation_function" {
   description = "Aggregation function and group by for table_client_other_error_requests detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name'])"
 }
 
 variable "table_client_other_error_requests_transformation_function" {
@@ -2337,7 +2337,7 @@ variable "blob_authorization_error_requests_notifications_critical" {
 variable "blob_authorization_error_requests_aggregation_function" {
   description = "Aggregation function and group by for blob_authorization_error_requests detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name'])"
 }
 
 variable "blob_authorization_error_requests_transformation_function" {
@@ -2417,7 +2417,7 @@ variable "file_authorization_error_requests_notifications_critical" {
 variable "file_authorization_error_requests_aggregation_function" {
   description = "Aggregation function and group by for file_authorization_error_requests detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name'])"
 }
 
 variable "file_authorization_error_requests_transformation_function" {
@@ -2497,7 +2497,7 @@ variable "queue_authorization_error_requests_notifications_critical" {
 variable "queue_authorization_error_requests_aggregation_function" {
   description = "Aggregation function and group by for queue_authorization_error_requests detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name'])"
 }
 
 variable "queue_authorization_error_requests_transformation_function" {
@@ -2577,7 +2577,7 @@ variable "table_authorization_error_requests_notifications_critical" {
 variable "table_authorization_error_requests_aggregation_function" {
   description = "Aggregation function and group by for table_authorization_error_requests detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name'])"
 }
 
 variable "table_authorization_error_requests_transformation_function" {
