@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure API management heartbeat"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure API Management heartbeat"
 
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
@@ -18,7 +18,7 @@ resource "signalfx_detector" "heartbeat" {
 }
 
 resource "signalfx_detector" "failed_requests" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure API management failed requests"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure API Management failed request rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -49,7 +49,7 @@ resource "signalfx_detector" "failed_requests" {
 }
 
 resource "signalfx_detector" "other_requests" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure API management other requests"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure API Management other non successful request rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -82,7 +82,7 @@ resource "signalfx_detector" "other_requests" {
 }
 
 resource "signalfx_detector" "unauthorized_requests" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure API management unauthorized requests"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure API Management unauthorized request rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -113,7 +113,7 @@ resource "signalfx_detector" "unauthorized_requests" {
 }
 
 resource "signalfx_detector" "successful_requests" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure API management successful requests rate"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure API Management successful request rate"
 
 	program_text = <<-EOF
 		A = data('EventHubSuccessfulEvents', filter=filter('resource_type', 'Microsoft.ApiManagement/service') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.successful_requests_aggregation_function}
