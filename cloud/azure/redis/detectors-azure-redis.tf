@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure redis heartbeat"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Redis heartbeat"
 
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
@@ -18,7 +18,7 @@ resource "signalfx_detector" "heartbeat" {
 }
 
 resource "signalfx_detector" "evictedkeys" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure redis evictedkeys"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Redis evictedkeys"
 
 	program_text = <<-EOF
 		signal = data('evictedkeys', filter=filter('resource_type', 'Microsoft.Cache/redis') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.evictedkeys_aggregation_function}.${var.evictedkeys_transformation_function}(over='${var.evictedkeys_transformation_window}').publish('signal')
@@ -27,7 +27,7 @@ resource "signalfx_detector" "evictedkeys" {
 	EOF
 
 	rule {
-		description           = "is too high > ${var.evictedkeys_threshold_critical}"
+		description           = "are too high > ${var.evictedkeys_threshold_critical}"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.evictedkeys_disabled_critical, var.evictedkeys_disabled, var.detectors_disabled)
@@ -36,7 +36,7 @@ resource "signalfx_detector" "evictedkeys" {
 	}
 
 	rule {
-		description           = "is too high > ${var.evictedkeys_threshold_warning}"
+		description           = "are too high > ${var.evictedkeys_threshold_warning}"
 		severity              = "Warning"
 		detect_label          = "WARN"
 		disabled              = coalesce(var.evictedkeys_disabled_warning, var.evictedkeys_disabled, var.detectors_disabled)
@@ -46,7 +46,7 @@ resource "signalfx_detector" "evictedkeys" {
 }
 
 resource "signalfx_detector" "percent_processor_time" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure redis processor time too high"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Redis processor time"
 
 	program_text = <<-EOF
 		signal = data('percentProcessorTime', filter=filter('resource_type', 'Microsoft.Cache/redis') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.percent_processor_time_aggregation_function}.${var.percent_processor_time_transformation_function}(over='${var.percent_processor_time_transformation_window}').publish('signal')
@@ -74,7 +74,7 @@ resource "signalfx_detector" "percent_processor_time" {
 }
 
 resource "signalfx_detector" "load" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure redis load too"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Redis load"
 
 	program_text = <<-EOF
 		signal = data('serverLoad', filter=filter('resource_type', 'Microsoft.Cache/redis') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.load_aggregation_function}.${var.load_transformation_function}(over='${var.load_transformation_window}').publish('signal')
