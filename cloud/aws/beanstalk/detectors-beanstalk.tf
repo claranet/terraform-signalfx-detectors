@@ -3,8 +3,8 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
-		signal = data('InstanceHealth', filter=filter('stat', 'mean') and filter('namespace', 'AWS/ElasticBeanstalk') and ${module.filter-tags.filter_custom}).publish('signal')
-		not_reporting.detector(stream=signal, resource_identifier=['InstanceId'], duration='${var.heartbeat_timeframe}').publish('CRIT')
+		signal = data('EnvironmentHealth', filter=filter('stat', 'upper') and filter('namespace', 'AWS/ElasticBeanstalk') and ${module.filter-tags.filter_custom}).publish('signal')
+		not_reporting.detector(stream=signal, resource_identifier=['EnvironmentName'], duration='${var.heartbeat_timeframe}').publish('CRIT')
 	EOF
 
   rule {
