@@ -1,10 +1,10 @@
 resource "signalfx_detector" "heartbeat" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure storage heartbeat"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Storage heartbeat"
 
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
-		signal = data('Transactions', filter=filter('resource_type', 'Microsoft.Storage/storageAccounts') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}).publish('signal')
-		not_reporting.detector(stream=signal, resource_identifier=['ApiName'], duration='${var.heartbeat_timeframe}').publish('CRIT')
+		signal = data('UsedCapacity', filter=filter('resource_type', 'Microsoft.Storage/storageAccounts') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}).publish('signal')
+		not_reporting.detector(stream=signal, resource_identifier=['azure_resource_id'], duration='${var.heartbeat_timeframe}').publish('CRIT')
 	EOF
 
 	rule {
@@ -18,7 +18,7 @@ resource "signalfx_detector" "heartbeat" {
 }
 
 resource "signalfx_detector" "blobservices_requests_error" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure storage blob service error requests"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Blob Storage error rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -50,7 +50,7 @@ resource "signalfx_detector" "blobservices_requests_error" {
 }
 
 resource "signalfx_detector" "fileservices_requests_error" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure storage file service error requests"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Storage File service error rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -82,7 +82,7 @@ resource "signalfx_detector" "fileservices_requests_error" {
 }
 
 resource "signalfx_detector" "queueservices_requests_error" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure storage queue service error requests"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Storage Queue error rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -114,7 +114,7 @@ resource "signalfx_detector" "queueservices_requests_error" {
 }
 
 resource "signalfx_detector" "tableservices_requests_error" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure storage table service error requests"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Storage Table error rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -146,7 +146,7 @@ resource "signalfx_detector" "tableservices_requests_error" {
 }
 
 resource "signalfx_detector" "blobservices_latency" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure storage blob service latency"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Storage Blob latency"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -176,7 +176,7 @@ resource "signalfx_detector" "blobservices_latency" {
 }
 
 resource "signalfx_detector" "fileservices_latency" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure storage file service latency"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Storage File latency"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -206,7 +206,7 @@ resource "signalfx_detector" "fileservices_latency" {
 }
 
 resource "signalfx_detector" "queueservices_latency" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure storage queue service latency"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Storage Queue latency"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -236,7 +236,7 @@ resource "signalfx_detector" "queueservices_latency" {
 }
 
 resource "signalfx_detector" "tableservices_latency" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure storage table service latency"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Storage Table latency"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -266,7 +266,7 @@ resource "signalfx_detector" "tableservices_latency" {
 }
 
 resource "signalfx_detector" "blob_timeout_error_requests" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure storage blob timeout errors"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Storage Blob timeout error rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -298,7 +298,7 @@ resource "signalfx_detector" "blob_timeout_error_requests" {
 }
 
 resource "signalfx_detector" "file_timeout_error_requests" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure storage file timeout errors"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Storage File timeout error rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -330,7 +330,7 @@ resource "signalfx_detector" "file_timeout_error_requests" {
 }
 
 resource "signalfx_detector" "queue_timeout_error_requests" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure storage queue timeout errors"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Storage Queue timeout error rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -362,7 +362,7 @@ resource "signalfx_detector" "queue_timeout_error_requests" {
 }
 
 resource "signalfx_detector" "table_timeout_error_requests" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure storage table timeout errors"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Storage table timeout error rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -394,7 +394,7 @@ resource "signalfx_detector" "table_timeout_error_requests" {
 }
 
 resource "signalfx_detector" "blob_network_error_requests" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure storage blob network errors"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Storage Blob network error rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -426,7 +426,7 @@ resource "signalfx_detector" "blob_network_error_requests" {
 }
 
 resource "signalfx_detector" "file_network_error_requests" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure storage file network errors"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Storage File network error rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -458,7 +458,7 @@ resource "signalfx_detector" "file_network_error_requests" {
 }
 
 resource "signalfx_detector" "queue_network_error_requests" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure storage queue network errors"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Storage Queue Network error rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -490,7 +490,7 @@ resource "signalfx_detector" "queue_network_error_requests" {
 }
 
 resource "signalfx_detector" "table_network_error_requests" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure storage table network errors"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Storage Table network error rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -522,7 +522,7 @@ rule {
 }
 
 resource "signalfx_detector" "blob_throttling_error_requests" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure storage blob throttling errors"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Storage Blob throttling error rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -554,7 +554,7 @@ resource "signalfx_detector" "blob_throttling_error_requests" {
 }
 
 resource "signalfx_detector" "file_throttling_error_requests" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure storage file throttling errors"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Storage File throttling error rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -586,7 +586,7 @@ resource "signalfx_detector" "file_throttling_error_requests" {
 }
 
 resource "signalfx_detector" "queue_throttling_error_requests" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure storage queue throttling errors"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Storage Queue throttling error"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -618,7 +618,7 @@ resource "signalfx_detector" "queue_throttling_error_requests" {
 }
 
 resource "signalfx_detector" "table_throttling_error_requests" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure storage table throttling errors"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Storage Table throttling error rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -650,7 +650,7 @@ resource "signalfx_detector" "table_throttling_error_requests" {
 }
 
 resource "signalfx_detector" "blob_server_other_error_requests" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure storage blob server_other errors"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Storage Blob server other error rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -682,7 +682,7 @@ resource "signalfx_detector" "blob_server_other_error_requests" {
 }
 
 resource "signalfx_detector" "file_server_other_error_requests" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure storage file server_other errors"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Storage File server other error rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -714,7 +714,7 @@ resource "signalfx_detector" "file_server_other_error_requests" {
 }
 
 resource "signalfx_detector" "queue_server_other_error_requests" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure storage queue server_other errors"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Storage Queue server other error rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -746,7 +746,7 @@ resource "signalfx_detector" "queue_server_other_error_requests" {
 }
 
 resource "signalfx_detector" "table_server_other_error_requests" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure storage table server_other errors"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Storage Table server other error rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -778,7 +778,7 @@ resource "signalfx_detector" "table_server_other_error_requests" {
 }
 
 resource "signalfx_detector" "blob_client_other_error_requests" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure storage blob client_other errors"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Storage Blob client other error rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -810,7 +810,7 @@ resource "signalfx_detector" "blob_client_other_error_requests" {
 }
 
 resource "signalfx_detector" "file_client_other_error_requests" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure storage file client_other errors"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Storage File client other error rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -842,7 +842,7 @@ resource "signalfx_detector" "file_client_other_error_requests" {
 }
 
 resource "signalfx_detector" "queue_client_other_error_requests" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure storage queue client_other errors"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Storage Queue client other error rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -874,7 +874,7 @@ resource "signalfx_detector" "queue_client_other_error_requests" {
 }
 
 resource "signalfx_detector" "table_client_other_error_requests" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure storage table client_other errors"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Storage Table client other error rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -906,7 +906,7 @@ resource "signalfx_detector" "table_client_other_error_requests" {
 }
 
 resource "signalfx_detector" "blob_authorization_error_requests" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure storage blob authorization errors"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Storage Blob authorization error rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -938,7 +938,7 @@ resource "signalfx_detector" "blob_authorization_error_requests" {
 }
 
 resource "signalfx_detector" "file_authorization_error_requests" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure storage file authorization errors"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Storage File authorization error rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -970,7 +970,7 @@ resource "signalfx_detector" "file_authorization_error_requests" {
 }
 
 resource "signalfx_detector" "queue_authorization_error_requests" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure storage queue authorization errors"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Storage Queue Authorization error rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -1002,7 +1002,7 @@ resource "signalfx_detector" "queue_authorization_error_requests" {
 }
 
 resource "signalfx_detector" "table_authorization_error_requests" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure storage table authorization errors"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Storage Table authorization error rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
