@@ -1,10 +1,10 @@
 resource "signalfx_detector" "heartbeat" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure servicebus heartbeat"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Service Bus heartbeat"
 
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
 		signal = data('SuccessfulRequests', filter=filter('resource_type', 'Microsoft.ServiceBus/namespaces') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}).publish('signal')
-		not_reporting.detector(stream=signal, resource_identifier=['EntityName'], duration='${var.heartbeat_timeframe}').publish('CRIT')
+		not_reporting.detector(stream=signal, resource_identifier=['entityname'], duration='${var.heartbeat_timeframe}').publish('CRIT')
 	EOF
 
 	rule {
@@ -18,7 +18,7 @@ resource "signalfx_detector" "heartbeat" {
 }
 
 resource "signalfx_detector" "active_connections" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure servicebus active connection"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Service Bus no active connections"
 
 	program_text = <<-EOF
 		signal = data('ActiveConnections', filter=filter('resource_type', 'Microsoft.ServiceBus/namespaces') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.active_connections_aggregation_function}.${var.active_connections_transformation_function}(over='${var.active_connections_transformation_window}').publish('signal')
@@ -26,7 +26,7 @@ resource "signalfx_detector" "active_connections" {
 	EOF
 
 	rule {
-		description           = "is too low < ${var.active_connections_threshold_critical}"
+		description           = " < ${var.active_connections_threshold_critical}"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.active_connections_disabled_critical, var.active_connections_disabled, var.detectors_disabled)
@@ -37,7 +37,7 @@ resource "signalfx_detector" "active_connections" {
 }
 
 resource "signalfx_detector" "user_errors" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure servicebus user errors rate"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Service Bus user error rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -68,7 +68,7 @@ resource "signalfx_detector" "user_errors" {
 }
 
 resource "signalfx_detector" "server_errors" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure servicebus server errors rate"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Service Bus server error rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
