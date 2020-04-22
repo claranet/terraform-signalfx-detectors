@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure app gateway heartbeat"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Gateway heartbeat"
 
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
@@ -18,7 +18,7 @@ resource "signalfx_detector" "heartbeat" {
 }
 
 resource "signalfx_detector" "total_requests" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] App Gateway requests"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Gateway requests"
 
 	program_text = <<-EOF
 		signal = data('CurrentConnections', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.total_requests_aggregation_function}.${var.total_requests_transformation_function}(over='${var.total_requests_transformation_window}').publish('signal')
@@ -26,7 +26,7 @@ resource "signalfx_detector" "total_requests" {
 	EOF
 
 	rule {
-		description           = "has fallen below critical capacity < ${var.total_requests_threshold_critical}"
+		description           = "have fallen below critical capacity < ${var.total_requests_threshold_critical}"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.total_requests_disabled_critical, var.total_requests_disabled, var.detectors_disabled)
@@ -65,7 +65,7 @@ resource "signalfx_detector" "backend_connect_time" {
 }
 
 resource "signalfx_detector" "failed_requests" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Gateway failed requests"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Gateway failed request rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -126,7 +126,7 @@ resource "signalfx_detector" "unhealthy_host_ratio" {
 }
 
 resource "signalfx_detector" "http_4xx_errors" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Gateway HTTP 4xx errors rate"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Gateway 4xx error rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -157,7 +157,7 @@ resource "signalfx_detector" "http_4xx_errors" {
 }
 
 resource "signalfx_detector" "http_5xx_errors" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Gateway HTTP 5xx errors rate"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Gateway 5xx error rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -188,7 +188,7 @@ resource "signalfx_detector" "http_5xx_errors" {
 }
 
 resource "signalfx_detector" "backend_http_4xx_errors" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Gateway backend HTTP 4xx errors rate"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Gateway backend 4xx error rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -219,7 +219,7 @@ resource "signalfx_detector" "backend_http_4xx_errors" {
 }
 
 resource "signalfx_detector" "backend_http_5xx_errors" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Gateway backend HTTP 5xx errors rate"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Gateway backend 5xx error rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
