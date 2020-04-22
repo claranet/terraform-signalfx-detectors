@@ -1,10 +1,10 @@
 resource "signalfx_detector" "heartbeat" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure stream analytics heartbeat"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Stream Analytics heartbeat"
 
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
-		signal = data('InputEventsSourcesPerSecond', filter=filter('resource_type', 'Microsoft.StreamAnalytics/streamingjobs') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}).publish('signal')
-		not_reporting.detector(stream=signal, resource_identifier=['PartitionId'], duration='${var.heartbeat_timeframe}').publish('CRIT')
+		signal = data('ResourceUtilization', filter=filter('resource_type', 'Microsoft.StreamAnalytics/streamingjobs') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}).publish('signal')
+		not_reporting.detector(stream=signal, resource_identifier=['logicalname'], duration='${var.heartbeat_timeframe}').publish('CRIT')
 	EOF
 
 	rule {
@@ -46,7 +46,7 @@ resource "signalfx_detector" "su_utilization" {
 }
 
 resource "signalfx_detector" "failed_requests" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Stream Analytics failed requests] rate"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Stream Analytics failed request rate"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
