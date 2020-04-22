@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure sqldatabase heartbeat"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure SQL Database heartbeat"
 
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
@@ -18,7 +18,7 @@ resource "signalfx_detector" "heartbeat" {
 }
 
 resource "signalfx_detector" "cpu" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure sqldatabase CPU"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Sql Database CPU"
 
 	program_text = <<-EOF
 		signal = data('cpu_percent', filter=filter('resource_type', 'Microsoft.Sql/servers/databases') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.cpu_aggregation_function}.${var.cpu_transformation_function}(over='${var.cpu_transformation_window}').publish('signal')
@@ -46,7 +46,7 @@ resource "signalfx_detector" "cpu" {
 }
 
 resource "signalfx_detector" "free_space" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure sqldatabase disk usage"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure SQL Database disk usage"
 
 	program_text = <<-EOF
 		signal = data('storage_percent', filter=filter('resource_type', 'Microsoft.Sql/servers/databases') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.free_space_aggregation_function}.${var.free_space_transformation_function}(over='${var.free_space_transformation_window}').publish('signal')
@@ -74,7 +74,7 @@ resource "signalfx_detector" "free_space" {
 }
 
 resource "signalfx_detector" "dtu_consumption" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure sqldatabase DTU Consumption"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure SQL Database DTU consumption"
 
 	program_text = <<-EOF
 		signal = data('dtu_consumption_percent', filter=filter('resource_type', 'Microsoft.Sql/servers/databases') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.dtu_consumption_aggregation_function}.${var.dtu_consumption_transformation_function}(over='${var.dtu_consumption_transformation_window}').publish('signal')
@@ -102,7 +102,7 @@ resource "signalfx_detector" "dtu_consumption" {
 }
 
 resource "signalfx_detector" "deadlocks_count" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure sqldatabase deadlocks count"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure SQL Database deadlocks count"
 
 	program_text = <<-EOF
 		signal = data('deadlock', filter=filter('resource_type', 'Microsoft.Sql/servers/databases') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.deadlocks_count_aggregation_function}.${var.deadlocks_count_transformation_function}(over='${var.deadlocks_count_transformation_window}').publish('signal')
