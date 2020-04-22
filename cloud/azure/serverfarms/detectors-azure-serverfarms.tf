@@ -1,10 +1,10 @@
 resource "signalfx_detector" "heartbeat" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure serverfarms heartbeat"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Server Farm heartbeat"
 
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
 		signal = data('BytesReceived', filter=filter('resource_type', 'Microsoft.Web/serverfarms') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}).publish('signal')
-		not_reporting.detector(stream=signal, resource_identifier=['Instance'], duration='${var.heartbeat_timeframe}').publish('CRIT')
+		not_reporting.detector(stream=signal, resource_identifier=['instance'], duration='${var.heartbeat_timeframe}').publish('CRIT')
 	EOF
 
 	rule {
@@ -18,7 +18,7 @@ resource "signalfx_detector" "heartbeat" {
 }
 
 resource "signalfx_detector" "cpu_percentage" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure serverfarms CPU percentage"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Server Farm CPU percentage"
 
 	program_text = <<-EOF
 		signal = data('CpuPercentage', filter=filter('resource_type', 'Microsoft.Web/serverfarms') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.cpu_percentage_aggregation_function}.${var.cpu_percentage_transformation_function}(over='${var.cpu_percentage_transformation_window}').publish('signal')
@@ -46,7 +46,7 @@ resource "signalfx_detector" "cpu_percentage" {
 }
 
 resource "signalfx_detector" "memory_percentage" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure serverfarms memory percentage"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Server Farms memory percentage"
 
 	program_text = <<-EOF
 		signal = data('MemoryPercentage', filter=filter('resource_type', 'Microsoft.Web/serverfarms') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.memory_percentage_aggregation_function}.${var.memory_percentage_transformation_function}(over='${var.memory_percentage_transformation_window}').publish('signal')
