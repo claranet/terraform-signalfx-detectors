@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure mysql heartbeat"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure MySQL heartbeat"
 
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
@@ -18,7 +18,7 @@ resource "signalfx_detector" "heartbeat" {
 }
 
 resource "signalfx_detector" "cpu_usage" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure mysql server CPU usage"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure MySQL server CPU usage"
 
 	program_text = <<-EOF
 		signal = data('cpu_percent', filter=filter('resource_type', 'Microsoft.DBforMySQL/servers') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.cpu_usage_aggregation_function}.${var.cpu_usage_transformation_function}(over='${var.cpu_usage_transformation_window}').publish('signal')
@@ -46,7 +46,7 @@ resource "signalfx_detector" "cpu_usage" {
 }
 
 resource "signalfx_detector" "free_storage" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure mysql server storage"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure MySQL free storage %"
 
 	program_text = <<-EOF
 		A = data('storage_percent', filter=filter('resource_type', 'Microsoft.DBforMySQL/servers') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.free_storage_aggregation_function}
@@ -75,7 +75,7 @@ resource "signalfx_detector" "free_storage" {
 }
 
 resource "signalfx_detector" "io_consumption" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure mysql server IO consumption"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure MySQL IO consumption"
 
 	program_text = <<-EOF
 		signal = data('io_consumption_percent', filter=filter('resource_type', 'Microsoft.DBforMySQL/servers') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.io_consumption_aggregation_function}.${var.io_consumption_transformation_function}(over='${var.io_consumption_transformation_window}').publish('signal')
@@ -103,7 +103,7 @@ resource "signalfx_detector" "io_consumption" {
 }
 
 resource "signalfx_detector" "memory_usage" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure mysql server memory usage"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure MySQL memory usage"
 
 	program_text = <<-EOF
 		signal = data('memory_percent', filter=filter('resource_type', 'Microsoft.DBforMySQL/servers') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.memory_usage_aggregation_function}.${var.memory_usage_transformation_function}(over='${var.memory_usage_transformation_window}').publish('signal')
