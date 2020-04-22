@@ -1,9 +1,9 @@
 resource "signalfx_detector" "heartbeat" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure virtual machine heartbeat"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Virtual Machine heartbeat"
 
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
-		signal = data('Inbound Flows', filter=filter('resource_type', 'Microsoft.Compute/virtualMachines') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}).publish('signal')
+		signal = data('Percentage CPU', filter=filter('resource_type', 'Microsoft.Compute/virtualMachines') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}).publish('signal')
 		not_reporting.detector(stream=signal, resource_identifier=['azure_resource_id'], duration='${var.heartbeat_timeframe}').publish('CRIT')
 	EOF
 
@@ -18,7 +18,7 @@ resource "signalfx_detector" "heartbeat" {
 }
 
 resource "signalfx_detector" "cpu_usage" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure virtual machine CPU usage"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Virtual Machine CPU usage"
 
 	program_text = <<-EOF
 		signal = data('Percentage CPU', filter=filter('resource_type', 'Microsoft.Compute/virtualMachines') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.cpu_usage_aggregation_function}.${var.cpu_usage_transformation_function}(over='${var.cpu_usage_transformation_window}').publish('signal')
@@ -46,7 +46,7 @@ resource "signalfx_detector" "cpu_usage" {
 }
 
 resource "signalfx_detector" "credit_cpu" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure virtual machine remaining credit CPU"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Virtual Machine remaining CPU credit %"
 
 	program_text = <<-EOF
 		A = data('CPU Credits Remaining', filter=filter('resource_type', 'Microsoft.Compute/virtualMachines') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.credit_cpu_aggregation_function}
