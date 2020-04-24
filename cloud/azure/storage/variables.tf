@@ -817,7 +817,7 @@ variable "file_timeout_error_requests_notifications_critical" {
 variable "file_timeout_error_requests_aggregation_function" {
   description = "Aggregation function and group by for file_timeout_error_requests detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name'f])"
+  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name'])"
 }
 
 variable "file_timeout_error_requests_transformation_function" {
