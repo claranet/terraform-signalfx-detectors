@@ -303,7 +303,7 @@ resource "signalfx_detector" "file_timeout_error_requests" {
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
 		A = data('Transactions', filter=filter('resource_type', 'Microsoft.Storage/storageAccounts/fileServices') and filter('responsetype', 'ServerTimeoutError') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.file_timeout_error_requests_aggregation_function}
-		B = data('Transactions', filter=filter('resource_type', 'Microsoft.Storage/storageAccounts/fileServices') and filter('apiname', 'GetFileServiceProperties') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.file_timeout_error_requests_aggregation_function}
+		B = data('Transactions', filter=filter('resource_type', 'Microsoft.Storage/storageAccounts/fileServices') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.file_timeout_error_requests_aggregation_function}
 		signal = (A/B).scale(100).${var.file_timeout_error_requests_transformation_function}(over='${var.file_timeout_error_requests_transformation_window}').publish('signal')
 		aperiodic.above_or_below_detector(signal, ${var.file_timeout_error_requests_threshold_critical}, 'above', lasting('${var.file_timeout_error_requests_aperiodic_duration}', ${var.file_timeout_error_requests_aperiodic_percentage})).publish('CRIT')
 		aperiodic.range_detector(signal, ${var.file_timeout_error_requests_threshold_warning}, ${var.file_timeout_error_requests_threshold_critical}, 'within_range', lasting('${var.file_timeout_error_requests_aperiodic_duration}', ${var.file_timeout_error_requests_aperiodic_percentage})).publish('WARN')
