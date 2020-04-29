@@ -18,7 +18,7 @@ resource "signalfx_detector" "heartbeat" {
 }
 
 resource "signalfx_detector" "php_fpm_connect_idle" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] PHP-FPM active worker"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] PHP-FPM busy workers"
 
 	program_text = <<-EOF
 		A = data('phpfpm_processes.active' and ${module.filter-tags.filter_custom})${var.php_fpm_connect_idle_aggregation_function}
