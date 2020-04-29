@@ -97,7 +97,7 @@ variable "memory_used_notifications_critical" {
 variable "memory_used_aggregation_function" {
   description = "Aggregation function and group by for memory_used detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['container_name'])"
+  default     = ""
 }
 
 variable "memory_used_transformation_function" {
