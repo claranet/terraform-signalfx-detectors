@@ -97,7 +97,7 @@ variable "php_fpm_connect_idle_notifications_critical" {
 variable "php_fpm_connect_idle_aggregation_function" {
   description = "Aggregation function and group by for php_fpm_connect_idle detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['host'])"
+  default     = ""
 }
 
 variable "php_fpm_connect_idle_transformation_function" {
