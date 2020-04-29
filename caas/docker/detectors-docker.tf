@@ -3,8 +3,8 @@ resource "signalfx_detector" "heartbeat" {
 
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
-		signal = data('cpu.percent', filter=filter('plugin', 'docker') and ${module.filter-tags.filter_custom}).publish('signal')
-		not_reporting.detector(stream=signal, resource_identifier=['container_name'], duration='${var.heartbeat_timeframe}').publish('CRIT')
+		signal = data('cpu.usage.total', filter=filter('plugin', 'docker') and ${module.filter-tags.filter_custom}).mean(by=['host']).publish('signal')
+		not_reporting.detector(stream=signal, resource_identifier=['host'], duration='${var.heartbeat_timeframe}').publish('CRIT')
 	EOF
 
 	rule {
@@ -18,17 +18,17 @@ resource "signalfx_detector" "heartbeat" {
 }
 
 resource "signalfx_detector" "memory_used" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Docker memory used instances"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Docker container memory used"
 
 	program_text = <<-EOF
-		A = data('memory.usage.total', filter=filter('plugin', 'docker') and ${module.filter-tags.filter_custom})${var.memory_used_aggregation_function}
-		signal = (A*100).${var.memory_used_transformation_function}(over='${var.memory_used_transformation_window}').publish('signal')
+		A = data('memory.usage.limit', filter=filter('plugin', 'docker') and ${module.filter-tags.filter_custom})${var.memory_used_aggregation_function}
+		signal = ((A/B)*100).${var.memory_used_transformation_function}(over='${var.memory_used_transformation_window}').publish('signal')
 		detect(when(signal > ${var.memory_used_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.memory_used_threshold_warning}) AND when(signal <= ${var.memory_used_threshold_critical})).publish('WARN')
 	EOF
 
 	rule {
-		description           = "are too high > ${var.memory_used_threshold_critical}"
+		description           = "is too high > ${var.memory_used_threshold_critical}"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.memory_used_disabled_critical, var.memory_used_disabled, var.detectors_disabled)
@@ -37,7 +37,7 @@ resource "signalfx_detector" "memory_used" {
 	}
 
 	rule {
-		description           = "are too high > ${var.memory_used_threshold_warning}"
+		description           = "is too high > ${var.memory_used_threshold_warning}"
 		severity              = "Warning"
 		detect_label          = "WARN"
 		disabled              = coalesce(var.memory_used_disabled_warning, var.memory_used_disabled, var.detectors_disabled)
