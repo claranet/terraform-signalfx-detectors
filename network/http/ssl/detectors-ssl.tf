@@ -1,14 +1,14 @@
 resource "signalfx_detector" "invalid_ssl_certificate" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] SSL invalid certificate count"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] SSL valid certificate count"
 
 	program_text = <<-EOF
 		signal = data('http.certificate_valid' and ${module.filter-tags.filter_custom})${var.invalid_ssl_certificate_aggregation_function}.${var.invalid_ssl_certificate_transformation_function}(over='${var.invalid_ssl_certificate_transformation_window}').publish('signal')
-		detect(when(signal > ${var.invalid_ssl_certificate_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.invalid_ssl_certificate_threshold_warning}) and when(signal <= ${var.invalid_ssl_certificate_threshold_critical})).publish('WARN')
+		detect(when(signal < ${var.invalid_ssl_certificate_threshold_critical})).publish('CRIT')
+		detect(when(signal < ${var.invalid_ssl_certificate_threshold_warning}) and when(signal <= ${var.invalid_ssl_certificate_threshold_critical})).publish('WARN')
 	EOF
 
 	rule {
-		description           = "is too high > ${var.invalid_ssl_certificate_threshold_critical}"
+		description           = "is too low < ${var.invalid_ssl_certificate_threshold_critical}"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.invalid_ssl_certificate_disabled_critical, var.invalid_ssl_certificate_disabled, var.detectors_disabled)
@@ -17,7 +17,7 @@ resource "signalfx_detector" "invalid_ssl_certificate" {
 	}
 
 	rule {
-		description           = "is too high > ${var.invalid_ssl_certificate_threshold_warning}"
+		description           = "is too low < ${var.invalid_ssl_certificate_threshold_warning}"
 		severity              = "Warning"
 		detect_label          = "WARN"
 		disabled              = coalesce(var.invalid_ssl_certificate_disabled_warning, var.invalid_ssl_certificate_disabled, var.detectors_disabled)
