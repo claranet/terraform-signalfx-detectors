@@ -35,7 +35,7 @@ resource "signalfx_detector" "db_4xx_requests" {
 		K = data('TotalRequests', filter=filter('resource_type', 'Microsoft.DocumentDb/databaseAccounts') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.db_4xx_requests_aggregation_function}
 		signal = (((A+B+C+D+E+F+G+H+I+J)/K)*100).${var.db_4xx_requests_transformation_function}(over='${var.db_4xx_requests_transformation_window}').publish('signal')
 		aperiodic.above_or_below_detector(signal, ${var.db_4xx_requests_threshold_critical}, 'above', lasting('${var.db_4xx_requests_aperiodic_duration}', ${var.db_4xx_requests_aperiodic_percentage})).publish('CRIT')
-		aperiodic.range_detector(signal, ${var.db_4xx_requests_threshold_warning}, ${var.db_4xx_requests_threshold_critical}, 'within_range', lasting('${var.db_4xx_requests_aperiodic_duration}', ${var.db_4xx_requests_aperiodic_percentage})).publish('WARN')
+		aperiodic.range_detector(signal, ${var.db_4xx_requests_threshold_warning}, ${var.db_4xx_requests_threshold_critical}, 'within_range', lasting('${var.db_4xx_requests_aperiodic_duration}', ${var.db_4xx_requests_aperiodic_percentage}), upper_strict=${var.db_4xx_requests_aperiodic_upper_strict}).publish('WARN')
 	EOF
 
 	rule {
@@ -67,7 +67,7 @@ resource "signalfx_detector" "db_5xx_requests" {
 		C = data('TotalRequests', filter=filter('resource_type', 'Microsoft.DocumentDb/databaseAccounts') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.db_5xx_requests_aggregation_function}
 		signal = (((A+B)/C)*100).${var.db_5xx_requests_transformation_function}(over='${var.db_5xx_requests_transformation_window}').publish('signal')
 		aperiodic.above_or_below_detector(signal, ${var.db_5xx_requests_threshold_critical}, 'above', lasting('${var.db_5xx_requests_aperiodic_duration}', ${var.db_5xx_requests_aperiodic_percentage})).publish('CRIT')
-		aperiodic.range_detector(signal, ${var.db_5xx_requests_threshold_warning}, ${var.db_5xx_requests_threshold_critical}, 'within_range', lasting('${var.db_5xx_requests_aperiodic_duration}', ${var.db_5xx_requests_aperiodic_percentage})).publish('WARN')
+		aperiodic.range_detector(signal, ${var.db_5xx_requests_threshold_warning}, ${var.db_5xx_requests_threshold_critical}, 'within_range', lasting('${var.db_5xx_requests_aperiodic_duration}', ${var.db_5xx_requests_aperiodic_percentage}), upper_strict=${var.db_5xx_requests_aperiodic_upper_strict}).publish('WARN')
 	EOF
 
 	rule {
@@ -98,7 +98,7 @@ resource "signalfx_detector" "scaling" {
 		B = data('TotalRequests', filter=filter('resource_type', 'Microsoft.DocumentDb/databaseAccounts') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.scaling_aggregation_function}
 		signal = ((A/B)*100).${var.scaling_transformation_function}(over='${var.scaling_transformation_window}').publish('signal')
 		aperiodic.above_or_below_detector(signal, ${var.scaling_threshold_critical}, 'above', lasting('${var.scaling_aperiodic_duration}', ${var.scaling_aperiodic_percentage})).publish('CRIT')
-		aperiodic.range_detector(signal, ${var.scaling_threshold_warning}, ${var.scaling_threshold_critical}, 'within_range', lasting('${var.scaling_aperiodic_duration}', ${var.scaling_aperiodic_percentage})).publish('WARN')
+		aperiodic.range_detector(signal, ${var.scaling_threshold_warning}, ${var.scaling_threshold_critical}, 'within_range', lasting('${var.scaling_aperiodic_duration}', ${var.scaling_aperiodic_percentage}), upper_strict=${var.scaling_aperiodic_upper_strict}).publish('WARN')
 	EOF
 
 	rule {
