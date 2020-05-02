@@ -136,6 +136,12 @@ variable "db_4xx_requests_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "db_4xx_requests_aperiodic_upper_strict" {
+  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
+  type        = bool
+  default     = "0"
+}
+
 # db_5xx_requests detectors
 
 variable "db_5xx_requests_disabled" {
@@ -216,6 +222,12 @@ variable "db_5xx_requests_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "db_5xx_requests_aperiodic_upper_strict" {
+  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
+  type        = bool
+  default     = "0"
+}
+
 # Scaling detectors
 
 variable "scaling_disabled" {
@@ -294,4 +306,10 @@ variable "scaling_aperiodic_percentage" {
   description = "Percentage for the scaling block"
   type        = number
   default     = 0.9
+}
+
+variable "scaling_aperiodic_upper_strict" {
+  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
+  type        = bool
+  default     = "0"
 }
