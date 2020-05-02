@@ -266,6 +266,12 @@ variable "failed_requests_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "failed_requests_aperiodic_upper_strict" {
+  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
+  type        = bool
+  default     = "0"
+}
+
 # Unhealthy_host_ratio detectors
 
 variable "unhealthy_host_ratio_disabled" {
@@ -414,6 +420,12 @@ variable "http_4xx_errors_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "http_4xx_errors_aperiodic_upper_strict" {
+  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
+  type        = bool
+  default     = "0"
+}
+
 # Http_5xx_errors detectors
 
 variable "http_5xx_errors_disabled" {
@@ -492,6 +504,12 @@ variable "http_5xx_errors_aperiodic_percentage" {
   description = "Percentage for the http_5xx_errors block"
   type        = number
   default     = 0.9
+}
+
+variable "http_5xx_errors_aperiodic_upper_strict" {
+  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
+  type        = bool
+  default     = "0"
 }
 
 # Backend_http_4xx_errors detectors
@@ -574,6 +592,12 @@ variable "backend_http_4xx_errors_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "backend_http_4xx_errors_aperiodic_upper_strict" {
+  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
+  type        = bool
+  default     = "0"
+}
+
 # Backend_http_5xx_errors detectors
 
 variable "backend_http_5xx_errors_disabled" {
@@ -652,4 +676,10 @@ variable "backend_http_5xx_errors_aperiodic_percentage" {
   description = "Percentage for the backend_http_5xx_errors block"
   type        = number
   default     = 0.9
+}
+
+variable "backend_http_5xx_errors_aperiodic_upper_strict" {
+  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
+  type        = bool
+  default     = "0"
 }
