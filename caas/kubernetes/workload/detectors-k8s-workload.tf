@@ -1,10 +1,10 @@
 resource "signalfx_detector" "heartbeat" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Kubernetes API server heartbeat"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Kubernetes no job completed"
 
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
-		signal = data('kubernetes.job.failed' and ${module.filter-tags.filter_custom})
-		not_reporting.detector(stream=signal, resource_identifier=['host'], duration='${var.heartbeat_timeframe}').publish('CRIT')
+		signal = data('kubernetes.job.completions' and ${module.filter-tags.filter_custom})
+		not_reporting.detector(stream=signal, resource_identifier=['kubernetes_name'], duration='${var.heartbeat_timeframe}').publish('CRIT')
 	EOF
 
 	rule {
