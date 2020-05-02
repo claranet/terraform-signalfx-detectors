@@ -97,7 +97,7 @@ variable "invalid_ssl_certificate_notifications_critical" {
 variable "invalid_ssl_certificate_aggregation_function" {
   description = "Aggregation function and group by for invalid_ssl_certificate detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".count()"
+  default     = ""
 }
 
 variable "invalid_ssl_certificate_transformation_function" {
