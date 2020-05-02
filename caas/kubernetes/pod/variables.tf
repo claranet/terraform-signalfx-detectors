@@ -136,6 +136,12 @@ variable "pod_phase_status_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "pod_phase_status_aperiodic_upper_strict" {
+  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
+  type        = bool
+  default     = "0"
+}
+
 # Error detectors
 
 variable "error_disabled" {
