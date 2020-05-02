@@ -139,7 +139,7 @@ variable "jobs_failed_aperiodic_percentage" {
 variable "jobs_failed_aperiodic_upper_strict" {
   description = "If True, compare stream against upper with strict inequality; if False, non-strict"
   type        = bool
-  default     = "0"
+  default     = false
 }
 
 # list_jobs_failed detectors
@@ -225,7 +225,7 @@ variable "list_jobs_failed_aperiodic_percentage" {
 variable "list_jobs_failed_aperiodic_upper_strict" {
   description = "If True, compare stream against upper with strict inequality; if False, non-strict"
   type        = bool
-  default     = "0"
+  default     = false
 }
 
 # query_jobs_failed detectors
@@ -311,7 +311,7 @@ variable "query_jobs_failed_aperiodic_percentage" {
 variable "query_jobs_failed_aperiodic_upper_strict" {
   description = "If True, compare stream against upper with strict inequality; if False, non-strict"
   type        = bool
-  default     = "0"
+  default     = false
 }
 
 # total_devices detectors
@@ -459,7 +459,7 @@ variable "c2d_methods_failed_aperiodic_percentage" {
 variable "c2d_methods_failed_aperiodic_upper_strict" {
   description = "If True, compare stream against upper with strict inequality; if False, non-strict"
   type        = bool
-  default     = "0"
+  default     = false
 }
 
 # c2d_twin_read_failed detectors
@@ -545,7 +545,7 @@ variable "c2d_twin_read_failed_aperiodic_percentage" {
 variable "c2d_twin_read_failed_aperiodic_upper_strict" {
   description = "If True, compare stream against upper with strict inequality; if False, non-strict"
   type        = bool
-  default     = "0"
+  default     = false
 }
 
 # c2d_twin_update_failed detectors
@@ -631,7 +631,7 @@ variable "c2d_twin_update_failed_aperiodic_percentage" {
 variable "c2d_twin_update_failed_aperiodic_upper_strict" {
   description = "If True, compare stream against upper with strict inequality; if False, non-strict"
   type        = bool
-  default     = "0"
+  default     = false
 }
 
 # d2c_twin_read_failed detectors
@@ -717,7 +717,7 @@ variable "d2c_twin_read_failed_aperiodic_percentage" {
 variable "d2c_twin_read_failed_aperiodic_upper_strict" {
   description = "If True, compare stream against upper with strict inequality; if False, non-strict"
   type        = bool
-  default     = "0"
+  default     = false
 }
 
 # d2c_twin_update_failed detectors
@@ -803,7 +803,7 @@ variable "d2c_twin_update_failed_aperiodic_percentage" {
 variable "d2c_twin_update_failed_aperiodic_upper_strict" {
   description = "If True, compare stream against upper with strict inequality; if False, non-strict"
   type        = bool
-  default     = "0"
+  default     = false
 }
 
 # d2c_telemetry_egress_dropped detectors
@@ -889,7 +889,7 @@ variable "d2c_telemetry_egress_dropped_aperiodic_percentage" {
 variable "d2c_telemetry_egress_dropped_aperiodic_upper_strict" {
   description = "If True, compare stream against upper with strict inequality; if False, non-strict"
   type        = bool
-  default     = "0"
+  default     = false
 }
 
 # d2c_telemetry_egress_orphaned detectors
@@ -975,7 +975,7 @@ variable "d2c_telemetry_egress_orphaned_aperiodic_percentage" {
 variable "d2c_telemetry_egress_orphaned_aperiodic_upper_strict" {
   description = "If True, compare stream against upper with strict inequality; if False, non-strict"
   type        = bool
-  default     = "0"
+  default     = false
 }
 
 # d2c_telemetry_egress_invalid detectors
@@ -1061,7 +1061,7 @@ variable "d2c_telemetry_egress_invalid_aperiodic_percentage" {
 variable "d2c_telemetry_egress_invalid_aperiodic_upper_strict" {
   description = "If True, compare stream against upper with strict inequality; if False, non-strict"
   type        = bool
-  default     = "0"
+  default     = false
 }
 
 # d2c_telemetry_ingress_nosent detectors
@@ -1147,5 +1147,5 @@ variable "d2c_telemetry_ingress_nosent_aperiodic_percentage" {
 variable "d2c_telemetry_ingress_nosent_aperiodic_upper_strict" {
   description = "If True, compare stream against upper with strict inequality; if False, non-strict"
   type        = bool
-  default     = "0"
+  default     = false
 }
