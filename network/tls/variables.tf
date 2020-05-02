@@ -97,7 +97,7 @@ variable "invalid_tls_certificate_notifications_critical" {
 variable "invalid_tls_certificate_aggregation_function" {
   description = "Aggregation function and group by for invalid_tls_certificate detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".count()"
+  default     = ""
 }
 
 variable "invalid_tls_certificate_transformation_function" {
@@ -162,10 +162,16 @@ variable "tls_certificate_expiration_notifications_critical" {
   default     = []
 }
 
+variable "tls_certificate_expiration_timeframe" {
+  description = "Number of days in seconds till certificate expires to include"
+  type        = string
+  default     = "432000"
+}
+
 variable "tls_certificate_expiration_aggregation_function" {
   description = "Aggregation function and group by for tls_certificate_expiration detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".count()"
+  default     = ""
 }
 
 variable "tls_certificate_expiration_transformation_function" {
@@ -251,11 +257,11 @@ variable "certificate_expiration_date_transformation_window" {
 variable "certificate_expiration_date_threshold_critical" {
   description = "Critical threshold for certificate_expiration_date detector"
   type        = number
-  default     = 30
+  default     = 15
 }
 
 variable "certificate_expiration_date_threshold_warning" {
   description = "Warning threshold for certificate_expiration_date detector"
   type        = number
-  default     = 15
+  default     = 30
 }
