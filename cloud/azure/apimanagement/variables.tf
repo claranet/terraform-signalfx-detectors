@@ -136,6 +136,12 @@ variable "failed_requests_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "failed_requests_aperiodic_upper_strict" {
+  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
+  type        = bool
+  default     = "0"
+}
+
 # Other_requests detectors
 
 variable "other_requests_disabled" {
@@ -216,6 +222,12 @@ variable "other_requests_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "other_requests_aperiodic_upper_strict" {
+  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
+  type        = bool
+  default     = "0"
+}
+
 # Unauthorized_requests detectors
 
 variable "unauthorized_requests_disabled" {
@@ -294,6 +306,12 @@ variable "unauthorized_requests_aperiodic_percentage" {
   description = "Percentage for the unauthorized_requests block"
   type        = number
   default     = 0.9
+}
+
+variable "unauthorized_requests_aperiodic_upper_strict" {
+  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
+  type        = bool
+  default     = "0"
 }
 
 # successful_requests detectors
