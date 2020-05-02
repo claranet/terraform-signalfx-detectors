@@ -24,7 +24,7 @@ resource "signalfx_detector" "pod_phase_status" {
 		from signalfx.detectors.aperiodic import aperiodic
 		signal = data('kube_pod_status_phase', filter=('phase', 'Failed') and ${module.filter-tags.filter_custom})${var.pod_phase_status_aggregation_function}.${var.pod_phase_status_transformation_function}(over='${var.pod_phase_status_transformation_window}').publish('signal')
 		aperiodic.above_or_below_detector(signal, ${var.pod_phase_status_threshold_critical}, 'above', lasting('${var.pod_phase_status_aperiodic_duration}', ${var.pod_phase_status_aperiodic_percentage})).publish('CRIT')
-		aperiodic.range_detector(signal, ${var.pod_phase_status_threshold_warning}, ${var.pod_phase_status_threshold_critical}, 'within_range', lasting('${var.pod_phase_status_aperiodic_duration}', ${var.pod_phase_status_aperiodic_percentage})).publish('WARN')
+		aperiodic.range_detector(signal, ${var.pod_phase_status_threshold_warning}, ${var.pod_phase_status_threshold_critical}, 'within_range', lasting('${var.pod_phase_status_aperiodic_duration}', ${var.pod_phase_status_aperiodic_percentage}), upper_strict=${var.pod_phase_status_aperiodic_upper_strict}).publish('WARN')
 	EOF
 
 	rule {
