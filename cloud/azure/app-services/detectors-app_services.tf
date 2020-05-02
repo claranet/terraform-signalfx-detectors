@@ -24,7 +24,7 @@ resource "signalfx_detector" "response_time" {
 		from signalfx.detectors.aperiodic import aperiodic
 		signal = data('AverageResponseTime', filter=filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'false') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.response_time_aggregation_function}.${var.response_time_transformation_function}(over='${var.response_time_transformation_window}').publish('signal')
 		aperiodic.above_or_below_detector(signal, ${var.response_time_threshold_critical}, 'above', lasting('${var.response_time_aperiodic_duration}', ${var.response_time_aperiodic_percentage})).publish('CRIT')
-		aperiodic.range_detector(signal, ${var.response_time_threshold_warning}, ${var.response_time_threshold_critical}, 'within_range', lasting('${var.response_time_aperiodic_duration}', ${var.response_time_aperiodic_percentage})).publish('WARN')
+		aperiodic.range_detector(signal, ${var.response_time_threshold_warning}, ${var.response_time_threshold_critical}, 'within_range', lasting('${var.response_time_aperiodic_duration}', ${var.response_time_aperiodic_percentage}), upper_strict=${var.response_time_aperiodic_upper_strict}).publish('WARN')
 	EOF
 
 	rule {
@@ -85,7 +85,7 @@ resource "signalfx_detector" "http_5xx_errors_count" {
 		B = data('Requests', filter=filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'false') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.http_5xx_errors_count_aggregation_function}
 		signal = ((A/B)*100).${var.http_5xx_errors_count_transformation_function}(over='${var.http_5xx_errors_count_transformation_window}').publish('signal')
 		aperiodic.above_or_below_detector(signal, ${var.http_5xx_errors_count_threshold_critical}, 'above', lasting('${var.http_5xx_errors_count_aperiodic_duration}', ${var.http_5xx_errors_count_aperiodic_percentage})).publish('CRIT')
-		aperiodic.range_detector(signal, ${var.http_5xx_errors_count_threshold_warning}, ${var.http_5xx_errors_count_threshold_critical}, 'within_range', lasting('${var.http_5xx_errors_count_aperiodic_duration}', ${var.http_5xx_errors_count_aperiodic_percentage})).publish('WARN')
+		aperiodic.range_detector(signal, ${var.http_5xx_errors_count_threshold_warning}, ${var.http_5xx_errors_count_threshold_critical}, 'within_range', lasting('${var.http_5xx_errors_count_aperiodic_duration}', ${var.http_5xx_errors_count_aperiodic_percentage}), upper_strict=${var.http_5xx_errors_count_aperiodic_upper_strict}).publish('WARN')
 	EOF
 
 	rule {
@@ -117,7 +117,7 @@ resource "signalfx_detector" "http_4xx_errors_count" {
 		B = data('Requests', filter=filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'false') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.http_4xx_errors_count_aggregation_function}
 		signal = ((A/B)*100).${var.http_4xx_errors_count_transformation_function}(over='${var.http_4xx_errors_count_transformation_window}').publish('signal')
 		aperiodic.above_or_below_detector(signal, ${var.http_4xx_errors_count_threshold_critical}, 'above', lasting('${var.http_4xx_errors_count_aperiodic_duration}', ${var.http_4xx_errors_count_aperiodic_percentage})).publish('CRIT')
-		aperiodic.range_detector(signal, ${var.http_4xx_errors_count_threshold_warning}, ${var.http_4xx_errors_count_threshold_critical}, 'within_range', lasting('${var.http_4xx_errors_count_aperiodic_duration}', ${var.http_4xx_errors_count_aperiodic_percentage})).publish('WARN')
+		aperiodic.range_detector(signal, ${var.http_4xx_errors_count_threshold_warning}, ${var.http_4xx_errors_count_threshold_critical}, 'within_range', lasting('${var.http_4xx_errors_count_aperiodic_duration}', ${var.http_4xx_errors_count_aperiodic_percentage}), upper_strict=${var.http_4xx_errors_count_aperiodic_upper_strict}).publish('WARN')
 	EOF
 
 	rule {
@@ -149,7 +149,7 @@ resource "signalfx_detector" "http_success_status_rate" {
 		C = data('Requests', filter=filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'false') and ${module.filter-tags.filter_custom})${var.http_success_status_rate_aggregation_function}
 		signal = (((A+B)/C)*100).${var.http_success_status_rate_transformation_function}(over='${var.http_success_status_rate_transformation_window}').publish('signal')
 		aperiodic.above_or_below_detector(signal, ${var.http_success_status_rate_threshold_critical}, 'below', lasting('${var.http_success_status_rate_aperiodic_duration}', ${var.http_success_status_rate_aperiodic_percentage})).publish('CRIT')
-		aperiodic.range_detector(signal, ${var.http_success_status_rate_threshold_warning}, ${var.http_success_status_rate_threshold_critical}, 'within_range', lasting('${var.http_success_status_rate_aperiodic_duration}', ${var.http_success_status_rate_aperiodic_percentage})).publish('WARN')
+		aperiodic.range_detector(signal, ${var.http_success_status_rate_threshold_warning}, ${var.http_success_status_rate_threshold_critical}, 'within_range', lasting('${var.http_success_status_rate_aperiodic_duration}', ${var.http_success_status_rate_aperiodic_percentage}), upper_strict=${var.http_success_status_rate_aperiodic_upper_strict}).publish('WARN')
 	EOF
 
 	rule {
