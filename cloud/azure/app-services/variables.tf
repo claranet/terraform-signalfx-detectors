@@ -462,8 +462,8 @@ variable "http_success_status_rate_aperiodic_percentage" {
   default     = 0.9
 }
 
-variable "http_success_status_rate_aperiodic_upper_strict" {
-  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
+variable "http_success_status_rate_aperiodic_lower_strict" {
+  description = "If True, compare stream against lower with strict inequality; if False, non-strict"
   type        = bool
   default     = "0"
 }
