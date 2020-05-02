@@ -136,6 +136,12 @@ variable "jobs_failed_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "jobs_failed_aperiodic_upper_strict" {
+  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
+  type        = bool
+  default     = "0"
+}
+
 # list_jobs_failed detectors
 
 variable "list_jobs_failed_disabled" {
@@ -216,6 +222,12 @@ variable "list_jobs_failed_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "list_jobs_failed_aperiodic_upper_strict" {
+  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
+  type        = bool
+  default     = "0"
+}
+
 # query_jobs_failed detectors
 
 variable "query_jobs_failed_disabled" {
@@ -294,6 +306,12 @@ variable "query_jobs_failed_aperiodic_percentage" {
   description = "Percentage for the query_jobs_failed block"
   type        = number
   default     = 0.9
+}
+
+variable "query_jobs_failed_aperiodic_upper_strict" {
+  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
+  type        = bool
+  default     = "0"
 }
 
 # total_devices detectors
@@ -438,6 +456,12 @@ variable "c2d_methods_failed_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "c2d_methods_failed_aperiodic_upper_strict" {
+  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
+  type        = bool
+  default     = "0"
+}
+
 # c2d_twin_read_failed detectors
 
 variable "c2d_twin_read_failed_disabled" {
@@ -516,6 +540,12 @@ variable "c2d_twin_read_failed_aperiodic_percentage" {
   description = "Percentage for the c2d_twin_read_failed block"
   type        = number
   default     = 0.9
+}
+
+variable "c2d_twin_read_failed_aperiodic_upper_strict" {
+  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
+  type        = bool
+  default     = "0"
 }
 
 # c2d_twin_update_failed detectors
@@ -598,6 +628,12 @@ variable "c2d_twin_update_failed_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "c2d_twin_update_failed_aperiodic_upper_strict" {
+  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
+  type        = bool
+  default     = "0"
+}
+
 # d2c_twin_read_failed detectors
 
 variable "d2c_twin_read_failed_disabled" {
@@ -676,6 +712,12 @@ variable "d2c_twin_read_failed_aperiodic_percentage" {
   description = "Percentage for the d2c_twin_read_failed block"
   type        = number
   default     = 0.9
+}
+
+variable "d2c_twin_read_failed_aperiodic_upper_strict" {
+  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
+  type        = bool
+  default     = "0"
 }
 
 # d2c_twin_update_failed detectors
@@ -758,6 +800,12 @@ variable "d2c_twin_update_failed_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "d2c_twin_update_failed_aperiodic_upper_strict" {
+  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
+  type        = bool
+  default     = "0"
+}
+
 # d2c_telemetry_egress_dropped detectors
 
 variable "d2c_telemetry_egress_dropped_disabled" {
@@ -836,6 +884,12 @@ variable "d2c_telemetry_egress_dropped_aperiodic_percentage" {
   description = "Percentage for the d2c_telemetry_egress_dropped block"
   type        = number
   default     = 0.9
+}
+
+variable "d2c_telemetry_egress_dropped_aperiodic_upper_strict" {
+  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
+  type        = bool
+  default     = "0"
 }
 
 # d2c_telemetry_egress_orphaned detectors
@@ -918,6 +972,12 @@ variable "d2c_telemetry_egress_orphaned_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "d2c_telemetry_egress_orphaned_aperiodic_upper_strict" {
+  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
+  type        = bool
+  default     = "0"
+}
+
 # d2c_telemetry_egress_invalid detectors
 
 variable "d2c_telemetry_egress_invalid_disabled" {
@@ -998,6 +1058,12 @@ variable "d2c_telemetry_egress_invalid_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "d2c_telemetry_egress_invalid_aperiodic_upper_strict" {
+  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
+  type        = bool
+  default     = "0"
+}
+
 # d2c_telemetry_ingress_nosent detectors
 
 variable "d2c_telemetry_ingress_nosent_disabled" {
@@ -1076,4 +1142,10 @@ variable "d2c_telemetry_ingress_nosent_aperiodic_percentage" {
   description = "Percentage for the d2c_telemetry_ingress_nosent block"
   type        = number
   default     = 0.9
+}
+
+variable "d2c_telemetry_ingress_nosent_aperiodic_upper_strict" {
+  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
+  type        = bool
+  default     = "0"
 }
