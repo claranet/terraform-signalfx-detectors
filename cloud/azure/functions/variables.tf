@@ -139,7 +139,7 @@ variable "http_5xx_errors_rate_aperiodic_percentage" {
 variable "http_5xx_errors_rate_aperiodic_upper_strict" {
   description = "If True, compare stream against upper with strict inequality; if False, non-strict"
   type        = bool
-  default     = "0"
+  default     = false
 }
 
 # High_connections_count detectors
@@ -225,7 +225,7 @@ variable "high_connections_count_aperiodic_percentage" {
 variable "high_connections_count_aperiodic_upper_strict" {
   description = "If True, compare stream against upper with strict inequality; if False, non-strict"
   type        = bool
-  default     = "0"
+  default     = false
 }
 
 # High_threads_count detectors
@@ -311,5 +311,5 @@ variable "high_threads_count_aperiodic_percentage" {
 variable "high_threads_count_aperiodic_upper_strict" {
   description = "If True, compare stream against upper with strict inequality; if False, non-strict"
   type        = bool
-  default     = "0"
+  default     = false
 }
