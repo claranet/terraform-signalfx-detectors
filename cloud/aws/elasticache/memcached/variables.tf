@@ -136,6 +136,12 @@ variable "get_hits_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "get_hits_aperiodic_upper_strict" {
+  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
+  type        = bool
+  default     = false
+}
+
 # cpu_high detectors
 
 variable "cpu_high_disabled" {
