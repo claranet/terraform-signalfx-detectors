@@ -137,9 +137,9 @@ variable "eventhub_failed_requests_aperiodic_percentage" {
 }
 
 variable "eventhub_failed_requests_aperiodic_upper_strict" {
-  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
+   description = "If True, compare stream against upper with strict inequality; if False, non-strict"
   type        = bool
-  default     = false
+  default     = False
 }
 
 # Eventhub_errors detectors
@@ -223,7 +223,7 @@ variable "eventhub_errors_aperiodic_percentage" {
 }
 
 variable "eventhub_errors_aperiodic_upper_strict" {
-  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
+   description = "If True, compare stream against upper with strict inequality; if False, non-strict"
   type        = bool
-  default     = false
+  default     = False
 }
