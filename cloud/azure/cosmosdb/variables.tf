@@ -139,7 +139,7 @@ variable "db_4xx_requests_aperiodic_percentage" {
 variable "db_4xx_requests_aperiodic_upper_strict" {
   description = "If True, compare stream against upper with strict inequality; if False, non-strict"
   type        = bool
-  default     = False
+  default     = false
 }
 
 # db_5xx_requests detectors
@@ -225,7 +225,7 @@ variable "db_5xx_requests_aperiodic_percentage" {
 variable "db_5xx_requests_aperiodic_upper_strict" {
   description = "If True, compare stream against upper with strict inequality; if False, non-strict"
   type        = bool
-  default     = False
+  default     = false
 }
 
 # Scaling detectors
@@ -311,5 +311,5 @@ variable "scaling_aperiodic_percentage" {
 variable "scaling_aperiodic_upper_strict" {
   description = "If True, compare stream against upper with strict inequality; if False, non-strict"
   type        = bool
-  default     = False
+  default     = false
 }
