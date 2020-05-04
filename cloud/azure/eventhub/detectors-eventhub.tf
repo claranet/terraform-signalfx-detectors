@@ -26,7 +26,7 @@ resource "signalfx_detector" "eventhub_failed_requests" {
 		B = data('SuccessfulRequests', filter=filter('resource_type', 'Microsoft.EventHub/namespaces') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.eventhub_failed_requests_aggregation_function}
 		signal = (((A-B)/A)*100).${var.eventhub_failed_requests_transformation_function}(over='${var.eventhub_failed_requests_transformation_window}').publish('signal')
 		aperiodic.above_or_below_detector(signal, ${var.eventhub_failed_requests_threshold_critical}, 'above', lasting('${var.eventhub_failed_requests_aperiodic_duration}', ${var.eventhub_failed_requests_aperiodic_percentage})).publish('CRIT')
-		aperiodic.range_detector(signal, ${var.eventhub_failed_requests_threshold_warning}, ${var.eventhub_failed_requests_threshold_critical}, 'within_range', lasting('${var.eventhub_failed_requests_aperiodic_duration}', ${var.eventhub_failed_requests_aperiodic_percentage}), upper_strict=${var.eventhub_failed_requests_aperiodic_upper_strict}).publish('WARN')
+		aperiodic.range_detector_with_clear(signal, ${var.eventhub_failed_requests_threshold_warning}, ${var.eventhub_failed_requests_threshold_critical}, 'within_range', lasting('${var.eventhub_failed_requests_aperiodic_duration}', ${var.eventhub_failed_requests_aperiodic_percentage}), upper_strict=${var.eventhub_failed_requests_aperiodic_upper_strict}).publish('WARN')
 
 	EOF
 
@@ -61,7 +61,7 @@ resource "signalfx_detector" "eventhub_errors" {
 		D = data('IncomingRequests', filter=filter('resource_type', 'Microsoft.EventHub/namespaces') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.eventhub_errors_aggregation_function}
 		signal = (((A+B+C)/D)*100).${var.eventhub_errors_transformation_function}(over='${var.eventhub_errors_transformation_window}').publish('signal')
 		aperiodic.above_or_below_detector(signal, ${var.eventhub_errors_threshold_critical}, 'above', lasting('${var.eventhub_errors_aperiodic_duration}', ${var.eventhub_errors_aperiodic_percentage})).publish('CRIT')
-		aperiodic.range_detector(signal, ${var.eventhub_errors_threshold_warning}, ${var.eventhub_errors_threshold_critical}, 'within_range', lasting('${var.eventhub_errors_aperiodic_duration}', ${var.eventhub_errors_aperiodic_percentage}), upper_strict=${var.eventhub_errors_aperiodic_upper_strict}).publish('WARN')
+		aperiodic.range_detector_with_clear(signal, ${var.eventhub_errors_threshold_warning}, ${var.eventhub_errors_threshold_critical}, 'within_range', lasting('${var.eventhub_errors_aperiodic_duration}', ${var.eventhub_errors_aperiodic_percentage}), upper_strict=${var.eventhub_errors_aperiodic_upper_strict}).publish('WARN')
 
 	EOF
 
