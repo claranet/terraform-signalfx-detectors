@@ -207,7 +207,7 @@ variable "latency_aperiodic_percentage" {
 variable "latency_aperiodic_upper_strict" {
   description = "If True, compare stream against upper with strict inequality; if False, non-strict"
   type        = bool
-  default     = "0"
+  default     = False
 
 }
 
