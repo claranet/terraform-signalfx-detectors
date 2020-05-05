@@ -118,13 +118,6 @@ variable "pct_errors_aperiodic_percentage" {
   default     = 0.9
 }
 
-variable "pct_errors_aperiodic_upper_strict" {
-  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
-  type        = bool
-  default     = false
-
-}
-
 # Errors detectors
 
 variable "errors_disabled" {
@@ -203,13 +196,6 @@ variable "errors_aperiodic_percentage" {
   description = "Percentage for the errors block"
   type        = number
   default     = 0.9
-}
-
-variable "errors_aperiodic_upper_strict" {
-  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
-  type        = bool
-  default     = false
-
 }
 
 # Throttles detectors
@@ -292,13 +278,6 @@ variable "throttles_aperiodic_percentage" {
   default     = 0.9
 }
 
-variable "throttles_aperiodic_upper_strict" {
-  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
-  type        = bool
-  default     = false
-
-}
-
 # invocations detectors
 
 variable "invocations_disabled" {
@@ -377,11 +356,4 @@ variable "invocations_aperiodic_percentage" {
   description = "Percentage for the invocations block"
   type        = number
   default     = 0.9
-}
-
-variable "invocations_aperiodic_upper_strict" {
-  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
-  type        = bool
-  default     = false
-
 }
