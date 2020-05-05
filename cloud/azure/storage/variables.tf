@@ -136,12 +136,6 @@ variable "blobservices_requests_error_aperiodic_percentage" {
   default     = 0.9
 }
 
-variable "blobservices_requests_error_aperiodic_upper_strict" {
-  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
-  type        = bool
-  default     = false
-}
-
 # Fileservices_requests_error detectors
 
 variable "fileservices_requests_error_disabled" {
@@ -220,12 +214,6 @@ variable "fileservices_requests_error_aperiodic_percentage" {
   description = "Percentage for the fileservices_requests_error block"
   type        = number
   default     = 0.9
-}
-
-variable "fileservices_requests_error_aperiodic_upper_strict" {
-  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
-  type        = bool
-  default     = false
 }
 
 # Queueservices_requests_error detectors
@@ -308,12 +296,6 @@ variable "queueservices_requests_error_aperiodic_percentage" {
   default     = 0.9
 }
 
-variable "queueservices_requests_error_aperiodic_upper_strict" {
-  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
-  type        = bool
-  default     = false
-}
-
 # Tableservices_requests_error detectors
 
 variable "tableservices_requests_error_disabled" {
@@ -392,12 +374,6 @@ variable "tableservices_requests_error_aperiodic_percentage" {
   description = "Percentage for the tableservices_requests_error block"
   type        = number
   default     = 0.9
-}
-
-variable "tableservices_requests_error_aperiodic_upper_strict" {
-  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
-  type        = bool
-  default     = false
 }
 
 # Blobservices_latency detectors
@@ -480,12 +456,6 @@ variable "blobservices_latency_aperiodic_percentage" {
   default     = 0.9
 }
 
-variable "blobservices_latency_aperiodic_upper_strict" {
-  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
-  type        = bool
-  default     = false
-}
-
 # fileservices_latency detectors
 
 variable "fileservices_latency_disabled" {
@@ -564,12 +534,6 @@ variable "fileservices_latency_aperiodic_percentage" {
   description = "Percentage for the fileservices_latency block"
   type        = number
   default     = 0.9
-}
-
-variable "fileservices_latency_aperiodic_upper_strict" {
-  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
-  type        = bool
-  default     = false
 }
 
 # Queueservices_latency detectors
@@ -652,12 +616,6 @@ variable "queueservices_latency_aperiodic_percentage" {
   default     = 0.9
 }
 
-variable "queueservices_latency_aperiodic_upper_strict" {
-  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
-  type        = bool
-  default     = false
-}
-
 # Tableservices_latency detectors
 
 variable "tableservices_latency_disabled" {
@@ -736,12 +694,6 @@ variable "tableservices_latency_aperiodic_percentage" {
   description = "Percentage for the tableservices_latency block"
   type        = number
   default     = 0.9
-}
-
-variable "tableservices_latency_aperiodic_upper_strict" {
-  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
-  type        = bool
-  default     = false
 }
 
 # Blob_timeout_error_requests detectors
@@ -824,12 +776,6 @@ variable "blob_timeout_error_requests_aperiodic_percentage" {
   default     = 0.9
 }
 
-variable "blob_timeout_error_requests_aperiodic_upper_strict" {
-  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
-  type        = bool
-  default     = false
-}
-
 # File_timeout_error_requests detectors
 
 variable "file_timeout_error_requests_disabled" {
@@ -908,12 +854,6 @@ variable "file_timeout_error_requests_aperiodic_percentage" {
   description = "Percentage for the file_timeout_error_requests block"
   type        = number
   default     = 0.9
-}
-
-variable "file_timeout_error_requests_aperiodic_upper_strict" {
-  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
-  type        = bool
-  default     = false
 }
 
 # Queue_timeout_error_requests detectors
@@ -996,12 +936,6 @@ variable "queue_timeout_error_requests_aperiodic_percentage" {
   default     = 0.9
 }
 
-variable "queue_timeout_error_requests_aperiodic_upper_strict" {
-  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
-  type        = bool
-  default     = false
-}
-
 # Table_timeout_error_requests detectors
 
 variable "table_timeout_error_requests_disabled" {
@@ -1080,12 +1014,6 @@ variable "table_timeout_error_requests_aperiodic_percentage" {
   description = "Percentage for the table_timeout_error_requests block"
   type        = number
   default     = 0.9
-}
-
-variable "table_timeout_error_requests_aperiodic_upper_strict" {
-  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
-  type        = bool
-  default     = false
 }
 
 # Blob_network_error_requests detectors
@@ -1168,12 +1096,6 @@ variable "blob_network_error_requests_aperiodic_percentage" {
   default     = 0.9
 }
 
-variable "blob_network_error_requests_aperiodic_upper_strict" {
-  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
-  type        = bool
-  default     = false
-}
-
 # File_network_error_requests detectors
 
 variable "file_network_error_requests_disabled" {
@@ -1252,12 +1174,6 @@ variable "file_network_error_requests_aperiodic_percentage" {
   description = "Percentage for the file_network_error_requests block"
   type        = number
   default     = 0.9
-}
-
-variable "file_network_error_requests_aperiodic_upper_strict" {
-  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
-  type        = bool
-  default     = false
 }
 
 # Queue_network_error_requests detectors
@@ -1340,12 +1256,6 @@ variable "queue_network_error_requests_aperiodic_percentage" {
   default     = 0.9
 }
 
-variable "queue_network_error_requests_aperiodic_upper_strict" {
-  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
-  type        = bool
-  default     = false
-}
-
 # Table_network_error_requests detectors
 
 variable "table_network_error_requests_disabled" {
@@ -1424,12 +1334,6 @@ variable "table_network_error_requests_aperiodic_percentage" {
   description = "Percentage for the table_network_error_requests block"
   type        = number
   default     = 0.9
-}
-
-variable "table_network_error_requests_aperiodic_upper_strict" {
-  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
-  type        = bool
-  default     = false
 }
 
 # Blob_throttling_error_requests detectors
@@ -1512,12 +1416,6 @@ variable "blob_throttling_error_requests_aperiodic_percentage" {
   default     = 0.9
 }
 
-variable "blob_throttling_error_requests_aperiodic_upper_strict" {
-  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
-  type        = bool
-  default     = false
-}
-
 # File_throttling_error_requests detectors
 
 variable "file_throttling_error_requests_disabled" {
@@ -1596,12 +1494,6 @@ variable "file_throttling_error_requests_aperiodic_percentage" {
   description = "Percentage for the file_throttling_error_requests block"
   type        = number
   default     = 0.9
-}
-
-variable "file_throttling_error_requests_aperiodic_upper_strict" {
-  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
-  type        = bool
-  default     = false
 }
 
 # Queue_throttling_error_requests detectors
@@ -1684,12 +1576,6 @@ variable "queue_throttling_error_requests_aperiodic_percentage" {
   default     = 0.9
 }
 
-variable "queue_throttling_error_requests_aperiodic_upper_strict" {
-  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
-  type        = bool
-  default     = false
-}
-
 # Table_throttling_error_requests detectors
 
 variable "table_throttling_error_requests_disabled" {
@@ -1768,12 +1654,6 @@ variable "table_throttling_error_requests_aperiodic_percentage" {
   description = "Percentage for the table_throttling_error_requests block"
   type        = number
   default     = 0.9
-}
-
-variable "table_throttling_error_requests_aperiodic_upper_strict" {
-  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
-  type        = bool
-  default     = false
 }
 
 # Blob_server_other_error_requests detectors
@@ -1856,12 +1736,6 @@ variable "blob_server_other_error_requests_aperiodic_percentage" {
   default     = 0.9
 }
 
-variable "blob_server_other_error_requests_aperiodic_upper_strict" {
-  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
-  type        = bool
-  default     = false
-}
-
 # file_server_other_error_requests detectors
 
 variable "file_server_other_error_requests_disabled" {
@@ -1940,12 +1814,6 @@ variable "file_server_other_error_requests_aperiodic_percentage" {
   description = "Percentage for the file_server_other_error_requests block"
   type        = number
   default     = 0.9
-}
-
-variable "file_server_other_error_requests_aperiodic_upper_strict" {
-  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
-  type        = bool
-  default     = false
 }
 
 # Queue_server_other_error_requests detectors
@@ -2028,12 +1896,6 @@ variable "queue_server_other_error_requests_aperiodic_percentage" {
   default     = 0.9
 }
 
-variable "queue_server_other_error_requests_aperiodic_upper_strict" {
-  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
-  type        = bool
-  default     = false
-}
-
 # Table_server_other_error_requests detectors
 
 variable "table_server_other_error_requests_disabled" {
@@ -2112,12 +1974,6 @@ variable "table_server_other_error_requests_aperiodic_percentage" {
   description = "Percentage for the table_server_other_error_requests block"
   type        = number
   default     = 0.9
-}
-
-variable "table_server_other_error_requests_aperiodic_upper_strict" {
-  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
-  type        = bool
-  default     = false
 }
 
 # Blob_client_other_error_requests detectors
@@ -2200,12 +2056,6 @@ variable "blob_client_other_error_requests_aperiodic_percentage" {
   default     = 0.9
 }
 
-variable "blob_client_other_error_requests_aperiodic_upper_strict" {
-  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
-  type        = bool
-  default     = false
-}
-
 # File_client_other_error_requests detectors
 
 variable "file_client_other_error_requests_disabled" {
@@ -2284,12 +2134,6 @@ variable "file_client_other_error_requests_aperiodic_percentage" {
   description = "Percentage for the file_client_other_error_requests block"
   type        = number
   default     = 0.9
-}
-
-variable "file_client_other_error_requests_aperiodic_upper_strict" {
-  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
-  type        = bool
-  default     = false
 }
 
 # Queue_client_other_error_requests detectors
@@ -2372,12 +2216,6 @@ variable "queue_client_other_error_requests_aperiodic_percentage" {
   default     = 0.9
 }
 
-variable "queue_client_other_error_requests_aperiodic_upper_strict" {
-  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
-  type        = bool
-  default     = false
-}
-
 # Table_client_other_error_requests detectors
 
 variable "table_client_other_error_requests_disabled" {
@@ -2456,12 +2294,6 @@ variable "table_client_other_error_requests_aperiodic_percentage" {
   description = "Percentage for the table_client_other_error_requests block"
   type        = number
   default     = 0.9
-}
-
-variable "table_client_other_error_requests_aperiodic_upper_strict" {
-  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
-  type        = bool
-  default     = false
 }
 
 # Blob_authorization_error_requests detectors
@@ -2544,12 +2376,6 @@ variable "blob_authorization_error_requests_aperiodic_percentage" {
   default     = 0.9
 }
 
-variable "blob_authorization_error_requests_aperiodic_upper_strict" {
-  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
-  type        = bool
-  default     = false
-}
-
 # File_authorization_error_requests detectors
 
 variable "file_authorization_error_requests_disabled" {
@@ -2628,12 +2454,6 @@ variable "file_authorization_error_requests_aperiodic_percentage" {
   description = "Percentage for the file_authorization_error_requests block"
   type        = number
   default     = 0.9
-}
-
-variable "file_authorization_error_requests_aperiodic_upper_strict" {
-  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
-  type        = bool
-  default     = false
 }
 
 # Queue_authorization_error_requests detectors
@@ -2716,12 +2536,6 @@ variable "queue_authorization_error_requests_aperiodic_percentage" {
   default     = 0.9
 }
 
-variable "queue_authorization_error_requests_aperiodic_upper_strict" {
-  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
-  type        = bool
-  default     = false
-}
-
 # Table_authorization_error_requests detectors
 
 variable "table_authorization_error_requests_disabled" {
@@ -2800,10 +2614,4 @@ variable "table_authorization_error_requests_aperiodic_percentage" {
   description = "Percentage for the table_authorization_error_requests block"
   type        = number
   default     = 0.9
-}
-
-variable "table_authorization_error_requests_aperiodic_upper_strict" {
-  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
-  type        = bool
-  default     = false
 }
