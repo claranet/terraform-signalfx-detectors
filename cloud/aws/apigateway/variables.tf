@@ -136,13 +136,6 @@ variable "latency_aperiodic_percentage" {
   default     = 0.9
 }
 
-variable "latency_aperiodic_upper_strict" {
-  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
-  type        = bool
-  default     = False
-
-}
-
 # Http_5xx_errors detectors
 
 variable "http_5xx_errors_disabled" {
