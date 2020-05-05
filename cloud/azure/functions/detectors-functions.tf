@@ -26,7 +26,7 @@ resource "signalfx_detector" "http_5xx_errors_rate" {
 		B = data('FunctionExecutionCount', filter=filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'true') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.http_5xx_errors_rate_aggregation_function}
 		signal = ((A/B)*100).${var.http_5xx_errors_rate_transformation_function}(over='${var.http_5xx_errors_rate_transformation_window}').publish('signal')
 		aperiodic.above_or_below_detector(signal, ${var.http_5xx_errors_rate_threshold_critical}, 'above', lasting('${var.http_5xx_errors_rate_aperiodic_duration}', ${var.http_5xx_errors_rate_aperiodic_percentage})).publish('CRIT')
-		aperiodic.range_detector(signal, ${var.http_5xx_errors_rate_threshold_warning}, ${var.http_5xx_errors_rate_threshold_critical}, 'within_range', lasting('${var.http_5xx_errors_rate_aperiodic_duration}', ${var.http_5xx_errors_rate_aperiodic_percentage}), upper_strict=${var.http_5xx_errors_rate_aperiodic_upper_strict}).publish('WARN')
+		aperiodic.range_detector(signal, ${var.http_5xx_errors_rate_threshold_warning}, ${var.http_5xx_errors_rate_threshold_critical}, 'within_range', lasting('${var.http_5xx_errors_rate_aperiodic_duration}', ${var.http_5xx_errors_rate_aperiodic_percentage}), upper_strict=False).publish('WARN')
 	EOF
 
 	rule {
@@ -55,7 +55,7 @@ resource "signalfx_detector" "high_connections_count" {
 		from signalfx.detectors.aperiodic import aperiodic
 		signal = data('AppConnections', filter=filter('resource_type', 'Microsoft.Web/sites/slots') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.high_connections_count_aggregation_function}.${var.high_connections_count_transformation_function}(over='${var.high_connections_count_transformation_window}').publish('signal')
 		aperiodic.above_or_below_detector(signal, ${var.high_connections_count_threshold_critical}, 'above', lasting('${var.high_connections_count_aperiodic_duration}', ${var.high_connections_count_aperiodic_percentage})).publish('CRIT')
-		aperiodic.range_detector(signal, ${var.high_connections_count_threshold_warning}, ${var.high_connections_count_threshold_critical}, 'within_range', lasting('${var.high_connections_count_aperiodic_duration}', ${var.high_connections_count_aperiodic_percentage}), upper_strict=${var.high_connections_count_aperiodic_upper_strict}).publish('WARN')
+		aperiodic.range_detector(signal, ${var.high_connections_count_threshold_warning}, ${var.high_connections_count_threshold_critical}, 'within_range', lasting('${var.high_connections_count_aperiodic_duration}', ${var.high_connections_count_aperiodic_percentage}), upper_strict=False).publish('WARN')
 	EOF
 
 	rule {
@@ -84,7 +84,7 @@ resource "signalfx_detector" "high_threads_count" {
 		from signalfx.detectors.aperiodic import aperiodic
 		signal = data('Threads', filter=filter('resource_type', 'Microsoft.Web/sites/slots') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.high_threads_count_aggregation_function}.${var.high_threads_count_transformation_function}(over='${var.high_threads_count_transformation_window}').publish('signal')
 		aperiodic.above_or_below_detector(signal, ${var.high_threads_count_threshold_critical}, 'above', lasting('${var.high_threads_count_aperiodic_duration}', ${var.high_threads_count_aperiodic_percentage})).publish('CRIT')
-		aperiodic.range_detector(signal, ${var.high_threads_count_threshold_warning}, ${var.high_threads_count_threshold_critical}, 'within_range', lasting('${var.high_threads_count_aperiodic_duration}', ${var.high_threads_count_aperiodic_percentage}), upper_strict=${var.high_threads_count_aperiodic_upper_strict}).publish('WARN')
+		aperiodic.range_detector(signal, ${var.high_threads_count_threshold_warning}, ${var.high_threads_count_threshold_critical}, 'within_range', lasting('${var.high_threads_count_aperiodic_duration}', ${var.high_threads_count_aperiodic_percentage}), upper_strict=False).publish('WARN')
 	EOF
 
 	rule {
