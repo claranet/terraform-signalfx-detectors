@@ -179,7 +179,7 @@ resource "signalfx_detector" "backend_latency" {
 		from signalfx.detectors.aperiodic import aperiodic
 		signal = data('Latency', filter=filter('namespace', 'AWS/ELB') and filter('stat', 'mean') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom})${var.backend_latency_aggregation_function}.${var.backend_latency_transformation_function}(over='${var.backend_latency_transformation_window}').publish('signal')
 		aperiodic.above_or_below_detector(signal, ${var.backend_latency_threshold_critical}, 'above', lasting('${var.backend_latency_aperiodic_duration}', ${var.backend_latency_aperiodic_percentage})).publish('CRIT')
-		aperiodic.range_detector(signal, ${var.backend_latency_threshold_warning}, ${var.backend_latency_threshold_critical}, 'within_range', lasting('${var.backend_latency_aperiodic_duration}', ${var.backend_latency_aperiodic_percentage}), upper_strict=${var.backend_latency_aperiodic_upper_strict}).publish('WARN')
+		aperiodic.range_detector(signal, ${var.backend_latency_threshold_warning}, ${var.backend_latency_threshold_critical}, 'within_range', lasting('${var.backend_latency_aperiodic_duration}', ${var.backend_latency_aperiodic_percentage}), upper_strict=False).publish('WARN')
 	EOF
 
   rule {
