@@ -204,12 +204,6 @@ variable "failed_messages_aperiodic_percentage" {
   default     = 0.9
 }
 
-variable "failed_messages_aperiodic_upper_strict" {
-  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
-  type        = bool
-  default     = false
-}
-
 # unmatched_events detectors
 
 variable "unmatched_events_disabled" {
@@ -288,10 +282,4 @@ variable "unmatched_events_aperiodic_percentage" {
   description = "Percentage for the unmatched_events block"
   type        = number
   default     = 0.9
-}
-
-variable "unmatched_events_aperiodic_upper_strict" {
-  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
-  type        = bool
-  default     = false
 }
