@@ -204,12 +204,6 @@ variable "failed_requests_aperiodic_percentage" {
   default     = 0.9
 }
 
-variable "failed_requests_aperiodic_upper_strict" {
-  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
-  type        = bool
-  default     = false
-}
-
 # Conversion_errors detectors
 
 variable "conversion_errors_disabled" {
