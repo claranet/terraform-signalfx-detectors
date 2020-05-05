@@ -36,6 +36,26 @@ variable "detectors_disabled" {
   default     = false
 }
 
+# Kubernetes ingress detectors specific
+
+variable "heartbeat_disabled" {
+  description = "Disable all alerting rules for heartbeat detector"
+  type        = bool
+  default     = null
+}
+
+variable "heartbeat_notifications" {
+  description = "Notification recipients list for every alerting rules of heartbeat detector"
+  type        = list
+  default     = []
+}
+
+variable "heartbeat_timeframe" {
+  description = "Timeframe for system not reporting detector (i.e. \"10m\")"
+  type        = string
+  default     = "20m"
+}
+
 # Nginx_ingress_too_many_5xx detectors
 
 variable "nginx_ingress_too_many_5xx_disabled" {
@@ -77,7 +97,7 @@ variable "nginx_ingress_too_many_5xx_notifications_critical" {
 variable "nginx_ingress_too_many_5xx_aggregation_function" {
   description = "Aggregation function and group by for nginx_ingress_too_many_5xx detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['controller_class', 'ingress'])"
+  default     = ".sum(by=['Ingress'])"
 }
 
 variable "nginx_ingress_too_many_5xx_transformation_function" {
@@ -114,12 +134,6 @@ variable "nginx_ingress_too_many_5xx_aperiodic_percentage" {
   description = "Percentage for the nginx_ingress_too_many_5xx block"
   type        = number
   default     = 0.9
-}
-
-variable "nginx_ingress_too_many_5xx_aperiodic_upper_strict" {
-  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
-  type        = bool
-  default     = false
 }
 
 # Nginx_ingress_too_many_4xx detectors
@@ -163,7 +177,7 @@ variable "nginx_ingress_too_many_4xx_notifications_critical" {
 variable "nginx_ingress_too_many_4xx_aggregation_function" {
   description = "Aggregation function and group by for nginx_ingress_too_many_4xx detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['controller_class', 'ingress'])"
+  default     = ".sum(by=['Ingress'])"
 }
 
 variable "nginx_ingress_too_many_4xx_transformation_function" {
@@ -200,10 +214,4 @@ variable "nginx_ingress_too_many_4xx_aperiodic_percentage" {
   description = "Percentage for the nginx_ingress_too_many_4xx block"
   type        = number
   default     = 0.9
-}
-
-variable "nginx_ingress_too_many_4xx_aperiodic_upper_strict" {
-  description = "If True, compare stream against upper with strict inequality; if False, non-strict"
-  type        = bool
-  default     = false
 }
