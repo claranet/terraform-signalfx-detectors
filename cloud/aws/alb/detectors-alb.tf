@@ -55,7 +55,7 @@ resource "signalfx_detector" "latency" {
 		from signalfx.detectors.aperiodic import aperiodic
 		signal = data('TargetResponseTime', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'mean') and filter('TargetGroup', '*') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom})${var.latency_aggregation_function}.${var.latency_transformation_function}(over='${var.latency_transformation_window}').publish('signal')
 		aperiodic.above_or_below_detector(signal, ${var.latency_threshold_critical}, 'above', lasting('${var.latency_aperiodic_duration}', ${var.latency_aperiodic_percentage})).publish('CRIT')
-    aperiodic.range_detector(signal, ${var.latency_threshold_warning}, ${var.latency_threshold_critical}, 'within_range', lasting('${var.latency_aperiodic_duration}', ${var.latency_aperiodic_percentage}), upper_strict=False).publish('WARN')
+		aperiodic.range_detector(signal, ${var.latency_threshold_warning}, ${var.latency_threshold_critical}, 'within_range', lasting('${var.latency_aperiodic_duration}', ${var.latency_aperiodic_percentage}), upper_strict=False).publish('WARN')
 	EOF
 
   rule {
