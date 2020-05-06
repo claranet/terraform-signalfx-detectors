@@ -1,0 +1,62 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Minimal CI
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  push:
+#    branches: [ master ]
+#  pull_request:
+#    branches: [ master ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  test:
+    # The type of runner that the job will run on
+    #runs-on: hashicorp/terraform:full
+    runs-on: ubuntu-latest
+    env:
+      TF_VAR_sfx_token: ${{ secrets.SFX_TOKEN }}
+      TF_VAR_pagerduty_integration_id: ${{ secrets.PAGERDUTY_INTEGRATION }}
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
+      with:
+        terraform_version: 0.12.24
+        #terraform_wrapper: false
+
+    - name: Setup env
+      run: |
+        set -xeuo pipefail
+        echo Setup terraform test environment
+        TF_REF=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; NF>1{print $NF}')
+        ./scripts/gen_tf.sh "${TF_REF}" > test/${TF_REF}.tf
+    
+    - name: Terraform init
+      run: terraform init test
+
+    - name: Terraform fmt
+      run: terraform fmt -check test
+
+    - name: Terraform validate
+      run: terraform validate test
+
+    - name: Terraform Plan
+      run: terraform plan -input=false -lock=false -detailed-exitcode test || if [ $? -ne 2 ]; then exit $?; fi
+
+    - name: Terraform Apply
+      #if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+      run: terraform apply -input=false -lock=false -auto-approve test
+
+    - name: Terraform Destroy
+      #if: github.ref == 'refs/heads/master' && github.event_name == 'push' && ${{ always() }}
+      if: ${{ always() }}
+      run: terraform destroy -input=false -lock=false -auto-approve test
+
