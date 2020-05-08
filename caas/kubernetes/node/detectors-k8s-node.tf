@@ -21,9 +21,9 @@ resource "signalfx_detector" "ready" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Kubernetes node ready state"
 
 	program_text = <<-EOF
-		signal = data('kubernetes.node_ready' and ${module.filter-tags.filter_custom})${var.ready_aggregation_function}.${var.ready_transformation_function}(over='${var.ready_transformation_window}')${var.ready_aggregation_function2}.publish('signal')
-		detect(when(signal >= ${var.ready_threshold_critical})).publish('CRIT')
-		detect(when(signal >= ${var.ready_threshold_warning}) and when(signal < ${var.ready_threshold_critical})).publish('WARN')
+		signal = data('kubernetes.node_ready' and ${module.filter-tags.filter_custom})${var.ready_aggregation_function}.${var.ready_transformation_function}(over='${var.ready_transformation_window}').publish('signal')
+		detect(when(signal < ${var.ready_threshold_critical})).publish('CRIT')
+		detect(when(signal < ${var.ready_threshold_warning}) and when(signal >= ${var.ready_threshold_critical})).publish('WARN')
 	EOF
 
 	rule {
