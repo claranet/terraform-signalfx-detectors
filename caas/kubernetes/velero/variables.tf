@@ -97,7 +97,7 @@ variable "velero_scheduled_backup_missing_notifications_critical" {
 variable "velero_scheduled_backup_missing_aggregation_function" {
   description = "Aggregation function and group by for velero_scheduled_backup_missing detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['cluster-name'])"
+  default     = ".sum(by=['kubernetes_cluster', 'schedule'])"
 }
 
 variable "velero_scheduled_backup_missing_transformation_function" {
