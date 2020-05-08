@@ -100,12 +100,6 @@ variable "ready_aggregation_function" {
   default     = ".sum(by=['kubernetes_node', 'kubernetes_cluster'])"
 }
 
-variable "ready_aggregation_function2" {
-  description = "Aggregation function and group by for ready detector (i.e. \".mean(by=['host'])\")"
-  type        = string
-  default     = ".count(by=['kubernetes_cluster'])"
-}
-
 variable "ready_transformation_function" {
   description = "Transformation function for ready detector (mean, min, max)"
   type        = string
@@ -115,31 +109,19 @@ variable "ready_transformation_function" {
 variable "ready_transformation_window" {
   description = "Transformation window for ready detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
-  default     = "1m"
+  default     = "6m"
 }
 
 variable "ready_threshold_critical" {
   description = "Critical threshold for ready detector"
   type        = number
-  default     = 45
+  default     = 1
 }
 
 variable "ready_threshold_warning" {
   description = "Warning threshold for ready detector"
   type        = number
-  default     = 40
-}
-
-variable "ready_aperiodic_duration" {
-  description = "Duration for the ready block"
-  type        = string
-  default     = "10m"
-}
-
-variable "ready_aperiodic_percentage" {
-  description = "Percentage for the ready block"
-  type        = number
-  default     = 0.9
+  default     = .5
 }
 
 # Volume_space detectors
