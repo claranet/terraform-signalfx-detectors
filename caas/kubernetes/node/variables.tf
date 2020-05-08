@@ -115,13 +115,13 @@ variable "ready_transformation_window" {
 variable "ready_threshold_critical" {
   description = "Critical threshold for ready detector"
   type        = number
-  default     = 1
+  default     = .5
 }
 
 variable "ready_threshold_warning" {
   description = "Warning threshold for ready detector"
   type        = number
-  default     = .5
+  default     = 1
 }
 
 # Volume_space detectors
