@@ -183,7 +183,7 @@ variable "volume_space_notifications_critical" {
 variable "volume_space_aggregation_function" {
   description = "Aggregation function and group by for volume_space detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean()"
+  default     = ""
 }
 
 variable "volume_space_transformation_function" {
