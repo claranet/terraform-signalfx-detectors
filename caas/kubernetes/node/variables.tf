@@ -97,7 +97,7 @@ variable "ready_notifications_critical" {
 variable "ready_aggregation_function" {
   description = "Aggregation function and group by for ready detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['kubernetes_node', 'kubernetes_cluster'])"
+  default     = ""
 }
 
 variable "ready_transformation_function" {
