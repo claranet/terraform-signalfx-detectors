@@ -4,7 +4,7 @@ resource "signalfx_detector" "heartbeat" {
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
 		signal = data('machine_memory_bytes' and ${module.filter-tags.filter_custom})
-		not_reporting.detector(stream=signal, resource_identifier=['kubernetes_cluster'], duration='${var.heartbeat_timeframe}').publish('CRIT')
+		not_reporting.detector(stream=signal, resource_identifier=['host', 'kubernetes_node_uid'], duration='${var.heartbeat_timeframe}').publish('CRIT')
 	EOF
 
 	rule {
