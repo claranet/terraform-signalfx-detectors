@@ -4,7 +4,7 @@ resource "signalfx_detector" "nginx_ingress_too_many_5xx" {
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
 		A = data('nginx_ingress_controller_requests', filter=filter('status', '5*') and ${module.filter-tags.filter_custom})${var.nginx_ingress_too_many_5xx_aggregation_function}
-		B = data('nginx_ingress_controller_requests' and ${module.filter-tags.filter_custom})${var.nginx_ingress_too_many_5xx_aggregation_function}
+		B = data('nginx_ingress_controller_requests', ${module.filter-tags.filter_custom})${var.nginx_ingress_too_many_5xx_aggregation_function}
 		signal = ((A/B)*100).${var.nginx_ingress_too_many_5xx_transformation_function}(over='${var.nginx_ingress_too_many_5xx_transformation_window}').publish('signal')
 		aperiodic.above_or_below_detector(signal, ${var.nginx_ingress_too_many_5xx_threshold_critical}, 'above', lasting('${var.nginx_ingress_too_many_5xx_aperiodic_duration}', ${var.nginx_ingress_too_many_5xx_aperiodic_percentage})).publish('CRIT')
 		aperiodic.range_detector(signal, ${var.nginx_ingress_too_many_5xx_threshold_warning}, ${var.nginx_ingress_too_many_5xx_threshold_critical}, 'within_range', lasting('${var.nginx_ingress_too_many_5xx_aperiodic_duration}', ${var.nginx_ingress_too_many_5xx_aperiodic_percentage}), upper_strict=False).publish('WARN')
@@ -36,7 +36,7 @@ resource "signalfx_detector" "nginx_ingress_too_many_4xx" {
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
 		A = data('nginx_ingress_controller_requests', filter=filter('status', '4*') and ${module.filter-tags.filter_custom})${var.nginx_ingress_too_many_4xx_aggregation_function}
-		B = data('nginx_ingress_controller_requests' and ${module.filter-tags.filter_custom})${var.nginx_ingress_too_many_4xx_aggregation_function}
+		B = data('nginx_ingress_controller_requests', ${module.filter-tags.filter_custom})${var.nginx_ingress_too_many_4xx_aggregation_function}
 		signal = ((A/B)*100).${var.nginx_ingress_too_many_4xx_transformation_function}(over='${var.nginx_ingress_too_many_4xx_transformation_window}').publish('signal')
 		aperiodic.above_or_below_detector(signal, ${var.nginx_ingress_too_many_4xx_threshold_critical}, 'above', lasting('${var.nginx_ingress_too_many_4xx_aperiodic_duration}', ${var.nginx_ingress_too_many_4xx_aperiodic_percentage})).publish('CRIT')
 		aperiodic.range_detector(signal, ${var.nginx_ingress_too_many_4xx_threshold_warning}, ${var.nginx_ingress_too_many_4xx_threshold_critical}, 'within_range', lasting('${var.nginx_ingress_too_many_4xx_aperiodic_duration}', ${var.nginx_ingress_too_many_4xx_aperiodic_percentage}), upper_strict=False).publish('WARN')
