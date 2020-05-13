@@ -97,7 +97,7 @@ variable "ready_notifications_critical" {
 variable "ready_aggregation_function" {
   description = "Aggregation function and group by for ready detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['kubernetes_node', 'kubernetes_cluster'])"
+  default     = ""
 }
 
 variable "ready_transformation_function" {
@@ -115,13 +115,13 @@ variable "ready_transformation_window" {
 variable "ready_threshold_critical" {
   description = "Critical threshold for ready detector"
   type        = number
-  default     = 1
+  default     = 0.5
 }
 
 variable "ready_threshold_warning" {
   description = "Warning threshold for ready detector"
   type        = number
-  default     = 0.5
+  default     = 1
 }
 
 # Volume_space detectors
