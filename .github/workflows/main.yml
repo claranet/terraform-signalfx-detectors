@@ -36,7 +36,8 @@ jobs:
       run: |
         set -xeuo pipefail
         echo Setup terraform test environment
-        TF_REF=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; NF>1{print $NF}')
+        TF_REF=$(git rev-parse HEAD)
+        #TF_REF=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; NF>1{print $NF}')
         ./scripts/gen_tf.sh "${TF_REF}" > test/${TF_REF}.tf
     
     - name: Terraform init
