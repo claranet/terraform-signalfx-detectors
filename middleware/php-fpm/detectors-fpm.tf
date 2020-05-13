@@ -3,7 +3,7 @@ resource "signalfx_detector" "heartbeat" {
 
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
-		signal = data('phpfpm_requests' and ${module.filter-tags.filter_custom})
+		signal = data('phpfpm_requests', ${module.filter-tags.filter_custom})
 		not_reporting.detector(stream=signal, resource_identifier=['host'], duration='${var.heartbeat_timeframe}').publish('CRIT')
 	EOF
 
@@ -21,11 +21,11 @@ resource "signalfx_detector" "php_fpm_connect_idle" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] PHP-FPM busy workers"
 
 	program_text = <<-EOF
-		A = data('phpfpm_processes.active' and ${module.filter-tags.filter_custom})${var.php_fpm_connect_idle_aggregation_function}
-		B = data('phpfpm_processes.total' and ${module.filter-tags.filter_custom})${var.php_fpm_connect_idle_aggregation_function}
+		A = data('phpfpm_processes.active', ${module.filter-tags.filter_custom})${var.php_fpm_connect_idle_aggregation_function}
+		B = data('phpfpm_processes.total', ${module.filter-tags.filter_custom})${var.php_fpm_connect_idle_aggregation_function}
 		signal = ((A/B)*100).${var.php_fpm_connect_idle_transformation_function}(over='${var.php_fpm_connect_idle_transformation_window}').publish('signal')
 		detect(when(signal > ${var.php_fpm_connect_idle_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.php_fpm_connect_idle_threshold_warning}) AND when(signal <= ${var.php_fpm_connect_idle_threshold_critical})).publish('WARN')
+		detect(when(signal > ${var.php_fpm_connect_idle_threshold_warning}) and when(signal <= ${var.php_fpm_connect_idle_threshold_critical})).publish('WARN')
 	EOF
 
 	rule {
