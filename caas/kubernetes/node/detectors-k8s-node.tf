@@ -3,8 +3,8 @@ resource "signalfx_detector" "heartbeat" {
 
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
-		signal = data('machine_memory_bytes' and ${module.filter-tags.filter_custom})
-		not_reporting.detector(stream=signal, resource_identifier=['kubernetes_node'], duration='${var.heartbeat_timeframe}').publish('CRIT')
+		signal = data('machine_memory_bytes', ${module.filter-tags.filter_custom})
+		not_reporting.detector(stream=signal, resource_identifier=['kubernetes_cluster'], duration='${var.heartbeat_timeframe}').publish('CRIT')
 	EOF
 
 	rule {
@@ -21,9 +21,9 @@ resource "signalfx_detector" "ready" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Kubernetes node ready state"
 
 	program_text = <<-EOF
-		signal = data('kubernetes.node_ready' and ${module.filter-tags.filter_custom})${var.ready_aggregation_function}.${var.ready_transformation_function}(over='${var.ready_transformation_window}').publish('signal')
-		detect(when(signal < ${var.ready_threshold_critical})).publish('CRIT')
-		detect(when(signal < ${var.ready_threshold_warning}) and when(signal >= ${var.ready_threshold_critical})).publish('WARN')
+		signal = data('kubernetes.node_ready', ${module.filter-tags.filter_custom})${var.ready_aggregation_function}.${var.ready_transformation_function}(over='${var.ready_transformation_window}')${var.ready_aggregation_function2}.publish('signal')
+		detect(when(signal >= ${var.ready_threshold_critical})).publish('CRIT')
+		detect(when(signal >= ${var.ready_threshold_warning}) and when(signal < ${var.ready_threshold_critical})).publish('WARN')
 	EOF
 
 	rule {
@@ -50,9 +50,9 @@ resource "signalfx_detector" "volume_space" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Kubernetes node volume space usage"
 
 	program_text = <<-EOF
-		A = data('kubernetes.volume_available_bytes' and ${module.filter-tags.filter_custom})${var.volume_space_aggregation_function}
-    B = data('kubernetes.volume_capacity_bytes' and ${module.filter-tags.filter_custom})${var.volume_space_aggregation_function}
-    signal = (((B-A)/B)*100).${var.volume_space_transformation_function}(over='${var.volume_space_transformation_window}').publish('signal')
+		A = data('kubernetes.volume_available_bytes', ${module.filter-tags.filter_custom})${var.volume_space_aggregation_function}
+		B = data('kubernetes.volume_capacity_bytes', ${module.filter-tags.filter_custom})${var.volume_space_aggregation_function}
+		signal = (((B-A)/B)*100).${var.volume_space_transformation_function}(over='${var.volume_space_transformation_window}').publish('signal')
 		detect(when(signal > ${var.volume_space_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.volume_space_threshold_warning}) and when(signal < ${var.volume_space_threshold_critical})).publish('WARN')
 	EOF
