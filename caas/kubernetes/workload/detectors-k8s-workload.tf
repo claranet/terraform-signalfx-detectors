@@ -1,10 +1,10 @@
 resource "signalfx_detector" "heartbeat" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Kubernetes no job completed"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Kubernetes API server heartbeat"
 
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
-		signal = data('kubernetes.job.completions' and ${module.filter-tags.filter_custom})
-		not_reporting.detector(stream=signal, resource_identifier=['kubernetes_name'], duration='${var.heartbeat_timeframe}').publish('CRIT')
+		signal = data('kubernetes.job.failed', ${module.filter-tags.filter_custom})
+		not_reporting.detector(stream=signal, resource_identifier=['host'], duration='${var.heartbeat_timeframe}').publish('CRIT')
 	EOF
 
 	rule {
@@ -21,8 +21,8 @@ resource "signalfx_detector" "replica_available" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Kubernetes workload available replicas"
 
 	program_text = <<-EOF
-		A = data('kubernetes.deployment.desired' and ${module.filter-tags.filter_custom})${var.replica_available_aggregation_function}
-		B = data('kubernetes.deployment.available' and ${module.filter-tags.filter_custom})${var.replica_available_aggregation_function}
+		A = data('kubernetes.deployment.desired', ${module.filter-tags.filter_custom})${var.replica_available_aggregation_function}
+		B = data('kubernetes.deployment.available', ${module.filter-tags.filter_custom})${var.replica_available_aggregation_function}
 		signal = (A-B).${var.replica_available_transformation_function}(over='${var.replica_available_transformation_window}').publish('signal')
 		detect(when(signal < ${var.replica_available_threshold_critical}) and when(B < ${var.replica_available_threshold_number_requests})).publish('CRIT')
 		detect(when(signal < ${var.replica_available_threshold_warning}) and when(B < ${var.replica_available_threshold_number_requests}) and when(signal >= ${var.replica_available_threshold_critical})).publish('WARN')
@@ -53,8 +53,8 @@ resource "signalfx_detector" "replica_ready" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Kubernetes workload ready replicas"
 
 	program_text = <<-EOF
-		A = data('kubernetes.replica_set.desired' and ${module.filter-tags.filter_custom})${var.replica_ready_aggregation_function}
-		B = data('kubernetes.replica_set.available' and ${module.filter-tags.filter_custom})${var.replica_ready_aggregation_function}
+		A = data('kubernetes.replica_set.desired', ${module.filter-tags.filter_custom})${var.replica_ready_aggregation_function}
+		B = data('kubernetes.replica_set.available', ${module.filter-tags.filter_custom})${var.replica_ready_aggregation_function}
 		signal = (A-B).${var.replica_ready_transformation_function}(over='${var.replica_ready_transformation_window}').publish('signal')
 		detect(when(signal < ${var.replica_ready_threshold_critical}) and when(B < ${var.replica_ready_threshold_number_requests})).publish('CRIT')
 		detect(when(signal < ${var.replica_ready_threshold_warning}) and when(B < ${var.replica_ready_threshold_number_requests}) and when(signal >= ${var.replica_ready_threshold_critical})).publish('WARN')
