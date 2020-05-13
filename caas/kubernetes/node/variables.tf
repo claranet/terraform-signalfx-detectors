@@ -115,7 +115,7 @@ variable "ready_transformation_window" {
 variable "ready_threshold_critical" {
   description = "Critical threshold for ready detector"
   type        = number
-  default     = .5
+  default     = 0.5
 }
 
 variable "ready_threshold_warning" {
