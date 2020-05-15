@@ -3,8 +3,8 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
-		signal = data('UsedCapacity', filter=filter('resource_type', 'Microsoft.Storage/storageAccounts') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}).publish('signal')
-		not_reporting.detector(stream=signal, resource_identifier=['azure_resource_id'], duration='${var.heartbeat_timeframe}').publish('CRIT')
+		signal = data('Transactions', filter=filter('resource_type', 'Microsoft.Storage/storageAccounts') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}).publish('signal')
+		not_reporting.detector(stream=signal, resource_identifier=['azure_resource_name', 'azure_resource_group_name', 'azure_region'], duration='${var.heartbeat_timeframe}').publish('CRIT')
 	EOF
 
   rule {
