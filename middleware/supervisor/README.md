@@ -53,4 +53,5 @@ Creates SignalFx detectors with the following checks:
 
 ## Related documentation
 
+[Official documentation for supervisor](https://docs.signalfx.com/en/latest/integrations/agent/monitors/supervisor.html)
 [Supervisor state definition](http://supervisord.org/subprocess.html#process-states)
