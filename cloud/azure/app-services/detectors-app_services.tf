@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Services heartbeat"
+  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Service heartbeat"
 
   program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
