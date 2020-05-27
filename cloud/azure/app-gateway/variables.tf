@@ -165,7 +165,7 @@ variable "backend_connect_time_aggregation_function" {
 variable "backend_connect_time_transformation_function" {
   description = "Transformation function for backend_connect_time detector (mean, min, max)"
   type        = string
-  default     = "max"
+  default     = "min"
 }
 
 variable "backend_connect_time_transformation_window" {
@@ -381,7 +381,7 @@ variable "http_4xx_errors_aggregation_function" {
 variable "http_4xx_errors_transformation_function" {
   description = "Transformation function for http_4xx_errors detector (mean, min, max)"
   type        = string
-  default     = "max"
+  default     = "min"
 }
 
 variable "http_4xx_errors_transformation_window" {
@@ -461,7 +461,7 @@ variable "http_5xx_errors_aggregation_function" {
 variable "http_5xx_errors_transformation_function" {
   description = "Transformation function for http_5xx_errors detector (mean, min, max)"
   type        = string
-  default     = "max"
+  default     = "min"
 }
 
 variable "http_5xx_errors_transformation_window" {
@@ -541,7 +541,7 @@ variable "backend_http_4xx_errors_aggregation_function" {
 variable "backend_http_4xx_errors_transformation_function" {
   description = "Transformation function for backend_http_4xx_errors detector (mean, min, max)"
   type        = string
-  default     = "max"
+  default     = "min"
 }
 
 variable "backend_http_4xx_errors_transformation_window" {
@@ -621,7 +621,7 @@ variable "backend_http_5xx_errors_aggregation_function" {
 variable "backend_http_5xx_errors_transformation_function" {
   description = "Transformation function for backend_http_5xx_errors detector (mean, min, max)"
   type        = string
-  default     = "max"
+  default     = "min"
 }
 
 variable "backend_http_5xx_errors_transformation_window" {
