@@ -103,7 +103,7 @@ variable "blobservices_requests_error_aggregation_function" {
 variable "blobservices_requests_error_transformation_function" {
   description = "Transformation function for blobservices_requests_error detector (mean, min, max)"
   type        = string
-  default     = "max"
+  default     = "min"
 }
 
 variable "blobservices_requests_error_transformation_window" {
@@ -183,7 +183,7 @@ variable "fileservices_requests_error_aggregation_function" {
 variable "fileservices_requests_error_transformation_function" {
   description = "Transformation function for fileservices_requests_error detector (mean, min, max)"
   type        = string
-  default     = "max"
+  default     = "min"
 }
 
 variable "fileservices_requests_error_transformation_window" {
@@ -263,7 +263,7 @@ variable "queueservices_requests_error_aggregation_function" {
 variable "queueservices_requests_error_transformation_function" {
   description = "Transformation function for queueservices_requests_error detector (mean, min, max)"
   type        = string
-  default     = "max"
+  default     = "min"
 }
 
 variable "queueservices_requests_error_transformation_window" {
@@ -343,7 +343,7 @@ variable "tableservices_requests_error_aggregation_function" {
 variable "tableservices_requests_error_transformation_function" {
   description = "Transformation function for tableservices_requests_error detector (mean, min, max)"
   type        = string
-  default     = "max"
+  default     = "min"
 }
 
 variable "tableservices_requests_error_transformation_window" {
