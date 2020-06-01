@@ -27,3 +27,18 @@ output "http_content_length_id" {
   description = "id for detector http_content_length"
   value       = signalfx_detector.http_content_length.*.id
 }
+
+output "certificate_expiration_date_id" {
+  description = "id for detector certificate_expiration_date"
+  value       = signalfx_detector.certificate_expiration_date.*.id
+}
+
+output "tls_certificate_expiration_id" {
+  description = "id for detector tls_certificate_expiration"
+  value       = signalfx_detector.tls_certificate_expiration.*.id
+}
+
+output "invalid_tls_certificate_id" {
+  description = "id for detector invalid_tls_certificate"
+  value       = signalfx_detector.invalid_tls_certificate.*.id
+}
