@@ -68,7 +68,7 @@ resource "signalfx_detector" "http_regex_matched" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] HTTP regex matched"
 
 	program_text = <<-EOF
-		signal = data('http.regex_matched', ${module.filter-tags.filter_custom}).count()${var.http_regex_matched_aggregation_function}${var.http_regex_matched_transformation_function}(over='${var.http_regex_matched_transformation_window}').publish('signal')
+		signal = data('http.regex_matched', ${module.filter-tags.filter_custom}).count()${var.http_regex_matched_aggregation_function}.${var.http_regex_matched_transformation_function}(over='${var.http_regex_matched_transformation_window}').publish('signal')
 		detect(when(signal < ${var.http_regex_matched_threshold_critical})).publish('CRIT')
 		detect(when(signal < ${var.http_regex_matched_threshold_warning}) and when(signal >= ${var.http_regex_matched_threshold_critical})).publish('WARN')
 	EOF
