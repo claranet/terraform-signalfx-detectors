@@ -313,7 +313,7 @@ variable "unhealthy_host_ratio_aggregation_function" {
 variable "unhealthy_host_ratio_transformation_function" {
   description = "Transformation function for unhealthy_host_ratio detector (mean, min, max)"
   type        = string
-  default     = "max"
+  default     = "min"
 }
 
 variable "unhealthy_host_ratio_transformation_window" {
