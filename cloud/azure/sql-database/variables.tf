@@ -53,7 +53,7 @@ variable "heartbeat_notifications" {
 variable "heartbeat_timeframe" {
   description = "Timeframe for system not reporting detector (i.e. \"10m\")"
   type        = string
-  default     = "20m"
+  default     = "5m"
 }
 
 # cpu detectors
