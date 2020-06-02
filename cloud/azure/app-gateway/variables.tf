@@ -414,6 +414,12 @@ variable "http_4xx_errors_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "http_4xx_errors_clear_duration" {
+  description = "Duration for the http_4xx_errors clear condition"
+  type        = string
+  default     = "15m"
+}
+
 # Http_5xx_errors detectors
 
 variable "http_5xx_errors_disabled" {
@@ -492,6 +498,12 @@ variable "http_5xx_errors_aperiodic_percentage" {
   description = "Percentage for the http_5xx_errors block"
   type        = number
   default     = 0.9
+}
+
+variable "http_5xx_errors_clear_duration" {
+  description = "Duration for the http_5xx_errors clear condition"
+  type        = string
+  default     = "15m"
 }
 
 # Backend_http_4xx_errors detectors
@@ -574,6 +586,12 @@ variable "backend_http_4xx_errors_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "backend_http_4xx_errors_clear_duration" {
+  description = "Duration for the backend_http_4xx_errors clear condition"
+  type        = string
+  default     = "15m"
+}
+
 # Backend_http_5xx_errors detectors
 
 variable "backend_http_5xx_errors_disabled" {
@@ -652,4 +670,10 @@ variable "backend_http_5xx_errors_aperiodic_percentage" {
   description = "Percentage for the backend_http_5xx_errors block"
   type        = number
   default     = 0.9
+}
+
+variable "backend_http_5xx_errors_clear_duration" {
+  description = "Duration for the backend_http_5xx_errors clear condition"
+  type        = string
+  default     = "15m"
 }
