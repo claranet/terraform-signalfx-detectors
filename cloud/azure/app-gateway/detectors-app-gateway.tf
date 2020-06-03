@@ -21,7 +21,7 @@ resource "signalfx_detector" "total_requests" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Gateway requests"
 
 	program_text = <<-EOF
-		signal = data('CurrentConnections', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}, rollup='sum')${var.total_requests_aggregation_function}.${var.total_requests_transformation_function}(over='${var.total_requests_transformation_window}').publish('signal')
+		signal = data('TotalRequests', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}, rollup='sum')${var.total_requests_aggregation_function}.${var.total_requests_transformation_function}(over='${var.total_requests_transformation_window}').publish('signal')
 		detect(when(signal < ${var.total_requests_threshold_critical})).publish('CRIT')
 	EOF
 
