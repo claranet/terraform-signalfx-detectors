@@ -1,8 +1,3 @@
-output "heartbeat_id" {
-  description = "id for detector heartbeat"
-  value       = signalfx_detector.heartbeat.*.id
-}
-
 output "search_latency_id" {
   description = "id for detector search_latency"
   value       = signalfx_detector.search_latency.*.id
