@@ -107,7 +107,7 @@ resource "signalfx_detector" "unhealthy_host_ratio" {
 	EOF
 
 	rule {
-		description           = "is too high > ${var.unhealthy_host_ratio_threshold_critical}"
+		description           = "is too high >= ${var.unhealthy_host_ratio_threshold_critical}"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.unhealthy_host_ratio_disabled_critical, var.unhealthy_host_ratio_disabled, var.detectors_disabled)
@@ -116,7 +116,7 @@ resource "signalfx_detector" "unhealthy_host_ratio" {
 	}
 
 	rule {
-		description           = "is too high > ${var.unhealthy_host_ratio_threshold_warning}"
+		description           = "is too high >= ${var.unhealthy_host_ratio_threshold_warning}"
 		severity              = "Warning"
 		detect_label          = "WARN"
 		disabled              = coalesce(var.unhealthy_host_ratio_disabled_warning, var.unhealthy_host_ratio_disabled, var.detectors_disabled)
