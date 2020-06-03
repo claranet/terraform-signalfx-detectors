@@ -97,7 +97,7 @@ variable "cpu_notifications_critical" {
 variable "cpu_aggregation_function" {
   description = "Aggregation function and group by for cpu detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
 variable "cpu_transformation_function" {
