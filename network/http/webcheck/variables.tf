@@ -70,20 +70,8 @@ variable "http_code_matched_disabled_critical" {
   default     = null
 }
 
-variable "http_code_matched_disabled_warning" {
-  description = "Disable warning alerting rule for http_code_matched detector"
-  type        = bool
-  default     = null
-}
-
 variable "http_code_matched_notifications" {
   description = "Notification recipients list for every alerting rules of http_code_matched detector"
-  type        = list
-  default     = []
-}
-
-variable "http_code_matched_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of http_code_matched detector"
   type        = list
   default     = []
 }
@@ -97,7 +85,7 @@ variable "http_code_matched_notifications_critical" {
 variable "http_code_matched_aggregation_function" {
   description = "Aggregation function and group by for http_code_matched detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".mean(by=['url']"
 }
 
 variable "http_code_matched_transformation_function" {
@@ -115,63 +103,7 @@ variable "http_code_matched_transformation_window" {
 variable "http_code_matched_threshold_critical" {
   description = "Critical threshold for http_code_matched detector"
   type        = number
-  default     = 3
-}
-
-variable "http_code_matched_threshold_warning" {
-  description = "Warning threshold for http_code_matched detector"
-  type        = number
-  default     = 5
-}
-
-# Http_status_code detectors
-
-variable "http_status_code_disabled" {
-  description = "Disable all alerting rules for http_status_code detector"
-  type        = bool
-  default     = null
-}
-
-variable "http_status_code_disabled_critical" {
-  description = "Disable critical alerting rule for http_status_code detector"
-  type        = bool
-  default     = null
-}
-
-variable "http_status_code_notifications" {
-  description = "Notification recipients list for every alerting rules of http_status_code detector"
-  type        = list
-  default     = []
-}
-
-variable "http_status_code_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of http_status_code detector"
-  type        = list
-  default     = []
-}
-
-variable "http_status_code_aggregation_function" {
-  description = "Aggregation function and group by for http_status_code detector (i.e. \".mean(by=['host'])\")"
-  type        = string
-  default     = ""
-}
-
-variable "http_status_code_transformation_function" {
-  description = "Transformation function for http_status_code detector (mean, min, max)"
-  type        = string
-  default     = "mean"
-}
-
-variable "http_status_code_transformation_window" {
-  description = "Transformation window for http_status_code detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "15m"
-}
-
-variable "http_status_code_threshold_critical" {
-  description = "Critical threshold for http_status_code detector"
-  type        = number
-  default     = 200
+  default     = 1
 }
 
 # Http_regex_matched detectors
@@ -188,20 +120,8 @@ variable "http_regex_matched_disabled_critical" {
   default     = null
 }
 
-variable "http_regex_matched_disabled_warning" {
-  description = "Disable warning alerting rule for http_regex_matched detector"
-  type        = bool
-  default     = null
-}
-
 variable "http_regex_matched_notifications" {
   description = "Notification recipients list for every alerting rules of http_regex_matched detector"
-  type        = list
-  default     = []
-}
-
-variable "http_regex_matched_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of http_regex_matched detector"
   type        = list
   default     = []
 }
@@ -215,7 +135,7 @@ variable "http_regex_matched_notifications_critical" {
 variable "http_regex_matched_aggregation_function" {
   description = "Aggregation function and group by for http_regex_matched detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".mean(by=['url']"
 }
 
 variable "http_regex_matched_transformation_function" {
@@ -233,13 +153,7 @@ variable "http_regex_matched_transformation_window" {
 variable "http_regex_matched_threshold_critical" {
   description = "Critical threshold for http_regex_matched detector"
   type        = number
-  default     = 3
-}
-
-variable "http_regex_matched_threshold_warning" {
-  description = "Warning threshold for http_regex_matched detector"
-  type        = number
-  default     = 5
+  default     = 1
 }
 
 # Http_response_time detectors
@@ -351,7 +265,7 @@ variable "http_content_length_notifications_critical" {
 variable "http_content_length_aggregation_function" {
   description = "Aggregation function and group by for http_content_length detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".mean(by=['url'])"
 }
 
 variable "http_content_length_transformation_function" {
@@ -419,7 +333,7 @@ variable "certificate_expiration_date_notifications_critical" {
 variable "certificate_expiration_date_aggregation_function" {
   description = "Aggregation function and group by for certificate_expiration_date detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".mean(by=['url'])"
 }
 
 variable "certificate_expiration_date_transformation_function" {
@@ -444,80 +358,6 @@ variable "certificate_expiration_date_threshold_warning" {
   description = "Warning threshold for certificate_expiration_date detector"
   type        = number
   default     = 30
-}
-
-# TLS_certificate_expiration detectors
-
-variable "tls_certificate_expiration_disabled" {
-  description = "Disable all alerting rules for tls_certificate_expiration detector"
-  type        = bool
-  default     = null
-}
-
-variable "tls_certificate_expiration_disabled_critical" {
-  description = "Disable critical alerting rule for tls_certificate_expiration detector"
-  type        = bool
-  default     = null
-}
-
-variable "tls_certificate_expiration_disabled_warning" {
-  description = "Disable warning alerting rule for tls_certificate_expiration detector"
-  type        = bool
-  default     = null
-}
-
-variable "tls_certificate_expiration_notifications" {
-  description = "Notification recipients list for every alerting rules of tls_certificate_expiration detector"
-  type        = list
-  default     = []
-}
-
-variable "tls_certificate_expiration_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of tls_certificate_expiration detector"
-  type        = list
-  default     = []
-}
-
-variable "tls_certificate_expiration_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of tls_certificate_expiration detector"
-  type        = list
-  default     = []
-}
-
-variable "tls_certificate_expiration_timeframe" {
-  description = "Number of days in seconds till certificate expires to include"
-  type        = string
-  default     = "432000"
-}
-
-variable "tls_certificate_expiration_aggregation_function" {
-  description = "Aggregation function and group by for tls_certificate_expiration detector (i.e. \".mean(by=['host'])\")"
-  type        = string
-  default     = ""
-}
-
-variable "tls_certificate_expiration_transformation_function" {
-  description = "Transformation function for tls_certificate_expiration detector (mean, min, max)"
-  type        = string
-  default     = "mean"
-}
-
-variable "tls_certificate_expiration_transformation_window" {
-  description = "Transformation window for tls_certificate_expiration detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "15m"
-}
-
-variable "tls_certificate_expiration_threshold_critical" {
-  description = "Critical threshold for tls_certificate_expiration detector"
-  type        = number
-  default     = 5
-}
-
-variable "tls_certificate_expiration_threshold_warning" {
-  description = "Warning threshold for tls_certificate_expiration detector"
-  type        = number
-  default     = 5
 }
 
 # Invalid_tls_certificate detectors
@@ -549,7 +389,7 @@ variable "invalid_tls_certificate_notifications_critical" {
 variable "invalid_tls_certificate_aggregation_function" {
   description = "Aggregation function and group by for invalid_tls_certificate detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".mean(by=['url'])"
 }
 
 variable "invalid_tls_certificate_transformation_function" {
@@ -567,5 +407,5 @@ variable "invalid_tls_certificate_transformation_window" {
 variable "invalid_tls_certificate_threshold_critical" {
   description = "Critical threshold for invalid_tls_certificate detector"
   type        = number
-  default     = 5
+  default     = 1
 }
