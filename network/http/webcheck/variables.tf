@@ -85,7 +85,7 @@ variable "http_code_matched_notifications_critical" {
 variable "http_code_matched_aggregation_function" {
   description = "Aggregation function and group by for http_code_matched detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['url']"
+  default     = ".mean(by=['url'])"
 }
 
 variable "http_code_matched_transformation_function" {
@@ -135,7 +135,7 @@ variable "http_regex_matched_notifications_critical" {
 variable "http_regex_matched_aggregation_function" {
   description = "Aggregation function and group by for http_regex_matched detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['url']"
+  default     = ".mean(by=['url'])"
 }
 
 variable "http_regex_matched_transformation_function" {
