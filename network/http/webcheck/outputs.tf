@@ -8,11 +8,6 @@ output "http_code_matched_id" {
   value       = signalfx_detector.http_code_matched.*.id
 }
 
-output "http_status_code_id" {
-  description = "id for detector http_status_code"
-  value       = signalfx_detector.http_status_code.*.id
-}
-
 output "http_regex_matched_id" {
   description = "id for detector http_regex_matched"
   value       = signalfx_detector.http_regex_matched.*.id
@@ -31,11 +26,6 @@ output "http_content_length_id" {
 output "certificate_expiration_date_id" {
   description = "id for detector certificate_expiration_date"
   value       = signalfx_detector.certificate_expiration_date.*.id
-}
-
-output "tls_certificate_expiration_id" {
-  description = "id for detector tls_certificate_expiration"
-  value       = signalfx_detector.tls_certificate_expiration.*.id
 }
 
 output "invalid_tls_certificate_id" {
