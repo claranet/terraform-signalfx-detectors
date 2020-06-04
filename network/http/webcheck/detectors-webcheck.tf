@@ -18,16 +18,15 @@ resource "signalfx_detector" "heartbeat" {
 }
 
 resource "signalfx_detector" "http_code_matched" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] HTTP code matched"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] HTTP code"
 
 	program_text = <<-EOF
-		signal = data('http.code_matched', ${module.filter-tags.filter_custom}).count()${var.http_code_matched_aggregation_function}.${var.http_code_matched_transformation_function}(over='${var.http_code_matched_transformation_window}').publish('signal')
+		signal = data('http.code_matched', ${module.filter-tags.filter_custom})${var.http_code_matched_aggregation_function}.${var.http_code_matched_transformation_function}(over='${var.http_code_matched_transformation_window}').publish('signal')
 		detect(when(signal < ${var.http_code_matched_threshold_critical})).publish('CRIT')
-		detect(when(signal < ${var.http_code_matched_threshold_warning}) and when(signal >= ${var.http_code_matched_threshold_critical})).publish('WARN')
 	EOF
 
 	rule {
-		description           = "is too low < ${var.http_code_matched_threshold_critical}"
+		description           = " does not match"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.http_code_matched_disabled_critical, var.http_code_matched_disabled, var.detectors_disabled)
@@ -35,46 +34,18 @@ resource "signalfx_detector" "http_code_matched" {
 		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 
-	rule {
-		description           = "is too low < ${var.http_code_matched_threshold_warning}"
-		severity              = "Warning"
-		detect_label          = "WARN"
-		disabled              = coalesce(var.http_code_matched_disabled_warning, var.http_code_matched_disabled, var.detectors_disabled)
-		notifications         = coalescelist(var.http_code_matched_notifications_warning, var.http_code_matched_notifications, var.notifications)
-		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-	}
-}
-
-resource "signalfx_detector" "http_status_code" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] HTTP status code"
-
-	program_text = <<-EOF
-		signal = data('http.status_code', ${module.filter-tags.filter_custom})${var.http_status_code_aggregation_function}.${var.http_status_code_transformation_function}(over='${var.http_status_code_transformation_window}').publish('signal')
-		detect(when(signal > ${var.http_status_code_threshold_critical})).publish('CRIT')
-	EOF
-
-	rule {
-		description           = "is not success > ${var.http_status_code_threshold_critical}"
-		severity              = "Critical"
-		detect_label          = "CRIT"
-		disabled              = coalesce(var.http_status_code_disabled_critical, var.http_status_code_disabled, var.detectors_disabled)
-		notifications         = coalescelist(var.http_status_code_notifications_critical, var.http_status_code_notifications, var.notifications)
-		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-	}
-
 }
 
 resource "signalfx_detector" "http_regex_matched" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] HTTP regex matched"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] HTTP regex"
 
 	program_text = <<-EOF
-		signal = data('http.regex_matched', ${module.filter-tags.filter_custom}).count()${var.http_regex_matched_aggregation_function}.${var.http_regex_matched_transformation_function}(over='${var.http_regex_matched_transformation_window}').publish('signal')
+		signal = data('http.regex_matched', ${module.filter-tags.filter_custom})${var.http_regex_matched_aggregation_function}.${var.http_regex_matched_transformation_function}(over='${var.http_regex_matched_transformation_window}').publish('signal')
 		detect(when(signal < ${var.http_regex_matched_threshold_critical})).publish('CRIT')
-		detect(when(signal < ${var.http_regex_matched_threshold_warning}) and when(signal >= ${var.http_regex_matched_threshold_critical})).publish('WARN')
 	EOF
 
 	rule {
-		description           = "is too low < ${var.http_regex_matched_threshold_critical}"
+		description           = " does not match"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.http_regex_matched_disabled_critical, var.http_regex_matched_disabled, var.detectors_disabled)
@@ -82,14 +53,6 @@ resource "signalfx_detector" "http_regex_matched" {
 		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 
-	rule {
-		description           = "is too low < ${var.http_regex_matched_threshold_warning}"
-		severity              = "Warning"
-		detect_label          = "WARN"
-		disabled              = coalesce(var.http_regex_matched_disabled_warning, var.http_regex_matched_disabled, var.detectors_disabled)
-		notifications         = coalescelist(var.http_regex_matched_notifications_warning, var.http_regex_matched_notifications, var.notifications)
-		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-	}
 }
 
 resource "signalfx_detector" "http_response_time" {
@@ -177,44 +140,16 @@ resource "signalfx_detector" "certificate_expiration_date" {
 	}
 }
 
-resource "signalfx_detector" "tls_certificate_expiration" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] TLS certificate expiring count"
-
-	program_text = <<-EOF
-		signal = data('http.cert_expiry', ${module.filter-tags.filter_custom}).below(${var.tls_certificate_expiration_timeframe}, inclusive=True).count(by=['server_name', 'url'])${var.tls_certificate_expiration_aggregation_function}.${var.tls_certificate_expiration_transformation_function}(over='${var.tls_certificate_expiration_transformation_window}').publish('signal')
-		detect(when(signal > ${var.tls_certificate_expiration_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.tls_certificate_expiration_threshold_warning}) and when(signal <= ${var.tls_certificate_expiration_threshold_critical})).publish('WARN')
-	EOF
-
-	rule {
-		description           = "is too high > ${var.tls_certificate_expiration_threshold_critical}"
-		severity              = "Critical"
-		detect_label          = "CRIT"
-		disabled              = coalesce(var.tls_certificate_expiration_disabled_critical, var.tls_certificate_expiration_disabled, var.detectors_disabled)
-		notifications         = coalescelist(var.tls_certificate_expiration_notifications_critical, var.tls_certificate_expiration_notifications, var.notifications)
-		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-	}
-
-	rule {
-		description           = "is too high > ${var.tls_certificate_expiration_threshold_warning}"
-		severity              = "Warning"
-		detect_label          = "WARN"
-		disabled              = coalesce(var.tls_certificate_expiration_disabled_warning, var.tls_certificate_expiration_disabled, var.detectors_disabled)
-		notifications         = coalescelist(var.tls_certificate_expiration_notifications_warning, var.tls_certificate_expiration_notifications, var.notifications)
-		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-	}
-}
-
 resource "signalfx_detector" "invalid_tls_certificate" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] TLS invalid certificate count"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] TLS certificate"
 
 	program_text = <<-EOF
-		signal = data('http.cert_valid', ${module.filter-tags.filter_custom}).count()${var.invalid_tls_certificate_aggregation_function}.${var.invalid_tls_certificate_transformation_function}(over='${var.invalid_tls_certificate_transformation_window}').publish('signal')
+		signal = data('http.cert_valid', ${module.filter-tags.filter_custom})${var.invalid_tls_certificate_aggregation_function}.${var.invalid_tls_certificate_transformation_function}(over='${var.invalid_tls_certificate_transformation_window}').publish('signal')
 		detect(when(signal < ${var.invalid_tls_certificate_threshold_critical})).publish('CRIT')
 	EOF
 
 	rule {
-		description           = " < ${var.invalid_tls_certificate_threshold_critical}"
+		description           = " is not valid"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.invalid_tls_certificate_disabled_critical, var.invalid_tls_certificate_disabled, var.detectors_disabled)
