@@ -18,7 +18,7 @@ resource "signalfx_detector" "heartbeat" {
 }
 
 resource "signalfx_detector" "http_code_matched" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] HTTP code"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] HTTP code "
 
 	program_text = <<-EOF
 		signal = data('http.code_matched', ${module.filter-tags.filter_custom})${var.http_code_matched_aggregation_function}.${var.http_code_matched_transformation_function}(over='${var.http_code_matched_transformation_window}').publish('signal')
@@ -26,7 +26,7 @@ resource "signalfx_detector" "http_code_matched" {
 	EOF
 
 	rule {
-		description           = " does not match"
+		description           = "does not match"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.http_code_matched_disabled_critical, var.http_code_matched_disabled, var.detectors_disabled)
@@ -37,7 +37,7 @@ resource "signalfx_detector" "http_code_matched" {
 }
 
 resource "signalfx_detector" "http_regex_matched" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] HTTP regex"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] HTTP regex "
 
 	program_text = <<-EOF
 		signal = data('http.regex_matched', ${module.filter-tags.filter_custom})${var.http_regex_matched_aggregation_function}.${var.http_regex_matched_transformation_function}(over='${var.http_regex_matched_transformation_window}').publish('signal')
@@ -45,7 +45,7 @@ resource "signalfx_detector" "http_regex_matched" {
 	EOF
 
 	rule {
-		description           = " does not match"
+		description           = "does not match"
 		severity              = "Critical"
 		detect_label          = "CRIT"
 		disabled              = coalesce(var.http_regex_matched_disabled_critical, var.http_regex_matched_disabled, var.detectors_disabled)
