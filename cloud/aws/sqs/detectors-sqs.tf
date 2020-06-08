@@ -23,7 +23,7 @@ resource "signalfx_detector" "visible_messages" {
   program_text = <<-EOF
 		signal = data('ApproximateNumberOfMessagesVisible', filter=filter('namespace', 'AWS/SQS')and filter('stat', 'upper') and ${module.filter-tags.filter_custom})${var.visible_messages_aggregation_function}.${var.visible_messages_transformation_function}(over='${var.visible_messages_transformation_window}').publish('signal')
 		detect(when(signal > ${var.visible_messages_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.visible_messages_threshold_warning})).publish('WARN')
+		detect(when(signal > ${var.visible_messages_threshold_warning}) and when(signal <= ${var.visible_messages_threshold_critical})).publish('WARN')
 	EOF
 
   rule {
@@ -52,7 +52,7 @@ resource "signalfx_detector" "age_of_oldest_message" {
   program_text = <<-EOF
 		signal = data('ApproximateAgeOfOldestMessage', filter=filter('namespace', 'AWS/SQS') and filter('stat', 'upper') and ${module.filter-tags.filter_custom})${var.age_of_oldest_message_aggregation_function}.${var.age_of_oldest_message_transformation_function}(over='${var.age_of_oldest_message_transformation_window}').publish('signal')
 		detect(when(signal > ${var.age_of_oldest_message_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.age_of_oldest_message_threshold_warning})).publish('WARN')
+		detect(when(signal > ${var.age_of_oldest_message_threshold_warning}) and when(signal <= ${var.age_of_oldest_message_threshold_critical})).publish('WARN')
 	EOF
 
   rule {

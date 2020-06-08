@@ -23,7 +23,7 @@ resource "signalfx_detector" "cpu_90_15min" {
   program_text = <<-EOF
 		signal = data('CPUUtilization', filter=filter('namespace', 'AWS/RDS') and filter('stat', 'mean') and filter('DBInstanceIdentifier', '*') and ${module.filter-tags.filter_custom})${var.cpu_90_15min_aggregation_function}.${var.cpu_90_15min_transformation_function}(over='${var.cpu_90_15min_transformation_window}').publish('signal')
 		detect(when(signal > ${var.cpu_90_15min_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.cpu_90_15min_threshold_warning})).publish('WARN')
+		detect(when(signal > ${var.cpu_90_15min_threshold_warning}) and when(signal <= ${var.cpu_90_15min_threshold_critical})).publish('WARN')
 	EOF
 
   rule {
@@ -52,7 +52,7 @@ resource "signalfx_detector" "free_space_low" {
   program_text = <<-EOF
 		signal = data('FreeStorageSpace', filter=filter('namespace', 'AWS/RDS') and filter('stat', 'mean') and filter('DBInstanceIdentifier', '*') and ${module.filter-tags.filter_custom})${var.free_space_low_aggregation_function}.${var.free_space_low_transformation_function}(over='${var.free_space_low_transformation_window}').publish('signal')
 		detect(when(signal < ${var.free_space_low_threshold_critical})).publish('CRIT')
-		detect(when(signal < ${var.free_space_low_threshold_warning})).publish('WARN')
+		detect(when(signal < ${var.free_space_low_threshold_warning}) and when(signal >= ${var.free_space_low_threshold_critical})).publish('WARN')
 	EOF
 
   rule {
@@ -79,9 +79,9 @@ resource "signalfx_detector" "replica_lag" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS RDS replica lag"
 
   program_text = <<-EOF
-		signal = data('ReplicaLag', filter=filter('namespace', 'AWS/RDS') and filter('stat', 'mean') and filter('DBInstanceIdentifier', '*') and ${module.filter-tags.filter_custom})${var.replica_lag_aggregation_function}.${var.replica_lag_transformation_function}(over='${var.replica_lag_transformation_window}').publish('signal')
+		signal = data('ReplicaLag', filter=filter('namespace', 'AWS/RDS') and filter('stat', 'mean')and filter('DBInstanceIdentifier', '*') and ${module.filter-tags.filter_custom})${var.replica_lag_aggregation_function}.${var.replica_lag_transformation_function}(over='${var.replica_lag_transformation_window}').publish('signal')
 		detect(when(signal > ${var.replica_lag_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.replica_lag_threshold_warning})).publish('WARN')
+		detect(when(signal > ${var.replica_lag_threshold_warning}) and when(signal <= ${var.replica_lag_threshold_critical})).publish('WARN')
 	EOF
 
   rule {
