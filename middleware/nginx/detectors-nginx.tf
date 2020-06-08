@@ -23,7 +23,7 @@ resource "signalfx_detector" "dropped_connections" {
   program_text = <<-EOF
 		signal = data('connections.failed', filter=${module.filter-tags.filter_custom})${var.dropped_connections_aggregation_function}.${var.dropped_connections_transformation_function}(over='${var.dropped_connections_transformation_window}').publish('signal')
 		detect(when(signal > ${var.dropped_connections_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.dropped_connections_threshold_warning})).publish('WARN')
+		detect(when(signal > ${var.dropped_connections_threshold_warning}) and when(signal <= ${var.dropped_connections_threshold_critical})).publish('WARN')
   EOF
 
   rule {
@@ -44,4 +44,3 @@ resource "signalfx_detector" "dropped_connections" {
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
-

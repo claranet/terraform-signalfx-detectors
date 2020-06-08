@@ -21,9 +21,9 @@ resource "signalfx_detector" "evictions" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ElastiCache evictions"
 
   program_text = <<-EOF
-		signal = data('Evictions', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*')and ${module.filter-tags.filter_custom})${var.evictions_aggregation_function}.${var.evictions_transformation_function}(over='${var.evictions_transformation_window}').publish('signal')
+		signal = data('Evictions', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.evictions_aggregation_function}.${var.evictions_transformation_function}(over='${var.evictions_transformation_window}').publish('signal')
 		detect(when(signal > ${var.evictions_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.evictions_threshold_warning})).publish('WARN')
+		detect(when(signal > ${var.evictions_threshold_warning}) and when(signal <= ${var.evictions_threshold_critical})).publish('WARN')
 	EOF
 
   rule {
@@ -90,7 +90,7 @@ resource "signalfx_detector" "swap" {
   program_text = <<-EOF
 		signal = data('SwapUsage', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'upper') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.swap_aggregation_function}.${var.swap_transformation_function}(over='${var.swap_transformation_window}').publish('signal')
 		detect(when(signal > ${var.swap_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.swap_threshold_warning})).publish('WARN')
+		detect(when(signal > ${var.swap_threshold_warning}) and when(signal <= ${var.swap_threshold_critical})).publish('WARN')
 	EOF
 
   rule {
@@ -119,7 +119,7 @@ resource "signalfx_detector" "free_memory" {
   program_text = <<-EOF
 		signal = data('FreeableMemory', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'lower') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom}).rateofchange()${var.free_memory_aggregation_function}.${var.free_memory_transformation_function}(over='${var.free_memory_transformation_window}').publish('signal')
 		detect(when(signal < ${var.free_memory_threshold_critical})).publish('CRIT')
-		detect(when(signal < ${var.free_memory_threshold_warning})).publish('WARN')
+		detect(when(signal < ${var.free_memory_threshold_warning}) and when(signal >= ${var.free_memory_threshold_critical})).publish('WARN')
 	EOF
 
   rule {
@@ -149,11 +149,11 @@ resource "signalfx_detector" "evictions_growing" {
 		A = data('Evictions', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom}).rateofchange().${var.evictions_growing_transformation_function}(over='${var.evictions_growing_transformation_window}')
 		signal = (A*100).publish('signal')
 		detect(when(signal > ${var.evictions_growing_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.evictions_growing_threshold_warning})).publish('WARN')
+		detect(when(signal > ${var.evictions_growing_threshold_warning}) and when(signal <= ${var.evictions_growing_threshold_critical})).publish('WARN')
 	EOF
 
   rule {
-    description           = "to fast > ${var.evictions_growing_threshold_critical}"
+    description           = "too fast > ${var.evictions_growing_threshold_critical}"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.evictions_growing_disabled_critical, var.evictions_growing_disabled, var.detectors_disabled)
@@ -162,7 +162,7 @@ resource "signalfx_detector" "evictions_growing" {
   }
 
   rule {
-    description           = "to fast > ${var.evictions_growing_threshold_warning}"
+    description           = "too fast > ${var.evictions_growing_threshold_warning}"
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.evictions_growing_disabled_warning, var.evictions_growing_disabled, var.detectors_disabled)

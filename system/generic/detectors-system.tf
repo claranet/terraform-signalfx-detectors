@@ -23,7 +23,7 @@ resource "signalfx_detector" "cpu" {
   program_text = <<-EOF
 		signal = data('cpu.utilization', filter=${module.filter-tags.filter_custom})${var.cpu_aggregation_function}.${var.cpu_transformation_function}(over='${var.cpu_transformation_window}').publish('signal')
 		detect(when(signal > ${var.cpu_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.cpu_threshold_warning})).publish('WARN')
+		detect(when(signal > ${var.cpu_threshold_warning}) and when(signal <= ${var.cpu_threshold_critical})).publish('WARN')
   EOF
 
   rule {
@@ -51,7 +51,7 @@ resource "signalfx_detector" "load" {
   program_text = <<-EOF
 		signal = data('load.midterm', filter=${module.filter-tags.filter_custom})${var.load_aggregation_function}.${var.load_transformation_function}(over='${var.load_transformation_window}').publish('signal')
 		detect(when(signal > ${var.load_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.load_threshold_warning})).publish('WARN')
+		detect(when(signal > ${var.load_threshold_warning}) and when(signal <= ${var.load_threshold_critical})).publish('WARN')
   EOF
 
   rule {
@@ -79,7 +79,7 @@ resource "signalfx_detector" "disk_space" {
   program_text = <<-EOF
 		signal = data('disk.utilization', filter=${module.filter-tags.filter_custom})${var.disk_space_aggregation_function}.${var.disk_space_transformation_function}(over='${var.disk_space_transformation_window}').publish('signal')
 		detect(when(signal > ${var.disk_space_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.disk_space_threshold_warning})).publish('WARN')
+		detect(when(signal > ${var.disk_space_threshold_warning}) and when(signal <= ${var.disk_space_threshold_critical})).publish('WARN')
   EOF
 
   rule {
@@ -107,7 +107,7 @@ resource "signalfx_detector" "disk_inodes" {
   program_text = <<-EOF
 		signal = data('percent_inodes.used', filter=${module.filter-tags.filter_custom})${var.disk_inodes_aggregation_function}.${var.disk_inodes_transformation_function}(over='${var.disk_inodes_transformation_window}').publish('signal')
 		detect(when(signal > ${var.disk_inodes_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.disk_inodes_threshold_warning})).publish('WARN')
+		detect(when(signal > ${var.disk_inodes_threshold_warning}) and when(signal <= ${var.disk_inodes_threshold_critical})).publish('WARN')
   EOF
 
   rule {
@@ -154,7 +154,7 @@ resource "signalfx_detector" "memory" {
   program_text = <<-EOF
 		signal = data('memory.utilization', filter=${module.filter-tags.filter_custom})${var.memory_aggregation_function}.${var.memory_transformation_function}(over='${var.memory_transformation_window}').publish('signal')
 		detect(when(signal > ${var.memory_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.memory_threshold_warning})).publish('WARN')
+		detect(when(signal > ${var.memory_threshold_warning}) and when(signal <= ${var.memory_threshold_critical})).publish('WARN')
   EOF
 
   rule {
