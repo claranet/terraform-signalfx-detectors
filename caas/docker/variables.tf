@@ -61,7 +61,7 @@ variable "heartbeat_timeframe" {
 variable "memory_used_disabled" {
   description = "Disable all alerting rules for memory_used detector"
   type        = bool
-  default     = null
+  default     = false
 }
 
 variable "memory_used_disabled_critical" {
