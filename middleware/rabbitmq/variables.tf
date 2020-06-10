@@ -320,4 +320,67 @@ variable "vm_memory_threshold_warning" {
   default     = 80
 }
 
+variable "messages_ready_disabled" {
+  description = "Disable all alerting rules for vm_memory detector"
+  type        = bool
+  default     = null
+}
 
+variable "messages_ready_disabled_critical" {
+  description = "Disable critical alerting rule for vm_memory detector"
+  type        = bool
+  default     = null
+}
+
+variable "messages_ready_disabled_warning" {
+  description = "Disable warning alerting rule for vm_memory detector"
+  type        = bool
+  default     = null
+}
+
+variable "messages_ready_notifications" {
+  description = "Notification recipients list for every alerting rules of vm_memory detector"
+  type        = list
+  default     = []
+}
+
+variable "messages_ready_notifications_warning" {
+  description = "Notification recipients list for warning alerting rule of vm_memory detector"
+  type        = list
+  default     = []
+}
+
+variable "messages_ready_notifications_critical" {
+  description = "Notification recipients list for critical alerting rule of vm_memory detector"
+  type        = list
+  default     = []
+}
+
+variable "messages_ready_aggregation_function" {
+  description = "Aggregation function and group by for vm_memory detector (i.e. \".mean(by=['host']).\")"
+  type        = string
+  default     = ""
+}
+
+variable "messages_ready_transformation_function" {
+  description = "Transformation function for vm_memory detector (mean, min, max)"
+  type        = string
+  default     = "mean"
+}
+
+variable "messages_ready_transformation_window" {
+  description = "Transformation window for vm_memory detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "10m"
+}
+
+variable "messages_ready_thresholds" {
+  description = "Thresholds value for messages ready detector. Several filters can be associated to different thresholds. The filter field must be in the SignalFx filter format."
+  default = {
+    default = {
+        filter             = "filter('name', '*')"
+        threshold_critical = "10000"
+        threshold_warning  = "15000"
+    }
+  }
+}

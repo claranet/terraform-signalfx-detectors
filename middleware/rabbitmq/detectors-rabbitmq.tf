@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] RabbitMQ heartbeat"
+  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] RabbitMQ  heartbeat"
 
   program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
@@ -18,7 +18,7 @@ resource "signalfx_detector" "heartbeat" {
 }
 
 resource "signalfx_detector" "file_descriptors" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] RabbitMQ file descriptors usage"
+  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] RabbitMQ Node file descriptors usage"
 
   program_text = <<-EOF
         A = data('gauge.node.fd_used', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom})${var.file_descriptors_aggregation_function}
@@ -48,7 +48,7 @@ resource "signalfx_detector" "file_descriptors" {
 }
 
 resource "signalfx_detector" "processes" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] RabbitMQ process usage"
+  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] RabbitMQ Node process usage"
 
   program_text = <<-EOF
         A = data('gauge.node.proc_used', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom})${var.processes_aggregation_function}
@@ -78,7 +78,7 @@ resource "signalfx_detector" "processes" {
 }
 
 resource "signalfx_detector" "sockets" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] RabbitMQ sockets usage"
+  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] RabbitMQ Node sockets usage"
 
   program_text = <<-EOF
         A = data('gauge.node.sockets_used', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom})${var.sockets_aggregation_function}
@@ -108,7 +108,7 @@ resource "signalfx_detector" "sockets" {
 }
 
 resource "signalfx_detector" "vm_memory" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] RabbitMQ vm_memory usage"
+  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] RabbitMQ Node vm_memory usage"
 
   program_text = <<-EOF
         A = data('gauge.node.mem_used', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom})${var.vm_memory_aggregation_function}
@@ -137,3 +137,31 @@ resource "signalfx_detector" "vm_memory" {
   }
 }
 
+resource "signalfx_detector" "messages_ready" {
+  for_each = var.messages_ready_thresholds
+  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] RabbitMQ Queue messages ready ${each.key}"
+
+  program_text = <<-EOF
+        signal = data('gauge.queue.messages_ready', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom} and ${each.value.filter})${var.messages_ready_aggregation_function}.${var.messages_ready_transformation_function}(over='${var.messages_ready_transformation_window}').publish('signal')
+        detect(when(signal > ${each.value.threshold_critical})).publish('CRIT')
+        detect(when(signal > ${each.value.threshold_warning})).publish('WARN')
+  EOF
+
+  rule {
+    description           = "is too high"
+    severity              = "Critical"
+    detect_label          = "CRIT"
+    disabled              = coalesce(var.messages_ready_disabled_critical, var.messages_ready_disabled, var.detectors_disabled)
+    notifications         = coalescelist(var.messages_ready_notifications_critical, var.messages_ready_notifications, var.notifications)
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+  }
+
+  rule {
+    description           = "is too high"
+    severity              = "Warning"
+    detect_label          = "WARN"
+    disabled              = coalesce(var.messages_ready_disabled_warning, var.messages_ready_disabled, var.detectors_disabled)
+    notifications         = coalescelist(var.messages_ready_notifications_warning, var.messages_ready_notifications, var.notifications)
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+  }
+}

@@ -43,6 +43,16 @@ Creates SignalFx detectors with the following checks:
 | heartbeat\_disabled | Disable all alerting rules for heartbeat detector | bool | `"null"` | no |
 | heartbeat\_notifications | Notification recipients list for every alerting rules of heartbeat detector | list | `[]` | no |
 | heartbeat\_timeframe | Timeframe for system not reporting detector \(i.e. "10m"\) | string | `"20m"` | no |
+| messages\_ready\_aggregation\_function | Aggregation function and group by for vm\_memory detector \(i.e. ".mean\(by=\['host'\]\)."\) | string | `""` | no |
+| messages\_ready\_disabled | Disable all alerting rules for vm\_memory detector | bool | `"null"` | no |
+| messages\_ready\_disabled\_critical | Disable critical alerting rule for vm\_memory detector | bool | `"null"` | no |
+| messages\_ready\_disabled\_warning | Disable warning alerting rule for vm\_memory detector | bool | `"null"` | no |
+| messages\_ready\_notifications | Notification recipients list for every alerting rules of vm\_memory detector | list | `[]` | no |
+| messages\_ready\_notifications\_critical | Notification recipients list for critical alerting rule of vm\_memory detector | list | `[]` | no |
+| messages\_ready\_notifications\_warning | Notification recipients list for warning alerting rule of vm\_memory detector | list | `[]` | no |
+| messages\_ready\_thresholds | Thresholds value for messages ready detector. Several filters can be associated to different thresholds. The filter field must be in the SignalFx filter format. | map | `{ "default": [ { "filter": "filter('name', '*')", "threshold_critical": "10000", "threshold_warning": "15000" } ] }` | no |
+| messages\_ready\_transformation\_function | Transformation function for vm\_memory detector \(mean, min, max\) | string | `"mean"` | no |
+| messages\_ready\_transformation\_window | Transformation window for vm\_memory detector \(i.e. 5m, 20m, 1h, 1d\) | string | `"10m"` | no |
 | notifications | Notification recipients list for every detectors | list | n/a | yes |
 | prefixes | Prefixes list to prepend between brackets on every monitors names before environment | list | `[]` | no |
 | processes\_aggregation\_function | Aggregation function and group by for processes detector \(i.e. ".mean\(by=\['host'\]\)."\) | string | `""` | no |
@@ -88,6 +98,7 @@ Creates SignalFx detectors with the following checks:
 | processes\_id | id for detector processes |
 | sockets\_id | id for detector sockets |
 | vm\_memory\_id | id for detector vm memory |
+
 
 
 ## Related documentation
