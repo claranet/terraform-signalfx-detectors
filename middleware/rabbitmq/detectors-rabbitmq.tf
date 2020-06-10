@@ -165,3 +165,74 @@ resource "signalfx_detector" "messages_ready" {
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
+
+resource "signalfx_detector" "messages_unacknowledged" {
+  for_each = var.messages_unacknowledged_thresholds
+  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] RabbitMQ Queue messages unacknowledged ${each.key}"
+
+  program_text = <<-EOF
+        signal = data('gauge.queue.messages_unacknowledged', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom} and ${each.value.filter})${var.messages_unacknowledged_aggregation_function}.${var.messages_unacknowledged_transformation_function}(over='${var.messages_unacknowledged_transformation_window}').publish('signal')
+        detect(when(signal > ${each.value.threshold_critical})).publish('CRIT')
+        detect(when(signal > ${each.value.threshold_warning})).publish('WARN')
+  EOF
+
+  rule {
+    description           = "is too high"
+    severity              = "Critical"
+    detect_label          = "CRIT"
+    disabled              = coalesce(var.messages_unacknowledged_disabled_critical, var.messages_unacknowledged_disabled, var.detectors_disabled)
+    notifications         = coalescelist(var.messages_unacknowledged_notifications_critical, var.messages_unacknowledged_notifications, var.notifications)
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+  }
+
+  rule {
+    description           = "is too high"
+    severity              = "Warning"
+    detect_label          = "WARN"
+    disabled              = coalesce(var.messages_unacknowledged_disabled_warning, var.messages_unacknowledged_disabled, var.detectors_disabled)
+    notifications         = coalescelist(var.messages_unacknowledged_notifications_warning, var.messages_unacknowledged_notifications, var.notifications)
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+  }
+}
+
+resource "signalfx_detector" "messages_ack_rate" {
+  for_each = var.messages_ack_rate_thresholds
+  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] RabbitMQ Queue messages ack rate ${each.key}"
+
+  program_text = <<-EOF
+        from signalfx.detectors.aperiodic import aperiodic
+        rate = data('counter.queue.message_stats.ack', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom} and ${each.value.filter})${var.messages_ack_rate_aggregation_function}.publish('rate')
+        ready = data('gauge.queue.messages_ready', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom} and ${each.value.filter})${var.messages_ack_rate_aggregation_function}.publish('ready')
+        detect((when((rate >= threshold(0)) and (rate <= threshold(${each.value.threshold_critical}) and (ready > 0)), lasting='${var.messages_ack_rate_aperiodic_duration}'))).publish('CRIT')
+        detect((when((rate >= threshold(${each.value.threshold_critical})) and (rate <= threshold(${each.value.threshold_warning}) and (ready > 0)), lasting='${var.messages_ack_rate_aperiodic_duration}'))).publish('WARN')
+  EOF
+
+  rule {
+    description           = "is too low < ${each.value.threshold_critical} and there are ready messages"
+    severity              = "Critical"
+    detect_label          = "CRIT"
+    disabled              = coalesce(var.messages_ack_rate_disabled_critical, var.messages_ack_rate_disabled, var.detectors_disabled)
+    notifications         = coalescelist(var.messages_ack_rate_notifications_critical, var.messages_ack_rate_notifications, var.notifications)
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+  }
+
+  rule {
+    description           = "is too low < ${each.value.threshold_warning} and there are ready messages"
+    severity              = "Warning"
+    detect_label          = "WARN"
+    disabled              = coalesce(var.messages_ack_rate_disabled_warning, var.messages_ack_rate_disabled, var.detectors_disabled)
+    notifications         = coalescelist(var.messages_ack_rate_notifications_warning, var.messages_ack_rate_notifications, var.notifications)
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+  }
+}
+
+#  program_text = <<-EOF
+#        from signalfx.detectors.aperiodic import aperiodic
+#        rate = data('counter.queue.message_stats.ack', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom} and ${each.value.filter})${var.messages_ack_rate_aggregation_function}.publish('rate')
+#
+#        ready = data('gauge.queue.messages_ready', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom} and ${each.value.filter})${var.messages_ack_rate_aggregation_function}.publish('ready')
+#
+#        aperiodic.range_detector(signal, ${each.value.threshold_critical}, ${each.value.threshold_warning}, 'within_range', lasting('${var.messages_ack_rate_aperiodic_duration}')).publish('WARN')
+#        aperiodic.range_detector(signal, 0, ${each.value.threshold_critical}, 'within_range', lasting('${var.messages_ack_rate_aperiodic_duration}')).publish('CRIT')
+#  EOF
+

@@ -18,6 +18,30 @@ output "vm_memory_id" {
   value       = signalfx_detector.vm_memory.*.id
 }
 
+output "messages_ready_ids" {
+  description = "id for detector messages_ack_rate"
+  value       = [
+    for d in signalfx_detector.messages_ack_rate:
+    d.id
+  ]
+}
+
+output "messages_unacknowledged_ids" {
+  description = "id for detector messages_ack_rate"
+  value       = [
+    for d in signalfx_detector.messages_ack_rate:
+    d.id
+  ]
+}
+
+output "messages_ack_rate_ids" {
+  description = "id for detector messages_ack_rate"
+  value       = [
+    for d in signalfx_detector.messages_ack_rate:
+    d.id
+  ]
+}
+
 output "heartbeat_id" {
   description = "id for detector heartbeat"
   value       = signalfx_detector.heartbeat.*.id

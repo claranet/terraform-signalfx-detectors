@@ -101,7 +101,7 @@ variable "file_descriptors_aggregation_function" {
 variable "file_descriptors_transformation_function" {
   description = "Transformation function for file descriptors detector (mean, min, max)"
   type        = string
-  default     = "mean"
+  default     = "min"
 }
 
 variable "file_descriptors_transformation_window" {
@@ -167,7 +167,7 @@ variable "processes_aggregation_function" {
 variable "processes_transformation_function" {
   description = "Transformation function for processes detector (mean, min, max)"
   type        = string
-  default     = "mean"
+  default     = "min"
 }
 
 variable "processes_transformation_window" {
@@ -233,7 +233,7 @@ variable "sockets_aggregation_function" {
 variable "sockets_transformation_function" {
   description = "Transformation function for sockets detector (mean, min, max)"
   type        = string
-  default     = "mean"
+  default     = "min"
 }
 
 variable "sockets_transformation_window" {
@@ -299,7 +299,7 @@ variable "vm_memory_aggregation_function" {
 variable "vm_memory_transformation_function" {
   description = "Transformation function for vm_memory detector (mean, min, max)"
   type        = string
-  default     = "mean"
+  default     = "min"
 }
 
 variable "vm_memory_transformation_window" {
@@ -321,61 +321,66 @@ variable "vm_memory_threshold_warning" {
 }
 
 variable "messages_ready_disabled" {
-  description = "Disable all alerting rules for vm_memory detector"
+  description = "Disable all alerting rules for messages_ready detector"
   type        = bool
   default     = null
 }
 
 variable "messages_ready_disabled_critical" {
-  description = "Disable critical alerting rule for vm_memory detector"
+  description = "Disable critical alerting rule for messages_ready detector"
   type        = bool
   default     = null
 }
 
 variable "messages_ready_disabled_warning" {
-  description = "Disable warning alerting rule for vm_memory detector"
+  description = "Disable warning alerting rule for messages_ready detector"
   type        = bool
   default     = null
 }
 
 variable "messages_ready_notifications" {
-  description = "Notification recipients list for every alerting rules of vm_memory detector"
+  description = "Notification recipients list for every alerting rules of messages_ready detector"
   type        = list
   default     = []
 }
 
 variable "messages_ready_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of vm_memory detector"
+  description = "Notification recipients list for warning alerting rule of messages_ready detector"
   type        = list
   default     = []
 }
 
 variable "messages_ready_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of vm_memory detector"
+  description = "Notification recipients list for critical alerting rule of messages_ready detector"
   type        = list
   default     = []
 }
 
 variable "messages_ready_aggregation_function" {
-  description = "Aggregation function and group by for vm_memory detector (i.e. \".mean(by=['host']).\")"
+  description = "Aggregation function and group by for messages_ready detector (i.e. \".mean(by=['host']).\")"
   type        = string
   default     = ""
 }
 
 variable "messages_ready_transformation_function" {
-  description = "Transformation function for vm_memory detector (mean, min, max)"
+  description = "Transformation function for messages_ready detector (mean, min, max)"
   type        = string
-  default     = "mean"
+  default     = "min"
 }
 
 variable "messages_ready_transformation_window" {
-  description = "Transformation window for vm_memory detector (i.e. 5m, 20m, 1h, 1d)"
+  description = "Transformation window for messages_ready detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
-  default     = "10m"
+  default     = "20m"
 }
 
+#
+# Trigger an alert when the number of ready message is becoming too high in a queue
+# Specifying multiple threshold and filter will create several detector 
+#
 variable "messages_ready_thresholds" {
   description = "Thresholds value for messages ready detector. Several filters can be associated to different thresholds. The filter field must be in the SignalFx filter format."
+  type = map
   default = {
     default = {
         filter             = "filter('name', '*')"
@@ -383,4 +388,133 @@ variable "messages_ready_thresholds" {
         threshold_warning  = "15000"
     }
   }
+}
+
+variable "messages_unacknowledged_disabled" {
+  description = "Disable all alerting rules for messages_unacknowledged detector"
+  type        = bool
+  default     = null
+}
+
+variable "messages_unacknowledged_disabled_critical" {
+  description = "Disable critical alerting rule for messages_unacknowledged detector"
+  type        = bool
+  default     = null
+}
+
+variable "messages_unacknowledged_disabled_warning" {
+  description = "Disable warning alerting rule for messages_unacknowledged detector"
+  type        = bool
+  default     = null
+}
+
+variable "messages_unacknowledged_notifications" {
+  description = "Notification recipients list for every alerting rules of messages_unacknowledged detector"
+  type        = list
+  default     = []
+}
+
+variable "messages_unacknowledged_notifications_warning" {
+  description = "Notification recipients list for warning alerting rule of messages_unacknowledged detector"
+  type        = list
+  default     = []
+}
+
+variable "messages_unacknowledged_notifications_critical" {
+  description = "Notification recipients list for critical alerting rule of messages_unacknowledged detector"
+  type        = list
+  default     = []
+}
+
+variable "messages_unacknowledged_aggregation_function" {
+  description = "Aggregation function and group by for messages_unacknowledged detector (i.e. \".mean(by=['host']).\")"
+  type        = string
+  default     = ""
+}
+
+variable "messages_unacknowledged_transformation_function" {
+  description = "Transformation function for messages_unacknowledged detector (mean, min, max)"
+  type        = string
+  default     = "min"
+}
+
+variable "messages_unacknowledged_transformation_window" {
+  description = "Transformation window for messages_unacknowledged detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "20m"
+}
+
+#
+# Trigger an alert when the number of unack message is becoming too high in a queue
+# Specifying multiple threshold and filter will create several detector 
+#
+variable "messages_unacknowledged_thresholds" {
+  description = "Thresholds value for messages unacknowledged detector. Several filters can be associated to different thresholds. The filter field must be in the SignalFx filter format."
+  type = map
+  default = {
+    default = {
+        filter             = "filter('name', '*')"
+        threshold_critical = "10000"
+        threshold_warning  = "15000"
+    }
+  }
+}
+
+variable "messages_ack_rate_disabled" {
+  description = "Disable all alerting rules for messages_ack_rate detector"
+  type        = bool
+  default     = true
+}
+
+variable "messages_ack_rate_disabled_critical" {
+  description = "Disable critical alerting rule for messages_ack_rate detector"
+  type        = bool
+  default     = null
+}
+
+variable "messages_ack_rate_disabled_warning" {
+  description = "Disable warning alerting rule for messages_ack_rate detector"
+  type        = bool
+  default     = null
+}
+
+variable "messages_ack_rate_notifications" {
+  description = "Notification recipients list for every alerting rules of messages_ack_rate detector"
+  type        = list
+  default     = []
+}
+
+variable "messages_ack_rate_notifications_warning" {
+  description = "Notification recipients list for warning alerting rule of messages_ack_rate detector"
+  type        = list
+  default     = []
+}
+
+variable "messages_ack_rate_notifications_critical" {
+  description = "Notification recipients list for critical alerting rule of messages_ack_rate detector"
+  type        = list
+  default     = []
+}
+
+variable "messages_ack_rate_aggregation_function" {
+  description = "Aggregation function and group by for messages_ack_rate detector (i.e. \".mean(by=['host']).\")"
+  type        = string
+  default     = ""
+}
+
+variable "messages_ack_rate_aperiodic_duration" {
+  description = "aperiodic durection for messages_ack_rate detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "10m"
+}
+
+#
+# Trigger an alert when the rate of acknownledged message is too low and
+# there are messages ready in the queue
+# Specifying multiple threshold and filter will create several detector 
+#
+variable "messages_ack_rate_thresholds" {
+  description = "Thresholds value for messages ack rate detector. Several filters can be associated to different thresholds. The filter field must be in the SignalFx filter format."
+  type = map
+  default = {}
 }
