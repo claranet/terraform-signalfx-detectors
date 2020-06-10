@@ -393,7 +393,7 @@ variable "messages_ready_thresholds" {
 variable "messages_unacknowledged_disabled" {
   description = "Disable all alerting rules for messages_unacknowledged detector"
   type        = bool
-  default     = null
+  default     = true
 }
 
 variable "messages_unacknowledged_disabled_critical" {
