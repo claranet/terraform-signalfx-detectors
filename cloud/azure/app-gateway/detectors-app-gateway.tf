@@ -68,13 +68,14 @@ resource "signalfx_detector" "failed_requests" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Gateway failed request rate"
 
 	program_text = <<-EOF
-		from signalfx.detectors.aperiodic import aperiodic
+		from signalfx.detectors.aperiodic import conditions
 		A = data('FailedRequests', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.failed_requests_aggregation_function}
 		B = data('TotalRequests', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.failed_requests_aggregation_function}
 		signal = ((A/B)*100).${var.failed_requests_transformation_function}(over='${var.failed_requests_transformation_window}').publish('signal')
-		aperiodic.above_or_below_detector(signal, ${var.failed_requests_threshold_critical}, 'above', lasting('${var.failed_requests_aperiodic_duration}', ${var.failed_requests_aperiodic_percentage})).publish('CRIT')
-		aperiodic.range_detector(signal, ${var.failed_requests_threshold_warning}, ${var.failed_requests_threshold_critical}, 'within_range', lasting('${var.failed_requests_aperiodic_duration}', ${var.failed_requests_aperiodic_percentage}), upper_strict=False).publish('WARN')
-	EOF
+		ON_Condition_CRIT = conditions.generic_condition(signal, ${var.failed_requests_threshold_critical}, ${var.failed_requests_threshold_critical}, 'above', lasting('${var.failed_requests_aperiodic_duration}', ${var.failed_requests_aperiodic_percentage}), 'observed')
+		ON_Condition_WARN = conditions.generic_condition(signal, ${var.failed_requests_threshold_warning}, ${var.failed_requests_threshold_critical}, 'within_range', lasting('${var.failed_requests_aperiodic_duration}', ${var.failed_requests_aperiodic_percentage}), 'observed', strict_2=False)
+		detect(ON_Condition_CRIT, off=when(signal is None, '${var.failed_requests_clear_duration}')).publish('CRIT')
+		detect(ON_Condition_WARN, off=when(signal is None, '${var.failed_requests_clear_duration}')).publish('WARN')	EOF
 
 	rule {
 		description           = "is too high > ${var.failed_requests_threshold_critical}"
