@@ -20,32 +20,32 @@ output "vm_memory_id" {
 
 output "messages_ready_ids" {
   description = "id for detector messages_ready_ids"
-  value       = [
-    for d in signalfx_detector.messages_ready:
+  value = [
+    for d in signalfx_detector.messages_ready :
     d.id
   ]
 }
 
 output "messages_unacknowledged_ids" {
   description = "id for detector messages_unacknowledged_ids"
-  value       = [
-    for d in signalfx_detector.messages_unacknowledged:
+  value = [
+    for d in signalfx_detector.messages_unacknowledged :
     d.id
   ]
 }
 
 output "messages_ack_rate_ids" {
   description = "id for detector messages_ack_rate"
-  value       = [
-    for d in signalfx_detector.messages_ack_rate:
+  value = [
+    for d in signalfx_detector.messages_ack_rate :
     d.id
   ]
 }
 
 output "consumer_utilisation_ids" {
   description = "id for detector consumer_utilisation"
-  value       = [
-    for d in signalfx_detector.consumer_utilisation:
+  value = [
+    for d in signalfx_detector.consumer_utilisation :
     d.id
   ]
 }

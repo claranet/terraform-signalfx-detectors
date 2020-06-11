@@ -119,7 +119,7 @@ resource "signalfx_detector" "vm_memory" {
   EOF
 
   rule {
-    description           = "is approaching the watermark" 
+    description           = "is approaching the watermark"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.vm_memory_disabled_critical, var.vm_memory_disabled, var.detectors_disabled)
@@ -128,7 +128,7 @@ resource "signalfx_detector" "vm_memory" {
   }
 
   rule {
-    description           = "is approaching the watermark" 
+    description           = "is approaching the watermark"
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.vm_memory_disabled_warning, var.vm_memory_disabled, var.detectors_disabled)
@@ -139,7 +139,7 @@ resource "signalfx_detector" "vm_memory" {
 
 resource "signalfx_detector" "messages_ready" {
   for_each = var.messages_ready_thresholds
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] RabbitMQ Queue messages ready ${each.key}"
+  name     = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] RabbitMQ Queue messages ready ${each.key}"
 
   program_text = <<-EOF
         signal = data('gauge.queue.messages_ready', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom} and ${each.value.filter})${var.messages_ready_aggregation_function}.${var.messages_ready_transformation_function}(over='${var.messages_ready_transformation_window}').publish('signal')
@@ -168,7 +168,7 @@ resource "signalfx_detector" "messages_ready" {
 
 resource "signalfx_detector" "messages_unacknowledged" {
   for_each = var.messages_unacknowledged_thresholds
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] RabbitMQ Queue messages unacknowledged ${each.key}"
+  name     = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] RabbitMQ Queue messages unacknowledged ${each.key}"
 
   program_text = <<-EOF
         signal = data('gauge.queue.messages_unacknowledged', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom} and ${each.value.filter})${var.messages_unacknowledged_aggregation_function}.${var.messages_unacknowledged_transformation_function}(over='${var.messages_unacknowledged_transformation_window}').publish('signal')
@@ -197,7 +197,7 @@ resource "signalfx_detector" "messages_unacknowledged" {
 
 resource "signalfx_detector" "messages_ack_rate" {
   for_each = var.messages_ack_rate_thresholds
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] RabbitMQ Queue messages ack rate ${each.key}"
+  name     = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] RabbitMQ Queue messages ack rate ${each.key}"
 
   program_text = <<-EOF
         rate = data('counter.queue.message_stats.ack', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom} and ${each.value.filter})${var.messages_ack_rate_aggregation_function}.publish('rate')
@@ -227,7 +227,7 @@ resource "signalfx_detector" "messages_ack_rate" {
 
 resource "signalfx_detector" "consumer_utilisation" {
   for_each = var.consumer_utilisation_thresholds
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] RabbitMQ Queue consumer utilisation ${each.key}"
+  name     = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] RabbitMQ Queue consumer utilisation ${each.key}"
 
   program_text = <<-EOF
         util = data('gauge.queue.consumer_utilisation', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom} and ${each.value.filter})${var.consumer_utilisation_aggregation_function}.publish('util')
