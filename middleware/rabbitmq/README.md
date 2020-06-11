@@ -83,10 +83,10 @@ module "signalfx-detectors-aws-beanstalk-rabbitmq" {
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | consumer\_utilisation\_aggregation\_function | Aggregation function and group by for consumer\_utilisation detector \(i.e. ".mean\(by=\['host'\]\)."\) | string | `""` | no |
-| consumer\_utilisation\_aperiodic\_duration | aperiodic durection for consumer\_utilisation detector \(i.e. 5m, 20m, 1h, 1d\) | string | `"10m"` | no |
 | consumer\_utilisation\_disabled | Disable all alerting rules for consumer\_utilisation detector | bool | `"true"` | no |
 | consumer\_utilisation\_disabled\_critical | Disable critical alerting rule for consumer\_utilisation detector | bool | `"null"` | no |
 | consumer\_utilisation\_disabled\_warning | Disable warning alerting rule for consumer\_utilisation detector | bool | `"null"` | no |
+| consumer\_utilisation\_duration | Duration for consumer\_utilisation detector \(i.e. 5m, 20m, 1h, 1d\) | string | `"10m"` | no |
 | consumer\_utilisation\_notifications | Notification recipients list for every alerting rules of consumer\_utilisation detector | list | `[]` | no |
 | consumer\_utilisation\_notifications\_critical | Notification recipients list for critical alerting rule of consumer\_utilisation detector | list | `[]` | no |
 | consumer\_utilisation\_notifications\_warning | Notification recipients list for warning alerting rule of consumer\_utilisation detector | list | `[]` | no |
@@ -110,10 +110,10 @@ module "signalfx-detectors-aws-beanstalk-rabbitmq" {
 | heartbeat\_notifications | Notification recipients list for every alerting rules of heartbeat detector | list | `[]` | no |
 | heartbeat\_timeframe | Timeframe for system not reporting detector \(i.e. "10m"\) | string | `"20m"` | no |
 | messages\_ack\_rate\_aggregation\_function | Aggregation function and group by for messages\_ack\_rate detector \(i.e. ".mean\(by=\['host'\]\)."\) | string | `""` | no |
-| messages\_ack\_rate\_aperiodic\_duration | aperiodic durection for messages\_ack\_rate detector \(i.e. 5m, 20m, 1h, 1d\) | string | `"10m"` | no |
 | messages\_ack\_rate\_disabled | Disable all alerting rules for messages\_ack\_rate detector | bool | `"true"` | no |
 | messages\_ack\_rate\_disabled\_critical | Disable critical alerting rule for messages\_ack\_rate detector | bool | `"null"` | no |
 | messages\_ack\_rate\_disabled\_warning | Disable warning alerting rule for messages\_ack\_rate detector | bool | `"null"` | no |
+| messages\_ack\_rate\_duration | Duration for messages\_ack\_rate detector \(i.e. 5m, 20m, 1h, 1d\) | string | `"10m"` | no |
 | messages\_ack\_rate\_notifications | Notification recipients list for every alerting rules of messages\_ack\_rate detector | list | `[]` | no |
 | messages\_ack\_rate\_notifications\_critical | Notification recipients list for critical alerting rule of messages\_ack\_rate detector | list | `[]` | no |
 | messages\_ack\_rate\_notifications\_warning | Notification recipients list for warning alerting rule of messages\_ack\_rate detector | list | `[]` | no |
@@ -178,15 +178,15 @@ module "signalfx-detectors-aws-beanstalk-rabbitmq" {
 
 | Name | Description |
 |------|-------------|
+| consumer\_utilisation\_ids | id for detector consumer\_utilisation |
 | file\_descriptors\_id | id for detector file descriptors |
 | heartbeat\_id | id for detector heartbeat |
 | messages\_ack\_rate\_ids | id for detector messages\_ack\_rate |
-| messages\_ready\_ids | id for detector messages\_ack\_rate |
-| messages\_unacknowledged\_ids | id for detector messages\_ack\_rate |
+| messages\_ready\_ids | id for detector messages\_ready\_ids |
+| messages\_unacknowledged\_ids | id for detector messages\_unacknowledged\_ids |
 | processes\_id | id for detector processes |
 | sockets\_id | id for detector sockets |
 | vm\_memory\_id | id for detector vm memory |
-
 
 ## Related documentation
 

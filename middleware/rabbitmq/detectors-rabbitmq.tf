@@ -202,8 +202,8 @@ resource "signalfx_detector" "messages_ack_rate" {
   program_text = <<-EOF
         rate = data('counter.queue.message_stats.ack', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom} and ${each.value.filter})${var.messages_ack_rate_aggregation_function}.publish('rate')
         msg = data('gauge.queue.messages', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom} and ${each.value.filter})${var.messages_ack_rate_aggregation_function}.publish('msg')
-        detect((when((rate >= threshold(0)) and (rate <= threshold(${each.value.threshold_critical}) and (msg > 0)), lasting='${var.messages_ack_rate_aperiodic_duration}'))).publish('CRIT')
-        detect((when((rate >= threshold(${each.value.threshold_critical})) and (rate <= threshold(${each.value.threshold_warning}) and (msg > 0)), lasting='${var.messages_ack_rate_aperiodic_duration}'))).publish('WARN')
+        detect((when((rate >= threshold(0)) and (rate <= threshold(${each.value.threshold_critical}) and (msg > 0)), lasting='${var.messages_ack_rate_duration}'))).publish('CRIT')
+        detect((when((rate >= threshold(${each.value.threshold_critical})) and (rate <= threshold(${each.value.threshold_warning}) and (msg > 0)), lasting='${var.messages_ack_rate_duration}'))).publish('WARN')
   EOF
 
   rule {
@@ -232,8 +232,8 @@ resource "signalfx_detector" "consumer_utilisation" {
   program_text = <<-EOF
         util = data('gauge.queue.consumer_utilisation', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom} and ${each.value.filter})${var.consumer_utilisation_aggregation_function}.publish('util')
         msg = data('gauge.queue.messages', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom} and ${each.value.filter})${var.consumer_utilisation_aggregation_function}.publish('msg')
-        detect((when((util < threshold(${each.value.threshold_critical}) and (msg > 0)), lasting='${var.consumer_utilisation_aperiodic_duration}'))).publish('CRIT')
-        detect((when((util < threshold(${each.value.threshold_warning}) and (msg > 0)), lasting='${var.consumer_utilisation_aperiodic_duration}'))).publish('WARN')
+        detect((when((util < threshold(${each.value.threshold_critical}) and (msg > 0)), lasting='${var.consumer_utilisation_duration}'))).publish('CRIT')
+        detect((when((util < threshold(${each.value.threshold_warning}) and (msg > 0)), lasting='${var.consumer_utilisation_duration}'))).publish('WARN')
   EOF
 
   rule {

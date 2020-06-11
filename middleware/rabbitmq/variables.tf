@@ -502,8 +502,8 @@ variable "messages_ack_rate_aggregation_function" {
   default     = ""
 }
 
-variable "messages_ack_rate_aperiodic_duration" {
-  description = "aperiodic durection for messages_ack_rate detector (i.e. 5m, 20m, 1h, 1d)"
+variable "messages_ack_rate_duration" {
+  description = "Duration for messages_ack_rate detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "10m"
 }
@@ -561,8 +561,8 @@ variable "consumer_utilisation_aggregation_function" {
   default     = ""
 }
 
-variable "consumer_utilisation_aperiodic_duration" {
-  description = "aperiodic durection for consumer_utilisation detector (i.e. 5m, 20m, 1h, 1d)"
+variable "consumer_utilisation_duration" {
+  description = "Duration for consumer_utilisation detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "10m"
 }
