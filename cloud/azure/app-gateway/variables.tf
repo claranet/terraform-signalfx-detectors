@@ -266,6 +266,12 @@ variable "failed_requests_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "failed_requests_clear_duration" {
+  description = "Duration for the failed_requests clear condition"
+  type        = string
+  default     = "15m"
+}
+
 # Unhealthy_host_ratio detectors
 
 variable "unhealthy_host_ratio_disabled" {
