@@ -202,13 +202,13 @@ resource "signalfx_detector" "messages_ack_rate" {
   program_text = <<-EOF
         from signalfx.detectors.aperiodic import aperiodic
         rate = data('counter.queue.message_stats.ack', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom} and ${each.value.filter})${var.messages_ack_rate_aggregation_function}.publish('rate')
-        ready = data('gauge.queue.messages_ready', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom} and ${each.value.filter})${var.messages_ack_rate_aggregation_function}.publish('ready')
-        detect((when((rate >= threshold(0)) and (rate <= threshold(${each.value.threshold_critical}) and (ready > 0)), lasting='${var.messages_ack_rate_aperiodic_duration}'))).publish('CRIT')
-        detect((when((rate >= threshold(${each.value.threshold_critical})) and (rate <= threshold(${each.value.threshold_warning}) and (ready > 0)), lasting='${var.messages_ack_rate_aperiodic_duration}'))).publish('WARN')
+        msg = data('gauge.queue.messages', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom} and ${each.value.filter})${var.messages_ack_rate_aggregation_function}.publish('msg')
+        detect((when((rate >= threshold(0)) and (rate <= threshold(${each.value.threshold_critical}) and (msg > 0)), lasting='${var.messages_ack_rate_aperiodic_duration}'))).publish('CRIT')
+        detect((when((rate >= threshold(${each.value.threshold_critical})) and (rate <= threshold(${each.value.threshold_warning}) and (msg > 0)), lasting='${var.messages_ack_rate_aperiodic_duration}'))).publish('WARN')
   EOF
 
   rule {
-    description           = "is too low < ${each.value.threshold_critical} and there are ready messages"
+    description           = "is too low < ${each.value.threshold_critical} and there are ready or unack messages"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.messages_ack_rate_disabled_critical, var.messages_ack_rate_disabled, var.detectors_disabled)
@@ -217,7 +217,7 @@ resource "signalfx_detector" "messages_ack_rate" {
   }
 
   rule {
-    description           = "is too low < ${each.value.threshold_warning} and there are ready messages"
+    description           = "is too low < ${each.value.threshold_warning} and there are ready or unack messages"
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.messages_ack_rate_disabled_warning, var.messages_ack_rate_disabled, var.detectors_disabled)
@@ -225,14 +225,3 @@ resource "signalfx_detector" "messages_ack_rate" {
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
-
-#  program_text = <<-EOF
-#        from signalfx.detectors.aperiodic import aperiodic
-#        rate = data('counter.queue.message_stats.ack', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom} and ${each.value.filter})${var.messages_ack_rate_aggregation_function}.publish('rate')
-#
-#        ready = data('gauge.queue.messages_ready', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom} and ${each.value.filter})${var.messages_ack_rate_aggregation_function}.publish('ready')
-#
-#        aperiodic.range_detector(signal, ${each.value.threshold_critical}, ${each.value.threshold_warning}, 'within_range', lasting('${var.messages_ack_rate_aperiodic_duration}')).publish('WARN')
-#        aperiodic.range_detector(signal, 0, ${each.value.threshold_critical}, 'within_range', lasting('${var.messages_ack_rate_aperiodic_duration}')).publish('CRIT')
-#  EOF
-
