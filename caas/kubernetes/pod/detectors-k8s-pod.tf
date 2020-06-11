@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Kubernetes POD heartbeat"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Kubernetes pod heartbeat"
 
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
@@ -18,7 +18,7 @@ resource "signalfx_detector" "heartbeat" {
 }
 
 resource "signalfx_detector" "pod_phase_status" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Kubernetes POD phase failed status"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Kubernetes pod status phase: failed"
 
 	program_text = <<-EOF
 		from signalfx.detectors.aperiodic import aperiodic
@@ -48,7 +48,7 @@ resource "signalfx_detector" "pod_phase_status" {
 }
 
 resource "signalfx_detector" "error" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Kubernetes POD waiting errors"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Kubernetes pod waiting errors"
 
 	program_text = <<-EOF
 		signal = data('kube_pod_container_status_waiting', filter=(not filter('reason', 'ContainerCreating')) and ${module.filter-tags.filter_custom})${var.error_aggregation_function}.${var.error_transformation_function}(over='${var.error_transformation_window}').publish('signal')
@@ -77,7 +77,7 @@ resource "signalfx_detector" "error" {
 }
 
 resource "signalfx_detector" "terminated" {
-	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Kubernetes POD terminated abnormally"
+	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Kubernetes pod terminated abnormally"
 
 	program_text = <<-EOF
 		signal = data('kube_pod_container_status_terminated', filter=(not filter('reason', 'ContainerCreating')) and ${module.filter-tags.filter_custom})${var.terminated_aggregation_function}.${var.terminated_transformation_function}(over='${var.terminated_transformation_window}').publish('signal')
