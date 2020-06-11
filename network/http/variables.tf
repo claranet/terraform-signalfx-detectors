@@ -36,7 +36,7 @@ variable "detectors_disabled" {
   default     = false
 }
 
-# WebCheck detectors specific
+# HTTP detectors specific
 
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
@@ -53,7 +53,7 @@ variable "heartbeat_notifications" {
 variable "heartbeat_timeframe" {
   description = "Timeframe for system not reporting detector (i.e. \"10m\")"
   type        = string
-  default     = "20m"
+  default     = "10m"
 }
 
 # Http_code_matched detectors
@@ -85,25 +85,19 @@ variable "http_code_matched_notifications_critical" {
 variable "http_code_matched_aggregation_function" {
   description = "Aggregation function and group by for http_code_matched detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['url'])"
+  default     = ""
 }
 
 variable "http_code_matched_transformation_function" {
   description = "Transformation function for http_code_matched detector (mean, min, max)"
   type        = string
-  default     = "mean"
+  default     = "max"
 }
 
 variable "http_code_matched_transformation_window" {
   description = "Transformation window for http_code_matched detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
-  default     = "15m"
-}
-
-variable "http_code_matched_threshold_critical" {
-  description = "Critical threshold for http_code_matched detector"
-  type        = number
-  default     = 1
+  default     = "1m"
 }
 
 # Http_regex_matched detectors
@@ -135,25 +129,19 @@ variable "http_regex_matched_notifications_critical" {
 variable "http_regex_matched_aggregation_function" {
   description = "Aggregation function and group by for http_regex_matched detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['url'])"
+  default     = ""
 }
 
 variable "http_regex_matched_transformation_function" {
   description = "Transformation function for http_regex_matched detector (mean, min, max)"
   type        = string
-  default     = "mean"
+  default     = "max"
 }
 
 variable "http_regex_matched_transformation_window" {
   description = "Transformation window for http_regex_matched detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
-  default     = "15m"
-}
-
-variable "http_regex_matched_threshold_critical" {
-  description = "Critical threshold for http_regex_matched detector"
-  type        = number
-  default     = 1
+  default     = "5m"
 }
 
 # Http_response_time detectors
@@ -203,7 +191,7 @@ variable "http_response_time_aggregation_function" {
 variable "http_response_time_transformation_function" {
   description = "Transformation function for http_response_time detector (mean, min, max)"
   type        = string
-  default     = "mean"
+  default     = "min"
 }
 
 variable "http_response_time_transformation_window" {
@@ -215,13 +203,13 @@ variable "http_response_time_transformation_window" {
 variable "http_response_time_threshold_critical" {
   description = "Critical threshold for http_response_time detector"
   type        = number
-  default     = 10
+  default     = 2
 }
 
 variable "http_response_time_threshold_warning" {
   description = "Warning threshold for http_response_time detector"
   type        = number
-  default     = 5
+  default     = 1
 }
 
 # http_content_length detectors
@@ -265,13 +253,13 @@ variable "http_content_length_notifications_critical" {
 variable "http_content_length_aggregation_function" {
   description = "Aggregation function and group by for http_content_length detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['url'])"
+  default     = ""
 }
 
 variable "http_content_length_transformation_function" {
   description = "Transformation function for http_content_length detector (mean, min, max)"
   type        = string
-  default     = "mean"
+  default     = "max"
 }
 
 variable "http_content_length_transformation_window" {
@@ -283,13 +271,13 @@ variable "http_content_length_transformation_window" {
 variable "http_content_length_threshold_critical" {
   description = "Critical threshold for http_content_length detector"
   type        = number
-  default     = 2
+  default     = 10
 }
 
 variable "http_content_length_threshold_warning" {
   description = "Warning threshold for http_content_length detector"
   type        = number
-  default     = 3
+  default     = 300
 }
 
 # Certificate_expiration_date detectors
@@ -333,7 +321,7 @@ variable "certificate_expiration_date_notifications_critical" {
 variable "certificate_expiration_date_aggregation_function" {
   description = "Aggregation function and group by for certificate_expiration_date detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['url'])"
+  default     = ""
 }
 
 variable "certificate_expiration_date_transformation_function" {
@@ -389,23 +377,18 @@ variable "invalid_tls_certificate_notifications_critical" {
 variable "invalid_tls_certificate_aggregation_function" {
   description = "Aggregation function and group by for invalid_tls_certificate detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['url'])"
+  default     = ""
 }
 
 variable "invalid_tls_certificate_transformation_function" {
   description = "Transformation function for invalid_tls_certificate detector (mean, min, max)"
   type        = string
-  default     = "mean"
+  default     = "max"
 }
 
 variable "invalid_tls_certificate_transformation_window" {
   description = "Transformation window for invalid_tls_certificate detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
-  default     = "15m"
+  default     = "5m"
 }
 
-variable "invalid_tls_certificate_threshold_critical" {
-  description = "Critical threshold for invalid_tls_certificate detector"
-  type        = number
-  default     = 1
-}

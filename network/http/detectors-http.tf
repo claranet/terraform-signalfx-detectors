@@ -4,7 +4,7 @@ resource "signalfx_detector" "heartbeat" {
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
 		signal = data('http.status_code', ${module.filter-tags.filter_custom}).publish('signal')
-		not_reporting.detector(stream=signal, resource_identifier=['url'], duration='${var.heartbeat_timeframe}').publish('CRIT')
+		not_reporting.detector(stream=signal, resource_identifier=['host', 'url', 'method'], duration='${var.heartbeat_timeframe}').publish('CRIT')
 	EOF
 
 	rule {
@@ -22,7 +22,7 @@ resource "signalfx_detector" "http_code_matched" {
 
 	program_text = <<-EOF
 		signal = data('http.code_matched', ${module.filter-tags.filter_custom})${var.http_code_matched_aggregation_function}.${var.http_code_matched_transformation_function}(over='${var.http_code_matched_transformation_window}').publish('signal')
-		detect(when(signal < ${var.http_code_matched_threshold_critical})).publish('CRIT')
+		detect(when(signal < 1)).publish('CRIT')
 	EOF
 
 	rule {
@@ -41,7 +41,7 @@ resource "signalfx_detector" "http_regex_matched" {
 
 	program_text = <<-EOF
 		signal = data('http.regex_matched', ${module.filter-tags.filter_custom})${var.http_regex_matched_aggregation_function}.${var.http_regex_matched_transformation_function}(over='${var.http_regex_matched_transformation_window}').publish('signal')
-		detect(when(signal < ${var.http_regex_matched_threshold_critical})).publish('CRIT')
+		detect(when(signal < 1)).publish('CRIT')
 	EOF
 
 	rule {
@@ -145,7 +145,7 @@ resource "signalfx_detector" "invalid_tls_certificate" {
 
 	program_text = <<-EOF
 		signal = data('http.cert_valid', ${module.filter-tags.filter_custom})${var.invalid_tls_certificate_aggregation_function}.${var.invalid_tls_certificate_transformation_function}(over='${var.invalid_tls_certificate_transformation_window}').publish('signal')
-		detect(when(signal < ${var.invalid_tls_certificate_threshold_critical})).publish('CRIT')
+		detect(when(signal < 1)).publish('CRIT')
 	EOF
 
 	rule {
