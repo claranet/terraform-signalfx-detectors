@@ -10,7 +10,24 @@ module "signalfx-detectors-middleware-rabbitmq" {
   notifications = var.notifications
 }
 
+In order to work properly, this module needs some `extraMetrics`, the agent needs a least the following configuration for the `collectd/rabbitmq` monitor :
+
+```yaml
+monitors:
+  - type: collectd/rabbitmq
+    collectNodes: true
+    collectQueues: true
+    verbosityLevel: true
+    extraMetrics:
+      - gauge.node.proc_used
+      - gauge.node.proc_total
+      - gauge.node.sockets_used
+      - gauge.node.sockets_total
+      - gauge.queue.messages_unacknowledged
+      - counter.queue.message_stats.ack
+      - gauge.queue.consumer_utilisation
 ```
+
 ## Purpose
 
 Creates SignalFx detectors with the following checks:
