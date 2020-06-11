@@ -36,7 +36,25 @@ variable "detectors_disabled" {
   default     = false
 }
 
-# SQL Server detectors specific
+# DNS detectors specific
+
+variable "heartbeat_disabled" {
+  description = "Disable all alerting rules for heartbeat detector"
+  type        = bool
+  default     = null
+}
+
+variable "heartbeat_notifications" {
+  description = "Notification recipients list for every alerting rules of heartbeat detector"
+  type        = list
+  default     = []
+}
+
+variable "heartbeat_timeframe" {
+  description = "Timeframe for system not reporting detector (i.e. \"10m\")"
+  type        = string
+  default     = "10m"
+}
 
 # Dns_query_time detectors
 
@@ -79,81 +97,31 @@ variable "dns_query_time_notifications_critical" {
 variable "dns_query_time_aggregation_function" {
   description = "Aggregation function and group by for dns_query_time detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['domain'])"
+  default     = ""
 }
 
 variable "dns_query_time_transformation_function" {
   description = "Transformation function for dns_query_time detector (mean, min, max)"
   type        = string
-  default     = "mean"
+  default     = "max"
 }
 
 variable "dns_query_time_transformation_window" {
   description = "Transformation window for dns_query_time detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
-  default     = "5m"
+  default     = "15m"
 }
 
 variable "dns_query_time_threshold_critical" {
   description = "Critical threshold for dns_query_time detector"
   type        = number
-  default     = 30
+  default     = 1000
 }
 
 variable "dns_query_time_threshold_warning" {
   description = "Warning threshold for dns_query_time detector"
   type        = number
-  default     = 20
-}
-
-# Dns_error_code detectors
-
-variable "dns_error_code_disabled" {
-  description = "Disable all alerting rules for dns_error_code detector"
-  type        = bool
-  default     = null
-}
-
-variable "dns_error_code_disabled_critical" {
-  description = "Disable critical alerting rule for dns_error_code detector"
-  type        = bool
-  default     = null
-}
-
-variable "dns_error_code_notifications" {
-  description = "Notification recipients list for every alerting rules of dns_error_code detector"
-  type        = list
-  default     = []
-}
-
-variable "dns_error_code_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of dns_error_code detector"
-  type        = list
-  default     = []
-}
-
-variable "dns_error_code_aggregation_function" {
-  description = "Aggregation function and group by for dns_error_code detector (i.e. \".mean(by=['host'])\")"
-  type        = string
-  default     = ".mean(by=['domain'])"
-}
-
-variable "dns_error_code_transformation_function" {
-  description = "Transformation function for dns_error_code detector (mean, min, max)"
-  type        = string
-  default     = "mean"
-}
-
-variable "dns_error_code_transformation_window" {
-  description = "Transformation window for dns_error_code detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "5m"
-}
-
-variable "dns_error_code_threshold_critical" {
-  description = "Critical threshold for dns_error_code detector"
-  type        = number
-  default     = 0
+  default     = 500
 }
 
 # Dns_result_code detectors
@@ -185,13 +153,13 @@ variable "dns_result_code_notifications_critical" {
 variable "dns_result_code_aggregation_function" {
   description = "Aggregation function and group by for dns_result_code detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['domain'])"
+  default     = ""
 }
 
 variable "dns_result_code_transformation_function" {
   description = "Transformation function for dns_result_code detector (mean, min, max)"
   type        = string
-  default     = "mean"
+  default     = "min"
 }
 
 variable "dns_result_code_transformation_window" {
@@ -200,8 +168,3 @@ variable "dns_result_code_transformation_window" {
   default     = "5m"
 }
 
-variable "dns_result_code_threshold_critical" {
-  description = "Critical threshold for dns_result_code detector"
-  type        = number
-  default     = 0
-}
