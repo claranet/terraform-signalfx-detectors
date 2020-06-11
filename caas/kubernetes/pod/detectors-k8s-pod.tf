@@ -36,15 +36,6 @@ resource "signalfx_detector" "pod_phase_status" {
 		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
 	}
 
-	rule {
-		description           = "is too high > ${var.pod_phase_status_threshold_warning}"
-		severity              = "Warning"
-		detect_label          = "WARN"
-		disabled              = coalesce(var.pod_phase_status_disabled_warning, var.pod_phase_status_disabled, var.detectors_disabled)
-		notifications         = coalescelist(var.pod_phase_status_notifications_warning, var.pod_phase_status_notifications, var.notifications)
-		parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-	}
-
 }
 
 resource "signalfx_detector" "error" {
