@@ -518,3 +518,70 @@ variable "messages_ack_rate_thresholds" {
   type = map
   default = {}
 }
+
+variable "consumer_utilisation_disabled" {
+  description = "Disable all alerting rules for consumer_utilisation detector"
+  type        = bool
+  default     = true
+}
+
+variable "consumer_utilisation_disabled_critical" {
+  description = "Disable critical alerting rule for consumer_utilisation detector"
+  type        = bool
+  default     = null
+}
+
+variable "consumer_utilisation_disabled_warning" {
+  description = "Disable warning alerting rule for consumer_utilisation detector"
+  type        = bool
+  default     = null
+}
+
+variable "consumer_utilisation_notifications" {
+  description = "Notification recipients list for every alerting rules of consumer_utilisation detector"
+  type        = list
+  default     = []
+}
+
+variable "consumer_utilisation_notifications_warning" {
+  description = "Notification recipients list for warning alerting rule of consumer_utilisation detector"
+  type        = list
+  default     = []
+}
+
+variable "consumer_utilisation_notifications_critical" {
+  description = "Notification recipients list for critical alerting rule of consumer_utilisation detector"
+  type        = list
+  default     = []
+}
+
+variable "consumer_utilisation_aggregation_function" {
+  description = "Aggregation function and group by for consumer_utilisation detector (i.e. \".mean(by=['host']).\")"
+  type        = string
+  default     = ""
+}
+
+variable "consumer_utilisation_aperiodic_duration" {
+  description = "aperiodic durection for consumer_utilisation detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "10m"
+}
+
+#
+# Trigger an alert when the consumer utilisation is too low and
+# there are messages ready in the queue, often means that the consumers
+# are too slow
+# Specifying multiple threshold and filter will create several detector 
+#
+variable "consumer_utilisation_thresholds" {
+  description = "Thresholds value for consumer_utilisation detector. Several filters can be associated to different thresholds. The filter field must be in the SignalFx filter format."
+  type = map
+  default = {
+    "default" = {
+        filter = "filter('name', '*')"
+        threshold_critical = 0.8
+        threshold_warning  = 1.0
+    }
+  }
+}
+

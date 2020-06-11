@@ -39,10 +39,11 @@ Creates SignalFx detectors with the following checks:
 * RabbitMQ Queue messages ready
 * RabbitMQ Queue messages unacknowledged (disabled by default)
 * RabbitMQ Queue messages ack rate (disable by default)
+* RabbitMQ Queue consumer utilisation (disable by default)
 
 The default alerting  behavior is to alert when the number of ready message in any queue will be above `messages_ready_thresholds`.  It is possible to create multiple detectors with specific filters if you need different thresholds.
 
-This can also be done with the `messages_unacknowledged` and `messages_ack_rate` detector which are disabled by default.
+This can also be done with the `messages_unacknowledged`, `messages_ack_rate` and `consumer_utilisation` detectors which are disabled by default.
 
 Example : 
 
@@ -81,6 +82,15 @@ module "signalfx-detectors-aws-beanstalk-rabbitmq" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
+| consumer\_utilisation\_aggregation\_function | Aggregation function and group by for consumer\_utilisation detector \(i.e. ".mean\(by=\['host'\]\)."\) | string | `""` | no |
+| consumer\_utilisation\_aperiodic\_duration | aperiodic durection for consumer\_utilisation detector \(i.e. 5m, 20m, 1h, 1d\) | string | `"10m"` | no |
+| consumer\_utilisation\_disabled | Disable all alerting rules for consumer\_utilisation detector | bool | `"true"` | no |
+| consumer\_utilisation\_disabled\_critical | Disable critical alerting rule for consumer\_utilisation detector | bool | `"null"` | no |
+| consumer\_utilisation\_disabled\_warning | Disable warning alerting rule for consumer\_utilisation detector | bool | `"null"` | no |
+| consumer\_utilisation\_notifications | Notification recipients list for every alerting rules of consumer\_utilisation detector | list | `[]` | no |
+| consumer\_utilisation\_notifications\_critical | Notification recipients list for critical alerting rule of consumer\_utilisation detector | list | `[]` | no |
+| consumer\_utilisation\_notifications\_warning | Notification recipients list for warning alerting rule of consumer\_utilisation detector | list | `[]` | no |
+| consumer\_utilisation\_thresholds | Thresholds value for consumer\_utilisation detector. Several filters can be associated to different thresholds. The filter field must be in the SignalFx filter format. | map | `{ "default": [ { "filter": "filter('name', '*')", "threshold_critical": 0.8, "threshold_warning": 1 } ] }` | no |
 | detectors\_disabled | Disable all detectors in this module | bool | `"false"` | no |
 | environment | Infrastructure environment | string | n/a | yes |
 | file\_descriptors\_aggregation\_function | Aggregation function and group by for file descriptors detector \(i.e. ".mean\(by=\['host'\]\)."\) | string | `""` | no |
@@ -119,7 +129,7 @@ module "signalfx-detectors-aws-beanstalk-rabbitmq" {
 | messages\_ready\_transformation\_function | Transformation function for messages\_ready detector \(mean, min, max\) | string | `"min"` | no |
 | messages\_ready\_transformation\_window | Transformation window for messages\_ready detector \(i.e. 5m, 20m, 1h, 1d\) | string | `"20m"` | no |
 | messages\_unacknowledged\_aggregation\_function | Aggregation function and group by for messages\_unacknowledged detector \(i.e. ".mean\(by=\['host'\]\)."\) | string | `""` | no |
-| messages\_unacknowledged\_disabled | Disable all alerting rules for messages\_unacknowledged detector | bool | `"null"` | no |
+| messages\_unacknowledged\_disabled | Disable all alerting rules for messages\_unacknowledged detector | bool | `"true"` | no |
 | messages\_unacknowledged\_disabled\_critical | Disable critical alerting rule for messages\_unacknowledged detector | bool | `"null"` | no |
 | messages\_unacknowledged\_disabled\_warning | Disable warning alerting rule for messages\_unacknowledged detector | bool | `"null"` | no |
 | messages\_unacknowledged\_notifications | Notification recipients list for every alerting rules of messages\_unacknowledged detector | list | `[]` | no |
@@ -176,6 +186,7 @@ module "signalfx-detectors-aws-beanstalk-rabbitmq" {
 | processes\_id | id for detector processes |
 | sockets\_id | id for detector sockets |
 | vm\_memory\_id | id for detector vm memory |
+
 
 ## Related documentation
 

@@ -200,7 +200,6 @@ resource "signalfx_detector" "messages_ack_rate" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] RabbitMQ Queue messages ack rate ${each.key}"
 
   program_text = <<-EOF
-        from signalfx.detectors.aperiodic import aperiodic
         rate = data('counter.queue.message_stats.ack', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom} and ${each.value.filter})${var.messages_ack_rate_aggregation_function}.publish('rate')
         msg = data('gauge.queue.messages', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom} and ${each.value.filter})${var.messages_ack_rate_aggregation_function}.publish('msg')
         detect((when((rate >= threshold(0)) and (rate <= threshold(${each.value.threshold_critical}) and (msg > 0)), lasting='${var.messages_ack_rate_aperiodic_duration}'))).publish('CRIT')
@@ -222,6 +221,36 @@ resource "signalfx_detector" "messages_ack_rate" {
     detect_label          = "WARN"
     disabled              = coalesce(var.messages_ack_rate_disabled_warning, var.messages_ack_rate_disabled, var.detectors_disabled)
     notifications         = coalescelist(var.messages_ack_rate_notifications_warning, var.messages_ack_rate_notifications, var.notifications)
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+  }
+}
+
+resource "signalfx_detector" "consumer_utilisation" {
+  for_each = var.consumer_utilisation_thresholds
+  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] RabbitMQ Queue consumer utilisation ${each.key}"
+
+  program_text = <<-EOF
+        util = data('gauge.queue.consumer_utilisation', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom} and ${each.value.filter})${var.consumer_utilisation_aggregation_function}.publish('util')
+        msg = data('gauge.queue.messages', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom} and ${each.value.filter})${var.consumer_utilisation_aggregation_function}.publish('msg')
+        detect((when((util < threshold(${each.value.threshold_critical}) and (msg > 0)), lasting='${var.consumer_utilisation_aperiodic_duration}'))).publish('CRIT')
+        detect((when((util < threshold(${each.value.threshold_warning}) and (msg > 0)), lasting='${var.consumer_utilisation_aperiodic_duration}'))).publish('WARN')
+  EOF
+
+  rule {
+    description           = "is too low < ${each.value.threshold_critical}, consumers seems too slow"
+    severity              = "Critical"
+    detect_label          = "CRIT"
+    disabled              = coalesce(var.consumer_utilisation_disabled_critical, var.consumer_utilisation_disabled, var.detectors_disabled)
+    notifications         = coalescelist(var.consumer_utilisation_notifications_critical, var.consumer_utilisation_notifications, var.notifications)
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+  }
+
+  rule {
+    description           = "is too low < ${each.value.threshold_warning}, consumers seems too slow"
+    severity              = "Warning"
+    detect_label          = "WARN"
+    disabled              = coalesce(var.consumer_utilisation_disabled_warning, var.consumer_utilisation_disabled, var.detectors_disabled)
+    notifications         = coalescelist(var.consumer_utilisation_notifications_warning, var.consumer_utilisation_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
