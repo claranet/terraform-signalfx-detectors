@@ -320,7 +320,7 @@ variable "commands_threshold_critical" {
   description = "Critical threshold for commands detector"
   type        = number
   # by default we want avoid trigger critical but could be useful in some cases
-  default     = -1 # impossible to raise alert by default but make it possible to customize
+  default = -1 # impossible to raise alert by default but make it possible to customize
 }
 
 variable "commands_threshold_warning" {

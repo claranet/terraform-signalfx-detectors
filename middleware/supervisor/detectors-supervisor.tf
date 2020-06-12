@@ -21,7 +21,7 @@ resource "signalfx_detector" "process_state" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Supervisor process"
 
   program_text = <<-EOF
-		signal = data('supervisor.state', filter=${module.filter-tags.filter_custom})${var. process_state_aggregation_function}.${var. process_state_transformation_function}(over='${var.process_state_transformation_window}').publish('signal')
+		signal = data('supervisor.state', filter=${module.filter-tags.filter_custom})${var.process_state_aggregation_function}.${var.process_state_transformation_function}(over='${var.process_state_transformation_window}').publish('signal')
 		detect(when(signal > ${var.process_state_threshold_critical})).publish('CRIT')
 		detect(when(signal < ${var.process_state_threshold_warning})).publish('WARN')
   EOF
