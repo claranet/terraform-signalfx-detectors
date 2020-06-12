@@ -1,11 +1,12 @@
 resource "signalfx_detector" "heartbeat" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure functions heartbeat"
+  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Function App heartbeat"
 
   program_text = <<-EOF
-		from signalfx.detectors.not_reporting import not_reporting
-		signal = data('BytesReceived', filter=filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'true') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}).publish('signal')
-		not_reporting.detector(stream=signal, resource_identifier=['azure_resource_name', 'azure_resource_group_name', 'azure_region'], duration='${var.heartbeat_timeframe}').publish('CRIT')
-	EOF
+        from signalfx.detectors.not_reporting import not_reporting
+        base_filter = filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'true') and filter('primary_aggregation_type', 'true')
+        signal = data('FileSystemUsage', filter=base_filter and ${module.filter-tags.filter_custom})
+        not_reporting.detector(stream=signal, resource_identifier=['azure_resource_name', 'azure_resource_group_name', 'azure_region'], duration='${var.heartbeat_timeframe}').publish('CRIT')
+    EOF
 
   rule {
     description           = "has not reported in ${var.heartbeat_timeframe}"
@@ -18,19 +19,19 @@ resource "signalfx_detector" "heartbeat" {
 }
 
 resource "signalfx_detector" "http_5xx_errors_rate" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure function HTTP 5xx error rate"
+  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Function App HTTP 5xx error rate"
 
   program_text = <<-EOF
-		from signalfx.detectors.aperiodic import aperiodic
-		A = data('Http5xx', filter=filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'true') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.http_5xx_errors_rate_aggregation_function}
-		B = data('FunctionExecutionCount', filter=filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'true') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.http_5xx_errors_rate_aggregation_function}
-		signal = ((A/B)*100).${var.http_5xx_errors_rate_transformation_function}(over='${var.http_5xx_errors_rate_transformation_window}').publish('signal')
-		aperiodic.above_or_below_detector(signal, ${var.http_5xx_errors_rate_threshold_critical}, 'above', lasting('${var.http_5xx_errors_rate_aperiodic_duration}', ${var.http_5xx_errors_rate_aperiodic_percentage})).publish('CRIT')
-		aperiodic.range_detector(signal, ${var.http_5xx_errors_rate_threshold_warning}, ${var.http_5xx_errors_rate_threshold_critical}, 'within_range', lasting('${var.http_5xx_errors_rate_aperiodic_duration}', ${var.http_5xx_errors_rate_aperiodic_percentage}), upper_strict=False).publish('WARN')
-	EOF
+        base_filter = filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'true') and filter('primary_aggregation_type', 'true')
+        A = data('Http5xx', extrapolation="zero", filter=base_filter and ${module.filter-tags.filter_custom})${var.http_5xx_errors_rate_aggregation_function}
+        B = data('FunctionExecutionCount', extrapolation="zero", filter=base_filter and ${module.filter-tags.filter_custom})${var.http_5xx_errors_rate_aggregation_function}
+        signal = ((A/B)*100).fill(0).${var.http_5xx_errors_rate_transformation_function}(over='${var.http_5xx_errors_rate_transformation_window}')
+        detect(when(signal > ${var.http_5xx_errors_rate_threshold_critical})).publish('CRIT')
+        detect(when(signal > ${var.http_5xx_errors_rate_threshold_warning}) and when(signal <= ${var.http_5xx_errors_rate_threshold_critical})).publish('WARN')
+    EOF
 
   rule {
-    description           = "is too high > ${var.http_5xx_errors_rate_threshold_critical}"
+    description           = "is too high > ${var.http_5xx_errors_rate_threshold_critical}%"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.http_5xx_errors_rate_disabled_critical, var.http_5xx_errors_rate_disabled, var.detectors_disabled)
@@ -39,7 +40,7 @@ resource "signalfx_detector" "http_5xx_errors_rate" {
   }
 
   rule {
-    description           = "is too high > ${var.http_5xx_errors_rate_threshold_warning}"
+    description           = "is too high > ${var.http_5xx_errors_rate_threshold_warning}%"
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.http_5xx_errors_rate_disabled_warning, var.http_5xx_errors_rate_disabled, var.detectors_disabled)
@@ -49,14 +50,14 @@ resource "signalfx_detector" "http_5xx_errors_rate" {
 }
 
 resource "signalfx_detector" "high_connections_count" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure functions connections count"
+  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Function App connections count"
 
   program_text = <<-EOF
-		from signalfx.detectors.aperiodic import aperiodic
-		signal = data('AppConnections', filter=filter('resource_type', 'Microsoft.Web/sites/slots') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.high_connections_count_aggregation_function}.${var.high_connections_count_transformation_function}(over='${var.high_connections_count_transformation_window}').publish('signal')
-		aperiodic.above_or_below_detector(signal, ${var.high_connections_count_threshold_critical}, 'above', lasting('${var.high_connections_count_aperiodic_duration}', ${var.high_connections_count_aperiodic_percentage})).publish('CRIT')
-		aperiodic.range_detector(signal, ${var.high_connections_count_threshold_warning}, ${var.high_connections_count_threshold_critical}, 'within_range', lasting('${var.high_connections_count_aperiodic_duration}', ${var.high_connections_count_aperiodic_percentage}), upper_strict=False).publish('WARN')
-	EOF
+        base_filter = filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'true') and filter('primary_aggregation_type', 'true')
+        signal = data('AppConnections', extrapolation="last_value", filter=base_filter and ${module.filter-tags.filter_custom})${var.high_connections_count_aggregation_function}.${var.high_connections_count_transformation_function}(over='${var.high_connections_count_transformation_window}')
+        detect(when(signal > ${var.high_connections_count_threshold_critical})).publish('CRIT')
+        detect(when(signal > ${var.high_connections_count_threshold_warning}) and when(signal <= ${var.high_connections_count_threshold_critical})).publish('WARN')
+    EOF
 
   rule {
     description           = "is too high > ${var.high_connections_count_threshold_critical}"
@@ -78,14 +79,14 @@ resource "signalfx_detector" "high_connections_count" {
 }
 
 resource "signalfx_detector" "high_threads_count" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure functions thread count"
+  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Function App thread count"
 
   program_text = <<-EOF
-		from signalfx.detectors.aperiodic import aperiodic
-		signal = data('Threads', filter=filter('resource_type', 'Microsoft.Web/sites/slots') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.high_threads_count_aggregation_function}.${var.high_threads_count_transformation_function}(over='${var.high_threads_count_transformation_window}').publish('signal')
-		aperiodic.above_or_below_detector(signal, ${var.high_threads_count_threshold_critical}, 'above', lasting('${var.high_threads_count_aperiodic_duration}', ${var.high_threads_count_aperiodic_percentage})).publish('CRIT')
-		aperiodic.range_detector(signal, ${var.high_threads_count_threshold_warning}, ${var.high_threads_count_threshold_critical}, 'within_range', lasting('${var.high_threads_count_aperiodic_duration}', ${var.high_threads_count_aperiodic_percentage}), upper_strict=False).publish('WARN')
-	EOF
+        base_filter = filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'true') and filter('primary_aggregation_type', 'true')
+        signal = data('Threads', extrapolation='last_value', filter=base_filter and ${module.filter-tags.filter_custom})${var.high_threads_count_aggregation_function}.${var.high_threads_count_transformation_function}(over='${var.high_threads_count_transformation_window}')
+        detect(when(signal > ${var.high_threads_count_threshold_critical})).publish('CRIT')
+        detect(when(signal > ${var.high_threads_count_threshold_warning}) and when(signal <= ${var.high_threads_count_threshold_critical})).publish('WARN')
+    EOF
 
   rule {
     description           = "is too high > ${var.high_threads_count_threshold_critical}"
