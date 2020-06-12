@@ -99,17 +99,6 @@ Creates SignalFx detectors with the following checks:
 | response\_time\_threshold\_warning | Warning threshold for response\_time detector | `number` | `5` | no |
 | response\_time\_transformation\_function | Transformation function for response\_time detector (mean, min, max) | `string` | `"min"` | no |
 | response\_time\_transformation\_window | Transformation window for response\_time detector (i.e. 5m, 20m, 1h, 1d) | `string` | `"5m"` | no |
-| status\_aggregation\_function | Aggregation function and group by for status detector (i.e. ".mean(by=['host'])") | `string` | `".mean(by=['Instance', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"` | no |
-| status\_disabled | Disable all alerting rules for status detector | `bool` | `null` | no |
-| status\_disabled\_critical | Disable critical alerting rule for status detector | `bool` | `null` | no |
-| status\_disabled\_warning | Disable warning alerting rule for status detector | `bool` | `null` | no |
-| status\_notifications | Notification recipients list for every alerting rules of status detector | `list` | `[]` | no |
-| status\_notifications\_critical | Notification recipients list for critical alerting rule of status detector | `list` | `[]` | no |
-| status\_notifications\_warning | Notification recipients list for warning alerting rule of status detector | `list` | `[]` | no |
-| status\_threshold\_critical | Critical threshold for status detector | `number` | `0` | no |
-| status\_threshold\_warning | Warning threshold for status detector | `number` | `1` | no |
-| status\_transformation\_function | Transformation function for status detector (mean, min, max) | `string` | `"max"` | no |
-| status\_transformation\_window | Transformation window for status detector (i.e. 5m, 20m, 1h, 1d) | `string` | `"5m"` | no |
 
 ## Outputs
 
@@ -121,7 +110,6 @@ Creates SignalFx detectors with the following checks:
 | http\_success\_status\_rate\_id | id for detector http\_success\_status\_rate |
 | memory\_usage\_count\_id | id for detector memory\_usage\_count |
 | response\_time\_id | id for detector response\_time |
-| status\_id | id for detector status |
 
 ## Related documentation
 

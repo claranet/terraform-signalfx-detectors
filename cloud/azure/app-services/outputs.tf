@@ -27,8 +27,3 @@ output "http_success_status_rate_id" {
   description = "id for detector http_success_status_rate"
   value       = signalfx_detector.http_success_status_rate.*.id
 }
-
-output "status_id" {
-  description = "id for detector status"
-  value       = signalfx_detector.status.*.id
-}
