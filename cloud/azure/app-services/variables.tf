@@ -195,13 +195,13 @@ variable "memory_usage_count_transformation_window" {
 variable "memory_usage_count_threshold_critical" {
   description = "Critical threshold for memory_usage_count detector"
   type        = number
-  default     = 1073741824  # 1Gb
+  default     = 1073741824 # 1Gb
 }
 
 variable "memory_usage_count_threshold_warning" {
   description = "Warning threshold for memory_usage_count detector"
   type        = number
-  default     = 536870912  # 512Mb
+  default     = 536870912 # 512Mb
 }
 
 # Http_5xx_errors_count detectors
