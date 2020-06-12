@@ -29,8 +29,11 @@ jobs:
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
       with:
-        terraform_version: 0.12.24
+        terraform_version: 0.12.26
         #terraform_wrapper: false
+
+    - name: Terraform fmt
+      run: terraform fmt -recursive -write=false -diff -check .
 
     - name: Setup env
       run: |
@@ -42,9 +45,6 @@ jobs:
     
     - name: Terraform init
       run: terraform init test
-
-    - name: Terraform fmt
-      run: terraform fmt -check test
 
     - name: Terraform validate
       run: terraform validate test
