@@ -46,7 +46,6 @@ resource "signalfx_detector" "replica_available" {
     notifications         = coalescelist(var.replica_available_notifications_warning, var.replica_available_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
-
 }
 
 resource "signalfx_detector" "replica_ready" {
@@ -78,5 +77,4 @@ resource "signalfx_detector" "replica_ready" {
     notifications         = coalescelist(var.replica_ready_notifications_warning, var.replica_ready_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
-
 }

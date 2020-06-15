@@ -43,7 +43,6 @@ resource "signalfx_detector" "ready" {
     notifications         = coalescelist(var.ready_notifications_warning, var.ready_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
-
 }
 
 resource "signalfx_detector" "volume_space" {
@@ -74,5 +73,4 @@ resource "signalfx_detector" "volume_space" {
     notifications         = coalescelist(var.volume_space_notifications_warning, var.volume_space_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
-
 }

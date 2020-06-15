@@ -35,7 +35,6 @@ resource "signalfx_detector" "pod_phase_status" {
     notifications         = coalescelist(var.pod_phase_status_notifications_critical, var.pod_phase_status_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
-
 }
 
 resource "signalfx_detector" "error" {
@@ -64,7 +63,6 @@ resource "signalfx_detector" "error" {
     notifications         = coalescelist(var.error_notifications_warning, var.error_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
-
 }
 
 resource "signalfx_detector" "terminated" {
@@ -93,5 +91,4 @@ resource "signalfx_detector" "terminated" {
     notifications         = coalescelist(var.terminated_notifications_warning, var.terminated_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
-
 }
