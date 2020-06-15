@@ -180,12 +180,6 @@ variable "no_connection_transformation_window" {
   default     = "5m"
 }
 
-variable "no_connection_threshold_critical" {
-  description = "Critical threshold for no_connection detector"
-  type        = number
-  default     = 1
-}
-
 # free_storage detectors
 
 variable "free_storage_disabled" {
