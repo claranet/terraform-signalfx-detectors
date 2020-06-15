@@ -237,7 +237,7 @@ resource "signalfx_detector" "consumer_utilisation" {
   EOF
 
   rule {
-    description           = "is too low < ${each.value.threshold_critical}, consumers seems too slow"
+    description           = format("is too low < %s, consumers seems too slow", each.value.threshold_critical)
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.consumer_utilisation_disabled_critical, var.consumer_utilisation_disabled, var.detectors_disabled)
@@ -246,7 +246,7 @@ resource "signalfx_detector" "consumer_utilisation" {
   }
 
   rule {
-    description           = "is too low < ${each.value.threshold_warning}, consumers seems too slow"
+    description           = format("is too low < %s, consumers seems too slow", each.value.threshold_warning)
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.consumer_utilisation_disabled_warning, var.consumer_utilisation_disabled, var.detectors_disabled)
