@@ -524,18 +524,18 @@ variable "messages_ack_rate_duration" {
 # Specifying multiple threshold and filter will create several detector 
 #
 variable "messages_ack_rate_thresholds" {
-  description = "Thresholds value for messages ack rate detector. Several filters can be associated to different thresholds. The filter field must be in the SignalFx filter format."
+  description = "Thresholds value for messages ack rate detector. Several filters can be associated to different thresholds. The filter field must be in the SignalFx filter format. Thresholds must be specified as a rate, 1/60 means we want 1 ack message per 60 seconds."
   type = map(
     object({
       filter             = string
-      threshold_critical = number
-      threshold_warning  = number
+      threshold_critical = string
+      threshold_warning  = string
   }))
   default = {
     "default" = {
       filter             = "filter('name', '*')"
-      threshold_critical = 0
-      threshold_warning  = 1
+      threshold_critical = "1/60"
+      threshold_warning  = "2/60"
     }
   }
 }

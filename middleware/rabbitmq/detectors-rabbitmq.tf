@@ -207,7 +207,7 @@ resource "signalfx_detector" "messages_ack_rate" {
   EOF
 
   rule {
-    description           = "is too low < ${each.value.threshold_critical} and there are ready or unack messages"
+    description           = format("is too low < %s and there are ready or unack messages", each.value.threshold_critical)
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.messages_ack_rate_disabled_critical, var.messages_ack_rate_disabled, var.detectors_disabled)
@@ -216,7 +216,7 @@ resource "signalfx_detector" "messages_ack_rate" {
   }
 
   rule {
-    description           = "is too low < ${each.value.threshold_warning} and there are ready or unack messages"
+    description           = format("is too low < %s and there are ready or unack messages", each.value.threshold_warning)
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.messages_ack_rate_disabled_warning, var.messages_ack_rate_disabled, var.detectors_disabled)

@@ -117,7 +117,7 @@ module "signalfx-detectors-aws-beanstalk-rabbitmq" {
 | messages\_ack\_rate\_notifications | Notification recipients list for every alerting rules of messages\_ack\_rate detector | list | `[]` | no |
 | messages\_ack\_rate\_notifications\_critical | Notification recipients list for critical alerting rule of messages\_ack\_rate detector | list | `[]` | no |
 | messages\_ack\_rate\_notifications\_warning | Notification recipients list for warning alerting rule of messages\_ack\_rate detector | list | `[]` | no |
-| messages\_ack\_rate\_thresholds | Thresholds value for messages ack rate detector. Several filters can be associated to different thresholds. The filter field must be in the SignalFx filter format. | map( | `{ "default": [ { "filter": "filter('name', '*')", "threshold_critical": 0, "threshold_warning": 1 } ] }` | no |
+| messages\_ack\_rate\_thresholds | Thresholds value for messages ack rate detector. Several filters can be associated to different thresholds. The filter field must be in the SignalFx filter format. Thresholds must be specified as a rate, 1/60 means we want 1 ack message per 60 seconds. | map( | `{ "default": [ { "filter": "filter('name', '*')", "threshold_critical": "1/60", "threshold_warning": "2/60" } ] }` | no |
 | messages\_ready\_aggregation\_function | Aggregation function and group by for messages\_ready detector \(i.e. ".mean\(by=\['host'\]\)."\) | string | `""` | no |
 | messages\_ready\_disabled | Disable all alerting rules for messages\_ready detector | bool | `"null"` | no |
 | messages\_ready\_disabled\_critical | Disable critical alerting rule for messages\_ready detector | bool | `"null"` | no |
@@ -187,7 +187,6 @@ module "signalfx-detectors-aws-beanstalk-rabbitmq" {
 | processes\_id | id for detector processes |
 | sockets\_id | id for detector sockets |
 | vm\_memory\_id | id for detector vm memory |
-
 
 ## Related documentation
 
