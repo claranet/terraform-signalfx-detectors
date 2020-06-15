@@ -26,7 +26,6 @@ resource "signalfx_detector" "file_descriptors" {
         signal = (A/B).scale(100).${var.file_descriptors_transformation_function}(over='${var.file_descriptors_transformation_window}').publish('signal')
         detect(when(signal > ${var.file_descriptors_threshold_critical})).publish('CRIT')
         detect(when(signal > ${var.file_descriptors_threshold_warning}) and when(signal <= ${var.file_descriptors_threshold_critical})).publish('WARN')
-        ```
   EOF
 
   rule {
