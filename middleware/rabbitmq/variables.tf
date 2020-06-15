@@ -380,12 +380,17 @@ variable "messages_ready_transformation_window" {
 #
 variable "messages_ready_thresholds" {
   description = "Thresholds value for messages ready detector. Several filters can be associated to different thresholds. The filter field must be in the SignalFx filter format."
-  type        = map
+  type = map(
+    object({
+      filter             = string
+      threshold_critical = number
+      threshold_warning  = number
+  }))
   default = {
     default = {
       filter             = "filter('name', '*')"
-      threshold_critical = "10000"
-      threshold_warning  = "15000"
+      threshold_critical = "15000"
+      threshold_warning  = "10000"
     }
   }
 }
@@ -450,12 +455,17 @@ variable "messages_unacknowledged_transformation_window" {
 #
 variable "messages_unacknowledged_thresholds" {
   description = "Thresholds value for messages unacknowledged detector. Several filters can be associated to different thresholds. The filter field must be in the SignalFx filter format."
-  type        = map
+  type = map(
+    object({
+      filter             = string
+      threshold_critical = number
+      threshold_warning  = number
+  }))
   default = {
     default = {
       filter             = "filter('name', '*')"
-      threshold_critical = "10000"
-      threshold_warning  = "15000"
+      threshold_critical = "15000"
+      threshold_warning  = "10000"
     }
   }
 }
@@ -515,8 +525,19 @@ variable "messages_ack_rate_duration" {
 #
 variable "messages_ack_rate_thresholds" {
   description = "Thresholds value for messages ack rate detector. Several filters can be associated to different thresholds. The filter field must be in the SignalFx filter format."
-  type        = map
-  default     = {}
+  type = map(
+    object({
+      filter             = string
+      threshold_critical = number
+      threshold_warning  = number
+  }))
+  default = {
+    "default" = {
+      filter             = "filter('name', '*')"
+      threshold_critical = 0
+      threshold_warning  = 1
+    }
+  }
 }
 
 variable "consumer_utilisation_disabled" {
@@ -575,7 +596,12 @@ variable "consumer_utilisation_duration" {
 #
 variable "consumer_utilisation_thresholds" {
   description = "Thresholds value for consumer_utilisation detector. Several filters can be associated to different thresholds. The filter field must be in the SignalFx filter format."
-  type        = map
+  type = map(
+    object({
+      filter             = string
+      threshold_critical = number
+      threshold_warning  = number
+  }))
   default = {
     "default" = {
       filter             = "filter('name', '*')"
