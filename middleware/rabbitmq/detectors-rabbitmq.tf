@@ -201,9 +201,9 @@ resource "signalfx_detector" "messages_ack_rate" {
 
   program_text = <<-EOF
         rate = data('counter.queue.message_stats.ack', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom} and ${each.value.filter})${var.messages_ack_rate_aggregation_function}.publish('rate')
-        msg = data('gauge.queue.messages', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom} and ${each.value.filter})${var.messages_ack_rate_aggregation_function}.publish('msg')
-        detect((when((rate >= threshold(0)) and (rate <= threshold(${each.value.threshold_critical}) and (msg > 0)), lasting='${var.messages_ack_rate_duration}'))).publish('CRIT')
-        detect((when((rate >= threshold(${each.value.threshold_critical})) and (rate <= threshold(${each.value.threshold_warning}) and (msg > 0)), lasting='${var.messages_ack_rate_duration}'))).publish('WARN')
+        msg = data('gauge.queue.messages', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom} and ${each.value.filter})${var.messages_ack_rate_aggregation_function}.publish('msg', enable=False)
+        detect((when((rate >= 0) and (rate <= threshold(${each.value.threshold_critical}) and (msg > 0)), lasting='${var.messages_ack_rate_duration}'))).publish('CRIT')
+        detect((when((rate >= ${each.value.threshold_critical}) and (rate <= threshold(${each.value.threshold_warning}) and (msg > 0)), lasting='${var.messages_ack_rate_duration}'))).publish('WARN')
   EOF
 
   rule {
