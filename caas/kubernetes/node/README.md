@@ -7,6 +7,11 @@ The detectors in this module are based on metrics reported by the following moni
 
 ## Requirements
 
+The following metrics must be emitted by the SignalFx agent:
+
+- `kubernetes.volume_inodes`
+- `kubernetes.volume_inodes_free`
+
 Here is a sample configuration fragment for the SignalFx agent:
 
 ```
@@ -24,11 +29,11 @@ monitors:
       - '!*network*'
 
 - type: kubernetes-cluster
-  extraMetrics:
-    - kubernetes.job.active
-    - kubernetes.job.failed
 
 - type: kubernetes-volumes
+  extraMetrics:
+    - kubernetes.volume_inodes
+    - kubernetes.volume_inodes_free
 ```
 
 In addition to the base permissions granted to the cluster role associated to the SignalFx Agent's service account in the official Helm Chart,
