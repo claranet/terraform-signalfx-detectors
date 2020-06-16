@@ -97,7 +97,7 @@ variable "pod_phase_status_notifications_critical" {
 variable "pod_phase_status_aggregation_function" {
   description = "Aggregation function and group by for pod_phase_status detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['kubernetes_pod_name'])"
+  default     = ".sum(by=['namespace'])"
 }
 
 variable "pod_phase_status_transformation_function" {
@@ -134,6 +134,12 @@ variable "pod_phase_status_aperiodic_percentage" {
   description = "Percentage for the pod_phase_status block"
   type        = number
   default     = 0.9
+}
+
+variable "pod_phase_status_clear_duration" {
+  description = "Duration for the pod_phase_status clear condition"
+  type        = string
+  default     = "15m"
 }
 
 # Error detectors
@@ -177,7 +183,7 @@ variable "error_notifications_critical" {
 variable "error_aggregation_function" {
   description = "Aggregation function and group by for error detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['kubernetes_pod_name', 'container_status_reason'])"
+  default     = ".sum(by=['namespace', 'pod', 'reason'])"
 }
 
 variable "error_transformation_function" {
@@ -245,7 +251,7 @@ variable "terminated_notifications_critical" {
 variable "terminated_aggregation_function" {
   description = "Aggregation function and group by for terminated detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['kubernetes_pod_name', 'container_status_reason'])"
+  default     = ".sum(by=['namespace', 'pod', 'reason'])"
 }
 
 variable "terminated_transformation_function" {
