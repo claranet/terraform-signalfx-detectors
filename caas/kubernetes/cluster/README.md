@@ -5,7 +5,9 @@ The detectors in this module are based on metrics reported by the following moni
 
 ## Requirements
 
-* `apiserver_request_total` must be emitted by the SignalFx agent
+The following metrics must be emitted by the SignalFx agent:
+
+- `apiserver_request_total`
 
 Here is a sample configuration fragment for the SignalFx agent:
 

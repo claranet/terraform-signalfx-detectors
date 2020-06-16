@@ -5,6 +5,10 @@ The detectors in this module are based on metrics reported by the following moni
 
 ## Requirements
 
+The following metrics must be emitted by the SignalFx agent:
+
+- `kubernetes.job.active`
+
 Here is a sample configuration fragment for the SignalFx agent:
 
 ```

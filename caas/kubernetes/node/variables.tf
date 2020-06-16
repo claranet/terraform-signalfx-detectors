@@ -191,3 +191,71 @@ variable "volume_space_threshold_warning" {
   type        = number
   default     = 90
 }
+
+# Volume_inodes detectors
+
+variable "volume_inodes_disabled" {
+  description = "Disable all alerting rules for volume_inodes detector"
+  type        = bool
+  default     = null
+}
+
+variable "volume_inodes_disabled_critical" {
+  description = "Disable critical alerting rule for volume_inodes detector"
+  type        = bool
+  default     = null
+}
+
+variable "volume_inodes_disabled_warning" {
+  description = "Disable warning alerting rule for volume_inodes detector"
+  type        = bool
+  default     = null
+}
+
+variable "volume_inodes_notifications" {
+  description = "Notification recipients list for every alerting rules of volume_inodes detector"
+  type        = list
+  default     = []
+}
+
+variable "volume_inodes_notifications_warning" {
+  description = "Notification recipients list for warning alerting rule of volume_inodes detector"
+  type        = list
+  default     = []
+}
+
+variable "volume_inodes_notifications_critical" {
+  description = "Notification recipients list for critical alerting rule of volume_inodes detector"
+  type        = list
+  default     = []
+}
+
+variable "volume_inodes_aggregation_function" {
+  description = "Aggregation function and group by for volume_inodes detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ""
+}
+
+variable "volume_inodes_transformation_function" {
+  description = "Transformation function for volume_inodes detector (mean, min, max)"
+  type        = string
+  default     = "min"
+}
+
+variable "volume_inodes_transformation_window" {
+  description = "Transformation window for volume_inodes detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "5m"
+}
+
+variable "volume_inodes_threshold_critical" {
+  description = "Critical threshold for volume_inodes detector"
+  type        = number
+  default     = 95
+}
+
+variable "volume_inodes_threshold_warning" {
+  description = "Warning threshold for volume_inodes detector"
+  type        = number
+  default     = 90
+}
