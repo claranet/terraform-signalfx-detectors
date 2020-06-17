@@ -4,7 +4,7 @@ resource "signalfx_detector" "processes" {
   program_text = <<-EOF
 		signal = data('ps_count.processes', filter=${module.filter-tags.filter_custom})${var.processes_aggregation_function}.${var.processes_transformation_function}(over='${var.processes_transformation_window}').publish('signal')
 		detect(when(signal < ${var.processes_threshold_critical})).publish('CRIT')
-        detect(when(signal < ${var.processes_threshold_warning}) and when(signal > ${var.processes_threshold_critical})).publish('WARN')
+        detect(when((signal < ${var.processes_threshold_warning}) and (signal > ${var.processes_threshold_critical}))).publish('WARN')
   EOF
 
   rule {
