@@ -101,6 +101,6 @@ variable "processes_threshold_critical" {
 variable "processes_threshold_warning" {
   description = "Warning threshold for processes detector"
   type        = number
-  default     = 2
+  default     = 1
 }
 
