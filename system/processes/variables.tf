@@ -53,7 +53,7 @@ variable "processes_disabled_critical" {
 variable "processes_disabled_warning" {
   description = "Disable warning alerting rule for processes detector"
   type        = bool
-  default     = null
+  default     = true
 }
 
 variable "processes_notifications" {
@@ -89,7 +89,7 @@ variable "processes_transformation_function" {
 variable "processes_transformation_window" {
   description = "Transformation window for processes detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
-  default     = "1h"
+  default     = "15min"
 }
 
 variable "processes_threshold_critical" {
