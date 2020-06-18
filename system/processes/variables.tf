@@ -89,7 +89,7 @@ variable "processes_transformation_function" {
 variable "processes_transformation_window" {
   description = "Transformation window for processes detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
-  default     = "15min"
+  default     = "15m"
 }
 
 variable "processes_threshold_warning" {
