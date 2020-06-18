@@ -92,15 +92,9 @@ variable "processes_transformation_window" {
   default     = "15min"
 }
 
-variable "processes_threshold_critical" {
-  description = "Critical threshold for processes detector"
-  type        = number
-  default     = 1
-}
-
 variable "processes_threshold_warning" {
   description = "Warning threshold for processes detector"
   type        = number
-  default     = 1
+  default     = 2
 }
 

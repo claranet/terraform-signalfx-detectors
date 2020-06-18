@@ -52,8 +52,8 @@ Creates SignalFx detectors with the following checks:
 
 ## Notes
 
-By default, this detectors will check if a process is present or not. 
+By default, only `critical` rule is enabled. This allows the detector to check if the service has, at least, one process running.
 
-The "warning" state can be enable if you need to check if a process need a minimal amount of process running.
-Ex: I need 5 "foo" processes for my api to run correctly, so I will put in warning 5 and in critical 1. 
-In that case, "warning" will raise if I’m under 5 processes and "critical" if no process is found.
+Optionally, this is possible to enable `warning` rule to check if the service has a minimal amount of process running.
+(i.e. I need 5 "foo" processes for my api to run correctly, so I will update `processes_threshold_warning` to `5` and `processes_disabled_warning` to `null`).
+
