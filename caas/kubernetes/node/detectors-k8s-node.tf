@@ -49,9 +49,9 @@ resource "signalfx_detector" "volume_space" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Kubernetes node volume space usage"
 
   program_text = <<-EOF
-		A = data('kubernetes.volume_available_bytes', ${module.filter-tags.filter_custom})${var.volume_space_aggregation_function}
-		B = data('kubernetes.volume_capacity_bytes', ${module.filter-tags.filter_custom})${var.volume_space_aggregation_function}
-		signal = (((B-A)/B)*100).${var.volume_space_transformation_function}(over='${var.volume_space_transformation_window}').publish('signal')
+		A = data('kubernetes.volume_available_bytes', ${module.filter-tags.filter_custom} and not filter('volume_type', 'configMap', 'secret'))${var.volume_space_aggregation_function}
+		B = data('kubernetes.volume_capacity_bytes', ${module.filter-tags.filter_custom} and not filter('volume_type', 'configMap', 'secret'))${var.volume_space_aggregation_function}
+		signal = ((B-A)/B).scale(100).${var.volume_space_transformation_function}(over='${var.volume_space_transformation_window}').publish('signal')
 		detect(when(signal > ${var.volume_space_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.volume_space_threshold_warning}) and when(signal < ${var.volume_space_threshold_critical})).publish('WARN')
 	EOF
@@ -79,9 +79,9 @@ resource "signalfx_detector" "volume_inodes" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Kubernetes node volume inodes usage"
 
   program_text = <<-EOF
-		A = data('kubernetes.volume_inodes_free', ${module.filter-tags.filter_custom})${var.volume_inodes_aggregation_function}
-		B = data('kubernetes.volume_inodes', ${module.filter-tags.filter_custom})${var.volume_inodes_aggregation_function}
-		signal = (((B-A)/B)*100).${var.volume_inodes_transformation_function}(over='${var.volume_inodes_transformation_window}').publish('signal')
+		A = data('kubernetes.volume_inodes_free', ${module.filter-tags.filter_custom} and not filter('volume_type', 'configMap', 'secret'))${var.volume_inodes_aggregation_function}
+		B = data('kubernetes.volume_inodes', ${module.filter-tags.filter_custom} and not filter('volume_type', 'configMap', 'secret'))${var.volume_inodes_aggregation_function}
+		signal = ((B-A)/B).scale(100).${var.volume_inodes_transformation_function}(over='${var.volume_inodes_transformation_window}').publish('signal')
 		detect(when(signal > ${var.volume_inodes_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.volume_inodes_threshold_warning}) and when(signal < ${var.volume_inodes_threshold_critical})).publish('WARN')
 	EOF
