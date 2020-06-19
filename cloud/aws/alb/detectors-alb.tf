@@ -3,7 +3,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
-		signal = data('RequestCount', filter=filter('stat', 'sum') and filter('namespace', 'AWS/ApplicationELB') and ${module.filter-tags.filter_custom}).publish('signal')
+		signal = data('RequestCount', filter=filter('stat', 'sum') and filter('namespace', 'AWS/ApplicationELB') and (not filter('aws_state', '{Code: 32,Name: shutting-down', '{Code: 48,Name: terminated}', '{Code: 62,Name: stopping}', '{Code: 80,Name: stopped}') and ${module.filter-tags.filter_custom}).publish('signal')
 		not_reporting.detector(stream=signal, resource_identifier=['LoadBalancer'], duration='${var.heartbeat_timeframe}').publish('CRIT')
 	EOF
 
@@ -52,10 +52,12 @@ resource "signalfx_detector" "latency" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ALB latency"
 
   program_text = <<-EOF
-		from signalfx.detectors.aperiodic import aperiodic
+		from signalfx.detectors.aperiodic import conditions
 		signal = data('TargetResponseTime', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'mean') and filter('TargetGroup', '*') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom})${var.latency_aggregation_function}.${var.latency_transformation_function}(over='${var.latency_transformation_window}').publish('signal')
-		aperiodic.above_or_below_detector(signal, ${var.latency_threshold_critical}, 'above', lasting('${var.latency_aperiodic_duration}', ${var.latency_aperiodic_percentage})).publish('CRIT')
-		aperiodic.range_detector(signal, ${var.latency_threshold_warning}, ${var.latency_threshold_critical}, 'within_range', lasting('${var.latency_aperiodic_duration}', ${var.latency_aperiodic_percentage}), upper_strict=False).publish('WARN')
+    ON_Condition_CRIT = conditions.generic_condition(signal, ${var.latency_threshold_critical}, ${var.latency_threshold_critical}, 'above', lasting('${var.latency_aperiodic_duration}', ${var.latency_aperiodic_percentage}), 'observed')
+		ON_Condition_WARN = conditions.generic_condition(signal, ${var.flatency_threshold_warning}, ${var.latency_threshold_critical}, 'within_range', lasting('${var.latency_aperiodic_duration}', ${var.latency_aperiodic_percentage}), 'observed', strict_2=False)
+		detect(ON_Condition_CRIT, off=when(signal is None, '${var.latency_clear_duration}')).publish('CRIT')
+		detect(ON_Condition_WARN, off=when(signal is None, '${var.latency_clear_duration}')).publish('WARN')
 	EOF
 
   rule {
