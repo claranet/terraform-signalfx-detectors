@@ -204,6 +204,12 @@ variable "latency_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "latency_clear_duration" {
+  description = "Duration for the latency clear condition"
+  type        = string
+  default     = "15m"
+}
+
 # Httpcode_5xx detectors
 
 variable "httpcode_5xx_disabled" {
