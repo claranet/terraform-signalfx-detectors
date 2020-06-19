@@ -136,6 +136,12 @@ variable "failed_requests_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "failed_requests_clear_duration" {
+  description = "Duration for the failed_requests clear condition"
+  type        = string
+  default     = "15m"
+}
+
 # Other_requests detectors
 
 variable "other_requests_disabled" {
@@ -216,6 +222,12 @@ variable "other_requests_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "other_requests_clear_duration" {
+  description = "Duration for the other_requests clear condition"
+  type        = string
+  default     = "15m"
+}
+
 # Unauthorized_requests detectors
 
 variable "unauthorized_requests_disabled" {
@@ -294,6 +306,12 @@ variable "unauthorized_requests_aperiodic_percentage" {
   description = "Percentage for the unauthorized_requests block"
   type        = number
   default     = 0.9
+}
+
+variable "unauthorized_requests_clear_duration" {
+  description = "Duration for the unauthorized_requests clear condition"
+  type        = string
+  default     = "15m"
 }
 
 # successful_requests detectors
