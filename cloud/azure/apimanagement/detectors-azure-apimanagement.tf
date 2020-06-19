@@ -3,7 +3,7 @@ resource "signalfx_detector" "heartbeat" {
 
 	program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
-		signal = data('Duration', filter=filter('resource_type', 'Microsoft.ApiManagement/service') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}).publish('signal')
+		signal = data('Duration', filter=filter('resource_type', 'Microsoft.ApiManagement/service') and filter('primary_aggregation_type', 'true') and (not filter('azure_power_state', 'PowerState/stopping', 'PowerState/stoppped', 'PowerState/deallocating', 'PowerState/deallocated') and ${module.filter-tags.filter_custom}).publish('signal')
 		not_reporting.detector(stream=signal, resource_identifier=['hostname'], duration='${var.heartbeat_timeframe}').publish('CRIT')
 	EOF
 
@@ -21,12 +21,14 @@ resource "signalfx_detector" "failed_requests" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure API Management failed request rate"
 
 	program_text = <<-EOF
-		from signalfx.detectors.aperiodic import aperiodic
+		from signalfx.detectors.aperiodic import conditions
 		A = data('EventHubTotalFailedEvents', filter=filter('resource_type', 'Microsoft.ApiManagement/service') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.failed_requests_aggregation_function}
 		B = data('EventHubTotalEvents', filter=filter('resource_type', 'Microsoft.ApiManagement/service') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.failed_requests_aggregation_function}
 		signal = ((A/B)*100).${var.failed_requests_transformation_function}(over='${var.failed_requests_transformation_window}').publish('signal')
-		aperiodic.above_or_below_detector(signal, ${var.failed_requests_threshold_critical}, 'above', lasting('${var.failed_requests_aperiodic_duration}', ${var.failed_requests_aperiodic_percentage})).publish('CRIT')
-		aperiodic.range_detector(signal, ${var.failed_requests_threshold_warning}, ${var.failed_requests_threshold_critical}, 'within_range', lasting('${var.failed_requests_aperiodic_duration}', ${var.failed_requests_aperiodic_percentage}), upper_strict=False).publish('WARN')
+		ON_Condition_CRIT = conditions.generic_condition(signal, ${var.failed_requests_threshold_critical}, ${var.failed_requests_threshold_critical}, 'above', lasting('${var.failed_requests_aperiodic_duration}', ${var.failed_requests_aperiodic_percentage}), 'observed')
+		ON_Condition_WARN = conditions.generic_condition(signal, ${var.failed_requests_threshold_warning}, ${var.failed_requests_threshold_critical}, 'within_range', lasting('${var.failed_requests_aperiodic_duration}', ${var.failed_requests_aperiodic_percentage}), 'observed', strict_2=False)
+		detect(ON_Condition_CRIT, off=when(signal is None, '${var.failed_requests_clear_duration}')).publish('CRIT')
+		detect(ON_Condition_WARN, off=when(signal is None, '${var.failed_requests_clear_duration}')).publish('WARN')
 	EOF
 
 	rule {
@@ -52,14 +54,16 @@ resource "signalfx_detector" "other_requests" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure API Management other non successful request rate"
 
 	program_text = <<-EOF
-		from signalfx.detectors.aperiodic import aperiodic
+		from signalfx.detectors.aperiodic import conditions
 		A = data('EventHubThrottledEvents', filter=filter('resource_type', 'Microsoft.ApiManagement/service') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.other_requests_aggregation_function}
 		B = data('EventHubTimedoutEvents', filter=filter('resource_type', 'Microsoft.ApiManagement/service') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.other_requests_aggregation_function}
 		C = data('EventHubDroppedEvents', filter=filter('resource_type', 'Microsoft.ApiManagement/service') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.other_requests_aggregation_function}
 		D = data('EventHubTotalEvents', filter=filter('resource_type', 'Microsoft.ApiManagement/service') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.other_requests_aggregation_function}
 		signal = (((A+B+C)/D)*100).${var.other_requests_transformation_function}(over='${var.other_requests_transformation_window}').publish('signal')
-		aperiodic.above_or_below_detector(signal, ${var.other_requests_threshold_critical}, 'above', lasting('${var.other_requests_aperiodic_duration}', ${var.other_requests_aperiodic_percentage})).publish('CRIT')
-		aperiodic.range_detector(signal, ${var.other_requests_threshold_warning}, ${var.other_requests_threshold_critical}, 'within_range', lasting('${var.other_requests_aperiodic_duration}', ${var.other_requests_aperiodic_percentage}), upper_strict=False).publish('WARN')
+		ON_Condition_CRIT = conditions.generic_condition(signal, ${var.other_requests_threshold_critical}, ${var.other_requests_threshold_critical}, 'above', lasting('${var.other_requests_aperiodic_duration}', ${var.other_requests_aperiodic_percentage}), 'observed')
+		ON_Condition_WARN = conditions.generic_condition(signal, ${var.other_requests_threshold_warning}, ${var.other_requests_threshold_critical}, 'within_range', lasting('${var.other_requests_aperiodic_duration}', ${var.other_requests_aperiodic_percentage}), 'observed', strict_2=False)
+		detect(ON_Condition_CRIT, off=when(signal is None, '${var.other_requests_clear_duration}')).publish('CRIT')
+		detect(ON_Condition_WARN, off=when(signal is None, '${var.other_requests_clear_duration}')).publish('WARN')
 	EOF
 
 	rule {
@@ -85,12 +89,14 @@ resource "signalfx_detector" "unauthorized_requests" {
 	name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure API Management unauthorized request rate"
 
 	program_text = <<-EOF
-		from signalfx.detectors.aperiodic import aperiodic
+		from signalfx.detectors.aperiodic import conditions
 		A = data('EventHubRejectedEvents', filter=filter('resource_type', 'Microsoft.ApiManagement/service') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.unauthorized_requests_aggregation_function}
 		B = data('EventHubTotalEvents', filter=filter('resource_type', 'Microsoft.ApiManagement/service') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.unauthorized_requests_aggregation_function}
 		signal = ((A/B)*100).${var.unauthorized_requests_transformation_function}(over='${var.unauthorized_requests_transformation_window}').publish('signal')
-		aperiodic.above_or_below_detector(signal, ${var.unauthorized_requests_threshold_critical}, 'above', lasting('${var.unauthorized_requests_aperiodic_duration}', ${var.unauthorized_requests_aperiodic_percentage})).publish('CRIT')
-		aperiodic.range_detector(signal, ${var.unauthorized_requests_threshold_warning}, ${var.unauthorized_requests_threshold_critical}, 'within_range', lasting('${var.unauthorized_requests_aperiodic_duration}', ${var.unauthorized_requests_aperiodic_percentage}), upper_strict=False).publish('WARN')
+		ON_Condition_CRIT = conditions.generic_condition(signal, ${var.unauthorized_requests_threshold_critical}, ${var.unauthorized_requests_threshold_critical}, 'above', lasting('${var.unauthorized_requests_aperiodic_duration}', ${var.unauthorized_requests_aperiodic_percentage}), 'observed')
+		ON_Condition_WARN = conditions.generic_condition(signal, ${var.unauthorized_requests_threshold_warning}, ${var.unauthorized_requests_threshold_critical}, 'within_range', lasting('${var.unauthorized_requests_aperiodic_duration}', ${var.unauthorized_requests_aperiodic_percentage}), 'observed', strict_2=False)
+		detect(ON_Condition_CRIT, off=when(signal is None, '${var.unauthorized_requests_clear_duration}')).publish('CRIT')
+		detect(ON_Condition_WARN, off=when(signal is None, '${var.unauthorized_requests_clear_duration}')).publish('WARN')
 	EOF
 
 	rule {
