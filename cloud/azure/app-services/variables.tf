@@ -201,7 +201,7 @@ variable "memory_usage_count_transformation_window" {
 variable "memory_usage_count_threshold_critical" {
   description = "Critical threshold for memory_usage_count detector"
   type        = number
-  default     = 1073741824  # 1Gb
+  default     = 1073741824 # 1Gb
 }
 
 variable "memory_usage_count_threshold_warning" {
