@@ -45,7 +45,7 @@ resource "signalfx_detector" "response_time" {
     disabled              = coalesce(var.response_time_disabled_warning, var.response_time_disabled, var.detectors_disabled)
     notifications         = coalescelist(var.response_time_notifications_warning, var.response_time_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-  }	
+  }
 }
 
 resource "signalfx_detector" "memory_usage_count" {
