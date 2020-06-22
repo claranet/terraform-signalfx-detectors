@@ -136,6 +136,12 @@ variable "eventhub_failed_requests_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "eventhub_failed_requests_clear_duration" {
+  description = "Duration for the eventhub_failed_requests clear condition"
+  type        = string
+  default     = "15m"
+}
+
 # Eventhub_errors detectors
 
 variable "eventhub_errors_disabled" {
@@ -214,4 +220,10 @@ variable "eventhub_errors_aperiodic_percentage" {
   description = "Percentage for the eventhub_errors block"
   type        = number
   default     = 0.9
+}
+
+variable "eventhub_errors_clear_duration" {
+  description = "Duration for the eventhub_errors clear condition"
+  type        = string
+  default     = "15m"
 }
