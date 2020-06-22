@@ -118,6 +118,12 @@ variable "pct_errors_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "pct_errors_clear_duration" {
+  description = "Duration for the pct_errors clear condition"
+  type        = string
+  default     = "15m"
+}
+
 # Errors detectors
 
 variable "errors_disabled" {
@@ -196,6 +202,12 @@ variable "errors_aperiodic_percentage" {
   description = "Percentage for the errors block"
   type        = number
   default     = 0.9
+}
+
+variable "errors_clear_duration" {
+  description = "Duration for the errors clear condition"
+  type        = string
+  default     = "15m"
 }
 
 # Throttles detectors
@@ -278,6 +290,12 @@ variable "throttles_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "throttles_clear_duration" {
+  description = "Duration for the throttles clear condition"
+  type        = string
+  default     = "15m"
+}
+
 # invocations detectors
 
 variable "invocations_disabled" {
@@ -356,4 +374,10 @@ variable "invocations_aperiodic_percentage" {
   description = "Percentage for the invocations block"
   type        = number
   default     = 0.9
+}
+
+variable "invocations_clear_duration" {
+  description = "Duration for the invocations clear condition"
+  type        = string
+  default     = "15m"
 }
