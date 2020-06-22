@@ -136,6 +136,12 @@ variable "blobservices_requests_error_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "blobservices_requests_error_clear_duration" {
+  description = "Duration for the blobservices_requests_error clear condition"
+  type        = string
+  default     = "15m"
+}
+
 # Fileservices_requests_error detectors
 
 variable "fileservices_requests_error_disabled" {
@@ -214,6 +220,12 @@ variable "fileservices_requests_error_aperiodic_percentage" {
   description = "Percentage for the fileservices_requests_error block"
   type        = number
   default     = 0.9
+}
+
+variable "fileservices_requests_error_clear_duration" {
+  description = "Duration for the fileservices_requests_error clear condition"
+  type        = string
+  default     = "15m"
 }
 
 # Queueservices_requests_error detectors
@@ -296,6 +308,12 @@ variable "queueservices_requests_error_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "queueservices_requests_error_clear_duration" {
+  description = "Duration for the queueservices_requests_error clear condition"
+  type        = string
+  default     = "15m"
+}
+
 # Tableservices_requests_error detectors
 
 variable "tableservices_requests_error_disabled" {
@@ -376,84 +394,96 @@ variable "tableservices_requests_error_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "tableservices_requests_error_clear_duration" {
+  description = "Duration for the tableservices_requests_error clear condition"
+  type        = string
+  default     = "15m"
+}
+
 # Blobservices_latency detectors
 
 variable "blobservices_latency_disabled" {
-  description = "Disable all alerting rules for Blobservices_latency detector"
+  description = "Disable all alerting rules for blobservices_latency detector"
   type        = bool
   default     = null
 }
 
 variable "blobservices_latency_disabled_critical" {
-  description = "Disable critical alerting rule for Blobservices_latency detector"
+  description = "Disable critical alerting rule for blobservices_latency detector"
   type        = bool
   default     = null
 }
 
 variable "blobservices_latency_disabled_warning" {
-  description = "Disable warning alerting rule for Blobservices_latency detector"
+  description = "Disable warning alerting rule for blobservices_latency detector"
   type        = bool
   default     = null
 }
 
 variable "blobservices_latency_notifications" {
-  description = "Notification recipients list for every alerting rules of Blobservices_latency detector"
+  description = "Notification recipients list for every alerting rules of blobservices_latency detector"
   type        = list
   default     = []
 }
 
 variable "blobservices_latency_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of Blobservices_latency detector"
+  description = "Notification recipients list for warning alerting rule of blobservices_latency detector"
   type        = list
   default     = []
 }
 
 variable "blobservices_latency_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of Blobservices_latency detector"
+  description = "Notification recipients list for critical alerting rule of blobservices_latency detector"
   type        = list
   default     = []
 }
 
 variable "blobservices_latency_aggregation_function" {
-  description = "Aggregation function and group by for Blobservices_latency detector (i.e. \".mean(by=['host'])\")"
+  description = "Aggregation function and group by for blobservices_latency detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name'])"
 }
 
 variable "blobservices_latency_transformation_function" {
-  description = "Transformation function for Blobservices_latency detector (mean, min, max)"
+  description = "Transformation function for blobservices_latency detector (mean, min, max)"
   type        = string
   default     = "min"
 }
 
 variable "blobservices_latency_transformation_window" {
-  description = "Transformation window for Blobservices_latency detector (i.e. 5m, 20m, 1h, 1d)"
+  description = "Transformation window for blobservices_latency detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
 }
 
 variable "blobservices_latency_threshold_critical" {
-  description = "Critical threshold for Blobservices_latency detector"
+  description = "Critical threshold for blobservices_latency detector"
   type        = number
   default     = 2000
 }
 
 variable "blobservices_latency_threshold_warning" {
-  description = "Warning threshold for Blobservices_latency detector"
+  description = "Warning threshold for blobservices_latency detector"
   type        = number
   default     = 1000
 }
 
 variable "blobservices_latency_aperiodic_duration" {
-  description = "Duration for the Blobservices_latency block"
+  description = "Duration for the blobservices_latency block"
   type        = string
   default     = "10m"
 }
 
 variable "blobservices_latency_aperiodic_percentage" {
-  description = "Percentage for the Blobservices_latency block"
+  description = "Percentage for the blobservices_latency block"
   type        = number
   default     = 0.9
+}
+
+variable "blobservices_latency_clear_duration" {
+  description = "Duration for the blobservices_latency clear condition"
+  type        = string
+  default     = "15m"
 }
 
 # fileservices_latency detectors
@@ -536,6 +566,12 @@ variable "fileservices_latency_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "fileservices_latency_clear_duration" {
+  description = "Duration for the fileservices_latency clear condition"
+  type        = string
+  default     = "15m"
+}
+
 # Queueservices_latency detectors
 
 variable "queueservices_latency_disabled" {
@@ -614,6 +650,12 @@ variable "queueservices_latency_aperiodic_percentage" {
   description = "Percentage for the queueservices_latency block"
   type        = number
   default     = 0.9
+}
+
+variable "queueservices_latency_clear_duration" {
+  description = "Duration for the queueservices_latency clear condition"
+  type        = string
+  default     = "15m"
 }
 
 # Tableservices_latency detectors
@@ -696,6 +738,12 @@ variable "tableservices_latency_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "tableservices_latency_clear_duration" {
+  description = "Duration for the tableservices_latency clear condition"
+  type        = string
+  default     = "15m"
+}
+
 # Blob_timeout_error_requests detectors
 
 variable "blob_timeout_error_requests_disabled" {
@@ -774,6 +822,12 @@ variable "blob_timeout_error_requests_aperiodic_percentage" {
   description = "Percentage for the blob_timeout_error_requests block"
   type        = number
   default     = 0.9
+}
+
+variable "blob_timeout_error_requests_clear_duration" {
+  description = "Duration for the blob_timeout_error_requests clear condition"
+  type        = string
+  default     = "15m"
 }
 
 # File_timeout_error_requests detectors
@@ -856,6 +910,12 @@ variable "file_timeout_error_requests_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "file_timeout_error_requests_clear_duration" {
+  description = "Duration for the file_timeout_error_requests clear condition"
+  type        = string
+  default     = "15m"
+}
+
 # Queue_timeout_error_requests detectors
 
 variable "queue_timeout_error_requests_disabled" {
@@ -934,6 +994,12 @@ variable "queue_timeout_error_requests_aperiodic_percentage" {
   description = "Percentage for the queue_timeout_error_requests block"
   type        = number
   default     = 0.9
+}
+
+variable "queue_timeout_error_requests_clear_duration" {
+  description = "Duration for the queue_timeout_error_requests clear condition"
+  type        = string
+  default     = "15m"
 }
 
 # Table_timeout_error_requests detectors
@@ -1016,6 +1082,12 @@ variable "table_timeout_error_requests_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "table_timeout_error_requests_clear_duration" {
+  description = "Duration for the table_timeout_error_requests clear condition"
+  type        = string
+  default     = "15m"
+}
+
 # Blob_network_error_requests detectors
 
 variable "blob_network_error_requests_disabled" {
@@ -1094,6 +1166,12 @@ variable "blob_network_error_requests_aperiodic_percentage" {
   description = "Percentage for the blob_network_error_requests block"
   type        = number
   default     = 0.9
+}
+
+variable "blob_network_error_requests_clear_duration" {
+  description = "Duration for the blob_network_error_requests clear condition"
+  type        = string
+  default     = "15m"
 }
 
 # File_network_error_requests detectors
@@ -1176,6 +1254,12 @@ variable "file_network_error_requests_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "file_network_error_requests_clear_duration" {
+  description = "Duration for the file_network_error_requests clear condition"
+  type        = string
+  default     = "15m"
+}
+
 # Queue_network_error_requests detectors
 
 variable "queue_network_error_requests_disabled" {
@@ -1254,6 +1338,12 @@ variable "queue_network_error_requests_aperiodic_percentage" {
   description = "Percentage for the queue_network_error_requests block"
   type        = number
   default     = 0.9
+}
+
+variable "queue_network_error_requests_clear_duration" {
+  description = "Duration for the queue_network_error_requests clear condition"
+  type        = string
+  default     = "15m"
 }
 
 # Table_network_error_requests detectors
@@ -1336,6 +1426,12 @@ variable "table_network_error_requests_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "table_network_error_requests_clear_duration" {
+  description = "Duration for the table_network_error_requests clear condition"
+  type        = string
+  default     = "15m"
+}
+
 # Blob_throttling_error_requests detectors
 
 variable "blob_throttling_error_requests_disabled" {
@@ -1414,6 +1510,12 @@ variable "blob_throttling_error_requests_aperiodic_percentage" {
   description = "Percentage for the blob_throttling_error_requests block"
   type        = number
   default     = 0.9
+}
+
+variable "blob_throttling_error_requests_clear_duration" {
+  description = "Duration for the blob_throttling_error_requests clear condition"
+  type        = string
+  default     = "15m"
 }
 
 # File_throttling_error_requests detectors
@@ -1496,6 +1598,12 @@ variable "file_throttling_error_requests_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "file_throttling_error_requests_clear_duration" {
+  description = "Duration for the file_throttling_error_requests clear condition"
+  type        = string
+  default     = "15m"
+}
+
 # Queue_throttling_error_requests detectors
 
 variable "queue_throttling_error_requests_disabled" {
@@ -1574,6 +1682,12 @@ variable "queue_throttling_error_requests_aperiodic_percentage" {
   description = "Percentage for the queue_throttling_error_requests block"
   type        = number
   default     = 0.9
+}
+
+variable "queue_throttling_error_requests_clear_duration" {
+  description = "Duration for the queue_throttling_error_requests clear condition"
+  type        = string
+  default     = "15m"
 }
 
 # Table_throttling_error_requests detectors
@@ -1656,6 +1770,12 @@ variable "table_throttling_error_requests_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "table_throttling_error_requests_clear_duration" {
+  description = "Duration for the table_throttling_error_requests clear condition"
+  type        = string
+  default     = "15m"
+}
+
 # Blob_server_other_error_requests detectors
 
 variable "blob_server_other_error_requests_disabled" {
@@ -1734,6 +1854,12 @@ variable "blob_server_other_error_requests_aperiodic_percentage" {
   description = "Percentage for the blob_server_other_error_requests block"
   type        = number
   default     = 0.9
+}
+
+variable "blob_server_other_error_requests_clear_duration" {
+  description = "Duration for the blob_server_other_error_requests clear condition"
+  type        = string
+  default     = "15m"
 }
 
 # file_server_other_error_requests detectors
@@ -1816,6 +1942,12 @@ variable "file_server_other_error_requests_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "file_server_other_error_requests_clear_duration" {
+  description = "Duration for the file_server_other_error_requests clear condition"
+  type        = string
+  default     = "15m"
+}
+
 # Queue_server_other_error_requests detectors
 
 variable "queue_server_other_error_requests_disabled" {
@@ -1894,6 +2026,12 @@ variable "queue_server_other_error_requests_aperiodic_percentage" {
   description = "Percentage for the queue_server_other_error_requests block"
   type        = number
   default     = 0.9
+}
+
+variable "queue_server_other_error_requests_clear_duration" {
+  description = "Duration for the queue_server_other_error_requests clear condition"
+  type        = string
+  default     = "15m"
 }
 
 # Table_server_other_error_requests detectors
@@ -1976,6 +2114,12 @@ variable "table_server_other_error_requests_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "table_server_other_error_requests_clear_duration" {
+  description = "Duration for the table_server_other_error_requests clear condition"
+  type        = string
+  default     = "15m"
+}
+
 # Blob_client_other_error_requests detectors
 
 variable "blob_client_other_error_requests_disabled" {
@@ -2054,6 +2198,12 @@ variable "blob_client_other_error_requests_aperiodic_percentage" {
   description = "Percentage for the blob_client_other_error_requests block"
   type        = number
   default     = 0.9
+}
+
+variable "blob_client_other_error_requests_clear_duration" {
+  description = "Duration for the blob_client_other_error_requests clear condition"
+  type        = string
+  default     = "15m"
 }
 
 # File_client_other_error_requests detectors
@@ -2136,6 +2286,12 @@ variable "file_client_other_error_requests_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "file_client_other_error_requests_clear_duration" {
+  description = "Duration for the file_client_other_error_requests clear condition"
+  type        = string
+  default     = "15m"
+}
+
 # Queue_client_other_error_requests detectors
 
 variable "queue_client_other_error_requests_disabled" {
@@ -2214,6 +2370,12 @@ variable "queue_client_other_error_requests_aperiodic_percentage" {
   description = "Percentage for the queue_client_other_error_requests block"
   type        = number
   default     = 0.9
+}
+
+variable "queue_client_other_error_requests_clear_duration" {
+  description = "Duration for the queue_client_other_error_requests clear condition"
+  type        = string
+  default     = "15m"
 }
 
 # Table_client_other_error_requests detectors
@@ -2296,6 +2458,12 @@ variable "table_client_other_error_requests_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "table_client_other_error_requests_clear_duration" {
+  description = "Duration for the table_client_other_error_requests clear condition"
+  type        = string
+  default     = "15m"
+}
+
 # Blob_authorization_error_requests detectors
 
 variable "blob_authorization_error_requests_disabled" {
@@ -2374,6 +2542,12 @@ variable "blob_authorization_error_requests_aperiodic_percentage" {
   description = "Percentage for the blob_authorization_error_requests block"
   type        = number
   default     = 0.9
+}
+
+variable "blob_authorization_error_requests_clear_duration" {
+  description = "Duration for the blob_authorization_error_requests clear condition"
+  type        = string
+  default     = "15m"
 }
 
 # File_authorization_error_requests detectors
@@ -2456,6 +2630,12 @@ variable "file_authorization_error_requests_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "file_authorization_error_requests_clear_duration" {
+  description = "Duration for the file_authorization_error_requests clear condition"
+  type        = string
+  default     = "15m"
+}
+
 # Queue_authorization_error_requests detectors
 
 variable "queue_authorization_error_requests_disabled" {
@@ -2536,6 +2716,12 @@ variable "queue_authorization_error_requests_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "queue_authorization_error_requests_clear_duration" {
+  description = "Duration for the queue_authorization_error_requests clear condition"
+  type        = string
+  default     = "15m"
+}
+
 # Table_authorization_error_requests detectors
 
 variable "table_authorization_error_requests_disabled" {
@@ -2614,4 +2800,10 @@ variable "table_authorization_error_requests_aperiodic_percentage" {
   description = "Percentage for the table_authorization_error_requests block"
   type        = number
   default     = 0.9
+}
+
+variable "table_authorization_error_requests_clear_duration" {
+  description = "Duration for the table_authorization_error_requests clear condition"
+  type        = string
+  default     = "15m"
 }
