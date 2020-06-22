@@ -136,6 +136,12 @@ variable "db_4xx_requests_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "db_4xx_requests_clear_duration" {
+  description = "Duration for the db_4xx_requests clear condition"
+  type        = string
+  default     = "15m"
+}
+
 # db_5xx_requests detectors
 
 variable "db_5xx_requests_disabled" {
@@ -216,6 +222,12 @@ variable "db_5xx_requests_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "db_5xx_requests_clear_duration" {
+  description = "Duration for the db_5xx_requests clear condition"
+  type        = string
+  default     = "15m"
+}
+
 # Scaling detectors
 
 variable "scaling_disabled" {
@@ -294,4 +306,10 @@ variable "scaling_aperiodic_percentage" {
   description = "Percentage for the scaling block"
   type        = number
   default     = 0.9
+}
+
+variable "scaling_clear_duration" {
+  description = "Duration for the scaling clear condition"
+  type        = string
+  default     = "15m"
 }
