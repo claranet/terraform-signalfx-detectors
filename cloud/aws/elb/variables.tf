@@ -499,3 +499,9 @@ variable "backend_latency_aperiodic_percentage" {
   type        = number
   default     = 0.9
 }
+
+variable "backend_latency_clear_duration" {
+  description = "Duration for the backend_latency clear condition"
+  type        = string
+  default     = "15m"
+}
