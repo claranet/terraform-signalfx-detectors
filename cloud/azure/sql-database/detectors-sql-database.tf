@@ -3,7 +3,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
-		signal = data('connection_successful', filter=filter('resource_type', 'Microsoft.Sql/servers/databases') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}).publish('signal')
+		signal = data('connection_successful', filter=filter('resource_type', 'Microsoft.Sql/servers/databases') and filter('primary_aggregation_type', 'true') and (not filter('azure_power_state', 'PowerState/stopping', 'PowerState/stoppped', 'PowerState/deallocating', 'PowerState/deallocated')) and ${module.filter-tags.filter_custom}).publish('signal')
 		not_reporting.detector(stream=signal, resource_identifier=['azure_resource_group_name'], duration='${var.heartbeat_timeframe}').publish('CRIT')
 	EOF
 
