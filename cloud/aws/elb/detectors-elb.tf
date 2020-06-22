@@ -3,9 +3,9 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
-		signal = data('RequestCount', filter=filter('stat', 'sum') and filter('namespace', 'AWS/ELB')and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom}).publish('signal')
+		signal = data('RequestCount', filter=filter('stat', 'sum') and filter('namespace', 'AWS/ELB')and (not filter('AvailabilityZone', '*')) and (not filter('aws_state', '{Code: 32,Name: shutting-down', '{Code: 48,Name: terminated}', '{Code: 62,Name: stopping}', '{Code: 80,Name: stopped}')) and ${module.filter-tags.filter_custom}).publish('signal')
 		not_reporting.detector(stream=signal, resource_identifier=['LoadBalancerName'], duration='${var.heartbeat_timeframe}').publish('CRIT')
-	EOF
+  EOF
 
   rule {
     description           = "has not reported in ${var.heartbeat_timeframe}"
@@ -26,7 +26,7 @@ resource "signalfx_detector" "no_healthy_instances" {
 		signal = (A/ (A + B)).scale(100).${var.no_healthy_instances_transformation_function}(over='${var.no_healthy_instances_transformation_window}').publish('signal')
 		detect(when(signal < ${var.no_healthy_instances_threshold_critical})).publish('CRIT')
 		detect(when(signal < ${var.no_healthy_instances_threshold_warning}) and when(signal >= ${var.no_healthy_instances_threshold_critical})).publish('WARN')
-	EOF
+  EOF
 
   rule {
     description           = "has fallen below critical capacity < ${var.no_healthy_instances_threshold_critical}%"
@@ -45,7 +45,6 @@ resource "signalfx_detector" "no_healthy_instances" {
     notifications         = coalescelist(var.no_healthy_instances_notifications_warning, var.no_healthy_instances_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
-
 }
 
 resource "signalfx_detector" "too_much_4xx" {
@@ -57,7 +56,7 @@ resource "signalfx_detector" "too_much_4xx" {
 		signal = (A/B).scale(100).${var.too_much_4xx_transformation_function}(over='${var.too_much_4xx_transformation_window}').publish('signal')
 		detect(when(signal > ${var.too_much_4xx_threshold_critical}) and when(B > ${var.too_much_4xx_threshold_number_requests})).publish('CRIT')
 		detect(when(signal > ${var.too_much_4xx_threshold_warning}) and when(B > ${var.too_much_4xx_threshold_number_requests}) and when(signal <= ${var.too_much_4xx_threshold_critical})).publish('WARN')
-	EOF
+  EOF
 
   rule {
     description           = "is too high > ${var.too_much_4xx_threshold_critical}%"
@@ -76,7 +75,6 @@ resource "signalfx_detector" "too_much_4xx" {
     notifications         = coalescelist(var.too_much_4xx_notifications_warning, var.too_much_4xx_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
-
 }
 
 resource "signalfx_detector" "too_much_5xx" {
@@ -88,7 +86,7 @@ resource "signalfx_detector" "too_much_5xx" {
 		signal = (A/B).scale(100).${var.too_much_5xx_transformation_function}(over='${var.too_much_5xx_transformation_window}').publish('signal')
 		detect(when(signal > ${var.too_much_5xx_threshold_critical}) and when(B > ${var.too_much_5xx_threshold_number_requests})).publish('CRIT')
 		detect(when(signal > ${var.too_much_5xx_threshold_warning}) and when(B > ${var.too_much_5xx_threshold_number_requests}) and when(signal <= ${var.too_much_5xx_threshold_critical})).publish('WARN')
-	EOF
+  EOF
 
   rule {
     description           = "is too high > ${var.too_much_5xx_threshold_critical}%"
@@ -107,7 +105,6 @@ resource "signalfx_detector" "too_much_5xx" {
     notifications         = coalescelist(var.too_much_5xx_notifications_warning, var.too_much_5xx_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
-
 }
 
 resource "signalfx_detector" "too_much_4xx_backend" {
@@ -119,7 +116,7 @@ resource "signalfx_detector" "too_much_4xx_backend" {
 		signal = (A/B).scale(100).${var.too_much_4xx_backend_transformation_function}(over='${var.too_much_4xx_backend_transformation_window}').publish('signal')
 		detect(when(signal > ${var.too_much_4xx_backend_threshold_critical}) and when(B > ${var.too_much_4xx_backend_threshold_number_requests})).publish('CRIT')
 		detect(when(signal > ${var.too_much_4xx_backend_threshold_warning}) and when(B > ${var.too_much_4xx_backend_threshold_number_requests}) and when(signal <= ${var.too_much_4xx_backend_threshold_critical})).publish('WARN')
-	EOF
+  EOF
 
   rule {
     description           = "is too high > ${var.too_much_4xx_backend_threshold_critical}%"
@@ -138,7 +135,6 @@ resource "signalfx_detector" "too_much_4xx_backend" {
     notifications         = coalescelist(var.too_much_4xx_backend_notifications_warning, var.too_much_4xx_backend_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
-
 }
 
 resource "signalfx_detector" "too_much_5xx_backend" {
@@ -150,7 +146,7 @@ resource "signalfx_detector" "too_much_5xx_backend" {
 		signal = (A/B).scale(100).${var.too_much_5xx_backend_transformation_function}(over='${var.too_much_5xx_backend_transformation_window}').publish('signal')
 		detect(when(signal > ${var.too_much_5xx_backend_threshold_critical}) and when(B > ${var.too_much_5xx_backend_threshold_number_requests})).publish('CRIT')
 		detect(when(signal > ${var.too_much_5xx_backend_threshold_warning}) and when(B > ${var.too_much_5xx_backend_threshold_number_requests}) and when(signal <= ${var.too_much_5xx_backend_threshold_critical})).publish('WARN')
-	EOF
+  EOF
 
   rule {
     description           = "is too high > ${var.too_much_5xx_backend_threshold_critical}%"
@@ -169,18 +165,19 @@ resource "signalfx_detector" "too_much_5xx_backend" {
     notifications         = coalescelist(var.too_much_5xx_backend_notifications_warning, var.too_much_5xx_backend_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
-
 }
 
 resource "signalfx_detector" "backend_latency" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ELB backend latency"
 
   program_text = <<-EOF
-		from signalfx.detectors.aperiodic import aperiodic
+		from signalfx.detectors.aperiodic import conditions
 		signal = data('Latency', filter=filter('namespace', 'AWS/ELB') and filter('stat', 'mean') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom})${var.backend_latency_aggregation_function}.${var.backend_latency_transformation_function}(over='${var.backend_latency_transformation_window}').publish('signal')
-		aperiodic.above_or_below_detector(signal, ${var.backend_latency_threshold_critical}, 'above', lasting('${var.backend_latency_aperiodic_duration}', ${var.backend_latency_aperiodic_percentage})).publish('CRIT')
-		aperiodic.range_detector(signal, ${var.backend_latency_threshold_warning}, ${var.backend_latency_threshold_critical}, 'within_range', lasting('${var.backend_latency_aperiodic_duration}', ${var.backend_latency_aperiodic_percentage}), upper_strict=False).publish('WARN')
-	EOF
+		ON_Condition_CRIT = conditions.generic_condition(signal, ${var.backend_latency_threshold_critical}, ${var.backend_latency_threshold_critical}, 'above', lasting('${var.backend_latency_aperiodic_duration}', ${var.backend_latency_aperiodic_percentage}), 'observed')
+		ON_Condition_WARN = conditions.generic_condition(signal, ${var.backend_latency_threshold_warning}, ${var.backend_latency_threshold_critical}, 'within_range', lasting('${var.backend_latency_aperiodic_duration}', ${var.backend_latency_aperiodic_percentage}), 'observed', strict_2=False)
+		detect(ON_Condition_CRIT, off=when(signal is None, '${var.backend_latency_clear_duration}')).publish('CRIT')
+		detect(ON_Condition_WARN, off=when(signal is None, '${var.backend_latency_clear_duration}')).publish('WARN')
+  EOF
 
   rule {
     description           = "is too high > ${var.backend_latency_threshold_critical}s"
@@ -199,5 +196,4 @@ resource "signalfx_detector" "backend_latency" {
     notifications         = coalescelist(var.backend_latency_notifications_warning, var.backend_latency_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
-
 }
