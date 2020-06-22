@@ -2,13 +2,15 @@ resource "signalfx_detector" "pct_errors" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS Lambda errors rate"
 
   program_text = <<-EOF
-		from signalfx.detectors.aperiodic import aperiodic
+		from signalfx.detectors.aperiodic import conditions
 		A = data('Errors', filter=filter('namespace', 'AWS/Lambda') and filter('stat', 'sum') and ${module.filter-tags.filter_custom})${var.pct_errors_aggregation_function}
 		B = data('Invocations', filter=filter('namespace', 'AWS/Lambda') and filter('stat', 'sum') and ${module.filter-tags.filter_custom})${var.pct_errors_aggregation_function}
 		signal = (A/B).scale(100).${var.pct_errors_transformation_function}(over='${var.pct_errors_transformation_window}').publish('signal')
-		aperiodic.above_or_below_detector(signal, ${var.pct_errors_threshold_critical}, 'above', lasting('${var.pct_errors_aperiodic_duration}', ${var.pct_errors_aperiodic_percentage})).publish('CRIT')
-		aperiodic.range_detector(signal, ${var.pct_errors_threshold_warning}, ${var.pct_errors_threshold_critical}, 'within_range', lasting('${var.pct_errors_aperiodic_duration}', ${var.pct_errors_aperiodic_percentage}), upper_strict=False).publish('WARN')
-	EOF
+		ON_Condition_CRIT = conditions.generic_condition(signal, ${var.pct_errors_threshold_critical}, ${var.pct_errors_threshold_critical}, 'above', lasting('${var.pct_errors_aperiodic_duration}', ${var.pct_errors_aperiodic_percentage}), 'observed')
+		ON_Condition_WARN = conditions.generic_condition(signal, ${var.pct_errors_threshold_warning}, ${var.pct_errors_threshold_critical}, 'within_range', lasting('${var.pct_errors_aperiodic_duration}', ${var.pct_errors_aperiodic_percentage}), 'observed', strict_2=False)
+		detect(ON_Condition_CRIT, off=when(signal is None, '${var.pct_errors_clear_duration}')).publish('CRIT')
+		detect(ON_Condition_WARN, off=when(signal is None, '${var.pct_errors_clear_duration}')).publish('WARN')
+  EOF
 
   rule {
     description           = "is too high > ${var.pct_errors_threshold_critical}"
@@ -27,18 +29,19 @@ resource "signalfx_detector" "pct_errors" {
     notifications         = coalescelist(var.pct_errors_notifications_warning, var.pct_errors_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
-
 }
 
 resource "signalfx_detector" "errors" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS Lambda errors"
 
   program_text = <<-EOF
-		from signalfx.detectors.aperiodic import aperiodic
+		from signalfx.detectors.aperiodic import conditions
 		signal = data('Errors', filter=filter('namespace', 'AWS/Lambda') and filter('stat', 'sum') and ${module.filter-tags.filter_custom})${var.errors_aggregation_function}.${var.errors_transformation_function}(over='${var.errors_transformation_window}').publish('signal')
-		aperiodic.above_or_below_detector(signal, ${var.errors_threshold_critical}, 'above', lasting('${var.errors_aperiodic_duration}', ${var.errors_aperiodic_percentage})).publish('CRIT')
-		aperiodic.range_detector(signal, ${var.errors_threshold_warning}, ${var.errors_threshold_critical}, 'within_range', lasting('${var.errors_aperiodic_duration}', ${var.errors_aperiodic_percentage}), upper_strict=False).publish('WARN')
-	EOF
+		ON_Condition_CRIT = conditions.generic_condition(signal, ${var.errors_threshold_critical}, ${var.errors_threshold_critical}, 'above', lasting('${var.errors_aperiodic_duration}', ${var.errors_aperiodic_percentage}), 'observed')
+		ON_Condition_WARN = conditions.generic_condition(signal, ${var.errors_threshold_warning}, ${var.errors_threshold_critical}, 'within_range', lasting('${var.errors_aperiodic_duration}', ${var.errors_aperiodic_percentage}), 'observed', strict_2=False)
+		detect(ON_Condition_CRIT, off=when(signal is None, '${var.errors_clear_duration}')).publish('CRIT')
+		detect(ON_Condition_WARN, off=when(signal is None, '${var.errors_clear_duration}')).publish('WARN')
+  EOF
 
   rule {
     description           = "is too high > ${var.errors_threshold_critical}"
@@ -57,18 +60,19 @@ resource "signalfx_detector" "errors" {
     notifications         = coalescelist(var.errors_notifications_warning, var.errors_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
-
 }
 
 resource "signalfx_detector" "throttles" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS Lambda invocations throttled"
 
   program_text = <<-EOF
-		from signalfx.detectors.aperiodic import aperiodic
+		from signalfx.detectors.aperiodic import conditions
 		signal = data('Throttles', filter=filter('namespace', 'AWS/Lambda') and filter('stat', 'sum') and ${module.filter-tags.filter_custom})${var.throttles_aggregation_function}.${var.throttles_transformation_function}(over='${var.throttles_transformation_window}').publish('signal')
-		aperiodic.above_or_below_detector(signal, ${var.throttles_threshold_critical}, 'above', lasting('${var.throttles_aperiodic_duration}', ${var.throttles_aperiodic_percentage})).publish('CRIT')
-		aperiodic.range_detector(signal, ${var.throttles_threshold_warning}, ${var.throttles_threshold_critical}, 'within_range', lasting('${var.throttles_aperiodic_duration}', ${var.throttles_aperiodic_percentage}), upper_strict=False).publish('WARN')
-	EOF
+		ON_Condition_CRIT = conditions.generic_condition(signal, ${var.throttles_threshold_critical}, ${var.throttles_threshold_critical}, 'above', lasting('${var.throttles_aperiodic_duration}', ${var.throttles_aperiodic_percentage}), 'observed')
+		ON_Condition_WARN = conditions.generic_condition(signal, ${var.throttles_threshold_warning}, ${var.throttles_threshold_critical}, 'within_range', lasting('${var.throttles_aperiodic_duration}', ${var.throttles_aperiodic_percentage}), 'observed', strict_2=False)
+		detect(ON_Condition_CRIT, off=when(signal is None, '${var.throttles_clear_duration}')).publish('CRIT')
+		detect(ON_Condition_WARN, off=when(signal is None, '${var.throttles_clear_duration}')).publish('WARN')
+  EOF
 
   rule {
     description           = "is too high > ${var.throttles_threshold_critical}"
@@ -87,18 +91,19 @@ resource "signalfx_detector" "throttles" {
     notifications         = coalescelist(var.throttles_notifications_warning, var.throttles_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
-
 }
 
 resource "signalfx_detector" "invocations" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS Lambda invocations"
 
   program_text = <<-EOF
-		from signalfx.detectors.aperiodic import aperiodic
+		from signalfx.detectors.aperiodic import conditions
 		signal = data('Invocations', filter=filter('namespace', 'AWS/Lambda') and filter('stat', 'sum') and ${module.filter-tags.filter_custom})${var.invocations_aggregation_function}.${var.invocations_transformation_function}(over='${var.invocations_transformation_window}').publish('signal')
-		aperiodic.above_or_below_detector(signal, ${var.invocations_threshold_critical}, 'above', lasting('${var.invocations_aperiodic_duration}', ${var.invocations_aperiodic_percentage})).publish('CRIT')
-		aperiodic.range_detector(signal, ${var.invocations_threshold_warning}, ${var.invocations_threshold_critical}, 'within_range', lasting('${var.invocations_aperiodic_duration}', ${var.invocations_aperiodic_percentage}), upper_strict=False).publish('WARN')
-	EOF
+		ON_Condition_CRIT = conditions.generic_condition(signal, ${var.invocations_threshold_critical}, ${var.invocations_threshold_critical}, 'above', lasting('${var.invocations_aperiodic_duration}', ${var.invocations_aperiodic_percentage}), 'observed')
+		ON_Condition_WARN = conditions.generic_condition(signal, ${var.invocations_threshold_warning}, ${var.invocations_threshold_critical}, 'within_range', lasting('${var.invocations_aperiodic_duration}', ${var.invocations_aperiodic_percentage}), 'observed', strict_2=False)
+		detect(ON_Condition_CRIT, off=when(signal is None, '${var.invocations_clear_duration}')).publish('CRIT')
+		detect(ON_Condition_WARN, off=when(signal is None, '${var.invocations_clear_duration}')).publish('WARN')
+  EOF
 
   rule {
     description           = "is too low <= ${var.invocations_threshold_critical}"
@@ -117,5 +122,4 @@ resource "signalfx_detector" "invocations" {
     notifications         = coalescelist(var.invocations_notifications_warning, var.invocations_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
-
 }
