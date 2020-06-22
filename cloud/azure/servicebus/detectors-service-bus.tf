@@ -3,9 +3,9 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
-		signal = data('SuccessfulRequests', filter=filter('resource_type', 'Microsoft.ServiceBus/namespaces') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}).publish('signal')
+		signal = data('SuccessfulRequests', filter=filter('resource_type', 'Microsoft.ServiceBus/namespaces') and filter('primary_aggregation_type', 'true') and (not filter('azure_power_state', 'PowerState/stopping', 'PowerState/stoppped', 'PowerState/deallocating', 'PowerState/deallocated')) and ${module.filter-tags.filter_custom}).publish('signal')
 		not_reporting.detector(stream=signal, resource_identifier=['entityname'], duration='${var.heartbeat_timeframe}').publish('CRIT')
-	EOF
+  EOF
 
   rule {
     description           = "has not reported in ${var.heartbeat_timeframe}"
@@ -22,8 +22,8 @@ resource "signalfx_detector" "active_connections" {
 
   program_text = <<-EOF
 		signal = data('ActiveConnections', filter=filter('resource_type', 'Microsoft.ServiceBus/namespaces') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.active_connections_aggregation_function}.${var.active_connections_transformation_function}(over='${var.active_connections_transformation_window}').publish('signal')
-		detect(when(signal > ${var.active_connections_threshold_critical})).publish('CRIT')
-	EOF
+		detect(when(signal < ${var.active_connections_threshold_critical})).publish('CRIT')
+  EOF
 
   rule {
     description           = " < ${var.active_connections_threshold_critical}"
@@ -33,20 +33,21 @@ resource "signalfx_detector" "active_connections" {
     notifications         = coalescelist(var.active_connections_notifications_critical, var.active_connections_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
-
 }
 
 resource "signalfx_detector" "user_errors" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Service Bus user error rate"
 
   program_text = <<-EOF
-		from signalfx.detectors.aperiodic import aperiodic
+		from signalfx.detectors.aperiodic import conditions
 		A = data('UserErrors', filter=filter('resource_type', 'Microsoft.ServiceBus/namespaces') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.user_errors_aggregation_function}
 		B = data('IncomingRequests', filter=filter('resource_type', 'Microsoft.ServiceBus/namespaces') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.user_errors_aggregation_function}
 		signal = ((A/B)*100).${var.user_errors_transformation_function}(over='${var.user_errors_transformation_window}').publish('signal')
-		aperiodic.above_or_below_detector(signal, ${var.user_errors_threshold_critical}, 'above', lasting('${var.user_errors_aperiodic_duration}', ${var.user_errors_aperiodic_percentage})).publish('CRIT')
-		aperiodic.range_detector(signal, ${var.user_errors_threshold_warning}, ${var.user_errors_threshold_critical}, 'within_range', lasting('${var.user_errors_aperiodic_duration}', ${var.user_errors_aperiodic_percentage}), upper_strict=False).publish('WARN')
-	EOF
+		ON_Condition_CRIT = conditions.generic_condition(signal, ${var.user_errors_threshold_critical}, ${var.user_errors_threshold_critical}, 'above', lasting('${var.user_errors_aperiodic_duration}', ${var.user_errors_aperiodic_percentage}), 'observed')
+		ON_Condition_WARN = conditions.generic_condition(signal, ${var.user_errors_threshold_warning}, ${var.user_errors_threshold_critical}, 'within_range', lasting('${var.user_errors_aperiodic_duration}', ${var.user_errors_aperiodic_percentage}), 'observed', strict_2=False)
+		detect(ON_Condition_CRIT, off=when(signal is None, '${var.user_errors_clear_duration}')).publish('CRIT')
+		detect(ON_Condition_WARN, off=when(signal is None, '${var.user_errors_clear_duration}')).publish('WARN')
+  EOF
 
   rule {
     description           = "is too high > ${var.user_errors_threshold_critical}"
@@ -71,13 +72,15 @@ resource "signalfx_detector" "server_errors" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Service Bus server error rate"
 
   program_text = <<-EOF
-		from signalfx.detectors.aperiodic import aperiodic
+		from signalfx.detectors.aperiodic import conditions
 		A = data('ServerErrors', filter=filter('resource_type', 'Microsoft.ServiceBus/namespaces') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.server_errors_aggregation_function}
 		B = data('IncomingRequests', filter=filter('resource_type', 'Microsoft.ServiceBus/namespaces') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.server_errors_aggregation_function}
 		signal = ((A/B)*100).${var.server_errors_transformation_function}(over='${var.server_errors_transformation_window}').publish('signal')
-		aperiodic.above_or_below_detector(signal, ${var.server_errors_threshold_critical}, 'above', lasting('${var.server_errors_aperiodic_duration}', ${var.server_errors_aperiodic_percentage})).publish('CRIT')
-		aperiodic.range_detector(signal, ${var.server_errors_threshold_warning}, ${var.server_errors_threshold_critical}, 'within_range', lasting('${var.server_errors_aperiodic_duration}', ${var.server_errors_aperiodic_percentage}), upper_strict=False).publish('WARN')
-	EOF
+		ON_Condition_CRIT = conditions.generic_condition(signal, ${var.server_errors_threshold_critical}, ${var.server_errors_threshold_critical}, 'above', lasting('${var.server_errors_aperiodic_duration}', ${var.server_errors_aperiodic_percentage}), 'observed')
+		ON_Condition_WARN = conditions.generic_condition(signal, ${var.server_errors_threshold_warning}, ${var.server_errors_threshold_critical}, 'within_range', lasting('${var.server_errors_aperiodic_duration}', ${var.server_errors_aperiodic_percentage}), 'observed', strict_2=False)
+		detect(ON_Condition_CRIT, off=when(signal is None, '${var.server_errors_clear_duration}')).publish('CRIT')
+		detect(ON_Condition_WARN, off=when(signal is None, '${var.server_errors_clear_duration}')).publish('WARN')
+  EOF
 
   rule {
     description           = "is too high > ${var.server_errors_threshold_critical}"
