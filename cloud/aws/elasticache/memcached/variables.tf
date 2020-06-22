@@ -136,6 +136,12 @@ variable "get_hits_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "get_hits_clear_duration" {
+  description = "Duration for the get_hits clear condition"
+  type        = string
+  default     = "15m"
+}
+
 # cpu_high detectors
 
 variable "cpu_high_disabled" {
