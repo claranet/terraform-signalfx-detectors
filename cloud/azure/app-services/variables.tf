@@ -207,7 +207,7 @@ variable "memory_usage_count_threshold_critical" {
 variable "memory_usage_count_threshold_warning" {
   description = "Warning threshold for memory_usage_count detector"
   type        = number
-  default     = 536870912  # 512Mb
+  default     = 536870912 # 512Mb
 }
 
 # Http_5xx_errors_count detectors
