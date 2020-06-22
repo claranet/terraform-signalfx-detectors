@@ -136,6 +136,12 @@ variable "nginx_ingress_too_many_5xx_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "nginx_ingress_too_many_5xx_clear_duration" {
+  description = "Duration for the nginx_ingress_too_many_5xx clear condition"
+  type        = string
+  default     = "15m"
+}
+
 # Nginx_ingress_too_many_4xx detectors
 
 variable "nginx_ingress_too_many_4xx_disabled" {
@@ -214,4 +220,10 @@ variable "nginx_ingress_too_many_4xx_aperiodic_percentage" {
   description = "Percentage for the nginx_ingress_too_many_4xx block"
   type        = number
   default     = 0.9
+}
+
+variable "nginx_ingress_too_many_4xx_clear_duration" {
+  description = "Duration for the nginx_ingress_too_many_4xx clear condition"
+  type        = string
+  default     = "15m"
 }
