@@ -45,8 +45,7 @@ resource "signalfx_detector" "response_time" {
     disabled              = coalesce(var.response_time_disabled_warning, var.response_time_disabled, var.detectors_disabled)
     notifications         = coalescelist(var.response_time_notifications_warning, var.response_time_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-  }
-	
+  }	
 }
 
 resource "signalfx_detector" "memory_usage_count" {
@@ -75,7 +74,6 @@ resource "signalfx_detector" "memory_usage_count" {
     notifications         = coalescelist(var.memory_usage_count_notifications_warning, var.memory_usage_count_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
-
 }
 
 resource "signalfx_detector" "http_5xx_errors_count" {
@@ -109,7 +107,6 @@ resource "signalfx_detector" "http_5xx_errors_count" {
     notifications         = coalescelist(var.http_5xx_errors_count_notifications_warning, var.http_5xx_errors_count_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
-
 }
 
 resource "signalfx_detector" "http_4xx_errors_count" {
@@ -195,5 +192,4 @@ resource "signalfx_detector" "status" {
     notifications         = coalescelist(var.status_notifications_critical, var.status_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
-
 }
