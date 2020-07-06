@@ -10,7 +10,7 @@ resource "signalfx_detector" "pct_errors" {
 		ON_Condition_WARN = conditions.generic_condition(signal, ${var.pct_errors_threshold_warning}, ${var.pct_errors_threshold_critical}, 'within_range', lasting('${var.pct_errors_aperiodic_duration}', ${var.pct_errors_aperiodic_percentage}), 'observed', strict_2=False)
 		detect(ON_Condition_CRIT, off=when(signal is None, '${var.pct_errors_clear_duration}')).publish('CRIT')
 		detect(ON_Condition_WARN, off=when(signal is None, '${var.pct_errors_clear_duration}')).publish('WARN')
-  EOF
+	EOF
 
   rule {
     description           = "is too high > ${var.pct_errors_threshold_critical}"
@@ -41,7 +41,7 @@ resource "signalfx_detector" "errors" {
 		ON_Condition_WARN = conditions.generic_condition(signal, ${var.errors_threshold_warning}, ${var.errors_threshold_critical}, 'within_range', lasting('${var.errors_aperiodic_duration}', ${var.errors_aperiodic_percentage}), 'observed', strict_2=False)
 		detect(ON_Condition_CRIT, off=when(signal is None, '${var.errors_clear_duration}')).publish('CRIT')
 		detect(ON_Condition_WARN, off=when(signal is None, '${var.errors_clear_duration}')).publish('WARN')
-  EOF
+	EOF
 
   rule {
     description           = "is too high > ${var.errors_threshold_critical}"
@@ -72,7 +72,7 @@ resource "signalfx_detector" "throttles" {
 		ON_Condition_WARN = conditions.generic_condition(signal, ${var.throttles_threshold_warning}, ${var.throttles_threshold_critical}, 'within_range', lasting('${var.throttles_aperiodic_duration}', ${var.throttles_aperiodic_percentage}), 'observed', strict_2=False)
 		detect(ON_Condition_CRIT, off=when(signal is None, '${var.throttles_clear_duration}')).publish('CRIT')
 		detect(ON_Condition_WARN, off=when(signal is None, '${var.throttles_clear_duration}')).publish('WARN')
-  EOF
+	EOF
 
   rule {
     description           = "is too high > ${var.throttles_threshold_critical}"
@@ -103,7 +103,7 @@ resource "signalfx_detector" "invocations" {
 		ON_Condition_WARN = conditions.generic_condition(signal, ${var.invocations_threshold_warning}, ${var.invocations_threshold_critical}, 'within_range', lasting('${var.invocations_aperiodic_duration}', ${var.invocations_aperiodic_percentage}), 'observed', strict_2=False)
 		detect(ON_Condition_CRIT, off=when(signal is None, '${var.invocations_clear_duration}')).publish('CRIT')
 		detect(ON_Condition_WARN, off=when(signal is None, '${var.invocations_clear_duration}')).publish('WARN')
-  EOF
+	EOF
 
   rule {
     description           = "is too low <= ${var.invocations_threshold_critical}"
