@@ -97,7 +97,7 @@ variable "pod_phase_status_notifications_critical" {
 variable "pod_phase_status_aggregation_function" {
   description = "Aggregation function and group by for pod_phase_status detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['namespace'])"
+  default     = ".sum(by=['kubernetes_namespace', 'kubernetes_pod_name'])"
 }
 
 variable "pod_phase_status_transformation_function" {
@@ -183,7 +183,7 @@ variable "error_notifications_critical" {
 variable "error_aggregation_function" {
   description = "Aggregation function and group by for error detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['namespace', 'pod', 'reason'])"
+  default     = ".sum(by=['kubernetes_namespace', 'kubernetes_pod_name', 'container_status_reason'])"
 }
 
 variable "error_transformation_function" {
@@ -251,7 +251,7 @@ variable "terminated_notifications_critical" {
 variable "terminated_aggregation_function" {
   description = "Aggregation function and group by for terminated detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['namespace', 'pod', 'reason'])"
+  default     = ".sum(by=['kubernetes_namespace', 'kubernetes_pod_name', 'container_status_reason'])"
 }
 
 variable "terminated_transformation_function" {
