@@ -51,9 +51,9 @@ resource "signalfx_detector" "too_much_4xx" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ELB 4xx error rate"
 
   program_text = <<-EOF
-		A = data('HTTPCode_ELB_4XX', filter=filter('namespace', 'AWS/ELB') and filter('stat', 'sum') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero')${var.too_much_4xx_aggregation_function}
-		B = data('RequestCount', filter=filter('namespace', 'AWS/ELB') and filter('stat', 'sum') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero')${var.too_much_4xx_aggregation_function}
-		signal = (A/B).scale(100).${var.too_much_4xx_transformation_function}(over='${var.too_much_4xx_transformation_window}').publish('signal')
+		A = data('HTTPCode_ELB_4XX', filter=filter('namespace', 'AWS/ELB') and filter('stat', 'sum') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero').${var.too_much_4xx_transformation_function}(over='${var.too_much_4xx_transformation_window}')${var.too_much_4xx_aggregation_function}
+		B = data('RequestCount', filter=filter('namespace', 'AWS/ELB') and filter('stat', 'sum') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero').${var.too_much_4xx_transformation_function}(over='${var.too_much_4xx_transformation_window}')${var.too_much_4xx_aggregation_function}
+		signal = (A/B).scale(100).publish('signal')
 		detect(when(signal > ${var.too_much_4xx_threshold_critical}) and when(B > ${var.too_much_4xx_threshold_number_requests})).publish('CRIT')
 		detect(when(signal > ${var.too_much_4xx_threshold_warning}) and when(B > ${var.too_much_4xx_threshold_number_requests}) and when(signal <= ${var.too_much_4xx_threshold_critical})).publish('WARN')
 	EOF
@@ -81,9 +81,9 @@ resource "signalfx_detector" "too_much_5xx" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ELB 5xx error rate"
 
   program_text = <<-EOF
-		A = data('HTTPCode_ELB_5XX', filter=filter('namespace', 'AWS/ELB') and filter('stat', 'sum') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero')${var.too_much_5xx_aggregation_function}
-		B = data('RequestCount', filter=filter('namespace', 'AWS/ELB') and filter('stat', 'sum') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero')${var.too_much_5xx_aggregation_function}
-		signal = (A/B).scale(100).${var.too_much_5xx_transformation_function}(over='${var.too_much_5xx_transformation_window}').publish('signal')
+		A = data('HTTPCode_ELB_5XX', filter=filter('namespace', 'AWS/ELB') and filter('stat', 'sum') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero').${var.too_much_5xx_transformation_function}(over='${var.too_much_5xx_transformation_window}')${var.too_much_5xx_aggregation_function}
+		B = data('RequestCount', filter=filter('namespace', 'AWS/ELB') and filter('stat', 'sum') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero').${var.too_much_5xx_transformation_function}(over='${var.too_much_5xx_transformation_window}')${var.too_much_5xx_aggregation_function}
+		signal = (A/B).scale(100).publish('signal')
 		detect(when(signal > ${var.too_much_5xx_threshold_critical}) and when(B > ${var.too_much_5xx_threshold_number_requests})).publish('CRIT')
 		detect(when(signal > ${var.too_much_5xx_threshold_warning}) and when(B > ${var.too_much_5xx_threshold_number_requests}) and when(signal <= ${var.too_much_5xx_threshold_critical})).publish('WARN')
 	EOF
@@ -111,9 +111,9 @@ resource "signalfx_detector" "too_much_4xx_backend" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ELB backend 4xx error rate"
 
   program_text = <<-EOF
-		A = data('HTTPCode_Backend_4XX', filter=filter('namespace', 'AWS/ELB') and filter('stat', 'sum') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero')${var.too_much_4xx_backend_aggregation_function}
-		B = data('RequestCount', filter=filter('namespace', 'AWS/ELB') and filter('stat', 'sum') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero')${var.too_much_4xx_backend_aggregation_function}
-		signal = (A/B).scale(100).${var.too_much_4xx_backend_transformation_function}(over='${var.too_much_4xx_backend_transformation_window}').publish('signal')
+		A = data('HTTPCode_Backend_4XX', filter=filter('namespace', 'AWS/ELB') and filter('stat', 'sum') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero').${var.too_much_4xx_backend_transformation_function}(over='${var.too_much_4xx_backend_transformation_window}')${var.too_much_4xx_backend_aggregation_function}
+		B = data('RequestCount', filter=filter('namespace', 'AWS/ELB') and filter('stat', 'sum') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero').${var.too_much_4xx_backend_transformation_function}(over='${var.too_much_4xx_backend_transformation_window}')${var.too_much_4xx_backend_aggregation_function}
+		signal = (A/B).scale(100).publish('signal')
 		detect(when(signal > ${var.too_much_4xx_backend_threshold_critical}) and when(B > ${var.too_much_4xx_backend_threshold_number_requests})).publish('CRIT')
 		detect(when(signal > ${var.too_much_4xx_backend_threshold_warning}) and when(B > ${var.too_much_4xx_backend_threshold_number_requests}) and when(signal <= ${var.too_much_4xx_backend_threshold_critical})).publish('WARN')
 	EOF
@@ -141,9 +141,9 @@ resource "signalfx_detector" "too_much_5xx_backend" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ELB backend 5xx error rate"
 
   program_text = <<-EOF
-		A = data('HTTPCode_Backend_5XX', filter=filter('namespace', 'AWS/ELB') and filter('stat', 'sum') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero')${var.too_much_5xx_backend_aggregation_function}
-		B = data('RequestCount', filter=filter('namespace', 'AWS/ELB') and filter('stat', 'sum') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero')${var.too_much_5xx_backend_aggregation_function}
-		signal = (A/B).scale(100).${var.too_much_5xx_backend_transformation_function}(over='${var.too_much_5xx_backend_transformation_window}').publish('signal')
+		A = data('HTTPCode_Backend_5XX', filter=filter('namespace', 'AWS/ELB') and filter('stat', 'sum') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero').${var.too_much_5xx_backend_transformation_function}(over='${var.too_much_5xx_backend_transformation_window}')${var.too_much_5xx_backend_aggregation_function}
+		B = data('RequestCount', filter=filter('namespace', 'AWS/ELB') and filter('stat', 'sum') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero').${var.too_much_5xx_backend_transformation_function}(over='${var.too_much_5xx_backend_transformation_window}')${var.too_much_5xx_backend_aggregation_function}
+		signal = (A/B).scale(100).publish('signal')
 		detect(when(signal > ${var.too_much_5xx_backend_threshold_critical}) and when(B > ${var.too_much_5xx_backend_threshold_number_requests})).publish('CRIT')
 		detect(when(signal > ${var.too_much_5xx_backend_threshold_warning}) and when(B > ${var.too_much_5xx_backend_threshold_number_requests}) and when(signal <= ${var.too_much_5xx_backend_threshold_critical})).publish('WARN')
 	EOF
@@ -172,7 +172,7 @@ resource "signalfx_detector" "backend_latency" {
 
   program_text = <<-EOF
 		from signalfx.detectors.aperiodic import conditions
-		signal = data('Latency', filter=filter('namespace', 'AWS/ELB') and filter('stat', 'mean') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom})${var.backend_latency_aggregation_function}.${var.backend_latency_transformation_function}(over='${var.backend_latency_transformation_window}').publish('signal')
+		signal = data('Latency', filter=filter('namespace', 'AWS/ELB') and filter('stat', 'mean') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero')${var.backend_latency_aggregation_function}.${var.backend_latency_transformation_function}(over='${var.backend_latency_transformation_window}').publish('signal')
 		ON_Condition_CRIT = conditions.generic_condition(signal, ${var.backend_latency_threshold_critical}, ${var.backend_latency_threshold_critical}, 'above', lasting('${var.backend_latency_aperiodic_duration}', ${var.backend_latency_aperiodic_percentage}), 'observed')
 		ON_Condition_WARN = conditions.generic_condition(signal, ${var.backend_latency_threshold_warning}, ${var.backend_latency_threshold_critical}, 'within_range', lasting('${var.backend_latency_aperiodic_duration}', ${var.backend_latency_aperiodic_percentage}), 'observed', strict_2=False)
 		detect(ON_Condition_CRIT, off=when(signal is None, '${var.backend_latency_clear_duration}')).publish('CRIT')
