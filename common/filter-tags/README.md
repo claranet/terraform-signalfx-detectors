@@ -19,7 +19,7 @@ resource "signalfx_detector" "disk" {
 
   program_text = <<-EOF
         signal = data('disk.utilization', filter=filter('myKey', 'myValue') and ${module.filter-tags.filter_custom}).max(over='5m').publish('signal')
-		detect(when(signal > 80)).publish('disk space too high')
+        detect(when(signal > 80)).publish('disk space too high')
     EOF
   #...
 }
