@@ -38,6 +38,12 @@ variable "detectors_disabled" {
 
 # AWS ApiGateway detectors specific
 
+variable "minimum_traffic" {
+  description = "Minimum required traffic to evaluate rate of errors detectors"
+  type        = number
+  default     = 4
+}
+
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
   type        = bool
@@ -101,15 +107,21 @@ variable "latency_aggregation_function" {
 }
 
 variable "latency_transformation_function" {
-  description = "Transformation function for latency detector (mean, min, max)"
+  description = "Transformation function for latency detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
+  default     = ""
 }
 
-variable "latency_transformation_window" {
-  description = "Transformation window for latency detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "5m"
+variable "latency_lasting_duration_seconds" {
+  description = "Minimum duration that conditions must be true before raising alert (in seconds)"
+  type        = number
+  default     = 600
+}
+
+variable "latency_at_least_percentage" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 0.9
 }
 
 variable "latency_threshold_critical" {
@@ -124,162 +136,151 @@ variable "latency_threshold_warning" {
   default     = 1000
 }
 
-variable "latency_aperiodic_duration" {
-  description = "Duration for the latency block"
-  type        = string
-  default     = "10m"
+# Http_5xx detectors
+
+variable "http_5xx_disabled" {
+  description = "Disable all alerting rules for http_5xx detector"
+  type        = bool
+  default     = null
 }
 
-variable "latency_aperiodic_percentage" {
-  description = "Percentage for the latency block"
+variable "http_5xx_disabled_critical" {
+  description = "Disable critical alerting rule for http_5xx detector"
+  type        = bool
+  default     = null
+}
+
+variable "http_5xx_disabled_warning" {
+  description = "Disable warning alerting rule for http_5xx detector"
+  type        = bool
+  default     = null
+}
+
+variable "http_5xx_notifications" {
+  description = "Notification recipients list for every alerting rules of http_5xx detector"
+  type        = list
+  default     = []
+}
+
+variable "http_5xx_notifications_warning" {
+  description = "Notification recipients list for warning alerting rule of http_5xx detector"
+  type        = list
+  default     = []
+}
+
+variable "http_5xx_notifications_critical" {
+  description = "Notification recipients list for critical alerting rule of http_5xx detector"
+  type        = list
+  default     = []
+}
+
+variable "http_5xx_aggregation_function" {
+  description = "Aggregation function and group by for http_5xx detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ""
+}
+
+variable "http_5xx_transformation_function" {
+  description = "Transformation function for http_5xx detector (i.e. \".mean(over='5m')\"))"
+  type        = string
+  default     = ""
+}
+
+variable "http_5xx_lasting_duration_seconds" {
+  description = "Minimum duration that conditions must be true before raising alert (in seconds)"
+  type        = number
+  default     = 300
+}
+
+variable "http_5xx_at_least_percentage" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 0.9
 }
 
-# Http_5xx_errors detectors
-
-variable "http_5xx_errors_disabled" {
-  description = "Disable all alerting rules for http_5xx_errors detector"
-  type        = bool
-  default     = null
-}
-
-variable "http_5xx_errors_disabled_critical" {
-  description = "Disable critical alerting rule for http_5xx_errors detector"
-  type        = bool
-  default     = null
-}
-
-variable "http_5xx_errors_disabled_warning" {
-  description = "Disable warning alerting rule for http_5xx_errors detector"
-  type        = bool
-  default     = null
-}
-
-variable "http_5xx_errors_notifications" {
-  description = "Notification recipients list for every alerting rules of http_5xx_errors detector"
-  type        = list
-  default     = []
-}
-
-variable "http_5xx_errors_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of http_5xx_errors detector"
-  type        = list
-  default     = []
-}
-
-variable "http_5xx_errors_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of http_5xx_errors detector"
-  type        = list
-  default     = []
-}
-
-variable "http_5xx_errors_aggregation_function" {
-  description = "Aggregation function and group by for http_5xx_errors detector (i.e. \".mean(by=['host'])\")"
-  type        = string
-  default     = ".mean()"
-}
-
-variable "http_5xx_errors_transformation_function" {
-  description = "Transformation function for http_5xx_errors detector (mean, min, max)"
-  type        = string
-  default     = "min"
-}
-
-variable "http_5xx_errors_transformation_window" {
-  description = "Transformation window for http_5xx_errors detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "5m"
-}
-
-variable "http_5xx_errors_threshold_critical" {
-  description = "Critical threshold for http_5xx_errors detector"
-  type        = number
-  default     = 20
-}
-
-variable "http_5xx_errors_threshold_warning" {
-  description = "Warning threshold for http_5xx_errors detector"
+variable "http_5xx_threshold_critical" {
+  description = "Critical threshold for http_5xx detector"
   type        = number
   default     = 10
 }
 
-variable "http_5xx_errors_threshold_number_requests" {
-  description = "Number threshold for http_5xx_errors detector"
+variable "http_5xx_threshold_warning" {
+  description = "Warning threshold for http_5xx detector"
   type        = number
   default     = 5
 }
 
-# Http_4xx_errors detectors
+# Http_4xx detectors
 
-variable "http_4xx_errors_disabled" {
-  description = "Disable all alerting rules for http_4xx_errors detector"
+variable "http_4xx_disabled" {
+  description = "Disable all alerting rules for http_4xx detector"
   type        = bool
   default     = null
 }
 
-variable "http_4xx_errors_disabled_critical" {
-  description = "Disable critical alerting rule for http_4xx_errors detector"
+variable "http_4xx_disabled_critical" {
+  description = "Disable critical alerting rule for http_4xx detector"
   type        = bool
   default     = null
 }
 
-variable "http_4xx_errors_disabled_warning" {
-  description = "Disable warning alerting rule for http_4xx_errors detector"
+variable "http_4xx_disabled_warning" {
+  description = "Disable warning alerting rule for http_4xx detector"
   type        = bool
   default     = null
 }
 
-variable "http_4xx_errors_notifications" {
-  description = "Notification recipients list for every alerting rules of http_4xx_errors detector"
+variable "http_4xx_notifications" {
+  description = "Notification recipients list for every alerting rules of http_4xx detector"
   type        = list
   default     = []
 }
 
-variable "http_4xx_errors_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of http_4xx_errors detector"
+variable "http_4xx_notifications_warning" {
+  description = "Notification recipients list for warning alerting rule of http_4xx detector"
   type        = list
   default     = []
 }
 
-variable "http_4xx_errors_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of http_4xx_errors detector"
+variable "http_4xx_notifications_critical" {
+  description = "Notification recipients list for critical alerting rule of http_4xx detector"
   type        = list
   default     = []
 }
 
-variable "http_4xx_errors_aggregation_function" {
-  description = "Aggregation function and group by for http_4xx_errors detector (i.e. \".mean(by=['host'])\")"
+variable "http_4xx_aggregation_function" {
+  description = "Aggregation function and group by for http_4xx detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean()"
+  default     = ""
 }
 
-variable "http_4xx_errors_transformation_function" {
-  description = "Transformation function for http_4xx_errors detector (mean, min, max)"
+variable "http_4xx_transformation_function" {
+  description = "Transformation function for http_4xx detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
+  default     = ""
 }
 
-variable "http_4xx_errors_transformation_window" {
-  description = "Transformation window for http_4xx_errors detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "5m"
-}
-
-variable "http_4xx_errors_threshold_critical" {
-  description = "Critical threshold for http_4xx_errors detector"
+variable "http_4xx_lasting_duration_seconds" {
+  description = "Minimum duration that conditions must be true before raising alert (in seconds)"
   type        = number
-  default     = 30
+  default     = 300
 }
 
-variable "http_4xx_errors_threshold_warning" {
-  description = "Warning threshold for http_4xx_errors detector"
+variable "http_4xx_at_least_percentage" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
-  default     = 15
+  default     = 0.9
 }
 
-variable "http_4xx_errors_threshold_number_requests" {
-  description = "Number threshold for http_4xx_errors detector"
+variable "http_4xx_threshold_critical" {
+  description = "Critical threshold for http_4xx detector"
   type        = number
-  default     = 5
+  default     = 40
 }
+
+variable "http_4xx_threshold_warning" {
+  description = "Warning threshold for http_4xx detector"
+  type        = number
+  default     = 20
+}
+
