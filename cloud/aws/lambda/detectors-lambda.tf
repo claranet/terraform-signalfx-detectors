@@ -8,7 +8,7 @@ resource "signalfx_detector" "pct_errors" {
 		signal = (A/B).scale(100).${var.pct_errors_transformation_function}(over='${var.pct_errors_transformation_window}').publish('signal')
 		aperiodic.above_or_below_detector(signal, ${var.pct_errors_threshold_critical}, 'above', lasting('${var.pct_errors_aperiodic_duration}', ${var.pct_errors_aperiodic_percentage})).publish('CRIT')
 		aperiodic.range_detector(signal, ${var.pct_errors_threshold_warning}, ${var.pct_errors_threshold_critical}, 'within_range', lasting('${var.pct_errors_aperiodic_duration}', ${var.pct_errors_aperiodic_percentage}), upper_strict=False).publish('WARN')
-	EOF
+EOF
 
   rule {
     description           = "is too high > ${var.pct_errors_threshold_critical}"
@@ -38,7 +38,7 @@ resource "signalfx_detector" "errors" {
 		signal = data('Errors', filter=filter('namespace', 'AWS/Lambda') and filter('stat', 'sum') and ${module.filter-tags.filter_custom})${var.errors_aggregation_function}.${var.errors_transformation_function}(over='${var.errors_transformation_window}').publish('signal')
 		aperiodic.above_or_below_detector(signal, ${var.errors_threshold_critical}, 'above', lasting('${var.errors_aperiodic_duration}', ${var.errors_aperiodic_percentage})).publish('CRIT')
 		aperiodic.range_detector(signal, ${var.errors_threshold_warning}, ${var.errors_threshold_critical}, 'within_range', lasting('${var.errors_aperiodic_duration}', ${var.errors_aperiodic_percentage}), upper_strict=False).publish('WARN')
-	EOF
+EOF
 
   rule {
     description           = "is too high > ${var.errors_threshold_critical}"
@@ -68,7 +68,7 @@ resource "signalfx_detector" "throttles" {
 		signal = data('Throttles', filter=filter('namespace', 'AWS/Lambda') and filter('stat', 'sum') and ${module.filter-tags.filter_custom})${var.throttles_aggregation_function}.${var.throttles_transformation_function}(over='${var.throttles_transformation_window}').publish('signal')
 		aperiodic.above_or_below_detector(signal, ${var.throttles_threshold_critical}, 'above', lasting('${var.throttles_aperiodic_duration}', ${var.throttles_aperiodic_percentage})).publish('CRIT')
 		aperiodic.range_detector(signal, ${var.throttles_threshold_warning}, ${var.throttles_threshold_critical}, 'within_range', lasting('${var.throttles_aperiodic_duration}', ${var.throttles_aperiodic_percentage}), upper_strict=False).publish('WARN')
-	EOF
+EOF
 
   rule {
     description           = "is too high > ${var.throttles_threshold_critical}"
@@ -98,7 +98,7 @@ resource "signalfx_detector" "invocations" {
 		signal = data('Invocations', filter=filter('namespace', 'AWS/Lambda') and filter('stat', 'sum') and ${module.filter-tags.filter_custom})${var.invocations_aggregation_function}.${var.invocations_transformation_function}(over='${var.invocations_transformation_window}').publish('signal')
 		aperiodic.above_or_below_detector(signal, ${var.invocations_threshold_critical}, 'above', lasting('${var.invocations_aperiodic_duration}', ${var.invocations_aperiodic_percentage})).publish('CRIT')
 		aperiodic.range_detector(signal, ${var.invocations_threshold_warning}, ${var.invocations_threshold_critical}, 'within_range', lasting('${var.invocations_aperiodic_duration}', ${var.invocations_aperiodic_percentage}), upper_strict=False).publish('WARN')
-	EOF
+EOF
 
   rule {
     description           = "is too low <= ${var.invocations_threshold_critical}"
