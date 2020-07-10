@@ -3,9 +3,9 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
-		signal = data('haproxy_session_current', filter=filter('aws_state', 'running') and filter('gcp_status', '*RUNNING}') and filter('azure_power_state', 'PowerState/running') and ${module.filter-tags.filter_custom}).publish('signal')
+		signal = data('haproxy_session_current', filter=(not filter('aws_state', '{Code: 32,Name: shutting-down', '{Code: 48,Name: terminated}', '{Code: 62,Name: stopping}', '{Code: 80,Name: stopped}')) and (not filter('gcp_status', '{Code=3, Name=STOPPING}', '{Code=4, Name=TERMINATED}')) and (not filter('azure_power_state', 'PowerState/stopping', 'PowerState/stoppped', 'PowerState/deallocating', 'PowerState/deallocated')) and ${module.filter-tags.filter_custom}).publish('signal')
 		not_reporting.detector(stream=signal, resource_identifier=['host'], duration='${var.heartbeat_timeframe}').publish('CRIT')
-  EOF
+EOF
 
   rule {
     description           = "has not reported in ${var.heartbeat_timeframe}"
@@ -23,7 +23,7 @@ resource "signalfx_detector" "server_status" {
   program_text = <<-EOF
 		signal = data('haproxy_status', filter=filter('type', '2') and ${module.filter-tags.filter_custom})${var.server_status_aggregation_function}.${var.server_status_transformation_function}(over='${var.server_status_transformation_window}').publish('signal')
 		detect(when(signal < 1)).publish('CRIT')
-  EOF
+EOF
 
   rule {
     description           = "is down or in maintenance"
@@ -41,7 +41,7 @@ resource "signalfx_detector" "backend_status" {
   program_text = <<-EOF
 		signal = data('haproxy_status', filter=filter('type', '1') and ${module.filter-tags.filter_custom})${var.backend_status_aggregation_function}.${var.backend_status_transformation_function}(over='${var.backend_status_transformation_window}').publish('signal')
 		detect(when(signal < 1)).publish('CRIT')
-  EOF
+EOF
 
   rule {
     description           = "is down (no available server left)"
@@ -62,7 +62,7 @@ resource "signalfx_detector" "session_limit" {
         signal = (A/B).scale(100).${var.session_limit_transformation_function}(over='${var.session_limit_transformation_window}').publish('signal')
         detect(when(signal > ${var.session_limit_threshold_critical})).publish('CRIT')
         detect(when(signal > ${var.session_limit_threshold_warning}) and when(signal <= ${var.session_limit_threshold_critical})).publish('WARN')
-  EOF
+EOF
 
   rule {
     description           = "is approaching the limit > ${var.session_limit_threshold_critical}%"
@@ -92,7 +92,7 @@ resource "signalfx_detector" "http_5xx_response" {
         signal = (A/B).scale(100).${var.http_5xx_response_transformation_function}(over='${var.http_5xx_response_transformation_window}').publish('signal')
         detect(when(signal > ${var.http_5xx_response_threshold_critical})).publish('CRIT')
         detect(when(signal > ${var.http_5xx_response_threshold_warning}) and when(signal <= ${var.http_5xx_response_threshold_critical})).publish('WARN')
-  EOF
+EOF
 
   rule {
     description           = "is too high > ${var.http_5xx_response_threshold_critical}%"
@@ -122,7 +122,7 @@ resource "signalfx_detector" "http_4xx_response" {
         signal = (A/B).scale(100).${var.http_4xx_response_transformation_function}(over='${var.http_4xx_response_transformation_window}').publish('signal')
         detect(when(signal > ${var.http_4xx_response_threshold_critical})).publish('CRIT')
         detect(when(signal > ${var.http_4xx_response_threshold_warning}) and when(signal <= ${var.http_4xx_response_threshold_critical})).publish('WARN')
-  EOF
+EOF
 
   rule {
     description           = "is too high > ${var.http_4xx_response_threshold_critical}%"

@@ -5,7 +5,7 @@ resource "signalfx_detector" "heartbeat" {
 		from signalfx.detectors.not_reporting import not_reporting
 		signal = data('ntp.offset_seconds', filter=filter('aws_state', 'running') and filter('gcp_status', '*RUNNING}') and filter('azure_power_state', 'PowerState/running') and ${module.filter-tags.filter_custom}).publish('signal')
 		not_reporting.detector(stream=signal, resource_identifier=['host'], duration='${var.heartbeat_timeframe}').publish('CRIT')
-  EOF
+EOF
 
   rule {
     description           = "has not reported in ${var.heartbeat_timeframe}"
@@ -23,7 +23,7 @@ resource "signalfx_detector" "ntp" {
   program_text = <<-EOF
         signal = data('ntp.offset_seconds', filter=${module.filter-tags.filter_custom})${var.ntp_aggregation_function}.${var.ntp_transformation_function}(over='${var.ntp_transformation_window}').publish('signal')
         detect(when(signal > ${var.ntp_threshold_warning})).publish('WARN')
-  EOF
+EOF
 
   rule {
     description           = "is too high > ${var.ntp_threshold_warning}"

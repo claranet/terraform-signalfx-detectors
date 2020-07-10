@@ -3,9 +3,9 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
-		signal = data('phpfpm_requests.accepted', ${module.filter-tags.filter_custom})
+		signal = data('phpfpm_requests.accepted', filter=(not filter('aws_state', '{Code: 32,Name: shutting-down', '{Code: 48,Name: terminated}', '{Code: 62,Name: stopping}', '{Code: 80,Name: stopped}')) and (not filter('gcp_status', '{Code=3, Name=STOPPING}', '{Code=4, Name=TERMINATED}')) and (not filter('azure_power_state', 'PowerState/stopping', 'PowerState/stoppped', 'PowerState/deallocating', 'PowerState/deallocated')) and ${module.filter-tags.filter_custom})
 		not_reporting.detector(stream=signal, resource_identifier=['host'], duration='${var.heartbeat_timeframe}').publish('CRIT')
-	EOF
+EOF
 
   rule {
     description           = "has not reported in ${var.heartbeat_timeframe}"
@@ -26,7 +26,7 @@ resource "signalfx_detector" "php_fpm_connect_idle" {
 		signal = ((A/B)*100).${var.php_fpm_connect_idle_transformation_function}(over='${var.php_fpm_connect_idle_transformation_window}').publish('signal')
 		detect(when(signal > ${var.php_fpm_connect_idle_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.php_fpm_connect_idle_threshold_warning}) and when(signal <= ${var.php_fpm_connect_idle_threshold_critical})).publish('WARN')
-	EOF
+EOF
 
   rule {
     description           = "are too high > ${var.php_fpm_connect_idle_threshold_critical}"
