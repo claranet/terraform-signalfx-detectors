@@ -5,7 +5,7 @@ resource "signalfx_detector" "heartbeat" {
 		from signalfx.detectors.not_reporting import not_reporting
 		signal = data('http.status_code', filter=(not filter('aws_state', '{Code: 32,Name: shutting-down', '{Code: 48,Name: terminated}', '{Code: 62,Name: stopping}', '{Code: 80,Name: stopped}')) and (not filter('gcp_status', '{Code=3, Name=STOPPING}', '{Code=4, Name=TERMINATED}')) and (not filter('azure_power_state', 'PowerState/stopping', 'PowerState/stoppped', 'PowerState/deallocating', 'PowerState/deallocated')) and ${module.filter-tags.filter_custom}).publish('signal')
 		not_reporting.detector(stream=signal, resource_identifier=['host', 'url', 'method'], duration='${var.heartbeat_timeframe}').publish('CRIT')
-	EOF
+EOF
 
   rule {
     description           = "has not reported in ${var.heartbeat_timeframe}"
@@ -23,7 +23,7 @@ resource "signalfx_detector" "http_code_matched" {
   program_text = <<-EOF
 		signal = data('http.code_matched', ${module.filter-tags.filter_custom})${var.http_code_matched_aggregation_function}.${var.http_code_matched_transformation_function}(over='${var.http_code_matched_transformation_window}').publish('signal')
 		detect(when(signal < 1)).publish('CRIT')
-	EOF
+EOF
 
   rule {
     description           = "does not match"
@@ -42,7 +42,7 @@ resource "signalfx_detector" "http_regex_matched" {
   program_text = <<-EOF
 		signal = data('http.regex_matched', ${module.filter-tags.filter_custom})${var.http_regex_matched_aggregation_function}.${var.http_regex_matched_transformation_function}(over='${var.http_regex_matched_transformation_window}').publish('signal')
 		detect(when(signal < 1)).publish('CRIT')
-	EOF
+EOF
 
   rule {
     description           = "does not match"
@@ -62,7 +62,7 @@ resource "signalfx_detector" "http_response_time" {
 		signal = data('http.response_time', ${module.filter-tags.filter_custom})${var.http_response_time_aggregation_function}.${var.http_response_time_transformation_function}(over='${var.http_response_time_transformation_window}').publish('signal')
 		detect(when(signal > ${var.http_response_time_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.http_response_time_threshold_warning}) and when(signal <= ${var.http_response_time_threshold_critical})).publish('WARN')
-	EOF
+EOF
 
   rule {
     description           = "is too high > ${var.http_response_time_threshold_critical}"
@@ -90,7 +90,7 @@ resource "signalfx_detector" "http_content_length" {
 		signal = data('http.content_length', ${module.filter-tags.filter_custom})${var.http_content_length_aggregation_function}.${var.http_content_length_transformation_function}(over='${var.http_content_length_transformation_window}').publish('signal')
 		detect(when(signal < ${var.http_content_length_threshold_critical})).publish('CRIT')
 		detect(when(signal < ${var.http_content_length_threshold_warning}) and when(signal >= ${var.http_content_length_threshold_critical})).publish('WARN')
-	EOF
+EOF
 
   rule {
     description           = "is too low < ${var.http_content_length_threshold_critical}"
@@ -119,7 +119,7 @@ resource "signalfx_detector" "certificate_expiration_date" {
 		signal = (A/86400).${var.certificate_expiration_date_transformation_function}(over='${var.certificate_expiration_date_transformation_window}').publish('signal')
 		detect(when(signal < ${var.certificate_expiration_date_threshold_critical})).publish('CRIT')
 		detect(when(signal < ${var.certificate_expiration_date_threshold_warning}) and when(signal >= ${var.certificate_expiration_date_threshold_critical})).publish('WARN')
-	EOF
+EOF
 
   rule {
     description           = " < ${var.certificate_expiration_date_threshold_critical} days"
@@ -146,7 +146,7 @@ resource "signalfx_detector" "invalid_tls_certificate" {
   program_text = <<-EOF
 		signal = data('http.cert_valid', ${module.filter-tags.filter_custom})${var.invalid_tls_certificate_aggregation_function}.${var.invalid_tls_certificate_transformation_function}(over='${var.invalid_tls_certificate_transformation_window}').publish('signal')
 		detect(when(signal < 1)).publish('CRIT')
-	EOF
+EOF
 
   rule {
     description           = " is not valid"

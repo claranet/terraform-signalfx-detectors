@@ -5,7 +5,7 @@ resource "signalfx_detector" "heartbeat" {
 		from signalfx.detectors.not_reporting import not_reporting
 		signal = data('RequestCount', filter=filter('stat', 'sum') and filter('namespace', 'AWS/ApplicationELB') and (not filter('aws_state', '{Code: 32,Name: shutting-down', '{Code: 48,Name: terminated}', '{Code: 62,Name: stopping}', '{Code: 80,Name: stopped}') and ${module.filter-tags.filter_custom})).publish('signal')
 		not_reporting.detector(stream=signal, resource_identifier=['LoadBalancer'], duration='${var.heartbeat_timeframe}').publish('CRIT')
-	EOF
+EOF
 
   rule {
     description           = "has not reported in ${var.heartbeat_timeframe}"
@@ -26,7 +26,7 @@ resource "signalfx_detector" "no_healthy_instances" {
 		signal = (A/(A+B)).scale(100).${var.no_healthy_instances_transformation_function}(over='${var.no_healthy_instances_transformation_window}').publish('signal')
 		detect(when(signal < ${var.no_healthy_instances_threshold_critical})).publish('CRIT')
 		detect(when(signal < ${var.no_healthy_instances_threshold_warning}) and when(signal >= ${var.no_healthy_instances_threshold_critical})).publish('WARN')
-	EOF
+EOF
 
   rule {
     description           = "has fallen below critical capacity < ${var.no_healthy_instances_threshold_critical}%"
@@ -56,7 +56,7 @@ resource "signalfx_detector" "latency" {
 		signal = data('TargetResponseTime', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'mean') and filter('TargetGroup', '*') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom})${var.latency_aggregation_function}.${var.latency_transformation_function}(over='${var.latency_transformation_window}').publish('signal')
 		aperiodic.above_or_below_detector(signal, ${var.latency_threshold_critical}, 'above', lasting('${var.latency_aperiodic_duration}', ${var.latency_aperiodic_percentage})).publish('CRIT')
 		aperiodic.range_detector(signal, ${var.latency_threshold_warning}, ${var.latency_threshold_critical}, 'within_range', lasting('${var.latency_aperiodic_duration}', ${var.latency_aperiodic_percentage}), upper_strict=False).publish('WARN')
-	EOF
+EOF
 
   rule {
     description           = "is too high > ${var.latency_threshold_critical}s"
@@ -87,7 +87,7 @@ resource "signalfx_detector" "httpcode_5xx" {
 		signal = (A/B).scale(100).${var.httpcode_5xx_transformation_function}(over='${var.httpcode_5xx_transformation_window}').publish('signal')
 		detect(when(signal > ${var.httpcode_5xx_threshold_critical}) and when(B > ${var.httpcode_5xx_threshold_number_requests})).publish('CRIT')
 		detect(when(signal > ${var.httpcode_5xx_threshold_warning}) and when(B > ${var.httpcode_5xx_threshold_number_requests}) and when(signal <= ${var.httpcode_5xx_threshold_critical})).publish('WARN')
-	EOF
+EOF
 
   rule {
     description           = "is too high > ${var.httpcode_5xx_threshold_critical}%"
@@ -118,7 +118,7 @@ resource "signalfx_detector" "httpcode_4xx" {
 		signal = (A/B).scale(100).${var.httpcode_4xx_transformation_function}(over='${var.httpcode_4xx_transformation_window}').publish('signal')
 		detect(when(signal > ${var.httpcode_4xx_threshold_critical}) and when(B > ${var.httpcode_4xx_threshold_number_requests})).publish('CRIT')
 		detect(when(signal > ${var.httpcode_4xx_threshold_warning}) and when(B > ${var.httpcode_4xx_threshold_number_requests}) and when(signal <= ${var.httpcode_4xx_threshold_critical})).publish('WARN')
-	EOF
+EOF
 
   rule {
     description           = "is too high > ${var.httpcode_4xx_threshold_critical}%"
@@ -149,7 +149,7 @@ resource "signalfx_detector" "httpcode_target_5xx" {
 		signal = (A/B).scale(100).${var.httpcode_target_5xx_transformation_function}(over='${var.httpcode_target_5xx_transformation_window}').publish('signal')
 		detect(when(signal > ${var.httpcode_target_5xx_threshold_critical}) and when(B > ${var.httpcode_target_5xx_threshold_number_requests})).publish('CRIT')
 		detect(when(signal > ${var.httpcode_target_5xx_threshold_warning}) and when(B > ${var.httpcode_target_5xx_threshold_number_requests}) and when(signal <= ${var.httpcode_target_5xx_threshold_critical})).publish('WARN')
-	EOF
+EOF
 
   rule {
     description           = "is too high > ${var.httpcode_target_5xx_threshold_critical}%"
@@ -180,7 +180,7 @@ resource "signalfx_detector" "httpcode_target_4xx" {
 		signal = (A/B).scale(100).${var.httpcode_target_4xx_transformation_function}(over='${var.httpcode_target_4xx_transformation_window}').publish('signal')
 		detect(when(signal > ${var.httpcode_target_4xx_threshold_critical}) and when(B > ${var.httpcode_target_4xx_threshold_number_requests})).publish('CRIT')
 		detect(when(signal > ${var.httpcode_target_4xx_threshold_warning}) and when(B > ${var.httpcode_target_4xx_threshold_number_requests}) and when(signal <= ${var.httpcode_target_4xx_threshold_critical})).publish('WARN')
-	EOF
+EOF
 
   rule {
     description           = "is too high > ${var.httpcode_target_4xx_threshold_critical}%"

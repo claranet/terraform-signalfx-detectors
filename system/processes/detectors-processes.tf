@@ -5,7 +5,7 @@ resource "signalfx_detector" "processes" {
         signal = data('ps_count.processes', filter=${module.filter-tags.filter_custom})${var.processes_aggregation_function}.${var.processes_transformation_function}(over='${var.processes_transformation_window}').publish('signal')
         detect(when(signal < 1)).publish('CRIT')
         detect(when(signal < ${var.processes_threshold_warning}) and when (signal >= 1)).publish('WARN')
-  EOF
+EOF
 
   rule {
     description           = "count is too low < 1"
