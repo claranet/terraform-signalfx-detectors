@@ -5,7 +5,7 @@ resource "signalfx_detector" "heartbeat" {
 		from signalfx.detectors.not_reporting import not_reporting
 		signal = data('machine_memory_bytes', ${module.filter-tags.filter_custom})
 		not_reporting.detector(stream=signal, resource_identifier=['kubernetes_node'], duration='${var.heartbeat_timeframe}').publish('CRIT')
-	EOF
+EOF
 
   rule {
     description           = "has not reported in ${var.heartbeat_timeframe}"
@@ -24,7 +24,7 @@ resource "signalfx_detector" "ready" {
 		signal = data('kubernetes.node_ready', ${module.filter-tags.filter_custom})${var.ready_aggregation_function}.${var.ready_transformation_function}(over='${var.ready_transformation_window}').publish('signal')
 		detect(when(signal < ${var.ready_threshold_critical})).publish('CRIT')
 		detect(when(signal < ${var.ready_threshold_warning}) and when(signal >= ${var.ready_threshold_critical})).publish('WARN')
-	EOF
+EOF
 
   rule {
     description           = "is too high >= ${var.ready_threshold_critical}"
@@ -54,7 +54,7 @@ resource "signalfx_detector" "volume_space" {
 		signal = ((B-A)/B).scale(100).${var.volume_space_transformation_function}(over='${var.volume_space_transformation_window}').publish('signal')
 		detect(when(signal > ${var.volume_space_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.volume_space_threshold_warning}) and when(signal < ${var.volume_space_threshold_critical})).publish('WARN')
-	EOF
+EOF
 
   rule {
     description           = "is too high > ${var.volume_space_threshold_critical}"
@@ -84,7 +84,7 @@ resource "signalfx_detector" "volume_inodes" {
 		signal = ((B-A)/B).scale(100).${var.volume_inodes_transformation_function}(over='${var.volume_inodes_transformation_window}').publish('signal')
 		detect(when(signal > ${var.volume_inodes_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.volume_inodes_threshold_warning}) and when(signal < ${var.volume_inodes_threshold_critical})).publish('WARN')
-	EOF
+EOF
 
   rule {
     description           = "is too high > ${var.volume_inodes_threshold_critical}"
