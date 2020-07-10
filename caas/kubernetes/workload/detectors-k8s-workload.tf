@@ -5,7 +5,7 @@ resource "signalfx_detector" "heartbeat" {
 		from signalfx.detectors.not_reporting import not_reporting
 		signal = data('kubernetes.job.active', ${module.filter-tags.filter_custom})
 		not_reporting.detector(stream=signal, resource_identifier=['kubernetes_cluster'], duration='${var.heartbeat_timeframe}').publish('CRIT')
-	EOF
+EOF
 
   rule {
     description           = "has not reported in ${var.heartbeat_timeframe}"
@@ -27,7 +27,7 @@ resource "signalfx_detector" "replica_available" {
 		detect(when(signal < ${var.replica_available_threshold_critical}) and when(B < ${var.replica_available_threshold_number_requests})).publish('CRIT')
 		detect(when(signal < ${var.replica_available_threshold_warning}) and when(B < ${var.replica_available_threshold_number_requests}) and when(signal >= ${var.replica_available_threshold_critical})).publish('WARN')
 
-	EOF
+EOF
 
   rule {
     description           = "are too low < ${var.replica_available_threshold_critical}"
@@ -58,7 +58,7 @@ resource "signalfx_detector" "replica_ready" {
 		detect(when(signal < ${var.replica_ready_threshold_critical}) and when(B < ${var.replica_ready_threshold_number_requests})).publish('CRIT')
 		detect(when(signal < ${var.replica_ready_threshold_warning}) and when(B < ${var.replica_ready_threshold_number_requests}) and when(signal >= ${var.replica_ready_threshold_critical})).publish('WARN')
 
-	EOF
+EOF
 
   rule {
     description           = "are too low < ${var.replica_ready_threshold_critical}"

@@ -10,7 +10,7 @@ resource "signalfx_detector" "nginx_ingress_too_many_5xx" {
 		ON_Condition_WARN = conditions.generic_condition(signal, ${var.nginx_ingress_too_many_5xx_threshold_warning}, ${var.nginx_ingress_too_many_5xx_threshold_critical}, 'within_range', lasting('${var.nginx_ingress_too_many_5xx_aperiodic_duration}', ${var.nginx_ingress_too_many_5xx_aperiodic_percentage}), 'observed', strict_2=False)
 		detect(ON_Condition_CRIT, off=when(signal is None, '${var.nginx_ingress_too_many_5xx_clear_duration}')).publish('CRIT')
 		detect(ON_Condition_WARN, off=when(signal is None, '${var.nginx_ingress_too_many_5xx_clear_duration}')).publish('WARN')
-  EOF
+EOF
 
   rule {
     description           = "are too high > ${var.nginx_ingress_too_many_5xx_threshold_critical}"
@@ -43,7 +43,7 @@ resource "signalfx_detector" "nginx_ingress_too_many_4xx" {
 		ON_Condition_WARN = conditions.generic_condition(signal, ${var.nginx_ingress_too_many_4xx_threshold_warning}, ${var.nginx_ingress_too_many_4xx_threshold_critical}, 'within_range', lasting('${var.nginx_ingress_too_many_4xx_aperiodic_duration}', ${var.nginx_ingress_too_many_4xx_aperiodic_percentage}), 'observed', strict_2=False)
 		detect(ON_Condition_CRIT, off=when(signal is None, '${var.nginx_ingress_too_many_4xx_clear_duration}')).publish('CRIT')
 		detect(ON_Condition_WARN, off=when(signal is None, '${var.nginx_ingress_too_many_4xx_clear_duration}')).publish('WARN')
-  EOF
+EOF
 
   rule {
     description           = "are too high > ${var.nginx_ingress_too_many_4xx_threshold_critical}"
