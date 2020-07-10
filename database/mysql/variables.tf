@@ -101,21 +101,15 @@ variable "mysql_connections_aggregation_function" {
 }
 
 variable "mysql_connections_transformation_function" {
-  description = "Transformation function for mysql_connection detector (mean, min, max)"
+  description = "Transformation function for mysql_connection detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "mean"
-}
-
-variable "mysql_connections_transformation_window" {
-  description = "Transformation window for mysql_connection detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "10m"
+  default     = ".min(over='1m')"
 }
 
 variable "mysql_connections_threshold_critical" {
   description = "Critical threshold for mysql_connection detector"
   type        = number
-  default     = 80
+  default     = 90
 }
 
 variable "mysql_connections_threshold_warning" {
@@ -132,14 +126,14 @@ variable "mysql_pool_efficiency_disabled" {
   default     = null
 }
 
-variable "mysql_pool_efficiency_disabled_critical" {
-  description = "Disable critical alerting rule for mysql_pool_efficiency detector"
+variable "mysql_pool_efficiency_disabled_major" {
+  description = "Disable major alerting rule for mysql_pool_efficiency detector"
   type        = bool
   default     = null
 }
 
-variable "mysql_pool_efficiency_disabled_warning" {
-  description = "Disable warning alerting rule for mysql_pool_efficiency detector"
+variable "mysql_pool_efficiency_disabled_minor" {
+  description = "Disable minor alerting rule for mysql_pool_efficiency detector"
   type        = bool
   default     = null
 }
@@ -150,14 +144,14 @@ variable "mysql_pool_efficiency_notifications" {
   default     = []
 }
 
-variable "mysql_pool_efficiency_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of mysql_pool_efficiency detector"
+variable "mysql_pool_efficiency_notifications_minor" {
+  description = "Notification recipients list for minor alerting rule of mysql_pool_efficiency detector"
   type        = list
   default     = []
 }
 
-variable "mysql_pool_efficiency_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of mysql_pool_efficiency detector"
+variable "mysql_pool_efficiency_notifications_major" {
+  description = "Notification recipients list for major alerting rule of mysql_pool_efficiency detector"
   type        = list
   default     = []
 }
@@ -169,25 +163,19 @@ variable "mysql_pool_efficiency_aggregation_function" {
 }
 
 variable "mysql_pool_efficiency_transformation_function" {
-  description = "Transformation function for mysql_pool_efficiency detector (mean, min, max)"
+  description = "Transformation function for mysql_pool_efficiency detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
+  default     = ".min(over='1h')"
 }
 
-variable "mysql_pool_efficiency_transformation_window" {
-  description = "Transformation window for mysql_pool_efficiency detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "1h"
-}
-
-variable "mysql_pool_efficiency_threshold_critical" {
-  description = "Critical threshold for mysql_pool_efficiency detector"
+variable "mysql_pool_efficiency_threshold_major" {
+  description = "major threshold for mysql_pool_efficiency detector"
   type        = number
   default     = 30
 }
 
-variable "mysql_pool_efficiency_threshold_warning" {
-  description = "Warning threshold for mysql_pool_efficiency detector"
+variable "mysql_pool_efficiency_threshold_minor" {
+  description = "minor threshold for mysql_pool_efficiency detector"
   type        = number
   default     = 20
 }
@@ -200,14 +188,14 @@ variable "mysql_pool_utilization_disabled" {
   default     = null
 }
 
-variable "mysql_pool_utilization_disabled_critical" {
-  description = "Disable critical alerting rule for mysql_pool_utilization detector"
+variable "mysql_pool_utilization_disabled_major" {
+  description = "Disable major alerting rule for mysql_pool_utilization detector"
   type        = bool
   default     = null
 }
 
-variable "mysql_pool_utilization_disabled_warning" {
-  description = "Disable warning alerting rule for mysql_pool_utilization detector"
+variable "mysql_pool_utilization_disabled_minor" {
+  description = "Disable minor alerting rule for mysql_pool_utilization detector"
   type        = bool
   default     = null
 }
@@ -218,14 +206,14 @@ variable "mysql_pool_utilization_notifications" {
   default     = []
 }
 
-variable "mysql_pool_utilization_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of mysql_pool_utilization detector"
+variable "mysql_pool_utilization_notifications_minor" {
+  description = "Notification recipients list for minor alerting rule of mysql_pool_utilization detector"
   type        = list
   default     = []
 }
 
-variable "mysql_pool_utilization_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of mysql_pool_utilization detector"
+variable "mysql_pool_utilization_notifications_major" {
+  description = "Notification recipients list for major alerting rule of mysql_pool_utilization detector"
   type        = list
   default     = []
 }
@@ -237,25 +225,19 @@ variable "mysql_pool_utilization_aggregation_function" {
 }
 
 variable "mysql_pool_utilization_transformation_function" {
-  description = "Transformation function for mysql_pool_utilization detector (mean, min, max)"
+  description = "Transformation function for mysql_pool_utilization detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
+  default     = ".min(over='1h')"
 }
 
-variable "mysql_pool_utilization_transformation_window" {
-  description = "Transformation window for mysql_pool_utilization detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "1h"
-}
-
-variable "mysql_pool_utilization_threshold_critical" {
-  description = "Critical threshold for mysql_pool_utilization detector"
+variable "mysql_pool_utilization_threshold_major" {
+  description = "major threshold for mysql_pool_utilization detector"
   type        = number
   default     = 95
 }
 
-variable "mysql_pool_utilization_threshold_warning" {
-  description = "Warning threshold for mysql_pool_utilization detector"
+variable "mysql_pool_utilization_threshold_minor" {
+  description = "minor threshold for mysql_pool_utilization detector"
   type        = number
   default     = 80
 }
@@ -305,27 +287,21 @@ variable "mysql_slow_aggregation_function" {
 }
 
 variable "mysql_slow_transformation_function" {
-  description = "Transformation function for mysql_slow detector (mean, min, max)"
+  description = "Transformation function for mysql_slow detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "mean"
-}
-
-variable "mysql_slow_transformation_window" {
-  description = "Transformation window for mysql_slow detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "15m"
+  default     = ".mean(over='15m')"
 }
 
 variable "mysql_slow_threshold_critical" {
   description = "Critical threshold for mysql_slow detector"
   type        = number
-  default     = 20
+  default     = 25
 }
 
 variable "mysql_slow_threshold_warning" {
   description = "Warning threshold for mysql_slow detector"
   type        = number
-  default     = 5
+  default     = 10
 }
 
 # Mysql_threads_anomaly detectors
@@ -333,35 +309,11 @@ variable "mysql_slow_threshold_warning" {
 variable "mysql_threads_anomaly_disabled" {
   description = "Disable all alerting rules for mysql_threads_anomaly detector"
   type        = bool
-  default     = null
-}
-
-variable "mysql_threads_anomaly_disabled_critical" {
-  description = "Disable critical alerting rule for mysql_threads_anomaly detector"
-  type        = bool
-  default     = null
-}
-
-variable "mysql_threads_anomaly_disabled_warning" {
-  description = "Disable warning alerting rule for mysql_threads_anomaly detector"
-  type        = bool
-  default     = null
+  default     = true
 }
 
 variable "mysql_threads_anomaly_notifications" {
   description = "Notification recipients list for every alerting rules of mysql_threads_anomaly detector"
-  type        = list
-  default     = []
-}
-
-variable "mysql_threads_anomaly_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of mysql_threads_anomaly detector"
-  type        = list
-  default     = []
-}
-
-variable "mysql_threads_anomaly_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of mysql_threads_anomaly detector"
   type        = list
   default     = []
 }
@@ -373,15 +325,9 @@ variable "mysql_threads_anomaly_aggregation_function" {
 }
 
 variable "mysql_threads_anomaly_transformation_function" {
-  description = "Transformation function for mysql_threads_anomaly detector (mean, min, max)"
+  description = "Transformation function for mysql_threads_anomaly detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "mean"
-}
-
-variable "mysql_threads_anomaly_transformation_window" {
-  description = "Transformation window for mysql_threads_anomaly detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "15m"
+  default     = ".mean(over='15m')"
 }
 
 variable "mysql_threads_anomaly_window_to_compare" {
@@ -425,35 +371,11 @@ variable "mysql_threads_anomaly_orientation" {
 variable "mysql_questions_anomaly_disabled" {
   description = "Disable all alerting rules for mysql_questions_anomaly detector"
   type        = bool
-  default     = null
-}
-
-variable "mysql_questions_anomaly_disabled_critical" {
-  description = "Disable critical alerting rule for mysql_questions_anomaly detector"
-  type        = bool
-  default     = null
-}
-
-variable "mysql_questions_anomaly_disabled_warning" {
-  description = "Disable warning alerting rule for mysql_questions_anomaly detector"
-  type        = bool
-  default     = null
+  default     = true
 }
 
 variable "mysql_questions_anomaly_notifications" {
   description = "Notification recipients list for every alerting rules of mysql_questions_anomaly detector"
-  type        = list
-  default     = []
-}
-
-variable "mysql_questions_anomaly_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of mysql_questions_anomaly detector"
-  type        = list
-  default     = []
-}
-
-variable "mysql_questions_anomaly_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of mysql_questions_anomaly detector"
   type        = list
   default     = []
 }
@@ -465,15 +387,9 @@ variable "mysql_questions_anomaly_aggregation_function" {
 }
 
 variable "mysql_questions_anomaly_transformation_function" {
-  description = "Transformation function for mysql_questions_anomaly detector (mean, min, max)"
+  description = "Transformation function for mysql_questions_anomaly detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "mean"
-}
-
-variable "mysql_questions_anomaly_transformation_window" {
-  description = "Transformation window for mysql_questions_anomaly detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "15m"
+  default     = ".mean(over='15m')"
 }
 
 variable "mysql_questions_anomaly_window_to_compare" {
@@ -557,15 +473,9 @@ variable "mysql_replication_lag_aggregation_function" {
 }
 
 variable "mysql_replication_lag_transformation_function" {
-  description = "Transformation function for mysql_replication_lag detector (mean, min, max)"
+  description = "Transformation function for mysql_replication_lag detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
-}
-
-variable "mysql_replication_lag_transformation_window" {
-  description = "Transformation window for mysql_replication_lag detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "15m"
+  default     = ".min(over='15m')"
 }
 
 variable "mysql_replication_lag_threshold_critical" {
@@ -588,20 +498,8 @@ variable "mysql_replication_status_disabled" {
   default     = null
 }
 
-variable "mysql_replication_status_disabled_critical" {
-  description = "Disable critical alerting rule for mysql_replication_status detector"
-  type        = bool
-  default     = null
-}
-
 variable "mysql_replication_status_notifications" {
   description = "Notification recipients list for every alerting rules of mysql_replication_status detector"
-  type        = list
-  default     = []
-}
-
-variable "mysql_replication_status_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of mysql_replication_status detector"
   type        = list
   default     = []
 }
@@ -613,13 +511,8 @@ variable "mysql_replication_status_aggregation_function" {
 }
 
 variable "mysql_replication_status_transformation_function" {
-  description = "Transformation function for mysql_replication_status detector (mean, min, max)"
+  description = "Transformation function for mysql_replication_status detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
+  default     = ".max(over='5m')"
 }
 
-variable "mysql_replication_status_transformation_window" {
-  description = "Transformation window for mysql_replication_status detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "5m"
-}

@@ -56,6 +56,68 @@ variable "heartbeat_timeframe" {
   default     = "20m"
 }
 
+# errors detectors
+
+variable "errors_disabled" {
+  description = "Disable all alerting rules for errors detector"
+  type        = bool
+  default     = null
+}
+
+variable "errors_disabled_critical" {
+  description = "Disable critical alerting rule for errors detector"
+  type        = bool
+  default     = null
+}
+
+variable "errors_disabled_warning" {
+  description = "Disable warning alerting rule for errors detector"
+  type        = bool
+  default     = null
+}
+
+variable "errors_notifications" {
+  description = "Notification recipients list for every alerting rules of errors detector"
+  type        = list
+  default     = []
+}
+
+variable "errors_notifications_warning" {
+  description = "Notification recipients list for warning alerting rule of errors detector"
+  type        = list
+  default     = []
+}
+
+variable "errors_notifications_critical" {
+  description = "Notification recipients list for critical alerting rule of errors detector"
+  type        = list
+  default     = []
+}
+
+variable "errors_aggregation_function" {
+  description = "Aggregation function and group by for errors detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ""
+}
+
+variable "errors_transformation_function" {
+  description = "Transformation function for errors detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ".mean(over='5m')"
+}
+
+variable "errors_threshold_critical" {
+  description = "Critical threshold for errors detector"
+  type        = number
+  default     = 5
+}
+
+variable "errors_threshold_warning" {
+  description = "Warning threshold for errors detector"
+  type        = number
+  default     = 0
+}
+
 # Searcher_warmup_time detectors
 
 variable "searcher_warmup_time_disabled" {
@@ -97,19 +159,13 @@ variable "searcher_warmup_time_notifications_critical" {
 variable "searcher_warmup_time_aggregation_function" {
   description = "Aggregation function and group by for searcher_warmup_time detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".min(by=['node'])"
+  default     = ""
 }
 
 variable "searcher_warmup_time_transformation_function" {
-  description = "Transformation function for searcher_warmup_time detector (mean, min, max)"
+  description = "Transformation function for searcher_warmup_time detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = "max"
-}
-
-variable "searcher_warmup_time_transformation_window" {
-  description = "Transformation window for searcher_warmup_time detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "5m"
+  default     = ".max(over='5m')"
 }
 
 variable "searcher_warmup_time_threshold_critical" {

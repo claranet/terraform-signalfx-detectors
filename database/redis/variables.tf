@@ -101,27 +101,21 @@ variable "evicted_keys_aggregation_function" {
 }
 
 variable "evicted_keys_transformation_function" {
-  description = "Transformation function for evicted_keys detector (mean, min, max)"
+  description = "Transformation function for evicted_keys detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "mean"
-}
-
-variable "evicted_keys_transformation_window" {
-  description = "Transformation window for evicted_keys detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "5m"
+  default     = ".mean(over='15m')"
 }
 
 variable "evicted_keys_threshold_critical" {
   description = "Critical threshold for evicted_keys detector"
   type        = number
-  default     = 100
+  default     = 50
 }
 
 variable "evicted_keys_threshold_warning" {
   description = "Warning threshold for evicted_keys detector"
   type        = number
-  default     = 20
+  default     = 25
 }
 
 # Expirations detectors
@@ -169,27 +163,21 @@ variable "expirations_aggregation_function" {
 }
 
 variable "expirations_transformation_function" {
-  description = "Transformation function for expirations detector (mean, min, max)"
+  description = "Transformation function for expirations detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
-}
-
-variable "expirations_transformation_window" {
-  description = "Transformation window for expirations detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "5m"
+  default     = ".mean(over='15m')"
 }
 
 variable "expirations_threshold_critical" {
   description = "Critical threshold for expirations detector"
   type        = number
-  default     = 80
+  default     = 100
 }
 
 variable "expirations_threshold_warning" {
   description = "Warning threshold for expirations detector"
   type        = number
-  default     = 60
+  default     = 50
 }
 
 # Blocked_clients detectors
@@ -237,27 +225,21 @@ variable "blocked_clients_aggregation_function" {
 }
 
 variable "blocked_clients_transformation_function" {
-  description = "Transformation function for blocked_clients detector (mean, min, max)"
+  description = "Transformation function for blocked_clients detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
-}
-
-variable "blocked_clients_transformation_window" {
-  description = "Transformation window for blocked_clients detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "5m"
+  default     = ".mean(over='1h')"
 }
 
 variable "blocked_clients_threshold_critical" {
   description = "Critical threshold for blocked_clients detector"
   type        = number
-  default     = 30
+  default     = 5
 }
 
 variable "blocked_clients_threshold_warning" {
   description = "Warning threshold for blocked_clients detector"
   type        = number
-  default     = 10
+  default     = 0
 }
 
 # Keyspace_full detectors
@@ -268,32 +250,8 @@ variable "keyspace_full_disabled" {
   default     = null
 }
 
-variable "keyspace_full_disabled_critical" {
-  description = "Disable critical alerting rule for keyspace_full detector"
-  type        = bool
-  default     = null
-}
-
-variable "keyspace_full_disabled_warning" {
-  description = "Disable warning alerting rule for keyspace_full detector"
-  type        = bool
-  default     = null
-}
-
 variable "keyspace_full_notifications" {
   description = "Notification recipients list for every alerting rules of keyspace_full detector"
-  type        = list
-  default     = []
-}
-
-variable "keyspace_full_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of keyspace_full detector"
-  type        = list
-  default     = []
-}
-
-variable "keyspace_full_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of keyspace_full detector"
   type        = list
   default     = []
 }
@@ -305,169 +263,257 @@ variable "keyspace_full_aggregation_function" {
 }
 
 variable "keyspace_full_transformation_function" {
-  description = "Transformation function for keyspace_full detector (mean, min, max)"
+  description = "Transformation function for keyspace_full detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
+  default     = ".sum(over='1h')"
 }
 
-variable "keyspace_full_transformation_window" {
-  description = "Transformation window for keyspace_full detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "5m"
-}
+# Memory_used_max detectors
 
-variable "keyspace_full_timeshift" {
-  description = "Timeshift window for keyspace_full detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "5m"
-}
-
-variable "keyspace_full_threshold_critical" {
-  description = "Critical threshold for keyspace_full detector"
-  type        = number
-  default     = 0
-}
-
-variable "keyspace_full_threshold_warning" {
-  description = "Warning threshold for keyspace_full detector"
-  type        = number
-  default     = 1
-}
-
-# Memory_used detectors
-
-variable "memory_used_disabled" {
-  description = "Disable all alerting rules for memory_used detector"
+variable "memory_used_max_disabled" {
+  description = "Disable all alerting rules for memory_used_max detector"
   type        = bool
   default     = null
 }
 
-variable "memory_used_disabled_critical" {
-  description = "Disable critical alerting rule for memory_used detector"
+variable "memory_used_max_disabled_critical" {
+  description = "Disable critical alerting rule for memory_used_max detector"
   type        = bool
   default     = null
 }
 
-variable "memory_used_disabled_warning" {
-  description = "Disable warning alerting rule for memory_used detector"
+variable "memory_used_max_disabled_warning" {
+  description = "Disable warning alerting rule for memory_used_max detector"
   type        = bool
   default     = null
 }
 
-variable "memory_used_notifications" {
-  description = "Notification recipients list for every alerting rules of memory_used detector"
+variable "memory_used_max_notifications" {
+  description = "Notification recipients list for every alerting rules of memory_used_max detector"
   type        = list
   default     = []
 }
 
-variable "memory_used_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of memory_used detector"
+variable "memory_used_max_notifications_warning" {
+  description = "Notification recipients list for warning alerting rule of memory_used_max detector"
   type        = list
   default     = []
 }
 
-variable "memory_used_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of memory_used detector"
+variable "memory_used_max_notifications_critical" {
+  description = "Notification recipients list for critical alerting rule of memory_used_max detector"
   type        = list
   default     = []
 }
 
-variable "memory_used_aggregation_function" {
-  description = "Aggregation function and group by for memory_used detector (i.e. \".mean(by=['host'])\")"
+variable "memory_used_max_aggregation_function" {
+  description = "Aggregation function and group by for memory_used_max detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
 }
 
-variable "memory_used_transformation_function" {
-  description = "Transformation function for memory_used detector (mean, min, max)"
+variable "memory_used_max_transformation_function" {
+  description = "Transformation function for memory_used_max detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
+  default     = ".min(over='10m')"
 }
 
-variable "memory_used_transformation_window" {
-  description = "Transformation window for memory_used detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "5m"
-}
-
-variable "memory_used_threshold_critical" {
-  description = "Critical threshold for memory_used detector"
+variable "memory_used_max_threshold_critical" {
+  description = "Critical threshold for memory_used_max detector"
   type        = number
   default     = 95
 }
 
-variable "memory_used_threshold_warning" {
-  description = "Warning threshold for memory_used detector"
+variable "memory_used_max_threshold_warning" {
+  description = "Warning threshold for memory_used_max detector"
   type        = number
   default     = 85
 }
 
-# Memory_frag detectors
+# Memory_used_total detectors
 
-variable "memory_frag_disabled" {
-  description = "Disable all alerting rules for memory_frag detector"
+variable "memory_used_total_disabled" {
+  description = "Disable all alerting rules for memory_used_total detector"
   type        = bool
   default     = null
 }
 
-variable "memory_frag_disabled_critical" {
-  description = "Disable critical alerting rule for memory_frag detector"
+variable "memory_used_total_disabled_critical" {
+  description = "Disable critical alerting rule for memory_used_total detector"
   type        = bool
   default     = null
 }
 
-variable "memory_frag_disabled_warning" {
-  description = "Disable warning alerting rule for memory_frag detector"
+variable "memory_used_total_disabled_warning" {
+  description = "Disable warning alerting rule for memory_used_total detector"
   type        = bool
   default     = null
 }
 
-variable "memory_frag_notifications" {
-  description = "Notification recipients list for every alerting rules of memory_frag detector"
+variable "memory_used_total_notifications" {
+  description = "Notification recipients list for every alerting rules of memory_used_total detector"
   type        = list
   default     = []
 }
 
-variable "memory_frag_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of memory_frag detector"
+variable "memory_used_total_notifications_warning" {
+  description = "Notification recipients list for warning alerting rule of memory_used_total detector"
   type        = list
   default     = []
 }
 
-variable "memory_frag_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of memory_frag detector"
+variable "memory_used_total_notifications_critical" {
+  description = "Notification recipients list for critical alerting rule of memory_used_total detector"
   type        = list
   default     = []
 }
 
-variable "memory_frag_aggregation_function" {
-  description = "Aggregation function and group by for memory_frag detector (i.e. \".mean(by=['host'])\")"
+variable "memory_used_total_aggregation_function" {
+  description = "Aggregation function and group by for memory_used_total detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
 }
 
-variable "memory_frag_transformation_function" {
-  description = "Transformation function for memory_frag detector (mean, min, max)"
+variable "memory_used_total_transformation_function" {
+  description = "Transformation function for memory_used_total detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
+  default     = ".min(over='10m')"
 }
 
-variable "memory_frag_transformation_window" {
-  description = "Transformation window for memory_frag detector (i.e. 5m, 20m, 1h, 1d)"
+variable "memory_used_total_threshold_critical" {
+  description = "Critical threshold for memory_used_total detector"
+  type        = number
+  default     = 95
+}
+
+variable "memory_used_total_threshold_warning" {
+  description = "Warning threshold for memory_used_total detector"
+  type        = number
+  default     = 85
+}
+
+# Memory_frag_high detectors
+
+variable "memory_frag_high_disabled" {
+  description = "Disable all alerting rules for memory_frag_high detector"
+  type        = bool
+  default     = null
+}
+
+variable "memory_frag_high_disabled_critical" {
+  description = "Disable critical alerting rule for memory_frag_high detector"
+  type        = bool
+  default     = null
+}
+
+variable "memory_frag_high_disabled_warning" {
+  description = "Disable warning alerting rule for memory_frag_high detector"
+  type        = bool
+  default     = null
+}
+
+variable "memory_frag_high_notifications" {
+  description = "Notification recipients list for every alerting rules of memory_frag_high detector"
+  type        = list
+  default     = []
+}
+
+variable "memory_frag_high_notifications_warning" {
+  description = "Notification recipients list for warning alerting rule of memory_frag_high detector"
+  type        = list
+  default     = []
+}
+
+variable "memory_frag_high_notifications_critical" {
+  description = "Notification recipients list for critical alerting rule of memory_frag_high detector"
+  type        = list
+  default     = []
+}
+
+variable "memory_frag_high_aggregation_function" {
+  description = "Aggregation function and group by for memory_frag_high detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = "5m"
+  default     = ""
 }
 
-variable "memory_frag_threshold_critical" {
-  description = "Critical threshold for memory_frag detector"
-  type        = number
-  default     = 150
+variable "memory_frag_high_transformation_function" {
+  description = "Transformation function for memory_frag_high detector (i.e. \".mean(over='5m')\"))"
+  type        = string
+  default     = ".mean(over='15m')"
 }
 
-variable "memory_frag_threshold_warning" {
-  description = "Warning threshold for memory_frag detector"
+variable "memory_frag_high_threshold_critical" {
+  description = "Critical threshold for memory_frag_high detector"
   type        = number
-  default     = 130
+  default     = 5
+}
+
+variable "memory_frag_high_threshold_warning" {
+  description = "Warning threshold for memory_frag_high detector"
+  type        = number
+  default     = 2
+}
+
+# Memory_frag_low detectors
+
+variable "memory_frag_low_disabled" {
+  description = "Disable all alerting rules for memory_frag_low detector"
+  type        = bool
+  default     = null
+}
+
+variable "memory_frag_low_disabled_critical" {
+  description = "Disable critical alerting rule for memory_frag_low detector"
+  type        = bool
+  default     = null
+}
+
+variable "memory_frag_low_disabled_warning" {
+  description = "Disable warning alerting rule for memory_frag_low detector"
+  type        = bool
+  default     = null
+}
+
+variable "memory_frag_low_notifications" {
+  description = "Notification recipients list for every alerting rules of memory_frag_low detector"
+  type        = list
+  default     = []
+}
+
+variable "memory_frag_low_notifications_warning" {
+  description = "Notification recipients list for warning alerting rule of memory_frag_low detector"
+  type        = list
+  default     = []
+}
+
+variable "memory_frag_low_notifications_critical" {
+  description = "Notification recipients list for critical alerting rule of memory_frag_low detector"
+  type        = list
+  default     = []
+}
+
+variable "memory_frag_low_aggregation_function" {
+  description = "Aggregation function and group by for memory_frag_low detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ""
+}
+
+variable "memory_frag_low_transformation_function" {
+  description = "Transformation function for memory_frag_low detector (i.e. \".mean(over='5m')\"))"
+  type        = string
+  default     = ".mean(over='15m')"
+}
+
+variable "memory_frag_low_threshold_critical" {
+  description = "Critical threshold for memory_frag_low detector"
+  type        = number
+  default     = 0.75
+}
+
+variable "memory_frag_low_threshold_warning" {
+  description = "Warning threshold for memory_frag_low detector"
+  type        = number
+  default     = 1
 }
 
 # rejected_connections detectors
@@ -515,27 +561,21 @@ variable "rejected_connections_aggregation_function" {
 }
 
 variable "rejected_connections_transformation_function" {
-  description = "Transformation function for rejected_connections detector (mean, min, max)"
+  description = "Transformation function for rejected_connections detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
-}
-
-variable "rejected_connections_transformation_window" {
-  description = "Transformation window for rejected_connections detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "5m"
+  default     = "sum(over='5m')"
 }
 
 variable "rejected_connections_threshold_critical" {
   description = "Critical threshold for rejected_connections detector"
   type        = number
-  default     = 50
+  default     = 5
 }
 
 variable "rejected_connections_threshold_warning" {
   description = "Warning threshold for rejected_connections detector"
   type        = number
-  default     = 10
+  default     = 0
 }
 
 # Hitrate detectors
@@ -583,15 +623,9 @@ variable "hitrate_aggregation_function" {
 }
 
 variable "hitrate_transformation_function" {
-  description = "Transformation function for hitrate detector (mean, min, max)"
+  description = "Transformation function for hitrate (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "max"
-}
-
-variable "hitrate_transformation_window" {
-  description = "Transformation window for hitrate detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "5m"
+  default     = ".max(over='5m')"
 }
 
 variable "hitrate_threshold_critical" {
