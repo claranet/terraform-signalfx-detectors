@@ -6,7 +6,7 @@ resource "signalfx_detector" "velero_scheduled_backup_missing" {
 		detect(when(signal < ${var.velero_scheduled_backup_missing_threshold_critical})).publish('CRIT')
 		detect(when(signal < ${var.velero_scheduled_backup_missing_threshold_warning}) and when(signal >= ${var.velero_scheduled_backup_missing_threshold_critical})).publish('WARN')
 
-	EOF
+EOF
 
   rule {
     description           = "are too low < ${var.velero_scheduled_backup_missing_threshold_critical}"
@@ -36,7 +36,7 @@ resource "signalfx_detector" "velero_backup_failure" {
 		detect(when(signal > ${var.velero_backup_failure_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.velero_backup_failure_threshold_warning}) and when(signal <= ${var.velero_backup_failure_threshold_critical})).publish('WARN')
 
-	EOF
+EOF
 
   rule {
     description           = "are too high > ${var.velero_backup_failure_threshold_critical}"
@@ -66,7 +66,7 @@ resource "signalfx_detector" "velero_backup_partial_failure" {
 		detect(when(signal > ${var.velero_backup_partial_failure_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.velero_backup_partial_failure_threshold_warning}) and when(signal <= ${var.velero_backup_partial_failure_threshold_critical})).publish('WARN')
 
-	EOF
+EOF
 
   rule {
     description           = "are too high > ${var.velero_backup_partial_failure_threshold_critical}"
@@ -96,7 +96,7 @@ resource "signalfx_detector" "velero_backup_deletion_failure" {
 		detect(when(signal > ${var.velero_backup_deletion_failure_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.velero_backup_deletion_failure_threshold_warning}) and when(signal <= ${var.velero_backup_deletion_failure_threshold_critical})).publish('WARN')
 
-	EOF
+EOF
 
   rule {
     description           = "are too high > ${var.velero_backup_deletion_failure_threshold_critical}"
@@ -126,7 +126,7 @@ resource "signalfx_detector" "velero_volume_snapshot_failure" {
 		detect(when(signal > ${var.velero_volume_snapshot_failure_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.velero_volume_snapshot_failure_threshold_warning}) and when(signal <= ${var.velero_volume_snapshot_failure_threshold_critical})).publish('WARN')
 
-	EOF
+EOF
 
   rule {
     description           = "are too high > ${var.velero_volume_snapshot_failure_threshold_critical}"

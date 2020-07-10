@@ -5,7 +5,7 @@ resource "signalfx_detector" "heartbeat" {
 		from signalfx.detectors.not_reporting import not_reporting
 		signal = data('cpu.usage.system', filter=filter('plugin', 'docker') and ${module.filter-tags.filter_custom}).publish('signal')
 		not_reporting.detector(stream=signal, resource_identifier=['container_name'], duration='${var.heartbeat_timeframe}').publish('CRIT')
-	EOF
+EOF
 
   rule {
     description           = "has not reported in ${var.heartbeat_timeframe}"
@@ -26,7 +26,7 @@ resource "signalfx_detector" "memory_used" {
 		signal = ((B*100)/A).${var.memory_used_transformation_function}(over='${var.memory_used_transformation_window}').publish('signal')
 		detect(when(signal > ${var.memory_used_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.memory_used_threshold_warning}) and when(signal <= ${var.memory_used_threshold_critical})).publish('WARN')
-	EOF
+EOF
 
   rule {
     description           = "are too high > ${var.memory_used_threshold_critical}"
