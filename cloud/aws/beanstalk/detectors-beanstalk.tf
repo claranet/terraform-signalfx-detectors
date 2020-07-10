@@ -3,9 +3,9 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
-		signal = data('EnvironmentHealth', filter=filter('stat', 'upper') and filter('namespace', 'AWS/ElasticBeanstalk') and ${module.filter-tags.filter_custom}).publish('signal')
+		signal = data('InstanceHealth', filter=filter('stat', 'mean') and filter('namespace', 'AWS/ElasticBeanstalk') and (not filter('aws_state', '{Code: 32,Name: shutting-down', '{Code: 48,Name: terminated}', '{Code: 62,Name: stopping}', '{Code: 80,Name: stopped}')) and ${module.filter-tags.filter_custom}).publish('signal')
 		not_reporting.detector(stream=signal, resource_identifier=['EnvironmentName'], duration='${var.heartbeat_timeframe}').publish('CRIT')
-	EOF
+EOF
 
   rule {
     description           = "has not reported in ${var.heartbeat_timeframe}"
@@ -24,7 +24,7 @@ resource "signalfx_detector" "health" {
 		signal = data('EnvironmentHealth', filter=filter('namespace', 'AWS/ElasticBeanstalk') and filter('stat', 'upper') and ${module.filter-tags.filter_custom})${var.health_aggregation_function}.${var.health_transformation_function}(over='${var.health_transformation_window}').publish('signal')
 		detect(when(signal >= ${var.health_threshold_critical})).publish('CRIT')
 		detect(when(signal >= ${var.health_threshold_warning}) and when(signal < ${var.health_threshold_critical})).publish('WARN')
-	EOF
+EOF
 
   rule {
     description           = "is too high >= ${var.health_threshold_critical}"
@@ -53,7 +53,7 @@ resource "signalfx_detector" "latency_p90" {
 		signal = data('ApplicationLatencyP90', filter=filter('namespace', 'AWS/ElasticBeanstalk') and filter('stat', 'lower') and filter('InstanceId', '*') and ${module.filter-tags.filter_custom})${var.latency_p90_aggregation_function}.${var.latency_p90_transformation_function}(over='${var.latency_p90_transformation_window}').publish('signal')
 		detect(when(signal >= ${var.latency_p90_threshold_critical})).publish('CRIT')
 		detect(when(signal >= ${var.latency_p90_threshold_warning}) and when(signal < ${var.latency_p90_threshold_critical})).publish('WARN')
-	EOF
+EOF
 
   rule {
     description           = "is too high > ${var.latency_p90_threshold_critical}"
@@ -84,7 +84,7 @@ resource "signalfx_detector" "app_5xx_error_rate" {
 		signal = (A/B).scale(100).${var.app_5xx_error_rate_transformation_function}(over='${var.app_5xx_error_rate_transformation_window}').publish('signal')
 		detect(when(signal > ${var.app_5xx_error_rate_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.app_5xx_error_rate_threshold_warning}) and when(signal <= ${var.app_5xx_error_rate_threshold_critical})).publish('WARN')
-	EOF
+EOF
 
   rule {
     description           = "is too high > ${var.app_5xx_error_rate_threshold_critical}"
@@ -113,7 +113,7 @@ resource "signalfx_detector" "root_filesystem_usage" {
 		signal = data('RootFilesystemUtil', filter=filter('namespace', 'AWS/ElasticBeanstalk') and filter('stat', 'lower') and filter('InstanceId', '*') and ${module.filter-tags.filter_custom})${var.root_filesystem_usage_aggregation_function}.${var.root_filesystem_usage_transformation_function}(over='${var.root_filesystem_usage_transformation_window}').publish('signal')
 		detect(when(signal > ${var.root_filesystem_usage_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.root_filesystem_usage_threshold_warning}) and when(signal <= ${var.root_filesystem_usage_threshold_critical})).publish('WARN')
-	EOF
+EOF
 
   rule {
     description           = "is too high > ${var.root_filesystem_usage_threshold_critical}"

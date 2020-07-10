@@ -3,9 +3,9 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
-		signal = data('TunnelDataIn', filter=filter('stat', 'mean') and filter('namespace', 'AWS/VPN') and ${module.filter-tags.filter_custom}).publish('signal')
+		signal = data('TunnelDataIn', filter=filter('stat', 'mean') and filter('namespace', 'AWS/VPN') and (not filter('aws_state', '{Code: 32,Name: shutting-down', '{Code: 48,Name: terminated}', '{Code: 62,Name: stopping}', '{Code: 80,Name: stopped}')) and ${module.filter-tags.filter_custom}).publish('signal')
 		not_reporting.detector(stream=signal, resource_identifier=['TunnelIpAddress'], duration='${var.heartbeat_timeframe}').publish('CRIT')
-	EOF
+EOF
 
   rule {
     description           = "has not reported in ${var.heartbeat_timeframe}"
@@ -23,7 +23,7 @@ resource "signalfx_detector" "VPN_status" {
   program_text = <<-EOF
 		signal = data('TunnelState', filter=filter('namespace', 'AWS/VPN') and filter('stat', 'lower') and ${module.filter-tags.filter_custom})${var.vpn_status_aggregation_function}.${var.vpn_status_transformation_function}(over='${var.vpn_status_transformation_window}').publish('signal')
 		detect(when(signal < ${var.vpn_status_threshold_critical})).publish('CRIT')
-	EOF
+EOF
 
   rule {
     description           = "is reporting a state other than up"

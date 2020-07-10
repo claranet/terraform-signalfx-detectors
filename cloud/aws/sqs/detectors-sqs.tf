@@ -3,9 +3,9 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
-		signal = data('NumberOfMessagesReceived', filter=filter('stat', 'mean') and filter('namespace', 'AWS/SQS') and ${module.filter-tags.filter_custom}).publish('signal')
+		signal = data('SentMessageSize', filter=filter('stat', 'mean') and filter('namespace', 'AWS/SQS') and (not filter('aws_state', '{Code: 32,Name: shutting-down', '{Code: 48,Name: terminated}', '{Code: 62,Name: stopping}', '{Code: 80,Name: stopped}')) and ${module.filter-tags.filter_custom}).publish('signal')
 		not_reporting.detector(stream=signal, resource_identifier=['QueueName'], duration='${var.heartbeat_timeframe}').publish('CRIT')
-	EOF
+EOF
 
   rule {
     description           = "has not reported in ${var.heartbeat_timeframe}"
@@ -24,7 +24,7 @@ resource "signalfx_detector" "visible_messages" {
 		signal = data('ApproximateNumberOfMessagesVisible', filter=filter('namespace', 'AWS/SQS')and filter('stat', 'upper') and ${module.filter-tags.filter_custom})${var.visible_messages_aggregation_function}.${var.visible_messages_transformation_function}(over='${var.visible_messages_transformation_window}').publish('signal')
 		detect(when(signal > ${var.visible_messages_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.visible_messages_threshold_warning}) and when(signal <= ${var.visible_messages_threshold_critical})).publish('WARN')
-	EOF
+EOF
 
   rule {
     description           = "are too high > ${var.visible_messages_threshold_critical}"
@@ -53,7 +53,7 @@ resource "signalfx_detector" "age_of_oldest_message" {
 		signal = data('ApproximateAgeOfOldestMessage', filter=filter('namespace', 'AWS/SQS') and filter('stat', 'upper') and ${module.filter-tags.filter_custom})${var.age_of_oldest_message_aggregation_function}.${var.age_of_oldest_message_transformation_function}(over='${var.age_of_oldest_message_transformation_window}').publish('signal')
 		detect(when(signal > ${var.age_of_oldest_message_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.age_of_oldest_message_threshold_warning}) and when(signal <= ${var.age_of_oldest_message_threshold_critical})).publish('WARN')
-	EOF
+EOF
 
   rule {
     description           = "is too old > ${var.age_of_oldest_message_threshold_critical}"
