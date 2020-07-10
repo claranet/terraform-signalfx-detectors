@@ -56,138 +56,127 @@ variable "heartbeat_timeframe" {
   default     = "20m"
 }
 
-# App_error_rate detectors
+# error_rate detectors
 
-variable "app_error_rate_disabled" {
-  description = "Disable all alerting rules for app_error_rate detector"
+variable "error_rate_disabled" {
+  description = "Disable all alerting rules for error_rate detector"
   type        = bool
   default     = null
 }
 
-variable "app_error_rate_disabled_critical" {
-  description = "Disable critical alerting rule for app_error_rate detector"
+variable "error_rate_disabled_critical" {
+  description = "Disable critical alerting rule for error_rate detector"
   type        = bool
   default     = null
 }
 
-variable "app_error_rate_disabled_warning" {
-  description = "Disable warning alerting rule for app_error_rate detector"
+variable "error_rate_disabled_warning" {
+  description = "Disable warning alerting rule for error_rate detector"
   type        = bool
   default     = null
 }
 
-variable "app_error_rate_notifications" {
-  description = "Notification recipients list for every alerting rules of app_error_rate detector"
+variable "error_rate_notifications" {
+  description = "Notification recipients list for every alerting rules of error_rate detector"
   type        = list
   default     = []
 }
 
-variable "app_error_rate_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of app_error_rate detector"
+variable "error_rate_notifications_warning" {
+  description = "Notification recipients list for warning alerting rule of error_rate detector"
   type        = list
   default     = []
 }
 
-variable "app_error_rate_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of app_error_rate detector"
+variable "error_rate_notifications_critical" {
+  description = "Notification recipients list for critical alerting rule of error_rate detector"
   type        = list
   default     = []
 }
 
-variable "app_error_rate_aggregation_function" {
-  description = "Aggregation function and group by for app_error_rate detector (i.e. \".mean(by=['host'])\")"
+variable "error_rate_aggregation_function" {
+  description = "Aggregation function and group by for error_rate detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
 }
 
-variable "app_error_rate_transformation_function" {
-  description = "Transformation function for app_error_rate detector (mean, min, max)"
+variable "error_rate_transformation_function" {
+  description = "Transformation function for error_rate detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
+  default     = ".min(over='5m')"
 }
 
-variable "app_error_rate_transformation_window" {
-  description = "Transformation window for app_error_rate detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "5m"
-}
-
-variable "app_error_rate_threshold_critical" {
-  description = "Critical threshold for app_error_rate detector"
+variable "error_rate_threshold_critical" {
+  description = "Critical threshold for error_rate detector"
   type        = number
   default     = 5
 }
 
-variable "app_error_rate_threshold_warning" {
-  description = "Warning threshold for app_error_rate detector"
+variable "error_rate_threshold_warning" {
+  description = "Warning threshold for error_rate detector"
   type        = number
   default     = 1
 }
 
-# App_apdex_score detectors
+# apdex detectors
 
-variable "app_apdex_score_disabled" {
-  description = "Disable all alerting rules for app_apdex_score detector"
+variable "apdex_disabled" {
+  description = "Disable all alerting rules for apdex detector"
   type        = bool
   default     = null
 }
 
-variable "app_apdex_score_disabled_critical" {
-  description = "Disable critical alerting rule for app_apdex_score detector"
+variable "apdex_disabled_critical" {
+  description = "Disable critical alerting rule for apdex detector"
   type        = bool
   default     = null
 }
 
-variable "app_apdex_score_disabled_warning" {
-  description = "Disable warning alerting rule for app_apdex_score detector"
+variable "apdex_disabled_warning" {
+  description = "Disable warning alerting rule for apdex detector"
   type        = bool
   default     = null
 }
 
-variable "app_apdex_score_notifications" {
-  description = "Notification recipients list for every alerting rules of app_apdex_score detector"
+variable "apdex_notifications" {
+  description = "Notification recipients list for every alerting rules of apdex detector"
   type        = list
   default     = []
 }
 
-variable "app_apdex_score_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of app_apdex_score detector"
+variable "apdex_notifications_warning" {
+  description = "Notification recipients list for warning alerting rule of apdex detector"
   type        = list
   default     = []
 }
 
-variable "app_apdex_score_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of app_apdex_score detector"
+variable "apdex_notifications_critical" {
+  description = "Notification recipients list for critical alerting rule of apdex detector"
   type        = list
   default     = []
 }
 
-variable "app_apdex_score_aggregation_function" {
-  description = "Aggregation function and group by for app_apdex_score detector (i.e. \".mean(by=['host'])\")"
+variable "apdex_aggregation_function" {
+  description = "Aggregation function and group by for apdex detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
 }
 
-variable "app_apdex_score_transformation_function" {
-  description = "Transformation function for app_apdex_score detector (mean, min, max)"
+variable "apdex_transformation_function" {
+  description = "Transformation function for apdex detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "mean"
+  default     = ".mean(over='15m')"
 }
 
-variable "app_apdex_score_transformation_window" {
-  description = "Transformation window for app_apdex_score detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "15m"
-}
-
-variable "app_apdex_score_threshold_critical" {
-  description = "Critical threshold for app_apdex_score detector"
+variable "apdex_threshold_critical" {
+  description = "Critical threshold for apdex detector"
   type        = number
   default     = 0.25
 }
 
-variable "app_apdex_score_threshold_warning" {
-  description = "Warning threshold for app_apdex_score detector"
+variable "apdex_threshold_warning" {
+  description = "Warning threshold for apdex detector"
   type        = number
   default     = 0.5
 }
+
