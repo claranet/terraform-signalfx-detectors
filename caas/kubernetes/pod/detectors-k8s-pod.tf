@@ -24,12 +24,12 @@ resource "signalfx_detector" "pod_phase_status" {
 		from signalfx.detectors.aperiodic import conditions
 		# Current phase of the pod (1 - Pending, 2 - Running, 3 - Succeeded, 4 - Failed, 5 - Unknown)
 		signal = data('kubernetes.pod_phase', filter=${module.filter-tags.filter_custom})${var.pod_phase_status_aggregation_function}.${var.pod_phase_status_transformation_function}(over='${var.pod_phase_status_transformation_window}').publish('signal')
-		ON_Condition_CRIT = conditions.generic_condition(signal, 4, 5, 'within_range', lasting('${var.pod_phase_status_aperiodic_duration}', ${var.pod_phase_status_aperiodic_percentage}), 'observed', strict_2=False)
+		ON_Condition_CRIT = conditions.generic_condition(signal, 4, 5, 'within_range', lasting('${var.pod_phase_status_aperiodic_duration}', ${var.pod_phase_status_aperiodic_percentage}), 'observed', strict_1=False, strict_2=False)
 		detect(ON_Condition_CRIT, off=when(signal is None, '${var.pod_phase_status_clear_duration}')).publish('CRIT')
 EOF
 
   rule {
-    description           = "is too high > ${var.pod_phase_status_threshold_critical}"
+    description           = "for too long (${var.pod_phase_status_transformation_window} + ${var.pod_phase_status_aperiodic_duration})"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.pod_phase_status_disabled_critical, var.pod_phase_status_disabled, var.detectors_disabled)

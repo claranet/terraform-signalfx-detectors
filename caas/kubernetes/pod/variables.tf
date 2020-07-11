@@ -112,18 +112,6 @@ variable "pod_phase_status_transformation_window" {
   default     = "5m"
 }
 
-variable "pod_phase_status_threshold_critical" {
-  description = "Critical threshold for pod_phase_status detector"
-  type        = number
-  default     = 0
-}
-
-variable "pod_phase_status_threshold_warning" {
-  description = "Warning threshold for pod_phase_status detector"
-  type        = number
-  default     = 0
-}
-
 variable "pod_phase_status_aperiodic_duration" {
   description = "Duration for the pod_phase_status block"
   type        = string
