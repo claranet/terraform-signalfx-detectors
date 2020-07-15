@@ -136,6 +136,12 @@ variable "response_time_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "response_time_clear_duration" {
+  description = "Duration for the response_time clear condition"
+  type        = string
+  default     = "15m"
+}
+
 # Memory_usage_count detectors
 
 variable "memory_usage_count_disabled" {
@@ -284,6 +290,12 @@ variable "http_5xx_errors_count_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "http_5xx_errors_count_clear_duration" {
+  description = "Duration for the http_5xx_errors_count clear condition"
+  type        = string
+  default     = "15m"
+}
+
 # http_4xx_errors_count detectors
 
 variable "http_4xx_errors_count_disabled" {
@@ -364,6 +376,12 @@ variable "http_4xx_errors_count_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "http_4xx_errors_count_clear_duration" {
+  description = "Duration for the http_4xx_errors_count clear condition"
+  type        = string
+  default     = "15m"
+}
+
 # Http_success_status_rate detectors
 
 variable "http_success_status_rate_disabled" {
@@ -442,4 +460,10 @@ variable "http_success_status_rate_aperiodic_percentage" {
   description = "Percentage for the http_success_status_rate block"
   type        = number
   default     = 0.9
+}
+
+variable "http_success_status_rate_clear_duration" {
+  description = "Duration for the http_success_status_rate clear condition"
+  type        = string
+  default     = "15m"
 }
