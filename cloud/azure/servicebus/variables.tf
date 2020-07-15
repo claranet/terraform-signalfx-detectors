@@ -198,6 +198,12 @@ variable "user_errors_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "user_errors_clear_duration" {
+  description = "Duration for the user_errors clear condition"
+  type        = string
+  default     = "15m"
+}
+
 # Server_errors detectors
 
 variable "server_errors_disabled" {
@@ -276,4 +282,10 @@ variable "server_errors_aperiodic_percentage" {
   description = "Percentage for the server_errors block"
   type        = number
   default     = 0.9
+}
+
+variable "server_errors_clear_duration" {
+  description = "Duration for the server_errors clear condition"
+  type        = string
+  default     = "15m"
 }
