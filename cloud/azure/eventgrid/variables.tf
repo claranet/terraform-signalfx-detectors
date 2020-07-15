@@ -204,6 +204,12 @@ variable "failed_messages_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "failed_messages_clear_duration" {
+  description = "Duration for the failed_messages clear condition"
+  type        = string
+  default     = "15m"
+}
+
 # unmatched_events detectors
 
 variable "unmatched_events_disabled" {
@@ -282,4 +288,10 @@ variable "unmatched_events_aperiodic_percentage" {
   description = "Percentage for the unmatched_events block"
   type        = number
   default     = 0.9
+}
+
+variable "unmatched_events_clear_duration" {
+  description = "Duration for the unmatched_events clear condition"
+  type        = string
+  default     = "15m"
 }
