@@ -54,7 +54,7 @@ resource "signalfx_detector" "memory_usage_count" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Service memory usage"
 
   program_text = <<-EOF
-  	base_filter = filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'false') and filter('primary_aggregation_type', 'true')
+		base_filter = filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'false') and filter('primary_aggregation_type', 'true')
 		signal = data('MemoryWorkingSet', filter=base_filter and ${module.filter-tags.filter_custom})${var.memory_usage_count_aggregation_function}.${var.memory_usage_count_transformation_function}(over='${var.memory_usage_count_transformation_window}').publish('signal')
 		detect(when(signal > ${var.memory_usage_count_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.memory_usage_count_threshold_warning}) and when(signal <= ${var.memory_usage_count_threshold_critical})).publish('WARN')
@@ -84,7 +84,7 @@ resource "signalfx_detector" "http_5xx_errors_count" {
 
   program_text = <<-EOF
 		from signalfx.detectors.aperiodic import conditions
-  	base_filter = filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'false') and filter('primary_aggregation_type', 'true')
+		base_filter = filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'false') and filter('primary_aggregation_type', 'true')
 		A = data('Http5xx', filter=base_filter and ${module.filter-tags.filter_custom})${var.http_5xx_errors_count_aggregation_function}
 		B = data('Requests', filter=base_filter and ${module.filter-tags.filter_custom})${var.http_5xx_errors_count_aggregation_function}
 		signal = ((A/B)*100).${var.http_5xx_errors_count_transformation_function}(over='${var.http_5xx_errors_count_transformation_window}').publish('signal')
