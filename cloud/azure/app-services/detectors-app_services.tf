@@ -61,7 +61,7 @@ resource "signalfx_detector" "memory_usage_count" {
   EOF
 
   rule {
-    description           = "is too high > ${var.memory_usage_count_threshold_critical / 1024 / 1024)}Mb"
+    description           = "is too high > ${ceil(var.memory_usage_count_threshold_critical / 1024 / 1024)}Mb"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.memory_usage_count_disabled_critical, var.memory_usage_count_disabled, var.detectors_disabled)
@@ -70,7 +70,7 @@ resource "signalfx_detector" "memory_usage_count" {
   }
 
   rule {
-    description           = "is too high > ${var.memory_usage_count_threshold_warning / 1024 / 1024)}Mb"
+    description           = "is too high > ${ceil(var.memory_usage_count_threshold_warning / 1024 / 1024)}Mb"
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.memory_usage_count_disabled_warning, var.memory_usage_count_disabled, var.detectors_disabled)
