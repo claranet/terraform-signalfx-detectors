@@ -3,9 +3,9 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
-		signal = data('Throughput', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}).publish('signal')
+		signal = data('Throughput', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true') and (not filter('azure_power_state', 'PowerState/stopping', 'PowerState/stoppped', 'PowerState/deallocating', 'PowerState/deallocated')) and ${module.filter-tags.filter_custom}).publish('signal')
 		not_reporting.detector(stream=signal, resource_identifier=['subscription_id'], duration='${var.heartbeat_timeframe}').publish('CRIT')
-	EOF
+  EOF
 
   rule {
     description           = "has not reported in ${var.heartbeat_timeframe}"
@@ -23,7 +23,7 @@ resource "signalfx_detector" "total_requests" {
   program_text = <<-EOF
 		signal = data('TotalRequests', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}, rollup='sum')${var.total_requests_aggregation_function}.${var.total_requests_transformation_function}(over='${var.total_requests_transformation_window}').publish('signal')
 		detect(when(signal < ${var.total_requests_threshold_critical})).publish('CRIT')
-	EOF
+  EOF
 
   rule {
     description           = "have fallen below critical capacity < ${var.total_requests_threshold_critical}"
@@ -43,7 +43,7 @@ resource "signalfx_detector" "backend_connect_time" {
 		signal = data('BackendConnectTime', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.backend_connect_time_aggregation_function}.${var.backend_connect_time_transformation_function}(over='${var.backend_connect_time_transformation_window}').publish('signal')
 		detect(when(signal > ${var.backend_connect_time_threshold_critical})).publish('CRIT')
 		detect(when(signal > ${var.backend_connect_time_threshold_warning}) and when(signal <= ${var.backend_connect_time_threshold_critical})).publish('WARN')
-	EOF
+  EOF
 
   rule {
     description           = "is too high > ${var.backend_connect_time_threshold_critical}"
@@ -74,9 +74,9 @@ resource "signalfx_detector" "failed_requests" {
 		signal = ((A/B)*100).${var.failed_requests_transformation_function}(over='${var.failed_requests_transformation_window}').publish('signal')
 		ON_Condition_CRIT = conditions.generic_condition(signal, ${var.failed_requests_threshold_critical}, ${var.failed_requests_threshold_critical}, 'above', lasting('${var.failed_requests_aperiodic_duration}', ${var.failed_requests_aperiodic_percentage}), 'observed')
 		ON_Condition_WARN = conditions.generic_condition(signal, ${var.failed_requests_threshold_warning}, ${var.failed_requests_threshold_critical}, 'within_range', lasting('${var.failed_requests_aperiodic_duration}', ${var.failed_requests_aperiodic_percentage}), 'observed', strict_2=False)
-		detect(ON_Condition_CRIT, off=when(signal is None, '${var.failed_requests_clear_duration}')).publish('CRIT')
-		detect(ON_Condition_WARN, off=when(signal is None, '${var.failed_requests_clear_duration}')).publish('WARN')	
-	EOF
+		detect(ON_Condition_CRIT, off=when(signal is None, '${var.failed_requests_clear_duration}') or not ON_Condition_CRIT, mode='split').publish('CRIT')
+		detect(ON_Condition_WARN, off=when(signal is None, '${var.failed_requests_clear_duration}') or not ON_Condition_WARN, mode='split').publish('WARN')
+  EOF
 
   rule {
     description           = "is too high > ${var.failed_requests_threshold_critical}"
@@ -106,7 +106,7 @@ resource "signalfx_detector" "unhealthy_host_ratio" {
 		signal = ((A/(A+B))*100).${var.unhealthy_host_ratio_transformation_function}(over='${var.unhealthy_host_ratio_transformation_window}').publish('signal')
 		detect(when(signal >= ${var.unhealthy_host_ratio_threshold_critical})).publish('CRIT')
 		detect(when(signal >= ${var.unhealthy_host_ratio_threshold_warning}) and when(signal < ${var.unhealthy_host_ratio_threshold_critical})).publish('WARN')
-	EOF
+  EOF
 
   rule {
     description           = "is too high >= ${var.unhealthy_host_ratio_threshold_critical}"
@@ -137,9 +137,9 @@ resource "signalfx_detector" "http_4xx_errors" {
 		signal = ((A/B)*100).${var.http_4xx_errors_transformation_function}(over='${var.http_4xx_errors_transformation_window}').publish('signal')
 		ON_Condition_CRIT = conditions.generic_condition(signal, ${var.http_4xx_errors_threshold_critical}, ${var.http_4xx_errors_threshold_critical}, 'above', lasting('${var.http_4xx_errors_aperiodic_duration}', ${var.http_4xx_errors_aperiodic_percentage}), 'observed')
 		ON_Condition_WARN = conditions.generic_condition(signal, ${var.http_4xx_errors_threshold_warning}, ${var.http_4xx_errors_threshold_critical}, 'within_range', lasting('${var.http_4xx_errors_aperiodic_duration}', ${var.http_4xx_errors_aperiodic_percentage}), 'observed', strict_2=False)
-		detect(ON_Condition_CRIT, off=when(signal is None, '${var.http_4xx_errors_clear_duration}')).publish('CRIT')
-		detect(ON_Condition_WARN, off=when(signal is None, '${var.http_4xx_errors_clear_duration}')).publish('WARN')
-	EOF
+		detect(ON_Condition_CRIT, off=when(signal is None, '${var.http_4xx_errors_clear_duration}') or not ON_Condition_CRIT, mode='split').publish('CRIT')
+		detect(ON_Condition_WARN, off=when(signal is None, '${var.http_4xx_errors_clear_duration}') or not ON_Condition_WARN, mode='split').publish('WARN')
+  EOF
 
   rule {
     description           = "is too high > ${var.http_4xx_errors_threshold_critical}"
@@ -170,9 +170,9 @@ resource "signalfx_detector" "http_5xx_errors" {
 		signal = ((A/B)*100).${var.http_5xx_errors_transformation_function}(over='${var.http_5xx_errors_transformation_window}').publish('signal')
 		ON_Condition_CRIT = conditions.generic_condition(signal, ${var.http_5xx_errors_threshold_critical}, ${var.http_5xx_errors_threshold_critical}, 'above', lasting('${var.http_5xx_errors_aperiodic_duration}', ${var.http_5xx_errors_aperiodic_percentage}), 'observed')
 		ON_Condition_WARN = conditions.generic_condition(signal, ${var.http_5xx_errors_threshold_warning}, ${var.http_5xx_errors_threshold_critical}, 'within_range', lasting('${var.http_5xx_errors_aperiodic_duration}', ${var.http_5xx_errors_aperiodic_percentage}), 'observed', strict_2=False)
-		detect(ON_Condition_CRIT, off=when(signal is None, '${var.http_5xx_errors_clear_duration}')).publish('CRIT')
-		detect(ON_Condition_WARN, off=when(signal is None, '${var.http_5xx_errors_clear_duration}')).publish('WARN')
-	EOF
+		detect(ON_Condition_CRIT, off=when(signal is None, '${var.http_5xx_errors_clear_duration}') or not ON_Condition_CRIT, mode='split').publish('CRIT')
+		detect(ON_Condition_WARN, off=when(signal is None, '${var.http_5xx_errors_clear_duration}') or not ON_Condition_WARN, mode='split').publish('WARN')
+  EOF
 
   rule {
     description           = "is too high > ${var.http_5xx_errors_threshold_critical}"
@@ -203,9 +203,9 @@ resource "signalfx_detector" "backend_http_4xx_errors" {
 		signal = ((A/B)*100).${var.backend_http_4xx_errors_transformation_function}(over='${var.backend_http_4xx_errors_transformation_window}').publish('signal')
 		ON_Condition_CRIT = conditions.generic_condition(signal, ${var.backend_http_4xx_errors_threshold_critical}, ${var.backend_http_4xx_errors_threshold_critical}, 'above', lasting('${var.backend_http_4xx_errors_aperiodic_duration}', ${var.backend_http_4xx_errors_aperiodic_percentage}), 'observed')
 		ON_Condition_WARN = conditions.generic_condition(signal, ${var.backend_http_4xx_errors_threshold_warning}, ${var.backend_http_4xx_errors_threshold_critical}, 'within_range', lasting('${var.backend_http_4xx_errors_aperiodic_duration}', ${var.backend_http_4xx_errors_aperiodic_percentage}), 'observed', strict_2=False)
-		detect(ON_Condition_CRIT, off=when(signal is None, '${var.backend_http_4xx_errors_clear_duration}')).publish('CRIT')
-		detect(ON_Condition_WARN, off=when(signal is None, '${var.backend_http_4xx_errors_clear_duration}')).publish('WARN')
-	EOF
+		detect(ON_Condition_CRIT, off=when(signal is None, '${var.backend_http_4xx_errors_clear_duration}') or not ON_Condition_CRIT, mode='split').publish('CRIT')
+		detect(ON_Condition_WARN, off=when(signal is None, '${var.backend_http_4xx_errors_clear_duration}') or not ON_Condition_WARN, mode='split').publish('WARN')
+  EOF
 
   rule {
     description           = "is too high > ${var.backend_http_4xx_errors_threshold_critical}"
@@ -236,9 +236,9 @@ resource "signalfx_detector" "backend_http_5xx_errors" {
 		signal = ((A/B)*100).${var.backend_http_5xx_errors_transformation_function}(over='${var.backend_http_5xx_errors_transformation_window}').publish('signal')
 		ON_Condition_CRIT = conditions.generic_condition(signal, ${var.backend_http_5xx_errors_threshold_critical}, ${var.backend_http_5xx_errors_threshold_critical}, 'above', lasting('${var.backend_http_5xx_errors_aperiodic_duration}', ${var.backend_http_5xx_errors_aperiodic_percentage}), 'observed')
 		ON_Condition_WARN = conditions.generic_condition(signal, ${var.backend_http_5xx_errors_threshold_warning}, ${var.backend_http_5xx_errors_threshold_critical}, 'within_range', lasting('${var.backend_http_5xx_errors_aperiodic_duration}', ${var.backend_http_5xx_errors_aperiodic_percentage}), 'observed', strict_2=False)
-		detect(ON_Condition_CRIT, off=when(signal is None, '${var.backend_http_5xx_errors_clear_duration}')).publish('CRIT')
-		detect(ON_Condition_WARN, off=when(signal is None, '${var.backend_http_5xx_errors_clear_duration}')).publish('WARN')
-	EOF
+		detect(ON_Condition_CRIT, off=when(signal is None, '${var.backend_http_5xx_errors_clear_duration}') or not ON_Condition_CRIT, mode='split').publish('CRIT')
+		detect(ON_Condition_WARN, off=when(signal is None, '${var.backend_http_5xx_errors_clear_duration}') or not ON_Condition_WARN, mode='split').publish('WARN')
+  EOF
 
   rule {
     description           = "is too high > ${var.backend_http_5xx_errors_threshold_critical}"
