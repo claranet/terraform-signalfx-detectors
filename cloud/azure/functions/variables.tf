@@ -136,6 +136,12 @@ variable "http_5xx_errors_rate_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "http_5xx_errors_rate_clear_duration" {
+  description = "Duration for the http_5xx_errors_rate clear condition"
+  type        = string
+  default     = "15m"
+}
+
 # High_connections_count detectors
 
 variable "high_connections_count_disabled" {
@@ -216,6 +222,12 @@ variable "high_connections_count_aperiodic_percentage" {
   default     = 0.9
 }
 
+variable "high_connections_count_clear_duration" {
+  description = "Duration for the high_connections_count clear condition"
+  type        = string
+  default     = "15m"
+}
+
 # High_threads_count detectors
 
 variable "high_threads_count_disabled" {
@@ -294,4 +306,10 @@ variable "high_threads_count_aperiodic_percentage" {
   description = "Percentage for the high_threads_count block"
   type        = number
   default     = 0.9
+}
+
+variable "high_threads_count_clear_duration" {
+  description = "Duration for the high_threads_count clear condition"
+  type        = string
+  default     = "15m"
 }
