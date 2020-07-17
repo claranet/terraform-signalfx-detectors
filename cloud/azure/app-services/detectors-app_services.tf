@@ -157,7 +157,7 @@ resource "signalfx_detector" "http_success_status_rate" {
 		B = data('Http3xx', filter=base_filter and ${module.filter-tags.filter_custom})${var.http_success_status_rate_aggregation_function}
 		C = data('Requests', filter=base_filter and ${module.filter-tags.filter_custom})${var.http_success_status_rate_aggregation_function}
 		signal = (((A+B)/C)*100).${var.http_success_status_rate_transformation_function}(over='${var.http_success_status_rate_transformation_window}').publish('signal')
-		ON_Condition_CRIT = conditions.generic_condition(signal, ${var.http_success_status_rate_threshold_critical}, ${var.http_success_status_rate_threshold_critical}, 'above', lasting('${var.http_success_status_rate_aperiodic_duration}', ${var.http_success_status_rate_aperiodic_percentage}), 'observed')
+		ON_Condition_CRIT = conditions.generic_condition(signal, ${var.http_success_status_rate_threshold_critical}, ${var.http_success_status_rate_threshold_critical}, 'below', lasting('${var.http_success_status_rate_aperiodic_duration}', ${var.http_success_status_rate_aperiodic_percentage}), 'observed')
 		ON_Condition_WARN = conditions.generic_condition(signal, ${var.http_success_status_rate_threshold_warning}, ${var.http_success_status_rate_threshold_critical}, 'within_range', lasting('${var.http_success_status_rate_aperiodic_duration}', ${var.http_success_status_rate_aperiodic_percentage}), 'observed', strict_2=False)
 		detect(ON_Condition_CRIT, off=when(signal is None, '${var.http_success_status_rate_clear_duration}') or not ON_Condition_CRIT, mode='split').publish('CRIT')
 		detect(ON_Condition_WARN, off=when(signal is None, '${var.http_success_status_rate_clear_duration}') or not ON_Condition_WARN, mode='split').publish('WARN')
