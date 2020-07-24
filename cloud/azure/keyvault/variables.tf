@@ -97,7 +97,7 @@ variable "api_result_notifications_critical" {
 variable "api_result_aggregation_function" {
   description = "Aggregation function and group by for api_result detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
 variable "api_result_transformation_function" {

@@ -23,8 +23,8 @@ resource "signalfx_detector" "api_result" {
 
     program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.KeyVault/vaults') and filter('primary_aggregation_type', 'true')
-        A = data('ServiceApiResult', extrapolation="zero", rollup="sum", filter=base_filter and filter('statuscode', '200') and ${module.filter-tags.filter_custom})${var.api_result_aggregation_function}
-        B = data('ServiceApiResult', extrapolation="zero", rollup="sum", filter=base_filter and ${module.filter-tags.filter_custom})${var.api_result_aggregation_function}
+        A = data('ServiceApiResult', extrapolation="zero", filter=base_filter and filter('statuscode', '200') and ${module.filter-tags.filter_custom})${var.api_result_aggregation_function}
+        B = data('ServiceApiResult', extrapolation="zero", filter=base_filter and ${module.filter-tags.filter_custom})${var.api_result_aggregation_function}
         signal = ((A/B)*100).fill(100).${var.api_result_transformation_function}(over='${var.api_result_transformation_window}')
         detect(when(signal < ${var.api_result_threshold_critical})).publish('CRIT')
         detect(when(signal < ${var.api_result_threshold_warning}) and when(signal >= ${var.api_result_threshold_critical})).publish('WARN')
