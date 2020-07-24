@@ -21,8 +21,8 @@ resource "signalfx_detector" "treatment_limit" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Kong treatment limit"
 
   program_text = <<-EOF
-    A = data('counter.kong.connections.handled', filter=${module.filter-tags.filter_custom})${var.treatment_limit_aggregation_function}
-    B = data('counter.kong.connections.accepted', filter=${module.filter-tags.filter_custom})${var.treatment_limit_aggregation_function}
+    A = data('kong_nginx_http_current_connections', filter=filter('state', 'handled') and ${module.filter-tags.filter_custom})${var.treatment_limit_aggregation_function}
+    B = data('kong_nginx_http_current_connections', filter=filter('state', 'accepted') and ${module.filter-tags.filter_custom})${var.treatment_limit_aggregation_function}
     signal = ((A-B)/A).scale(100).${var.treatment_limit_transformation_function}(over='${var.treatment_limit_transformation_window}').publish('signal')
     detect(when(signal > ${var.treatment_limit_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.treatment_limit_threshold_warning}) and when(signal <= ${var.treatment_limit_threshold_critical})).publish('WARN')
