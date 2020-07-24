@@ -333,7 +333,7 @@ variable "disk_inodes_threshold_warning" {
 variable "disk_running_out_disabled" {
   description = "Disable all alerting rules for disk running out detector"
   type        = bool
-  default     = null
+  default     = true
 }
 
 variable "disk_running_out_maximum_capacity" {
