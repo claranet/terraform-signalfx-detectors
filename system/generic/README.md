@@ -54,7 +54,7 @@ Creates SignalFx detectors with the following checks:
 | disk\_running\_out\_clear\_hours\_remaining | With how many hours left till disk is full can the alert clear | `number` | `96` | no |
 | disk\_running\_out\_clear\_lasting\_time | Time clear condition must be true to clear | `string` | `"30m"` | no |
 | disk\_running\_out\_clear\_lasting\_time\_percent | Percent of clear lasting time the conditon must be true.  Expressed as decimal | `number` | `0.9` | no |
-| disk\_running\_out\_disabled | Disable all alerting rules for disk running out detector | `bool` | n/a | yes |
+| disk\_running\_out\_disabled | Disable all alerting rules for disk running out detector | `bool` | `true` | yes |
 | disk\_running\_out\_fire\_lasting\_time | Time condition must be true to fire | `string` | `"30m"` | no |
 | disk\_running\_out\_fire\_lasting\_time\_percent | Percent of fire lasting time the conditon must be true.  Expressed as decimal | `number` | `0.9` | no |
 | disk\_running\_out\_hours\_till\_full | How manuy hours before disk is projected to be full do you want to be alerted | `number` | `72` | no |
