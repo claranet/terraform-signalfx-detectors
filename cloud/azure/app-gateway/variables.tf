@@ -9,24 +9,24 @@ variable "environment" {
 
 variable "notifications" {
   description = "Notification recipients list for every detectors"
-  type        = list
+  type        = list(string)
 }
 
 variable "prefixes" {
   description = "Prefixes list to prepend between brackets on every monitors names before environment"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
 variable "filter_custom_includes" {
   description = "List of tags to include when custom filtering is used"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
 variable "filter_custom_excludes" {
   description = "List of tags to exclude when custom filtering is used"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
@@ -46,7 +46,7 @@ variable "heartbeat_disabled" {
 
 variable "heartbeat_notifications" {
   description = "Notification recipients list for every alerting rules of heartbeat detector"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
@@ -78,26 +78,26 @@ variable "total_requests_disabled_warning" {
 
 variable "total_requests_notifications" {
   description = "Notification recipients list for every alerting rules of total_requests detector"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
 variable "total_requests_notifications_warning" {
   description = "Notification recipients list for warning alerting rule of total_requests detector"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
 variable "total_requests_notifications_critical" {
   description = "Notification recipients list for critical alerting rule of total_requests detector"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
 variable "total_requests_aggregation_function" {
   description = "Aggregation function and group by for total_requests detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
 variable "total_requests_transformation_function" {
@@ -110,12 +110,6 @@ variable "total_requests_transformation_window" {
   description = "Transformation window for total_requests detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
-}
-
-variable "total_requests_threshold_critical" {
-  description = "Critical threshold for total_requests detector"
-  type        = number
-  default     = 1
 }
 
 # backend_connect_time detectors
@@ -140,26 +134,26 @@ variable "backend_connect_time_disabled_warning" {
 
 variable "backend_connect_time_notifications" {
   description = "Notification recipients list for every alerting rules of backend_connect_time detector"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
 variable "backend_connect_time_notifications_warning" {
   description = "Notification recipients list for warning alerting rule of backend_connect_time detector"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
 variable "backend_connect_time_notifications_critical" {
   description = "Notification recipients list for critical alerting rule of backend_connect_time detector"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
 variable "backend_connect_time_aggregation_function" {
   description = "Aggregation function and group by for backend_connect_time detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region', 'backendhttpsetting', 'backendpool', 'backendserver'])"
+  default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region', 'backendhttpsetting', 'backendpool', 'backendserver'])"
 }
 
 variable "backend_connect_time_transformation_function" {
@@ -208,26 +202,26 @@ variable "failed_requests_disabled_warning" {
 
 variable "failed_requests_notifications" {
   description = "Notification recipients list for every alerting rules of failed_requests detector"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
 variable "failed_requests_notifications_warning" {
   description = "Notification recipients list for warning alerting rule of failed_requests detector"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
 variable "failed_requests_notifications_critical" {
   description = "Notification recipients list for critical alerting rule of failed_requests detector"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
 variable "failed_requests_aggregation_function" {
   description = "Aggregation function and group by for failed_requests detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region', 'backendsettingspool'])"
+  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region', 'backendsettingspool'])"
 }
 
 variable "failed_requests_transformation_function" {
@@ -254,24 +248,6 @@ variable "failed_requests_threshold_warning" {
   default     = 80
 }
 
-variable "failed_requests_aperiodic_duration" {
-  description = "Duration for the failed_requests block"
-  type        = string
-  default     = "10m"
-}
-
-variable "failed_requests_aperiodic_percentage" {
-  description = "Percentage for the failed_requests block"
-  type        = number
-  default     = 0.9
-}
-
-variable "failed_requests_clear_duration" {
-  description = "Duration for the failed_requests clear condition"
-  type        = string
-  default     = "15m"
-}
-
 # Unhealthy_host_ratio detectors
 
 variable "unhealthy_host_ratio_disabled" {
@@ -294,19 +270,19 @@ variable "unhealthy_host_ratio_disabled_warning" {
 
 variable "unhealthy_host_ratio_notifications" {
   description = "Notification recipients list for every alerting rules of unhealthy_host_ratio detector"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
 variable "unhealthy_host_ratio_notifications_warning" {
   description = "Notification recipients list for warning alerting rule of unhealthy_host_ratio detector"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
 variable "unhealthy_host_ratio_notifications_critical" {
   description = "Notification recipients list for critical alerting rule of unhealthy_host_ratio detector"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
@@ -362,19 +338,19 @@ variable "http_4xx_errors_disabled_warning" {
 
 variable "http_4xx_errors_notifications" {
   description = "Notification recipients list for every alerting rules of http_4xx_errors detector"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
 variable "http_4xx_errors_notifications_warning" {
   description = "Notification recipients list for warning alerting rule of http_4xx_errors detector"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
 variable "http_4xx_errors_notifications_critical" {
   description = "Notification recipients list for critical alerting rule of http_4xx_errors detector"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
@@ -408,24 +384,6 @@ variable "http_4xx_errors_threshold_warning" {
   default     = 80
 }
 
-variable "http_4xx_errors_aperiodic_duration" {
-  description = "Duration for the http_4xx_errors block"
-  type        = string
-  default     = "10m"
-}
-
-variable "http_4xx_errors_aperiodic_percentage" {
-  description = "Percentage for the http_4xx_errors block"
-  type        = number
-  default     = 0.9
-}
-
-variable "http_4xx_errors_clear_duration" {
-  description = "Duration for the http_4xx_errors clear condition"
-  type        = string
-  default     = "15m"
-}
-
 # Http_5xx_errors detectors
 
 variable "http_5xx_errors_disabled" {
@@ -448,19 +406,19 @@ variable "http_5xx_errors_disabled_warning" {
 
 variable "http_5xx_errors_notifications" {
   description = "Notification recipients list for every alerting rules of http_5xx_errors detector"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
 variable "http_5xx_errors_notifications_warning" {
   description = "Notification recipients list for warning alerting rule of http_5xx_errors detector"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
 variable "http_5xx_errors_notifications_critical" {
   description = "Notification recipients list for critical alerting rule of http_5xx_errors detector"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
@@ -494,24 +452,6 @@ variable "http_5xx_errors_threshold_warning" {
   default     = 80
 }
 
-variable "http_5xx_errors_aperiodic_duration" {
-  description = "Duration for the http_5xx_errors block"
-  type        = string
-  default     = "10m"
-}
-
-variable "http_5xx_errors_aperiodic_percentage" {
-  description = "Percentage for the http_5xx_errors block"
-  type        = number
-  default     = 0.9
-}
-
-variable "http_5xx_errors_clear_duration" {
-  description = "Duration for the http_5xx_errors clear condition"
-  type        = string
-  default     = "15m"
-}
-
 # Backend_http_4xx_errors detectors
 
 variable "backend_http_4xx_errors_disabled" {
@@ -534,19 +474,19 @@ variable "backend_http_4xx_errors_disabled_warning" {
 
 variable "backend_http_4xx_errors_notifications" {
   description = "Notification recipients list for every alerting rules of backend_http_4xx_errors detector"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
 variable "backend_http_4xx_errors_notifications_warning" {
   description = "Notification recipients list for warning alerting rule of backend_http_4xx_errors detector"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
 variable "backend_http_4xx_errors_notifications_critical" {
   description = "Notification recipients list for critical alerting rule of backend_http_4xx_errors detector"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
@@ -580,24 +520,6 @@ variable "backend_http_4xx_errors_threshold_warning" {
   default     = 80
 }
 
-variable "backend_http_4xx_errors_aperiodic_duration" {
-  description = "Duration for the backend_http_4xx_errors block"
-  type        = string
-  default     = "10m"
-}
-
-variable "backend_http_4xx_errors_aperiodic_percentage" {
-  description = "Percentage for the backend_http_4xx_errors block"
-  type        = number
-  default     = 0.9
-}
-
-variable "backend_http_4xx_errors_clear_duration" {
-  description = "Duration for the backend_http_4xx_errors clear condition"
-  type        = string
-  default     = "15m"
-}
-
 # Backend_http_5xx_errors detectors
 
 variable "backend_http_5xx_errors_disabled" {
@@ -620,19 +542,19 @@ variable "backend_http_5xx_errors_disabled_warning" {
 
 variable "backend_http_5xx_errors_notifications" {
   description = "Notification recipients list for every alerting rules of backend_http_5xx_errors detector"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
 variable "backend_http_5xx_errors_notifications_warning" {
   description = "Notification recipients list for warning alerting rule of backend_http_5xx_errors detector"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
 variable "backend_http_5xx_errors_notifications_critical" {
   description = "Notification recipients list for critical alerting rule of backend_http_5xx_errors detector"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
@@ -664,22 +586,4 @@ variable "backend_http_5xx_errors_threshold_warning" {
   description = "Warning threshold for backend_http_5xx_errors detector"
   type        = number
   default     = 80
-}
-
-variable "backend_http_5xx_errors_aperiodic_duration" {
-  description = "Duration for the backend_http_5xx_errors block"
-  type        = string
-  default     = "10m"
-}
-
-variable "backend_http_5xx_errors_aperiodic_percentage" {
-  description = "Percentage for the backend_http_5xx_errors block"
-  type        = number
-  default     = 0.9
-}
-
-variable "backend_http_5xx_errors_clear_duration" {
-  description = "Duration for the backend_http_5xx_errors clear condition"
-  type        = string
-  default     = "15m"
 }
