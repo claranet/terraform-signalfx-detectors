@@ -61,3 +61,18 @@ jobs:
       if: ${{ always() }}
       run: terraform destroy -input=false -lock=false -auto-approve test
 
+  compliance:
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: sudo apt install pcregrep
+
+    - name: Check unused variables
+      run: ./scripts/unused_variables.sh
+
