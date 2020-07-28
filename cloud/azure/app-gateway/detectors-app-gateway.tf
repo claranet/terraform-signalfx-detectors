@@ -24,7 +24,7 @@ resource "signalfx_detector" "total_requests" {
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true')
         signal = data('TotalRequests', filter=base_filter and ${module.filter-tags.filter_custom})${var.total_requests_aggregation_function}.${var.total_requests_transformation_function}(over='${var.total_requests_transformation_window}').publish('signal')
-        detect(when(signal < 1)).publish('CRIT')
+        detect(when(signal < threshold(1))).publish('CRIT')
     EOF
 
   rule {
@@ -44,8 +44,8 @@ resource "signalfx_detector" "backend_connect_time" {
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true')
         signal = data('BackendConnectTime', filter=base_filter and ${module.filter-tags.filter_custom})${var.backend_connect_time_aggregation_function}.${var.backend_connect_time_transformation_function}(over='${var.backend_connect_time_transformation_window}').publish('signal')
-        detect(when(signal > ${var.backend_connect_time_threshold_critical})).publish('CRIT')
-        detect(when(signal > ${var.backend_connect_time_threshold_warning}) and when(signal <= ${var.backend_connect_time_threshold_critical})).publish('WARN')
+        detect(when(signal > threshold(${var.backend_connect_time_threshold_critical}))).publish('CRIT')
+        detect(when(signal > threshold(${var.backend_connect_time_threshold_warning})) and when(signal <= ${var.backend_connect_time_threshold_critical})).publish('WARN')
     EOF
 
   rule {
@@ -76,8 +76,8 @@ resource "signalfx_detector" "failed_requests" {
         A = data('FailedRequests', extrapolation='zero', filter=base_filter and ${module.filter-tags.filter_custom})${var.failed_requests_aggregation_function}
         B = data('TotalRequests', extrapolation='zero', filter=base_filter and ${module.filter-tags.filter_custom})${var.failed_requests_aggregation_function}
         signal = ((A/B)*100).fill(0).${var.failed_requests_transformation_function}(over='${var.failed_requests_transformation_window}').publish('signal')
-        detect(when(signal > ${var.failed_requests_threshold_critical})).publish('CRIT')
-        detect(when(signal > ${var.failed_requests_threshold_warning}) and when(signal <= ${var.failed_requests_threshold_critical})).publish('WARN')
+        detect(when(signal > threshold(${var.failed_requests_threshold_critical}))).publish('CRIT')
+        detect(when(signal > threshold(${var.failed_requests_threshold_warning})) and when(signal <= ${var.failed_requests_threshold_critical})).publish('WARN')
     EOF
 
   rule {
@@ -107,8 +107,8 @@ resource "signalfx_detector" "unhealthy_host_ratio" {
         A = data('UnhealthyHostCount', filter=base_filter and ${module.filter-tags.filter_custom})${var.unhealthy_host_ratio_aggregation_function}
         B = data('HealthyHostCount', filter=base_filter and ${module.filter-tags.filter_custom})${var.unhealthy_host_ratio_aggregation_function}
         signal = ((A/(A+B))*100).${var.unhealthy_host_ratio_transformation_function}(over='${var.unhealthy_host_ratio_transformation_window}').publish('signal')
-        detect(when(signal >= ${var.unhealthy_host_ratio_threshold_critical})).publish('CRIT')
-        detect(when(signal >= ${var.unhealthy_host_ratio_threshold_warning}) and when(signal < ${var.unhealthy_host_ratio_threshold_critical})).publish('WARN')
+        detect(when(signal >= threshold(${var.unhealthy_host_ratio_threshold_critical}))).publish('CRIT')
+        detect(when(signal >= threshold(${var.unhealthy_host_ratio_threshold_warning})) and when(signal < ${var.unhealthy_host_ratio_threshold_critical})).publish('WARN')
     EOF
 
   rule {
@@ -138,8 +138,8 @@ resource "signalfx_detector" "http_4xx_errors" {
         A = data('ResponseStatus', extrapolation='zero', filter=base_filter and filter('httpstatusgroup', '4xx') and ${module.filter-tags.filter_custom})${var.http_4xx_errors_aggregation_function}
         B = data('ResponseStatus', extrapolation='zero', filter=base_filter and ${module.filter-tags.filter_custom})${var.http_4xx_errors_aggregation_function}
         signal = ((A/B)*100).fill(0).${var.http_4xx_errors_transformation_function}(over='${var.http_4xx_errors_transformation_window}').publish('signal')
-        detect(when(signal > ${var.http_4xx_errors_threshold_critical})).publish('CRIT')
-        detect(when(signal > ${var.http_4xx_errors_threshold_warning}) and when(signal <= ${var.http_4xx_errors_threshold_critical})).publish('WARN')
+        detect(when(signal > threshold(${var.http_4xx_errors_threshold_critical}))).publish('CRIT')
+        detect(when(signal > threshold(${var.http_4xx_errors_threshold_warning})) and when(signal <= ${var.http_4xx_errors_threshold_critical})).publish('WARN')
     EOF
 
   rule {
@@ -169,8 +169,8 @@ resource "signalfx_detector" "http_5xx_errors" {
         A = data('ResponseStatus', extrapolation='zero', filter=base_filter and filter('httpstatusgroup', '5xx') and ${module.filter-tags.filter_custom})${var.http_5xx_errors_aggregation_function}
         B = data('ResponseStatus', extrapolation='zero', filter=base_filter and ${module.filter-tags.filter_custom})${var.http_5xx_errors_aggregation_function}
         signal = ((A/B)*100).fill(0).${var.http_5xx_errors_transformation_function}(over='${var.http_5xx_errors_transformation_window}').publish('signal')
-        detect(when(signal > ${var.http_5xx_errors_threshold_critical})).publish('CRIT')
-        detect(when(signal > ${var.http_5xx_errors_threshold_warning}) and when(signal <= ${var.http_5xx_errors_threshold_critical})).publish('WARN')
+        detect(when(signal > threshold(${var.http_5xx_errors_threshold_critical}))).publish('CRIT')
+        detect(when(signal > threshold(${var.http_5xx_errors_threshold_warning})) and when(signal <= ${var.http_5xx_errors_threshold_critical})).publish('WARN')
     EOF
 
   rule {
@@ -200,8 +200,8 @@ resource "signalfx_detector" "backend_http_4xx_errors" {
         A = data('BackendResponseStatus', extrapolation='zero', filter=base_filter and filter('httpstatusgroup', '4xx') and ${module.filter-tags.filter_custom})${var.backend_http_4xx_errors_aggregation_function}
         B = data('BackendResponseStatus', extrapolation='zero', filter=base_filter and ${module.filter-tags.filter_custom})${var.backend_http_4xx_errors_aggregation_function}
         signal = ((A/B)*100).fill(0).${var.backend_http_4xx_errors_transformation_function}(over='${var.backend_http_4xx_errors_transformation_window}').publish('signal')
-        detect(when(signal > ${var.backend_http_4xx_errors_threshold_critical})).publish('CRIT')
-        detect(when(signal > ${var.backend_http_4xx_errors_threshold_warning}) and when(signal <= ${var.backend_http_4xx_errors_threshold_critical})).publish('WARN')
+        detect(when(signal > threshold(${var.backend_http_4xx_errors_threshold_critical}))).publish('CRIT')
+        detect(when(signal > threshold(${var.backend_http_4xx_errors_threshold_warning})) and when(signal <= ${var.backend_http_4xx_errors_threshold_critical})).publish('WARN')
     EOF
 
   rule {
@@ -231,8 +231,8 @@ resource "signalfx_detector" "backend_http_5xx_errors" {
         A = data('BackendResponseStatus', extrapolation='zero', filter=base_filter and filter('httpstatusgroup', '5xx') and ${module.filter-tags.filter_custom})${var.backend_http_5xx_errors_aggregation_function}
         B = data('BackendResponseStatus', extrapolation='zero', filter=base_filter and ${module.filter-tags.filter_custom})${var.backend_http_5xx_errors_aggregation_function}
         signal = ((A/B)*100).fill(0).${var.backend_http_5xx_errors_transformation_function}(over='${var.backend_http_5xx_errors_transformation_window}').publish('signal')
-        detect(when(signal > ${var.backend_http_5xx_errors_threshold_critical})).publish('CRIT')
-        detect(when(signal > ${var.backend_http_5xx_errors_threshold_warning}) and when(signal <= ${var.backend_http_5xx_errors_threshold_critical})).publish('WARN')
+        detect(when(signal > threshold(${var.backend_http_5xx_errors_threshold_critical}))).publish('CRIT')
+        detect(when(signal > threshold(${var.backend_http_5xx_errors_threshold_warning})) and when(signal <= ${var.backend_http_5xx_errors_threshold_critical})).publish('WARN')
     EOF
 
   rule {
