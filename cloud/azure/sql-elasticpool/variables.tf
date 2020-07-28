@@ -9,24 +9,24 @@ variable "environment" {
 
 variable "notifications" {
   description = "Notification recipients list for every detectors"
-  type        = list
+  type        = list(string)
 }
 
 variable "prefixes" {
   description = "Prefixes list to prepend between brackets on every monitors names before environment"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
 variable "filter_custom_includes" {
   description = "List of tags to include when custom filtering is used"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
 variable "filter_custom_excludes" {
   description = "List of tags to exclude when custom filtering is used"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
@@ -46,7 +46,7 @@ variable "heartbeat_disabled" {
 
 variable "heartbeat_notifications" {
   description = "Notification recipients list for every alerting rules of heartbeat detector"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
@@ -78,19 +78,19 @@ variable "cpu_disabled_warning" {
 
 variable "cpu_notifications" {
   description = "Notification recipients list for every alerting rules of cpu detector"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
 variable "cpu_notifications_warning" {
   description = "Notification recipients list for warning alerting rule of cpu detector"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
 variable "cpu_notifications_critical" {
   description = "Notification recipients list for critical alerting rule of cpu detector"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
@@ -100,14 +100,8 @@ variable "cpu_aggregation_function" {
   default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
-variable "cpu_transformation_function" {
-  description = "Transformation function for cpu detector (mean, min, max)"
-  type        = string
-  default     = "min"
-}
-
-variable "cpu_transformation_window" {
-  description = "Transformation window for cpu detector (i.e. 5m, 20m, 1h, 1d)"
+variable "cpu_timer" {
+  description = "Evaluation window for cpu detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "15m"
 }
@@ -146,19 +140,19 @@ variable "free_space_disabled_warning" {
 
 variable "free_space_notifications" {
   description = "Notification recipients list for every alerting rules of free_space detector"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
 variable "free_space_notifications_warning" {
   description = "Notification recipients list for warning alerting rule of free_space detector"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
 variable "free_space_notifications_critical" {
   description = "Notification recipients list for critical alerting rule of free_space detector"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
@@ -168,14 +162,8 @@ variable "free_space_aggregation_function" {
   default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
-variable "free_space_transformation_function" {
-  description = "Transformation function for free_space detector (mean, min, max)"
-  type        = string
-  default     = "max"
-}
-
-variable "free_space_transformation_window" {
-  description = "Transformation window for free_space detector (i.e. 5m, 20m, 1h, 1d)"
+variable "free_space_timer" {
+  description = "Evaluation window for free_space detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "15m"
 }
@@ -214,19 +202,19 @@ variable "dtu_consumption_disabled_warning" {
 
 variable "dtu_consumption_notifications" {
   description = "Notification recipients list for every alerting rules of dtu_consumption detector"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
 variable "dtu_consumption_notifications_warning" {
   description = "Notification recipients list for warning alerting rule of dtu_consumption detector"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
 variable "dtu_consumption_notifications_critical" {
   description = "Notification recipients list for critical alerting rule of dtu_consumption detector"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
@@ -236,14 +224,8 @@ variable "dtu_consumption_aggregation_function" {
   default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
-variable "dtu_consumption_transformation_function" {
-  description = "Transformation function for dtu_consumption detector (mean, min, max)"
-  type        = string
-  default     = "mean"
-}
-
-variable "dtu_consumption_transformation_window" {
-  description = "Transformation window for dtu_consumption detector (i.e. 5m, 20m, 1h, 1d)"
+variable "dtu_consumption_timer" {
+  description = "Evaluation window for dtu_consumption detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "15m"
 }
