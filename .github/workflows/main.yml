@@ -61,3 +61,21 @@ jobs:
       if: ${{ always() }}
       run: terraform destroy -input=false -lock=false -auto-approve test
 
+  compliance:
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: sudo apt install expect
+
+    - name: Install tflint
+      run: curl -sL "https://github.com$(curl -s https://github.com/terraform-linters/tflint/releases | grep -m 1 linux_amd64 | cut -d '"' -f 2)" | zcat | sudo tee /usr/local/bin/tflint > /dev/null && sudo chmod +x /usr/local/bin/tflint
+
+    - name: Run tflint
+      run: ./scripts/tflint.sh
+

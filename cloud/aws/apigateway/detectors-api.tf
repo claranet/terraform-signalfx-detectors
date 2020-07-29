@@ -87,7 +87,7 @@ resource "signalfx_detector" "http_4xx_errors" {
   program_text = <<-EOF
 		A = data('4XXError', filter=filter('namespace', 'AWS/ApiGateway') and filter('stat', 'sum') and (not filter('Stage', '*'))and (not filter('Method', '*'))and (not filter('Resource', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero')${var.http_4xx_errors_aggregation_function}
 		B = data('Count', filter=filter('namespace', 'AWS/ApiGateway') and filter('stat', 'sum') and ${module.filter-tags.filter_custom}, extrapolation='zero')${var.http_4xx_errors_aggregation_function}
-		signal = (A/B).scale(100).${var.http_5xx_errors_transformation_function}(over='${var.http_5xx_errors_transformation_window}').publish('signal')
+		signal = (A/B).scale(100).${var.http_4xx_errors_transformation_function}(over='${var.http_4xx_errors_transformation_window}').publish('signal')
 		detect(when(signal > ${var.http_4xx_errors_threshold_critical}) and when(B > ${var.http_4xx_errors_threshold_number_requests})).publish('CRIT')
 		detect(when(signal > ${var.http_4xx_errors_threshold_warning}) and when(B > ${var.http_4xx_errors_threshold_number_requests}) and when(signal <= ${var.http_4xx_errors_threshold_critical})).publish('WARN')
 EOF
