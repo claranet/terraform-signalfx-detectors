@@ -135,13 +135,13 @@ resource "signalfx_detector" "disk_running_out" {
   program_text = <<-EOF
 		from signalfx.detectors.countdown import countdown
 		signal = data('disk.utilization', filter=${module.filter-tags.filter_custom}).publish('signal')
-		countdown.hours_left_stream_incr_detector(stream=signal, maximum_capacity=${var.disk_running_out_maximum_capacity}, lower_threshold=${var.disk_running_out_hours_till_full}, fire_lasting=lasting('${var.disk_running_out_fire_lasting_time}', ${var.disk_running_out_fire_lasting_time_percent}), clear_threshold=${var.disk_running_out_clear_hours_remaining}, clear_lasting=lasting('${var.disk_running_out_clear_lasting_time}', ${var.disk_running_out_clear_lasting_time_percent}), use_double_ewma=${var.disk_running_out_use_ewma}).publish('CRIT')
+		countdown.hours_left_stream_incr_detector(stream=signal, maximum_capacity=${var.disk_running_out_maximum_capacity}, lower_threshold=${var.disk_running_out_hours_till_full}, fire_lasting=lasting('${var.disk_running_out_fire_lasting_time}', ${var.disk_running_out_fire_lasting_time_percent}), clear_threshold=${var.disk_running_out_clear_hours_remaining}, clear_lasting=lasting('${var.disk_running_out_clear_lasting_time}', ${var.disk_running_out_clear_lasting_time_percent}), use_double_ewma=${var.disk_running_out_use_ewma}).publish('WARN')
 EOF
 
   rule {
     description           = "in ${var.disk_running_out_hours_till_full}"
-    severity              = "Critical"
-    detect_label          = "CRIT"
+    severity              = "Warning"
+    detect_label          = "WARN"
     disabled              = coalesce(var.disk_running_out_disabled, var.detectors_disabled)
     notifications         = coalescelist(var.disk_running_out_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} on {{{dimensions}}}"
