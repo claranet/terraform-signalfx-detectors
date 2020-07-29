@@ -71,8 +71,11 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Install dependencies
-      run: sudo apt install pcregrep
+      run: sudo apt install expect
 
-    - name: Check unused variables
-      run: ./scripts/unused_variables.sh
+    - name: Install tflint
+      run: curl -sL "https://github.com$(curl -s https://github.com/terraform-linters/tflint/releases | grep -m 1 linux_amd64 | cut -d '"' -f 2)" | zcat | sudo tee /usr/local/bin/tflint > /dev/null && sudo chmod +x /usr/local/bin/tflint
+
+    - name: Run tflint
+      run: ./scripts/tflint.sh
 
