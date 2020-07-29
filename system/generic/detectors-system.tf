@@ -120,11 +120,11 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.disk_space_threshold_warning}"
+    description           = "is too high > ${var.disk_inodes_threshold_warning}"
     severity              = "Warning"
     detect_label          = "WARN"
-    disabled              = coalesce(var.disk_space_disabled_warning, var.disk_space_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.disk_space_notifications_warning, var.disk_space_notifications, var.notifications)
+    disabled              = coalesce(var.disk_inodes_disabled_warning, var.disk_inodes_disabled, var.detectors_disabled)
+    notifications         = coalescelist(var.disk_inodes_notifications_warning, var.disk_inodes_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }

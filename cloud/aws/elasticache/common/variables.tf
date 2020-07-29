@@ -138,20 +138,8 @@ variable "max_connection_disabled_critical" {
   default     = null
 }
 
-variable "max_connection_disabled_warning" {
-  description = "Disable warning alerting rule for max_connection detector"
-  type        = bool
-  default     = null
-}
-
 variable "max_connection_notifications" {
   description = "Notification recipients list for every alerting rules of max_connection detector"
-  type        = list
-  default     = []
-}
-
-variable "max_connection_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of max_connection detector"
   type        = list
   default     = []
 }
@@ -186,12 +174,6 @@ variable "max_connection_threshold_critical" {
   default     = 64999
 }
 
-variable "max_connection_threshold_warning" {
-  description = "Warning threshold for max_connection detector"
-  type        = number
-  default     = 50000
-}
-
 # No_connection detectors
 
 variable "no_connection_disabled" {
@@ -206,20 +188,8 @@ variable "no_connection_disabled_critical" {
   default     = null
 }
 
-variable "no_connection_disabled_warning" {
-  description = "Disable warning alerting rule for no_connection detector"
-  type        = bool
-  default     = null
-}
-
 variable "no_connection_notifications" {
   description = "Notification recipients list for every alerting rules of no_connection detector"
-  type        = list
-  default     = []
-}
-
-variable "no_connection_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of no_connection detector"
   type        = list
   default     = []
 }
@@ -250,12 +220,6 @@ variable "no_connection_transformation_window" {
 
 variable "no_connection_threshold_critical" {
   description = "Critical threshold for no_connection detector"
-  type        = number
-  default     = 0
-}
-
-variable "no_connection_threshold_warning" {
-  description = "Warning threshold for no_connection detector"
   type        = number
   default     = 0
 }
