@@ -2,12 +2,12 @@ resource "signalfx_detector" "get_hits" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ElastiCache memcached hit ratio"
 
   program_text = <<-EOF
-		from signalfx.detectors.aperiodic import aperiodic
-		A = data('GetHits', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.get_hits_aggregation_function}
-		B = data('GetMisses', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.get_hits_aggregation_function}
-		signal = (A/(A+B)).scale(100).${var.get_hits_transformation_function}(over='${var.get_hits_transformation_window}').publish('signal')
-		aperiodic.above_or_below_detector(signal, ${var.get_hits_threshold_critical}, 'below', lasting('${var.get_hits_aperiodic_duration}', ${var.get_hits_aperiodic_percentage})).publish('CRIT')
-		aperiodic.range_detector(signal, ${var.get_hits_threshold_warning}, ${var.get_hits_threshold_critical}, 'within_range', lasting('${var.get_hits_aperiodic_duration}', ${var.get_hits_aperiodic_percentage}), upper_strict=False).publish('WARN')
+    from signalfx.detectors.aperiodic import aperiodic
+    A = data('GetHits', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.get_hits_aggregation_function}
+    B = data('GetMisses', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.get_hits_aggregation_function}
+    signal = (A/(A+B)).scale(100).${var.get_hits_transformation_function}(over='${var.get_hits_transformation_window}').publish('signal')
+    aperiodic.above_or_below_detector(signal, ${var.get_hits_threshold_critical}, 'below', lasting('${var.get_hits_aperiodic_duration}', ${var.get_hits_aperiodic_percentage})).publish('CRIT')
+    aperiodic.range_detector(signal, ${var.get_hits_threshold_warning}, ${var.get_hits_threshold_critical}, 'within_range', lasting('${var.get_hits_aperiodic_duration}', ${var.get_hits_aperiodic_percentage}), upper_strict=False).publish('WARN')
 EOF
 
   rule {
@@ -34,9 +34,9 @@ resource "signalfx_detector" "cpu_high" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ElastiCache memcached CPU"
 
   program_text = <<-EOF
-		signal = data('CPUUtilization', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.cpu_high_aggregation_function}.${var.cpu_high_transformation_function}(over='${var.cpu_high_transformation_window}').publish('signal')
-		detect(when(signal > ${var.cpu_high_threshold_critical})).publish('CRIT')
-		detect(when(signal > ${var.cpu_high_threshold_warning}) and when(signal <= ${var.cpu_high_threshold_critical})).publish('WARN')
+    signal = data('CPUUtilization', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.cpu_high_aggregation_function}.${var.cpu_high_transformation_function}(over='${var.cpu_high_transformation_window}').publish('signal')
+    detect(when(signal > ${var.cpu_high_threshold_critical})).publish('CRIT')
+    detect(when(signal > ${var.cpu_high_threshold_warning}) and when(signal <= ${var.cpu_high_threshold_critical})).publish('WARN')
 EOF
 
   rule {
