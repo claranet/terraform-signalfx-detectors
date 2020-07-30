@@ -2,9 +2,9 @@ resource "signalfx_detector" "heartbeat" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS NLB heartbeat"
 
   program_text = <<-EOF
-		from signalfx.detectors.not_reporting import not_reporting
-		signal = data('ConsumedLCUs', filter=filter('stat', 'mean') and filter('namespace', 'AWS/NetworkELB') and (not filter('aws_state', '{Code: 32,Name: shutting-down', '{Code: 48,Name: terminated}', '{Code: 62,Name: stopping}', '{Code: 80,Name: stopped}')) and ${module.filter-tags.filter_custom}).publish('signal')
-		not_reporting.detector(stream=signal, resource_identifier=['LoadBalancer'], duration='${var.heartbeat_timeframe}').publish('CRIT')
+    from signalfx.detectors.not_reporting import not_reporting
+    signal = data('ConsumedLCUs', filter=filter('stat', 'mean') and filter('namespace', 'AWS/NetworkELB') and (not filter('aws_state', '{Code: 32,Name: shutting-down', '{Code: 48,Name: terminated}', '{Code: 62,Name: stopping}', '{Code: 80,Name: stopped}')) and ${module.filter-tags.filter_custom}).publish('signal')
+    not_reporting.detector(stream=signal, resource_identifier=['LoadBalancer'], duration='${var.heartbeat_timeframe}').publish('CRIT')
 EOF
 
   rule {
@@ -21,11 +21,11 @@ resource "signalfx_detector" "no_healthy_instances" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS NLB healthy instances percentage"
 
   program_text = <<-EOF
-		A = data('HealthyHostCount', filter=filter('namespace', 'AWS/NetworkELB') and filter('stat', 'lower') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom})${var.no_healthy_instances_aggregation_function}
-		B = data('UnHealthyHostCount', filter=filter('namespace', 'AWS/NetworkELB') and filter('stat', 'upper') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom})${var.no_healthy_instances_aggregation_function}
-		signal = (A / (A+B)).scale(100).${var.no_healthy_instances_transformation_function}(over='${var.no_healthy_instances_transformation_window}').publish('signal')
-		detect(when(signal < ${var.no_healthy_instances_threshold_critical})).publish('CRIT')
-		detect(when(signal < ${var.no_healthy_instances_threshold_warning}) and when(signal >= ${var.no_healthy_instances_threshold_critical})).publish('WARN')
+    A = data('HealthyHostCount', filter=filter('namespace', 'AWS/NetworkELB') and filter('stat', 'lower') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom})${var.no_healthy_instances_aggregation_function}
+    B = data('UnHealthyHostCount', filter=filter('namespace', 'AWS/NetworkELB') and filter('stat', 'upper') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom})${var.no_healthy_instances_aggregation_function}
+    signal = (A / (A+B)).scale(100).${var.no_healthy_instances_transformation_function}(over='${var.no_healthy_instances_transformation_window}').publish('signal')
+    detect(when(signal < ${var.no_healthy_instances_threshold_critical})).publish('CRIT')
+    detect(when(signal < ${var.no_healthy_instances_threshold_warning}) and when(signal >= ${var.no_healthy_instances_threshold_critical})).publish('WARN')
 EOF
 
   rule {
