@@ -3,44 +3,44 @@ output "heartbeat_id" {
   value       = signalfx_detector.heartbeat.*.id
 }
 
-output "blobservices_requests_error_id" {
-  description = "id for detector blobservices_requests_error"
-  value       = signalfx_detector.blobservices_requests_error.*.id
+output "blob_requests_error_id" {
+  description = "id for detector blob_requests_error"
+  value       = signalfx_detector.blob_requests_error.*.id
 }
 
-output "fileservices_requests_error_id" {
-  description = "id for detector fileservices_requests_error"
-  value       = signalfx_detector.fileservices_requests_error.*.id
+output "file_requests_error_id" {
+  description = "id for detector file_requests_error"
+  value       = signalfx_detector.file_requests_error.*.id
 }
 
-output "queueservices_requests_error_id" {
-  description = "id for detector queueservices_requests_error"
-  value       = signalfx_detector.queueservices_requests_error.*.id
+output "queue_requests_error_id" {
+  description = "id for detector queue_requests_error"
+  value       = signalfx_detector.queue_requests_error.*.id
 }
 
-output "tableservices_requests_error_id" {
-  description = "id for detector tableservices_requests_error"
-  value       = signalfx_detector.tableservices_requests_error.*.id
+output "table_requests_error_id" {
+  description = "id for detector table_requests_error"
+  value       = signalfx_detector.table_requests_error.*.id
 }
 
-output "blobservices_latency_id" {
-  description = "id for detector blobservices_latency"
-  value       = signalfx_detector.blobservices_latency.*.id
+output "blob_latency_id" {
+  description = "id for detector blob_latency"
+  value       = signalfx_detector.blob_latency.*.id
 }
 
-output "fileservices_latency_id" {
-  description = "id for detector fileservices_latency"
-  value       = signalfx_detector.fileservices_latency.*.id
+output "file_latency_id" {
+  description = "id for detector file_latency"
+  value       = signalfx_detector.file_latency.*.id
 }
 
-output "queueservices_latency_id" {
-  description = "id for detector queueservices_latency"
-  value       = signalfx_detector.queueservices_latency.*.id
+output "queue_latency_id" {
+  description = "id for detector queue_latency"
+  value       = signalfx_detector.queue_latency.*.id
 }
 
-output "tableservices_latency_id" {
-  description = "id for detector tableservices_latency"
-  value       = signalfx_detector.tableservices_latency.*.id
+output "table_latency_id" {
+  description = "id for detector table_latency"
+  value       = signalfx_detector.table_latency.*.id
 }
 
 output "blob_timeout_error_requests_id" {

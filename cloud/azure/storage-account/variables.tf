@@ -56,498 +56,498 @@ variable "heartbeat_timeframe" {
   default     = "1h"
 }
 
-# Blobservices_requests_error detectors
+# blob_requests_error detectors
 
-variable "blobservices_requests_error_disabled" {
-  description = "Disable all alerting rules for blobservices_requests_error detector"
+variable "blob_requests_error_disabled" {
+  description = "Disable all alerting rules for blob_requests_error detector"
   type        = bool
   default     = null
 }
 
-variable "blobservices_requests_error_disabled_critical" {
-  description = "Disable critical alerting rule for blobservices_requests_error detector"
+variable "blob_requests_error_disabled_critical" {
+  description = "Disable critical alerting rule for blob_requests_error detector"
   type        = bool
   default     = null
 }
 
-variable "blobservices_requests_error_disabled_warning" {
-  description = "Disable warning alerting rule for blobservices_requests_error detector"
+variable "blob_requests_error_disabled_warning" {
+  description = "Disable warning alerting rule for blob_requests_error detector"
   type        = bool
   default     = null
 }
 
-variable "blobservices_requests_error_notifications" {
-  description = "Notification recipients list for every alerting rules of blobservices_requests_error detector"
+variable "blob_requests_error_notifications" {
+  description = "Notification recipients list for every alerting rules of blob_requests_error detector"
   type        = list(string)
   default     = []
 }
 
-variable "blobservices_requests_error_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of blobservices_requests_error detector"
+variable "blob_requests_error_notifications_warning" {
+  description = "Notification recipients list for warning alerting rule of blob_requests_error detector"
   type        = list(string)
   default     = []
 }
 
-variable "blobservices_requests_error_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of blobservices_requests_error detector"
+variable "blob_requests_error_notifications_critical" {
+  description = "Notification recipients list for critical alerting rule of blob_requests_error detector"
   type        = list(string)
   default     = []
 }
 
-variable "blobservices_requests_error_aggregation_function" {
-  description = "Aggregation function and group by for blobservices_requests_error detector (i.e. \".mean(by=['host'])\")"
+variable "blob_requests_error_aggregation_function" {
+  description = "Aggregation function and group by for blob_requests_error detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ".sum(by=['azure_resource_id', 'azure_resource_group_name'])"
 }
 
-variable "blobservices_requests_error_timer" {
-  description = "Evaluation window for blobservices_requests_error detector (i.e. 5m, 20m, 1h, 1d)"
+variable "blob_requests_error_timer" {
+  description = "Evaluation window for blob_requests_error detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
 }
 
-variable "blobservices_requests_error_threshold_critical" {
-  description = "Critical threshold for blobservices_requests_error detector"
+variable "blob_requests_error_threshold_critical" {
+  description = "Critical threshold for blob_requests_error detector"
   type        = number
   default     = 90
 }
 
-variable "blobservices_requests_error_threshold_warning" {
-  description = "Warning threshold for blobservices_requests_error detector"
+variable "blob_requests_error_threshold_warning" {
+  description = "Warning threshold for blob_requests_error detector"
   type        = number
   default     = 70
 }
 
-# Fileservices_requests_error detectors
+# file_requests_error detectors
 
-variable "fileservices_requests_error_disabled" {
-  description = "Disable all alerting rules for fileservices_requests_error detector"
+variable "file_requests_error_disabled" {
+  description = "Disable all alerting rules for file_requests_error detector"
   type        = bool
   default     = null
 }
 
-variable "fileservices_requests_error_disabled_critical" {
-  description = "Disable critical alerting rule for fileservices_requests_error detector"
+variable "file_requests_error_disabled_critical" {
+  description = "Disable critical alerting rule for file_requests_error detector"
   type        = bool
   default     = null
 }
 
-variable "fileservices_requests_error_disabled_warning" {
-  description = "Disable warning alerting rule for fileservices_requests_error detector"
+variable "file_requests_error_disabled_warning" {
+  description = "Disable warning alerting rule for file_requests_error detector"
   type        = bool
   default     = null
 }
 
-variable "fileservices_requests_error_notifications" {
-  description = "Notification recipients list for every alerting rules of fileservices_requests_error detector"
+variable "file_requests_error_notifications" {
+  description = "Notification recipients list for every alerting rules of file_requests_error detector"
   type        = list(string)
   default     = []
 }
 
-variable "fileservices_requests_error_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of fileservices_requests_error detector"
+variable "file_requests_error_notifications_warning" {
+  description = "Notification recipients list for warning alerting rule of file_requests_error detector"
   type        = list(string)
   default     = []
 }
 
-variable "fileservices_requests_error_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of fileservices_requests_error detector"
+variable "file_requests_error_notifications_critical" {
+  description = "Notification recipients list for critical alerting rule of file_requests_error detector"
   type        = list(string)
   default     = []
 }
 
-variable "fileservices_requests_error_aggregation_function" {
-  description = "Aggregation function and group by for fileservices_requests_error detector (i.e. \".mean(by=['host'])\")"
+variable "file_requests_error_aggregation_function" {
+  description = "Aggregation function and group by for file_requests_error detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ".sum(by=['azure_resource_id', 'azure_resource_group_name'])"
 }
 
-variable "fileservices_requests_error_timer" {
-  description = "Evaluation window for fileservices_requests_error detector (i.e. 5m, 20m, 1h, 1d)"
+variable "file_requests_error_timer" {
+  description = "Evaluation window for file_requests_error detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
 }
 
-variable "fileservices_requests_error_threshold_critical" {
-  description = "Critical threshold for fileservices_requests_error detector"
+variable "file_requests_error_threshold_critical" {
+  description = "Critical threshold for file_requests_error detector"
   type        = number
   default     = 90
 }
 
-variable "fileservices_requests_error_threshold_warning" {
-  description = "Warning threshold for fileservices_requests_error detector"
+variable "file_requests_error_threshold_warning" {
+  description = "Warning threshold for file_requests_error detector"
   type        = number
   default     = 70
 }
 
-# Queueservices_requests_error detectors
+# queue_requests_error detectors
 
-variable "queueservices_requests_error_disabled" {
-  description = "Disable all alerting rules for queueservices_requests_error detector"
+variable "queue_requests_error_disabled" {
+  description = "Disable all alerting rules for queue_requests_error detector"
   type        = bool
   default     = null
 }
 
-variable "queueservices_requests_error_disabled_critical" {
-  description = "Disable critical alerting rule for queueservices_requests_error detector"
+variable "queue_requests_error_disabled_critical" {
+  description = "Disable critical alerting rule for queue_requests_error detector"
   type        = bool
   default     = null
 }
 
-variable "queueservices_requests_error_disabled_warning" {
-  description = "Disable warning alerting rule for queueservices_requests_error detector"
+variable "queue_requests_error_disabled_warning" {
+  description = "Disable warning alerting rule for queue_requests_error detector"
   type        = bool
   default     = null
 }
 
-variable "queueservices_requests_error_notifications" {
-  description = "Notification recipients list for every alerting rules of queueservices_requests_error detector"
+variable "queue_requests_error_notifications" {
+  description = "Notification recipients list for every alerting rules of queue_requests_error detector"
   type        = list(string)
   default     = []
 }
 
-variable "queueservices_requests_error_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of queueservices_requests_error detector"
+variable "queue_requests_error_notifications_warning" {
+  description = "Notification recipients list for warning alerting rule of queue_requests_error detector"
   type        = list(string)
   default     = []
 }
 
-variable "queueservices_requests_error_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of queueservices_requests_error detector"
+variable "queue_requests_error_notifications_critical" {
+  description = "Notification recipients list for critical alerting rule of queue_requests_error detector"
   type        = list(string)
   default     = []
 }
 
-variable "queueservices_requests_error_aggregation_function" {
-  description = "Aggregation function and group by for queueservices_requests_error detector (i.e. \".mean(by=['host'])\")"
+variable "queue_requests_error_aggregation_function" {
+  description = "Aggregation function and group by for queue_requests_error detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ".sum(by=['azure_resource_id', 'azure_resource_group_name'])"
 }
 
-variable "queueservices_requests_error_timer" {
-  description = "Evaluation window for queueservices_requests_error detector (i.e. 5m, 20m, 1h, 1d)"
+variable "queue_requests_error_timer" {
+  description = "Evaluation window for queue_requests_error detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
 }
 
-variable "queueservices_requests_error_threshold_critical" {
-  description = "Critical threshold for queueservices_requests_error detector"
+variable "queue_requests_error_threshold_critical" {
+  description = "Critical threshold for queue_requests_error detector"
   type        = number
   default     = 90
 }
 
-variable "queueservices_requests_error_threshold_warning" {
-  description = "Warning threshold for queueservices_requests_error detector"
+variable "queue_requests_error_threshold_warning" {
+  description = "Warning threshold for queue_requests_error detector"
   type        = number
   default     = 70
 }
 
-# Tableservices_requests_error detectors
+# table_requests_error detectors
 
-variable "tableservices_requests_error_disabled" {
-  description = "Disable all alerting rules for tableservices_requests_error detector"
+variable "table_requests_error_disabled" {
+  description = "Disable all alerting rules for table_requests_error detector"
   type        = bool
   default     = null
 }
 
-variable "tableservices_requests_error_disabled_critical" {
-  description = "Disable critical alerting rule for tableservices_requests_error detector"
+variable "table_requests_error_disabled_critical" {
+  description = "Disable critical alerting rule for table_requests_error detector"
   type        = bool
   default     = null
 }
 
-variable "tableservices_requests_error_disabled_warning" {
-  description = "Disable warning alerting rule for tableservices_requests_error detector"
+variable "table_requests_error_disabled_warning" {
+  description = "Disable warning alerting rule for table_requests_error detector"
   type        = bool
   default     = null
 }
 
-variable "tableservices_requests_error_notifications" {
-  description = "Notification recipients list for every alerting rules of tableservices_requests_error detector"
+variable "table_requests_error_notifications" {
+  description = "Notification recipients list for every alerting rules of table_requests_error detector"
   type        = list(string)
   default     = []
 }
 
-variable "tableservices_requests_error_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of tableservices_requests_error detector"
+variable "table_requests_error_notifications_warning" {
+  description = "Notification recipients list for warning alerting rule of table_requests_error detector"
   type        = list(string)
   default     = []
 }
 
-variable "tableservices_requests_error_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of tableservices_requests_error detector"
+variable "table_requests_error_notifications_critical" {
+  description = "Notification recipients list for critical alerting rule of table_requests_error detector"
   type        = list(string)
   default     = []
 }
 
-variable "tableservices_requests_error_aggregation_function" {
-  description = "Aggregation function and group by for tableservices_requests_error detector (i.e. \".mean(by=['host'])\")"
+variable "table_requests_error_aggregation_function" {
+  description = "Aggregation function and group by for table_requests_error detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ".sum(by=['azure_resource_id', 'azure_resource_group_name'])"
 }
 
-variable "tableservices_requests_error_timer" {
-  description = "Evaluation window for tableservices_requests_error detector (i.e. 5m, 20m, 1h, 1d)"
+variable "table_requests_error_timer" {
+  description = "Evaluation window for table_requests_error detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
 }
 
-variable "tableservices_requests_error_threshold_critical" {
-  description = "Critical threshold for tableservices_requests_error detector"
+variable "table_requests_error_threshold_critical" {
+  description = "Critical threshold for table_requests_error detector"
   type        = number
   default     = 90
 }
 
-variable "tableservices_requests_error_threshold_warning" {
-  description = "Warning threshold for tableservices_requests_error detector"
+variable "table_requests_error_threshold_warning" {
+  description = "Warning threshold for table_requests_error detector"
   type        = number
   default     = 70
 }
 
-# Blobservices_latency detectors
+# blob_latency detectors
 
-variable "blobservices_latency_disabled" {
-  description = "Disable all alerting rules for Blobservices_latency detector"
+variable "blob_latency_disabled" {
+  description = "Disable all alerting rules for blob_latency detector"
   type        = bool
   default     = null
 }
 
-variable "blobservices_latency_disabled_critical" {
-  description = "Disable critical alerting rule for Blobservices_latency detector"
+variable "blob_latency_disabled_critical" {
+  description = "Disable critical alerting rule for blob_latency detector"
   type        = bool
   default     = null
 }
 
-variable "blobservices_latency_disabled_warning" {
-  description = "Disable warning alerting rule for Blobservices_latency detector"
+variable "blob_latency_disabled_warning" {
+  description = "Disable warning alerting rule for blob_latency detector"
   type        = bool
   default     = null
 }
 
-variable "blobservices_latency_notifications" {
-  description = "Notification recipients list for every alerting rules of Blobservices_latency detector"
+variable "blob_latency_notifications" {
+  description = "Notification recipients list for every alerting rules of blob_latency detector"
   type        = list(string)
   default     = []
 }
 
-variable "blobservices_latency_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of Blobservices_latency detector"
+variable "blob_latency_notifications_warning" {
+  description = "Notification recipients list for warning alerting rule of blob_latency detector"
   type        = list(string)
   default     = []
 }
 
-variable "blobservices_latency_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of Blobservices_latency detector"
+variable "blob_latency_notifications_critical" {
+  description = "Notification recipients list for critical alerting rule of blob_latency detector"
   type        = list(string)
   default     = []
 }
 
-variable "blobservices_latency_aggregation_function" {
-  description = "Aggregation function and group by for Blobservices_latency detector (i.e. \".mean(by=['host'])\")"
+variable "blob_latency_aggregation_function" {
+  description = "Aggregation function and group by for blob_latency detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ".mean(by=['azure_resource_id', 'azure_resource_group_name'])"
 }
 
-variable "blobservices_latency_timer" {
-  description = "Evaluation window for Blobservices_latency detector (i.e. 5m, 20m, 1h, 1d)"
+variable "blob_latency_timer" {
+  description = "Evaluation window for blob_latency detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
 }
 
-variable "blobservices_latency_threshold_critical" {
-  description = "Critical threshold for Blobservices_latency detector"
+variable "blob_latency_threshold_critical" {
+  description = "Critical threshold for blob_latency detector"
   type        = number
   default     = 2000
 }
 
-variable "blobservices_latency_threshold_warning" {
-  description = "Warning threshold for Blobservices_latency detector"
+variable "blob_latency_threshold_warning" {
+  description = "Warning threshold for blob_latency detector"
   type        = number
   default     = 1000
 }
 
-# fileservices_latency detectors
+# file_latency detectors
 
-variable "fileservices_latency_disabled" {
-  description = "Disable all alerting rules for fileservices_latency detector"
+variable "file_latency_disabled" {
+  description = "Disable all alerting rules for file_latency detector"
   type        = bool
   default     = null
 }
 
-variable "fileservices_latency_disabled_critical" {
-  description = "Disable critical alerting rule for fileservices_latency detector"
+variable "file_latency_disabled_critical" {
+  description = "Disable critical alerting rule for file_latency detector"
   type        = bool
   default     = null
 }
 
-variable "fileservices_latency_disabled_warning" {
-  description = "Disable warning alerting rule for fileservices_latency detector"
+variable "file_latency_disabled_warning" {
+  description = "Disable warning alerting rule for file_latency detector"
   type        = bool
   default     = null
 }
 
-variable "fileservices_latency_notifications" {
-  description = "Notification recipients list for every alerting rules of fileservices_latency detector"
+variable "file_latency_notifications" {
+  description = "Notification recipients list for every alerting rules of file_latency detector"
   type        = list(string)
   default     = []
 }
 
-variable "fileservices_latency_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of fileservices_latency detector"
+variable "file_latency_notifications_warning" {
+  description = "Notification recipients list for warning alerting rule of file_latency detector"
   type        = list(string)
   default     = []
 }
 
-variable "fileservices_latency_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of fileservices_latency detector"
+variable "file_latency_notifications_critical" {
+  description = "Notification recipients list for critical alerting rule of file_latency detector"
   type        = list(string)
   default     = []
 }
 
-variable "fileservices_latency_aggregation_function" {
-  description = "Aggregation function and group by for fileservices_latency detector (i.e. \".mean(by=['host'])\")"
+variable "file_latency_aggregation_function" {
+  description = "Aggregation function and group by for file_latency detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ".mean(by=['azure_resource_id', 'azure_resource_group_name'])"
 }
 
-variable "fileservices_latency_timer" {
-  description = "Evaluation window for fileservices_latency detector (i.e. 5m, 20m, 1h, 1d)"
+variable "file_latency_timer" {
+  description = "Evaluation window for file_latency detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
 }
 
-variable "fileservices_latency_threshold_critical" {
-  description = "Critical threshold for fileservices_latency detector"
+variable "file_latency_threshold_critical" {
+  description = "Critical threshold for file_latency detector"
   type        = number
   default     = 2000
 }
 
-variable "fileservices_latency_threshold_warning" {
-  description = "Warning threshold for fileservices_latency detector"
+variable "file_latency_threshold_warning" {
+  description = "Warning threshold for file_latency detector"
   type        = number
   default     = 1000
 }
 
-# Queueservices_latency detectors
+# queue_latency detectors
 
-variable "queueservices_latency_disabled" {
-  description = "Disable all alerting rules for queueservices_latency detector"
+variable "queue_latency_disabled" {
+  description = "Disable all alerting rules for queue_latency detector"
   type        = bool
   default     = null
 }
 
-variable "queueservices_latency_disabled_critical" {
-  description = "Disable critical alerting rule for queueservices_latency detector"
+variable "queue_latency_disabled_critical" {
+  description = "Disable critical alerting rule for queue_latency detector"
   type        = bool
   default     = null
 }
 
-variable "queueservices_latency_disabled_warning" {
-  description = "Disable warning alerting rule for queueservices_latency detector"
+variable "queue_latency_disabled_warning" {
+  description = "Disable warning alerting rule for queue_latency detector"
   type        = bool
   default     = null
 }
 
-variable "queueservices_latency_notifications" {
-  description = "Notification recipients list for every alerting rules of queueservices_latency detector"
+variable "queue_latency_notifications" {
+  description = "Notification recipients list for every alerting rules of queue_latency detector"
   type        = list(string)
   default     = []
 }
 
-variable "queueservices_latency_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of queueservices_latency detector"
+variable "queue_latency_notifications_warning" {
+  description = "Notification recipients list for warning alerting rule of queue_latency detector"
   type        = list(string)
   default     = []
 }
 
-variable "queueservices_latency_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of queueservices_latency detector"
+variable "queue_latency_notifications_critical" {
+  description = "Notification recipients list for critical alerting rule of queue_latency detector"
   type        = list(string)
   default     = []
 }
 
-variable "queueservices_latency_aggregation_function" {
-  description = "Aggregation function and group by for queueservices_latency detector (i.e. \".mean(by=['host'])\")"
+variable "queue_latency_aggregation_function" {
+  description = "Aggregation function and group by for queue_latency detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ".mean(by=['azure_resource_id', 'azure_resource_group_name'])"
 }
 
-variable "queueservices_latency_timer" {
-  description = "Evaluation window for queueservices_latency detector (i.e. 5m, 20m, 1h, 1d)"
+variable "queue_latency_timer" {
+  description = "Evaluation window for queue_latency detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
 }
 
-variable "queueservices_latency_threshold_critical" {
-  description = "Critical threshold for queueservices_latency detector"
+variable "queue_latency_threshold_critical" {
+  description = "Critical threshold for queue_latency detector"
   type        = number
   default     = 2000
 }
 
-variable "queueservices_latency_threshold_warning" {
-  description = "Warning threshold for queueservices_latency detector"
+variable "queue_latency_threshold_warning" {
+  description = "Warning threshold for queue_latency detector"
   type        = number
   default     = 1000
 }
 
-# Tableservices_latency detectors
+# table_latency detectors
 
-variable "tableservices_latency_disabled" {
-  description = "Disable all alerting rules for tableservices_latency detector"
+variable "table_latency_disabled" {
+  description = "Disable all alerting rules for table_latency detector"
   type        = bool
   default     = null
 }
 
-variable "tableservices_latency_disabled_critical" {
-  description = "Disable critical alerting rule for tableservices_latency detector"
+variable "table_latency_disabled_critical" {
+  description = "Disable critical alerting rule for table_latency detector"
   type        = bool
   default     = null
 }
 
-variable "tableservices_latency_disabled_warning" {
-  description = "Disable warning alerting rule for tableservices_latency detector"
+variable "table_latency_disabled_warning" {
+  description = "Disable warning alerting rule for table_latency detector"
   type        = bool
   default     = null
 }
 
-variable "tableservices_latency_notifications" {
-  description = "Notification recipients list for every alerting rules of tableservices_latency detector"
+variable "table_latency_notifications" {
+  description = "Notification recipients list for every alerting rules of table_latency detector"
   type        = list(string)
   default     = []
 }
 
-variable "tableservices_latency_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of tableservices_latency detector"
+variable "table_latency_notifications_warning" {
+  description = "Notification recipients list for warning alerting rule of table_latency detector"
   type        = list(string)
   default     = []
 }
 
-variable "tableservices_latency_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of tableservices_latency detector"
+variable "table_latency_notifications_critical" {
+  description = "Notification recipients list for critical alerting rule of table_latency detector"
   type        = list(string)
   default     = []
 }
 
-variable "tableservices_latency_aggregation_function" {
-  description = "Aggregation function and group by for tableservices_latency detector (i.e. \".mean(by=['host'])\")"
+variable "table_latency_aggregation_function" {
+  description = "Aggregation function and group by for table_latency detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ".mean(by=['azure_resource_id', 'azure_resource_group_name'])"
 }
 
-variable "tableservices_latency_timer" {
-  description = "Evaluation window for tableservices_latency detector (i.e. 5m, 20m, 1h, 1d)"
+variable "table_latency_timer" {
+  description = "Evaluation window for table_latency detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
 }
 
-variable "tableservices_latency_threshold_critical" {
-  description = "Critical threshold for tableservices_latency detector"
+variable "table_latency_threshold_critical" {
+  description = "Critical threshold for table_latency detector"
   type        = number
   default     = 2000
 }
 
-variable "tableservices_latency_threshold_warning" {
-  description = "Warning threshold for tableservices_latency detector"
+variable "table_latency_threshold_warning" {
+  description = "Warning threshold for table_latency detector"
   type        = number
   default     = 1000
 }

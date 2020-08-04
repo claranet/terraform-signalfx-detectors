@@ -18,248 +18,248 @@ resource "signalfx_detector" "heartbeat" {
   }
 }
 
-resource "signalfx_detector" "blobservices_requests_error" {
+resource "signalfx_detector" "blob_requests_error" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Blob Storage error rate"
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Storage/storageAccounts/blobServices') and filter('primary_aggregation_type', 'true') and not filter('apiname', 'GetBlobProperties', 'CreateContainer') and ${module.filter-tags.filter_custom}
-        A = data('Transactions', extrapolation='zero', rollup='sum', filter=base_filter and not filter('responsetype', 'Success'))${var.blobservices_requests_error_aggregation_function}
-        B = data('Transactions', extrapolation='zero', rollup='sum', filter=base_filter)${var.blobservices_requests_error_aggregation_function}
+        A = data('Transactions', extrapolation='zero', rollup='sum', filter=base_filter and not filter('responsetype', 'Success'))${var.blob_requests_error_aggregation_function}
+        B = data('Transactions', extrapolation='zero', rollup='sum', filter=base_filter)${var.blob_requests_error_aggregation_function}
         signal = (A/B).scale(100).fill(0).publish('signal')
-        detect(when(signal > threshold(${var.blobservices_requests_error_threshold_critical}), lasting="${var.blobservices_requests_error_timer}")).publish('CRIT')
-        detect(when(signal > threshold(${var.blobservices_requests_error_threshold_warning}), lasting="${var.blobservices_requests_error_timer}") and when(signal <= ${var.blobservices_requests_error_threshold_critical})).publish('WARN')
+        detect(when(signal > threshold(${var.blob_requests_error_threshold_critical}), lasting="${var.blob_requests_error_timer}")).publish('CRIT')
+        detect(when(signal > threshold(${var.blob_requests_error_threshold_warning}), lasting="${var.blob_requests_error_timer}") and when(signal <= ${var.blob_requests_error_threshold_critical})).publish('WARN')
     EOF
 
   rule {
-    description           = "is too high > ${var.blobservices_requests_error_threshold_critical}%"
+    description           = "is too high > ${var.blob_requests_error_threshold_critical}%"
     severity              = "Critical"
     detect_label          = "CRIT"
-    disabled              = coalesce(var.blobservices_requests_error_disabled_critical, var.blobservices_requests_error_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.blobservices_requests_error_notifications_critical, var.blobservices_requests_error_notifications, var.notifications)
+    disabled              = coalesce(var.blob_requests_error_disabled_critical, var.blob_requests_error_disabled, var.detectors_disabled)
+    notifications         = coalescelist(var.blob_requests_error_notifications_critical, var.blob_requests_error_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
   rule {
-    description           = "is too high > ${var.blobservices_requests_error_threshold_warning}%"
+    description           = "is too high > ${var.blob_requests_error_threshold_warning}%"
     severity              = "Warning"
     detect_label          = "WARN"
-    disabled              = coalesce(var.blobservices_requests_error_disabled_warning, var.blobservices_requests_error_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.blobservices_requests_error_notifications_warning, var.blobservices_requests_error_notifications, var.notifications)
+    disabled              = coalesce(var.blob_requests_error_disabled_warning, var.blob_requests_error_disabled, var.detectors_disabled)
+    notifications         = coalescelist(var.blob_requests_error_notifications_warning, var.blob_requests_error_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
 }
 
-resource "signalfx_detector" "fileservices_requests_error" {
+resource "signalfx_detector" "file_requests_error" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Storage File service error rate"
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Storage/storageAccounts/fileServices') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}
-        A = data('Transactions', extrapolation='zero', rollup='sum', filter=base_filter and not filter('responsetype', 'Success'))${var.fileservices_requests_error_aggregation_function}
-        B = data('Transactions', extrapolation='zero', rollup='sum', filter=base_filter)${var.fileservices_requests_error_aggregation_function}
+        A = data('Transactions', extrapolation='zero', rollup='sum', filter=base_filter and not filter('responsetype', 'Success'))${var.file_requests_error_aggregation_function}
+        B = data('Transactions', extrapolation='zero', rollup='sum', filter=base_filter)${var.file_requests_error_aggregation_function}
         signal = (A/B).scale(100).fill(0).publish('signal')
-        detect(when(signal > threshold(${var.fileservices_requests_error_threshold_critical}), lasting="${var.fileservices_requests_error_timer}")).publish('CRIT')
-        detect(when(signal > threshold(${var.fileservices_requests_error_threshold_warning}), lasting="${var.fileservices_requests_error_timer}") and when(signal <= ${var.fileservices_requests_error_threshold_critical})).publish('WARN')
+        detect(when(signal > threshold(${var.file_requests_error_threshold_critical}), lasting="${var.file_requests_error_timer}")).publish('CRIT')
+        detect(when(signal > threshold(${var.file_requests_error_threshold_warning}), lasting="${var.file_requests_error_timer}") and when(signal <= ${var.file_requests_error_threshold_critical})).publish('WARN')
     EOF
 
   rule {
-    description           = "is too high > ${var.fileservices_requests_error_threshold_critical}%"
+    description           = "is too high > ${var.file_requests_error_threshold_critical}%"
     severity              = "Critical"
     detect_label          = "CRIT"
-    disabled              = coalesce(var.fileservices_requests_error_disabled_critical, var.fileservices_requests_error_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.fileservices_requests_error_notifications_critical, var.fileservices_requests_error_notifications, var.notifications)
+    disabled              = coalesce(var.file_requests_error_disabled_critical, var.file_requests_error_disabled, var.detectors_disabled)
+    notifications         = coalescelist(var.file_requests_error_notifications_critical, var.file_requests_error_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
   rule {
-    description           = "is too high > ${var.fileservices_requests_error_threshold_warning}%"
+    description           = "is too high > ${var.file_requests_error_threshold_warning}%"
     severity              = "Warning"
     detect_label          = "WARN"
-    disabled              = coalesce(var.fileservices_requests_error_disabled_warning, var.fileservices_requests_error_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.fileservices_requests_error_notifications_warning, var.fileservices_requests_error_notifications, var.notifications)
+    disabled              = coalesce(var.file_requests_error_disabled_warning, var.file_requests_error_disabled, var.detectors_disabled)
+    notifications         = coalescelist(var.file_requests_error_notifications_warning, var.file_requests_error_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
 }
 
-resource "signalfx_detector" "queueservices_requests_error" {
+resource "signalfx_detector" "queue_requests_error" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Storage Queue error rate"
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Storage/storageAccounts/queueServices') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}
-        A = data('Transactions', extrapolation='zero', rollup='sum', filter=base_filter and not filter('responsetype', 'Success'))${var.queueservices_requests_error_aggregation_function}
-        B = data('Transactions', extrapolation='zero', rollup='sum', filter=base_filter)${var.queueservices_requests_error_aggregation_function}
+        A = data('Transactions', extrapolation='zero', rollup='sum', filter=base_filter and not filter('responsetype', 'Success'))${var.queue_requests_error_aggregation_function}
+        B = data('Transactions', extrapolation='zero', rollup='sum', filter=base_filter)${var.queue_requests_error_aggregation_function}
         signal = (A/B).scale(100).fill(0).publish('signal')
-        detect(when(signal > threshold(${var.queueservices_requests_error_threshold_critical}), lasting="${var.queueservices_requests_error_timer}")).publish('CRIT')
-        detect(when(signal > threshold(${var.queueservices_requests_error_threshold_warning}), lasting="${var.queueservices_requests_error_timer}") and when(signal <= ${var.queueservices_requests_error_threshold_critical})).publish('WARN')
+        detect(when(signal > threshold(${var.queue_requests_error_threshold_critical}), lasting="${var.queue_requests_error_timer}")).publish('CRIT')
+        detect(when(signal > threshold(${var.queue_requests_error_threshold_warning}), lasting="${var.queue_requests_error_timer}") and when(signal <= ${var.queue_requests_error_threshold_critical})).publish('WARN')
     EOF
 
   rule {
-    description           = "is too high > ${var.queueservices_requests_error_threshold_critical}%"
+    description           = "is too high > ${var.queue_requests_error_threshold_critical}%"
     severity              = "Critical"
     detect_label          = "CRIT"
-    disabled              = coalesce(var.queueservices_requests_error_disabled_critical, var.queueservices_requests_error_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.queueservices_requests_error_notifications_critical, var.queueservices_requests_error_notifications, var.notifications)
+    disabled              = coalesce(var.queue_requests_error_disabled_critical, var.queue_requests_error_disabled, var.detectors_disabled)
+    notifications         = coalescelist(var.queue_requests_error_notifications_critical, var.queue_requests_error_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
   rule {
-    description           = "is too high > ${var.queueservices_requests_error_threshold_warning}%"
+    description           = "is too high > ${var.queue_requests_error_threshold_warning}%"
     severity              = "Warning"
     detect_label          = "WARN"
-    disabled              = coalesce(var.queueservices_requests_error_disabled_warning, var.queueservices_requests_error_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.queueservices_requests_error_notifications_warning, var.queueservices_requests_error_notifications, var.notifications)
+    disabled              = coalesce(var.queue_requests_error_disabled_warning, var.queue_requests_error_disabled, var.detectors_disabled)
+    notifications         = coalescelist(var.queue_requests_error_notifications_warning, var.queue_requests_error_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
 }
 
-resource "signalfx_detector" "tableservices_requests_error" {
+resource "signalfx_detector" "table_requests_error" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Storage Table error rate"
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Storage/storageAccounts/tableServices') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}
-        A = data('Transactions', extrapolation='zero', rollup='sum', filter=base_filter and not filter('responsetype', 'Success'))${var.tableservices_requests_error_aggregation_function}
-        B = data('Transactions', extrapolation='zero', rollup='sum', filter=base_filter)${var.tableservices_requests_error_aggregation_function}
+        A = data('Transactions', extrapolation='zero', rollup='sum', filter=base_filter and not filter('responsetype', 'Success'))${var.table_requests_error_aggregation_function}
+        B = data('Transactions', extrapolation='zero', rollup='sum', filter=base_filter)${var.table_requests_error_aggregation_function}
         signal = (A/B).scale(100).fill(0).publish('signal')
-        detect(when(signal > threshold(${var.tableservices_requests_error_threshold_critical}), lasting="${var.tableservices_requests_error_timer}")).publish('CRIT')
-        detect(when(signal > threshold(${var.tableservices_requests_error_threshold_warning}), lasting="${var.tableservices_requests_error_timer}") and when(signal <= ${var.tableservices_requests_error_threshold_critical})).publish('WARN')
+        detect(when(signal > threshold(${var.table_requests_error_threshold_critical}), lasting="${var.table_requests_error_timer}")).publish('CRIT')
+        detect(when(signal > threshold(${var.table_requests_error_threshold_warning}), lasting="${var.table_requests_error_timer}") and when(signal <= ${var.table_requests_error_threshold_critical})).publish('WARN')
     EOF
 
   rule {
-    description           = "is too high > ${var.tableservices_requests_error_threshold_critical}%"
+    description           = "is too high > ${var.table_requests_error_threshold_critical}%"
     severity              = "Critical"
     detect_label          = "CRIT"
-    disabled              = coalesce(var.tableservices_requests_error_disabled_critical, var.tableservices_requests_error_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.tableservices_requests_error_notifications_critical, var.tableservices_requests_error_notifications, var.notifications)
+    disabled              = coalesce(var.table_requests_error_disabled_critical, var.table_requests_error_disabled, var.detectors_disabled)
+    notifications         = coalescelist(var.table_requests_error_notifications_critical, var.table_requests_error_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
   rule {
-    description           = "is too high > ${var.tableservices_requests_error_threshold_warning}%"
+    description           = "is too high > ${var.table_requests_error_threshold_warning}%"
     severity              = "Warning"
     detect_label          = "WARN"
-    disabled              = coalesce(var.tableservices_requests_error_disabled_warning, var.tableservices_requests_error_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.tableservices_requests_error_notifications_warning, var.tableservices_requests_error_notifications, var.notifications)
+    disabled              = coalesce(var.table_requests_error_disabled_warning, var.table_requests_error_disabled, var.detectors_disabled)
+    notifications         = coalescelist(var.table_requests_error_notifications_warning, var.table_requests_error_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
 }
 
-resource "signalfx_detector" "blobservices_latency" {
+resource "signalfx_detector" "blob_latency" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Storage Blob latency"
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Storage/storageAccounts/blobServices') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}
-        signal = data('SuccessE2ELatency', extrapolation='zero', filter=base_filter)${var.blobservices_latency_aggregation_function}.publish('signal')
-        detect(when(signal > threshold(${var.blobservices_latency_threshold_critical}), lasting="${var.blobservices_latency_timer}")).publish('CRIT')
-        detect(when(signal > threshold(${var.blobservices_latency_threshold_warning}), lasting="${var.blobservices_latency_timer}") and when(signal <= ${var.blobservices_latency_threshold_critical})).publish('WARN')
+        signal = data('SuccessE2ELatency', extrapolation='zero', filter=base_filter)${var.blob_latency_aggregation_function}.publish('signal')
+        detect(when(signal > threshold(${var.blob_latency_threshold_critical}), lasting="${var.blob_latency_timer}")).publish('CRIT')
+        detect(when(signal > threshold(${var.blob_latency_threshold_warning}), lasting="${var.blob_latency_timer}") and when(signal <= ${var.blob_latency_threshold_critical})).publish('WARN')
     EOF
 
   rule {
-    description           = "is too high > ${var.blobservices_latency_threshold_critical}ms"
+    description           = "is too high > ${var.blob_latency_threshold_critical}ms"
     severity              = "Critical"
     detect_label          = "CRIT"
-    disabled              = coalesce(var.blobservices_latency_disabled_critical, var.blobservices_latency_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.blobservices_latency_notifications_critical, var.blobservices_latency_notifications, var.notifications)
+    disabled              = coalesce(var.blob_latency_disabled_critical, var.blob_latency_disabled, var.detectors_disabled)
+    notifications         = coalescelist(var.blob_latency_notifications_critical, var.blob_latency_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
   rule {
-    description           = "is too high > ${var.blobservices_latency_threshold_warning}ms"
+    description           = "is too high > ${var.blob_latency_threshold_warning}ms"
     severity              = "Warning"
     detect_label          = "WARN"
-    disabled              = coalesce(var.blobservices_latency_disabled_warning, var.blobservices_latency_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.blobservices_latency_notifications_warning, var.blobservices_latency_notifications, var.notifications)
+    disabled              = coalesce(var.blob_latency_disabled_warning, var.blob_latency_disabled, var.detectors_disabled)
+    notifications         = coalescelist(var.blob_latency_notifications_warning, var.blob_latency_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
 }
 
-resource "signalfx_detector" "fileservices_latency" {
+resource "signalfx_detector" "file_latency" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Storage File latency"
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Storage/storageAccounts/fileServices') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}
-        signal = data('SuccessE2ELatency', extrapolation='zero', filter=base_filter)${var.fileservices_latency_aggregation_function}.publish('signal')
-        detect(when(signal > threshold(${var.fileservices_latency_threshold_critical}), lasting="${var.fileservices_latency_timer}")).publish('CRIT')
-        detect(when(signal > threshold(${var.fileservices_latency_threshold_warning}), lasting="${var.fileservices_latency_timer}") and when(signal <= ${var.fileservices_latency_threshold_critical})).publish('WARN')
+        signal = data('SuccessE2ELatency', extrapolation='zero', filter=base_filter)${var.file_latency_aggregation_function}.publish('signal')
+        detect(when(signal > threshold(${var.file_latency_threshold_critical}), lasting="${var.file_latency_timer}")).publish('CRIT')
+        detect(when(signal > threshold(${var.file_latency_threshold_warning}), lasting="${var.file_latency_timer}") and when(signal <= ${var.file_latency_threshold_critical})).publish('WARN')
     EOF
 
   rule {
-    description           = "is too high > ${var.fileservices_latency_threshold_critical}ms"
+    description           = "is too high > ${var.file_latency_threshold_critical}ms"
     severity              = "Critical"
     detect_label          = "CRIT"
-    disabled              = coalesce(var.fileservices_latency_disabled_critical, var.fileservices_latency_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.fileservices_latency_notifications_critical, var.fileservices_latency_notifications, var.notifications)
+    disabled              = coalesce(var.file_latency_disabled_critical, var.file_latency_disabled, var.detectors_disabled)
+    notifications         = coalescelist(var.file_latency_notifications_critical, var.file_latency_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
   rule {
-    description           = "is too high > ${var.fileservices_latency_threshold_warning}ms"
+    description           = "is too high > ${var.file_latency_threshold_warning}ms"
     severity              = "Warning"
     detect_label          = "WARN"
-    disabled              = coalesce(var.fileservices_latency_disabled_warning, var.fileservices_latency_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.fileservices_latency_notifications_warning, var.fileservices_latency_notifications, var.notifications)
+    disabled              = coalesce(var.file_latency_disabled_warning, var.file_latency_disabled, var.detectors_disabled)
+    notifications         = coalescelist(var.file_latency_notifications_warning, var.file_latency_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
 
-resource "signalfx_detector" "queueservices_latency" {
+resource "signalfx_detector" "queue_latency" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Storage Queue latency"
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Storage/storageAccounts/queueServices') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}
-        signal = data('SuccessE2ELatency', extrapolation='zero', filter=base_filter)${var.queueservices_latency_aggregation_function}.publish('signal')
-        detect(when(signal > threshold(${var.queueservices_latency_threshold_critical}), lasting="${var.queueservices_latency_timer}")).publish('CRIT')
-        detect(when(signal > threshold(${var.queueservices_latency_threshold_warning}), lasting="${var.queueservices_latency_timer}") and when(signal <= ${var.queueservices_latency_threshold_critical})).publish('WARN')
+        signal = data('SuccessE2ELatency', extrapolation='zero', filter=base_filter)${var.queue_latency_aggregation_function}.publish('signal')
+        detect(when(signal > threshold(${var.queue_latency_threshold_critical}), lasting="${var.queue_latency_timer}")).publish('CRIT')
+        detect(when(signal > threshold(${var.queue_latency_threshold_warning}), lasting="${var.queue_latency_timer}") and when(signal <= ${var.queue_latency_threshold_critical})).publish('WARN')
     EOF
 
   rule {
-    description           = "is too high > ${var.queueservices_latency_threshold_critical}ms"
+    description           = "is too high > ${var.queue_latency_threshold_critical}ms"
     severity              = "Critical"
     detect_label          = "CRIT"
-    disabled              = coalesce(var.queueservices_latency_disabled_critical, var.queueservices_latency_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.queueservices_latency_notifications_critical, var.queueservices_latency_notifications, var.notifications)
+    disabled              = coalesce(var.queue_latency_disabled_critical, var.queue_latency_disabled, var.detectors_disabled)
+    notifications         = coalescelist(var.queue_latency_notifications_critical, var.queue_latency_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
   rule {
-    description           = "is too high > ${var.queueservices_latency_threshold_warning}ms"
+    description           = "is too high > ${var.queue_latency_threshold_warning}ms"
     severity              = "Warning"
     detect_label          = "WARN"
-    disabled              = coalesce(var.queueservices_latency_disabled_warning, var.queueservices_latency_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.queueservices_latency_notifications_warning, var.queueservices_latency_notifications, var.notifications)
+    disabled              = coalesce(var.queue_latency_disabled_warning, var.queue_latency_disabled, var.detectors_disabled)
+    notifications         = coalescelist(var.queue_latency_notifications_warning, var.queue_latency_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
 }
 
-resource "signalfx_detector" "tableservices_latency" {
+resource "signalfx_detector" "table_latency" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Storage Table latency"
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Storage/storageAccounts/tableServices') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}
-        signal = data('SuccessE2ELatency', extrapolation='zero', filter=base_filter)${var.tableservices_latency_aggregation_function}.publish('signal')
-        detect(when(signal > threshold(${var.tableservices_latency_threshold_critical}), lasting="${var.tableservices_latency_timer}")).publish('CRIT')
-        detect(when(signal > threshold(${var.tableservices_latency_threshold_warning}), lasting="${var.tableservices_latency_timer}") and when(signal <= ${var.tableservices_latency_threshold_critical})).publish('WARN')
+        signal = data('SuccessE2ELatency', extrapolation='zero', filter=base_filter)${var.table_latency_aggregation_function}.publish('signal')
+        detect(when(signal > threshold(${var.table_latency_threshold_critical}), lasting="${var.table_latency_timer}")).publish('CRIT')
+        detect(when(signal > threshold(${var.table_latency_threshold_warning}), lasting="${var.table_latency_timer}") and when(signal <= ${var.table_latency_threshold_critical})).publish('WARN')
     EOF
 
   rule {
-    description           = "is too high > ${var.tableservices_latency_threshold_critical}ms"
+    description           = "is too high > ${var.table_latency_threshold_critical}ms"
     severity              = "Critical"
     detect_label          = "CRIT"
-    disabled              = coalesce(var.tableservices_latency_disabled_critical, var.tableservices_latency_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.tableservices_latency_notifications_critical, var.tableservices_latency_notifications, var.notifications)
+    disabled              = coalesce(var.table_latency_disabled_critical, var.table_latency_disabled, var.detectors_disabled)
+    notifications         = coalescelist(var.table_latency_notifications_critical, var.table_latency_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
   rule {
-    description           = "is too high > ${var.tableservices_latency_threshold_warning}ms"
+    description           = "is too high > ${var.table_latency_threshold_warning}ms"
     severity              = "Warning"
     detect_label          = "WARN"
-    disabled              = coalesce(var.tableservices_latency_disabled_warning, var.tableservices_latency_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.tableservices_latency_notifications_warning, var.tableservices_latency_notifications, var.notifications)
+    disabled              = coalesce(var.table_latency_disabled_warning, var.table_latency_disabled, var.detectors_disabled)
+    notifications         = coalescelist(var.table_latency_notifications_warning, var.table_latency_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
@@ -274,7 +274,7 @@ resource "signalfx_detector" "blob_timeout_error_requests" {
         B = data('Transactions', extrapolation='zero', rollup='sum', filter=base_filter)${var.blob_timeout_error_requests_aggregation_function}
         signal = (A/B).scale(100).fill(0).publish('signal')
         detect(when(signal > threshold(${var.blob_timeout_error_requests_threshold_critical}), lasting="${var.blob_timeout_error_requests_timer}")).publish('CRIT')
-        detect(when(signal > threshold(${var.tableservices_latency_threshold_warning}), lasting="${var.blob_timeout_error_requests_timer}") and when(signal <= ${var.blob_timeout_error_requests_threshold_critical})).publish('WARN')
+        detect(when(signal > threshold(${var.blob_timeout_error_requests_threshold_warning}), lasting="${var.blob_timeout_error_requests_timer}") and when(signal <= ${var.blob_timeout_error_requests_threshold_critical})).publish('WARN')
     EOF
 
   rule {
@@ -306,7 +306,7 @@ resource "signalfx_detector" "file_timeout_error_requests" {
         B = data('Transactions', extrapolation='zero', rollup='sum', filter=base_filter)${var.file_timeout_error_requests_aggregation_function}
         signal = (A/B).scale(100).fill(0).publish('signal')
         detect(when(signal > threshold(${var.file_timeout_error_requests_threshold_critical}), lasting="${var.file_timeout_error_requests_timer}")).publish('CRIT')
-        detect(when(signal > threshold(${var.tableservices_latency_threshold_warning}), lasting="${var.file_timeout_error_requests_timer}") and when(signal <= ${var.file_timeout_error_requests_threshold_critical})).publish('WARN')
+        detect(when(signal > threshold(${var.file_timeout_error_requests_threshold_warning}), lasting="${var.file_timeout_error_requests_timer}") and when(signal <= ${var.file_timeout_error_requests_threshold_critical})).publish('WARN')
     EOF
 
   rule {
@@ -338,7 +338,7 @@ resource "signalfx_detector" "queue_timeout_error_requests" {
         B = data('Transactions', extrapolation='zero', rollup='sum', filter=base_filter)${var.queue_timeout_error_requests_aggregation_function}
         signal = (A/B).scale(100).fill(0).publish('signal')
         detect(when(signal > threshold(${var.queue_timeout_error_requests_threshold_critical}), lasting="${var.queue_timeout_error_requests_timer}")).publish('CRIT')
-        detect(when(signal > threshold(${var.tableservices_latency_threshold_warning}), lasting="${var.queue_timeout_error_requests_timer}") and when(signal <= ${var.queue_timeout_error_requests_threshold_critical})).publish('WARN')
+        detect(when(signal > threshold(${var.queue_timeout_error_requests_threshold_warning}), lasting="${var.queue_timeout_error_requests_timer}") and when(signal <= ${var.queue_timeout_error_requests_threshold_critical})).publish('WARN')
     EOF
 
   rule {
@@ -370,7 +370,7 @@ resource "signalfx_detector" "table_timeout_error_requests" {
         B = data('Transactions', extrapolation='zero', rollup='sum', filter=base_filter)${var.table_timeout_error_requests_aggregation_function}
         signal = (A/B).scale(100).fill(0).publish('signal')
         detect(when(signal > threshold(${var.table_timeout_error_requests_threshold_critical}), lasting="${var.table_timeout_error_requests_timer}")).publish('CRIT')
-        detect(when(signal > threshold(${var.tableservices_latency_threshold_warning}), lasting="${var.table_timeout_error_requests_timer}") and when(signal <= ${var.table_timeout_error_requests_threshold_critical})).publish('WARN')
+        detect(when(signal > threshold(${var.table_timeout_error_requests_threshold_warning}), lasting="${var.table_timeout_error_requests_timer}") and when(signal <= ${var.table_timeout_error_requests_threshold_critical})).publish('WARN')
     EOF
 
   rule {
