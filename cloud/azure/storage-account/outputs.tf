@@ -83,6 +83,26 @@ output "table_network_error_requests_id" {
   value       = signalfx_detector.table_network_error_requests.*.id
 }
 
+output "blob_busy_error_requests_id" {
+  description = "id for detector blob_busy_error_requests"
+  value       = signalfx_detector.blob_busy_error_requests.*.id
+}
+
+output "file_busy_error_requests_id" {
+  description = "id for detector file_busy_error_requests"
+  value       = signalfx_detector.file_busy_error_requests.*.id
+}
+
+output "queue_busy_error_requests_id" {
+  description = "id for detector queue_busy_error_requests"
+  value       = signalfx_detector.queue_busy_error_requests.*.id
+}
+
+output "table_busy_error_requests_id" {
+  description = "id for detector table_busy_error_requests"
+  value       = signalfx_detector.table_busy_error_requests.*.id
+}
+
 output "blob_throttling_error_requests_id" {
   description = "id for detector blob_throttling_error_requests"
   value       = signalfx_detector.blob_throttling_error_requests.*.id
