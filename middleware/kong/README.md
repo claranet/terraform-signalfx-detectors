@@ -53,4 +53,30 @@ Creates SignalFx detectors with the following checks:
 
 ## Related documentation
 
-[Official documentation](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.kong.html)
+[Official documentation](https://docs.signalfx.com/en/latest/integrations/agent/monitors/prometheus-exporter.html)
+
+## Notes
+
+We use the [Prometheus exporter monitor](https://docs.signalfx.com/en/latest/integrations/agent/monitors/prometheus-exporter.html) instead of [official Kong integration](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.kong.html) based on collectd while it requires to install a lua module on Kong server which could be problematic.
+
+Check [the official Kong documentation](https://docs.konghq.com/hub/kong-inc/prometheus/#enabling-the-plugin-on-a-service) to enable Prometheus metrics on Kong server(s).
+
+Here is a sample configuration for the SignalFx Smart Agent:
+
+```yaml
+  - type: prometheus-exporter
+    host: 127.0.0.1
+    port: 8444
+    useHTTPS: true
+    skipVerify: true
+    datapointsToExclude:
+      - metricNames:
+        - '*'
+        - '!kong_datastore_reachable'
+        - '!kong_http_status'
+        - '!kong_latency'
+        - '!kong_nginx_http_current_connections'
+        - '!kong_nginx_metric_errors_total'
+```
+
+_Note_: do not forget to filter while Promehteus format leads to lot of metrics which will be considered as custom by SignalFx and reach the limit (or cause over-billing).
