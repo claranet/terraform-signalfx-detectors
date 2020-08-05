@@ -8,11 +8,6 @@ output "failed_requests_id" {
   value       = signalfx_detector.failed_requests.*.id
 }
 
-output "other_requests_id" {
-  description = "id for detector other_requests"
-  value       = signalfx_detector.other_requests.*.id
-}
-
 output "unauthorized_requests_id" {
   description = "id for detector unauthorized_requests"
   value       = signalfx_detector.unauthorized_requests.*.id
