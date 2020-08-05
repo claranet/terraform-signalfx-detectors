@@ -1,10 +1,11 @@
 resource "signalfx_detector" "heartbeat" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Event Hubs heartbeat"
+  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Event Hub heartbeat"
 
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting
-        signal = data('SuccessfulRequests', filter=filter('resource_type', 'Microsoft.EventHub/namespace') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}).publish('signal')
-        not_reporting.detector(stream=signal, resource_identifier=['EntityName'], duration='${var.heartbeat_timeframe}').publish('CRIT')
+        base_filter = filter('resource_type', 'Microsoft.EventHub/namespaces') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}
+        signal = data('Size', filter=base_filter).publish('signal')
+        not_reporting.detector(stream=signal, resource_identifier=['Role', 'azure_resource_name', 'azure_resource_group_name'], duration='${var.heartbeat_timeframe}').publish('CRIT')
     EOF
 
   rule {
@@ -18,16 +19,15 @@ resource "signalfx_detector" "heartbeat" {
 }
 
 resource "signalfx_detector" "eventhub_failed_requests" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Event Hubs failed request rate"
+  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Event Hub failed requests rate"
 
   program_text = <<-EOF
-        from signalfx.detectors.aperiodic import aperiodic
-        A = data('IncomingRequests', filter=filter('resource_type', 'Microsoft.EventHub/namespaces') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.eventhub_failed_requests_aggregation_function}
-        B = data('SuccessfulRequests', filter=filter('resource_type', 'Microsoft.EventHub/namespaces') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.eventhub_failed_requests_aggregation_function}
-        signal = (((A-B)/A)*100).${var.eventhub_failed_requests_transformation_function}(over='${var.eventhub_failed_requests_transformation_window}').publish('signal')
-        aperiodic.above_or_below_detector(signal, ${var.eventhub_failed_requests_threshold_critical}, 'above', lasting('${var.eventhub_failed_requests_aperiodic_duration}', ${var.eventhub_failed_requests_aperiodic_percentage})).publish('CRIT')
-        aperiodic.range_detector(signal, ${var.eventhub_failed_requests_threshold_warning}, ${var.eventhub_failed_requests_threshold_critical}, 'within_range', lasting('${var.eventhub_failed_requests_aperiodic_duration}', ${var.eventhub_failed_requests_aperiodic_percentage}), upper_strict=False).publish('WARN')
-
+        base_filter = filter('resource_type', 'Microsoft.EventHub/namespaces') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}
+        A = data('IncomingRequests', extrapolation='zero', filter=base_filter)${var.eventhub_failed_requests_aggregation_function}
+        B = data('SuccessfulRequests', extrapolation='zero', filter=base_filter)${var.eventhub_failed_requests_aggregation_function}
+        signal = ((A-B)/A).scale(100).fill(0).publish('signal')
+        detect(when(signal > threshold(${var.eventhub_failed_requests_threshold_critical}), lasting="${var.eventhub_failed_requests_timer}")).publish('CRIT')
+        detect(when(signal > threshold(${var.eventhub_failed_requests_threshold_warning}), lasting="${var.eventhub_failed_requests_timer}") and when(signal <= ${var.eventhub_failed_requests_threshold_critical})).publish('WARN')
     EOF
 
   rule {
@@ -51,22 +51,21 @@ resource "signalfx_detector" "eventhub_failed_requests" {
 }
 
 resource "signalfx_detector" "eventhub_errors" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Eventh Hubs error rate"
+  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Event Hub errors rate"
 
   program_text = <<-EOF
-        from signalfx.detectors.aperiodic import aperiodic
-        A = data('ServerErrors', filter=filter('resource_type', 'Microsoft.EventHub/namespaces') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.eventhub_errors_aggregation_function}
-        B = data('UserErrors', filter=filter('resource_type', 'Microsoft.EventHub/namespaces') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.eventhub_errors_aggregation_function}
-        C = data('QuotaExceededErrors', filter=filter('resource_type', 'Microsoft.EventHub/namespaces') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.eventhub_errors_aggregation_function}
-        D = data('IncomingRequests', filter=filter('resource_type', 'Microsoft.EventHub/namespaces') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.eventhub_errors_aggregation_function}
-        signal = (((A+B+C)/D)*100).${var.eventhub_errors_transformation_function}(over='${var.eventhub_errors_transformation_window}').publish('signal')
-        aperiodic.above_or_below_detector(signal, ${var.eventhub_errors_threshold_critical}, 'above', lasting('${var.eventhub_errors_aperiodic_duration}', ${var.eventhub_errors_aperiodic_percentage})).publish('CRIT')
-        aperiodic.range_detector(signal, ${var.eventhub_errors_threshold_warning}, ${var.eventhub_errors_threshold_critical}, 'within_range', lasting('${var.eventhub_errors_aperiodic_duration}', ${var.eventhub_errors_aperiodic_percentage}), upper_strict=False).publish('WARN')
-
+        base_filter = filter('resource_type', 'Microsoft.EventHub/namespaces') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}
+        A = data('ServerErrors', extrapolation='zero', filter=base_filter)${var.eventhub_errors_aggregation_function}
+        B = data('UserErrors', extrapolation='zero', filter=base_filter)${var.eventhub_errors_aggregation_function}
+        C = data('QuotaExceededErrors', extrapolation='zero', filter=base_filter)${var.eventhub_errors_aggregation_function}
+        D = data('IncomingRequests', extrapolation='zero', filter=base_filter)${var.eventhub_errors_aggregation_function}
+        signal = ((A+B+C)/D).scale(100).fill(0).publish('signal')
+        detect(when(signal > threshold(${var.eventhub_failed_requests_threshold_critical}), lasting="${var.eventhub_errors_timer}")).publish('CRIT')
+        detect(when(signal > threshold(${var.eventhub_failed_requests_threshold_warning}), lasting="${var.eventhub_errors_timer}") and when(signal <= ${var.eventhub_failed_requests_threshold_critical})).publish('WARN')
     EOF
 
   rule {
-    description           = "is too high > ${var.eventhub_errors_threshold_critical}"
+    description           = "is too high > ${var.eventhub_errors_threshold_critical}%"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.eventhub_errors_disabled_critical, var.eventhub_errors_disabled, var.detectors_disabled)
@@ -75,7 +74,7 @@ resource "signalfx_detector" "eventhub_errors" {
   }
 
   rule {
-    description           = "is too high > ${var.eventhub_errors_threshold_warning}"
+    description           = "is too high > ${var.eventhub_errors_threshold_warning}%"
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.eventhub_errors_disabled_warning, var.eventhub_errors_disabled, var.detectors_disabled)
