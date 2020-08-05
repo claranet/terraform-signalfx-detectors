@@ -85,17 +85,11 @@ variable "no_successful_message_notifications_critical" {
 variable "no_successful_message_aggregation_function" {
   description = "Aggregation function and group by for no_successful_message detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
-variable "no_successful_message_transformation_function" {
-  description = "Transformation function for no_successful_message detector (mean, min, max)"
-  type        = string
-  default     = "min"
-}
-
-variable "no_successful_message_transformation_window" {
-  description = "Transformation window for no_successful_message detector (i.e. 5m, 20m, 1h, 1d)"
+variable "no_successful_message_timer" {
+  description = "Evaluation window for no_successful_message detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
 }
@@ -103,7 +97,7 @@ variable "no_successful_message_transformation_window" {
 variable "no_successful_message_threshold_critical" {
   description = "Critical threshold for no_successful_message detector"
   type        = number
-  default     = 0
+  default     = 1
 }
 
 # failed_messages detectors
@@ -147,17 +141,11 @@ variable "failed_messages_notifications_critical" {
 variable "failed_messages_aggregation_function" {
   description = "Aggregation function and group by for failed_messages detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
-variable "failed_messages_transformation_function" {
-  description = "Transformation function for failed_messages detector (mean, min, max)"
-  type        = string
-  default     = "min"
-}
-
-variable "failed_messages_transformation_window" {
-  description = "Transformation window for failed_messages detector (i.e. 5m, 20m, 1h, 1d)"
+variable "failed_messages_timer" {
+  description = "Evaluation window for failed_messages detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
 }
@@ -172,18 +160,6 @@ variable "failed_messages_threshold_warning" {
   description = "Warning threshold for failed_messages detector"
   type        = number
   default     = 50
-}
-
-variable "failed_messages_aperiodic_duration" {
-  description = "Duration for the failed_messages block"
-  type        = string
-  default     = "10m"
-}
-
-variable "failed_messages_aperiodic_percentage" {
-  description = "Percentage for the failed_messages block"
-  type        = number
-  default     = 0.9
 }
 
 # unmatched_events detectors
@@ -227,17 +203,11 @@ variable "unmatched_events_notifications_critical" {
 variable "unmatched_events_aggregation_function" {
   description = "Aggregation function and group by for unmatched_events detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
-variable "unmatched_events_transformation_function" {
-  description = "Transformation function for unmatched_events detector (mean, min, max)"
-  type        = string
-  default     = "min"
-}
-
-variable "unmatched_events_transformation_window" {
-  description = "Transformation window for unmatched_events detector (i.e. 5m, 20m, 1h, 1d)"
+variable "unmatched_events_timer" {
+  description = "Evaluation window for unmatched_events detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
 }
@@ -252,16 +222,4 @@ variable "unmatched_events_threshold_warning" {
   description = "Warning threshold for unmatched_events detector"
   type        = number
   default     = 50
-}
-
-variable "unmatched_events_aperiodic_duration" {
-  description = "Duration for the unmatched_events block"
-  type        = string
-  default     = "10m"
-}
-
-variable "unmatched_events_aperiodic_percentage" {
-  description = "Percentage for the unmatched_events block"
-  type        = number
-  default     = 0.9
 }

@@ -3,8 +3,9 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting
-        signal = data('DeliverySuccessCount', filter=filter('resource_type', 'Microsoft.EventGrid/topics') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}).publish('signal')
-        not_reporting.detector(stream=signal, resource_identifier=['EventSubscriptionName'], duration='${var.heartbeat_timeframe}').publish('CRIT')
+        base_filter = filter('resource_type', 'Microsoft.EventGrid/topics') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}
+        signal = data('DeliverySuccessCount', filter=base_filter).publish('signal')
+        not_reporting.detector(stream=signal, resource_identifier=['azure_resource_name', 'azure_resource_group_name'], duration='${var.heartbeat_timeframe}').publish('CRIT')
     EOF
 
   rule {
@@ -21,8 +22,9 @@ resource "signalfx_detector" "no_successful_message" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Event Grid no successful message"
 
   program_text = <<-EOF
-        signal = data('PublishSuccessCount', filter=filter('resource_type', 'Microsoft.EventGrid/topics')and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.no_successful_message_aggregation_function}.${var.no_successful_message_transformation_function}(over='${var.no_successful_message_transformation_window}').publish('signal')
-        detect(when(signal < ${var.no_successful_message_threshold_critical})).publish('CRIT')
+        base_filter = filter('resource_type', 'Microsoft.EventGrid/topics') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}
+        signal = data('PublishSuccessCount', filter=base_filter)${var.no_successful_message_aggregation_function}.publish('signal')
+        detect(when(signal < threshold(${var.no_successful_message_threshold_critical}), lasting="${var.no_successful_message_timer}")).publish('CRIT')
     EOF
 
   rule {
@@ -37,20 +39,20 @@ resource "signalfx_detector" "no_successful_message" {
 }
 
 resource "signalfx_detector" "failed_messages" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Event Grid failed message rate"
+  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Event Grid failed messages rate"
 
   program_text = <<-EOF
-        from signalfx.detectors.aperiodic import aperiodic
-        A = data('PublishFailCount', filter=filter('resource_type', 'Microsoft.EventGrid/topics') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.failed_messages_aggregation_function}
-        B = data('PublishSuccessCount', filter=filter('resource_type', 'Microsoft.EventGrid/topics') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.failed_messages_aggregation_function}
-        C = data('UnmatchedEventCount', filter=filter('resource_type', 'Microsoft.EventGrid/topics') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.failed_messages_aggregation_function}
-        signal = ((A/(A+B+C))*100).${var.failed_messages_transformation_function}(over='${var.failed_messages_transformation_window}').publish('signal')
-        aperiodic.above_or_below_detector(signal, ${var.failed_messages_threshold_critical}, 'above', lasting('${var.failed_messages_aperiodic_duration}', ${var.failed_messages_aperiodic_percentage})).publish('CRIT')
-        aperiodic.range_detector(signal, ${var.failed_messages_threshold_warning}, ${var.failed_messages_threshold_critical}, 'within_range', lasting('${var.failed_messages_aperiodic_duration}', ${var.failed_messages_aperiodic_percentage}), upper_strict=False).publish('WARN')
+        base_filter = filter('resource_type', 'Microsoft.EventGrid/topics') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}
+        A = data('PublishFailCount', extrapolation='zero', filter=base_filter)${var.failed_messages_aggregation_function}
+        B = data('PublishSuccessCount', extrapolation='zero', filter=base_filter)${var.failed_messages_aggregation_function}
+        C = data('UnmatchedEventCount', extrapolation='zero', filter=base_filter)${var.failed_messages_aggregation_function}
+        signal = (A/(A+B+C)).scale(100).fill(0).publish('signal')
+        detect(when(signal > threshold(${var.failed_messages_threshold_critical}), lasting="${var.failed_messages_timer}")).publish('CRIT')
+        detect(when(signal > threshold(${var.failed_messages_threshold_warning}), lasting="${var.failed_messages_timer}") and when(signal <= ${var.failed_messages_threshold_critical})).publish('WARN')
     EOF
 
   rule {
-    description           = "is too high > ${var.failed_messages_threshold_critical}"
+    description           = "is too high > ${var.failed_messages_threshold_critical}%"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.failed_messages_disabled_critical, var.failed_messages_disabled, var.detectors_disabled)
@@ -59,7 +61,7 @@ resource "signalfx_detector" "failed_messages" {
   }
 
   rule {
-    description           = "is too high > ${var.failed_messages_threshold_warning}"
+    description           = "is too high > ${var.failed_messages_threshold_warning}%"
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.failed_messages_disabled_warning, var.failed_messages_disabled, var.detectors_disabled)
@@ -72,17 +74,17 @@ resource "signalfx_detector" "unmatched_events" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Event Grid unmatched event rate"
 
   program_text = <<-EOF
-        from signalfx.detectors.aperiodic import aperiodic
-        A = data('UnmatchedEventCount', filter=filter('resource_type', 'Microsoft.EventGrid/topics') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.unmatched_events_aggregation_function}
-        B = data('PublishSuccessCount', filter=filter('resource_type', 'Microsoft.EventGrid/topics') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.unmatched_events_aggregation_function}
-        C = data('PublishFailCount', filter=filter('resource_type', 'Microsoft.EventGrid/topics') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom})${var.unmatched_events_aggregation_function}
-        signal = ((A/(A+B+C))*100).${var.unmatched_events_transformation_function}(over='${var.unmatched_events_transformation_window}').publish('signal')
-        aperiodic.above_or_below_detector(signal, ${var.unmatched_events_threshold_critical}, 'above', lasting('${var.unmatched_events_aperiodic_duration}', ${var.unmatched_events_aperiodic_percentage})).publish('CRIT')
-        aperiodic.range_detector(signal, ${var.unmatched_events_threshold_warning}, ${var.unmatched_events_threshold_critical}, 'within_range', lasting('${var.unmatched_events_aperiodic_duration}', ${var.unmatched_events_aperiodic_percentage}), upper_strict=False).publish('WARN')
+        base_filter = filter('resource_type', 'Microsoft.EventGrid/topics') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}
+        A = data('PublishFailCount', extrapolation='zero', filter=base_filter)${var.unmatched_events_aggregation_function}
+        B = data('PublishSuccessCount', extrapolation='zero', filter=base_filter)${var.unmatched_events_aggregation_function}
+        C = data('UnmatchedEventCount', extrapolation='zero', filter=base_filter)${var.unmatched_events_aggregation_function}
+        signal = (C/(A+B+C)).scale(100).fill(0).publish('signal')
+        detect(when(signal > threshold(${var.unmatched_events_threshold_critical}), lasting="${var.unmatched_events_timer}")).publish('CRIT')
+        detect(when(signal > threshold(${var.unmatched_events_threshold_warning}), lasting="${var.unmatched_events_timer}") and when(signal <= ${var.unmatched_events_threshold_critical})).publish('WARN')
     EOF
 
   rule {
-    description           = "is too high > ${var.unmatched_events_threshold_critical}"
+    description           = "is too high > ${var.unmatched_events_threshold_critical}%"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.unmatched_events_disabled_critical, var.unmatched_events_disabled, var.detectors_disabled)
@@ -91,7 +93,7 @@ resource "signalfx_detector" "unmatched_events" {
   }
 
   rule {
-    description           = "is too high > ${var.unmatched_events_threshold_warning}"
+    description           = "is too high > ${var.unmatched_events_threshold_warning}%"
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.unmatched_events_disabled_warning, var.unmatched_events_disabled, var.detectors_disabled)
