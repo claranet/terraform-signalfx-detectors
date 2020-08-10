@@ -38,6 +38,12 @@ variable "detectors_disabled" {
 
 # AWS ELB detectors specific
 
+variable "minimum_traffic" {
+  description = "Minimum required traffic to evaluate rate of errors detectors"
+  type        = number
+  default     = 4
+}
+
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
   type        = bool
@@ -101,15 +107,9 @@ variable "no_healthy_instances_aggregation_function" {
 }
 
 variable "no_healthy_instances_transformation_function" {
-  description = "Transformation function for no_healthy_instances detector (mean, min, max)"
+  description = "Transformation function for no_healthy_instances detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
-}
-
-variable "no_healthy_instances_transformation_window" {
-  description = "Transformation window for no_healthy_instances detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "5m"
+  default     = ".min(over='5m')"
 }
 
 variable "no_healthy_instances_threshold_critical" {
@@ -124,298 +124,298 @@ variable "no_healthy_instances_threshold_warning" {
   default     = 100
 }
 
-# Too_much_4xx detectors
+# 4xx detectors
 
-variable "too_much_4xx_disabled" {
-  description = "Disable all alerting rules for too_much_4xx detector"
+variable "elb_4xx_disabled" {
+  description = "Disable all alerting rules for 4xx detector"
   type        = bool
   default     = null
 }
 
-variable "too_much_4xx_disabled_critical" {
-  description = "Disable critical alerting rule for too_much_4xx detector"
+variable "elb_4xx_disabled_critical" {
+  description = "Disable critical alerting rule for 4xx detector"
   type        = bool
   default     = null
 }
 
-variable "too_much_4xx_disabled_warning" {
-  description = "Disable warning alerting rule for httpcode 5xx erros detector"
+variable "elb_4xx_disabled_warning" {
+  description = "Disable warning alerting rule for httpcode 4xx erros detector"
   type        = bool
   default     = null
 }
 
-variable "too_much_4xx_notifications" {
-  description = "Notification recipients list for every alerting rules of too_much_4xx detector"
+variable "elb_4xx_notifications" {
+  description = "Notification recipients list for every alerting rules of 4xx detector"
   type        = list
   default     = []
 }
 
-variable "too_much_4xx_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of too_much_4xx detector"
+variable "elb_4xx_notifications_warning" {
+  description = "Notification recipients list for warning alerting rule of 4xx detector"
   type        = list
   default     = []
 }
 
-variable "too_much_4xx_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of too_much_4xx detector"
+variable "elb_4xx_notifications_critical" {
+  description = "Notification recipients list for critical alerting rule of 4xx detector"
   type        = list
   default     = []
 }
 
-variable "too_much_4xx_aggregation_function" {
-  description = "Aggregation function and group by for too_much_4xx detector (i.e. \".mean(by=['host'])\")"
+variable "elb_4xx_aggregation_function" {
+  description = "Aggregation function and group by for elb_4xx detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
 }
 
-variable "too_much_4xx_transformation_function" {
-  description = "Transformation function for too_much_4xx detector (mean, min, max)"
-  type        = string
-  default     = "sum"
-}
-
-variable "too_much_4xx_transformation_window" {
-  description = "Transformation window for too_much_4xx detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "5m"
-}
-
-variable "too_much_4xx_threshold_critical" {
-  description = "Critical threshold for too_much_4xx detector"
-  type        = number
-  default     = 10
-}
-
-variable "too_much_4xx_threshold_warning" {
-  description = "Warning threshold for too_much_4xx detector"
-  type        = number
-  default     = 5
-}
-
-variable "too_much_4xx_threshold_number_requests" {
-  description = "Number threshold for too_much_4xx detector"
-  type        = number
-  default     = 5
-}
-
-# Too_much_5xx detectors
-
-variable "too_much_5xx_disabled" {
-  description = "Disable all alerting rules for too_much_5xx detector"
-  type        = bool
-  default     = null
-}
-
-variable "too_much_5xx_disabled_critical" {
-  description = "Disable critical alerting rule for too_much_5xx detector"
-  type        = bool
-  default     = null
-}
-
-variable "too_much_5xx_disabled_warning" {
-  description = "Disable warning alerting rule for too_much_5xx detector"
-  type        = bool
-  default     = null
-}
-
-variable "too_much_5xx_notifications" {
-  description = "Notification recipients list for every alerting rules of too_much_5xx detector"
-  type        = list
-  default     = []
-}
-
-variable "too_much_5xx_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of too_much_5xx detector"
-  type        = list
-  default     = []
-}
-
-variable "too_much_5xx_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of too_much_5xx detector"
-  type        = list
-  default     = []
-}
-
-variable "too_much_5xx_aggregation_function" {
-  description = "Aggregation function and group by for too_much_5xx detector (i.e. \".mean(by=['host'])\")"
+variable "elb_4xx_transformation_function" {
+  description = "Transformation function for elb_4xx detector (i.e. \".mean(over='5m')\"))"
   type        = string
   default     = ""
 }
 
-variable "too_much_5xx_transformation_function" {
-  description = "Transformation function for too_much_5xx detector (mean, min, max)"
-  type        = string
-  default     = "sum"
-}
-
-variable "too_much_5xx_transformation_window" {
-  description = "Transformation window for too_much_5xx detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "5m"
-}
-
-variable "too_much_5xx_threshold_critical" {
-  description = "Critical threshold for too_much_5xx detector"
+variable "elb_4xx_lasting_duration_seconds" {
+  description = "Minimum duration that conditions must be true before raising alert (in seconds)"
   type        = number
-  default     = 10
+  default     = 300
 }
 
-variable "too_much_5xx_threshold_warning" {
-  description = "Warning threshold for too_much_5xx detector"
+variable "elb_4xx_at_least_percentage" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
-  default     = 5
+  default     = 0.9
 }
 
-variable "too_much_5xx_threshold_number_requests" {
-  description = "Number threshold for too_much_5xx detector"
+variable "elb_4xx_threshold_critical" {
+  description = "Critical threshold for 4xx detector"
   type        = number
-  default     = 5
+  default     = 40
 }
 
-# Too_much_4xx_backend detectors
+variable "elb_4xx_threshold_warning" {
+  description = "Warning threshold for 4xx detector"
+  type        = number
+  default     = 20
+}
 
-variable "too_much_4xx_backend_disabled" {
-  description = "Disable all alerting rules for too_much_4xx_backend detector"
+# 5xx detectors
+
+variable "elb_5xx_disabled" {
+  description = "Disable all alerting rules for 5xx detector"
   type        = bool
   default     = null
 }
 
-variable "too_much_4xx_backend_disabled_critical" {
-  description = "Disable critical alerting rule for too_much_4xx_backend detector"
+variable "elb_5xx_disabled_critical" {
+  description = "Disable critical alerting rule for 5xx detector"
   type        = bool
   default     = null
 }
 
-variable "too_much_4xx_backend_disabled_warning" {
-  description = "Disable warning alerting rule for too_much_4xx_backend detector"
+variable "elb_5xx_disabled_warning" {
+  description = "Disable warning alerting rule for 5xx detector"
   type        = bool
   default     = null
 }
 
-variable "too_much_4xx_backend_notifications" {
-  description = "Notification recipients list for every alerting rules of too_much_4xx_backend detector"
+variable "elb_5xx_notifications" {
+  description = "Notification recipients list for every alerting rules of 5xx detector"
   type        = list
   default     = []
 }
 
-variable "too_much_4xx_backend_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of too_much_4xx_backend detector"
+variable "elb_5xx_notifications_warning" {
+  description = "Notification recipients list for warning alerting rule of 5xx detector"
   type        = list
   default     = []
 }
 
-variable "too_much_4xx_backend_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of too_much_4xx_backend detector"
+variable "elb_5xx_notifications_critical" {
+  description = "Notification recipients list for critical alerting rule of 5xx detector"
   type        = list
   default     = []
 }
 
-variable "too_much_4xx_backend_aggregation_function" {
-  description = "Aggregation function and group by for too_much_4xx_backend detector (i.e. \".mean(by=['host'])\")"
+variable "elb_5xx_aggregation_function" {
+  description = "Aggregation function and group by for elb_5xx detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
 }
 
-variable "too_much_4xx_backend_transformation_function" {
-  description = "Transformation function for too_much_4xx_backend detector (mean, min, max)"
-  type        = string
-  default     = "sum"
-}
-
-variable "too_much_4xx_backend_transformation_window" {
-  description = "Transformation window for too_much_4xx_backend detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "5m"
-}
-
-variable "too_much_4xx_backend_threshold_critical" {
-  description = "Critical threshold for too_much_4xx_backend detector"
-  type        = number
-  default     = 10
-}
-
-variable "too_much_4xx_backend_threshold_warning" {
-  description = "Warning threshold for too_much_4xx_backend detector"
-  type        = number
-  default     = 5
-}
-
-variable "too_much_4xx_backend_threshold_number_requests" {
-  description = "Number threshold for too_much_4xx_backend detector"
-  type        = number
-  default     = 5
-}
-
-# too_much_5xx_backend detectors
-
-variable "too_much_5xx_backend_disabled" {
-  description = "Disable all alerting rules for too_much_5xx_backend detector"
-  type        = bool
-  default     = null
-}
-
-variable "too_much_5xx_backend_disabled_critical" {
-  description = "Disable critical alerting rule for too_much_5xx_backend detector"
-  type        = bool
-  default     = null
-}
-
-variable "too_much_5xx_backend_disabled_warning" {
-  description = "Disable warning alerting rule for too_much_5xx_backend detector"
-  type        = bool
-  default     = null
-}
-
-variable "too_much_5xx_backend_notifications" {
-  description = "Notification recipients list for every alerting rules of too_much_5xx_backend detector"
-  type        = list
-  default     = []
-}
-
-variable "too_much_5xx_backend_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of too_much_5xx_backend detector"
-  type        = list
-  default     = []
-}
-
-variable "too_much_5xx_backend_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of too_much_5xx_backend detector"
-  type        = list
-  default     = []
-}
-
-variable "too_much_5xx_backend_aggregation_function" {
-  description = "Aggregation function and group by for too_much_5xx_backend detector (i.e. \".mean(by=['host'])\")"
+variable "elb_5xx_transformation_function" {
+  description = "Transformation function for elb_5xx detector (i.e. \".mean(over='5m')\"))"
   type        = string
   default     = ""
 }
 
-variable "too_much_5xx_backend_transformation_function" {
-  description = "Transformation function for too_much_5xx_backend detector (mean, min, max)"
-  type        = string
-  default     = "sum"
+variable "elb_5xx_lasting_duration_seconds" {
+  description = "Minimum duration that conditions must be true before raising alert (in seconds)"
+  type        = number
+  default     = 300
 }
 
-variable "too_much_5xx_backend_transformation_window" {
-  description = "Transformation window for too_much_5xx_backend detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "5m"
+variable "elb_5xx_at_least_percentage" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 0.9
 }
 
-variable "too_much_5xx_backend_threshold_critical" {
-  description = "Critical threshold for too_much_5xx_backend detector"
+variable "elb_5xx_threshold_critical" {
+  description = "Critical threshold for 5xx detector"
   type        = number
   default     = 10
 }
 
-variable "too_much_5xx_backend_threshold_warning" {
-  description = "Warning threshold for too_much_5xx_backend detector"
+variable "elb_5xx_threshold_warning" {
+  description = "Warning threshold for 5xx detector"
   type        = number
   default     = 5
 }
 
-variable "too_much_5xx_backend_threshold_number_requests" {
-  description = "Number threshold for too_much_5xx_backend detector"
+# backend_4xx detectors
+
+variable "backend_4xx_disabled" {
+  description = "Disable all alerting rules for backend_4xx detector"
+  type        = bool
+  default     = null
+}
+
+variable "backend_4xx_disabled_critical" {
+  description = "Disable critical alerting rule for backend_4xx detector"
+  type        = bool
+  default     = null
+}
+
+variable "backend_4xx_disabled_warning" {
+  description = "Disable warning alerting rule for backend_4xx detector"
+  type        = bool
+  default     = null
+}
+
+variable "backend_4xx_notifications" {
+  description = "Notification recipients list for every alerting rules of backend_4xx detector"
+  type        = list
+  default     = []
+}
+
+variable "backend_4xx_notifications_warning" {
+  description = "Notification recipients list for warning alerting rule of backend_4xx detector"
+  type        = list
+  default     = []
+}
+
+variable "backend_4xx_notifications_critical" {
+  description = "Notification recipients list for critical alerting rule of backend_4xx detector"
+  type        = list
+  default     = []
+}
+
+variable "backend_4xx_aggregation_function" {
+  description = "Aggregation function and group by for backend_4xx detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ""
+}
+
+variable "backend_4xx_transformation_function" {
+  description = "Transformation function for backend_4xx detector (i.e. \".mean(over='5m')\"))"
+  type        = string
+  default     = ""
+}
+
+variable "backend_4xx_lasting_duration_seconds" {
+  description = "Minimum duration that conditions must be true before raising alert (in seconds)"
+  type        = number
+  default     = 300
+}
+
+variable "backend_4xx_at_least_percentage" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 0.9
+}
+
+variable "backend_4xx_threshold_critical" {
+  description = "Critical threshold for backend_4xx detector"
+  type        = number
+  default     = 40
+}
+
+variable "backend_4xx_threshold_warning" {
+  description = "Warning threshold for backend_4xx detector"
+  type        = number
+  default     = 20
+}
+
+# backend_5xx detectors
+
+variable "backend_5xx_disabled" {
+  description = "Disable all alerting rules for backend_5xx detector"
+  type        = bool
+  default     = null
+}
+
+variable "backend_5xx_disabled_critical" {
+  description = "Disable critical alerting rule for backend_5xx detector"
+  type        = bool
+  default     = null
+}
+
+variable "backend_5xx_disabled_warning" {
+  description = "Disable warning alerting rule for backend_5xx detector"
+  type        = bool
+  default     = null
+}
+
+variable "backend_5xx_notifications" {
+  description = "Notification recipients list for every alerting rules of backend_5xx detector"
+  type        = list
+  default     = []
+}
+
+variable "backend_5xx_notifications_warning" {
+  description = "Notification recipients list for warning alerting rule of backend_5xx detector"
+  type        = list
+  default     = []
+}
+
+variable "backend_5xx_notifications_critical" {
+  description = "Notification recipients list for critical alerting rule of backend_5xx detector"
+  type        = list
+  default     = []
+}
+
+variable "backend_5xx_aggregation_function" {
+  description = "Aggregation function and group by for backend_5xx detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ""
+}
+
+variable "backend_5xx_transformation_function" {
+  description = "Transformation function for backend_5xx detector (i.e. \".mean(over='5m')\"))"
+  type        = string
+  default     = ""
+}
+
+variable "backend_5xx_lasting_duration_seconds" {
+  description = "Minimum duration that conditions must be true before raising alert (in seconds)"
+  type        = number
+  default     = 300
+}
+
+variable "backend_5xx_at_least_percentage" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 0.9
+}
+
+variable "backend_5xx_threshold_critical" {
+  description = "Critical threshold for backend_5xx detector"
+  type        = number
+  default     = 10
+}
+
+variable "backend_5xx_threshold_warning" {
+  description = "Warning threshold for backend_5xx detector"
   type        = number
   default     = 5
 }
@@ -465,15 +465,21 @@ variable "backend_latency_aggregation_function" {
 }
 
 variable "backend_latency_transformation_function" {
-  description = "Transformation function for backend_latency detector (mean, min, max)"
+  description = "Transformation function for backend_latency detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
+  default     = ""
 }
 
-variable "backend_latency_transformation_window" {
-  description = "Transformation window for backend_latency detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "5m"
+variable "backend_latency_lasting_duration_seconds" {
+  description = "Minimum duration that conditions must be true before raising alert (in seconds)"
+  type        = number
+  default     = 600
+}
+
+variable "backend_latency_at_least_percentage" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 0.9
 }
 
 variable "backend_latency_threshold_critical" {
@@ -488,14 +494,3 @@ variable "backend_latency_threshold_warning" {
   default     = 1
 }
 
-variable "backend_latency_aperiodic_duration" {
-  description = "Duration for the backend_latency block"
-  type        = string
-  default     = "10m"
-}
-
-variable "backend_latency_aperiodic_percentage" {
-  description = "Percentage for the backend_latency block"
-  type        = number
-  default     = 0.9
-}

@@ -76,126 +76,22 @@ variable "pct_errors_notifications_critical" {
   default     = []
 }
 
-variable "pct_errors_aggregation_function" {
-  description = "Aggregation function and group by for pct_errors detector (i.e. \".mean(by=['host'])\")"
-  type        = string
-  default     = ".sum(by=['FunctionName'])"
-}
-
-variable "pct_errors_transformation_function" {
-  description = "Transformation function for pct_errors detector (mean, min, max)"
-  type        = string
-  default     = "sum"
-}
-
-variable "pct_errors_transformation_window" {
-  description = "Transformation window for pct_errors detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "1h"
+variable "pct_errors_lasting_duration_seconds" {
+  description = "Minimum duration that conditions must be true before raising alert (in seconds)"
+  type        = number
+  default     = 900
 }
 
 variable "pct_errors_threshold_critical" {
   description = "Critical threshold for pct_errors detector"
   type        = number
-  default     = 30
+  default     = 25
 }
 
 variable "pct_errors_threshold_warning" {
   description = "Warning threshold for pct_errors detector"
   type        = number
-  default     = 20
-}
-
-variable "pct_errors_aperiodic_duration" {
-  description = "Duration for the pct_errors block"
-  type        = string
-  default     = "10m"
-}
-
-variable "pct_errors_aperiodic_percentage" {
-  description = "Percentage for the pct_errors block"
-  type        = number
-  default     = 0.9
-}
-
-# Errors detectors
-
-variable "errors_disabled" {
-  description = "Disable all alerting rules for errors detector"
-  type        = bool
-  default     = true
-}
-
-variable "errors_disabled_critical" {
-  description = "Disable critical alerting rule for errors detector"
-  type        = bool
-  default     = null
-}
-
-variable "errors_disabled_warning" {
-  description = "Disable warning alerting rule for errors detector"
-  type        = bool
-  default     = null
-}
-
-variable "errors_notifications" {
-  description = "Notification recipients list for every alerting rules of errors detector"
-  type        = list
-  default     = []
-}
-
-variable "errors_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of errors detector"
-  type        = list
-  default     = []
-}
-
-variable "errors_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of errors detector"
-  type        = list
-  default     = []
-}
-
-variable "errors_aggregation_function" {
-  description = "Aggregation function and group by for errors detector (i.e. \".mean(by=['host'])\")"
-  type        = string
-  default     = ".sum(by=['FunctionName'])"
-}
-
-variable "errors_transformation_function" {
-  description = "Transformation function for errors detector (mean, min, max)"
-  type        = string
-  default     = "sum"
-}
-
-variable "errors_transformation_window" {
-  description = "Transformation window for errors detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "1h"
-}
-
-variable "errors_threshold_critical" {
-  description = "Critical threshold for errors detector"
-  type        = number
-  default     = 3
-}
-
-variable "errors_threshold_warning" {
-  description = "Warning threshold for errors detector"
-  type        = number
-  default     = 1
-}
-
-variable "errors_aperiodic_duration" {
-  description = "Duration for the errors block"
-  type        = string
-  default     = "10m"
-}
-
-variable "errors_aperiodic_percentage" {
-  description = "Percentage for the errors block"
-  type        = number
-  default     = 0.9
+  default     = 0
 }
 
 # Throttles detectors
@@ -239,7 +135,7 @@ variable "throttles_notifications_critical" {
 variable "throttles_aggregation_function" {
   description = "Aggregation function and group by for throttles detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['FunctionName'])"
+  default     = ""
 }
 
 variable "throttles_transformation_function" {
@@ -257,25 +153,13 @@ variable "throttles_transformation_window" {
 variable "throttles_threshold_critical" {
   description = "Critical threshold for throttles detector"
   type        = number
-  default     = 3
+  default     = 1
 }
 
 variable "throttles_threshold_warning" {
   description = "Warning threshold for throttles detector"
   type        = number
-  default     = 1
-}
-
-variable "throttles_aperiodic_duration" {
-  description = "Duration for the throttles block"
-  type        = string
-  default     = "10m"
-}
-
-variable "throttles_aperiodic_percentage" {
-  description = "Percentage for the throttles block"
-  type        = number
-  default     = 0.9
+  default     = 0
 }
 
 # invocations detectors
@@ -286,32 +170,8 @@ variable "invocations_disabled" {
   default     = true
 }
 
-variable "invocations_disabled_critical" {
-  description = "Disable critical alerting rule for invocations detector"
-  type        = bool
-  default     = null
-}
-
-variable "invocations_disabled_warning" {
-  description = "Disable warning alerting rule for invocations detector"
-  type        = bool
-  default     = null
-}
-
 variable "invocations_notifications" {
   description = "Notification recipients list for every alerting rules of invocations detector"
-  type        = list
-  default     = []
-}
-
-variable "invocations_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of invocations detector"
-  type        = list
-  default     = []
-}
-
-variable "invocations_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of invocations detector"
   type        = list
   default     = []
 }
@@ -319,7 +179,7 @@ variable "invocations_notifications_critical" {
 variable "invocations_aggregation_function" {
   description = "Aggregation function and group by for invocations detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['FunctionName'])"
+  default     = ""
 }
 
 variable "invocations_transformation_function" {
@@ -331,29 +191,12 @@ variable "invocations_transformation_function" {
 variable "invocations_transformation_window" {
   description = "Transformation window for invocations detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
-  default     = "30m"
-}
-
-variable "invocations_threshold_critical" {
-  description = "Critical threshold for invocations detector"
-  type        = number
-  default     = 1
+  default     = "1h"
 }
 
 variable "invocations_threshold_warning" {
   description = "Warning threshold for invocations detector"
   type        = number
-  default     = 2
+  default     = 1
 }
 
-variable "invocations_aperiodic_duration" {
-  description = "Duration for the invocations block"
-  type        = string
-  default     = "10m"
-}
-
-variable "invocations_aperiodic_percentage" {
-  description = "Percentage for the invocations block"
-  type        = number
-  default     = 0.9
-}
