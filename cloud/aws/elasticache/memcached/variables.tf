@@ -76,6 +76,18 @@ variable "hit_ratio_notifications_critical" {
   default     = []
 }
 
+variable "hit_ratio_aggregation_function" {
+  description = "Aggregation function and group by for elb_4xx detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ""
+}
+
+variable "hit_ratio_transformation_function" {
+  description = "Transformation function for elb_4xx detector (i.e. \".mean(over='5m')\"))"
+  type        = string
+  default     = ""
+}
+
 variable "hit_ratio_lasting_duration_seconds" {
   description = "Minimum duration that conditions must be true before raising alert (in seconds)"
   type        = number
