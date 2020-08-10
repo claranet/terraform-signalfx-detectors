@@ -2,11 +2,11 @@ resource "signalfx_detector" "cache_hits" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ElastiCache redis cache hit ratio"
 
   program_text = <<-EOF
-    A = data('CacheHits', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.cache_hits_aggregation_function}
-    B = data('CacheMisses', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.cache_hits_aggregation_function}
-    signal = (A/(A+B)).scale(100).${var.cache_hits_transformation_function}(over='${var.cache_hits_transformation_window}').publish('signal')
-    detect(when(signal < ${var.cache_hits_threshold_critical})).publish('CRIT')
-    detect(when(signal < ${var.cache_hits_threshold_warning}) and when(signal >= ${var.cache_hits_threshold_critical})).publish('WARN')
+    A = data('CacheHits', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.cache_hits_aggregation_function}${var.cache_hits_transformation_function}
+    B = data('CacheMisses', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.cache_hits_aggregation_function}${var.cache_hits_transformation_function}
+    signal = (A/(A+B)).fill(value=1).scale(100).publish('signal')
+    detect(when(signal < threshold(${var.cache_hits_threshold_critical}), lasting='${var.cache_hits_lasting_duration_seconds}s', at_least=${var.cache_hits_at_least_percentage})).publish('CRIT')
+    detect((when(signal < threshold(${var.cache_hits_threshold_warning}), lasting='${var.cache_hits_lasting_duration_seconds}s', at_least=${var.cache_hits_at_least_percentage}) and when(signal >= ${var.cache_hits_threshold_critical})), off=(when(signal >= ${var.cache_hits_threshold_warning}, lasting='${var.cache_hits_lasting_duration_seconds / 2}s') or when(signal <= ${var.cache_hits_threshold_critical}, lasting='${var.cache_hits_lasting_duration_seconds}s', at_least=${var.cache_hits_at_least_percentage})), mode='paired').publish('WARN')
 EOF
 
   rule {

@@ -77,21 +77,27 @@ variable "cache_hits_notifications_critical" {
 }
 
 variable "cache_hits_aggregation_function" {
-  description = "Aggregation function and group by for cache_hits detector (i.e. \".mean(by=['host'])\")"
+  description = "Aggregation function and group by for elb_4xx detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
 }
 
 variable "cache_hits_transformation_function" {
-  description = "Transformation function for cache_hits detector (mean, min, max)"
+  description = "Transformation function for elb_4xx detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "max"
+  default     = ""
 }
 
-variable "cache_hits_transformation_window" {
-  description = "Transformation window for cache_hits detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "15m"
+variable "cache_hits_lasting_duration_seconds" {
+  description = "Minimum duration that conditions must be true before raising alert (in seconds)"
+  type        = number
+  default     = 300
+}
+
+variable "cache_hits_at_least_percentage" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 0.9
 }
 
 variable "cache_hits_threshold_critical" {

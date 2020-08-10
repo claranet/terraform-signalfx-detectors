@@ -2,11 +2,11 @@ resource "signalfx_detector" "hit_ratio" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ElastiCache memcached hit ratio"
 
   program_text = <<-EOF
-    A = data('GetHits', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')
-    B = data('GetMisses', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')
-    signal = (A/(A+B)).fill(value=0).scale(100).publish('signal')
-    detect(when(signal > threshold(${var.hit_ratio_threshold_critical}), lasting='${var.hit_ratio_lasting_duration_seconds}s', at_least=${var.hit_ratio_at_least_percentage})).publish('CRIT')
-    detect((when(signal > threshold(${var.hit_ratio_threshold_warning}), lasting='${var.hit_ratio_lasting_duration_seconds}s', at_least=${var.hit_ratio_at_least_percentage}) and when(signal <= ${var.hit_ratio_threshold_critical})), off=(when(signal <= ${var.hit_ratio_threshold_warning}, lasting='${var.hit_ratio_lasting_duration_seconds / 2}s') or when(signal >= ${var.hit_ratio_threshold_critical}, lasting='${var.hit_ratio_lasting_duration_seconds}s', at_least=${var.hit_ratio_at_least_percentage})), mode='paired').publish('WARN')
+    A = data('GetHits', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.hit_ratio_aggregation_function}${var.hit_ratio_transformation_function}
+    B = data('GetMisses', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.hit_ratio_aggregation_function}${var.hit_ratio_transformation_function}
+    signal = (A/(A+B)).fill(value=1).scale(100).publish('signal')
+    detect(when(signal < threshold(${var.hit_ratio_threshold_critical}), lasting='${var.hit_ratio_lasting_duration_seconds}s', at_least=${var.hit_ratio_at_least_percentage})).publish('CRIT')
+    detect((when(signal < threshold(${var.hit_ratio_threshold_warning}), lasting='${var.hit_ratio_lasting_duration_seconds}s', at_least=${var.hit_ratio_at_least_percentage}) and when(signal >= ${var.hit_ratio_threshold_critical})), off=(when(signal >= ${var.hit_ratio_threshold_warning}, lasting='${var.hit_ratio_lasting_duration_seconds / 2}s') or when(signal <= ${var.hit_ratio_threshold_critical}, lasting='${var.hit_ratio_lasting_duration_seconds}s', at_least=${var.hit_ratio_at_least_percentage})), mode='paired').publish('WARN')
 EOF
 
   rule {
