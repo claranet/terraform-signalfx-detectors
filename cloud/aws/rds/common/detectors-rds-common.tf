@@ -3,7 +3,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    signal = data('CPUUtilization', filter=filter('stat', 'mean') and filter('namespace', 'AWS/RDS') and (not filter('aws_state', '{Code: 32,Name: shutting-down', '{Code: 48,Name: terminated}', '{Code: 62,Name: stopping}', '{Code: 80,Name: stopped}')) and ${module.filter-tags.filter_custom}).publish('signal')
+    signal = data('CPUUtilization', filter=filter('stat', 'mean') and filter('namespace', 'AWS/RDS') and ${module.filter-tags.filter_custom}).mean(by=['DBInstanceIdentifier']).publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=['DBInstanceIdentifier'], duration='${var.heartbeat_timeframe}').publish('CRIT')
 EOF
 
@@ -79,7 +79,7 @@ resource "signalfx_detector" "replica_lag" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS RDS replica lag"
 
   program_text = <<-EOF
-    signal = data('ReplicaLag', filter=filter('namespace', 'AWS/RDS') and filter('stat', 'mean')and filter('DBInstanceIdentifier', '*') and ${module.filter-tags.filter_custom})${var.replica_lag_aggregation_function}.${var.replica_lag_transformation_function}(over='${var.replica_lag_transformation_window}').publish('signal')
+    signal = data('ReplicaLag', filter=filter('namespace', 'AWS/RDS') and filter('stat', 'mean') and filter('DBInstanceIdentifier', '*') and ${module.filter-tags.filter_custom})${var.replica_lag_aggregation_function}.${var.replica_lag_transformation_function}(over='${var.replica_lag_transformation_window}').publish('signal')
     detect(when(signal > ${var.replica_lag_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.replica_lag_threshold_warning}) and when(signal <= ${var.replica_lag_threshold_critical})).publish('WARN')
 EOF
