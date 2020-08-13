@@ -3,7 +3,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    signal = data('NumberOfMessagesReceived', filter=filter('stat', 'mean') and filter('namespace', 'AWS/SQS') and (not filter('aws_state', '{Code: 32,Name: shutting-down', '{Code: 48,Name: terminated}', '{Code: 62,Name: stopping}', '{Code: 80,Name: stopped}')) and ${module.filter-tags.filter_custom}).publish('signal')
+    signal = data('NumberOfMessagesReceived', filter=filter('stat', 'mean') and filter('namespace', 'AWS/SQS') and ${module.filter-tags.filter_custom}).mean(by=['QueueName']).publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=['QueueName'], duration='${var.heartbeat_timeframe}').publish('CRIT')
 EOF
 
@@ -21,7 +21,7 @@ resource "signalfx_detector" "visible_messages" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS SQS Visible messages"
 
   program_text = <<-EOF
-    signal = data('ApproximateNumberOfMessagesVisible', filter=filter('namespace', 'AWS/SQS')and filter('stat', 'upper') and ${module.filter-tags.filter_custom})${var.visible_messages_aggregation_function}.${var.visible_messages_transformation_function}(over='${var.visible_messages_transformation_window}').publish('signal')
+    signal = data('ApproximateNumberOfMessagesVisible', filter=filter('namespace', 'AWS/SQS') and filter('stat', 'upper') and ${module.filter-tags.filter_custom})${var.visible_messages_aggregation_function}.${var.visible_messages_transformation_function}(over='${var.visible_messages_transformation_window}').publish('signal')
     detect(when(signal > ${var.visible_messages_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.visible_messages_threshold_warning}) and when(signal <= ${var.visible_messages_threshold_critical})).publish('WARN')
 EOF
