@@ -3,7 +3,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    signal = data('InstanceHealth', filter=filter('stat', 'mean') and filter('namespace', 'AWS/ElasticBeanstalk') and (not filter('aws_state', '{Code: 32,Name: shutting-down', '{Code: 48,Name: terminated}', '{Code: 62,Name: stopping}', '{Code: 80,Name: stopped}')) and ${module.filter-tags.filter_custom}).publish('signal')
+    signal = data('InstanceHealth', filter=filter('stat', 'mean') and filter('namespace', 'AWS/ElasticBeanstalk') and ${module.filter-tags.filter_custom}).mean(by=['EnvironmentName']).publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=['EnvironmentName'], duration='${var.heartbeat_timeframe}').publish('CRIT')
 EOF
 
