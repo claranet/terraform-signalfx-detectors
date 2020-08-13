@@ -1,22 +1,3 @@
-resource "signalfx_detector" "heartbeat" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ApiGateway heartbeat"
-
-  program_text = <<-EOF
-    from signalfx.detectors.not_reporting import not_reporting
-    signal = data('IntegrationLatency', filter=filter('stat', 'mean') and filter('namespace', 'AWS/ApiGateway') and (not filter('aws_state', '{Code: 32,Name: shutting-down', '{Code: 48,Name: terminated}', '{Code: 62,Name: stopping}', '{Code: 80,Name: stopped}')) and ${module.filter-tags.filter_custom}).publish('signal')
-    not_reporting.detector(stream=signal, resource_identifier=['ApiName'], duration='${var.heartbeat_timeframe}').publish('CRIT')
-EOF
-
-  rule {
-    description           = "has not reported in ${var.heartbeat_timeframe}"
-    severity              = "Critical"
-    detect_label          = "CRIT"
-    disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.heartbeat_notifications, var.notifications)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} on {{{dimensions}}}"
-  }
-}
-
 # Monitoring Api Gateway latency
 resource "signalfx_detector" "latency" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ApiGateway latency"
