@@ -165,7 +165,7 @@ variable "latency_p90_notifications_critical" {
 variable "latency_p90_aggregation_function" {
   description = "Aggregation function and group by for latency_p90 detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".min(by=['EnvironmentName'])"
+  default     = ""
 }
 
 variable "latency_p90_transformation_function" {
@@ -233,7 +233,7 @@ variable "app_5xx_error_rate_notifications_critical" {
 variable "app_5xx_error_rate_aggregation_function" {
   description = "Aggregation function and group by for 5xx_error_rate detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['EnvironmentName'])"
+  default     = ""
 }
 
 variable "app_5xx_error_rate_transformation_function" {
