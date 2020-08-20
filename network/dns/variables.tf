@@ -53,7 +53,7 @@ variable "heartbeat_notifications" {
 variable "heartbeat_timeframe" {
   description = "Timeframe for system not reporting detector (i.e. \"10m\")"
   type        = string
-  default     = "10m"
+  default     = "20m"
 }
 
 # Dns_query_time detectors
