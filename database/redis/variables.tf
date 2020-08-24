@@ -247,7 +247,7 @@ variable "blocked_clients_threshold_warning" {
 variable "keyspace_full_disabled" {
   description = "Disable all alerting rules for keyspace_full detector"
   type        = bool
-  default     = null
+  default     = true
 }
 
 variable "keyspace_full_notifications" {
