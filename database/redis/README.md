@@ -1,6 +1,6 @@
 ## Notes
 
-Requires SignalFx Agent >= 5.5 and enable some extra metrics:
+Requires SignalFx Agent >= 5.4.2 and enable some extra metrics:
 
 ```
   - type: collectd/redis
@@ -11,3 +11,6 @@ Requires SignalFx Agent >= 5.5 and enable some extra metrics:
       - bytes.maxmemory
       - gauge.db0_keys
 ```
+
+__Notes__: the "keyspace full" detector uses number of keys from database index 0, 
+it will not work for other databases (1-15 by default).
