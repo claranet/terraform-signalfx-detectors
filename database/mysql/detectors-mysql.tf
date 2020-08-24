@@ -21,7 +21,9 @@ resource "signalfx_detector" "mysql_connections" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] MySQL number of connections over max capacity"
 
   program_text = <<-EOF
-    signal = data('mysql_pct_connections', filter=${module.filter-tags.filter_custom}, rollup='average')${var.mysql_connections_aggregation_function}${var.mysql_connections_transformation_function}.publish('signal')
+    A = data('mysql_threads_connected', filter=${module.filter-tags.filter_custom}, rollup='average')${var.mysql_connections_aggregation_function}${var.mysql_connections_transformation_function}
+    B = data('mysql_max_connections', filter=${module.filter-tags.filter_custom}, rollup='average')${var.mysql_connections_aggregation_function}${var.mysql_connections_transformation_function}
+    signal = (A/B).scale(100).publish('signal')
     detect(when(signal > ${var.mysql_connections_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.mysql_connections_threshold_warning}) and when(signal <= ${var.mysql_connections_threshold_critical})).publish('WARN')
   EOF

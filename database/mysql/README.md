@@ -72,25 +72,29 @@ Here is a full configuration example working with these detectors:
       #  metrics:
       #    - metricName: "mysql_slave_sql_running"
       #      valueColumn: "slave_sql_running"
-      - query: 'SELECT v.VARIABLE_VALUE AS max_connections, s.processcount AS connections, ((s.processcount/v.VARIABLE_VALUE)*100) AS pct_connections FROM information_schema.GLOBAL_VARIABLES v, (SELECT (@proc_connect:=count(*)) processcount FROM information_schema.PROCESSLIST) s WHERE v.VARIABLE_NAME = "max_connections";'
-        metrics:
-          - metricName: "mysql_pct_connections"
-            valueColumn: "pct_connections"
-      - query: 'SELECT VARIABLE_VALUE AS aborted_connects FROM information_schema.GLOBAL_STATUS WHERE VARIABLE_NAME LIKE "ABORTED_CONNECTS";'
+      - query: 'SHOW GLOBAL STATUS WHERE Variable_name like "Aborted_connects";'
         metrics:
           - metricName: "mysql_aborted_connects"
-            valueColumn: "aborted_connects"
+            valueColumn: "Value"
             isCumulative: true
-      - query: 'SELECT VARIABLE_VALUE AS queries FROM information_schema.GLOBAL_STATUS WHERE VARIABLE_NAME LIKE "QUERIES";'
+      - query: 'SHOW GLOBAL STATUS WHERE Variable_name like "Queries";'
         metrics:
           - metricName: "mysql_queries"
-            valueColumn: "queries"
+            valueColumn: "Value"
             isCumulative: true
-      - query: 'SELECT VARIABLE_VALUE AS slow_queries FROM information_schema.GLOBAL_STATUS WHERE VARIABLE_NAME LIKE "SLOW_QUERIES";'
+      - query: 'SHOW GLOBAL STATUS WHERE Variable_name like "Slow_queries";'
         metrics:
           - metricName: "mysql_slow_queries"
-            valueColumn: "slow_queries"
+            valueColumn: "Value"
             isCumulative: true
+      - query: 'SHOW GLOBAL STATUS WHERE Variable_name like "Threads_connected";'
+        metrics:
+          - metricName: "mysql_threads_connected"
+            valueColumn: "Value"
+      - query: 'SHOW GLOBAL VARIABLES WHERE Variable_name like "max_connections";'
+        metrics:
+          - metricName: "mysql_max_connections"
+            valueColumn: "Value"
 ```
 
 ## Related documentation
