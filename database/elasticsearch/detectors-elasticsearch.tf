@@ -43,7 +43,6 @@ EOF
     notifications         = coalescelist(var.cluster_status_notifications_warning, var.cluster_status_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
-
 }
 
 resource "signalfx_detector" "cluster_initializing_shards" {
@@ -72,7 +71,6 @@ EOF
     notifications         = coalescelist(var.cluster_initializing_shards_notifications_warning, var.cluster_initializing_shards_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
-
 }
 
 resource "signalfx_detector" "cluster_relocating_shards" {
@@ -101,7 +99,6 @@ EOF
     notifications         = coalescelist(var.cluster_relocating_shards_notifications_warning, var.cluster_relocating_shards_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
-
 }
 
 resource "signalfx_detector" "cluster_unassigned_shards" {
@@ -130,7 +127,6 @@ EOF
     notifications         = coalescelist(var.cluster_unassigned_shards_notifications_warning, var.cluster_unassigned_shards_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
-
 }
 
 resource "signalfx_detector" "pending_tasks" {
@@ -159,7 +155,6 @@ EOF
     notifications         = coalescelist(var.pending_tasks_notifications_warning, var.pending_tasks_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
-
 }
 
 resource "signalfx_detector" "cpu_usage" {
@@ -188,7 +183,6 @@ EOF
     notifications         = coalescelist(var.cpu_usage_notifications_warning, var.cpu_usage_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
-
 }
 
 resource "signalfx_detector" "file_descriptors" {
@@ -219,7 +213,6 @@ EOF
     notifications         = coalescelist(var.file_descriptors_notifications_warning, var.file_descriptors_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
-
 }
 
 resource "signalfx_detector" "jvm_heap_memory_usage" {
@@ -248,7 +241,6 @@ EOF
     notifications         = coalescelist(var.jvm_heap_memory_usage_notifications_warning, var.jvm_heap_memory_usage_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
-
 }
 
 resource "signalfx_detector" "jvm_memory_young_usage" {
@@ -279,7 +271,6 @@ EOF
     notifications         = coalescelist(var.jvm_memory_young_usage_notifications_major, var.jvm_memory_young_usage_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
-
 }
 
 resource "signalfx_detector" "jvm_memory_old_usage" {
@@ -310,7 +301,6 @@ EOF
     notifications         = coalescelist(var.jvm_memory_old_usage_notifications_major, var.jvm_memory_old_usage_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
-
 }
 
 resource "signalfx_detector" "jvm_gc_old_collection_latency" {
@@ -341,7 +331,6 @@ EOF
     notifications         = coalescelist(var.jvm_gc_old_collection_latency_notifications_major, var.jvm_gc_old_collection_latency_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
-
 }
 
 resource "signalfx_detector" "jvm_gc_young_collection_latency" {
@@ -372,7 +361,6 @@ EOF
     notifications         = coalescelist(var.jvm_gc_young_collection_latency_notifications_major, var.jvm_gc_young_collection_latency_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
-
 }
 
 resource "signalfx_detector" "indexing_latency" {
@@ -403,7 +391,6 @@ EOF
     notifications         = coalescelist(var.indexing_latency_notifications_major, var.indexing_latency_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
-
 }
 
 resource "signalfx_detector" "flush_latency" {
@@ -434,7 +421,6 @@ EOF
     notifications         = coalescelist(var.flush_latency_notifications_major, var.flush_latency_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
-
 }
 
 resource "signalfx_detector" "search_latency" {
@@ -523,7 +509,6 @@ EOF
     notifications         = coalescelist(var.field_data_evictions_change_notifications_major, var.field_data_evictions_change_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
-
 }
 
 resource "signalfx_detector" "query_cache_evictions_change" {
@@ -552,7 +537,6 @@ EOF
     notifications         = coalescelist(var.query_cache_evictions_change_notifications_major, var.query_cache_evictions_change_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
-
 }
 
 resource "signalfx_detector" "request_cache_evictions_change" {
@@ -581,7 +565,6 @@ EOF
     notifications         = coalescelist(var.request_cache_evictions_change_notifications_major, var.request_cache_evictions_change_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
-
 }
 
 resource "signalfx_detector" "task_time_in_queue_change" {
@@ -610,5 +593,5 @@ EOF
     notifications         = coalescelist(var.task_time_in_queue_change_notifications_major, var.task_time_in_queue_change_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
-
 }
+

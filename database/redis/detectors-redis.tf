@@ -101,7 +101,6 @@ EOF
     notifications         = coalescelist(var.blocked_clients_notifications_warning, var.blocked_clients_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
-
 }
 
 resource "signalfx_detector" "keyspace_full" {
@@ -276,7 +275,7 @@ resource "signalfx_detector" "hitrate" {
   program_text = <<-EOF
     A = data('derive.keyspace_hits', filter=filter('plugin', 'redis_info') and ${module.filter-tags.filter_custom}, rollup='rate')${var.hitrate_aggregation_function}${var.hitrate_transformation_function}
     B = data('derive.keyspace_misses', filter=filter('plugin', 'redis_info') and ${module.filter-tags.filter_custom}, rollup='rate')${var.hitrate_aggregation_function}${var.hitrate_transformation_function}
-    signal = (A/(A+B)).scale(100).publish('signal')
+    signal = (A / (A+B)).scale(100).publish('signal')
     detect(when(signal < ${var.hitrate_threshold_critical})).publish('CRIT')
     detect(when(signal < ${var.hitrate_threshold_warning}) and when(signal >= ${var.hitrate_threshold_critical})).publish('WARN')
 EOF
@@ -299,3 +298,4 @@ EOF
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
+
