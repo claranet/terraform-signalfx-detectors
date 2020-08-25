@@ -72,8 +72,7 @@ The default behavior is to alert when the number of ready message in any queue w
 | messages\_ready\_notifications\_warning | Notification recipients list for warning alerting rule of messages\_ready detector | list | `[]` | no |
 | messages\_ready\_threshold\_critical | Critical threshold for messages ready detector. | number | `"15000"` | no |
 | messages\_ready\_threshold\_warning | Warning threshold for messages ready detector. | number | `"10000"` | no |
-| messages\_ready\_transformation\_function | Transformation function for messages\_ready detector \(mean, min, max\) | string | `"min"` | no |
-| messages\_ready\_transformation\_window | Transformation window for messages\_ready detector \(i.e. 5m, 20m, 1h, 1d\) | string | `"20m"` | no |
+| messages\_ready\_transformation\_function | Transformation function for messages\_ready detector (i.e. \".mean(over='5m')\")) | string | `"min"` | no |
 | messages\_unacknowledged\_aggregation\_function | Aggregation function and group by for messages\_unacknowledged detector \(i.e. ".mean\(by=\['host'\]\)."\) | string | `""` | no |
 | messages\_unacknowledged\_disabled | Disable all alerting rules for messages\_unacknowledged detector | bool | `"true"` | no |
 | messages\_unacknowledged\_disabled\_critical | Disable critical alerting rule for messages\_unacknowledged detector | bool | `"null"` | no |
@@ -83,8 +82,7 @@ The default behavior is to alert when the number of ready message in any queue w
 | messages\_unacknowledged\_notifications\_warning | Notification recipients list for warning alerting rule of messages\_unacknowledged detector | list | `[]` | no |
 | messages\_unacknowledged\_threshold\_critical | Critical threshold for messages unacknowledged detector. | number | `"15000"` | no |
 | messages\_unacknowledged\_threshold\_warning | Warning threshold for messages unacknowledged detector. | number | `"10000"` | no |
-| messages\_unacknowledged\_transformation\_function | Transformation function for messages\_unacknowledged detector \(mean, min, max\) | string | `"min"` | no |
-| messages\_unacknowledged\_transformation\_window | Transformation window for messages\_unacknowledged detector \(i.e. 5m, 20m, 1h, 1d\) | string | `"20m"` | no |
+| messages\_unacknowledged\_transformation\_function | Transformation function for messages\_unacknowledged detector (i.e. \".mean(over='5m')\")) | string | `"min"` | no |
 | notifications | Notification recipients list for every detectors | list | n/a | yes |
 | prefixes | Prefixes list to prepend between brackets on every monitors names before environment | list | `[]` | no |
 

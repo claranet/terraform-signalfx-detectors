@@ -101,15 +101,9 @@ variable "treatment_limit_aggregation_function" {
 }
 
 variable "treatment_limit_transformation_function" {
-  description = "Transformation function for treatment limit detector (mean, min, max)"
+  description = "Transformation function for treatment limit detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
-}
-
-variable "treatment_limit_transformation_window" {
-  description = "Transformation window for treatment limit detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "15m"
+  default     = ".min(over='15m')"
 }
 
 variable "treatment_limit_threshold_critical" {

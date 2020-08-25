@@ -25,7 +25,6 @@ EOF
     notifications         = coalescelist(var.latency_notifications_warning, var.latency_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
-
 }
 
 # Monitoring API Gateway 5xx errors percent
@@ -57,7 +56,6 @@ EOF
     notifications         = coalescelist(var.http_5xx_notifications_warning, var.http_5xx_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
-
 }
 
 # Monitoring API Gateway 4xx errors percent
@@ -89,5 +87,5 @@ EOF
     notifications         = coalescelist(var.http_4xx_notifications_warning, var.http_4xx_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
-
 }
+

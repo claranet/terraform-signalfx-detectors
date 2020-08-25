@@ -31,8 +31,7 @@ Creates SignalFx detectors with the following checks:
 | processes\_notifications\_warning | Notification recipients list for warning alerting rule of processes detector | `list` | `[]` | no |
 | processes\_threshold\_critical | Critical threshold for processes detector | `number` | `1` | no |
 | processes\_threshold\_warning | Warning threshold for processes detector | `number` | `1` | no |
-| processes\_transformation\_function | Transformation function for processes detector (mean, min, max) | `string` | `"min"` | no |
-| processes\_transformation\_window | Transformation window for processes detector (i.e. 5m, 20m, 1h, 1d) | `string` | `"15min"` | no |
+| processes\_transformation\_function | Transformation function for processes detector (i.e. \".mean(over='5m')\")) | `string` | `"min"` | no |
 | detectors\_disabled | Disable all detectors in this module | `bool` | `false` | no |
 | environment | Infrastructure environment | `string` | n/a | yes |
 | filter\_custom\_excludes | List of tags to exclude when custom filtering is used | `list` | `[]` | no |

@@ -16,3 +16,34 @@ EOF
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} on {{{dimensions}}}"
   }
 }
+
+resource "signalfx_detector" "apache_workers" {
+  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Apache busy workers"
+
+  program_text = <<-EOF
+    A = data('apache_connections', ${module.filter-tags.filter_custom})${var.apache_workers_aggregation_function}${var.apache_workers_transformation_function}
+    B = data('apache_idle_workers', ${module.filter-tags.filter_custom})${var.apache_workers_aggregation_function}${var.apache_workers_transformation_function}
+    signal = ((A / (A+B)).scale(100)).publish('signal')
+    detect(when(signal > ${var.apache_workers_threshold_critical})).publish('CRIT')
+    detect(when(signal > ${var.apache_workers_threshold_warning}) and when(signal <= ${var.apache_workers_threshold_critical})).publish('WARN')
+EOF
+
+  rule {
+    description           = "are too high > ${var.apache_workers_threshold_critical}"
+    severity              = "Critical"
+    detect_label          = "CRIT"
+    disabled              = coalesce(var.apache_workers_disabled_critical, var.apache_workers_disabled, var.detectors_disabled)
+    notifications         = coalescelist(var.apache_workers_notifications_critical, var.apache_workers_notifications, var.notifications)
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+  }
+
+  rule {
+    description           = "are too high > ${var.apache_workers_threshold_warning}"
+    severity              = "Warning"
+    detect_label          = "WARN"
+    disabled              = coalesce(var.apache_workers_disabled_warning, var.apache_workers_disabled, var.detectors_disabled)
+    notifications         = coalescelist(var.apache_workers_notifications_warning, var.apache_workers_notifications, var.notifications)
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+  }
+}
+

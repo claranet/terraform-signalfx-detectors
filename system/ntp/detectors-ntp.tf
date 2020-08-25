@@ -21,7 +21,7 @@ resource "signalfx_detector" "ntp" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] NTP offset"
 
   program_text = <<-EOF
-        signal = data('ntp.offset_seconds', filter=${module.filter-tags.filter_custom})${var.ntp_aggregation_function}.${var.ntp_transformation_function}(over='${var.ntp_transformation_window}').publish('signal')
+        signal = data('ntp.offset_seconds', filter=${module.filter-tags.filter_custom})${var.ntp_aggregation_function}${var.ntp_transformation_function}.publish('signal')
         detect(when(signal > ${var.ntp_threshold_warning})).publish('WARN')
 EOF
 
@@ -34,3 +34,4 @@ EOF
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
+
