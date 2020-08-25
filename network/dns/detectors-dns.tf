@@ -21,7 +21,7 @@ resource "signalfx_detector" "dns_query_time" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] DNS query time"
 
   program_text = <<-EOF
-    signal = data('dns.query_time_ms', filter=filter('plugin', 'telegraf/dns') and ${module.filter-tags.filter_custom})${var.dns_query_time_aggregation_function}.${var.dns_query_time_transformation_function}(over='${var.dns_query_time_transformation_window}').publish('signal')
+    signal = data('dns.query_time_ms', filter=filter('plugin', 'telegraf/dns') and ${module.filter-tags.filter_custom})${var.dns_query_time_aggregation_function}${var.dns_query_time_transformation_function}.publish('signal')
     detect(when(signal > ${var.dns_query_time_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.dns_query_time_threshold_warning}) and when(signal <= ${var.dns_query_time_threshold_critical})).publish('WARN')
 EOF
@@ -49,7 +49,7 @@ resource "signalfx_detector" "dns_result_code" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] DNS query result"
 
   program_text = <<-EOF
-    signal = data('dns.result_code', filter=filter('plugin', 'telegraf/dns') and ${module.filter-tags.filter_custom})${var.dns_result_code_aggregation_function}.${var.dns_result_code_transformation_function}(over='${var.dns_result_code_transformation_window}').publish('signal')
+    signal = data('dns.result_code', filter=filter('plugin', 'telegraf/dns') and ${module.filter-tags.filter_custom})${var.dns_result_code_aggregation_function}${var.dns_result_code_transformation_function}.publish('signal')
     detect(when(signal > 0)).publish('CRIT')
 EOF
 

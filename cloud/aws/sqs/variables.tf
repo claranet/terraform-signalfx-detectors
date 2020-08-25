@@ -101,15 +101,9 @@ variable "visible_messages_aggregation_function" {
 }
 
 variable "visible_messages_transformation_function" {
-  description = "Transformation function for visible_messages detector (mean, min, max)"
+  description = "Transformation function for visible_messages detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
-}
-
-variable "visible_messages_transformation_window" {
-  description = "Transformation window for visible_messages detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "30m"
+  default     = ".min(over='30m')"
 }
 
 variable "visible_messages_threshold_critical" {
@@ -169,15 +163,9 @@ variable "age_of_oldest_message_aggregation_function" {
 }
 
 variable "age_of_oldest_message_transformation_function" {
-  description = "Transformation function for age_of_oldest_message detector (mean, min, max)"
+  description = "Transformation function for age_of_oldest_message detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
-}
-
-variable "age_of_oldest_message_transformation_window" {
-  description = "Transformation window for age_of_oldest_message detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "30m"
+  default     = ".min(over='30m')"
 }
 
 variable "age_of_oldest_message_threshold_critical" {
@@ -191,3 +179,4 @@ variable "age_of_oldest_message_threshold_warning" {
   type        = number
   default     = 300
 }
+

@@ -81,15 +81,9 @@ variable "processes_aggregation_function" {
 }
 
 variable "processes_transformation_function" {
-  description = "Transformation function for processes detector (mean, min, max)"
+  description = "Transformation function for processes detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
-}
-
-variable "processes_transformation_window" {
-  description = "Transformation window for processes detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "15m"
+  default     = ".min(over='15m')"
 }
 
 variable "processes_threshold_warning" {

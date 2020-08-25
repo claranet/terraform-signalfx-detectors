@@ -157,15 +157,9 @@ variable "cpu_aggregation_function" {
 }
 
 variable "cpu_transformation_function" {
-  description = "Transformation function for cpu detector (mean, min, max)"
+  description = "Transformation function for cpu detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
-}
-
-variable "cpu_transformation_window" {
-  description = "Transformation window for cpu detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "15m"
+  default     = ".min(over='15m')"
 }
 
 variable "cpu_threshold_critical" {
@@ -179,3 +173,4 @@ variable "cpu_threshold_warning" {
   type        = number
   default     = 75
 }
+

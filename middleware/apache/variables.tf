@@ -55,3 +55,66 @@ variable "heartbeat_timeframe" {
   type        = string
   default     = "20m"
 }
+
+# Apache_workers detectors
+
+variable "apache_workers_disabled" {
+  description = "Disable all alerting rules for apache_workers detector"
+  type        = bool
+  default     = null
+}
+
+variable "apache_workers_disabled_critical" {
+  description = "Disable critical alerting rule for apache_workers detector"
+  type        = bool
+  default     = null
+}
+
+variable "apache_workers_disabled_warning" {
+  description = "Disable warning alerting rule for apache_workers detector"
+  type        = bool
+  default     = null
+}
+
+variable "apache_workers_notifications" {
+  description = "Notification recipients list for every alerting rules of apache_workers detector"
+  type        = list
+  default     = []
+}
+
+variable "apache_workers_notifications_warning" {
+  description = "Notification recipients list for warning alerting rule of apache_workers detector"
+  type        = list
+  default     = []
+}
+
+variable "apache_workers_notifications_critical" {
+  description = "Notification recipients list for critical alerting rule of apache_workers detector"
+  type        = list
+  default     = []
+}
+
+variable "apache_workers_aggregation_function" {
+  description = "Aggregation function and group by for apache_workers detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ""
+}
+
+variable "apache_workers_transformation_function" {
+  description = "Transformation function for apache_workers detector (i.e. \".mean(over='5m')\"))"
+  type        = string
+  default     = ".mean(over='10m')"
+}
+
+variable "apache_workers_threshold_critical" {
+  description = "Critical threshold for apache_workers detector"
+  type        = number
+  default     = 90
+}
+
+variable "apache_workers_threshold_warning" {
+  description = "Warning threshold for apache_workers detector"
+  type        = number
+  default     = 80
+}
+

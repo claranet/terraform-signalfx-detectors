@@ -101,15 +101,9 @@ variable "evictions_aggregation_function" {
 }
 
 variable "evictions_transformation_function" {
-  description = "Transformation function for evictions detector (mean, min, max)"
+  description = "Transformation function for evictions detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "sum"
-}
-
-variable "evictions_transformation_window" {
-  description = "Transformation window for evictions detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "15m"
+  default     = ".sum(over='15m')"
 }
 
 variable "evictions_threshold_critical" {
@@ -157,15 +151,9 @@ variable "max_connection_aggregation_function" {
 }
 
 variable "max_connection_transformation_function" {
-  description = "Transformation function for max_connection detector (mean, min, max)"
+  description = "Transformation function for max_connection detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "max"
-}
-
-variable "max_connection_transformation_window" {
-  description = "Transformation window for max_connection detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "5m"
+  default     = ".max(over='5m')"
 }
 
 variable "max_connection_threshold_critical" {
@@ -207,15 +195,9 @@ variable "no_connection_aggregation_function" {
 }
 
 variable "no_connection_transformation_function" {
-  description = "Transformation function for no_connection detector (mean, min, max)"
+  description = "Transformation function for no_connection detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
-}
-
-variable "no_connection_transformation_window" {
-  description = "Transformation window for no_connection detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "5m"
+  default     = ".min(over='5m')"
 }
 
 variable "no_connection_threshold_critical" {
@@ -269,15 +251,9 @@ variable "swap_aggregation_function" {
 }
 
 variable "swap_transformation_function" {
-  description = "Transformation function for swap detector (mean, min, max)"
+  description = "Transformation function for swap detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
-}
-
-variable "swap_transformation_window" {
-  description = "Transformation window for swap detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "5m"
+  default     = ".min(over='5m')"
 }
 
 variable "swap_threshold_critical" {
@@ -337,15 +313,9 @@ variable "free_memory_aggregation_function" {
 }
 
 variable "free_memory_transformation_function" {
-  description = "Transformation function for free_memory detector (mean, min, max)"
+  description = "Transformation function for free_memory detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "mean"
-}
-
-variable "free_memory_transformation_window" {
-  description = "Transformation window for free_memory detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "15m"
+  default     = ".mean(over='15m')"
 }
 
 variable "free_memory_threshold_critical" {
@@ -398,16 +368,16 @@ variable "evictions_growing_notifications_critical" {
   default     = []
 }
 
-variable "evictions_growing_transformation_function" {
-  description = "Transformation function for evictions_growing detector (mean, min, max)"
+variable "evictions_growing_aggregation_function" {
+  description = "Aggregation function and group by for evictions_growing detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = "mean"
+  default     = ""
 }
 
-variable "evictions_growing_transformation_window" {
-  description = "Transformation window for evictions_growing detector (i.e. 5m, 20m, 1h, 1d)"
+variable "evictions_growing_transformation_function" {
+  description = "Transformation function for evictions_growing detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "5m"
+  default     = ".mean(over='5m')"
 }
 
 variable "evictions_growing_threshold_critical" {
@@ -421,3 +391,4 @@ variable "evictions_growing_threshold_warning" {
   type        = number
   default     = 10
 }
+

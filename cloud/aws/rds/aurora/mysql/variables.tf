@@ -83,13 +83,7 @@ variable "aurora_mysql_replica_lag_aggregation_function" {
 variable "aurora_mysql_replica_lag_transformation_function" {
   description = "Transformation function for aurora_mysql_replica_lag detector (mean, min, max)"
   type        = string
-  default     = "min"
-}
-
-variable "aurora_mysql_replica_lag_transformation_window" {
-  description = "Transformation window for aurora_mysql_replica_lag detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "5m"
+  default     = ".min(over='5m')"
 }
 
 variable "aurora_mysql_replica_lag_threshold_critical" {
@@ -103,3 +97,4 @@ variable "aurora_mysql_replica_lag_threshold_warning" {
   type        = number
   default     = 100
 }
+

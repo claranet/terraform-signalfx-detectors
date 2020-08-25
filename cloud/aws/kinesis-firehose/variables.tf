@@ -101,15 +101,9 @@ variable "incoming_records_aggregation_function" {
 }
 
 variable "incoming_records_transformation_function" {
-  description = "Transformation function for incoming_records detector (mean, min, max)"
+  description = "Transformation function for incoming_records detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "sum"
-}
-
-variable "incoming_records_transformation_window" {
-  description = "Transformation window for incoming_records detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "15m"
+  default     = ".sum(over='15m')"
 }
 
 variable "incoming_records_threshold_critical" {
@@ -123,3 +117,4 @@ variable "incoming_records_threshold_warning" {
   type        = number
   default     = 1
 }
+
