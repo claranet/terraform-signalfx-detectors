@@ -179,3 +179,4 @@ variable "searcher_warmup_time_threshold_warning" {
   type        = number
   default     = 2000
 }
+

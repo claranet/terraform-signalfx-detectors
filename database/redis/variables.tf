@@ -639,3 +639,4 @@ variable "hitrate_threshold_warning" {
   type        = number
   default     = 30
 }
+

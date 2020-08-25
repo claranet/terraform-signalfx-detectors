@@ -154,7 +154,6 @@ EOF
     notifications         = coalescelist(var.mysql_threads_anomaly_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
-
 }
 
 resource "signalfx_detector" "mysql_questions_anomaly" {
@@ -174,7 +173,6 @@ EOF
     notifications         = coalescelist(var.mysql_questions_anomaly_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
-
 }
 
 resource "signalfx_detector" "mysql_replication_lag" {
@@ -222,3 +220,4 @@ EOF
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
+
