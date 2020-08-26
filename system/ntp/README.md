@@ -50,3 +50,17 @@ Creates SignalFx detectors with the following checks:
 ## Related documentation
 
 [Official documentation ntp](https://docs.signalfx.com/en/latest/integrations/agent/monitors/ntp.html)
+
+## Notes
+
+NTP monitor has hardcoded minimal interval of 30m (https://www.pool.ntp.org/tos.html).
+As a result, the heartbeat timeframe should be higher than the other modules (`>= 3h` recommended).
+This assumes the monitor will often use public NTP servers which:
+
+- should not be overloaded
+- could be not enough reliable (and will cause at least 30m of null MTS)
+
+In the future we could improve this monitor to:
+
+- use 30m by default but allow configure lower interval when "internal" NTP server is used
+- add a retry mechanism to prevent missing data
