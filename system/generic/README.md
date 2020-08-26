@@ -37,8 +37,7 @@ Creates SignalFx detectors with the following checks:
 | cpu\_notifications\_warning | Notification recipients list for warning alerting rule of cpu detector | `list` | `[]` | no |
 | cpu\_threshold\_critical | Critical threshold for cpu detector | `number` | `90` | no |
 | cpu\_threshold\_warning | Warning threshold for cpu detector | `number` | `85` | no |
-| cpu\_transformation\_function | Transformation function for cpu detector (mean, min, max) | `string` | `"min"` | no |
-| cpu\_transformation\_window | Transformation window for cpu detector (i.e. 5m, 20m, 1h, 1d) | `string` | `"1h"` | no |
+| cpu\_transformation\_function | Transformation function for cpu detector (i.e. \".mean(over='5m')\")) | `string` | `"min"` | no |
 | detectors\_disabled | Disable all detectors in this module | `bool` | `false` | no |
 | disk\_inodes\_aggregation\_function | Aggregation function and group by for disk inodes detector (i.e. ".mean(by=['host']).") | `string` | `""` | no |
 | disk\_inodes\_disabled | Disable all alerting rules for disk\_inodes detector | `bool` | n/a | yes |
@@ -49,8 +48,7 @@ Creates SignalFx detectors with the following checks:
 | disk\_inodes\_notifications\_warning | Notification recipients list for warning alerting rule of disk inodes detector | `list` | `[]` | no |
 | disk\_inodes\_threshold\_critical | Critical threshold for disk inodes detector | `number` | `95` | no |
 | disk\_inodes\_threshold\_warning | Warning threshold for disk inodes detector | `number` | `90` | no |
-| disk\_inodes\_transformation\_function | Transformation function for disk inodes detector (mean, min, max) | `string` | `"min"` | no |
-| disk\_inodes\_transformation\_window | Transformation window for disk inodes detector (i.e. 5m, 20m, 1h, 1d) | `string` | `"5m"` | no |
+| disk\_inodes\_transformation\_function | Transformation function for disk inodes detector (i.e. \".mean(over='5m')\")) | `string` | `"min"` | no |
 | disk\_running\_out\_clear\_hours\_remaining | With how many hours left till disk is full can the alert clear | `number` | `96` | no |
 | disk\_running\_out\_clear\_lasting\_time | Time clear condition must be true to clear | `string` | `"30m"` | no |
 | disk\_running\_out\_clear\_lasting\_time\_percent | Percent of clear lasting time the conditon must be true.  Expressed as decimal | `number` | `0.9` | no |
@@ -70,8 +68,7 @@ Creates SignalFx detectors with the following checks:
 | disk\_space\_notifications\_warning | Notification recipients list for warning alerting rule of disk space detector | `list` | `[]` | no |
 | disk\_space\_threshold\_critical | Critical threshold for disk space detector | `number` | `90` | no |
 | disk\_space\_threshold\_warning | Warning threshold for disk space detector | `number` | `80` | no |
-| disk\_space\_transformation\_function | Transformation function for disk space detector (mean, min, max) | `string` | `"max"` | no |
-| disk\_space\_transformation\_window | Transformation window for disk space detector (i.e. 5m, 20m, 1h, 1d) | `string` | `"5m"` | no |
+| disk\_space\_transformation\_function | Transformation function for disk space detector (i.e. \".mean(over='5m')\")) | `string` | `"max"` | no |
 | environment | Infrastructure environment | `string` | n/a | yes |
 | filter\_custom\_excludes | List of tags to exclude when custom filtering is used | `list` | `[]` | no |
 | filter\_custom\_includes | List of tags to include when custom filtering is used | `list` | `[]` | no |
@@ -87,8 +84,7 @@ Creates SignalFx detectors with the following checks:
 | load\_notifications\_warning | Notification recipients list for warning alerting rule of load detector | `list` | `[]` | no |
 | load\_threshold\_critical | Critical threshold for load detector | `number` | `2.5` | no |
 | load\_threshold\_warning | Warning threshold for load detector | `number` | `2` | no |
-| load\_transformation\_function | Transformation function for load detector (mean, min, max) | `string` | `"min"` | no |
-| load\_transformation\_window | Transformation window for load detector (i.e. 5m, 20m, 1h, 1d) | `string` | `"30m"` | no |
+| load\_transformation\_function | Transformation function for load detector (i.e. \".mean(over='5m')\")) | `string` | `"min"` | no |
 | memory\_aggregation\_function | Aggregation function and group by for memory detector (i.e. ".mean(by=['host']).") | `string` | `""` | no |
 | memory\_disabled | Disable all alerting rules for memory detector | `bool` | n/a | yes |
 | memory\_disabled\_critical | Disable critical alerting rule for memory detector | `bool` | n/a | yes |
@@ -98,8 +94,7 @@ Creates SignalFx detectors with the following checks:
 | memory\_notifications\_warning | Notification recipients list for warning alerting rule of memory detector | `list` | `[]` | no |
 | memory\_threshold\_critical | Critical threshold for memory detector | `number` | `95` | no |
 | memory\_threshold\_warning | Warning threshold for memory detector | `number` | `90` | no |
-| memory\_transformation\_function | Transformation function for memory detector (mean, min, max) | `string` | `"min"` | no |
-| memory\_transformation\_window | Transformation window for memory detector (i.e. 5m, 20m, 1h, 1d) | `string` | `"5m"` | no |
+| memory\_transformation\_function | Transformation function for memory detector (i.e. \".mean(over='5m')\")) | `string` | `"min"` | no |
 | notifications | Notification recipients list for every detectors | `list` | n/a | yes |
 | prefixes | Prefixes list to prepend between brackets on every monitors names before environment | `list` | `[]` | no |
 

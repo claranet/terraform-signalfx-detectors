@@ -21,7 +21,7 @@ resource "signalfx_detector" "VPN_status" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS VPN tunnel state"
 
   program_text = <<-EOF
-    signal = data('TunnelState', filter=filter('namespace', 'AWS/VPN') and filter('stat', 'mean') and filter('VpnId', '*') and ${module.filter-tags.filter_custom})${var.vpn_status_aggregation_function}.${var.vpn_status_transformation_function}(over='${var.vpn_status_transformation_window}').publish('signal')
+    signal = data('TunnelState', filter=filter('namespace', 'AWS/VPN') and filter('stat', 'mean') and filter('VpnId', '*') and ${module.filter-tags.filter_custom})${var.vpn_status_aggregation_function}${var.vpn_status_transformation_function}.publish('signal')
     detect(when(signal < ${var.vpn_status_threshold_critical})).publish('CRIT')
 EOF
 
@@ -33,5 +33,5 @@ EOF
     notifications         = coalescelist(var.vpn_status_notifications_critical, var.vpn_status_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
-
 }
+

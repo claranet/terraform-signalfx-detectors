@@ -101,15 +101,9 @@ variable "php_fpm_connect_idle_aggregation_function" {
 }
 
 variable "php_fpm_connect_idle_transformation_function" {
-  description = "Transformation function for php_fpm_connect_idle detector (mean, min, max)"
+  description = "Transformation function for php_fpm_connect_idle detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "mean"
-}
-
-variable "php_fpm_connect_idle_transformation_window" {
-  description = "Transformation window for php_fpm_connect_idle detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "10m"
+  default     = ".mean(over='10m')"
 }
 
 variable "php_fpm_connect_idle_threshold_critical" {
@@ -123,3 +117,4 @@ variable "php_fpm_connect_idle_threshold_warning" {
   type        = number
   default     = 80
 }
+

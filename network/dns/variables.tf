@@ -101,15 +101,9 @@ variable "dns_query_time_aggregation_function" {
 }
 
 variable "dns_query_time_transformation_function" {
-  description = "Transformation function for dns_query_time detector (mean, min, max)"
+  description = "Transformation function for dns_query_time detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "max"
-}
-
-variable "dns_query_time_transformation_window" {
-  description = "Transformation window for dns_query_time detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "15m"
+  default     = ".max(over='15m')"
 }
 
 variable "dns_query_time_threshold_critical" {
@@ -157,14 +151,8 @@ variable "dns_result_code_aggregation_function" {
 }
 
 variable "dns_result_code_transformation_function" {
-  description = "Transformation function for dns_result_code detector (mean, min, max)"
+  description = "Transformation function for dns_result_code detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
-}
-
-variable "dns_result_code_transformation_window" {
-  description = "Transformation window for dns_result_code detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "5m"
+  default     = ".min(over='5m')"
 }
 

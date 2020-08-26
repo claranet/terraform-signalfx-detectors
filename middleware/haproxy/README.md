@@ -43,8 +43,7 @@ Creates SignalFx detectors with the following checks:
 | backend\_status\_disabled\_critical | Disable critical alerting rule for backend status detector | `bool` | `null` | no |
 | backend\_status\_notifications | Notification recipients list for every alerting rules of backend status detector | `list` | `[]` | no |
 | backend\_status\_notifications\_critical | Notification recipients list for critical alerting rule of backend status detector | `list` | `[]` | no |
-| backend\_status\_transformation\_function | Transformation function for backend status detector (mean, min, max) | `string` | `"min"` | no |
-| backend\_status\_transformation\_window | Transformation window for backend status detector (i.e. 5m, 20m, 1h, 1d) | `string` | `"5m"` | no |
+| backend\_status\_transformation\_function | Transformation function for backend status detector (i.e. \".mean(over='5m')\")) | `string` | `"min"` | no |
 | detectors\_disabled | Disable all detectors in this module | `bool` | `false` | no |
 | environment | Infrastructure environment | `string` | n/a | yes |
 | filter\_custom\_excludes | List of tags to exclude when custom filtering is used | `list` | `[]` | no |
@@ -61,8 +60,7 @@ Creates SignalFx detectors with the following checks:
 | http\_4xx\_response\_notifications\_warning | Notification recipients list for warning alerting rule of http\_4xx\_response detector | `list` | `[]` | no |
 | http\_4xx\_response\_threshold\_critical | Critical threshold for http\_4xx\_response detector | `number` | `80` | no |
 | http\_4xx\_response\_threshold\_warning | Critical threshold for http\_4xx\_response detector | `number` | `50` | no |
-| http\_4xx\_response\_transformation\_function | Transformation function for http\_4xx\_response detector (mean, min, max) | `string` | `"min"` | no |
-| http\_4xx\_response\_transformation\_window | Transformation window for http\_4xx\_response detector (i.e. 5m, 20m, 1h, 1d) | `string` | `"10m"` | no |
+| http\_4xx\_response\_transformation\_function | Transformation function for http\_4xx\_response detector (i.e. \".mean(over='5m')\")) | `string` | `"min"` | no |
 | http\_5xx\_response\_aggregation\_function | Aggregation function and group by for http\_5xx\_response detector (i.e. ".mean(by=['host']).") | `string` | `""` | no |
 | http\_5xx\_response\_disabled | Disable all alerting rules for http\_5xx\_response detector | `bool` | `null` | no |
 | http\_5xx\_response\_disabled\_critical | Disable critical alerting rule for http\_5xx\_response detector | `bool` | `null` | no |
@@ -72,8 +70,7 @@ Creates SignalFx detectors with the following checks:
 | http\_5xx\_response\_notifications\_warning | Notification recipients list for warning alerting rule of http\_5xx\_response detector | `list` | `[]` | no |
 | http\_5xx\_response\_threshold\_critical | Critical threshold for http\_5xx\_response detector | `number` | `80` | no |
 | http\_5xx\_response\_threshold\_warning | Critical threshold for http\_5xx\_response detector | `number` | `50` | no |
-| http\_5xx\_response\_transformation\_function | Transformation function for http\_5xx\_response detector (mean, min, max) | `string` | `"min"` | no |
-| http\_5xx\_response\_transformation\_window | Transformation window for http\_5xx\_response detector (i.e. 5m, 20m, 1h, 1d) | `string` | `"10m"` | no |
+| http\_5xx\_response\_transformation\_function | Transformation function for http\_5xx\_response detector (i.e. \".mean(over='5m')\")) | `string` | `"min"` | no |
 | notifications | Notification recipients list for every detectors | `list` | n/a | yes |
 | prefixes | Prefixes list to prepend between brackets on every monitors names before environment | `list` | `[]` | no |
 | server\_status\_aggregation\_function | Aggregation function and group by for server status detector (i.e. ".mean(by=['host']).") | `string` | `""` | no |
@@ -81,8 +78,7 @@ Creates SignalFx detectors with the following checks:
 | server\_status\_disabled\_critical | Disable critical alerting rule for server status detector | `bool` | `null` | no |
 | server\_status\_notifications | Notification recipients list for every alerting rules of server status detector | `list` | `[]` | no |
 | server\_status\_notifications\_critical | Notification recipients list for critical alerting rule of server status detector | `list` | `[]` | no |
-| server\_status\_transformation\_function | Transformation function for server status detector (mean, min, max) | `string` | `"min"` | no |
-| server\_status\_transformation\_window | Transformation window for server status detector (i.e. 5m, 20m, 1h, 1d) | `string` | `"5m"` | no |
+| server\_status\_transformation\_function | Transformation function for server status detector (i.e. \".mean(over='5m')\")) | `string` | `"min"` | no |
 | session\_limit\_aggregation\_function | Aggregation function and group by for session limit detector (i.e. ".mean(by=['host']).") | `string` | `""` | no |
 | session\_limit\_disabled | Disable all alerting rules for session limit detector | `bool` | `null` | no |
 | session\_limit\_disabled\_critical | Disable critical alerting rule for session limit detector | `bool` | `null` | no |
@@ -92,8 +88,7 @@ Creates SignalFx detectors with the following checks:
 | session\_limit\_notifications\_warning | Notification recipients list for warning alerting rule of session limit detector | `list` | `[]` | no |
 | session\_limit\_threshold\_critical | Critical threshold for session limit detector | `number` | `90` | no |
 | session\_limit\_threshold\_warning | Critical threshold for session limit detector | `number` | `80` | no |
-| session\_limit\_transformation\_function | Transformation function for session limit detector (mean, min, max) | `string` | `"min"` | no |
-| session\_limit\_transformation\_window | Transformation window for session limit detector (i.e. 5m, 20m, 1h, 1d) | `string` | `"10m"` | no |
+| session\_limit\_transformation\_function | Transformation function for session limit detector (i.e. \".mean(over='5m')\")) | `string` | `"min"` | no |
 
 ## Outputs
 

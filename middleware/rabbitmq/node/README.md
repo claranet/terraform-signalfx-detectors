@@ -51,8 +51,7 @@ In order to have a really complete monitoring, you should consider using the [qu
 | file\_descriptors\_notifications\_warning | Notification recipients list for warning alerting rule of file descriptors detector | list | `[]` | no |
 | file\_descriptors\_threshold\_critical | Critical threshold for file descriptors detector | number | `"90"` | no |
 | file\_descriptors\_threshold\_warning | Warning threshold for file descriptors detector | number | `"80"` | no |
-| file\_descriptors\_transformation\_function | Transformation function for file descriptors detector \(mean, min, max\) | string | `"min"` | no |
-| file\_descriptors\_transformation\_window | Transformation window for file descriptors detector \(i.e. 5m, 20m, 1h, 1d\) | string | `"10m"` | no |
+| file\_descriptors\_transformation\_function | Transformation function for file descriptors detector (i.e. \".mean(over='5m')\")) | string | `"min"` | no |
 | filter\_custom\_excludes | List of tags to exclude when custom filtering is used | list | `[]` | no |
 | filter\_custom\_includes | List of tags to include when custom filtering is used | list | `[]` | no |
 | heartbeat\_disabled | Disable all alerting rules for heartbeat detector | bool | `"null"` | no |
@@ -69,8 +68,7 @@ In order to have a really complete monitoring, you should consider using the [qu
 | processes\_notifications\_warning | Notification recipients list for warning alerting rule of processes detector | list | `[]` | no |
 | processes\_threshold\_critical | Critical threshold for processes detector | number | `"90"` | no |
 | processes\_threshold\_warning | Warning threshold for processes detector | number | `"80"` | no |
-| processes\_transformation\_function | Transformation function for processes detector \(mean, min, max\) | string | `"min"` | no |
-| processes\_transformation\_window | Transformation window for processes detector \(i.e. 5m, 20m, 1h, 1d\) | string | `"10m"` | no |
+| processes\_transformation\_function | Transformation function for processes detector (i.e. \".mean(over='5m')\")) | string | `"min"` | no |
 | sockets\_aggregation\_function | Aggregation function and group by for sockets detector \(i.e. ".mean\(by=\['host'\]\)."\) | string | `""` | no |
 | sockets\_disabled | Disable all alerting rules for sockets detector | bool | `"null"` | no |
 | sockets\_disabled\_critical | Disable critical alerting rule for sockets detector | bool | `"null"` | no |
@@ -80,8 +78,7 @@ In order to have a really complete monitoring, you should consider using the [qu
 | sockets\_notifications\_warning | Notification recipients list for warning alerting rule of sockets detector | list | `[]` | no |
 | sockets\_threshold\_critical | Critical threshold for sockets detector | number | `"90"` | no |
 | sockets\_threshold\_warning | Warning threshold for sockets detector | number | `"80"` | no |
-| sockets\_transformation\_function | Transformation function for sockets detector \(mean, min, max\) | string | `"min"` | no |
-| sockets\_transformation\_window | Transformation window for sockets detector \(i.e. 5m, 20m, 1h, 1d\) | string | `"10m"` | no |
+| sockets\_transformation\_function | Transformation function for sockets detector (i.e. \".mean(over='5m')\")) | string | `"min"` | no |
 | vm\_memory\_aggregation\_function | Aggregation function and group by for vm\_memory detector \(i.e. ".mean\(by=\['host'\]\)."\) | string | `""` | no |
 | vm\_memory\_disabled | Disable all alerting rules for vm\_memory detector | bool | `"null"` | no |
 | vm\_memory\_disabled\_critical | Disable critical alerting rule for vm\_memory detector | bool | `"null"` | no |
@@ -91,8 +88,7 @@ In order to have a really complete monitoring, you should consider using the [qu
 | vm\_memory\_notifications\_warning | Notification recipients list for warning alerting rule of vm\_memory detector | list | `[]` | no |
 | vm\_memory\_threshold\_critical | Critical threshold for vm\_memory detector | number | `"90"` | no |
 | vm\_memory\_threshold\_warning | Warning threshold for vm\_memory detector | number | `"80"` | no |
-| vm\_memory\_transformation\_function | Transformation function for vm\_memory detector \(mean, min, max\) | string | `"min"` | no |
-| vm\_memory\_transformation\_window | Transformation window for vm\_memory detector \(i.e. 5m, 20m, 1h, 1d\) | string | `"10m"` | no |
+| vm\_memory\_transformation\_function | Transformation function for vm\_memory detector (i.e. \".mean(over='5m')\")) | string | `"min"` | no |
 
 ## Outputs
 

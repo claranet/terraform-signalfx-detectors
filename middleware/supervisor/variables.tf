@@ -99,15 +99,9 @@ variable "process_state_aggregation_function" {
 }
 
 variable "process_state_transformation_function" {
-  description = "Transformation function for process state detector (mean, min, max)"
+  description = "Transformation function for process state detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
-}
-
-variable "process_state_transformation_window" {
-  description = "Transformation window for process state detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "10m"
+  default     = ".min(over='10m')"
 }
 
 variable "process_state_threshold_critical" {

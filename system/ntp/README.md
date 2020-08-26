@@ -37,8 +37,7 @@ Creates SignalFx detectors with the following checks:
 | ntp\_notifications | Notification recipients list for every alerting rules of ntp detector | list | `[]` | no |
 | ntp\_notifications\_warning | Notification recipients list for warning alerting rule of ntp detector | list | `[]` | no |
 | ntp\_threshold\_warning | Warning threshold for ntp detector | number | `"1500"` | no |
-| ntp\_transformation\_function | Transformation function for ntp detector \(mean, min, max\) | string | `"min"` | no |
-| ntp\_transformation\_window | Transformation window for ntp detector \(i.e. 5m, 20m, 1h, 1d\) | string | `"5m"` | no |
+| ntp\_transformation\_function | Transformation function for ntp detector (i.e. \".mean(over='5m')\")) | string | `"min"` | no |
 | prefixes | Prefixes list to prepend between brackets on every monitors names before environment | list | `[]` | no |
 
 ## Outputs

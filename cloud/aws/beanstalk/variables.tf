@@ -101,15 +101,9 @@ variable "health_aggregation_function" {
 }
 
 variable "health_transformation_function" {
-  description = "Transformation function for health detector (mean, min, max)"
+  description = "Transformation function for health detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
-}
-
-variable "health_transformation_window" {
-  description = "Transformation window for health detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "10m"
+  default     = ".min(over='10m')"
 }
 
 variable "health_threshold_critical" {
@@ -169,15 +163,9 @@ variable "latency_p90_aggregation_function" {
 }
 
 variable "latency_p90_transformation_function" {
-  description = "Transformation function for latency_p90 detector (mean, min, max)"
+  description = "Transformation function for latency_p90 detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
-}
-
-variable "latency_p90_transformation_window" {
-  description = "Transformation window for latency_p90 detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "15m"
+  default     = ".min(over='15m')"
 }
 
 variable "latency_p90_threshold_critical" {
@@ -237,15 +225,9 @@ variable "app_5xx_error_rate_aggregation_function" {
 }
 
 variable "app_5xx_error_rate_transformation_function" {
-  description = "Transformation function for 5xx_error_rate detector (mean, min, max)"
+  description = "Transformation function for 5xx_error_rate detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "sum"
-}
-
-variable "app_5xx_error_rate_transformation_window" {
-  description = "Transformation window for 5xx_error_rate detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "15m"
+  default     = ".sum(over='15m')"
 }
 
 variable "app_5xx_error_rate_threshold_critical" {
@@ -305,15 +287,9 @@ variable "root_filesystem_usage_aggregation_function" {
 }
 
 variable "root_filesystem_usage_transformation_function" {
-  description = "Transformation function for root_filesystem_usage detector (mean, min, max)"
+  description = "Transformation function for root_filesystem_usage detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "max"
-}
-
-variable "root_filesystem_usage_transformation_window" {
-  description = "Transformation window for root_filesystem_usage detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "5m"
+  default     = ".max(over='5m')"
 }
 
 variable "root_filesystem_usage_threshold_critical" {
@@ -327,3 +303,4 @@ variable "root_filesystem_usage_threshold_warning" {
   type        = number
   default     = 80
 }
+

@@ -101,15 +101,9 @@ variable "no_healthy_instances_aggregation_function" {
 }
 
 variable "no_healthy_instances_transformation_function" {
-  description = "Transformation function for no_healthy_instances detector (mean, min, max)"
+  description = "Transformation function for no_healthy_instances detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
-}
-
-variable "no_healthy_instances_transformation_window" {
-  description = "Transformation window for no_healthy_instances detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "5m"
+  default     = ".min(over='5m')"
 }
 
 variable "no_healthy_instances_threshold_critical" {
@@ -123,3 +117,4 @@ variable "no_healthy_instances_threshold_warning" {
   type        = number
   default     = 100
 }
+

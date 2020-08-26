@@ -33,8 +33,7 @@ Creates SignalFx detectors with the following checks:
 | dropped\_connections\_notifications\_warning | Notification recipients list for warning alerting rule of dropped connections detector | `list` | `[]` | no |
 | dropped\_connections\_threshold\_critical | Critical threshold for dropped connections detector | `number` | `1` | no |
 | dropped\_connections\_threshold\_warning | Warning threshold for dropped connections detector | `number` | `0` | no |
-| dropped\_connections\_transformation\_function | Transformation function for dropped connections detector (mean, min, max) | `string` | `"min"` | no |
-| dropped\_connections\_transformation\_window | Transformation window for dropped connections detector (i.e. 5m, 20m, 1h, 1d) | `string` | `"5m"` | no |
+| dropped\_connections\_transformation\_function | Transformation function for dropped connections detector (i.e. \".mean(over='5m')\")) | `string` | `"min"` | no |
 | environment | Infrastructure environment | `string` | n/a | yes |
 | filter\_custom\_excludes | List of tags to exclude when custom filtering is used | `list` | `[]` | no |
 | filter\_custom\_includes | List of tags to include when custom filtering is used | `list` | `[]` | no |

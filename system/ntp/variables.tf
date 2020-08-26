@@ -83,15 +83,9 @@ variable "ntp_aggregation_function" {
 }
 
 variable "ntp_transformation_function" {
-  description = "Transformation function for ntp detector (mean, min, max)"
+  description = "Transformation function for ntp detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
-}
-
-variable "ntp_transformation_window" {
-  description = "Transformation window for ntp detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "5m"
+  default     = ".min(over='5m')"
 }
 
 variable "ntp_threshold_warning" {
@@ -99,3 +93,4 @@ variable "ntp_threshold_warning" {
   type        = number
   default     = 1500
 }
+

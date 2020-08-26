@@ -4,7 +4,7 @@ resource "signalfx_detector" "cache_hits" {
   program_text = <<-EOF
     A = data('CacheHits', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.cache_hits_aggregation_function}${var.cache_hits_transformation_function}
     B = data('CacheMisses', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.cache_hits_aggregation_function}${var.cache_hits_transformation_function}
-    signal = (A/(A+B)).fill(value=1).scale(100).publish('signal')
+    signal = (A / (A+B)).fill(value=1).scale(100).publish('signal')
     detect(when(signal < threshold(${var.cache_hits_threshold_critical}), lasting='${var.cache_hits_lasting_duration_seconds}s', at_least=${var.cache_hits_at_least_percentage})).publish('CRIT')
     detect((when(signal < threshold(${var.cache_hits_threshold_warning}), lasting='${var.cache_hits_lasting_duration_seconds}s', at_least=${var.cache_hits_at_least_percentage}) and when(signal >= ${var.cache_hits_threshold_critical})), off=(when(signal >= ${var.cache_hits_threshold_warning}, lasting='${var.cache_hits_lasting_duration_seconds / 2}s') or when(signal <= ${var.cache_hits_threshold_critical}, lasting='${var.cache_hits_lasting_duration_seconds}s', at_least=${var.cache_hits_at_least_percentage})), mode='paired').publish('WARN')
 EOF
@@ -26,14 +26,13 @@ EOF
     notifications         = coalescelist(var.cache_hits_notifications_warning, var.cache_hits_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
-
 }
 
 resource "signalfx_detector" "cpu_high" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ElastiCache redis CPU"
 
   program_text = <<-EOF
-    signal = data('EngineCPUUtilization', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'upper') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.cpu_high_aggregation_function}.${var.cpu_high_transformation_function}(over='${var.cpu_high_transformation_window}').publish('signal')
+    signal = data('EngineCPUUtilization', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'upper') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.cpu_high_aggregation_function}${var.cpu_high_transformation_function}.publish('signal')
     detect(when(signal > ${var.cpu_high_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.cpu_high_threshold_warning}) and when(signal <= ${var.cpu_high_threshold_critical})).publish('WARN')
 EOF
@@ -55,14 +54,13 @@ EOF
     notifications         = coalescelist(var.cpu_high_notifications_warning, var.cpu_high_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
-
 }
 
 resource "signalfx_detector" "replication_lag" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ElastiCache redis replication lag"
 
   program_text = <<-EOF
-    signal = data('ReplicationLag', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'upper') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.replication_lag_aggregation_function}.${var.replication_lag_transformation_function}(over='${var.replication_lag_transformation_window}').publish('signal')
+    signal = data('ReplicationLag', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'upper') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.replication_lag_aggregation_function}${var.replication_lag_transformation_function}.publish('signal')
     detect(when(signal > ${var.replication_lag_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.replication_lag_threshold_warning}) and when(signal <= ${var.replication_lag_threshold_critical})).publish('WARN')
 EOF
@@ -84,16 +82,15 @@ EOF
     notifications         = coalescelist(var.replication_lag_notifications_warning, var.replication_lag_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
-
 }
 
 resource "signalfx_detector" "commands" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ElastiCache redis commands"
 
   program_text = <<-EOF
-    A = data('GetTypeCmds', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'lower') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.commands_aggregation_function}
-    B = data('SetTypeCmds', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'lower') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.commands_aggregation_function}
-    signal = (A + B).${var.commands_transformation_function}(over='${var.commands_transformation_window}').publish('signal')
+    A = data('GetTypeCmds', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'lower') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.commands_aggregation_function}${var.commands_transformation_function}
+    B = data('SetTypeCmds', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'lower') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.commands_aggregation_function}${var.commands_transformation_function}
+    signal = (A + B).publish('signal')
     detect(when(signal <= ${var.commands_threshold_critical})).publish('CRIT')
     detect(when(signal <= ${var.commands_threshold_warning}) and when(signal > ${var.commands_threshold_critical})).publish('WARN')
 EOF
@@ -115,5 +112,5 @@ EOF
     notifications         = coalescelist(var.commands_notifications_warning, var.commands_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
-
 }
+

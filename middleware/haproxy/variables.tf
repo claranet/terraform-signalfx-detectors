@@ -87,15 +87,9 @@ variable "server_status_aggregation_function" {
 }
 
 variable "server_status_transformation_function" {
-  description = "Transformation function for server status detector (mean, min, max)"
+  description = "Transformation function for server status detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
-}
-
-variable "server_status_transformation_window" {
-  description = "Transformation window for server status detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "5m"
+  default     = ".min(over='5m')"
 }
 
 variable "backend_status_disabled" {
@@ -129,15 +123,9 @@ variable "backend_status_aggregation_function" {
 }
 
 variable "backend_status_transformation_function" {
-  description = "Transformation function for backend status detector (mean, min, max)"
+  description = "Transformation function for backend status detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
-}
-
-variable "backend_status_transformation_window" {
-  description = "Transformation window for backend status detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "5m"
+  default     = ".min(over='5m')"
 }
 
 variable "session_limit_disabled" {
@@ -183,15 +171,9 @@ variable "session_limit_aggregation_function" {
 }
 
 variable "session_limit_transformation_function" {
-  description = "Transformation function for session limit detector (mean, min, max)"
+  description = "Transformation function for session limit detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
-}
-
-variable "session_limit_transformation_window" {
-  description = "Transformation window for session limit detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "10m"
+  default     = ".min(over='10m')"
 }
 
 variable "session_limit_threshold_warning" {
@@ -249,15 +231,9 @@ variable "http_5xx_response_aggregation_function" {
 }
 
 variable "http_5xx_response_transformation_function" {
-  description = "Transformation function for http_5xx_response detector (mean, min, max)"
+  description = "Transformation function for http_5xx_response detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
-}
-
-variable "http_5xx_response_transformation_window" {
-  description = "Transformation window for http_5xx_response detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "10m"
+  default     = ".min(over='10m')"
 }
 
 variable "http_5xx_response_threshold_warning" {
@@ -315,15 +291,9 @@ variable "http_4xx_response_aggregation_function" {
 }
 
 variable "http_4xx_response_transformation_function" {
-  description = "Transformation function for http_4xx_response detector (mean, min, max)"
+  description = "Transformation function for http_4xx_response detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
-}
-
-variable "http_4xx_response_transformation_window" {
-  description = "Transformation window for http_4xx_response detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "10m"
+  default     = ".min(over='10m')"
 }
 
 variable "http_4xx_response_threshold_warning" {
@@ -337,3 +307,4 @@ variable "http_4xx_response_threshold_critical" {
   type        = number
   default     = 80
 }
+

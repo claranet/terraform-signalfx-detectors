@@ -76,6 +76,18 @@ variable "pct_errors_notifications_critical" {
   default     = []
 }
 
+variable "pct_errors_aggregation_function" {
+  description = "Aggregation function and group by for pct_errors detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ""
+}
+
+variable "pct_errors_transformation_function" {
+  description = "Transformation function for pct_errors detector (i.e. \".mean(over='5m')\"))"
+  type        = string
+  default     = ""
+}
+
 variable "pct_errors_lasting_duration_seconds" {
   description = "Minimum duration that conditions must be true before raising alert (in seconds)"
   type        = number
@@ -139,15 +151,9 @@ variable "throttles_aggregation_function" {
 }
 
 variable "throttles_transformation_function" {
-  description = "Transformation function for throttles detector (mean, min, max)"
+  description = "Transformation function for throttles detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "sum"
-}
-
-variable "throttles_transformation_window" {
-  description = "Transformation window for throttles detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "1h"
+  default     = ".sum(over='1h')"
 }
 
 variable "throttles_threshold_critical" {
@@ -183,15 +189,9 @@ variable "invocations_aggregation_function" {
 }
 
 variable "invocations_transformation_function" {
-  description = "Transformation function for invocations detector (mean, min, max)"
+  description = "Transformation function for invocations detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "sum"
-}
-
-variable "invocations_transformation_window" {
-  description = "Transformation window for invocations detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "1h"
+  default     = ".sum(over='1h')"
 }
 
 variable "invocations_threshold_warning" {

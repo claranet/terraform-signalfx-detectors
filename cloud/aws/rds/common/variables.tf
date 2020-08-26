@@ -101,15 +101,9 @@ variable "cpu_90_15min_aggregation_function" {
 }
 
 variable "cpu_90_15min_transformation_function" {
-  description = "Transformation function for cpu_90_15min detector (mean, min, max)"
+  description = "Transformation function for cpu_90_15min detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
-}
-
-variable "cpu_90_15min_transformation_window" {
-  description = "Transformation window for cpu_90_15min detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "15m"
+  default     = ".min(over='15m')"
 }
 
 variable "cpu_90_15min_threshold_critical" {
@@ -169,15 +163,9 @@ variable "free_space_low_aggregation_function" {
 }
 
 variable "free_space_low_transformation_function" {
-  description = "Transformation function for free_space_low detector (mean, min, max)"
+  description = "Transformation function for free_space_low detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
-}
-
-variable "free_space_low_transformation_window" {
-  description = "Transformation window for free_space_low detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "15m"
+  default     = ".min(over='15m')"
 }
 
 variable "free_space_low_threshold_critical" {
@@ -237,15 +225,9 @@ variable "replica_lag_aggregation_function" {
 }
 
 variable "replica_lag_transformation_function" {
-  description = "Transformation function for replica_lag detector (mean, min, max)"
+  description = "Transformation function for replica_lag detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
-}
-
-variable "replica_lag_transformation_window" {
-  description = "Transformation window for replica_lag detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "5m"
+  default     = ".min(over='5m')"
 }
 
 variable "replica_lag_threshold_critical" {
@@ -259,3 +241,4 @@ variable "replica_lag_threshold_warning" {
   type        = number
   default     = 200
 }
+
