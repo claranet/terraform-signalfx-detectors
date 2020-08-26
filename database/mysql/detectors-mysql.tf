@@ -51,8 +51,8 @@ resource "signalfx_detector" "mysql_slow" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] MySQL slow queries percentage"
 
   program_text = <<-EOF
-    A = data('mysql_slow_queries', filter=(not filter('plugin', 'mysql')) and ${module.filter-tags.filter_custom}, rollup='rate')${var.mysql_slow_aggregation_function}${var.mysql_slow_transformation_function}
-    B = data('mysql_queries', filter=(not filter('plugin', 'mysql')) and ${module.filter-tags.filter_custom}, rollup='rate')${var.mysql_slow_aggregation_function}${var.mysql_slow_transformation_function}
+    A = data('mysql_slow_queries', filter=(not filter('plugin', 'mysql')) and ${module.filter-tags.filter_custom}, rollup='delta')${var.mysql_slow_aggregation_function}${var.mysql_slow_transformation_function}
+    B = data('mysql_queries', filter=(not filter('plugin', 'mysql')) and ${module.filter-tags.filter_custom}, rollup='delta')${var.mysql_slow_aggregation_function}${var.mysql_slow_transformation_function}
     signal = (A/B).scale(100).publish('signal')
     detect(when(signal > ${var.mysql_slow_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.mysql_slow_threshold_warning}) and when(signal <= ${var.mysql_slow_threshold_critical})).publish('WARN')
@@ -81,8 +81,8 @@ resource "signalfx_detector" "mysql_pool_efficiency" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] MySQL Innodb buffer pool efficiency"
 
   program_text = <<-EOF
-    A = data('mysql_bpool_counters.reads', filter=filter('plugin', 'mysql') and ${module.filter-tags.filter_custom}, rollup='rate')${var.mysql_pool_efficiency_aggregation_function}${var.mysql_pool_efficiency_transformation_function}
-    B = data('mysql_bpool_counters.read_requests', filter=filter('plugin', 'mysql') and ${module.filter-tags.filter_custom}, rollup='rate')${var.mysql_pool_efficiency_aggregation_function}${var.mysql_pool_efficiency_transformation_function}
+    A = data('mysql_bpool_counters.reads', filter=filter('plugin', 'mysql') and ${module.filter-tags.filter_custom}, rollup='delta')${var.mysql_pool_efficiency_aggregation_function}${var.mysql_pool_efficiency_transformation_function}
+    B = data('mysql_bpool_counters.read_requests', filter=filter('plugin', 'mysql') and ${module.filter-tags.filter_custom}, rollup='delta')${var.mysql_pool_efficiency_aggregation_function}${var.mysql_pool_efficiency_transformation_function}
     signal = (A/B).fill(0).scale(100).publish('signal')
     detect(when(signal > ${var.mysql_pool_efficiency_threshold_major})).publish('MAJOR')
     detect(when(signal > ${var.mysql_pool_efficiency_threshold_minor}) and when(signal <= ${var.mysql_pool_efficiency_threshold_major})).publish('MINOR')
@@ -161,7 +161,7 @@ resource "signalfx_detector" "mysql_questions_anomaly" {
 
   program_text = <<-EOF
     from signalfx.detectors.against_periods import against_periods
-    signal = data('mysql_commands.*', filter=filter('plugin', 'mysql') and ${module.filter-tags.filter_custom}, rollup='rate')${var.mysql_questions_anomaly_aggregation_function}${var.mysql_questions_anomaly_transformation_function}.publish('signal')
+    signal = data('mysql_commands.*', filter=filter('plugin', 'mysql') and ${module.filter-tags.filter_custom}, rollup='delta')${var.mysql_questions_anomaly_aggregation_function}${var.mysql_questions_anomaly_transformation_function}.publish('signal')
     against_periods.detector_growth_rate(signal, window_to_compare=duration('${var.mysql_questions_anomaly_window_to_compare}'), space_between_windows=duration('${var.mysql_questions_anomaly_space_between_windows}'), num_windows=${var.mysql_questions_anomaly_num_windows}, fire_growth_rate_threshold=${var.mysql_questions_anomaly_fire_growth_rate_threshold}, clear_growth_rate_threshold=${var.mysql_questions_anomaly_clear_growth_rate_threshold}, discard_historical_outliers=True, orientation='${var.mysql_questions_anomaly_orientation}').publish('CRIT')
 EOF
 
