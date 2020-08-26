@@ -81,15 +81,9 @@ variable "messages_ready_aggregation_function" {
 }
 
 variable "messages_ready_transformation_function" {
-  description = "Transformation function for messages_ready detector (mean, min, max)"
+  description = "Transformation function for messages_ready detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
-}
-
-variable "messages_ready_transformation_window" {
-  description = "Transformation window for messages_ready detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "20m"
+  default     = ".min(over='20m')"
 }
 
 variable "messages_ready_threshold_warning" {
@@ -147,15 +141,9 @@ variable "messages_unacknowledged_aggregation_function" {
 }
 
 variable "messages_unacknowledged_transformation_function" {
-  description = "Transformation function for messages_unacknowledged detector (mean, min, max)"
+  description = "Transformation function for messages_unacknowledged detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
-}
-
-variable "messages_unacknowledged_transformation_window" {
-  description = "Transformation window for messages_unacknowledged detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "20m"
+  default     = ".min(over='20m')"
 }
 
 variable "messages_unacknowledged_threshold_warning" {
@@ -212,10 +200,16 @@ variable "messages_ack_rate_aggregation_function" {
   default     = ""
 }
 
-variable "messages_ack_rate_duration" {
-  description = "Duration for messages_ack_rate detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "10m"
+variable "messages_ack_rate_lasting_duration_seconds" {
+  description = "Minimum duration that conditions must be true before raising alert (in seconds)"
+  type        = number
+  default     = 600
+}
+
+variable "messages_ack_rate_at_least_percentage" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 0.9
 }
 
 variable "messages_ack_rate_threshold_warning" {
@@ -230,62 +224,69 @@ variable "messages_ack_rate_threshold_critical" {
   default     = "1/60"
 }
 
-variable "consumer_utilisation_disabled" {
-  description = "Disable all alerting rules for consumer_utilisation detector"
+variable "consumer_use_disabled" {
+  description = "Disable all alerting rules for consumer_use detector"
   type        = bool
   default     = true
 }
 
-variable "consumer_utilisation_disabled_critical" {
-  description = "Disable critical alerting rule for consumer_utilisation detector"
+variable "consumer_use_disabled_critical" {
+  description = "Disable critical alerting rule for consumer_use detector"
   type        = bool
   default     = null
 }
 
-variable "consumer_utilisation_disabled_warning" {
-  description = "Disable warning alerting rule for consumer_utilisation detector"
+variable "consumer_use_disabled_warning" {
+  description = "Disable warning alerting rule for consumer_use detector"
   type        = bool
   default     = null
 }
 
-variable "consumer_utilisation_notifications" {
-  description = "Notification recipients list for every alerting rules of consumer_utilisation detector"
+variable "consumer_use_notifications" {
+  description = "Notification recipients list for every alerting rules of consumer_use detector"
   type        = list
   default     = []
 }
 
-variable "consumer_utilisation_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of consumer_utilisation detector"
+variable "consumer_use_notifications_warning" {
+  description = "Notification recipients list for warning alerting rule of consumer_use detector"
   type        = list
   default     = []
 }
 
-variable "consumer_utilisation_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of consumer_utilisation detector"
+variable "consumer_use_notifications_critical" {
+  description = "Notification recipients list for critical alerting rule of consumer_use detector"
   type        = list
   default     = []
 }
 
-variable "consumer_utilisation_aggregation_function" {
-  description = "Aggregation function and group by for consumer_utilisation detector (i.e. \".mean(by=['host']).\")"
+variable "consumer_use_aggregation_function" {
+  description = "Aggregation function and group by for consumer_use detector (i.e. \".mean(by=['host']).\")"
   type        = string
   default     = ""
 }
 
-variable "consumer_utilisation_duration" {
-  description = "Duration for consumer_utilisation detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "10m"
+variable "consumer_use_lasting_duration_seconds" {
+  description = "Minimum duration that conditions must be true before raising alert (in seconds)"
+  type        = number
+  default     = 600
 }
 
-variable "consumer_utilisation_threshold_warning" {
-  description = "Warning threshold for consumer utilisation detector."
+variable "consumer_use_at_least_percentage" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 0.9
+}
+
+variable "consumer_use_threshold_warning" {
+  description = "Warning threshold for consumer use detector."
   type        = number
   default     = 1.0
 }
 
-variable "consumer_utilisation_threshold_critical" {
-  description = "Critical threshold for consumer utilisation detector."
+variable "consumer_use_threshold_critical" {
+  description = "Critical threshold for consumer use detector."
   type        = string
   default     = 0.8
 }
+

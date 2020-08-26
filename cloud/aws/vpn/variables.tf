@@ -91,13 +91,7 @@ variable "vpn_status_aggregation_function" {
 variable "vpn_status_transformation_function" {
   description = "Transformation function for vpn_status detector (mean, min, max)"
   type        = string
-  default     = "max"
-}
-
-variable "vpn_status_transformation_window" {
-  description = "Transformation window for vpn_status detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "5m"
+  default     = ".max(over='5m')"
 }
 
 variable "vpn_status_threshold_critical" {
@@ -105,3 +99,4 @@ variable "vpn_status_threshold_critical" {
   type        = number
   default     = 1
 }
+

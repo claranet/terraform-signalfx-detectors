@@ -101,16 +101,11 @@ variable "cluster_status_aggregation_function" {
 }
 
 variable "cluster_status_transformation_function" {
-  description = "Transformation function for cluster_status detector (mean, min, max)"
+  description = "Transformation function for cluster_status detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "max"
+  default     = ".max(over='30m')"
 }
 
-variable "cluster_status_transformation_window" {
-  description = "Transformation window for cluster_status detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "30m"
-}
 # Free_space detectors
 
 variable "free_space_disabled" {
@@ -156,15 +151,9 @@ variable "free_space_aggregation_function" {
 }
 
 variable "free_space_transformation_function" {
-  description = "Transformation function for free_space detector (mean, min, max)"
+  description = "Transformation function for free_space detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
-}
-
-variable "free_space_transformation_window" {
-  description = "Transformation window for free_space detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "15m"
+  default     = ".min(over='15m')"
 }
 
 variable "free_space_threshold_critical" {
@@ -224,15 +213,9 @@ variable "cpu_90_15min_aggregation_function" {
 }
 
 variable "cpu_90_15min_transformation_function" {
-  description = "Transformation function for cpu_90_15min detector (mean, min, max)"
+  description = "Transformation function for cpu_90_15min detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "max"
-}
-
-variable "cpu_90_15min_transformation_window" {
-  description = "Transformation window for cpu_90_15min detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "15m"
+  default     = ".max(over='15m')"
 }
 
 variable "cpu_90_15min_threshold_critical" {
@@ -246,3 +229,4 @@ variable "cpu_90_15min_threshold_warning" {
   type        = number
   default     = 80
 }
+

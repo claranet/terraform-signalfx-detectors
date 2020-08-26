@@ -101,15 +101,9 @@ variable "cpu_utilization_aggregation_function" {
 }
 
 variable "cpu_utilization_transformation_function" {
-  description = "Transformation function for cpu_utilization detector (mean, min, max)"
+  description = "Transformation function for cpu_utilization detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
-}
-
-variable "cpu_utilization_transformation_window" {
-  description = "Transformation window for cpu_utilization detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "5m"
+  default     = ".min(over='5m')"
 }
 
 variable "cpu_utilization_threshold_critical" {
@@ -169,15 +163,9 @@ variable "memory_utilization_aggregation_function" {
 }
 
 variable "memory_utilization_transformation_function" {
-  description = "Transformation function for memory_utilization detector (mean, min, max)"
+  description = "Transformation function for memory_utilization detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
-}
-
-variable "memory_utilization_transformation_window" {
-  description = "Transformation window for memory_utilization detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "5m"
+  default     = ".min(over='5m')"
 }
 
 variable "memory_utilization_threshold_critical" {

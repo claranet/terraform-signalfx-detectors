@@ -99,15 +99,9 @@ variable "file_descriptors_aggregation_function" {
 }
 
 variable "file_descriptors_transformation_function" {
-  description = "Transformation function for file descriptors detector (mean, min, max)"
+  description = "Transformation function for file descriptors detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
-}
-
-variable "file_descriptors_transformation_window" {
-  description = "Transformation window for file descriptors detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "10m"
+  default     = ".min(over='10m')"
 }
 
 variable "file_descriptors_threshold_critical" {
@@ -165,15 +159,9 @@ variable "processes_aggregation_function" {
 }
 
 variable "processes_transformation_function" {
-  description = "Transformation function for processes detector (mean, min, max)"
+  description = "Transformation function for processes detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
-}
-
-variable "processes_transformation_window" {
-  description = "Transformation window for processes detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "10m"
+  default     = ".min(over='10m')"
 }
 
 variable "processes_threshold_critical" {
@@ -231,15 +219,9 @@ variable "sockets_aggregation_function" {
 }
 
 variable "sockets_transformation_function" {
-  description = "Transformation function for sockets detector (mean, min, max)"
+  description = "Transformation function for sockets detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
-}
-
-variable "sockets_transformation_window" {
-  description = "Transformation window for sockets detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "10m"
+  default     = ".min(over='10m')"
 }
 
 variable "sockets_threshold_critical" {
@@ -297,15 +279,9 @@ variable "vm_memory_aggregation_function" {
 }
 
 variable "vm_memory_transformation_function" {
-  description = "Transformation function for vm_memory detector (mean, min, max)"
+  description = "Transformation function for vm_memory detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
-}
-
-variable "vm_memory_transformation_window" {
-  description = "Transformation window for vm_memory detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "10m"
+  default     = ".min(over='10m')"
 }
 
 variable "vm_memory_threshold_critical" {
@@ -319,3 +295,4 @@ variable "vm_memory_threshold_warning" {
   type        = number
   default     = 80
 }
+

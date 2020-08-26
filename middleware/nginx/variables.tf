@@ -99,15 +99,9 @@ variable "dropped_connections_aggregation_function" {
 }
 
 variable "dropped_connections_transformation_function" {
-  description = "Transformation function for dropped connections detector (mean, min, max)"
+  description = "Transformation function for dropped connections detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
-}
-
-variable "dropped_connections_transformation_window" {
-  description = "Transformation window for dropped connections detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "5m"
+  default     = ".min(over='5m')"
 }
 
 variable "dropped_connections_threshold_critical" {

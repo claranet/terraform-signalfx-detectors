@@ -41,8 +41,7 @@ Creates SignalFx detectors with the following checks:
 | treatment\_limit\_notifications\_warning | Notification recipients list for warning alerting rule of treatment limit detector | `list` | `[]` | no |
 | treatment\_limit\_threshold\_critical | Critical threshold for treatment limit detector | `number` | `20` | no |
 | treatment\_limit\_threshold\_warning | Warning threshold for treatment limit detector | `number` | `0` | no |
-| treatment\_limit\_transformation\_function | Transformation function for treatment limit detector (mean, min, max) | `string` | `"min"` | no |
-| treatment\_limit\_transformation\_window | Transformation window for treatment limit detector (i.e. 5m, 20m, 1h, 1d) | `string` | `"15m"` | no |
+| treatment\_limit\_transformation\_function | Transformation function for treatment limit detector (i.e. \".mean(over='5m')\")) | `string` | `"min"` | no |
 
 ## Outputs
 

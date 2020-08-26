@@ -101,15 +101,9 @@ variable "cpu_aggregation_function" {
 }
 
 variable "cpu_transformation_function" {
-  description = "Transformation function for cpu detector (mean, min, max)"
+  description = "Transformation function for cpu detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
-}
-
-variable "cpu_transformation_window" {
-  description = "Transformation window for cpu detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "1h"
+  default     = ".min(over='1h')"
 }
 
 variable "cpu_threshold_critical" {
@@ -169,15 +163,9 @@ variable "load_aggregation_function" {
 }
 
 variable "load_transformation_function" {
-  description = "Transformation function for load detector (mean, min, max)"
+  description = "Transformation function for load detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
-}
-
-variable "load_transformation_window" {
-  description = "Transformation window for load detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "30m"
+  default     = ".min(over='30m')"
 }
 
 variable "load_threshold_critical" {
@@ -237,15 +225,9 @@ variable "disk_space_aggregation_function" {
 }
 
 variable "disk_space_transformation_function" {
-  description = "Transformation function for disk space detector (mean, min, max)"
+  description = "Transformation function for disk space detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "max"
-}
-
-variable "disk_space_transformation_window" {
-  description = "Transformation window for disk space detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "5m"
+  default     = ".max(over='5m')"
 }
 
 variable "disk_space_threshold_critical" {
@@ -305,15 +287,9 @@ variable "disk_inodes_aggregation_function" {
 }
 
 variable "disk_inodes_transformation_function" {
-  description = "Transformation function for disk inodes detector (mean, min, max)"
+  description = "Transformation function for disk inodes detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
-}
-
-variable "disk_inodes_transformation_window" {
-  description = "Transformation window for disk inodes detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "5m"
+  default     = ".max(over='5m')"
 }
 
 variable "disk_inodes_threshold_critical" {
@@ -435,15 +411,9 @@ variable "memory_aggregation_function" {
 }
 
 variable "memory_transformation_function" {
-  description = "Transformation function for memory detector (mean, min, max)"
+  description = "Transformation function for memory detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
-}
-
-variable "memory_transformation_window" {
-  description = "Transformation window for memory detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "5m"
+  default     = ".min(over='5m')"
 }
 
 variable "memory_threshold_critical" {

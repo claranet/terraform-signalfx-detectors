@@ -41,8 +41,7 @@ Creates SignalFx detectors with the following checks:
 | process\_state\_notifications\_warning | Notification recipients list for warning alerting rule of process state detector | list | `[]` | no |
 | process\_state\_threshold\_critical | Critical threshold for process state detector, see http://supervisord.org/subprocess.html#process-states\) | number | `"20"` | no |
 | process\_state\_threshold\_warning | Warning threshold for process state detector \(default to be less then 20 \(process has been stopped manually or is starting\), see http://supervisord.org/subprocess.html#process-states | number | `"20"` | no |
-| process\_state\_transformation\_function | Transformation function for process state detector \(mean, min, max\) | string | `"min"` | no |
-| process\_state\_transformation\_window | Transformation window for process state detector \(i.e. 5m, 20m, 1h, 1d\) | string | `"10m"` | no |
+| process\_state\_transformation\_function | Transformation function for process state detector (i.e. \".mean(over='5m')\")) | string | `"min"` | no |
 
 ## Outputs
 

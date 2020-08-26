@@ -157,15 +157,9 @@ variable "cpu_high_aggregation_function" {
 }
 
 variable "cpu_high_transformation_function" {
-  description = "Transformation function for cpu_high detector (mean, min, max)"
+  description = "Transformation function for cpu_high detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
-}
-
-variable "cpu_high_transformation_window" {
-  description = "Transformation window for cpu_high detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "15m"
+  default     = ".min(over='15m')"
 }
 
 variable "cpu_high_threshold_critical" {
@@ -225,15 +219,9 @@ variable "replication_lag_aggregation_function" {
 }
 
 variable "replication_lag_transformation_function" {
-  description = "Transformation function for replication_lag detector (mean, min, max)"
+  description = "Transformation function for replication_lag detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
-}
-
-variable "replication_lag_transformation_window" {
-  description = "Transformation window for replication_lag detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "10m"
+  default     = ".min(over='10m')"
 }
 
 variable "replication_lag_threshold_critical" {
@@ -293,15 +281,9 @@ variable "commands_aggregation_function" {
 }
 
 variable "commands_transformation_function" {
-  description = "Transformation function for commands detector (mean, min, max)"
+  description = "Transformation function for commands detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "sum"
-}
-
-variable "commands_transformation_window" {
-  description = "Transformation window for commands detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "15m"
+  default     = ".sum(over='15m')"
 }
 
 variable "commands_threshold_critical" {
@@ -316,3 +298,4 @@ variable "commands_threshold_warning" {
   type        = number
   default     = 0
 }
+

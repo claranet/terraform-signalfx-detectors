@@ -89,15 +89,9 @@ variable "http_code_matched_aggregation_function" {
 }
 
 variable "http_code_matched_transformation_function" {
-  description = "Transformation function for http_code_matched detector (mean, min, max)"
+  description = "Transformation function for http_code_matched detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "max"
-}
-
-variable "http_code_matched_transformation_window" {
-  description = "Transformation window for http_code_matched detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "1m"
+  default     = ".max(over='1m')"
 }
 
 # Http_regex_matched detectors
@@ -133,15 +127,9 @@ variable "http_regex_matched_aggregation_function" {
 }
 
 variable "http_regex_matched_transformation_function" {
-  description = "Transformation function for http_regex_matched detector (mean, min, max)"
+  description = "Transformation function for http_regex_matched detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "max"
-}
-
-variable "http_regex_matched_transformation_window" {
-  description = "Transformation window for http_regex_matched detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "5m"
+  default     = ".max(over='5m')"
 }
 
 # Http_response_time detectors
@@ -189,15 +177,9 @@ variable "http_response_time_aggregation_function" {
 }
 
 variable "http_response_time_transformation_function" {
-  description = "Transformation function for http_response_time detector (mean, min, max)"
+  description = "Transformation function for http_response_time detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "min"
-}
-
-variable "http_response_time_transformation_window" {
-  description = "Transformation window for http_response_time detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "15m"
+  default     = ".min(over='15m')"
 }
 
 variable "http_response_time_threshold_critical" {
@@ -220,32 +202,8 @@ variable "http_content_length_disabled" {
   default     = null
 }
 
-variable "http_content_length_disabled_critical" {
-  description = "Disable critical alerting rule for http_content_length detector"
-  type        = bool
-  default     = null
-}
-
-variable "http_content_length_disabled_warning" {
-  description = "Disable warning alerting rule for http_content_length detector"
-  type        = bool
-  default     = null
-}
-
 variable "http_content_length_notifications" {
   description = "Notification recipients list for every alerting rules of http_content_length detector"
-  type        = list
-  default     = []
-}
-
-variable "http_content_length_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of http_content_length detector"
-  type        = list
-  default     = []
-}
-
-variable "http_content_length_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of http_content_length detector"
   type        = list
   default     = []
 }
@@ -257,27 +215,15 @@ variable "http_content_length_aggregation_function" {
 }
 
 variable "http_content_length_transformation_function" {
-  description = "Transformation function for http_content_length detector (mean, min, max)"
+  description = "Transformation function for http_content_length detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "max"
-}
-
-variable "http_content_length_transformation_window" {
-  description = "Transformation window for http_content_length detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "15m"
-}
-
-variable "http_content_length_threshold_critical" {
-  description = "Critical threshold for http_content_length detector"
-  type        = number
-  default     = 10
+  default     = ".max(over='15m')"
 }
 
 variable "http_content_length_threshold_warning" {
-  description = "Warning threshold for http_content_length detector"
+  description = "Critical threshold for http_content_length detector"
   type        = number
-  default     = 300
+  default     = 10
 }
 
 # Certificate_expiration_date detectors
@@ -325,15 +271,9 @@ variable "certificate_expiration_date_aggregation_function" {
 }
 
 variable "certificate_expiration_date_transformation_function" {
-  description = "Transformation function for certificate_expiration_date detector (mean, min, max)"
+  description = "Transformation function for certificate_expiration_date detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "max"
-}
-
-variable "certificate_expiration_date_transformation_window" {
-  description = "Transformation window for certificate_expiration_date detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "5m"
+  default     = ".max(over='5m')"
 }
 
 variable "certificate_expiration_date_threshold_critical" {
@@ -381,14 +321,8 @@ variable "invalid_tls_certificate_aggregation_function" {
 }
 
 variable "invalid_tls_certificate_transformation_function" {
-  description = "Transformation function for invalid_tls_certificate detector (mean, min, max)"
+  description = "Transformation function for invalid_tls_certificate detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = "max"
-}
-
-variable "invalid_tls_certificate_transformation_window" {
-  description = "Transformation window for invalid_tls_certificate detector (i.e. 5m, 20m, 1h, 1d)"
-  type        = string
-  default     = "5m"
+  default     = ".max(over='5m')"
 }
 
