@@ -171,13 +171,13 @@ variable "hit_ratio_transformation_function" {
 variable "hit_ratio_threshold_minor" {
   description = "minor threshold for hit_ratio detector"
   type        = number
-  default     = 70
+  default     = 50
 }
 
 variable "hit_ratio_threshold_major" {
   description = "Major threshold for hit_ratio detector"
   type        = number
-  default     = 80
+  default     = 75
 }
 
 # rollbacks detectors
