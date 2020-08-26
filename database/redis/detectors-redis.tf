@@ -80,25 +80,25 @@ resource "signalfx_detector" "blocked_clients" {
     A = data('gauge.blocked_clients', filter=filter('plugin', 'redis_info') and ${module.filter-tags.filter_custom})${var.blocked_clients_aggregation_function}${var.blocked_clients_transformation_function}
     B = data('gauge.connected_clients', filter=filter('plugin', 'redis_info') and ${module.filter-tags.filter_custom})${var.blocked_clients_aggregation_function}${var.blocked_clients_transformation_function}
     signal = (A/B).scale(100).publish('signal')
-    detect(when(signal > ${var.blocked_clients_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.blocked_clients_threshold_warning}) and when(signal <= ${var.blocked_clients_threshold_critical})).publish('WARN')
+    detect(when(signal > ${var.blocked_clients_threshold_major})).publish('MAJOR')
+    detect(when(signal > ${var.blocked_clients_threshold_minor}) and when(signal <= ${var.blocked_clients_threshold_major})).publish('MINOR')
 EOF
 
   rule {
-    description           = "is too high > ${var.blocked_clients_threshold_critical}"
-    severity              = "Critical"
-    detect_label          = "CRIT"
-    disabled              = coalesce(var.blocked_clients_disabled_critical, var.blocked_clients_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.blocked_clients_notifications_critical, var.blocked_clients_notifications, var.notifications)
+    description           = "is too high > ${var.blocked_clients_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.blocked_clients_disabled_major, var.blocked_clients_disabled, var.detectors_disabled)
+    notifications         = coalescelist(var.blocked_clients_notifications_major, var.blocked_clients_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
   rule {
-    description           = "is too high > ${var.blocked_clients_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.blocked_clients_disabled_warning, var.blocked_clients_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.blocked_clients_notifications_warning, var.blocked_clients_notifications, var.notifications)
+    description           = "is too high > ${var.blocked_clients_threshold_minor}"
+    severity              = "Minor"
+    detect_label          = "MINOR"
+    disabled              = coalesce(var.blocked_clients_disabled_minor, var.blocked_clients_disabled, var.detectors_disabled)
+    notifications         = coalescelist(var.blocked_clients_notifications_minor, var.blocked_clients_notifications, var.notifications)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
