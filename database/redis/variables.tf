@@ -188,14 +188,14 @@ variable "blocked_clients_disabled" {
   default     = null
 }
 
-variable "blocked_clients_disabled_critical" {
-  description = "Disable critical alerting rule for blocked_clients detector"
+variable "blocked_clients_disabled_major" {
+  description = "Disable major alerting rule for blocked_clients detector"
   type        = bool
   default     = null
 }
 
-variable "blocked_clients_disabled_warning" {
-  description = "Disable warning alerting rule for blocked_clients detector"
+variable "blocked_clients_disabled_minor" {
+  description = "Disable minor alerting rule for blocked_clients detector"
   type        = bool
   default     = null
 }
@@ -206,14 +206,14 @@ variable "blocked_clients_notifications" {
   default     = []
 }
 
-variable "blocked_clients_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of blocked_clients detector"
+variable "blocked_clients_notifications_minor" {
+  description = "Notification recipients list for minor alerting rule of blocked_clients detector"
   type        = list
   default     = []
 }
 
-variable "blocked_clients_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of blocked_clients detector"
+variable "blocked_clients_notifications_major" {
+  description = "Notification recipients list for major alerting rule of blocked_clients detector"
   type        = list
   default     = []
 }
@@ -230,14 +230,14 @@ variable "blocked_clients_transformation_function" {
   default     = ".mean(over='1h')"
 }
 
-variable "blocked_clients_threshold_critical" {
-  description = "Critical threshold for blocked_clients detector"
+variable "blocked_clients_threshold_major" {
+  description = "major threshold for blocked_clients detector"
   type        = number
   default     = 5
 }
 
-variable "blocked_clients_threshold_warning" {
-  description = "Warning threshold for blocked_clients detector"
+variable "blocked_clients_threshold_minor" {
+  description = "minor threshold for blocked_clients detector"
   type        = number
   default     = 0
 }
