@@ -21,7 +21,7 @@ resource "signalfx_detector" "evicted_keys" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Redis evicted keys rate of change"
 
   program_text = <<-EOF
-    signal = data('counter.evicted_keys', filter=filter('plugin', 'redis_info') and ${module.filter-tags.filter_custom}, rollup='rate').rateofchange()${var.evicted_keys_aggregation_function}${var.evicted_keys_transformation_function}.publish('signal')
+    signal = data('counter.evicted_keys', filter=filter('plugin', 'redis_info') and ${module.filter-tags.filter_custom}, rollup='delta').rateofchange()${var.evicted_keys_aggregation_function}${var.evicted_keys_transformation_function}.publish('signal')
     detect(when(signal > ${var.evicted_keys_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.evicted_keys_threshold_warning}) and when(signal <= ${var.evicted_keys_threshold_critical})).publish('WARN')
 EOF
@@ -49,7 +49,7 @@ resource "signalfx_detector" "expirations" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Redis expired keys rate of change"
 
   program_text = <<-EOF
-    signal = data('counter.expired_keys', filter=filter('plugin', 'redis_info') and ${module.filter-tags.filter_custom}, rollup='rate').rateofchange()${var.expirations_aggregation_function}${var.expirations_transformation_function}.publish('signal')
+    signal = data('counter.expired_keys', filter=filter('plugin', 'redis_info') and ${module.filter-tags.filter_custom}, rollup='delta').rateofchange()${var.expirations_aggregation_function}${var.expirations_transformation_function}.publish('signal')
     detect(when(signal > ${var.expirations_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.expirations_threshold_warning}) and when(signal <= ${var.expirations_threshold_critical})).publish('WARN')
 EOF
@@ -245,7 +245,7 @@ resource "signalfx_detector" "rejected_connections" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Redis rejected connections (maxclient reached)"
 
   program_text = <<-EOF
-    signal = data('counter.rejected_connections', filter=filter('plugin', 'redis_info') and ${module.filter-tags.filter_custom}, rollup='rate').${var.rejected_connections_aggregation_function}${var.rejected_connections_transformation_function}.publish('signal')
+    signal = data('counter.rejected_connections', filter=filter('plugin', 'redis_info') and ${module.filter-tags.filter_custom}, rollup='delta').${var.rejected_connections_aggregation_function}${var.rejected_connections_transformation_function}.publish('signal')
     detect(when(signal > ${var.rejected_connections_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.rejected_connections_threshold_warning}) and when(signal <= ${var.rejected_connections_threshold_critical})).publish('WARN')
 EOF
@@ -273,8 +273,8 @@ resource "signalfx_detector" "hitrate" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Redis hitrate"
 
   program_text = <<-EOF
-    A = data('derive.keyspace_hits', filter=filter('plugin', 'redis_info') and ${module.filter-tags.filter_custom}, rollup='rate')${var.hitrate_aggregation_function}${var.hitrate_transformation_function}
-    B = data('derive.keyspace_misses', filter=filter('plugin', 'redis_info') and ${module.filter-tags.filter_custom}, rollup='rate')${var.hitrate_aggregation_function}${var.hitrate_transformation_function}
+    A = data('derive.keyspace_hits', filter=filter('plugin', 'redis_info') and ${module.filter-tags.filter_custom}, rollup='delta')${var.hitrate_aggregation_function}${var.hitrate_transformation_function}
+    B = data('derive.keyspace_misses', filter=filter('plugin', 'redis_info') and ${module.filter-tags.filter_custom}, rollup='delta')${var.hitrate_aggregation_function}${var.hitrate_transformation_function}
     signal = (A / (A+B)).scale(100).publish('signal')
     detect(when(signal < ${var.hitrate_threshold_critical})).publish('CRIT')
     detect(when(signal < ${var.hitrate_threshold_warning}) and when(signal >= ${var.hitrate_threshold_critical})).publish('WARN')
