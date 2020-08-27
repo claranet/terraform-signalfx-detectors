@@ -35,15 +35,20 @@ Here is a full configuration example working with these detectors:
 
 ```yaml
   - type: collectd/mysql
-    host: &mysqlHost 127.0.0.1
+    host: &mysqlHost localhost
     port: &mysqlPort 3306
     username: &mysqlUser {"#from": "vault:secret/my-database[username]"}
     password: &mysqlPass {"#from": "vault:secret/my-database[password]"}
     databases:
       - name: &mysqlDBName mysql
+    # Uncomment only if mysql server is not on the same host as signalfx agent
+    #disableHostDimensions: true
     extraDimensions: &mysqlDimensions
-      mysql_host: *mysqlHost
+      # Uncomment only if you enabled `disableHostDimensions` or for "serverless" mode.
+      #host: *mysqlHost
+      # Always add this extraDimension.
       mysql_port: *mysqlPort
+    # You should not have to change lines below
     innodbStats: true
     extraMetrics:
       - threads.running
@@ -51,7 +56,6 @@ Here is a full configuration example working with these detectors:
       - mysql_bpool_counters.read_requests
       - mysql_bpool_pages.free
       - mysql_bpool_pages.total
-  # You should not have to change this while it uses collectd/mysql  monitor config
   - type: sql
     dbDriver: mysql
     extraDimensions: *mysqlDimensions

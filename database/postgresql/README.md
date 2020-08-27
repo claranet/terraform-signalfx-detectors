@@ -6,19 +6,22 @@ The last one brings more useful metrics thanks to specific SQL queries configure
 
 ```yaml
   - type: postgresql
-    host: &psqlHost 127.0.0.1
+    host: &psqlHost localhost
     port: &psqlPort 5432
     params: &psqlParams
       username: {"#from": "vault:secret/my-database[username]"}
       password: {"#from": "vault:secret/my-database[password]"}
     masterDBName: &psqlDBName postgres
+    # Uncomment only if mysql server is not on the same host as signalfx agent
+    #disableHostDimensions: true
+    extraDimensions: &psqlDimensions
+      # Uncomment only if you enabled `disableHostDimensions` or for "serverless" mode.
+      #host: *psqlHost
+      # Always add this extraDimension.
+      postgres_port: *psqlPort
+    # You should not have to change lines below
     # Do not add host, port and dbname
     connectionString: "user={{.username}} password={{.password}} sslmode=disable"
-    # Do not change this, needed for detectors
-    extraDimensions: &psqlDimensions
-      postgres_host: *psqlHost
-      postgres_port: *psqlPort
-  # You should not have to change this while it uses postgresql monitor config
   - type: sql
     dbDriver: postgres
     extraDimensions: *psqlDimensions
