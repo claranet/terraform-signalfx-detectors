@@ -959,7 +959,7 @@ variable "search_latency_aggregation_function" {
 variable "search_latency_transformation_function" {
   description = "Transformation function for search_latency detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = ".mean(over='15m')"
+  default     = ".min(over='30m')"
 }
 
 variable "search_latency_threshold_warning" {
