@@ -101,7 +101,7 @@ variable "errors_aggregation_function" {
 }
 
 variable "errors_transformation_function" {
-  description = "Transformation function for errors detector (i.e. \".mean(by=['host'])\")"
+  description = "Transformation function for errors detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='5m')"
 }
@@ -163,7 +163,7 @@ variable "searcher_warmup_time_aggregation_function" {
 }
 
 variable "searcher_warmup_time_transformation_function" {
-  description = "Transformation function for searcher_warmup_time detector (i.e. \".mean(by=['host'])\")"
+  description = "Transformation function for searcher_warmup_time detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".max(over='5m')"
 }
