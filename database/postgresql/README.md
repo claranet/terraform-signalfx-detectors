@@ -1,4 +1,4 @@
-## Notes
+## Agent configuration
 
 This module deploy detectors which require both [postgresql](https://docs.signalfx.com/en/latest/integrations/agent/monitors/postgresql.html) and [sql](https://docs.signalfx.com/en/latest/integrations/agent/monitors/sql.html) monitors.
 
@@ -69,9 +69,15 @@ The last one brings more useful metrics thanks to specific SQL queries configure
 
 Feel free to add more queries either for specific use cases or for generic purpose (please submit a PR in this case).
 
-__Note__: if you master database is protected you will need to override `databases` with the list of readable databases
+## Notes
+
+* if you master database is protected you will need to override `databases` with the list of readable databases
 or monitor will fail to collect metrics.
 
-__Warning__: the heartbeat detector works a little differently from other database modules because of its granularity.
+* the heartbeat detector works a little differently from other database modules because of its granularity.
 Indeed, metrics are sent "per database" basis so this detector could raise alert for a deleted databse
 in addition to the usual alert when the database server does not reponse anymore.
+
+* For metrics about queries execution time, you must enable `pg_stat_statements` extension which should be specified 
+in the `shared_preload_libraries` config option in the main PostgreSQL configuration at server start up. Then, the 
+extension must be enabled for each database by running `CREATE EXTENSION IF NOT EXISTS pg_stat_statements;` on each database.
