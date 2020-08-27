@@ -13,6 +13,10 @@ module "signalfx-detectors-database-mysql" {
 
 ## Notes
 
+To prepare the Mysql server allowing monitoring you can use [this terraform module](https://github.com/claranet/terraform-signalfx-integrations/tree/master/database/mysql).
+
+## Agent configuration
+
 In order to work properly, this module needs some [extraMetrics](https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-mysql.html#non-default-metrics-version-4-7-0), the agent needs a least the following configuration for the [mysql](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.mysql.html) monitor :
 
 - `threads.running`
