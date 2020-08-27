@@ -161,7 +161,7 @@ resource "signalfx_detector" "cpu_usage" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Elasticsearch CPU usage"
 
   program_text = <<-EOF
-    signal = data('elasticsearch.process.cpu.percent', filter=filter('plugin', 'elasticsearch') and ${module.filter-tags.filter_custom}, rollup='average')${var.cpu_usage_aggregation_function}${var.cpu_usage_transformation_function}.publish('signal')
+    signal = data('elasticsearch.process.cpu.percent', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, rollup='average')${var.cpu_usage_aggregation_function}${var.cpu_usage_transformation_function}.publish('signal')
     detect(when(signal > ${var.cpu_usage_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.cpu_usage_threshold_warning}) and when(signal <= ${var.cpu_usage_threshold_critical})).publish('WARN')
 EOF
@@ -189,8 +189,8 @@ resource "signalfx_detector" "file_descriptors" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Elasticsearch file descriptors usage"
 
   program_text = <<-EOF
-    A = data('elasticsearch.process.open_file_descriptors', filter=filter('plugin', 'elasticsearch') and ${module.filter-tags.filter_custom}, rollup='average')${var.file_descriptors_aggregation_function}${var.file_descriptors_transformation_function}
-    B = data('elasticsearch.process.max_file_descriptors', filter=filter('plugin', 'elasticsearch') and ${module.filter-tags.filter_custom}, rollup='average')${var.file_descriptors_aggregation_function}${var.file_descriptors_transformation_function}
+    A = data('elasticsearch.process.open_file_descriptors', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, rollup='average')${var.file_descriptors_aggregation_function}${var.file_descriptors_transformation_function}
+    B = data('elasticsearch.process.max_file_descriptors', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, rollup='average')${var.file_descriptors_aggregation_function}${var.file_descriptors_transformation_function}
     signal = (A/B).scale(100).publish('signal')
     detect(when(signal > ${var.file_descriptors_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.file_descriptors_threshold_warning}) and when(signal <= ${var.file_descriptors_threshold_critical})).publish('WARN')
@@ -219,7 +219,7 @@ resource "signalfx_detector" "jvm_heap_memory_usage" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Elasticsearch JVM heap memory usage"
 
   program_text = <<-EOF
-    signal = data('elasticsearch.jvm.mem.heap-used-percent', filter=filter('plugin', 'elasticsearch') and ${module.filter-tags.filter_custom}, rollup='average')${var.jvm_heap_memory_usage_aggregation_function}${var.jvm_heap_memory_usage_transformation_function}.publish('signal')
+    signal = data('elasticsearch.jvm.mem.heap-used-percent', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, rollup='average')${var.jvm_heap_memory_usage_aggregation_function}${var.jvm_heap_memory_usage_transformation_function}.publish('signal')
     detect(when(signal > ${var.jvm_heap_memory_usage_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.jvm_heap_memory_usage_threshold_warning}) and when(signal <= ${var.jvm_heap_memory_usage_threshold_critical})).publish('WARN')
 EOF
@@ -247,9 +247,9 @@ resource "signalfx_detector" "jvm_memory_young_usage" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Elasticsearch JVM memory young usage"
 
   program_text = <<-EOF
-    A = data('elasticsearch.jvm.mem.pools.young.used_in_bytes', filter=filter('plugin', 'elasticsearch') and ${module.filter-tags.filter_custom}, rollup='average')${var.jvm_memory_young_usage_aggregation_function}${var.jvm_memory_young_usage_transformation_function}
-    B = data('elasticsearch.jvm.mem.pools.young.max_in_bytes', filter=filter('plugin', 'elasticsearch') and ${module.filter-tags.filter_custom}, rollup='average')${var.jvm_memory_young_usage_aggregation_function}${var.jvm_memory_young_usage_transformation_function}
-    signal = (A/B).scale(100).publish('signal')
+    A = data('elasticsearch.jvm.mem.pools.young.used_in_bytes', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, rollup='average')${var.jvm_memory_young_usage_aggregation_function}${var.jvm_memory_young_usage_transformation_function}
+    B = data('elasticsearch.jvm.mem.pools.young.max_in_bytes', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, rollup='average')${var.jvm_memory_young_usage_aggregation_function}${var.jvm_memory_young_usage_transformation_function}
+    signal = (A/B).fill(0).scale(100).publish('signal')
     detect(when(signal > ${var.jvm_memory_young_usage_threshold_warning})).publish('WARN')
     detect(when(signal > ${var.jvm_memory_young_usage_threshold_major}) and when(signal <= ${var.jvm_memory_young_usage_threshold_warning})).publish('MAJOR')
 EOF
@@ -277,9 +277,9 @@ resource "signalfx_detector" "jvm_memory_old_usage" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Elasticsearch JVM memory old usage"
 
   program_text = <<-EOF
-    A = data('elasticsearch.jvm.mem.pools.old.used_in_bytes', filter=filter('plugin', 'elasticsearch') and ${module.filter-tags.filter_custom}, rollup='average')${var.jvm_memory_old_usage_aggregation_function}${var.jvm_memory_old_usage_transformation_function}
-    B = data('elasticsearch.jvm.mem.pools.old.max_in_bytes', filter=filter('plugin', 'elasticsearch') and ${module.filter-tags.filter_custom}, rollup='average')${var.jvm_memory_old_usage_aggregation_function}${var.jvm_memory_old_usage_transformation_function}
-    signal = (A/B).scale(100).publish('signal')
+    A = data('elasticsearch.jvm.mem.pools.old.used_in_bytes', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, rollup='average')${var.jvm_memory_old_usage_aggregation_function}${var.jvm_memory_old_usage_transformation_function}
+    B = data('elasticsearch.jvm.mem.pools.old.max_in_bytes', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, rollup='average')${var.jvm_memory_old_usage_aggregation_function}${var.jvm_memory_old_usage_transformation_function}
+    signal = (A/B).fill(0).scale(100).publish('signal')
     detect(when(signal > ${var.jvm_memory_old_usage_threshold_warning})).publish('WARN')
     detect(when(signal > ${var.jvm_memory_old_usage_threshold_major}) and when(signal <= ${var.jvm_memory_old_usage_threshold_warning})).publish('MAJOR')
 EOF
@@ -307,9 +307,9 @@ resource "signalfx_detector" "jvm_gc_old_collection_latency" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Elasticsearch old-generation garbage collections latency"
 
   program_text = <<-EOF
-    A = data('elasticsearch.jvm.gc.old-time', filter=filter('plugin', 'elasticsearch') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.jvm_gc_old_collection_latency_aggregation_function}${var.jvm_gc_old_collection_latency_transformation_function}
-    B = data('elasticsearch.jvm.gc.count', filter=filter('plugin', 'elasticsearch') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.jvm_gc_old_collection_latency_aggregation_function}${var.jvm_gc_old_collection_latency_transformation_function}
-    signal = (A/B).fill(0).scale(1000).publish('signal')
+    A = data('elasticsearch.jvm.gc.old-time', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.jvm_gc_old_collection_latency_aggregation_function}${var.jvm_gc_old_collection_latency_transformation_function}
+    B = data('elasticsearch.jvm.gc.old-count', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.jvm_gc_old_collection_latency_aggregation_function}${var.jvm_gc_old_collection_latency_transformation_function}
+    signal = (A/B).fill(0).publish('signal')
     detect(when(signal > ${var.jvm_gc_old_collection_latency_threshold_warning})).publish('WARN')
     detect(when(signal > ${var.jvm_gc_old_collection_latency_threshold_major}) and when(signal <= ${var.jvm_gc_old_collection_latency_threshold_warning})).publish('MAJOR')
 EOF
@@ -337,9 +337,9 @@ resource "signalfx_detector" "jvm_gc_young_collection_latency" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Elasticsearch young-generation garbage collections latency"
 
   program_text = <<-EOF
-    A = data('elasticsearch.jvm.gc.time', filter=filter('plugin', 'elasticsearch') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.jvm_gc_young_collection_latency_aggregation_function}${var.jvm_gc_young_collection_latency_transformation_function}
+    A = data('elasticsearch.jvm.gc.time', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.jvm_gc_young_collection_latency_aggregation_function}${var.jvm_gc_young_collection_latency_transformation_function}
     B = data('elasticsearch.jvm.gc.count', filter=filter('plugin', 'elasticsearch') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.jvm_gc_young_collection_latency_aggregation_function}${var.jvm_gc_young_collection_latency_transformation_function}
-    signal = (A/B).fill(0).scale(1000).publish('signal')
+    signal = (A/B).fill(0).publish('signal')
     detect(when(signal > ${var.jvm_gc_young_collection_latency_threshold_warning})).publish('WARN')
     detect(when(signal > ${var.jvm_gc_young_collection_latency_threshold_major}) and when(signal <= ${var.jvm_gc_young_collection_latency_threshold_warning})).publish('MAJOR')
 EOF
@@ -367,9 +367,9 @@ resource "signalfx_detector" "indexing_latency" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Elasticsearch indexing latency"
 
   program_text = <<-EOF
-    A = data('elasticsearch.indices.indexing.index-time', filter=filter('plugin', 'elasticsearch') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.indexing_latency_aggregation_function}${var.indexing_latency_transformation_function}
-    B = data('elasticsearch.indices.indexing.index-total', filter=filter('plugin', 'elasticsearch') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.indexing_latency_aggregation_function}${var.indexing_latency_transformation_function}
-    signal = (A/B).fill(0).scale(1000).publish('signal')
+    A = data('elasticsearch.indices.indexing.index-time', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.indexing_latency_aggregation_function}${var.indexing_latency_transformation_function}
+    B = data('elasticsearch.indices.indexing.index-total', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.indexing_latency_aggregation_function}${var.indexing_latency_transformation_function}
+    signal = (A/B).fill(0).publish('signal')
     detect(when(signal > ${var.indexing_latency_threshold_warning})).publish('WARN')
     detect(when(signal > ${var.indexing_latency_threshold_major}) and when(signal <= ${var.indexing_latency_threshold_warning})).publish('MAJOR')
 EOF
@@ -397,9 +397,9 @@ resource "signalfx_detector" "flush_latency" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Elasticsearch index flushing to disk latency"
 
   program_text = <<-EOF
-    A = data('elasticsearch.indices.flush.total-time', filter=filter('plugin', 'elasticsearch') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.flush_latency_aggregation_function}${var.flush_latency_transformation_function}
-    B = data('elasticsearch.indices.flush.total', filter=filter('plugin', 'elasticsearch') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.flush_latency_aggregation_function}${var.flush_latency_transformation_function}
-    signal = (A/B).fill(0).scale(1000).publish('signal')
+    A = data('elasticsearch.indices.flush.total-time', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.flush_latency_aggregation_function}${var.flush_latency_transformation_function}
+    B = data('elasticsearch.indices.flush.total', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.flush_latency_aggregation_function}${var.flush_latency_transformation_function}
+    signal = (A/B).fill(0).publish('signal')
     detect(when(signal > ${var.flush_latency_threshold_warning})).publish('WARN')
     detect(when(signal > ${var.flush_latency_threshold_major}) and when(signal <= ${var.flush_latency_threshold_warning})).publish('MAJOR')
 EOF
@@ -427,9 +427,9 @@ resource "signalfx_detector" "search_latency" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Elasticsearch search query latency"
 
   program_text = <<-EOF
-    A = data('elasticsearch.indices.search.query-time', filter=filter('plugin', 'elasticsearch') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.search_latency_aggregation_function}${var.search_latency_transformation_function}
-    B = data('elasticsearch.indices.search.query-total', filter=filter('plugin', 'elasticsearch') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.search_latency_aggregation_function}${var.search_latency_transformation_function}
-    signal = (A/B).fill(0).scale(1000).publish('signal')
+    A = data('elasticsearch.indices.search.query-time', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.search_latency_aggregation_function}${var.search_latency_transformation_function}
+    B = data('elasticsearch.indices.search.query-total', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.search_latency_aggregation_function}${var.search_latency_transformation_function}
+    signal = (A/B).fill(0).publish('signal')
     detect(when(signal > ${var.search_latency_threshold_warning})).publish('WARN')
     detect(when(signal > ${var.search_latency_threshold_major}) and when(signal <= ${var.search_latency_threshold_warning})).publish('MAJOR')
 EOF
@@ -457,9 +457,9 @@ resource "signalfx_detector" "fetch_latency" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Elasticsearch search fetch latency"
 
   program_text = <<-EOF
-    A = data('elasticsearch.indices.search.fetch-time', filter=filter('plugin', 'elasticsearch') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.fetch_latency_aggregation_function}${var.fetch_latency_transformation_function}
-    B = data('elasticsearch.indices.search.fetch-total', filter=filter('plugin', 'elasticsearch') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.fetch_latency_aggregation_function}${var.fetch_latency_transformation_function}
-    signal = (A/B).fill(0).scale(1000).publish('signal')
+    A = data('elasticsearch.indices.search.fetch-time', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.fetch_latency_aggregation_function}${var.fetch_latency_transformation_function}
+    B = data('elasticsearch.indices.search.fetch-total', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.fetch_latency_aggregation_function}${var.fetch_latency_transformation_function}
+    signal = (A/B).fill(0).publish('signal')
     detect(when(signal > ${var.fetch_latency_threshold_warning})).publish('WARN')
     detect(when(signal > ${var.fetch_latency_threshold_major}) and when(signal <= ${var.fetch_latency_threshold_warning})).publish('MAJOR')
 EOF
@@ -487,7 +487,7 @@ resource "signalfx_detector" "field_data_evictions_change" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Elasticsearch fielddata cache evictions rate of change"
 
   program_text = <<-EOF
-    signal = data('elasticsearch.indices.fielddata.evictions', filter=filter('plugin', 'elasticsearch') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta').rateofchange()${var.field_data_evictions_change_aggregation_function}${var.field_data_evictions_change_transformation_function}.publish('signal')
+    signal = data('elasticsearch.indices.fielddata.evictions', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta').rateofchange()${var.field_data_evictions_change_aggregation_function}${var.field_data_evictions_change_transformation_function}.publish('signal')
     detect(when(signal > ${var.field_data_evictions_change_threshold_warning})).publish('WARN')
     detect(when(signal > ${var.field_data_evictions_change_threshold_major}) and when(signal <= ${var.field_data_evictions_change_threshold_warning})).publish('MAJOR')
 EOF
@@ -515,7 +515,7 @@ resource "signalfx_detector" "query_cache_evictions_change" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Elasticsearch query cache evictions rate of change"
 
   program_text = <<-EOF
-    signal = data('elasticsearch.indices.query-cache.evictions', filter=filter('plugin', 'elasticsearch') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta').rateofchange()${var.query_cache_evictions_change_aggregation_function}${var.query_cache_evictions_change_transformation_function}.publish('signal')
+    signal = data('elasticsearch.indices.query-cache.evictions', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta').rateofchange()${var.query_cache_evictions_change_aggregation_function}${var.query_cache_evictions_change_transformation_function}.publish('signal')
     detect(when(signal > ${var.query_cache_evictions_change_threshold_warning})).publish('WARN')
     detect(when(signal > ${var.query_cache_evictions_change_threshold_major}) and when(signal <= ${var.query_cache_evictions_change_threshold_warning})).publish('MAJOR')
 EOF
@@ -543,7 +543,7 @@ resource "signalfx_detector" "request_cache_evictions_change" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Elasticsearch request cache evictions rate of change"
 
   program_text = <<-EOF
-    signal = data('elasticsearch.indices.request-cache.evictions', filter=filter('plugin', 'elasticsearch') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta').rateofchange()${var.request_cache_evictions_change_aggregation_function}${var.request_cache_evictions_change_transformation_function}
+    signal = data('elasticsearch.indices.request-cache.evictions', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta').rateofchange()${var.request_cache_evictions_change_aggregation_function}${var.request_cache_evictions_change_transformation_function}.publish('signal')
     detect(when(signal > ${var.request_cache_evictions_change_threshold_warning})).publish('WARN')
     detect(when(signal > ${var.request_cache_evictions_change_threshold_major}) and when(signal <= ${var.request_cache_evictions_change_threshold_warning})).publish('MAJOR')
 EOF
