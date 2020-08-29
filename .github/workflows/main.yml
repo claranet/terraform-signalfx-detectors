@@ -19,6 +19,7 @@ jobs:
     env:
       TF_VAR_sfx_token: ${{ secrets.SFX_TOKEN }}
       TF_VAR_pagerduty_integration_id: ${{ secrets.PAGERDUTY_INTEGRATION }}
+      TF_VAR_environment: "ci-testing"
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -29,20 +30,29 @@ jobs:
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
       with:
-        terraform_version: 0.12.26
-        #terraform_wrapper: false
-
-    - name: Terraform fmt
-      run: terraform fmt -recursive -write=false -diff -check .
+        terraform_version: 0.13.1
+        terraform_wrapper: false
 
     - name: Setup env
       run: |
         set -xeuo pipefail
         echo Setup terraform test environment
+        wget -q https://dl.google.com/go/go1.15.linux-amd64.tar.gz
+        tar -xf go1.15.linux-amd64.tar.gz
+        sudo mv go /usr/local
+        export GOROOT=/usr/local/go
+        export GOPATH=$HOME/go
+        mkdir $GOPATH
+        export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+        GO111MODULE=on go get github.com/hashicorp/terraform-config-inspect
         TF_REF=$(git rev-parse HEAD)
         #TF_REF=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; NF>1{print $NF}')
         ./scripts/gen_tf.sh "${TF_REF}" > test/${TF_REF}.tf
+        cat test/${TF_REF}.tf
     
+    - name: Terraform fmt
+      run: terraform fmt -recursive -write=false -diff -check .
+
     - name: Terraform init
       run: terraform init test
 
