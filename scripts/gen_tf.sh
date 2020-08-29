@@ -1,5 +1,6 @@
 #!/bin/bash
 set -euo pipefail
+TMP="/tmp/out.tf"
 
 REF=${1:-}
 case $# in
@@ -21,7 +22,29 @@ case $# in
 esac
 #echo "${REF} : ${TARGET}"
 
+module_vars=$(cat <<-EOF
+	  environment   = var.environment
+	  notifications = [local.pagerduty_notification]
+EOF
+)
+env_vars=$(terraform-config-inspect $(dirname $0)/../test --json | jq -cr '.variables[] | select(.required) | .name')
+
 for i in $(find ${TARGET} -type f -not -path "*/.terraform/*" -name 'detectors-*.tf'); do
-    name=$(dirname $i)
-    echo -en "module \"signalfx-detectors-${name//\//-}\" {\n  source = \"github.com/claranet/terraform-signalfx-detectors.git//${name}?ref=${REF}\"\n\n  environment   = var.environment\n  notifications = [local.pagerduty_notification]\n}\n\n"
+    dir=$(dirname $i)
+    vars_string=""
+    vars_list=$(terraform-config-inspect ${dir} --json | jq -cr '.variables[] | select(.required) | .name')
+    for var in ${vars_list}; do
+        [[ ${env_vars} =~ (^|[[:space:]])$var($|[[:space:]]) ]] ||
+        echo "${module_vars}" | grep -q "^[[:space:]]*${var}" ||
+        vars_string="${vars_string}\n${var}=\"fillme\""
+    done
+    cat <<-EOF > ${TMP}
+	module "signalfx-detectors-${dir//\//-}" {
+	  source = "github.com/claranet/terraform-signalfx-detectors.git//${dir}?ref=${REF}"
+
+	  ${module_vars}$(echo -e ${vars_string})
+	}
+
+EOF
+    terraform fmt -write=false -list=false -diff=false ${TMP} 2> /dev/null
 done
