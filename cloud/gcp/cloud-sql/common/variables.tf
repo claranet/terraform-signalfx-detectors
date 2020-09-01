@@ -5,8 +5,8 @@ variable "environment" {
   type        = string
 }
 
-variable "gcp_project_name" {
-  description = "GCP project name used for default filtering while lables are not synced"
+variable "gcp_project_id" {
+  description = "GCP project id used for default filtering while lables are not synced"
   type        = string
 }
 
