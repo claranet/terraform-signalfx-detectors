@@ -49,7 +49,7 @@ resource "signalfx_detector" "hit_ratio" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] PostgreSQL hit ratio"
 
   program_text = <<-EOF
-    signal = data('postgres_block_hit_ratio', filter=${module.filter-tags.filter_custom}, rollup='average').scale(100)${var.hit_ratio_aggregation_function}${var.hit_ratio_transformation_function}.publish('signal')
+    signal = data('postgres_block_hit_ratio', filter=(not filter('index', '*')) and (not filter('schemaname', '*')) and (not filter('type', '*')) and (not filter('table', '*')) and ${module.filter-tags.filter_custom}, rollup='average').scale(100)${var.hit_ratio_aggregation_function}${var.hit_ratio_transformation_function}.publish('signal')
     detect(when(signal < ${var.hit_ratio_threshold_major})).publish('MAJOR')
     detect(when(signal < ${var.hit_ratio_threshold_minor}) and when(signal >= ${var.hit_ratio_threshold_major})).publish('MINOR')
 EOF
