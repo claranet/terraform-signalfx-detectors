@@ -21,7 +21,7 @@ resource "signalfx_detector" "cpu" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] System cpu utilization"
 
   program_text = <<-EOF
-    signal = data('cpu.utilization', filter=${module.filter-tags.filter_custom})${var.cpu_aggregation_function}${var.cpu_transformation_function}.publish('signal')
+    signal = data('cpu.utilization', filter=${module.filter-tags.filter_custom}, extrapolation='zero')${var.cpu_aggregation_function}${var.cpu_transformation_function}.publish('signal')
     detect(when(signal > ${var.cpu_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.cpu_threshold_warning}) and when(signal <= ${var.cpu_threshold_critical})).publish('WARN')
 EOF
