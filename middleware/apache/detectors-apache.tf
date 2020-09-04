@@ -21,9 +21,7 @@ resource "signalfx_detector" "apache_workers" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Apache busy workers"
 
   program_text = <<-EOF
-    A = data('apache_connections', ${module.filter-tags.filter_custom})${var.apache_workers_aggregation_function}${var.apache_workers_transformation_function}
-    B = data('apache_idle_workers', ${module.filter-tags.filter_custom})${var.apache_workers_aggregation_function}${var.apache_workers_transformation_function}
-    signal = ((A / (A+B)).scale(100)).publish('signal')
+    signal = data('apache_connections', ${module.filter-tags.filter_custom})${var.apache_workers_aggregation_function}${var.apache_workers_transformation_function}
     detect(when(signal > ${var.apache_workers_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.apache_workers_threshold_warning}) and when(signal <= ${var.apache_workers_threshold_critical})).publish('WARN')
 EOF
