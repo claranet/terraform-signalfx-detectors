@@ -1,5 +1,6 @@
 resource "signalfx_detector" "heartbeat" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Supervisor heartbeat"
+  name      = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Supervisor heartbeat"
+  max_delay = 900
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
