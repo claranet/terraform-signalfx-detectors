@@ -2,7 +2,8 @@ resource "signalfx_detector" "sending_operations" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] GCP Pub/Sub Topic sending messages operations"
 
   program_text = <<-EOF
-    signal = data('topic/send_message_operation_count', filter=filter('monitored_resource', 'pubsub_topic') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.sending_operations_aggregation_function}${var.sending_operations_transformation_function}.publish('signal')
+    reserved_topics = (not filter('topic_id', 'container-analysis-occurrences*', 'container-analysis-notes*', 'cloud-builds', 'gcr'))
+    signal = data('topic/send_message_operation_count', filter=filter('monitored_resource', 'pubsub_topic') and reserved_topics and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.sending_operations_aggregation_function}${var.sending_operations_transformation_function}.publish('signal')
     detect(when(signal < ${var.sending_operations_threshold_warning})).publish('WARN')
 EOF
 
@@ -20,7 +21,8 @@ resource "signalfx_detector" "unavailable_sending_operations" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] GCP Pub/Sub Topic sending unavailable messages"
 
   program_text = <<-EOF
-    signal = data('topic/send_message_operation_count', filter=filter('monitored_resource', 'pubsub_topic') and filter('response_code', 'unavailable') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.unavailable_sending_operations_aggregation_function}${var.unavailable_sending_operations_transformation_function}.publish('signal')
+    reserved_topics = (not filter('topic_id', 'container-analysis-occurrences*', 'container-analysis-notes*', 'cloud-builds', 'gcr'))
+    signal = data('topic/send_message_operation_count', filter=filter('monitored_resource', 'pubsub_topic') and reserved_topics and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.unavailable_sending_operations_aggregation_function}${var.unavailable_sending_operations_transformation_function}.publish('signal')
     detect(when(signal > ${var.unavailable_sending_operations_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.unavailable_sending_operations_threshold_warning}) and when(signal <= ${var.unavailable_sending_operations_threshold_critical})).publish('WARN')
 EOF
@@ -48,7 +50,8 @@ resource "signalfx_detector" "unavailable_sending_operations_ratio" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] GCP Pub/Sub Topic sending unavailable messages ratio"
 
   program_text = <<-EOF
-    A = data('topic/send_message_operation_count', filter=filter('monitored_resource', 'pubsub_topic') and filter('response_code', 'unavailable') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.unavailable_sending_operations_ratio_aggregation_function}${var.unavailable_sending_operations_ratio_transformation_function}
+    reserved_topics = (not filter('topic_id', 'container-analysis-occurrences*', 'container-analysis-notes*', 'cloud-builds', 'gcr'))
+    A = data('topic/send_message_operation_count', filter=filter('monitored_resource', 'pubsub_topic') and filter('response_code', 'unavailable') and reserved_topics and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.unavailable_sending_operations_ratio_aggregation_function}${var.unavailable_sending_operations_ratio_transformation_function}
     B = data('topic/send_message_operation_count', filter=filter('monitored_resource', 'pubsub_topic') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.unavailable_sending_operations_ratio_aggregation_function}${var.unavailable_sending_operations_ratio_transformation_function}
     signal = (A/B).scale(100).fill(value=0).publish('signal')
     detect(when(signal > ${var.unavailable_sending_operations_ratio_threshold_critical})).publish('CRIT')
