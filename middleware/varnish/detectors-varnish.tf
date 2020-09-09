@@ -90,9 +90,9 @@ resource "signalfx_detector" "varnish_memory_usage" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Varnish Memory Usage"
 
   program_text = <<-EOF
-    A = data('varnish.s0.g_space', filter=filter('plugin', 'telegraf/varnish') and ${module.filter-tags.filter_custom})${var.varnish_memory_usage_aggregation_function}${var.varnish_memory_usage_transformation_function}
-    B = data('varnish.s0.g_bytes', filter=filter('plugin', 'telegraf/varnish') and ${module.filter-tags.filter_custom})${var.varnish_memory_usage_aggregation_function}${var.varnish_memory_usage_transformation_function}
-    signal = (A/(A+B)).scale(100).fill(0).publish('signal')
+    A = data('varnish.s0.g_bytes', filter=filter('plugin', 'telegraf/varnish') and ${module.filter-tags.filter_custom})${var.varnish_memory_usage_aggregation_function}${var.varnish_memory_usage_transformation_function}
+    B = data('varnish.s0.g_space', filter=filter('plugin', 'telegraf/varnish') and ${module.filter-tags.filter_custom})${var.varnish_memory_usage_aggregation_function}${var.varnish_memory_usage_transformation_function}
+    signal = (A / (A+B)).scale(100).fill(0).publish('signal')
     detect(when(signal > ${var.varnish_memory_usage_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.varnish_memory_usage_threshold_warning}) and (signal < ${var.varnish_memory_usage_threshold_critical})).publish('WARN')
 EOF
