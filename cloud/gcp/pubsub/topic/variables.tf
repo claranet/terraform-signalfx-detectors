@@ -48,7 +48,7 @@ variable "detectors_disabled" {
 variable "sending_operations_disabled" {
   description = "Disable all alerting rules for sending_operations detector"
   type        = bool
-  default     = null
+  default     = true
 }
 
 variable "sending_operations_notifications" {
