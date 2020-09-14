@@ -53,7 +53,7 @@ variable "heartbeat_notifications" {
 variable "heartbeat_timeframe" {
   description = "Timeframe for system not reporting detector (i.e. \"10m\")"
   type        = string
-  default     = "1h"
+  default     = "4h"
 }
 
 # blob_requests_error detectors
