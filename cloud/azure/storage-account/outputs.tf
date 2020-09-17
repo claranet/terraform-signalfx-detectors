@@ -1,8 +1,3 @@
-output "heartbeat_id" {
-  description = "id for detector heartbeat"
-  value       = signalfx_detector.heartbeat.*.id
-}
-
 output "blob_requests_error_id" {
   description = "id for detector blob_requests_error"
   value       = signalfx_detector.blob_requests_error.*.id

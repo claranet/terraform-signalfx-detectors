@@ -36,26 +36,6 @@ variable "detectors_disabled" {
   default     = false
 }
 
-# Azure storage detectors specific
-
-variable "heartbeat_disabled" {
-  description = "Disable all alerting rules for heartbeat detector"
-  type        = bool
-  default     = null
-}
-
-variable "heartbeat_notifications" {
-  description = "Notification recipients list for every alerting rules of heartbeat detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "heartbeat_timeframe" {
-  description = "Timeframe for system not reporting detector (i.e. \"10m\")"
-  type        = string
-  default     = "4h"
-}
-
 # blob_requests_error detectors
 
 variable "blob_requests_error_disabled" {
