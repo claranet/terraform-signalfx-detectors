@@ -11,7 +11,6 @@ The detectors in this module are based on metrics reported by the following moni
 
 The following metrics must be emitted by the SignalFx agent:
 
-- `kubernetes.job.failed`
 - `kubernetes.job.completions`
 - `kubernetes.job.active`
 - `kubernetes.job.succeeded`
@@ -38,7 +37,6 @@ monitors:
 
 - type: kubernetes-cluster
   extraMetrics:
-    - kubernetes.job.failed
     - kubernetes.job.completions
     - kubernetes.job.active
     - kubernetes.job.succeeded
