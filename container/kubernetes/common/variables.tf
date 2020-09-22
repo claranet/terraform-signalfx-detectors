@@ -295,19 +295,25 @@ variable "job_failed_notifications" {
 variable "job_failed_aggregation_function" {
   description = "Aggregation function and group by for job_failed detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['kubernetes_cluster', 'kubernetes_namespace', 'cronJob'])"
+  default     = ""
 }
 
 variable "job_failed_transformation_function" {
   description = "Transformation function for job_failed detector (i.e. \".mean(over='5m')\"))"
   type        = string
-  default     = ".sum(over='1m')"
+  default     = ""
 }
 
 variable "job_failed_threshold_warning" {
   description = "Warning threshold for job_failed detector"
   type        = number
   default     = 0
+}
+
+variable "job_failed_lasting_duration_seconds" {
+  description = "Minimum duration that conditions must be true before raising alert (in seconds)"
+  type        = number
+  default     = 60
 }
 
 # daemonset_scheduled detectors
