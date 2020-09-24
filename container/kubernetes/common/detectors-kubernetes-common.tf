@@ -139,11 +139,11 @@ resource "signalfx_detector" "job_failed" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Kubernetes job from cronjob failed"
 
   program_text = <<-EOF
-    A = data('kubernetes.job.completions', filter=${module.filter-tags.filter_custom}, rollup='sum')${var.job_failed_aggregation_function}${var.job_failed_transformation_function}
-    B = data('kubernetes.job.active', filter=${module.filter-tags.filter_custom}, rollup='sum')${var.job_failed_aggregation_function}${var.job_failed_transformation_function}
-    C = data('kubernetes.job.succeeded', filter=${module.filter-tags.filter_custom}, rollup='sum')${var.job_failed_aggregation_function}${var.job_failed_transformation_function}
+    A = data('kubernetes.job.completions', extrapolation='zero', filter=${module.filter-tags.filter_custom})${var.job_failed_aggregation_function}${var.job_failed_transformation_function}
+    B = data('kubernetes.job.active', extrapolation='zero', filter=${module.filter-tags.filter_custom})${var.job_failed_aggregation_function}${var.job_failed_transformation_function}
+    C = data('kubernetes.job.succeeded', extrapolation='zero', filter=${module.filter-tags.filter_custom}, rollup='max')${var.job_failed_aggregation_function}${var.job_failed_transformation_function}
     signal = (A-B-C).publish('signal')
-    detect(when(signal > ${var.job_failed_threshold_warning})).publish('WARN')
+    detect(when(signal > ${var.job_failed_threshold_warning}, lasting='${var.job_failed_lasting_duration_seconds}s')).publish('WARN')
 EOF
 
   rule {
