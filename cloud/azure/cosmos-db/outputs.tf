@@ -1,19 +1,20 @@
-output "heartbeat_id" {
-  description = "id for detector heartbeat"
-  value       = signalfx_detector.heartbeat.*.id
+output "db_4xx_requests" {
+  description = "Detector resource for db_4xx_requests"
+  value       = signalfx_detector.db_4xx_requests
 }
 
-output "db_4xx_requests_id" {
-  description = "id for detector db_4xx_requests"
-  value       = signalfx_detector.db_4xx_requests.*.id
+output "db_5xx_requests" {
+  description = "Detector resource for db_5xx_requests"
+  value       = signalfx_detector.db_5xx_requests
 }
 
-output "db_5xx_requests_id" {
-  description = "id for detector db_5xx_requests"
-  value       = signalfx_detector.db_5xx_requests.*.id
+output "heartbeat" {
+  description = "Detector resource for heartbeat"
+  value       = signalfx_detector.heartbeat
 }
 
-output "scaling_id" {
-  description = "id for detector scaling"
-  value       = signalfx_detector.scaling.*.id
+output "scaling" {
+  description = "Detector resource for scaling"
+  value       = signalfx_detector.scaling
 }
+

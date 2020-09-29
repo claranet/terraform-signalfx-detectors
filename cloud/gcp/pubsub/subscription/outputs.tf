@@ -1,10 +1,15 @@
-output "oldest_unacked_message_id" {
-  description = "id for detector oldest_unacked_message"
-  value       = signalfx_detector.oldest_unacked_message.*.id
+output "heartbeat" {
+  description = "Detector resource for heartbeat"
+  value       = signalfx_detector.heartbeat
 }
 
-output "push_latency_id" {
-  description = "id for detector push_latency"
-  value       = signalfx_detector.push_latency.*.id
+output "oldest_unacked_message" {
+  description = "Detector resource for oldest_unacked_message"
+  value       = signalfx_detector.oldest_unacked_message
+}
+
+output "push_latency" {
+  description = "Detector resource for push_latency"
+  value       = signalfx_detector.push_latency
 }
 

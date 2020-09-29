@@ -1,4 +1,10 @@
-output "ntp_id" {
-  description = "id for detector ntp"
-  value       = signalfx_detector.ntp.*.id
+output "heartbeat" {
+  description = "Detector resource for heartbeat"
+  value       = signalfx_detector.heartbeat
 }
+
+output "ntp" {
+  description = "Detector resource for ntp"
+  value       = signalfx_detector.ntp
+}
+

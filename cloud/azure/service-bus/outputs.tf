@@ -1,19 +1,20 @@
-output "heartbeat_id" {
-  description = "id for detector heartbeat"
-  value       = signalfx_detector.heartbeat.*.id
+output "active_connections" {
+  description = "Detector resource for active_connections"
+  value       = signalfx_detector.active_connections
 }
 
-output "active_connections_id" {
-  description = "id for detector active_connections"
-  value       = signalfx_detector.active_connections.*.id
+output "heartbeat" {
+  description = "Detector resource for heartbeat"
+  value       = signalfx_detector.heartbeat
 }
 
-output "user_errors_id" {
-  description = "id for detector user_errors"
-  value       = signalfx_detector.user_errors.*.id
+output "server_errors" {
+  description = "Detector resource for server_errors"
+  value       = signalfx_detector.server_errors
 }
 
-output "server_errors_id" {
-  description = "id for detector server_errors"
-  value       = signalfx_detector.server_errors.*.id
+output "user_errors" {
+  description = "Detector resource for user_errors"
+  value       = signalfx_detector.user_errors
 }
+

@@ -1,19 +1,20 @@
-output "heartbeat_id" {
-  description = "id for detector heartbeat"
-  value       = signalfx_detector.heartbeat.*.id
+output "cpu" {
+  description = "Detector resource for cpu"
+  value       = signalfx_detector.cpu
 }
 
-output "cpu_id" {
-  description = "id for detector cpu"
-  value       = signalfx_detector.cpu.*.id
+output "dtu_consumption" {
+  description = "Detector resource for dtu_consumption"
+  value       = signalfx_detector.dtu_consumption
 }
 
-output "free_space_id" {
-  description = "id for detector free_space"
-  value       = signalfx_detector.free_space.*.id
+output "free_space" {
+  description = "Detector resource for free_space"
+  value       = signalfx_detector.free_space
 }
 
-output "dtu_consumption_id" {
-  description = "id for detector dtu_consumption"
-  value       = signalfx_detector.dtu_consumption.*.id
+output "heartbeat" {
+  description = "Detector resource for heartbeat"
+  value       = signalfx_detector.heartbeat
 }
+

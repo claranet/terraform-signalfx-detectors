@@ -1,30 +1,35 @@
-output "cpu_id" {
-  description = "id for detector cpu"
-  value       = signalfx_detector.cpu.*.id
+output "cpu" {
+  description = "Detector resource for cpu"
+  value       = signalfx_detector.cpu
 }
 
-output "disk_running_out_id" {
-  description = "id for detector disk running out"
-  value       = signalfx_detector.disk_running_out.*.id
+output "disk_inodes" {
+  description = "Detector resource for disk_inodes"
+  value       = signalfx_detector.disk_inodes
 }
 
-output "disk_space_id" {
-  description = "id for detector disk space"
-  value       = signalfx_detector.disk_space.*.id
+output "disk_running_out" {
+  description = "Detector resource for disk_running_out"
+  value       = signalfx_detector.disk_running_out
 }
 
-output "heartbeat_id" {
-  description = "id for detector heartbeat"
-  value       = signalfx_detector.heartbeat.*.id
+output "disk_space" {
+  description = "Detector resource for disk_space"
+  value       = signalfx_detector.disk_space
 }
 
-output "load_id" {
-  description = "id for detector load"
-  value       = signalfx_detector.load.*.id
+output "heartbeat" {
+  description = "Detector resource for heartbeat"
+  value       = signalfx_detector.heartbeat
 }
 
-output "memory_id" {
-  description = "id for detector memory"
-  value       = signalfx_detector.memory.*.id
+output "load" {
+  description = "Detector resource for load"
+  value       = signalfx_detector.load
+}
+
+output "memory" {
+  description = "Detector resource for memory"
+  value       = signalfx_detector.memory
 }
 

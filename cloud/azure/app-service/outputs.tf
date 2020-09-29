@@ -1,29 +1,30 @@
-output "heartbeat_id" {
-  description = "id for detector heartbeat"
-  value       = signalfx_detector.heartbeat.*.id
+output "heartbeat" {
+  description = "Detector resource for heartbeat"
+  value       = signalfx_detector.heartbeat
 }
 
-output "response_time_id" {
-  description = "id for detector response_time"
-  value       = signalfx_detector.response_time.*.id
+output "http_4xx_errors_count" {
+  description = "Detector resource for http_4xx_errors_count"
+  value       = signalfx_detector.http_4xx_errors_count
 }
 
-output "memory_usage_count_id" {
-  description = "id for detector memory_usage_count"
-  value       = signalfx_detector.memory_usage_count.*.id
+output "http_5xx_errors_count" {
+  description = "Detector resource for http_5xx_errors_count"
+  value       = signalfx_detector.http_5xx_errors_count
 }
 
-output "http_5xx_errors_count_id" {
-  description = "id for detector http_5xx_errors_count"
-  value       = signalfx_detector.http_5xx_errors_count.*.id
+output "http_success_status_rate" {
+  description = "Detector resource for http_success_status_rate"
+  value       = signalfx_detector.http_success_status_rate
 }
 
-output "http_4xx_errors_count_id" {
-  description = "id for detector http_4xx_errors_count"
-  value       = signalfx_detector.http_4xx_errors_count.*.id
+output "memory_usage_count" {
+  description = "Detector resource for memory_usage_count"
+  value       = signalfx_detector.memory_usage_count
 }
 
-output "http_success_status_rate_id" {
-  description = "id for detector http_success_status_rate"
-  value       = signalfx_detector.http_success_status_rate.*.id
+output "response_time" {
+  description = "Detector resource for response_time"
+  value       = signalfx_detector.response_time
 }
+

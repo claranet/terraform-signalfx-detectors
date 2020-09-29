@@ -1,24 +1,25 @@
-output "error_rate_4xx_id" {
-  description = "id for detector error_rate_4xx"
-  value       = signalfx_detector.error_rate_4xx.*.id
+output "backend_latency_bucket" {
+  description = "Detector resource for backend_latency_bucket"
+  value       = signalfx_detector.backend_latency_bucket
 }
 
-output "error_rate_5xx_id" {
-  description = "id for detector error_rate_5xx"
-  value       = signalfx_detector.error_rate_5xx.*.id
+output "backend_latency_service" {
+  description = "Detector resource for backend_latency_service"
+  value       = signalfx_detector.backend_latency_service
 }
 
-output "backend_latency_service_id" {
-  description = "id for detector backend_latency_service"
-  value       = signalfx_detector.backend_latency_service.*.id
+output "error_rate_4xx" {
+  description = "Detector resource for error_rate_4xx"
+  value       = signalfx_detector.error_rate_4xx
 }
 
-output "backend_latency_bucket_id" {
-  description = "id for detector backend_latency_bucket"
-  value       = signalfx_detector.backend_latency_bucket.*.id
+output "error_rate_5xx" {
+  description = "Detector resource for error_rate_5xx"
+  value       = signalfx_detector.error_rate_5xx
 }
 
-output "request_count_id" {
-  description = "id for detector request_count"
-  value       = signalfx_detector.request_count.*.id
+output "request_count" {
+  description = "Detector resource for request_count"
+  value       = signalfx_detector.request_count
 }
+
