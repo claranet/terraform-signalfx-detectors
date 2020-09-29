@@ -179,3 +179,65 @@ variable "memory_percentage_threshold_warning" {
   type        = number
   default     = 90
 }
+
+# Scaling Capacity detector
+
+variable "scaling_capacity_disabled" {
+  description = "Disable all alerting rules for scaling_capacity detector"
+  type        = bool
+  default     = null
+}
+
+variable "scaling_capacity_disabled_critical" {
+  description = "Disable critical alerting rule for scaling_capacity detector"
+  type        = bool
+  default     = null
+}
+
+variable "scaling_capacity_disabled_warning" {
+  description = "Disable warning alerting rule for scaling_capacity detector"
+  type        = bool
+  default     = null
+}
+
+variable "scaling_capacity_notifications" {
+  description = "Notification recipients list for every alerting rules of scaling_capacity detector"
+  type        = list(string)
+  default     = []
+}
+
+variable "scaling_capacity_notifications_warning" {
+  description = "Notification recipients list for warning alerting rule of scaling_capacity detector"
+  type        = list(string)
+  default     = []
+}
+
+variable "scaling_capacity_notifications_critical" {
+  description = "Notification recipients list for critical alerting rule of scaling_capacity detector"
+  type        = list(string)
+  default     = []
+}
+
+variable "scaling_capacity_aggregation_function" {
+  description = "Aggregation function and group by for scaling_capacity detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+}
+
+variable "scaling_capacity_timer" {
+  description = "Evaluation window for scaling_capacity detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "10m"
+}
+
+variable "scaling_capacity_threshold_critical" {
+  description = "Critical threshold for scaling_capacity detector"
+  type        = number
+  default     = 95
+}
+
+variable "scaling_capacity_threshold_warning" {
+  description = "Warning threshold for scaling_capacity detector"
+  type        = number
+  default     = 90
+}

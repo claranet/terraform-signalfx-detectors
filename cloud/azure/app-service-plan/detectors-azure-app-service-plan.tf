@@ -75,3 +75,32 @@ resource "signalfx_detector" "memory_percentage" {
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
+
+resource "signalfx_detector" "scaling_capacity" {
+  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Service Plan capacity instances"
+
+  program_text = <<-EOF
+        base_filter = filter('resource_type', 'Microsoft.Web/serverFarms') and filter('primary_aggregation_type', 'true')
+        signal = count('CpuPercentage', filter=base_filter and ${module.filter-tags.filter_custom})${var.scaling_capacity_aggregation_function}.publish('signal')
+        detect(when(signal == threshold(azure_tag_monitor_autoscale_max), lasting="${var.scaling_capacity_timer}")).publish('CRIT')
+        detect(when(signal >= threshold(${var.scaling_capacity_threshold_warning}), lasting="${var.scaling_capacity_timer}") and when(signal < ${var.scaling_capacity_threshold_critical})).publish('WARN')
+    EOF
+
+  rule {
+    description           = "is at maximum: ${var.scaling_capacity_threshold_critical}%"
+    severity              = "Critical"
+    detect_label          = "CRIT"
+    disabled              = coalesce(var.scaling_capacity_disabled_critical, var.scaling_capacity_disabled, var.detectors_disabled)
+    notifications         = coalescelist(var.scaling_capacity_notifications_critical, var.scaling_capacity_notifications, var.notifications)
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+  }
+
+  rule {
+    description           = "is near maximum: ${var.scaling_capacity_threshold_warning}%"
+    severity              = "Warning"
+    detect_label          = "WARN"
+    disabled              = coalesce(var.scaling_capacity_disabled_warning, var.scaling_capacity_disabled, var.detectors_disabled)
+    notifications         = coalescelist(var.scaling_capacity_notifications_warning, var.scaling_capacity_notifications, var.notifications)
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+  }
+}
