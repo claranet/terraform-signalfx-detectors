@@ -22,3 +22,9 @@ output "memory_usage_id" {
   description = "id for detector memory_usage"
   value       = signalfx_detector.memory_usage.*.id
 }
+
+output "replication_lag_id" {
+  description = "id for detector replication_lag"
+  value       = signalfx_detector.replication_lag.*.id
+}
+

@@ -134,3 +134,32 @@ resource "signalfx_detector" "memory_usage" {
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
+
+resource "signalfx_detector" "replication_lag" {
+  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure MySQL replication lag"
+
+  program_text = <<-EOF
+        base_filter = filter('resource_type', 'Microsoft.DBforMySQL/servers') and filter('primary_aggregation_type', 'true')
+        signal = data('seconds_behind_master', filter=base_filter and ${module.filter-tags.filter_custom})${var.replication_lag_aggregation_function}.publish('signal')
+        detect(when(signal > threshold(${var.replication_lag_threshold_critical}), lasting="${var.replication_lag_timer}")).publish('CRIT')
+        detect(when(signal > threshold(${var.replication_lag_threshold_warning}), lasting="${var.replication_lag_timer}") and when(signal <= ${var.replication_lag_threshold_critical})).publish('WARN')
+    EOF
+
+  rule {
+    description           = "is too high > ${var.replication_lag_threshold_critical}s"
+    severity              = "Critical"
+    detect_label          = "CRIT"
+    disabled              = coalesce(var.replication_lag_disabled_critical, var.replication_lag_disabled, var.detectors_disabled)
+    notifications         = coalescelist(var.replication_lag_notifications_critical, var.replication_lag_notifications, var.notifications)
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+  }
+
+  rule {
+    description           = "is too high > ${var.replication_lag_threshold_warning}s"
+    severity              = "Warning"
+    detect_label          = "WARN"
+    disabled              = coalesce(var.replication_lag_disabled_warning, var.replication_lag_disabled, var.detectors_disabled)
+    notifications         = coalescelist(var.replication_lag_notifications_warning, var.replication_lag_notifications, var.notifications)
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+  }
+}
