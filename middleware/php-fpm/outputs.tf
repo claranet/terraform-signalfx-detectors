@@ -1,9 +1,10 @@
-output "heartbeat_id" {
-  description = "id for detector heartbeat"
-  value       = signalfx_detector.heartbeat.*.id
+output "heartbeat" {
+  description = "Detector resource for heartbeat"
+  value       = signalfx_detector.heartbeat
 }
 
-output "php_fpm_connect_idle_id" {
-  description = "id for detector php_fpm_connect_idle"
-  value       = signalfx_detector.php_fpm_connect_idle.*.id
+output "php_fpm_connect_idle" {
+  description = "Detector resource for php_fpm_connect_idle"
+  value       = signalfx_detector.php_fpm_connect_idle
 }
+

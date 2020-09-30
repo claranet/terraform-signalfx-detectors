@@ -1,10 +1,10 @@
-output "dropped_connections_id" {
-  description = "id for detector dropped_connections"
-  value       = signalfx_detector.dropped_connections.*.id
+output "dropped_connections" {
+  description = "Detector resource for dropped_connections"
+  value       = signalfx_detector.dropped_connections
 }
 
-output "heartbeat_id" {
-  description = "id for detector heartbeat"
-  value       = signalfx_detector.heartbeat.*.id
+output "heartbeat" {
+  description = "Detector resource for heartbeat"
+  value       = signalfx_detector.heartbeat
 }
 

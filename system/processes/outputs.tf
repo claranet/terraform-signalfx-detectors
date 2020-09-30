@@ -1,4 +1,5 @@
-output "processes_id" {
-  description = "id for detector processes"
-  value       = signalfx_detector.processes.*.id
+output "processes" {
+  description = "Detector resource for processes"
+  value       = signalfx_detector.processes
 }
+

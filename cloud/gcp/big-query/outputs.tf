@@ -1,44 +1,45 @@
-output "concurrent_queries_id" {
-  description = "id for detector concurrent_queries"
-  value       = signalfx_detector.concurrent_queries.*.id
+output "available_slots" {
+  description = "Detector resource for available_slots"
+  value       = signalfx_detector.available_slots
 }
 
-output "execution_time_id" {
-  description = "id for detector execution_time"
-  value       = signalfx_detector.execution_time.*.id
+output "concurrent_queries" {
+  description = "Detector resource for concurrent_queries"
+  value       = signalfx_detector.concurrent_queries
 }
 
-output "scanned_bytes_id" {
-  description = "id for detector scanned_bytes"
-  value       = signalfx_detector.scanned_bytes.*.id
+output "execution_time" {
+  description = "Detector resource for execution_time"
+  value       = signalfx_detector.execution_time
 }
 
-output "scanned_bytes_billed_id" {
-  description = "id for detector scanned_bytes_billed"
-  value       = signalfx_detector.scanned_bytes_billed.*.id
+output "scanned_bytes" {
+  description = "Detector resource for scanned_bytes"
+  value       = signalfx_detector.scanned_bytes
 }
 
-output "available_slots_id" {
-  description = "id for detector available_slots"
-  value       = signalfx_detector.available_slots.*.id
+output "scanned_bytes_billed" {
+  description = "Detector resource for scanned_bytes_billed"
+  value       = signalfx_detector.scanned_bytes_billed
 }
 
-output "stored_bytes_id" {
-  description = "id for detector stored_bytes"
-  value       = signalfx_detector.stored_bytes.*.id
+output "stored_bytes" {
+  description = "Detector resource for stored_bytes"
+  value       = signalfx_detector.stored_bytes
 }
 
-output "table_count_id" {
-  description = "id for detector table_count"
-  value       = signalfx_detector.table_count.*.id
+output "table_count" {
+  description = "Detector resource for table_count"
+  value       = signalfx_detector.table_count
 }
 
-output "uploaded_bytes_id" {
-  description = "id for detector uploaded_bytes"
-  value       = signalfx_detector.uploaded_bytes.*.id
+output "uploaded_bytes" {
+  description = "Detector resource for uploaded_bytes"
+  value       = signalfx_detector.uploaded_bytes
 }
 
-output "uploaded_bytes_billed_id" {
-  description = "id for detector uploaded_bytes_billed"
-  value       = signalfx_detector.uploaded_bytes_billed.*.id
+output "uploaded_bytes_billed" {
+  description = "Detector resource for uploaded_bytes_billed"
+  value       = signalfx_detector.uploaded_bytes_billed
 }
+

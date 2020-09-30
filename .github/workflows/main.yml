@@ -16,6 +16,8 @@ jobs:
     # The type of runner that the job will run on
     #runs-on: hashicorp/terraform:full
     runs-on: ubuntu-latest
+    container:
+      image: "claranet/terraform-ci:latest"
     env:
       TF_VAR_sfx_token: ${{ secrets.SFX_TOKEN }}
       TF_VAR_pagerduty_integration_id: ${{ secrets.PAGERDUTY_INTEGRATION }}
@@ -30,26 +32,19 @@ jobs:
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
       with:
-        terraform_version: 0.13.1
+        terraform_version: 0.13.3
         terraform_wrapper: false
 
     - name: Setup env
       run: |
-        set -xeuo pipefail
-        echo Setup terraform test environment
-        wget -q https://dl.google.com/go/go1.15.linux-amd64.tar.gz
-        tar -xf go1.15.linux-amd64.tar.gz
-        sudo mv go /usr/local
-        export GOROOT=/usr/local/go
-        export GOPATH=$HOME/go
-        mkdir $GOPATH
-        export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
-        GO111MODULE=on go get github.com/hashicorp/terraform-config-inspect
         TF_REF=$(git rev-parse HEAD)
         #TF_REF=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; NF>1{print $NF}')
         ./scripts/gen_tf.sh "${TF_REF}" > test/${TF_REF}.tf
         cat test/${TF_REF}.tf
     
+    - name: Terraform version
+      run: terraform version
+
     - name: Terraform fmt
       run: terraform fmt -recursive -write=false -diff -check .
 
@@ -73,19 +68,31 @@ jobs:
 
   compliance:
     runs-on: ubuntu-latest
+    container:
+      image: "claranet/terraform-ci:0.13.3"
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - name: Checkout
       uses: actions/checkout@v2
 
     - name: Install dependencies
-      run: sudo apt install expect
-
-    - name: Install tflint
-      run: curl -sL "https://github.com$(curl -s https://github.com/terraform-linters/tflint/releases | grep -m 1 linux_amd64 | cut -d '"' -f 2)" | zcat | sudo tee /usr/local/bin/tflint > /dev/null && sudo chmod +x /usr/local/bin/tflint
+      run: apk add --no-cache expect
 
     - name: Run tflint
-      run: ./scripts/tflint.sh
+      run: ./scripts/lint_tf.sh
+
+  outputs:
+    runs-on: ubuntu-latest
+    container:
+      image: "claranet/terraform-ci:0.13.3"
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Generate modules outputs
+      run: ./scripts/gen_outputs.sh
+
+    - name: Check for changes
+      run: git diff --exit-code
 

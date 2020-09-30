@@ -1,10 +1,10 @@
-output "process_state_id" {
-  description = "id for detector process state"
-  value       = signalfx_detector.process_state.*.id
+output "heartbeat" {
+  description = "Detector resource for heartbeat"
+  value       = signalfx_detector.heartbeat
 }
 
-output "heartbeat_id" {
-  description = "id for detector heartbeat"
-  value       = signalfx_detector.heartbeat.*.id
+output "process_state" {
+  description = "Detector resource for process_state"
+  value       = signalfx_detector.process_state
 }
 

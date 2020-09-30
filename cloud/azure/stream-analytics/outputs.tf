@@ -1,24 +1,25 @@
-output "heartbeat_id" {
-  description = "id for detector heartbeat"
-  value       = signalfx_detector.heartbeat.*.id
+output "conversion_errors" {
+  description = "Detector resource for conversion_errors"
+  value       = signalfx_detector.conversion_errors
 }
 
-output "su_utilization_id" {
-  description = "id for detector su_utilization"
-  value       = signalfx_detector.su_utilization.*.id
+output "failed_function_requests" {
+  description = "Detector resource for failed_function_requests"
+  value       = signalfx_detector.failed_function_requests
 }
 
-output "failed_function_requests_id" {
-  description = "id for detector failed_function_requests"
-  value       = signalfx_detector.failed_function_requests.*.id
+output "heartbeat" {
+  description = "Detector resource for heartbeat"
+  value       = signalfx_detector.heartbeat
 }
 
-output "conversion_errors_id" {
-  description = "id for detector conversion_errors"
-  value       = signalfx_detector.conversion_errors.*.id
+output "runtime_errors" {
+  description = "Detector resource for runtime_errors"
+  value       = signalfx_detector.runtime_errors
 }
 
-output "runtime_errors_id" {
-  description = "id for detector runtime_errors"
-  value       = signalfx_detector.runtime_errors.*.id
+output "su_utilization" {
+  description = "Detector resource for su_utilization"
+  value       = signalfx_detector.su_utilization
 }
+

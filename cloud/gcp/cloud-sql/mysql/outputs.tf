@@ -1,4 +1,5 @@
-output "replication_lag_id" {
-  description = "id for detector replication_lag"
-  value       = signalfx_detector.replication_lag.*.id
+output "replication_lag" {
+  description = "Detector resource for replication_lag"
+  value       = signalfx_detector.replication_lag
 }
+

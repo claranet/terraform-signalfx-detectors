@@ -1,24 +1,25 @@
-output "file_descriptors_id" {
-  description = "id for detector file descriptors"
-  value       = signalfx_detector.file_descriptors.*.id
+output "file_descriptors" {
+  description = "Detector resource for file_descriptors"
+  value       = signalfx_detector.file_descriptors
 }
 
-output "processes_id" {
-  description = "id for detector processes"
-  value       = signalfx_detector.processes.*.id
+output "heartbeat" {
+  description = "Detector resource for heartbeat"
+  value       = signalfx_detector.heartbeat
 }
 
-output "sockets_id" {
-  description = "id for detector sockets"
-  value       = signalfx_detector.sockets.*.id
+output "processes" {
+  description = "Detector resource for processes"
+  value       = signalfx_detector.processes
 }
 
-output "vm_memory_id" {
-  description = "id for detector vm memory"
-  value       = signalfx_detector.vm_memory.*.id
+output "sockets" {
+  description = "Detector resource for sockets"
+  value       = signalfx_detector.sockets
 }
 
-output "heartbeat_id" {
-  description = "id for detector heartbeat"
-  value       = signalfx_detector.heartbeat.*.id
+output "vm_memory" {
+  description = "Detector resource for vm_memory"
+  value       = signalfx_detector.vm_memory
 }
+

@@ -1,19 +1,20 @@
-output "heartbeat_id" {
-  description = "id for detector heartbeat"
-  value       = signalfx_detector.heartbeat.*.id
+output "heartbeat" {
+  description = "Detector resource for heartbeat"
+  value       = signalfx_detector.heartbeat
 }
 
-output "http_5xx_errors_rate_id" {
-  description = "id for detector http_5xx_errors_rate"
-  value       = signalfx_detector.http_5xx_errors_rate.*.id
+output "high_connections_count" {
+  description = "Detector resource for high_connections_count"
+  value       = signalfx_detector.high_connections_count
 }
 
-output "high_connections_count_id" {
-  description = "id for detector high_connections_count"
-  value       = signalfx_detector.high_connections_count.*.id
+output "high_threads_count" {
+  description = "Detector resource for high_threads_count"
+  value       = signalfx_detector.high_threads_count
 }
 
-output "high_threads_count_id" {
-  description = "id for detector high_threads_count"
-  value       = signalfx_detector.high_threads_count.*.id
+output "http_5xx_errors_rate" {
+  description = "Detector resource for http_5xx_errors_rate"
+  value       = signalfx_detector.http_5xx_errors_rate
 }
+
