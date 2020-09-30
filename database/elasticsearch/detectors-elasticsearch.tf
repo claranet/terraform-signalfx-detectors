@@ -22,9 +22,9 @@ resource "signalfx_detector" "cluster_status" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] ElasticSearch cluster status"
 
   program_text = <<-EOF
-    signal = data('elasticsearch.cluster.status', filter=filter('plugin', 'elasticsearch') and ${module.filter-tags.filter_custom}, rollup='average')${var.cluster_status_aggregation_function}${var.cluster_status_transformation_function}.publish('signal')
-    detect(when(signal == 1)).publish('CRIT')
-    detect(when(signal == 2)).publish('WARN')
+    signal = data('elasticsearch.cluster.status', filter=filter('plugin', 'elasticsearch') and ${module.filter-tags.filter_custom})${var.cluster_status_aggregation_function}${var.cluster_status_transformation_function}.publish('signal')
+    detect(when(signal == 1)).publish('WARN')
+    detect(when(signal == 2)).publish('CRIT')
 EOF
 
   rule {
