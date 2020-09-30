@@ -303,3 +303,65 @@ variable "memory_usage_threshold_warning" {
   type        = number
   default     = 80
 }
+
+# replication_lag detectors
+
+variable "replication_lag_disabled" {
+  description = "Disable all alerting rules for replication_lag detector"
+  type        = bool
+  default     = null
+}
+
+variable "replication_lag_disabled_critical" {
+  description = "Disable critical alerting rule for replication_lag detector"
+  type        = bool
+  default     = null
+}
+
+variable "replication_lag_disabled_warning" {
+  description = "Disable warning alerting rule for replication_lag detector"
+  type        = bool
+  default     = null
+}
+
+variable "replication_lag_notifications" {
+  description = "Notification recipients list for every alerting rules of replication_lag detector"
+  type        = list(string)
+  default     = []
+}
+
+variable "replication_lag_notifications_warning" {
+  description = "Notification recipients list for warning alerting rule of replication_lag detector"
+  type        = list(string)
+  default     = []
+}
+
+variable "replication_lag_notifications_critical" {
+  description = "Notification recipients list for critical alerting rule of replication_lag detector"
+  type        = list(string)
+  default     = []
+}
+
+variable "replication_lag_aggregation_function" {
+  description = "Aggregation function and group by for replication_lag detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+}
+
+variable "replication_lag_timer" {
+  description = "Transformation window for replication_lag detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "15m"
+}
+
+variable "replication_lag_threshold_critical" {
+  description = "Critical threshold in seconds for replication_lag detector"
+  type        = number
+  default     = 200
+}
+
+variable "replication_lag_threshold_warning" {
+  description = "Warning threshold in seconds for replication_lag detector"
+  type        = number
+  default     = 100
+}
