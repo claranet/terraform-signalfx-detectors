@@ -32,7 +32,7 @@ resource "signalfx_detector" "http_5xx" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ApiGateway HTTP 5xx error rate"
 
   program_text = <<-EOF
-    A = data('5XXError', filter=filter('namespace', 'AWS/ApiGateway') and filter('stat', 'sum') and (not filter('Stage', '*')) and (not filter('Method', '*')) and (not filter('Resource', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.http_5xx_aggregation_function}${var.http_5xx_transformation_function}
+    A = data('${var.is_v2 ? "5xx" : "5XXError"}', filter=filter('namespace', 'AWS/ApiGateway') and filter('stat', 'sum') and (not filter('Stage', '*')) and (not filter('Method', '*')) and (not filter('Resource', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.http_5xx_aggregation_function}${var.http_5xx_transformation_function}
     B = data('Count', filter=filter('namespace', 'AWS/ApiGateway') and filter('stat', 'sum') and (not filter('Stage', '*')) and (not filter('Method', '*')) and (not filter('Resource', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.http_5xx_aggregation_function}${var.http_5xx_transformation_function}
     signal = (A/B).scale(100).fill(value=0).publish('signal')
     detect(when(signal > threshold(${var.http_5xx_threshold_critical}), lasting='${var.http_5xx_lasting_duration_seconds}s', at_least=${var.http_5xx_at_least_percentage}) and when(B > ${var.minimum_traffic})).publish('CRIT')
@@ -63,7 +63,7 @@ resource "signalfx_detector" "http_4xx" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ApiGateway HTTP 4xx error rate"
 
   program_text = <<-EOF
-    A = data('4XXError', filter=filter('namespace', 'AWS/ApiGateway') and filter('stat', 'sum') and (not filter('Stage', '*')) and (not filter('Method', '*')) and (not filter('Resource', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.http_4xx_aggregation_function}${var.http_4xx_transformation_function}
+    A = data('${var.is_v2 ? "4xx" : "4XXError"}', filter=filter('namespace', 'AWS/ApiGateway') and filter('stat', 'sum') and (not filter('Stage', '*')) and (not filter('Method', '*')) and (not filter('Resource', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.http_4xx_aggregation_function}${var.http_4xx_transformation_function}
     B = data('Count', filter=filter('namespace', 'AWS/ApiGateway') and filter('stat', 'sum') and (not filter('Stage', '*')) and (not filter('Method', '*')) and (not filter('Resource', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.http_4xx_aggregation_function}${var.http_4xx_transformation_function}
     signal = (A/B).scale(100).fill(value=0).publish('signal')
     detect(when(signal > threshold(${var.http_4xx_threshold_critical}), lasting='${var.http_4xx_lasting_duration_seconds}s', at_least=${var.http_4xx_at_least_percentage}) and when(B > ${var.minimum_traffic})).publish('CRIT')
