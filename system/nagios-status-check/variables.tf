@@ -56,8 +56,8 @@ variable "status_check_disabled_warning" {
   default     = null
 }
 
-variable "status_check_disabled_unknown" {
-  description = "Disable unknown alerting rule for status_check detector"
+variable "status_check_disabled_major" {
+  description = "Disable major alerting rule for status_check detector"
   type        = bool
   default     = null
 }
@@ -80,8 +80,8 @@ variable "status_check_notifications_critical" {
   default     = []
 }
 
-variable "status_check_notifications_unknown" {
-  description = "Notification recipients list for unknown alerting rule of status_check detector"
+variable "status_check_notifications_major" {
+  description = "Notification recipients list for major alerting rule of status_check detector"
   type        = list
   default     = []
 }
@@ -103,3 +103,4 @@ variable "status_check_lasting_duration_seconds" {
   type        = string
   default     = "900"
 }
+
