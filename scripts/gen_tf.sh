@@ -24,7 +24,7 @@ esac
 
 module_vars=$(cat <<-EOF
 	  environment   = var.environment
-	  notifications = [local.pagerduty_notification]
+	  notifications = local.notifications
 EOF
 )
 env_vars=$(terraform-config-inspect $(dirname $0)/../test --json | jq -cr '.variables[] | select(.required) | .name')
