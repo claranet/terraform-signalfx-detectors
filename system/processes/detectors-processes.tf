@@ -12,7 +12,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.processes_disabled_critical, var.processes_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.processes_notifications_critical, var.processes_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.processes_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
@@ -21,7 +21,7 @@ EOF
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.processes_disabled_warning, var.processes_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.processes_notifications_warning, var.processes_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.processes_notifications, "warning", []), var.notifications.warning)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }

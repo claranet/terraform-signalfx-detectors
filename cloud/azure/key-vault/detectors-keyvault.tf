@@ -15,7 +15,7 @@ resource "signalfx_detector" "api_result" {
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.api_result_disabled_critical, var.api_result_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.api_result_notifications_critical, var.api_result_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.api_result_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
@@ -24,7 +24,7 @@ resource "signalfx_detector" "api_result" {
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.api_result_disabled_warning, var.api_result_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.api_result_notifications_warning, var.api_result_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.api_result_notifications, "warning", []), var.notifications.warning)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -44,7 +44,7 @@ resource "signalfx_detector" "api_latency" {
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.api_latency_disabled_critical, var.api_latency_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.api_latency_notifications_critical, var.api_latency_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.api_latency_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
@@ -53,7 +53,7 @@ resource "signalfx_detector" "api_latency" {
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.api_latency_disabled_warning, var.api_latency_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.api_latency_notifications_warning, var.api_latency_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.api_latency_notifications, "warning", []), var.notifications.warning)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }

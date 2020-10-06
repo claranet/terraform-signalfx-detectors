@@ -8,8 +8,14 @@ variable "environment" {
 # SignalFx module specific
 
 variable "notifications" {
-  description = "Notification recipients list for every detectors"
-  type        = list(string)
+  description = "Default notification recipients list per severity"
+  type = object({
+    critical = list(string)
+    major    = list(string)
+    minor    = list(string)
+    warning  = list(string)
+    info     = list(string)
+  })
 }
 
 variable "prefixes" {
@@ -57,21 +63,9 @@ variable "api_result_disabled_warning" {
 }
 
 variable "api_result_notifications" {
-  description = "Notification recipients list for every alerting rules of api_result detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "api_result_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of api_result detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "api_result_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of api_result detector"
-  type        = list(string)
-  default     = []
+  description = "Notification recipients list per severity overridden for api_result detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "api_result_aggregation_function" {
@@ -119,21 +113,9 @@ variable "api_latency_disabled_warning" {
 }
 
 variable "api_latency_notifications" {
-  description = "Notification recipients list for every alerting rules of api_latency detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "api_latency_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of api_latency detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "api_latency_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of api_latency detector"
-  type        = list(string)
-  default     = []
+  description = "Notification recipients list per severity overridden for api_latency detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "api_latency_aggregation_function" {

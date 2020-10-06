@@ -12,7 +12,7 @@ EOF
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.sending_operations_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.sending_operations_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.sending_operations_notifications, "warning", []), var.notifications.warning)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -32,7 +32,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.unavailable_sending_operations_disabled_critical, var.unavailable_sending_operations_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.unavailable_sending_operations_notifications_critical, var.unavailable_sending_operations_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.unavailable_sending_operations_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
@@ -41,7 +41,7 @@ EOF
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.unavailable_sending_operations_disabled_warning, var.unavailable_sending_operations_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.unavailable_sending_operations_notifications_warning, var.unavailable_sending_operations_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.unavailable_sending_operations_notifications, "warning", []), var.notifications.warning)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -63,7 +63,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.unavailable_sending_operations_ratio_disabled_critical, var.unavailable_sending_operations_ratio_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.unavailable_sending_operations_ratio_notifications_critical, var.unavailable_sending_operations_ratio_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.unavailable_sending_operations_ratio_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
@@ -72,7 +72,7 @@ EOF
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.unavailable_sending_operations_ratio_disabled_warning, var.unavailable_sending_operations_ratio_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.unavailable_sending_operations_ratio_notifications_warning, var.unavailable_sending_operations_ratio_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.unavailable_sending_operations_ratio_notifications, "warning", []), var.notifications.warning)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }

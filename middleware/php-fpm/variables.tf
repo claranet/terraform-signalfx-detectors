@@ -8,8 +8,14 @@ variable "environment" {
 # SignalFx module specific
 
 variable "notifications" {
-  description = "Notification recipients list for every detectors"
-  type        = list
+  description = "Default notification recipients list per severity"
+  type = object({
+    critical = list(string)
+    major    = list(string)
+    minor    = list(string)
+    warning  = list(string)
+    info     = list(string)
+  })
 }
 
 variable "prefixes" {
@@ -45,9 +51,9 @@ variable "heartbeat_disabled" {
 }
 
 variable "heartbeat_notifications" {
-  description = "Notification recipients list for every alerting rules of heartbeat detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for heartbeat detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "heartbeat_timeframe" {
@@ -77,21 +83,9 @@ variable "php_fpm_connect_idle_disabled_warning" {
 }
 
 variable "php_fpm_connect_idle_notifications" {
-  description = "Notification recipients list for every alerting rules of php_fpm_connect_idle detector"
-  type        = list
-  default     = []
-}
-
-variable "php_fpm_connect_idle_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of php_fpm_connect_idle detector"
-  type        = list
-  default     = []
-}
-
-variable "php_fpm_connect_idle_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of php_fpm_connect_idle detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for php_fpm_connect_idle detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "php_fpm_connect_idle_aggregation_function" {

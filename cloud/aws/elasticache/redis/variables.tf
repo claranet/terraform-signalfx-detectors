@@ -8,8 +8,14 @@ variable "environment" {
 # SignalFx module specific
 
 variable "notifications" {
-  description = "Notification recipients list for every detectors"
-  type        = list
+  description = "Default notification recipients list per severity"
+  type = object({
+    critical = list(string)
+    major    = list(string)
+    minor    = list(string)
+    warning  = list(string)
+    info     = list(string)
+  })
 }
 
 variable "prefixes" {
@@ -59,21 +65,9 @@ variable "cache_hits_disabled_warning" {
 }
 
 variable "cache_hits_notifications" {
-  description = "Notification recipients list for every alerting rules of cache_hits detector"
-  type        = list
-  default     = []
-}
-
-variable "cache_hits_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of cache_hits detector"
-  type        = list
-  default     = []
-}
-
-variable "cache_hits_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of cache_hits detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for cache_hits detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "cache_hits_aggregation_function" {
@@ -133,21 +127,9 @@ variable "cpu_high_disabled_warning" {
 }
 
 variable "cpu_high_notifications" {
-  description = "Notification recipients list for every alerting rules of cpu_high detector"
-  type        = list
-  default     = []
-}
-
-variable "cpu_high_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of cpu_high detector"
-  type        = list
-  default     = []
-}
-
-variable "cpu_high_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of cpu_high detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for cpu_high detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "cpu_high_aggregation_function" {
@@ -195,21 +177,9 @@ variable "replication_lag_disabled_warning" {
 }
 
 variable "replication_lag_notifications" {
-  description = "Notification recipients list for every alerting rules of replication_lag detector"
-  type        = list
-  default     = []
-}
-
-variable "replication_lag_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of replication_lag detector"
-  type        = list
-  default     = []
-}
-
-variable "replication_lag_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of replication_lag detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for replication_lag detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "replication_lag_aggregation_function" {
@@ -257,21 +227,9 @@ variable "commands_disabled_warning" {
 }
 
 variable "commands_notifications" {
-  description = "Notification recipients list for every alerting rules of commands detector"
-  type        = list
-  default     = []
-}
-
-variable "commands_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of commands detector"
-  type        = list
-  default     = []
-}
-
-variable "commands_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of commands detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for commands detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "commands_aggregation_function" {

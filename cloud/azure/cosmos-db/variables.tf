@@ -8,8 +8,14 @@ variable "environment" {
 # SignalFx module specific
 
 variable "notifications" {
-  description = "Notification recipients list for every detectors"
-  type        = list(string)
+  description = "Default notification recipients list per severity"
+  type = object({
+    critical = list(string)
+    major    = list(string)
+    minor    = list(string)
+    warning  = list(string)
+    info     = list(string)
+  })
 }
 
 variable "prefixes" {
@@ -45,9 +51,9 @@ variable "heartbeat_disabled" {
 }
 
 variable "heartbeat_notifications" {
-  description = "Notification recipients list for every alerting rules of heartbeat detector"
-  type        = list(string)
-  default     = []
+  description = "Notification recipients list per severity overridden for heartbeat detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "heartbeat_timeframe" {
@@ -77,21 +83,9 @@ variable "db_4xx_requests_disabled_warning" {
 }
 
 variable "db_4xx_requests_notifications" {
-  description = "Notification recipients list for every alerting rules of db_4xx_requests detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "db_4xx_requests_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of db_4xx_requests detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "db_4xx_requests_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of db_4xx_requests detector"
-  type        = list(string)
-  default     = []
+  description = "Notification recipients list per severity overridden for db_4xx_requests detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "db_4xx_requests_aggregation_function" {
@@ -139,21 +133,9 @@ variable "db_5xx_requests_disabled_warning" {
 }
 
 variable "db_5xx_requests_notifications" {
-  description = "Notification recipients list for every alerting rules of db_5xx_requests detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "db_5xx_requests_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of db_5xx_requests detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "db_5xx_requests_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of db_5xx_requests detector"
-  type        = list(string)
-  default     = []
+  description = "Notification recipients list per severity overridden for db_5xx_requests detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "db_5xx_requests_aggregation_function" {
@@ -201,21 +183,9 @@ variable "scaling_disabled_warning" {
 }
 
 variable "scaling_notifications" {
-  description = "Notification recipients list for every alerting rules of scaling detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "scaling_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of scaling detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "scaling_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of scaling detector"
-  type        = list(string)
-  default     = []
+  description = "Notification recipients list per severity overridden for scaling detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "scaling_aggregation_function" {

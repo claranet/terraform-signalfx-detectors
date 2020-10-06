@@ -8,8 +8,14 @@ variable "environment" {
 # SignalFx module specific
 
 variable "notifications" {
-  description = "Notification recipients list for every detectors"
-  type        = list
+  description = "Default notification recipients list per severity"
+  type = object({
+    critical = list(string)
+    major    = list(string)
+    minor    = list(string)
+    warning  = list(string)
+    info     = list(string)
+  })
 }
 
 variable "prefixes" {
@@ -45,9 +51,9 @@ variable "heartbeat_disabled" {
 }
 
 variable "heartbeat_notifications" {
-  description = "Notification recipients list for every alerting rules of heartbeat detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for heartbeat detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "heartbeat_timeframe" {
@@ -77,27 +83,15 @@ variable "node_ready_disabled_warning" {
 }
 
 variable "node_ready_notifications" {
-  description = "Notification recipients list for every alerting rules of node_ready detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for node_ready detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "node_ready_lasting_duration_seconds" {
   description = "Minimum duration that conditions must be true before raising alert (in seconds)"
   type        = number
   default     = 3600
-}
-
-variable "node_ready_notifications_major" {
-  description = "Notification recipients list for major alerting rule of node_ready detector"
-  type        = list
-  default     = []
-}
-
-variable "node_ready_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of node_ready detector"
-  type        = list
-  default     = []
 }
 
 variable "node_ready_aggregation_function" {
@@ -121,9 +115,9 @@ variable "pod_phase_status_disabled" {
 }
 
 variable "pod_phase_status_notifications" {
-  description = "Notification recipients list for every alerting rules of pod_phase_status detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for pod_phase_status detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "pod_phase_status_aggregation_function" {
@@ -153,9 +147,9 @@ variable "terminated_disabled" {
 }
 
 variable "terminated_notifications" {
-  description = "Notification recipients list for every alerting rules of terminated detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for terminated detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "terminated_aggregation_function" {
@@ -191,9 +185,9 @@ variable "oom_killed_disabled" {
 }
 
 variable "oom_killed_notifications" {
-  description = "Notification recipients list for every alerting rules of oom_killed detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for oom_killed detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "oom_killed_aggregation_function" {
@@ -223,9 +217,9 @@ variable "deployment_crashloopbackoff_disabled" {
 }
 
 variable "deployment_crashloopbackoff_notifications" {
-  description = "Notification recipients list for every alerting rules of deployment_crashloopbackoff detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for deployment_crashloopbackoff detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "deployment_crashloopbackoff_aggregation_function" {
@@ -255,9 +249,9 @@ variable "daemonset_crashloopbackoff_disabled" {
 }
 
 variable "daemonset_crashloopbackoff_notifications" {
-  description = "Notification recipients list for every alerting rules of daemonset_crashloopbackoff detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for daemonset_crashloopbackoff detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "daemonset_crashloopbackoff_aggregation_function" {
@@ -287,9 +281,9 @@ variable "job_failed_disabled" {
 }
 
 variable "job_failed_notifications" {
-  description = "Notification recipients list for every alerting rules of job_failed detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for job_failed detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "job_failed_aggregation_function" {
@@ -325,9 +319,9 @@ variable "daemonset_scheduled_disabled" {
 }
 
 variable "daemonset_scheduled_notifications" {
-  description = "Notification recipients list for every alerting rules of daemonset_scheduled detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for daemonset_scheduled detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "daemonset_scheduled_aggregation_function" {
@@ -357,9 +351,9 @@ variable "daemonset_ready_disabled" {
 }
 
 variable "daemonset_ready_notifications" {
-  description = "Notification recipients list for every alerting rules of daemonset_ready detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for daemonset_ready detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "daemonset_ready_aggregation_function" {
@@ -395,9 +389,9 @@ variable "daemonset_misscheduled_disabled" {
 }
 
 variable "daemonset_misscheduled_notifications" {
-  description = "Notification recipients list for every alerting rules of daemonset_misscheduled detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for daemonset_misscheduled detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "daemonset_misscheduled_aggregation_function" {
@@ -433,9 +427,9 @@ variable "deployment_available_disabled" {
 }
 
 variable "deployment_available_notifications" {
-  description = "Notification recipients list for every alerting rules of deployment_available detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for deployment_available detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "deployment_available_aggregation_function" {
@@ -465,9 +459,9 @@ variable "replicaset_available_disabled" {
 }
 
 variable "replicaset_available_notifications" {
-  description = "Notification recipients list for every alerting rules of replicaset_available detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for replicaset_available detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "replicaset_available_aggregation_function" {
@@ -497,9 +491,9 @@ variable "replication_controller_available_disabled" {
 }
 
 variable "replication_controller_available_notifications" {
-  description = "Notification recipients list for every alerting rules of replication_controller_available detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for replication_controller_available detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "replication_controller_available_aggregation_function" {
@@ -529,9 +523,9 @@ variable "satefulset_ready_disabled" {
 }
 
 variable "satefulset_ready_notifications" {
-  description = "Notification recipients list for every alerting rules of satefulset_ready detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for satefulset_ready detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "satefulset_ready_aggregation_function" {

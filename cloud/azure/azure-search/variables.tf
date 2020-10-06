@@ -8,8 +8,14 @@ variable "environment" {
 # SignalFx module specific
 
 variable "notifications" {
-  description = "Notification recipients list for every detectors"
-  type        = list(string)
+  description = "Default notification recipients list per severity"
+  type = object({
+    critical = list(string)
+    major    = list(string)
+    minor    = list(string)
+    warning  = list(string)
+    info     = list(string)
+  })
 }
 
 variable "prefixes" {
@@ -59,21 +65,9 @@ variable "search_latency_disabled_warning" {
 }
 
 variable "search_latency_notifications" {
-  description = "Notification recipients list for every alerting rules of search_latency detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "search_latency_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of search_latency detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "search_latency_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of search_latency detector"
-  type        = list(string)
-  default     = []
+  description = "Notification recipients list per severity overridden for search_latency detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "search_latency_aggregation_function" {
@@ -121,21 +115,9 @@ variable "search_throttled_queries_rate_disabled_warning" {
 }
 
 variable "search_throttled_queries_rate_notifications" {
-  description = "Notification recipients list for every alerting rules of search_throttled_queries_rate detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "search_throttled_queries_rate_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of search_throttled_queries_rate detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "search_throttled_queries_rate_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of search_throttled_queries_rate detector"
-  type        = list(string)
-  default     = []
+  description = "Notification recipients list per severity overridden for search_throttled_queries_rate detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "search_throttled_queries_rate_aggregation_function" {

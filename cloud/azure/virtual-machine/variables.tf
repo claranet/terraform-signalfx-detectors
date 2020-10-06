@@ -8,8 +8,14 @@ variable "environment" {
 # SignalFx module specific
 
 variable "notifications" {
-  description = "Notification recipients list for every detectors"
-  type        = list(string)
+  description = "Default notification recipients list per severity"
+  type = object({
+    critical = list(string)
+    major    = list(string)
+    minor    = list(string)
+    warning  = list(string)
+    info     = list(string)
+  })
 }
 
 variable "prefixes" {
@@ -45,9 +51,9 @@ variable "heartbeat_disabled" {
 }
 
 variable "heartbeat_notifications" {
-  description = "Notification recipients list for every alerting rules of heartbeat detector"
-  type        = list(string)
-  default     = []
+  description = "Notification recipients list per severity overridden for heartbeat detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "heartbeat_timeframe" {
@@ -77,21 +83,9 @@ variable "cpu_usage_disabled_warning" {
 }
 
 variable "cpu_usage_notifications" {
-  description = "Notification recipients list for every alerting rules of cpu_usage detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "cpu_usage_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of cpu_usage detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "cpu_usage_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of cpu_usage detector"
-  type        = list(string)
-  default     = []
+  description = "Notification recipients list per severity overridden for cpu_usage detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "cpu_usage_aggregation_function" {
@@ -139,21 +133,9 @@ variable "credit_cpu_disabled_warning" {
 }
 
 variable "credit_cpu_notifications" {
-  description = "Notification recipients list for every alerting rules of credit_cpu detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "credit_cpu_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of credit_cpu detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "credit_cpu_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of credit_cpu detector"
-  type        = list(string)
-  default     = []
+  description = "Notification recipients list per severity overridden for credit_cpu detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "credit_cpu_aggregation_function" {

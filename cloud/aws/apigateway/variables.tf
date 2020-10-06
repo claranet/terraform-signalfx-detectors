@@ -14,8 +14,14 @@ variable "is_v2" {
 }
 
 variable "notifications" {
-  description = "Notification recipients list for every detectors"
-  type        = list
+  description = "Default notification recipients list per severity"
+  type = object({
+    critical = list(string)
+    major    = list(string)
+    minor    = list(string)
+    warning  = list(string)
+    info     = list(string)
+  })
 }
 
 variable "prefixes" {
@@ -71,21 +77,9 @@ variable "latency_disabled_warning" {
 }
 
 variable "latency_notifications" {
-  description = "Notification recipients list for every alerting rules of latency detector"
-  type        = list
-  default     = []
-}
-
-variable "latency_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of latency detector"
-  type        = list
-  default     = []
-}
-
-variable "latency_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of latency detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for latency detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "latency_aggregation_function" {
@@ -145,21 +139,9 @@ variable "http_5xx_disabled_warning" {
 }
 
 variable "http_5xx_notifications" {
-  description = "Notification recipients list for every alerting rules of http_5xx detector"
-  type        = list
-  default     = []
-}
-
-variable "http_5xx_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of http_5xx detector"
-  type        = list
-  default     = []
-}
-
-variable "http_5xx_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of http_5xx detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for http_5xx detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "http_5xx_aggregation_function" {
@@ -219,21 +201,9 @@ variable "http_4xx_disabled_warning" {
 }
 
 variable "http_4xx_notifications" {
-  description = "Notification recipients list for every alerting rules of http_4xx detector"
-  type        = list
-  default     = []
-}
-
-variable "http_4xx_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of http_4xx detector"
-  type        = list
-  default     = []
-}
-
-variable "http_4xx_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of http_4xx detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for http_4xx detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "http_4xx_aggregation_function" {

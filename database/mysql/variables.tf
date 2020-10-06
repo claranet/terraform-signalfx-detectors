@@ -8,8 +8,14 @@ variable "environment" {
 # SignalFx module specific
 
 variable "notifications" {
-  description = "Notification recipients list for every detectors"
-  type        = list
+  description = "Default notification recipients list per severity"
+  type = object({
+    critical = list(string)
+    major    = list(string)
+    minor    = list(string)
+    warning  = list(string)
+    info     = list(string)
+  })
 }
 
 variable "prefixes" {
@@ -45,9 +51,9 @@ variable "heartbeat_disabled" {
 }
 
 variable "heartbeat_notifications" {
-  description = "Notification recipients list for every alerting rules of heartbeat detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for heartbeat detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "heartbeat_timeframe" {
@@ -77,21 +83,9 @@ variable "mysql_connections_disabled_warning" {
 }
 
 variable "mysql_connections_notifications" {
-  description = "Notification recipients list for every alerting rules of mysql_connection detector"
-  type        = list
-  default     = []
-}
-
-variable "mysql_connections_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of mysql_connection detector"
-  type        = list
-  default     = []
-}
-
-variable "mysql_connections_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of mysql_connection detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for mysql_connection detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "mysql_connections_aggregation_function" {
@@ -139,21 +133,9 @@ variable "mysql_pool_efficiency_disabled_minor" {
 }
 
 variable "mysql_pool_efficiency_notifications" {
-  description = "Notification recipients list for every alerting rules of mysql_pool_efficiency detector"
-  type        = list
-  default     = []
-}
-
-variable "mysql_pool_efficiency_notifications_minor" {
-  description = "Notification recipients list for minor alerting rule of mysql_pool_efficiency detector"
-  type        = list
-  default     = []
-}
-
-variable "mysql_pool_efficiency_notifications_major" {
-  description = "Notification recipients list for major alerting rule of mysql_pool_efficiency detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for mysql_pool_efficiency detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "mysql_pool_efficiency_aggregation_function" {
@@ -201,21 +183,9 @@ variable "mysql_pool_utilization_disabled_minor" {
 }
 
 variable "mysql_pool_utilization_notifications" {
-  description = "Notification recipients list for every alerting rules of mysql_pool_utilization detector"
-  type        = list
-  default     = []
-}
-
-variable "mysql_pool_utilization_notifications_minor" {
-  description = "Notification recipients list for minor alerting rule of mysql_pool_utilization detector"
-  type        = list
-  default     = []
-}
-
-variable "mysql_pool_utilization_notifications_major" {
-  description = "Notification recipients list for major alerting rule of mysql_pool_utilization detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for mysql_pool_utilization detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "mysql_pool_utilization_aggregation_function" {
@@ -263,21 +233,9 @@ variable "mysql_slow_disabled_warning" {
 }
 
 variable "mysql_slow_notifications" {
-  description = "Notification recipients list for every alerting rules of mysql_slow detector"
-  type        = list
-  default     = []
-}
-
-variable "mysql_slow_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of mysql_slow detector"
-  type        = list
-  default     = []
-}
-
-variable "mysql_slow_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of mysql_slow detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for mysql_slow detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "mysql_slow_aggregation_function" {
@@ -313,9 +271,9 @@ variable "mysql_threads_anomaly_disabled" {
 }
 
 variable "mysql_threads_anomaly_notifications" {
-  description = "Notification recipients list for every alerting rules of mysql_threads_anomaly detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for mysql_threads_anomaly detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "mysql_threads_anomaly_aggregation_function" {
@@ -375,9 +333,9 @@ variable "mysql_questions_anomaly_disabled" {
 }
 
 variable "mysql_questions_anomaly_notifications" {
-  description = "Notification recipients list for every alerting rules of mysql_questions_anomaly detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for mysql_questions_anomaly detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "mysql_questions_anomaly_aggregation_function" {
@@ -449,21 +407,9 @@ variable "mysql_replication_lag_disabled_warning" {
 }
 
 variable "mysql_replication_lag_notifications" {
-  description = "Notification recipients list for every alerting rules of mysql_replication_lag detector"
-  type        = list
-  default     = []
-}
-
-variable "mysql_replication_lag_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of mysql_replication_lag detector"
-  type        = list
-  default     = []
-}
-
-variable "mysql_replication_lag_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of mysql_replication_lag detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for mysql_replication_lag detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "mysql_replication_lag_aggregation_function" {
@@ -499,9 +445,9 @@ variable "mysql_replication_status_disabled" {
 }
 
 variable "mysql_replication_status_notifications" {
-  description = "Notification recipients list for every alerting rules of mysql_replication_status detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for mysql_replication_status detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "mysql_replication_status_aggregation_function" {

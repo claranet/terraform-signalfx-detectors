@@ -11,7 +11,7 @@ EOF
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.failover_unavailable_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.failover_unavailable_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.failover_unavailable_notifications, "warning", []), var.notifications.warning)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }

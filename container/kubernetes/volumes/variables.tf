@@ -8,8 +8,14 @@ variable "environment" {
 # SignalFx module specific
 
 variable "notifications" {
-  description = "Notification recipients list for every detectors"
-  type        = list
+  description = "Default notification recipients list per severity"
+  type = object({
+    critical = list(string)
+    major    = list(string)
+    minor    = list(string)
+    warning  = list(string)
+    info     = list(string)
+  })
 }
 
 variable "prefixes" {
@@ -59,21 +65,9 @@ variable "volume_space_disabled_warning" {
 }
 
 variable "volume_space_notifications" {
-  description = "Notification recipients list for every alerting rules of volume_space detector"
-  type        = list
-  default     = []
-}
-
-variable "volume_space_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of volume_space detector"
-  type        = list
-  default     = []
-}
-
-variable "volume_space_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of volume_space detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for volume_space detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "volume_space_aggregation_function" {
@@ -121,21 +115,9 @@ variable "volume_inodes_disabled_warning" {
 }
 
 variable "volume_inodes_notifications" {
-  description = "Notification recipients list for every alerting rules of volume_inodes detector"
-  type        = list
-  default     = []
-}
-
-variable "volume_inodes_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of volume_inodes detector"
-  type        = list
-  default     = []
-}
-
-variable "volume_inodes_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of volume_inodes detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for volume_inodes detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "volume_inodes_aggregation_function" {

@@ -8,8 +8,14 @@ variable "environment" {
 # SignalFx module specific
 
 variable "notifications" {
-  description = "Notification recipients list for every detectors"
-  type        = list
+  description = "Default notification recipients list per severity"
+  type = object({
+    critical = list(string)
+    major    = list(string)
+    minor    = list(string)
+    warning  = list(string)
+    info     = list(string)
+  })
 }
 
 variable "prefixes" {
@@ -45,9 +51,9 @@ variable "heartbeat_disabled" {
 }
 
 variable "heartbeat_notifications" {
-  description = "Notification recipients list for every alerting rules of heartbeat detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for heartbeat detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "heartbeat_timeframe" {
@@ -71,15 +77,9 @@ variable "vpn_status_disabled_critical" {
 }
 
 variable "vpn_status_notifications" {
-  description = "Notification recipients list for every alerting rules of vpn_status detector"
-  type        = list
-  default     = []
-}
-
-variable "vpn_status_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of vpn_status detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for vpn_status detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "vpn_status_aggregation_function" {

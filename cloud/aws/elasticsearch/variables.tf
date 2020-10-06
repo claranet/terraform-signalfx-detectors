@@ -8,8 +8,14 @@ variable "environment" {
 # SignalFx module specific
 
 variable "notifications" {
-  description = "Notification recipients list for every detectors"
-  type        = list
+  description = "Default notification recipients list per severity"
+  type = object({
+    critical = list(string)
+    major    = list(string)
+    minor    = list(string)
+    warning  = list(string)
+    info     = list(string)
+  })
 }
 
 variable "prefixes" {
@@ -45,9 +51,9 @@ variable "heartbeat_disabled" {
 }
 
 variable "heartbeat_notifications" {
-  description = "Notification recipients list for every alerting rules of heartbeat detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for heartbeat detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "heartbeat_timeframe" {
@@ -77,21 +83,9 @@ variable "cluster_status_disabled_warning" {
 }
 
 variable "cluster_status_notifications" {
-  description = "Notification recipients list for every alerting rules of cluster_status detector"
-  type        = list
-  default     = []
-}
-
-variable "cluster_status_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of cluster_status detector"
-  type        = list
-  default     = []
-}
-
-variable "cluster_status_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of cluster_status detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for cluster_status detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "cluster_status_aggregation_function" {
@@ -127,21 +121,9 @@ variable "free_space_disabled_warning" {
 }
 
 variable "free_space_notifications" {
-  description = "Notification recipients list for every alerting rules of free_space detector"
-  type        = list
-  default     = []
-}
-
-variable "free_space_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of free_space detector"
-  type        = list
-  default     = []
-}
-
-variable "free_space_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of free_space detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for free_space detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "free_space_aggregation_function" {
@@ -189,21 +171,9 @@ variable "cpu_90_15min_disabled_warning" {
 }
 
 variable "cpu_90_15min_notifications" {
-  description = "Notification recipients list for every alerting rules of cpu_90_15min detector"
-  type        = list
-  default     = []
-}
-
-variable "cpu_90_15min_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of cpu_90_15min detector"
-  type        = list
-  default     = []
-}
-
-variable "cpu_90_15min_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of cpu_90_15min detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for cpu_90_15min detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "cpu_90_15min_aggregation_function" {

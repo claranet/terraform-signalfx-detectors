@@ -8,8 +8,14 @@ variable "environment" {
 # SignalFx module specific
 
 variable "notifications" {
-  description = "Notification recipients list for every detectors"
-  type        = list
+  description = "Default notification recipients list per severity"
+  type = object({
+    critical = list(string)
+    major    = list(string)
+    minor    = list(string)
+    warning  = list(string)
+    info     = list(string)
+  })
 }
 
 variable "prefixes" {
@@ -51,9 +57,9 @@ variable "heartbeat_disabled" {
 }
 
 variable "heartbeat_notifications" {
-  description = "Notification recipients list for every alerting rules of heartbeat detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for heartbeat detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "heartbeat_timeframe" {
@@ -83,21 +89,9 @@ variable "no_healthy_instances_disabled_warning" {
 }
 
 variable "no_healthy_instances_notifications" {
-  description = "Notification recipients list for every alerting rules of no_healthy_instances detector"
-  type        = list
-  default     = []
-}
-
-variable "no_healthy_instances_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of no_healthy_instances detector"
-  type        = list
-  default     = []
-}
-
-variable "no_healthy_instances_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of no_healthy_instances detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for no_healthy_instances detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "no_healthy_instances_aggregation_function" {
@@ -145,21 +139,9 @@ variable "elb_4xx_disabled_warning" {
 }
 
 variable "elb_4xx_notifications" {
-  description = "Notification recipients list for every alerting rules of 4xx detector"
-  type        = list
-  default     = []
-}
-
-variable "elb_4xx_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of 4xx detector"
-  type        = list
-  default     = []
-}
-
-variable "elb_4xx_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of 4xx detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for 4xx detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "elb_4xx_aggregation_function" {
@@ -219,21 +201,9 @@ variable "elb_5xx_disabled_warning" {
 }
 
 variable "elb_5xx_notifications" {
-  description = "Notification recipients list for every alerting rules of 5xx detector"
-  type        = list
-  default     = []
-}
-
-variable "elb_5xx_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of 5xx detector"
-  type        = list
-  default     = []
-}
-
-variable "elb_5xx_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of 5xx detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for 5xx detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "elb_5xx_aggregation_function" {
@@ -293,21 +263,9 @@ variable "backend_4xx_disabled_warning" {
 }
 
 variable "backend_4xx_notifications" {
-  description = "Notification recipients list for every alerting rules of backend_4xx detector"
-  type        = list
-  default     = []
-}
-
-variable "backend_4xx_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of backend_4xx detector"
-  type        = list
-  default     = []
-}
-
-variable "backend_4xx_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of backend_4xx detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for backend_4xx detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "backend_4xx_aggregation_function" {
@@ -367,21 +325,9 @@ variable "backend_5xx_disabled_warning" {
 }
 
 variable "backend_5xx_notifications" {
-  description = "Notification recipients list for every alerting rules of backend_5xx detector"
-  type        = list
-  default     = []
-}
-
-variable "backend_5xx_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of backend_5xx detector"
-  type        = list
-  default     = []
-}
-
-variable "backend_5xx_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of backend_5xx detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for backend_5xx detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "backend_5xx_aggregation_function" {
@@ -441,21 +387,9 @@ variable "backend_latency_disabled_warning" {
 }
 
 variable "backend_latency_notifications" {
-  description = "Notification recipients list for every alerting rules of backend_latency detector"
-  type        = list
-  default     = []
-}
-
-variable "backend_latency_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of backend_latency detector"
-  type        = list
-  default     = []
-}
-
-variable "backend_latency_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of backend_latency detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for backend_latency detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "backend_latency_aggregation_function" {

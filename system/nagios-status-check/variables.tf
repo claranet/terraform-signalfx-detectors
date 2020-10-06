@@ -8,8 +8,14 @@ variable "environment" {
 # SignalFx Module specific
 
 variable "notifications" {
-  description = "Notification recipients list for every detectors"
-  type        = list
+  description = "Default notification recipients list per severity"
+  type = object({
+    critical = list(string)
+    major    = list(string)
+    minor    = list(string)
+    warning  = list(string)
+    info     = list(string)
+  })
 }
 
 variable "prefixes" {
@@ -56,34 +62,16 @@ variable "status_check_disabled_warning" {
   default     = null
 }
 
-variable "status_check_disabled_unknown" {
-  description = "Disable unknown alerting rule for status_check detector"
+variable "status_check_disabled_major" {
+  description = "Disable major alerting rule for status_check detector"
   type        = bool
   default     = null
 }
 
 variable "status_check_notifications" {
-  description = "Notification recipients list for every alerting rules of status_check detector"
-  type        = list
-  default     = []
-}
-
-variable "status_check_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of status_check detector"
-  type        = list
-  default     = []
-}
-
-variable "status_check_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of status_check detector"
-  type        = list
-  default     = []
-}
-
-variable "status_check_notifications_unknown" {
-  description = "Notification recipients list for unknown alerting rule of status_check detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for status_check detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "status_check_aggregation_function" {
@@ -103,3 +91,4 @@ variable "status_check_lasting_duration_seconds" {
   type        = string
   default     = "900"
 }
+

@@ -12,7 +12,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.messages_ready_disabled_critical, var.messages_ready_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.messages_ready_notifications_critical, var.messages_ready_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.messages_ready_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
@@ -21,7 +21,7 @@ EOF
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.messages_ready_disabled_warning, var.messages_ready_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.messages_ready_notifications_warning, var.messages_ready_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.messages_ready_notifications, "warning", []), var.notifications.warning)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -40,7 +40,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.messages_unacknowledged_disabled_critical, var.messages_unacknowledged_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.messages_unacknowledged_notifications_critical, var.messages_unacknowledged_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.messages_unacknowledged_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
@@ -49,7 +49,7 @@ EOF
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.messages_unacknowledged_disabled_warning, var.messages_unacknowledged_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.messages_unacknowledged_notifications_warning, var.messages_unacknowledged_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.messages_unacknowledged_notifications, "warning", []), var.notifications.warning)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -69,7 +69,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.messages_ack_rate_disabled_critical, var.messages_ack_rate_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.messages_ack_rate_notifications_critical, var.messages_ack_rate_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.messages_ack_rate_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
@@ -78,7 +78,7 @@ EOF
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.messages_ack_rate_disabled_warning, var.messages_ack_rate_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.messages_ack_rate_notifications_warning, var.messages_ack_rate_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.messages_ack_rate_notifications, "warning", []), var.notifications.warning)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -98,7 +98,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.consumer_use_disabled_critical, var.consumer_use_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.consumer_use_notifications_critical, var.consumer_use_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.consumer_use_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
@@ -107,7 +107,7 @@ EOF
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.consumer_use_disabled_warning, var.consumer_use_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.consumer_use_notifications_warning, var.consumer_use_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.consumer_use_notifications, "warning", []), var.notifications.warning)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }

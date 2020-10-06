@@ -8,8 +8,14 @@ variable "environment" {
 # SignalFx module specific
 
 variable "notifications" {
-  description = "Notification recipients list for every detectors"
-  type        = list
+  description = "Default notification recipients list per severity"
+  type = object({
+    critical = list(string)
+    major    = list(string)
+    minor    = list(string)
+    warning  = list(string)
+    info     = list(string)
+  })
 }
 
 variable "prefixes" {
@@ -45,9 +51,9 @@ variable "heartbeat_disabled" {
 }
 
 variable "heartbeat_notifications" {
-  description = "Notification recipients list for every alerting rules of heartbeat detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for heartbeat detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "heartbeat_timeframe" {
@@ -75,21 +81,9 @@ variable "process_state_disabled_warning" {
 }
 
 variable "process_state_notifications" {
-  description = "Notification recipients list for every alerting rules of process state detector"
-  type        = list
-  default     = []
-}
-
-variable "process_state_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of process state detector"
-  type        = list
-  default     = []
-}
-
-variable "process_state_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of process state detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for process state detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "process_state_aggregation_function" {

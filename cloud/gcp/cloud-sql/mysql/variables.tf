@@ -13,8 +13,14 @@ variable "gcp_project_id" {
 # SignalFx module specific
 
 variable "notifications" {
-  description = "Notification recipients list for every detectors"
-  type        = list
+  description = "Default notification recipients list per severity"
+  type = object({
+    critical = list(string)
+    major    = list(string)
+    minor    = list(string)
+    warning  = list(string)
+    info     = list(string)
+  })
 }
 
 variable "prefixes" {
@@ -64,21 +70,9 @@ variable "replication_lag_disabled_warning" {
 }
 
 variable "replication_lag_notifications" {
-  description = "Notification recipients list for every alerting rules of replication_lag detector"
-  type        = list
-  default     = []
-}
-
-variable "replication_lag_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of replication_lag detector"
-  type        = list
-  default     = []
-}
-
-variable "replication_lag_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of replication_lag detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for replication_lag detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "replication_lag_aggregation_function" {

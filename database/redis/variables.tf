@@ -8,8 +8,14 @@ variable "environment" {
 # SignalFx module specific
 
 variable "notifications" {
-  description = "Notification recipients list for every detectors"
-  type        = list
+  description = "Default notification recipients list per severity"
+  type = object({
+    critical = list(string)
+    major    = list(string)
+    minor    = list(string)
+    warning  = list(string)
+    info     = list(string)
+  })
 }
 
 variable "prefixes" {
@@ -45,9 +51,9 @@ variable "heartbeat_disabled" {
 }
 
 variable "heartbeat_notifications" {
-  description = "Notification recipients list for every alerting rules of heartbeat detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for heartbeat detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "heartbeat_timeframe" {
@@ -77,21 +83,9 @@ variable "evicted_keys_disabled_warning" {
 }
 
 variable "evicted_keys_notifications" {
-  description = "Notification recipients list for every alerting rules of evicted_keys detector"
-  type        = list
-  default     = []
-}
-
-variable "evicted_keys_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of evicted_keys detector"
-  type        = list
-  default     = []
-}
-
-variable "evicted_keys_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of evicted_keys detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for evicted_keys detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "evicted_keys_aggregation_function" {
@@ -139,21 +133,9 @@ variable "expirations_disabled_warning" {
 }
 
 variable "expirations_notifications" {
-  description = "Notification recipients list for every alerting rules of expirations detector"
-  type        = list
-  default     = []
-}
-
-variable "expirations_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of expirations detector"
-  type        = list
-  default     = []
-}
-
-variable "expirations_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of expirations detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for expirations detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "expirations_aggregation_function" {
@@ -201,21 +183,9 @@ variable "blocked_clients_disabled_minor" {
 }
 
 variable "blocked_clients_notifications" {
-  description = "Notification recipients list for every alerting rules of blocked_clients detector"
-  type        = list
-  default     = []
-}
-
-variable "blocked_clients_notifications_minor" {
-  description = "Notification recipients list for minor alerting rule of blocked_clients detector"
-  type        = list
-  default     = []
-}
-
-variable "blocked_clients_notifications_major" {
-  description = "Notification recipients list for major alerting rule of blocked_clients detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for blocked_clients detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "blocked_clients_aggregation_function" {
@@ -251,9 +221,9 @@ variable "keyspace_full_disabled" {
 }
 
 variable "keyspace_full_notifications" {
-  description = "Notification recipients list for every alerting rules of keyspace_full detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for keyspace_full detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "keyspace_full_aggregation_function" {
@@ -289,21 +259,9 @@ variable "memory_used_max_disabled_warning" {
 }
 
 variable "memory_used_max_notifications" {
-  description = "Notification recipients list for every alerting rules of memory_used_max detector"
-  type        = list
-  default     = []
-}
-
-variable "memory_used_max_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of memory_used_max detector"
-  type        = list
-  default     = []
-}
-
-variable "memory_used_max_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of memory_used_max detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for memory_used_max detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "memory_used_max_aggregation_function" {
@@ -351,21 +309,9 @@ variable "memory_used_total_disabled_warning" {
 }
 
 variable "memory_used_total_notifications" {
-  description = "Notification recipients list for every alerting rules of memory_used_total detector"
-  type        = list
-  default     = []
-}
-
-variable "memory_used_total_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of memory_used_total detector"
-  type        = list
-  default     = []
-}
-
-variable "memory_used_total_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of memory_used_total detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for memory_used_total detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "memory_used_total_aggregation_function" {
@@ -413,21 +359,9 @@ variable "memory_frag_high_disabled_warning" {
 }
 
 variable "memory_frag_high_notifications" {
-  description = "Notification recipients list for every alerting rules of memory_frag_high detector"
-  type        = list
-  default     = []
-}
-
-variable "memory_frag_high_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of memory_frag_high detector"
-  type        = list
-  default     = []
-}
-
-variable "memory_frag_high_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of memory_frag_high detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for memory_frag_high detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "memory_frag_high_aggregation_function" {
@@ -475,21 +409,9 @@ variable "memory_frag_low_disabled_warning" {
 }
 
 variable "memory_frag_low_notifications" {
-  description = "Notification recipients list for every alerting rules of memory_frag_low detector"
-  type        = list
-  default     = []
-}
-
-variable "memory_frag_low_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of memory_frag_low detector"
-  type        = list
-  default     = []
-}
-
-variable "memory_frag_low_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of memory_frag_low detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for memory_frag_low detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "memory_frag_low_aggregation_function" {
@@ -537,21 +459,9 @@ variable "rejected_connections_disabled_warning" {
 }
 
 variable "rejected_connections_notifications" {
-  description = "Notification recipients list for every alerting rules of rejected_connections detector"
-  type        = list
-  default     = []
-}
-
-variable "rejected_connections_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of rejected_connections detector"
-  type        = list
-  default     = []
-}
-
-variable "rejected_connections_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of rejected_connections detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for rejected_connections detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "rejected_connections_aggregation_function" {
@@ -599,21 +509,9 @@ variable "hitrate_disabled_warning" {
 }
 
 variable "hitrate_notifications" {
-  description = "Notification recipients list for every alerting rules of hitrate detector"
-  type        = list
-  default     = []
-}
-
-variable "hitrate_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of hitrate detector"
-  type        = list
-  default     = []
-}
-
-variable "hitrate_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of hitrate detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for hitrate detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "hitrate_aggregation_function" {

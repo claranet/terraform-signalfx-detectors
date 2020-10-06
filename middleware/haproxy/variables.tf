@@ -8,8 +8,14 @@ variable "environment" {
 # SignalFx module specific
 
 variable "notifications" {
-  description = "Notification recipients list for every detectors"
-  type        = list
+  description = "Default notification recipients list per severity"
+  type = object({
+    critical = list(string)
+    major    = list(string)
+    minor    = list(string)
+    warning  = list(string)
+    info     = list(string)
+  })
 }
 
 variable "prefixes" {
@@ -45,9 +51,9 @@ variable "heartbeat_disabled" {
 }
 
 variable "heartbeat_notifications" {
-  description = "Notification recipients list for every alerting rules of heartbeat detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for heartbeat detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "heartbeat_timeframe" {
@@ -69,15 +75,9 @@ variable "server_status_disabled_critical" {
 }
 
 variable "server_status_notifications" {
-  description = "Notification recipients list for every alerting rules of server status detector"
-  type        = list
-  default     = []
-}
-
-variable "server_status_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of server status detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for server status detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "server_status_aggregation_function" {
@@ -105,15 +105,9 @@ variable "backend_status_disabled_critical" {
 }
 
 variable "backend_status_notifications" {
-  description = "Notification recipients list for every alerting rules of backend status detector"
-  type        = list
-  default     = []
-}
-
-variable "backend_status_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of backend status detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for backend status detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "backend_status_aggregation_function" {
@@ -147,21 +141,9 @@ variable "session_limit_disabled_critical" {
 }
 
 variable "session_limit_notifications" {
-  description = "Notification recipients list for every alerting rules of session limit detector"
-  type        = list
-  default     = []
-}
-
-variable "session_limit_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of session limit detector"
-  type        = list
-  default     = []
-}
-
-variable "session_limit_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of session limit detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for session limit detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "session_limit_aggregation_function" {
@@ -207,21 +189,9 @@ variable "http_5xx_response_disabled_critical" {
 }
 
 variable "http_5xx_response_notifications" {
-  description = "Notification recipients list for every alerting rules of http_5xx_response detector"
-  type        = list
-  default     = []
-}
-
-variable "http_5xx_response_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of http_5xx_response detector"
-  type        = list
-  default     = []
-}
-
-variable "http_5xx_response_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of http_5xx_response detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for http_5xx_response detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "http_5xx_response_aggregation_function" {
@@ -267,21 +237,9 @@ variable "http_4xx_response_disabled_critical" {
 }
 
 variable "http_4xx_response_notifications" {
-  description = "Notification recipients list for every alerting rules of http_4xx_response detector"
-  type        = list
-  default     = []
-}
-
-variable "http_4xx_response_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of http_4xx_response detector"
-  type        = list
-  default     = []
-}
-
-variable "http_4xx_response_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of http_4xx_response detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for http_4xx_response detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "http_4xx_response_aggregation_function" {

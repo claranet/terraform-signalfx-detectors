@@ -8,8 +8,14 @@ variable "environment" {
 # SignalFx module specific
 
 variable "notifications" {
-  description = "Notification recipients list for every detectors"
-  type        = list
+  description = "Default notification recipients list per severity"
+  type = object({
+    critical = list(string)
+    major    = list(string)
+    minor    = list(string)
+    warning  = list(string)
+    info     = list(string)
+  })
 }
 
 variable "prefixes" {
@@ -45,9 +51,9 @@ variable "heartbeat_disabled" {
 }
 
 variable "heartbeat_notifications" {
-  description = "Notification recipients list for every alerting rules of heartbeat detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for heartbeat detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "heartbeat_timeframe" {
@@ -77,21 +83,9 @@ variable "dns_query_time_disabled_warning" {
 }
 
 variable "dns_query_time_notifications" {
-  description = "Notification recipients list for every alerting rules of dns_query_time detector"
-  type        = list
-  default     = []
-}
-
-variable "dns_query_time_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of dns_query_time detector"
-  type        = list
-  default     = []
-}
-
-variable "dns_query_time_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of dns_query_time detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for dns_query_time detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "dns_query_time_aggregation_function" {
@@ -133,15 +127,9 @@ variable "dns_result_code_disabled_critical" {
 }
 
 variable "dns_result_code_notifications" {
-  description = "Notification recipients list for every alerting rules of dns_result_code detector"
-  type        = list
-  default     = []
-}
-
-variable "dns_result_code_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of dns_result_code detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for dns_result_code detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "dns_result_code_aggregation_function" {

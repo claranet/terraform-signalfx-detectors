@@ -8,8 +8,14 @@ variable "environment" {
 # SignalFx module specific
 
 variable "notifications" {
-  description = "Notification recipients list for every detectors"
-  type        = list(string)
+  description = "Default notification recipients list per severity"
+  type = object({
+    critical = list(string)
+    major    = list(string)
+    minor    = list(string)
+    warning  = list(string)
+    info     = list(string)
+  })
 }
 
 variable "prefixes" {
@@ -45,9 +51,9 @@ variable "heartbeat_disabled" {
 }
 
 variable "heartbeat_notifications" {
-  description = "Notification recipients list for every alerting rules of heartbeat detector"
-  type        = list(string)
-  default     = []
+  description = "Notification recipients list per severity overridden for heartbeat detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "heartbeat_timeframe" {
@@ -77,21 +83,9 @@ variable "evictedkeys_disabled_warning" {
 }
 
 variable "evictedkeys_notifications" {
-  description = "Notification recipients list for every alerting rules of evictedkeys detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "evictedkeys_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of evictedkeys detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "evictedkeys_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of evictedkeys detector"
-  type        = list(string)
-  default     = []
+  description = "Notification recipients list per severity overridden for evictedkeys detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "evictedkeys_aggregation_function" {
@@ -139,21 +133,9 @@ variable "percent_processor_time_disabled_warning" {
 }
 
 variable "percent_processor_time_notifications" {
-  description = "Notification recipients list for every alerting rules of percent_processor_time detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "percent_processor_time_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of percent_processor_time detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "percent_processor_time_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of percent_processor_time detector"
-  type        = list(string)
-  default     = []
+  description = "Notification recipients list per severity overridden for percent_processor_time detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "percent_processor_time_aggregation_function" {
@@ -201,21 +183,9 @@ variable "load_disabled_warning" {
 }
 
 variable "load_notifications" {
-  description = "Notification recipients list for every alerting rules of load detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "load_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of load detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "load_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of load detector"
-  type        = list(string)
-  default     = []
+  description = "Notification recipients list per severity overridden for load detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "load_aggregation_function" {

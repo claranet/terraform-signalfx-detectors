@@ -8,8 +8,14 @@ variable "environment" {
 # SignalFx Module specific
 
 variable "notifications" {
-  description = "Notification recipients list for every detectors"
-  type        = list
+  description = "Default notification recipients list per severity"
+  type = object({
+    critical = list(string)
+    major    = list(string)
+    minor    = list(string)
+    warning  = list(string)
+    info     = list(string)
+  })
 }
 
 variable "prefixes" {
@@ -57,21 +63,9 @@ variable "processes_disabled_warning" {
 }
 
 variable "processes_notifications" {
-  description = "Notification recipients list for every alerting rules of processes detector"
-  type        = list
-  default     = []
-}
-
-variable "processes_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of processes detector"
-  type        = list
-  default     = []
-}
-
-variable "processes_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of processes detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for processes detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "processes_aggregation_function" {

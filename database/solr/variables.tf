@@ -8,8 +8,14 @@ variable "environment" {
 # SignalFx module specific
 
 variable "notifications" {
-  description = "Notification recipients list for every detectors"
-  type        = list
+  description = "Default notification recipients list per severity"
+  type = object({
+    critical = list(string)
+    major    = list(string)
+    minor    = list(string)
+    warning  = list(string)
+    info     = list(string)
+  })
 }
 
 variable "prefixes" {
@@ -45,9 +51,9 @@ variable "heartbeat_disabled" {
 }
 
 variable "heartbeat_notifications" {
-  description = "Notification recipients list for every alerting rules of heartbeat detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for heartbeat detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "heartbeat_timeframe" {
@@ -77,21 +83,9 @@ variable "errors_disabled_warning" {
 }
 
 variable "errors_notifications" {
-  description = "Notification recipients list for every alerting rules of errors detector"
-  type        = list
-  default     = []
-}
-
-variable "errors_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of errors detector"
-  type        = list
-  default     = []
-}
-
-variable "errors_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of errors detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for errors detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "errors_aggregation_function" {
@@ -139,21 +133,9 @@ variable "searcher_warmup_time_disabled_warning" {
 }
 
 variable "searcher_warmup_time_notifications" {
-  description = "Notification recipients list for every alerting rules of searcher_warmup_time detector"
-  type        = list
-  default     = []
-}
-
-variable "searcher_warmup_time_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of searcher_warmup_time detector"
-  type        = list
-  default     = []
-}
-
-variable "searcher_warmup_time_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of searcher_warmup_time detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for searcher_warmup_time detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "searcher_warmup_time_aggregation_function" {

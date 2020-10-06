@@ -27,8 +27,14 @@ variable "multiplier" {
 # SignalFx module specific
 
 variable "notifications" {
-  description = "Notification recipients list for every detectors"
-  type        = list
+  description = "Default notification recipients list per severity"
+  type = object({
+    critical = list(string)
+    major    = list(string)
+    minor    = list(string)
+    warning  = list(string)
+    info     = list(string)
+  })
 }
 
 variable "prefixes" {
@@ -54,9 +60,9 @@ variable "hosts_limit_disabled" {
 }
 
 variable "hosts_limit_notifications" {
-  description = "Notification recipients list for every alerting rules of hosts_limit detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for hosts_limit detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "hosts_limit_transformation_function" {
@@ -74,9 +80,9 @@ variable "containers_limit_disabled" {
 }
 
 variable "containers_limit_notifications" {
-  description = "Notification recipients list for every alerting rules of containers_limit detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for containers_limit detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "containers_limit_transformation_function" {
@@ -94,9 +100,9 @@ variable "custom_metrics_limit_disabled" {
 }
 
 variable "custom_metrics_limit_notifications" {
-  description = "Notification recipients list for every alerting rules of custom_metrics_limit detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for custom_metrics_limit detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "custom_metrics_limit_transformation_function" {
@@ -114,9 +120,9 @@ variable "containers_ratio_disabled" {
 }
 
 variable "containers_ratio_notifications" {
-  description = "Notification recipients list for every alerting rules of containers_ratio detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for containers_ratio detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "containers_ratio_transformation_function" {
@@ -140,9 +146,9 @@ variable "custom_metrics_ratio_disabled" {
 }
 
 variable "custom_metrics_ratio_notifications" {
-  description = "Notification recipients list for every alerting rules of custom_metrics_ratio detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for custom_metrics_ratio detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "custom_metrics_ratio_transformation_function" {

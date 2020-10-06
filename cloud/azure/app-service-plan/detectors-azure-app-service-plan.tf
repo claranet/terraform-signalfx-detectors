@@ -13,7 +13,7 @@ resource "signalfx_detector" "heartbeat" {
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.heartbeat_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} on {{{dimensions}}}"
   }
 }
@@ -33,7 +33,7 @@ resource "signalfx_detector" "cpu_percentage" {
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.cpu_percentage_disabled_critical, var.cpu_percentage_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.cpu_percentage_notifications_critical, var.cpu_percentage_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.cpu_percentage_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
@@ -42,7 +42,7 @@ resource "signalfx_detector" "cpu_percentage" {
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.cpu_percentage_disabled_warning, var.cpu_percentage_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.cpu_percentage_notifications_warning, var.cpu_percentage_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.cpu_percentage_notifications, "warning", []), var.notifications.warning)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -62,7 +62,7 @@ resource "signalfx_detector" "memory_percentage" {
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.memory_percentage_disabled_critical, var.memory_percentage_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.memory_percentage_notifications_critical, var.memory_percentage_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.memory_percentage_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
@@ -71,7 +71,7 @@ resource "signalfx_detector" "memory_percentage" {
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.memory_percentage_disabled_warning, var.memory_percentage_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.memory_percentage_notifications_warning, var.memory_percentage_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.memory_percentage_notifications, "warning", []), var.notifications.warning)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }

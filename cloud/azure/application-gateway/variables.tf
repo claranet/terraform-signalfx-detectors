@@ -8,8 +8,14 @@ variable "environment" {
 # SignalFx module specific
 
 variable "notifications" {
-  description = "Notification recipients list for every detectors"
-  type        = list(string)
+  description = "Default notification recipients list per severity"
+  type = object({
+    critical = list(string)
+    major    = list(string)
+    minor    = list(string)
+    warning  = list(string)
+    info     = list(string)
+  })
 }
 
 variable "prefixes" {
@@ -45,9 +51,9 @@ variable "heartbeat_disabled" {
 }
 
 variable "heartbeat_notifications" {
-  description = "Notification recipients list for every alerting rules of heartbeat detector"
-  type        = list(string)
-  default     = []
+  description = "Notification recipients list per severity overridden for heartbeat detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "heartbeat_timeframe" {
@@ -71,15 +77,9 @@ variable "total_requests_disabled_critical" {
 }
 
 variable "total_requests_notifications" {
-  description = "Notification recipients list for every alerting rules of total_requests detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "total_requests_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of total_requests detector"
-  type        = list(string)
-  default     = []
+  description = "Notification recipients list per severity overridden for total_requests detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "total_requests_aggregation_function" {
@@ -115,21 +115,9 @@ variable "backend_connect_time_disabled_warning" {
 }
 
 variable "backend_connect_time_notifications" {
-  description = "Notification recipients list for every alerting rules of backend_connect_time detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "backend_connect_time_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of backend_connect_time detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "backend_connect_time_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of backend_connect_time detector"
-  type        = list(string)
-  default     = []
+  description = "Notification recipients list per severity overridden for backend_connect_time detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "backend_connect_time_aggregation_function" {
@@ -177,21 +165,9 @@ variable "failed_requests_disabled_warning" {
 }
 
 variable "failed_requests_notifications" {
-  description = "Notification recipients list for every alerting rules of failed_requests detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "failed_requests_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of failed_requests detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "failed_requests_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of failed_requests detector"
-  type        = list(string)
-  default     = []
+  description = "Notification recipients list per severity overridden for failed_requests detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "failed_requests_aggregation_function" {
@@ -239,21 +215,9 @@ variable "unhealthy_host_ratio_disabled_warning" {
 }
 
 variable "unhealthy_host_ratio_notifications" {
-  description = "Notification recipients list for every alerting rules of unhealthy_host_ratio detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "unhealthy_host_ratio_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of unhealthy_host_ratio detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "unhealthy_host_ratio_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of unhealthy_host_ratio detector"
-  type        = list(string)
-  default     = []
+  description = "Notification recipients list per severity overridden for unhealthy_host_ratio detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "unhealthy_host_ratio_aggregation_function" {
@@ -301,21 +265,9 @@ variable "http_4xx_errors_disabled_warning" {
 }
 
 variable "http_4xx_errors_notifications" {
-  description = "Notification recipients list for every alerting rules of http_4xx_errors detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "http_4xx_errors_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of http_4xx_errors detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "http_4xx_errors_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of http_4xx_errors detector"
-  type        = list(string)
-  default     = []
+  description = "Notification recipients list per severity overridden for http_4xx_errors detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "http_4xx_errors_aggregation_function" {
@@ -363,21 +315,9 @@ variable "http_5xx_errors_disabled_warning" {
 }
 
 variable "http_5xx_errors_notifications" {
-  description = "Notification recipients list for every alerting rules of http_5xx_errors detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "http_5xx_errors_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of http_5xx_errors detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "http_5xx_errors_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of http_5xx_errors detector"
-  type        = list(string)
-  default     = []
+  description = "Notification recipients list per severity overridden for http_5xx_errors detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "http_5xx_errors_aggregation_function" {
@@ -425,21 +365,9 @@ variable "backend_http_4xx_errors_disabled_warning" {
 }
 
 variable "backend_http_4xx_errors_notifications" {
-  description = "Notification recipients list for every alerting rules of backend_http_4xx_errors detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "backend_http_4xx_errors_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of backend_http_4xx_errors detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "backend_http_4xx_errors_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of backend_http_4xx_errors detector"
-  type        = list(string)
-  default     = []
+  description = "Notification recipients list per severity overridden for backend_http_4xx_errors detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "backend_http_4xx_errors_aggregation_function" {
@@ -487,21 +415,9 @@ variable "backend_http_5xx_errors_disabled_warning" {
 }
 
 variable "backend_http_5xx_errors_notifications" {
-  description = "Notification recipients list for every alerting rules of backend_http_5xx_errors detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "backend_http_5xx_errors_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of backend_http_5xx_errors detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "backend_http_5xx_errors_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of backend_http_5xx_errors detector"
-  type        = list(string)
-  default     = []
+  description = "Notification recipients list per severity overridden for backend_http_5xx_errors detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "backend_http_5xx_errors_aggregation_function" {

@@ -8,8 +8,14 @@ variable "environment" {
 # SignalFx Module specific
 
 variable "notifications" {
-  description = "Notification recipients list for every detectors"
-  type        = list
+  description = "Default notification recipients list per severity"
+  type = object({
+    critical = list(string)
+    major    = list(string)
+    minor    = list(string)
+    warning  = list(string)
+    info     = list(string)
+  })
 }
 
 variable "prefixes" {
@@ -45,9 +51,9 @@ variable "heartbeat_disabled" {
 }
 
 variable "heartbeat_notifications" {
-  description = "Notification recipients list for every alerting rules of heartbeat detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for heartbeat detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "heartbeat_timeframe" {
@@ -65,15 +71,9 @@ variable "ntp_disabled" {
 }
 
 variable "ntp_notifications" {
-  description = "Notification recipients list for every alerting rules of ntp detector"
-  type        = list
-  default     = []
-}
-
-variable "ntp_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of ntp detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for ntp detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "ntp_aggregation_function" {

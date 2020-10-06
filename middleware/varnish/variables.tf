@@ -8,8 +8,14 @@ variable "environment" {
 # SignalFx module specific
 
 variable "notifications" {
-  description = "Notification recipients list for every detectors"
-  type        = list
+  description = "Default notification recipients list per severity"
+  type = object({
+    critical = list(string)
+    major    = list(string)
+    minor    = list(string)
+    warning  = list(string)
+    info     = list(string)
+  })
 }
 
 variable "prefixes" {
@@ -42,8 +48,9 @@ variable "varnish_backend_failed_disabled" {
 }
 
 variable "varnish_backend_failed_notifications" {
-  type    = list
-  default = []
+  description = "Notification recipients list per severity overridden for backend_failed detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "varnish_threads_number_disabled" {
@@ -52,8 +59,9 @@ variable "varnish_threads_number_disabled" {
 }
 
 variable "varnish_threads_number_notifications" {
-  type    = list
-  default = []
+  description = "Notification recipients list per severity overridden for threads_number detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "varnish_session_dropped_disabled" {
@@ -62,48 +70,57 @@ variable "varnish_session_dropped_disabled" {
 }
 
 variable "varnish_session_dropped_notifications" {
-  type    = list
-  default = []
+  description = "Notification recipients list per severity overridden for session_dropped detector"
+  type        = map(list(string))
+  default     = {}
+}
+
+variable "varnish_cache_hit_rate_disabled" {
+  description = "Disable all alerting rules for cache_hit_rate detector"
+  type        = bool
+  default     = null
 }
 
 variable "varnish_cache_hit_rate_disabled_warning" {
-  type    = bool
-  default = null
-}
-
-variable "varnish_cache_hit_rate_notifications_warning" {
-  type    = list
-  default = []
+  description = "Disable warning alerting rule for cache_hit_rate detector"
+  type        = bool
+  default     = null
 }
 
 variable "varnish_cache_hit_rate_disabled_major" {
-  type    = bool
-  default = null
+  description = "Disable major alerting rule for cache_hit_rate detector"
+  type        = bool
+  default     = null
 }
 
-variable "varnish_cache_hit_rate_notifications_major" {
-  type    = list
-  default = []
+variable "varnish_cache_hit_rate_notifications" {
+  description = "Notification recipients list per severity overridden for cache_hit_rate detector"
+  type        = map(list(string))
+  default     = {}
 }
 
-variable "varnish_memory_usage_disabled_warning" {
-  type    = bool
-  default = null
-}
-
-variable "varnish_memory_usage_notifications_warning" {
-  type    = list
-  default = []
+variable "varnish_memory_usage_disabled" {
+  description = "Disable all alerting rules for memory_usage detector"
+  type        = bool
+  default     = null
 }
 
 variable "varnish_memory_usage_disabled_critical" {
-  type    = bool
-  default = null
+  description = "Disable critical alerting rule for memory_usage detector"
+  type        = bool
+  default     = null
 }
 
-variable "varnish_memory_usage_notifications_critical" {
-  type    = list
-  default = []
+variable "varnish_memory_usage_disabled_warning" {
+  description = "Disable warning alerting rule for memory_usage detector"
+  type        = bool
+  default     = null
+}
+
+variable "varnish_memory_usage_notifications" {
+  description = "Notification recipients list per severity overridden for memory_usage detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 # Varnish detectors specific
@@ -211,3 +228,4 @@ variable "varnish_memory_usage_threshold_critical" {
   type        = number
   default     = 90
 }
+

@@ -8,8 +8,14 @@ variable "environment" {
 # SignalFx module specific
 
 variable "notifications" {
-  description = "Notification recipients list for every detectors"
-  type        = list
+  description = "Default notification recipients list per severity"
+  type = object({
+    critical = list(string)
+    major    = list(string)
+    minor    = list(string)
+    warning  = list(string)
+    info     = list(string)
+  })
 }
 
 variable "prefixes" {
@@ -45,9 +51,9 @@ variable "heartbeat_disabled" {
 }
 
 variable "heartbeat_notifications" {
-  description = "Notification recipients list for every alerting rules of heartbeat detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for heartbeat detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "heartbeat_timeframe" {
@@ -71,15 +77,9 @@ variable "zookeeper_health_disabled_critical" {
 }
 
 variable "zookeeper_health_notifications" {
-  description = "Notification recipients list for every alerting rules of zookeeper_health detector"
-  type        = list
-  default     = []
-}
-
-variable "zookeeper_health_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of zookeeper_health detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for zookeeper_health detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "zookeeper_health_aggregation_function" {
@@ -115,21 +115,9 @@ variable "zookeeper_latency_disabled_warning" {
 }
 
 variable "zookeeper_latency_notifications" {
-  description = "Notification recipients list for every alerting rules of zookeeper_latency detector"
-  type        = list
-  default     = []
-}
-
-variable "zookeeper_latency_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of zookeeper_latency detector"
-  type        = list
-  default     = []
-}
-
-variable "zookeeper_latency_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of zookeeper_latency detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for zookeeper_latency detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "zookeeper_latency_aggregation_function" {
@@ -177,21 +165,9 @@ variable "file_descriptors_disabled_warning" {
 }
 
 variable "file_descriptors_notifications" {
-  description = "Notification recipients list for every alerting rules of file_descriptors detector"
-  type        = list
-  default     = []
-}
-
-variable "file_descriptors_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of file_descriptors detector"
-  type        = list
-  default     = []
-}
-
-variable "file_descriptors_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of file_descriptors detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for file_descriptors detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "file_descriptors_aggregation_function" {
