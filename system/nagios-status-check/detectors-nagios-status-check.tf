@@ -13,7 +13,7 @@ resource "signalfx_detector" "status_check" {
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.status_check_disabled_major, var.status_check_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.status_check_notifications_major, var.status_check_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.status_check_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
@@ -22,7 +22,7 @@ resource "signalfx_detector" "status_check" {
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.status_check_disabled_critical, var.status_check_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.status_check_notifications_critical, var.status_check_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.status_check_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
@@ -31,7 +31,7 @@ resource "signalfx_detector" "status_check" {
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.status_check_disabled_warning, var.status_check_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.status_check_notifications_warning, var.status_check_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.status_check_notifications, "warning", []), var.notifications.warning)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }

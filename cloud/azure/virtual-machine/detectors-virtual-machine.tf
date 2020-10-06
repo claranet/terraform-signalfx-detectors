@@ -13,7 +13,7 @@ resource "signalfx_detector" "heartbeat" {
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.heartbeat_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} on {{{dimensions}}}"
   }
 }
@@ -33,7 +33,7 @@ resource "signalfx_detector" "cpu_usage" {
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.cpu_usage_disabled_critical, var.cpu_usage_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.cpu_usage_notifications_critical, var.cpu_usage_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.cpu_usage_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
@@ -42,7 +42,7 @@ resource "signalfx_detector" "cpu_usage" {
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.cpu_usage_disabled_warning, var.cpu_usage_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.cpu_usage_notifications_warning, var.cpu_usage_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.cpu_usage_notifications, "warning", []), var.notifications.warning)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -64,7 +64,7 @@ resource "signalfx_detector" "credit_cpu" {
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.credit_cpu_disabled_critical, var.credit_cpu_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.credit_cpu_notifications_critical, var.credit_cpu_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.credit_cpu_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
@@ -73,7 +73,7 @@ resource "signalfx_detector" "credit_cpu" {
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.credit_cpu_disabled_warning, var.credit_cpu_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.credit_cpu_notifications_warning, var.credit_cpu_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.credit_cpu_notifications, "warning", []), var.notifications.warning)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }

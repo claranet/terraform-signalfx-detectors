@@ -13,7 +13,7 @@ resource "signalfx_detector" "heartbeat" {
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.heartbeat_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} on {{{dimensions}}}"
   }
 }
@@ -33,7 +33,7 @@ resource "signalfx_detector" "cpu" {
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.cpu_disabled_critical, var.cpu_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.cpu_notifications_critical, var.cpu_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.cpu_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
@@ -42,7 +42,7 @@ resource "signalfx_detector" "cpu" {
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.cpu_disabled_warning, var.cpu_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.cpu_notifications_warning, var.cpu_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.cpu_notifications, "warning", []), var.notifications.warning)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -62,7 +62,7 @@ resource "signalfx_detector" "free_space" {
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.free_space_disabled_critical, var.free_space_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.free_space_notifications_critical, var.free_space_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.free_space_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
@@ -71,7 +71,7 @@ resource "signalfx_detector" "free_space" {
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.free_space_disabled_warning, var.free_space_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.free_space_notifications_warning, var.free_space_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.free_space_notifications, "warning", []), var.notifications.warning)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -91,7 +91,7 @@ resource "signalfx_detector" "dtu_consumption" {
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.dtu_consumption_disabled_critical, var.dtu_consumption_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.dtu_consumption_notifications_critical, var.dtu_consumption_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.dtu_consumption_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
@@ -100,7 +100,7 @@ resource "signalfx_detector" "dtu_consumption" {
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.dtu_consumption_disabled_warning, var.dtu_consumption_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.dtu_consumption_notifications_warning, var.dtu_consumption_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.dtu_consumption_notifications, "warning", []), var.notifications.warning)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }

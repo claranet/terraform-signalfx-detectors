@@ -8,8 +8,14 @@ variable "environment" {
 # SignalFx module specific
 
 variable "notifications" {
-  description = "Notification recipients list for every detectors"
-  type        = list
+  description = "Default notification recipients list per severity"
+  type = object({
+    critical = list(string)
+    major    = list(string)
+    minor    = list(string)
+    warning  = list(string)
+    info     = list(string)
+  })
 }
 
 variable "prefixes" {
@@ -65,21 +71,9 @@ variable "ingress_5xx_disabled_warning" {
 }
 
 variable "ingress_5xx_notifications" {
-  description = "Notification recipients list for every alerting rules of ingress_5xx detector"
-  type        = list
-  default     = []
-}
-
-variable "ingress_5xx_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of ingress_5xx detector"
-  type        = list
-  default     = []
-}
-
-variable "ingress_5xx_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of ingress_5xx detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for ingress_5xx detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "ingress_5xx_aggregation_function" {
@@ -141,21 +135,9 @@ variable "ingress_4xx_disabled_warning" {
 }
 
 variable "ingress_4xx_notifications" {
-  description = "Notification recipients list for every alerting rules of ingress_4xx detector"
-  type        = list
-  default     = []
-}
-
-variable "ingress_4xx_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of ingress_4xx detector"
-  type        = list
-  default     = []
-}
-
-variable "ingress_4xx_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of ingress_4xx detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for ingress_4xx detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "ingress_4xx_aggregation_function" {
@@ -217,21 +199,9 @@ variable "ingress_latency_disabled_warning" {
 }
 
 variable "ingress_latency_notifications" {
-  description = "Notification recipients list for every alerting rules of ingress_latency detector"
-  type        = list
-  default     = []
-}
-
-variable "ingress_latency_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of ingress_latency detector"
-  type        = list
-  default     = []
-}
-
-variable "ingress_latency_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of ingress_latency detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for ingress_latency detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "ingress_latency_aggregation_function" {

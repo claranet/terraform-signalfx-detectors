@@ -13,7 +13,7 @@ resource "signalfx_detector" "heartbeat" {
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.heartbeat_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} on {{{dimensions}}}"
   }
 }
@@ -32,7 +32,7 @@ resource "signalfx_detector" "total_requests" {
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.total_requests_disabled_critical, var.total_requests_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.total_requests_notifications_critical, var.total_requests_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.total_requests_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
@@ -53,7 +53,7 @@ resource "signalfx_detector" "backend_connect_time" {
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.backend_connect_time_disabled_critical, var.backend_connect_time_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.backend_connect_time_notifications_critical, var.backend_connect_time_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.backend_connect_time_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
@@ -62,7 +62,7 @@ resource "signalfx_detector" "backend_connect_time" {
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.backend_connect_time_disabled_warning, var.backend_connect_time_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.backend_connect_time_notifications_warning, var.backend_connect_time_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.backend_connect_time_notifications, "warning", []), var.notifications.warning)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -85,7 +85,7 @@ resource "signalfx_detector" "failed_requests" {
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.failed_requests_disabled_critical, var.failed_requests_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.failed_requests_notifications_critical, var.failed_requests_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.failed_requests_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
@@ -94,7 +94,7 @@ resource "signalfx_detector" "failed_requests" {
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.failed_requests_disabled_warning, var.failed_requests_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.failed_requests_notifications_warning, var.failed_requests_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.failed_requests_notifications, "warning", []), var.notifications.warning)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -116,7 +116,7 @@ resource "signalfx_detector" "unhealthy_host_ratio" {
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.unhealthy_host_ratio_disabled_critical, var.unhealthy_host_ratio_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.unhealthy_host_ratio_notifications_critical, var.unhealthy_host_ratio_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.unhealthy_host_ratio_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
@@ -125,7 +125,7 @@ resource "signalfx_detector" "unhealthy_host_ratio" {
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.unhealthy_host_ratio_disabled_warning, var.unhealthy_host_ratio_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.unhealthy_host_ratio_notifications_warning, var.unhealthy_host_ratio_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.unhealthy_host_ratio_notifications, "warning", []), var.notifications.warning)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -147,7 +147,7 @@ resource "signalfx_detector" "http_4xx_errors" {
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.http_4xx_errors_disabled_critical, var.http_4xx_errors_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.http_4xx_errors_notifications_critical, var.http_4xx_errors_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.http_4xx_errors_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
@@ -156,7 +156,7 @@ resource "signalfx_detector" "http_4xx_errors" {
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.http_4xx_errors_disabled_warning, var.http_4xx_errors_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.http_4xx_errors_notifications_warning, var.http_4xx_errors_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.http_4xx_errors_notifications, "warning", []), var.notifications.warning)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -178,7 +178,7 @@ resource "signalfx_detector" "http_5xx_errors" {
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.http_5xx_errors_disabled_critical, var.http_5xx_errors_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.http_5xx_errors_notifications_critical, var.http_5xx_errors_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.http_5xx_errors_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
@@ -187,7 +187,7 @@ resource "signalfx_detector" "http_5xx_errors" {
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.http_5xx_errors_disabled_warning, var.http_5xx_errors_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.http_5xx_errors_notifications_warning, var.http_5xx_errors_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.http_5xx_errors_notifications, "warning", []), var.notifications.warning)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -209,7 +209,7 @@ resource "signalfx_detector" "backend_http_4xx_errors" {
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.backend_http_4xx_errors_disabled_critical, var.backend_http_4xx_errors_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.backend_http_4xx_errors_notifications_critical, var.backend_http_4xx_errors_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.backend_http_4xx_errors_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
@@ -218,7 +218,7 @@ resource "signalfx_detector" "backend_http_4xx_errors" {
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.backend_http_4xx_errors_disabled_warning, var.backend_http_4xx_errors_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.backend_http_4xx_errors_notifications_warning, var.backend_http_4xx_errors_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.backend_http_4xx_errors_notifications, "warning", []), var.notifications.warning)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -240,7 +240,7 @@ resource "signalfx_detector" "backend_http_5xx_errors" {
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.backend_http_5xx_errors_disabled_critical, var.backend_http_5xx_errors_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.backend_http_5xx_errors_notifications_critical, var.backend_http_5xx_errors_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.backend_http_5xx_errors_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
@@ -249,7 +249,7 @@ resource "signalfx_detector" "backend_http_5xx_errors" {
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.backend_http_5xx_errors_disabled_warning, var.backend_http_5xx_errors_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.backend_http_5xx_errors_notifications_warning, var.backend_http_5xx_errors_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.backend_http_5xx_errors_notifications, "warning", []), var.notifications.warning)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }

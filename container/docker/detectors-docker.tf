@@ -13,7 +13,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.heartbeat_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} on {{{dimensions}}}"
   }
 }
@@ -32,7 +32,7 @@ EOF
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.cpu_disabled_warning, var.cpu_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.cpu_notifications_warning, var.cpu_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.cpu_notifications, "warning", []), var.notifications.warning)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
@@ -41,7 +41,7 @@ EOF
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.cpu_disabled_major, var.cpu_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.cpu_notifications_major, var.cpu_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.cpu_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -62,7 +62,7 @@ EOF
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.throttling_disabled_warning, var.throttling_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.throttling_notifications_warning, var.throttling_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.throttling_notifications, "warning", []), var.notifications.warning)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
@@ -71,7 +71,7 @@ EOF
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.throttling_disabled_major, var.throttling_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.throttling_notifications_major, var.throttling_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.throttling_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -92,7 +92,7 @@ EOF
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.memory_disabled_warning, var.memory_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.memory_notifications_warning, var.memory_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.memory_notifications, "warning", []), var.notifications.warning)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
@@ -101,7 +101,7 @@ EOF
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.memory_disabled_major, var.memory_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.memory_notifications_major, var.memory_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.memory_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }

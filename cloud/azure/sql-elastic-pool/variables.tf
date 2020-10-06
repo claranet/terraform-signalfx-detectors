@@ -8,8 +8,14 @@ variable "environment" {
 # SignalFx module specific
 
 variable "notifications" {
-  description = "Notification recipients list for every detectors"
-  type        = list(string)
+  description = "Default notification recipients list per severity"
+  type = object({
+    critical = list(string)
+    major    = list(string)
+    minor    = list(string)
+    warning  = list(string)
+    info     = list(string)
+  })
 }
 
 variable "prefixes" {
@@ -45,9 +51,9 @@ variable "heartbeat_disabled" {
 }
 
 variable "heartbeat_notifications" {
-  description = "Notification recipients list for every alerting rules of heartbeat detector"
-  type        = list(string)
-  default     = []
+  description = "Notification recipients list per severity overridden for heartbeat detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "heartbeat_timeframe" {
@@ -77,21 +83,9 @@ variable "cpu_disabled_warning" {
 }
 
 variable "cpu_notifications" {
-  description = "Notification recipients list for every alerting rules of cpu detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "cpu_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of cpu detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "cpu_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of cpu detector"
-  type        = list(string)
-  default     = []
+  description = "Notification recipients list per severity overridden for cpu detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "cpu_aggregation_function" {
@@ -139,21 +133,9 @@ variable "free_space_disabled_warning" {
 }
 
 variable "free_space_notifications" {
-  description = "Notification recipients list for every alerting rules of free_space detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "free_space_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of free_space detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "free_space_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of free_space detector"
-  type        = list(string)
-  default     = []
+  description = "Notification recipients list per severity overridden for free_space detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "free_space_aggregation_function" {
@@ -201,21 +183,9 @@ variable "dtu_consumption_disabled_warning" {
 }
 
 variable "dtu_consumption_notifications" {
-  description = "Notification recipients list for every alerting rules of dtu_consumption detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "dtu_consumption_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of dtu_consumption detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "dtu_consumption_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of dtu_consumption detector"
-  type        = list(string)
-  default     = []
+  description = "Notification recipients list per severity overridden for dtu_consumption detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "dtu_consumption_aggregation_function" {

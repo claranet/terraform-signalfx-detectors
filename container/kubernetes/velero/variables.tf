@@ -8,8 +8,14 @@ variable "environment" {
 # SignalFx module specific
 
 variable "notifications" {
-  description = "Notification recipients list for every detectors"
-  type        = list
+  description = "Default notification recipients list per severity"
+  type = object({
+    critical = list(string)
+    major    = list(string)
+    minor    = list(string)
+    warning  = list(string)
+    info     = list(string)
+  })
 }
 
 variable "prefixes" {
@@ -47,9 +53,9 @@ variable "velero_scheduled_backup_missing_disabled" {
 }
 
 variable "velero_scheduled_backup_missing_notifications" {
-  description = "Notification recipients list for every alerting rules of velero_scheduled_backup_missing detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for velero_scheduled_backup_missing detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "velero_scheduled_backup_missing_aggregation_function" {
@@ -73,9 +79,9 @@ variable "velero_backup_failure_disabled" {
 }
 
 variable "velero_backup_failure_notifications" {
-  description = "Notification recipients list for every alerting rules of velero_backup_failure detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for velero_backup_failure detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "velero_backup_failure_aggregation_function" {
@@ -99,9 +105,9 @@ variable "velero_backup_partial_failure_disabled" {
 }
 
 variable "velero_backup_partial_failure_notifications" {
-  description = "Notification recipients list for every alerting rules of velero_backup_partial_failure detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for velero_backup_partial_failure detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "velero_backup_partial_failure_aggregation_function" {
@@ -125,9 +131,9 @@ variable "velero_backup_deletion_failure_disabled" {
 }
 
 variable "velero_backup_deletion_failure_notifications" {
-  description = "Notification recipients list for every alerting rules of velero_backup_deletion_failure detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for velero_backup_deletion_failure detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "velero_backup_deletion_failure_aggregation_function" {
@@ -151,9 +157,9 @@ variable "velero_volume_snapshot_failure_disabled" {
 }
 
 variable "velero_volume_snapshot_failure_notifications" {
-  description = "Notification recipients list for every alerting rules of velero_volume_snapshot_failure detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for velero_volume_snapshot_failure detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "velero_volume_snapshot_failure_aggregation_function" {

@@ -8,8 +8,14 @@ variable "environment" {
 # SignalFx module specific
 
 variable "notifications" {
-  description = "Notification recipients list for every detectors"
-  type        = list
+  description = "Default notification recipients list per severity"
+  type = object({
+    critical = list(string)
+    major    = list(string)
+    minor    = list(string)
+    warning  = list(string)
+    info     = list(string)
+  })
 }
 
 variable "prefixes" {
@@ -45,9 +51,9 @@ variable "heartbeat_disabled" {
 }
 
 variable "heartbeat_notifications" {
-  description = "Notification recipients list for every alerting rules of heartbeat detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for heartbeat detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "heartbeat_timeframe" {
@@ -71,15 +77,9 @@ variable "http_code_matched_disabled_critical" {
 }
 
 variable "http_code_matched_notifications" {
-  description = "Notification recipients list for every alerting rules of http_code_matched detector"
-  type        = list
-  default     = []
-}
-
-variable "http_code_matched_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of http_code_matched detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for http_code_matched detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "http_code_matched_aggregation_function" {
@@ -109,15 +109,9 @@ variable "http_regex_matched_disabled_critical" {
 }
 
 variable "http_regex_matched_notifications" {
-  description = "Notification recipients list for every alerting rules of http_regex_matched detector"
-  type        = list
-  default     = []
-}
-
-variable "http_regex_matched_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of http_regex_matched detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for http_regex_matched detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "http_regex_matched_aggregation_function" {
@@ -153,21 +147,9 @@ variable "http_response_time_disabled_warning" {
 }
 
 variable "http_response_time_notifications" {
-  description = "Notification recipients list for every alerting rules of http_response_time detector"
-  type        = list
-  default     = []
-}
-
-variable "http_response_time_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of http_response_time detector"
-  type        = list
-  default     = []
-}
-
-variable "http_response_time_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of http_response_time detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for http_response_time detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "http_response_time_aggregation_function" {
@@ -203,9 +185,9 @@ variable "http_content_length_disabled" {
 }
 
 variable "http_content_length_notifications" {
-  description = "Notification recipients list for every alerting rules of http_content_length detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for http_content_length detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "http_content_length_aggregation_function" {
@@ -247,21 +229,9 @@ variable "certificate_expiration_date_disabled_warning" {
 }
 
 variable "certificate_expiration_date_notifications" {
-  description = "Notification recipients list for every alerting rules of certificate_expiration_date detector"
-  type        = list
-  default     = []
-}
-
-variable "certificate_expiration_date_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of certificate_expiration_date detector"
-  type        = list
-  default     = []
-}
-
-variable "certificate_expiration_date_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of certificate_expiration_date detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for certificate_expiration_date detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "certificate_expiration_date_aggregation_function" {
@@ -303,15 +273,9 @@ variable "invalid_tls_certificate_disabled_critical" {
 }
 
 variable "invalid_tls_certificate_notifications" {
-  description = "Notification recipients list for every alerting rules of invalid_tls_certificate detector"
-  type        = list
-  default     = []
-}
-
-variable "invalid_tls_certificate_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of invalid_tls_certificate detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for invalid_tls_certificate detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "invalid_tls_certificate_aggregation_function" {

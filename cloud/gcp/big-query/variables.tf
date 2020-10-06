@@ -13,8 +13,14 @@ variable "gcp_project_id" {
 # SignalFx module specific
 
 variable "notifications" {
-  description = "Notification recipients list for every detectors"
-  type        = list
+  description = "Default notification recipients list per severity"
+  type = object({
+    critical = list(string)
+    major    = list(string)
+    minor    = list(string)
+    warning  = list(string)
+    info     = list(string)
+  })
 }
 
 variable "prefixes" {
@@ -64,21 +70,9 @@ variable "concurrent_queries_disabled_warning" {
 }
 
 variable "concurrent_queries_notifications" {
-  description = "Notification recipients list for every alerting rules of concurrent_queries detector"
-  type        = list
-  default     = []
-}
-
-variable "concurrent_queries_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of concurrent_queries detector"
-  type        = list
-  default     = []
-}
-
-variable "concurrent_queries_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of concurrent_queries detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for concurrent_queries detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "concurrent_queries_aggregation_function" {
@@ -144,21 +138,9 @@ variable "execution_time_disabled_warning" {
 }
 
 variable "execution_time_notifications" {
-  description = "Notification recipients list for every alerting rules of execution_time detector"
-  type        = list
-  default     = []
-}
-
-variable "execution_time_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of execution_time detector"
-  type        = list
-  default     = []
-}
-
-variable "execution_time_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of execution_time detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for execution_time detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "execution_time_aggregation_function" {
@@ -224,21 +206,9 @@ variable "scanned_bytes_disabled_warning" {
 }
 
 variable "scanned_bytes_notifications" {
-  description = "Notification recipients list for every alerting rules of scanned_bytes detector"
-  type        = list
-  default     = []
-}
-
-variable "scanned_bytes_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of scanned_bytes detector"
-  type        = list
-  default     = []
-}
-
-variable "scanned_bytes_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of scanned_bytes detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for scanned_bytes detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "scanned_bytes_aggregation_function" {
@@ -304,21 +274,9 @@ variable "scanned_bytes_billed_disabled_warning" {
 }
 
 variable "scanned_bytes_billed_notifications" {
-  description = "Notification recipients list for every alerting rules of scanned_bytes_billed detector"
-  type        = list
-  default     = []
-}
-
-variable "scanned_bytes_billed_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of scanned_bytes_billed detector"
-  type        = list
-  default     = []
-}
-
-variable "scanned_bytes_billed_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of scanned_bytes_billed detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for scanned_bytes_billed detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "scanned_bytes_billed_aggregation_function" {
@@ -384,21 +342,9 @@ variable "available_slots_disabled_warning" {
 }
 
 variable "available_slots_notifications" {
-  description = "Notification recipients list for every alerting rules of available_slots detector"
-  type        = list
-  default     = []
-}
-
-variable "available_slots_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of available_slots detector"
-  type        = list
-  default     = []
-}
-
-variable "available_slots_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of available_slots detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for available_slots detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "available_slots_aggregation_function" {
@@ -464,21 +410,9 @@ variable "stored_bytes_disabled_warning" {
 }
 
 variable "stored_bytes_notifications" {
-  description = "Notification recipients list for every alerting rules of stored_bytes detector"
-  type        = list
-  default     = []
-}
-
-variable "stored_bytes_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of stored_bytes detector"
-  type        = list
-  default     = []
-}
-
-variable "stored_bytes_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of stored_bytes detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for stored_bytes detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "stored_bytes_aggregation_function" {
@@ -544,21 +478,9 @@ variable "table_count_disabled_warning" {
 }
 
 variable "table_count_notifications" {
-  description = "Notification recipients list for every alerting rules of table_count detector"
-  type        = list
-  default     = []
-}
-
-variable "table_count_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of table_count detector"
-  type        = list
-  default     = []
-}
-
-variable "table_count_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of table_count detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for table_count detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "table_count_aggregation_function" {
@@ -624,21 +546,9 @@ variable "uploaded_bytes_disabled_warning" {
 }
 
 variable "uploaded_bytes_notifications" {
-  description = "Notification recipients list for every alerting rules of uploaded_bytes detector"
-  type        = list
-  default     = []
-}
-
-variable "uploaded_bytes_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of uploaded_bytes detector"
-  type        = list
-  default     = []
-}
-
-variable "uploaded_bytes_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of uploaded_bytes detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for uploaded_bytes detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "uploaded_bytes_aggregation_function" {
@@ -704,21 +614,9 @@ variable "uploaded_bytes_billed_disabled_warning" {
 }
 
 variable "uploaded_bytes_billed_notifications" {
-  description = "Notification recipients list for every alerting rules of uploaded_bytes_billed detector"
-  type        = list
-  default     = []
-}
-
-variable "uploaded_bytes_billed_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of uploaded_bytes_billed detector"
-  type        = list
-  default     = []
-}
-
-variable "uploaded_bytes_billed_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of uploaded_bytes_billed detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for uploaded_bytes_billed detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "uploaded_bytes_billed_aggregation_function" {

@@ -8,8 +8,14 @@ variable "environment" {
 # SignalFx module specific
 
 variable "notifications" {
-  description = "Notification recipients list for every detectors"
-  type        = list
+  description = "Default notification recipients list per severity"
+  type = object({
+    critical = list(string)
+    major    = list(string)
+    minor    = list(string)
+    warning  = list(string)
+    info     = list(string)
+  })
 }
 
 variable "prefixes" {
@@ -45,9 +51,9 @@ variable "heartbeat_disabled" {
 }
 
 variable "heartbeat_notifications" {
-  description = "Notification recipients list for every alerting rules of heartbeat detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for heartbeat detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "heartbeat_timeframe" {
@@ -77,21 +83,9 @@ variable "cpu_disabled_warning" {
 }
 
 variable "cpu_notifications" {
-  description = "Notification recipients list for every alerting rules of cpu detector"
-  type        = list
-  default     = []
-}
-
-variable "cpu_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of cpu detector"
-  type        = list
-  default     = []
-}
-
-variable "cpu_notifications_major" {
-  description = "Notification recipients list for major alerting rule of cpu detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for cpu detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "cpu_aggregation_function" {
@@ -139,21 +133,9 @@ variable "throttling_disabled_warning" {
 }
 
 variable "throttling_notifications" {
-  description = "Notification recipients list for every alerting rules of throttling detector"
-  type        = list
-  default     = []
-}
-
-variable "throttling_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of throttling detector"
-  type        = list
-  default     = []
-}
-
-variable "throttling_notifications_major" {
-  description = "Notification recipients list for major alerting rule of throttling detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for throttling detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "throttling_aggregation_function" {
@@ -201,21 +183,9 @@ variable "memory_disabled_warning" {
 }
 
 variable "memory_notifications" {
-  description = "Notification recipients list for every alerting rules of memory detector"
-  type        = list
-  default     = []
-}
-
-variable "memory_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of memory detector"
-  type        = list
-  default     = []
-}
-
-variable "memory_notifications_major" {
-  description = "Notification recipients list for major alerting rule of memory detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for memory detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "memory_aggregation_function" {

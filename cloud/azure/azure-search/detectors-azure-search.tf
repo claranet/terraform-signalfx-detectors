@@ -13,7 +13,7 @@ resource "signalfx_detector" "search_latency" {
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.search_latency_disabled_critical, var.search_latency_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.search_latency_notifications_critical, var.search_latency_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.search_latency_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
@@ -22,7 +22,7 @@ resource "signalfx_detector" "search_latency" {
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.search_latency_disabled_warning, var.search_latency_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.search_latency_notifications_warning, var.search_latency_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.search_latency_notifications, "warning", []), var.notifications.warning)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -42,7 +42,7 @@ resource "signalfx_detector" "search_throttled_queries_rate" {
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.search_throttled_queries_rate_disabled_critical, var.search_throttled_queries_rate_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.search_throttled_queries_rate_notifications_critical, var.search_throttled_queries_rate_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.search_throttled_queries_rate_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
@@ -51,7 +51,7 @@ resource "signalfx_detector" "search_throttled_queries_rate" {
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.search_throttled_queries_rate_disabled_warning, var.search_throttled_queries_rate_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.search_throttled_queries_rate_notifications_warning, var.search_throttled_queries_rate_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.search_throttled_queries_rate_notifications, "warning", []), var.notifications.warning)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 

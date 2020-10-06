@@ -14,7 +14,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.volume_space_disabled_critical, var.volume_space_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.volume_space_notifications_critical, var.volume_space_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.volume_space_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
@@ -23,7 +23,7 @@ EOF
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.volume_space_disabled_warning, var.volume_space_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.volume_space_notifications_warning, var.volume_space_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.volume_space_notifications, "warning", []), var.notifications.warning)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -44,7 +44,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.volume_inodes_disabled_critical, var.volume_inodes_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.volume_inodes_notifications_critical, var.volume_inodes_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.volume_inodes_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
@@ -53,7 +53,7 @@ EOF
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.volume_inodes_disabled_warning, var.volume_inodes_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.volume_inodes_notifications_warning, var.volume_inodes_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.volume_inodes_notifications, "warning", []), var.notifications.warning)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }

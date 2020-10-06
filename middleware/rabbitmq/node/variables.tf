@@ -8,8 +8,14 @@ variable "environment" {
 # SignalFx module specific
 
 variable "notifications" {
-  description = "Notification recipients list for every detectors"
-  type        = list
+  description = "Default notification recipients list per severity"
+  type = object({
+    critical = list(string)
+    major    = list(string)
+    minor    = list(string)
+    warning  = list(string)
+    info     = list(string)
+  })
 }
 
 variable "prefixes" {
@@ -45,9 +51,9 @@ variable "heartbeat_disabled" {
 }
 
 variable "heartbeat_notifications" {
-  description = "Notification recipients list for every alerting rules of heartbeat detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for heartbeat detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "heartbeat_timeframe" {
@@ -75,21 +81,9 @@ variable "file_descriptors_disabled_warning" {
 }
 
 variable "file_descriptors_notifications" {
-  description = "Notification recipients list for every alerting rules of file descriptors detector"
-  type        = list
-  default     = []
-}
-
-variable "file_descriptors_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of file descriptors detector"
-  type        = list
-  default     = []
-}
-
-variable "file_descriptors_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of file descriptors detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for file descriptors detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "file_descriptors_aggregation_function" {
@@ -135,21 +129,9 @@ variable "processes_disabled_warning" {
 }
 
 variable "processes_notifications" {
-  description = "Notification recipients list for every alerting rules of processes detector"
-  type        = list
-  default     = []
-}
-
-variable "processes_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of processes detector"
-  type        = list
-  default     = []
-}
-
-variable "processes_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of processes detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for processes detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "processes_aggregation_function" {
@@ -195,21 +177,9 @@ variable "sockets_disabled_warning" {
 }
 
 variable "sockets_notifications" {
-  description = "Notification recipients list for every alerting rules of sockets detector"
-  type        = list
-  default     = []
-}
-
-variable "sockets_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of sockets detector"
-  type        = list
-  default     = []
-}
-
-variable "sockets_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of sockets detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for sockets detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "sockets_aggregation_function" {
@@ -255,21 +225,9 @@ variable "vm_memory_disabled_warning" {
 }
 
 variable "vm_memory_notifications" {
-  description = "Notification recipients list for every alerting rules of vm_memory detector"
-  type        = list
-  default     = []
-}
-
-variable "vm_memory_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of vm_memory detector"
-  type        = list
-  default     = []
-}
-
-variable "vm_memory_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of vm_memory detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for vm_memory detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "vm_memory_aggregation_function" {

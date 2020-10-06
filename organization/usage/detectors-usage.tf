@@ -12,7 +12,7 @@ EOF
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.hosts_limit_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.hosts_limit_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.hosts_limit_notifications, "warning", []), var.notifications.warning)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}} > {{inputs.limit.value}}) on {{{dimensions}}}"
     parameterized_body    = local.parameterized_body
     runbook_url           = var.runbook_url
@@ -36,7 +36,7 @@ EOF
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.containers_limit_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.containers_limit_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.containers_limit_notifications, "warning", []), var.notifications.warning)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}} > {{inputs.limit.value}}) on {{{dimensions}}}"
     parameterized_body    = local.parameterized_body
     runbook_url           = var.runbook_url
@@ -60,7 +60,7 @@ EOF
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.custom_metrics_limit_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.custom_metrics_limit_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.custom_metrics_limit_notifications, "warning", []), var.notifications.warning)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}} > {{inputs.limit.value}}) on {{{dimensions}}}"
     parameterized_body    = local.parameterized_body
     runbook_url           = var.runbook_url
@@ -85,7 +85,7 @@ EOF
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.containers_ratio_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.containers_ratio_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.containers_ratio_notifications, "warning", []), var.notifications.warning)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
     parameterized_body    = local.parameterized_body
     runbook_url           = var.runbook_url
@@ -112,7 +112,7 @@ EOF
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.custom_metrics_ratio_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.custom_metrics_ratio_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.custom_metrics_ratio_notifications, "warning", []), var.notifications.warning)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
     parameterized_body    = local.parameterized_body
     runbook_url           = var.runbook_url

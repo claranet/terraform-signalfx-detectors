@@ -8,8 +8,14 @@ variable "environment" {
 # SignalFx module specific
 
 variable "notifications" {
-  description = "Notification recipients list for every detectors"
-  type        = list
+  description = "Default notification recipients list per severity"
+  type = object({
+    critical = list(string)
+    major    = list(string)
+    minor    = list(string)
+    warning  = list(string)
+    info     = list(string)
+  })
 }
 
 variable "prefixes" {
@@ -45,9 +51,9 @@ variable "heartbeat_disabled" {
 }
 
 variable "heartbeat_notifications" {
-  description = "Notification recipients list for every alerting rules of heartbeat detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for heartbeat detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "heartbeat_timeframe" {
@@ -77,21 +83,9 @@ variable "evictions_disabled_warning" {
 }
 
 variable "evictions_notifications" {
-  description = "Notification recipients list for every alerting rules of evictions detector"
-  type        = list
-  default     = []
-}
-
-variable "evictions_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of evictions detector"
-  type        = list
-  default     = []
-}
-
-variable "evictions_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of evictions detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for evictions detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "evictions_aggregation_function" {
@@ -133,15 +127,9 @@ variable "max_connection_disabled_critical" {
 }
 
 variable "max_connection_notifications" {
-  description = "Notification recipients list for every alerting rules of max_connection detector"
-  type        = list
-  default     = []
-}
-
-variable "max_connection_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of max_connection detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for max_connection detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "max_connection_aggregation_function" {
@@ -177,15 +165,9 @@ variable "no_connection_disabled_critical" {
 }
 
 variable "no_connection_notifications" {
-  description = "Notification recipients list for every alerting rules of no_connection detector"
-  type        = list
-  default     = []
-}
-
-variable "no_connection_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of no_connection detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for no_connection detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "no_connection_aggregation_function" {
@@ -227,21 +209,9 @@ variable "swap_disabled_warning" {
 }
 
 variable "swap_notifications" {
-  description = "Notification recipients list for every alerting rules of swap detector"
-  type        = list
-  default     = []
-}
-
-variable "swap_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of swap detector"
-  type        = list
-  default     = []
-}
-
-variable "swap_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of swap detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for swap detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "swap_aggregation_function" {
@@ -289,21 +259,9 @@ variable "free_memory_disabled_warning" {
 }
 
 variable "free_memory_notifications" {
-  description = "Notification recipients list for every alerting rules of free_memory detector"
-  type        = list
-  default     = []
-}
-
-variable "free_memory_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of free_memory detector"
-  type        = list
-  default     = []
-}
-
-variable "free_memory_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of free_memory detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for free_memory detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "free_memory_aggregation_function" {
@@ -351,21 +309,9 @@ variable "evictions_growing_disabled_warning" {
 }
 
 variable "evictions_growing_notifications" {
-  description = "Notification recipients list for every alerting rules of evictions_growing detector"
-  type        = list
-  default     = []
-}
-
-variable "evictions_growing_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of evictions_growing detector"
-  type        = list
-  default     = []
-}
-
-variable "evictions_growing_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of evictions_growing detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for evictions_growing detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "evictions_growing_aggregation_function" {

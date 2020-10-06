@@ -8,8 +8,14 @@ variable "environment" {
 # SignalFx module specific
 
 variable "notifications" {
-  description = "Notification recipients list for every detectors"
-  type        = list
+  description = "Default notification recipients list per severity"
+  type = object({
+    critical = list(string)
+    major    = list(string)
+    minor    = list(string)
+    warning  = list(string)
+    info     = list(string)
+  })
 }
 
 variable "prefixes" {
@@ -45,9 +51,9 @@ variable "heartbeat_disabled" {
 }
 
 variable "heartbeat_notifications" {
-  description = "Notification recipients list for every alerting rules of heartbeat detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for heartbeat detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "heartbeat_timeframe" {
@@ -77,21 +83,9 @@ variable "deadlocks_disabled_warning" {
 }
 
 variable "deadlocks_notifications" {
-  description = "Notification recipients list for every alerting rules of deadlocks detector"
-  type        = list
-  default     = []
-}
-
-variable "deadlocks_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of deadlocks detector"
-  type        = list
-  default     = []
-}
-
-variable "deadlocks_notifications_major" {
-  description = "Notification recipients list for major alerting rule of deadlocks detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for deadlocks detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "deadlocks_aggregation_function" {
@@ -139,21 +133,9 @@ variable "hit_ratio_disabled_major" {
 }
 
 variable "hit_ratio_notifications" {
-  description = "Notification recipients list for every alerting rules of hit_ratio detector"
-  type        = list
-  default     = []
-}
-
-variable "hit_ratio_notifications_minor" {
-  description = "Notification recipients list for minor alerting rule of hit_ratio detector"
-  type        = list
-  default     = []
-}
-
-variable "hit_ratio_notifications_major" {
-  description = "Notification recipients list for major alerting rule of hit_ratio detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for hit_ratio detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "hit_ratio_aggregation_function" {
@@ -201,21 +183,9 @@ variable "rollbacks_disabled_major" {
 }
 
 variable "rollbacks_notifications" {
-  description = "Notification recipients list for every alerting rules of rollbacks detector"
-  type        = list
-  default     = []
-}
-
-variable "rollbacks_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of rollbacks detector"
-  type        = list
-  default     = []
-}
-
-variable "rollbacks_notifications_major" {
-  description = "Notification recipients list for major alerting rule of rollbacks detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for rollbacks detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "rollbacks_aggregation_function" {
@@ -263,21 +233,9 @@ variable "conflicts_disabled_warning" {
 }
 
 variable "conflicts_notifications" {
-  description = "Notification recipients list for every alerting rules of conflicts detector"
-  type        = list
-  default     = []
-}
-
-variable "conflicts_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of conflicts detector"
-  type        = list
-  default     = []
-}
-
-variable "conflicts_notifications_major" {
-  description = "Notification recipients list for major alerting rule of conflicts detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for conflicts detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "conflicts_aggregation_function" {
@@ -325,21 +283,9 @@ variable "max_connections_disabled_warning" {
 }
 
 variable "max_connections_notifications" {
-  description = "Notification recipients list for every alerting rules of max_connections detector"
-  type        = list
-  default     = []
-}
-
-variable "max_connections_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of max_connections detector"
-  type        = list
-  default     = []
-}
-
-variable "max_connections_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of max_connections detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for max_connections detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "max_connections_aggregation_function" {
@@ -387,21 +333,9 @@ variable "replication_lag_disabled_warning" {
 }
 
 variable "replication_lag_notifications" {
-  description = "Notification recipients list for every alerting rules of replication_lag detector"
-  type        = list
-  default     = []
-}
-
-variable "replication_lag_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of replication_lag detector"
-  type        = list
-  default     = []
-}
-
-variable "replication_lag_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of replication_lag detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for replication_lag detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "replication_lag_aggregation_function" {
@@ -437,9 +371,9 @@ variable "replication_state_disabled" {
 }
 
 variable "replication_state_notifications" {
-  description = "Notification recipients list for every alerting rules of replication_state detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for replication_state detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "replication_state_aggregation_function" {

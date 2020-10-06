@@ -8,8 +8,14 @@ variable "environment" {
 # SignalFx module specific
 
 variable "notifications" {
-  description = "Notification recipients list for every detectors"
-  type        = list(string)
+  description = "Default notification recipients list per severity"
+  type = object({
+    critical = list(string)
+    major    = list(string)
+    minor    = list(string)
+    warning  = list(string)
+    info     = list(string)
+  })
 }
 
 variable "prefixes" {
@@ -45,9 +51,9 @@ variable "heartbeat_disabled" {
 }
 
 variable "heartbeat_notifications" {
-  description = "Notification recipients list for every alerting rules of heartbeat detector"
-  type        = list(string)
-  default     = []
+  description = "Notification recipients list per severity overridden for heartbeat detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "heartbeat_timeframe" {
@@ -77,21 +83,9 @@ variable "cpu_usage_disabled_warning" {
 }
 
 variable "cpu_usage_notifications" {
-  description = "Notification recipients list for every alerting rules of cpu_usage detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "cpu_usage_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of cpu_usage detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "cpu_usage_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of cpu_usage detector"
-  type        = list(string)
-  default     = []
+  description = "Notification recipients list per severity overridden for cpu_usage detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "cpu_usage_aggregation_function" {
@@ -133,15 +127,9 @@ variable "no_connection_disabled_critical" {
 }
 
 variable "no_connection_notifications" {
-  description = "Notification recipients list for every alerting rules of no_connection detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "no_connection_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of no_connection detector"
-  type        = list(string)
-  default     = []
+  description = "Notification recipients list per severity overridden for no_connection detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "no_connection_aggregation_function" {
@@ -177,21 +165,9 @@ variable "free_storage_disabled_warning" {
 }
 
 variable "free_storage_notifications" {
-  description = "Notification recipients list for every alerting rules of free_storage detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "free_storage_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of free_storage detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "free_storage_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of free_storage detector"
-  type        = list(string)
-  default     = []
+  description = "Notification recipients list per severity overridden for free_storage detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "free_storage_aggregation_function" {
@@ -239,21 +215,9 @@ variable "io_consumption_disabled_warning" {
 }
 
 variable "io_consumption_notifications" {
-  description = "Notification recipients list for every alerting rules of io_consumption detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "io_consumption_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of io_consumption detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "io_consumption_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of io_consumption detector"
-  type        = list(string)
-  default     = []
+  description = "Notification recipients list per severity overridden for io_consumption detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "io_consumption_aggregation_function" {
@@ -301,21 +265,9 @@ variable "memory_usage_disabled_warning" {
 }
 
 variable "memory_usage_notifications" {
-  description = "Notification recipients list for every alerting rules of memory_usage detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "memory_usage_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of memory_usage detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "memory_usage_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of memory_usage detector"
-  type        = list(string)
-  default     = []
+  description = "Notification recipients list per severity overridden for memory_usage detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "memory_usage_aggregation_function" {

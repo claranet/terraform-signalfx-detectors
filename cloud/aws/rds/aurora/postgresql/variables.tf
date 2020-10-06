@@ -8,8 +8,14 @@ variable "environment" {
 # SignalFx module specific
 
 variable "notifications" {
-  description = "Notification recipients list for every detectors"
-  type        = list
+  description = "Default notification recipients list per severity"
+  type = object({
+    critical = list(string)
+    major    = list(string)
+    minor    = list(string)
+    warning  = list(string)
+    info     = list(string)
+  })
 }
 
 variable "prefixes" {
@@ -59,21 +65,9 @@ variable "aurora_postgresql_replica_lag_disabled_warning" {
 }
 
 variable "aurora_postgresql_replica_lag_notifications" {
-  description = "Notification recipients list for every alerting rules of aurora_postgresql_replica_lag detector"
-  type        = list
-  default     = []
-}
-
-variable "aurora_postgresql_replica_lag_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of aurora_postgresql_replica_lag detector"
-  type        = list
-  default     = []
-}
-
-variable "aurora_postgresql_replica_lag_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of aurora_postgresql_replica_lag detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for aurora_postgresql_replica_lag detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "aurora_postgresql_replica_lag_aggregation_function" {

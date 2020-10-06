@@ -8,8 +8,14 @@ variable "environment" {
 # SignalFx Module specific
 
 variable "notifications" {
-  description = "Notification recipients list for every detectors"
-  type        = list
+  description = "Default notification recipients list per severity"
+  type = object({
+    critical = list(string)
+    major    = list(string)
+    minor    = list(string)
+    warning  = list(string)
+    info     = list(string)
+  })
 }
 
 variable "prefixes" {
@@ -45,9 +51,9 @@ variable "heartbeat_disabled" {
 }
 
 variable "heartbeat_notifications" {
-  description = "Notification recipients list for every alerting rules of heartbeat detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for heartbeat detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "heartbeat_timeframe" {
@@ -77,21 +83,9 @@ variable "cpu_disabled_warning" {
 }
 
 variable "cpu_notifications" {
-  description = "Notification recipients list for every alerting rules of cpu detector"
-  type        = list
-  default     = []
-}
-
-variable "cpu_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of cpu detector"
-  type        = list
-  default     = []
-}
-
-variable "cpu_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of cpu detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for cpu detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "cpu_aggregation_function" {
@@ -139,21 +133,9 @@ variable "load_disabled_warning" {
 }
 
 variable "load_notifications" {
-  description = "Notification recipients list for every alerting rules of load detector"
-  type        = list
-  default     = []
-}
-
-variable "load_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of load detector"
-  type        = list
-  default     = []
-}
-
-variable "load_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of load detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for load detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "load_aggregation_function" {
@@ -201,21 +183,9 @@ variable "disk_space_disabled_warning" {
 }
 
 variable "disk_space_notifications" {
-  description = "Notification recipients list for every alerting rules of disk space detector"
-  type        = list
-  default     = []
-}
-
-variable "disk_space_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of disk space detector"
-  type        = list
-  default     = []
-}
-
-variable "disk_space_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of disk space detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for disk space detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "disk_space_aggregation_function" {
@@ -263,21 +233,9 @@ variable "disk_inodes_disabled_warning" {
 }
 
 variable "disk_inodes_notifications" {
-  description = "Notification recipients list for every alerting rules of disk inodes detector"
-  type        = list
-  default     = []
-}
-
-variable "disk_inodes_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of disk inodes detector"
-  type        = list
-  default     = []
-}
-
-variable "disk_inodes_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of disk inodes detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for disk inodes detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "disk_inodes_aggregation_function" {
@@ -361,9 +319,9 @@ variable "disk_running_out_use_ewma" {
 }
 
 variable "disk_running_out_notifications" {
-  description = "Notification recipients list for every alerting rules of disk running out detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for disk running out detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 #####
@@ -387,21 +345,9 @@ variable "memory_disabled_warning" {
 }
 
 variable "memory_notifications" {
-  description = "Notification recipients list for every alerting rules of memory detector"
-  type        = list
-  default     = []
-}
-
-variable "memory_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of memory detector"
-  type        = list
-  default     = []
-}
-
-variable "memory_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of memory detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for memory detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "memory_aggregation_function" {

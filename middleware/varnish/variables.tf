@@ -8,8 +8,14 @@ variable "environment" {
 # SignalFx module specific
 
 variable "notifications" {
-  description = "Notification recipients list for every detectors"
-  type        = list
+  description = "Default notification recipients list per severity"
+  type = object({
+    critical = list(string)
+    major    = list(string)
+    minor    = list(string)
+    warning  = list(string)
+    info     = list(string)
+  })
 }
 
 variable "prefixes" {
@@ -42,9 +48,9 @@ variable "varnish_backend_failed_disabled" {
 }
 
 variable "varnish_backend_failed_notifications" {
-  description = "Notification recipients list for every alerting rules of backend_failed detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for backend_failed detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "varnish_threads_number_disabled" {
@@ -53,9 +59,9 @@ variable "varnish_threads_number_disabled" {
 }
 
 variable "varnish_threads_number_notifications" {
-  description = "Notification recipients list for every alerting rules of threads_number detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for threads_number detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "varnish_session_dropped_disabled" {
@@ -64,9 +70,9 @@ variable "varnish_session_dropped_disabled" {
 }
 
 variable "varnish_session_dropped_notifications" {
-  description = "Notification recipients list for every alerting rules of session_dropped detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for session_dropped detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "varnish_cache_hit_rate_disabled" {
@@ -88,21 +94,9 @@ variable "varnish_cache_hit_rate_disabled_major" {
 }
 
 variable "varnish_cache_hit_rate_notifications" {
-  description = "Notification recipients list for every alerting rules of cache_hit_rate detector"
-  type        = list
-  default     = []
-}
-
-variable "varnish_cache_hit_rate_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of cache_hit_rate detector"
-  type        = list
-  default     = []
-}
-
-variable "varnish_cache_hit_rate_notifications_major" {
-  description = "Notification recipients list for major alerting rule of cache_hit_rate detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for cache_hit_rate detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "varnish_memory_usage_disabled" {
@@ -124,21 +118,9 @@ variable "varnish_memory_usage_disabled_warning" {
 }
 
 variable "varnish_memory_usage_notifications" {
-  description = "Notification recipients list for every alerting rules of memory_usage detector"
-  type        = list
-  default     = []
-}
-
-variable "varnish_memory_usage_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of memory_usage detector"
-  type        = list
-  default     = []
-}
-
-variable "varnish_memory_usage_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of memory_usage detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for memory_usage detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 # Varnish detectors specific

@@ -8,8 +8,14 @@ variable "environment" {
 # SignalFx module specific
 
 variable "notifications" {
-  description = "Notification recipients list for every detectors"
-  type        = list(string)
+  description = "Default notification recipients list per severity"
+  type = object({
+    critical = list(string)
+    major    = list(string)
+    minor    = list(string)
+    warning  = list(string)
+    info     = list(string)
+  })
 }
 
 variable "prefixes" {
@@ -45,9 +51,9 @@ variable "heartbeat_disabled" {
 }
 
 variable "heartbeat_notifications" {
-  description = "Notification recipients list for every alerting rules of heartbeat detector"
-  type        = list(string)
-  default     = []
+  description = "Notification recipients list per severity overridden for heartbeat detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "heartbeat_timeframe" {
@@ -77,21 +83,9 @@ variable "response_time_disabled_warning" {
 }
 
 variable "response_time_notifications" {
-  description = "Notification recipients list for every alerting rules of response_time detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "response_time_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of response_time detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "response_time_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of response_time detector"
-  type        = list(string)
-  default     = []
+  description = "Notification recipients list per severity overridden for response_time detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "response_time_aggregation_function" {
@@ -139,21 +133,9 @@ variable "memory_usage_count_disabled_warning" {
 }
 
 variable "memory_usage_count_notifications" {
-  description = "Notification recipients list for every alerting rules of memory_usage_count detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "memory_usage_count_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of memory_usage_count detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "memory_usage_count_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of memory_usage_count detector"
-  type        = list(string)
-  default     = []
+  description = "Notification recipients list per severity overridden for memory_usage_count detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "memory_usage_count_aggregation_function" {
@@ -201,21 +183,9 @@ variable "http_5xx_errors_count_disabled_warning" {
 }
 
 variable "http_5xx_errors_count_notifications" {
-  description = "Notification recipients list for every alerting rules of http_5xx_errors_count detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "http_5xx_errors_count_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of http_5xx_errors_count detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "http_5xx_errors_count_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of http_5xx_errors_count detector"
-  type        = list(string)
-  default     = []
+  description = "Notification recipients list per severity overridden for http_5xx_errors_count detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "http_5xx_errors_count_aggregation_function" {
@@ -263,21 +233,9 @@ variable "http_4xx_errors_count_disabled_warning" {
 }
 
 variable "http_4xx_errors_count_notifications" {
-  description = "Notification recipients list for every alerting rules of http_4xx_errors_count detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "http_4xx_errors_count_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of http_4xx_errors_count detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "http_4xx_errors_count_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of http_4xx_errors_count detector"
-  type        = list(string)
-  default     = []
+  description = "Notification recipients list per severity overridden for http_4xx_errors_count detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "http_4xx_errors_count_aggregation_function" {
@@ -325,21 +283,9 @@ variable "http_success_status_rate_disabled_warning" {
 }
 
 variable "http_success_status_rate_notifications" {
-  description = "Notification recipients list for every alerting rules of http_success_status_rate detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "http_success_status_rate_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of http_success_status_rate detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "http_success_status_rate_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of http_success_status_rate detector"
-  type        = list(string)
-  default     = []
+  description = "Notification recipients list per severity overridden for http_success_status_rate detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "http_success_status_rate_aggregation_function" {

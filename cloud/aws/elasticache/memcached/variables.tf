@@ -8,8 +8,14 @@ variable "environment" {
 # SignalFx module specific
 
 variable "notifications" {
-  description = "Notification recipients list for every detectors"
-  type        = list
+  description = "Default notification recipients list per severity"
+  type = object({
+    critical = list(string)
+    major    = list(string)
+    minor    = list(string)
+    warning  = list(string)
+    info     = list(string)
+  })
 }
 
 variable "prefixes" {
@@ -59,21 +65,9 @@ variable "hit_ratio_disabled_warning" {
 }
 
 variable "hit_ratio_notifications" {
-  description = "Notification recipients list for every alerting rules of hit_ratio detector"
-  type        = list
-  default     = []
-}
-
-variable "hit_ratio_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of hit_ratio detector"
-  type        = list
-  default     = []
-}
-
-variable "hit_ratio_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of hit_ratio detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for hit_ratio detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "hit_ratio_aggregation_function" {
@@ -133,21 +127,9 @@ variable "cpu_disabled_warning" {
 }
 
 variable "cpu_notifications" {
-  description = "Notification recipients list for every alerting rules of cpu detector"
-  type        = list
-  default     = []
-}
-
-variable "cpu_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of cpu detector"
-  type        = list
-  default     = []
-}
-
-variable "cpu_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of cpu detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for cpu detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "cpu_aggregation_function" {

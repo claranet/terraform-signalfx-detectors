@@ -11,7 +11,7 @@ EOF
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.velero_scheduled_backup_missing_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.velero_scheduled_backup_missing_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.velero_scheduled_backup_missing_notifications, "warning", []), var.notifications.warning)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -29,7 +29,7 @@ EOF
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.velero_backup_failure_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.velero_backup_failure_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.velero_backup_failure_notifications, "warning", []), var.notifications.warning)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -47,7 +47,7 @@ EOF
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.velero_backup_partial_failure_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.velero_backup_partial_failure_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.velero_backup_partial_failure_notifications, "warning", []), var.notifications.warning)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -65,7 +65,7 @@ EOF
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.velero_backup_deletion_failure_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.velero_backup_deletion_failure_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.velero_backup_deletion_failure_notifications, "warning", []), var.notifications.warning)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -83,7 +83,7 @@ EOF
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.velero_volume_snapshot_failure_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.velero_volume_snapshot_failure_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.velero_volume_snapshot_failure_notifications, "warning", []), var.notifications.warning)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }

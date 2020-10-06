@@ -8,8 +8,14 @@ variable "environment" {
 # SignalFx module specific
 
 variable "notifications" {
-  description = "Notification recipients list for every detectors"
-  type        = list(string)
+  description = "Default notification recipients list per severity"
+  type = object({
+    critical = list(string)
+    major    = list(string)
+    minor    = list(string)
+    warning  = list(string)
+    info     = list(string)
+  })
 }
 
 variable "prefixes" {
@@ -45,9 +51,9 @@ variable "heartbeat_disabled" {
 }
 
 variable "heartbeat_notifications" {
-  description = "Notification recipients list for every alerting rules of heartbeat detector"
-  type        = list(string)
-  default     = []
+  description = "Notification recipients list per severity overridden for heartbeat detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "heartbeat_timeframe" {
@@ -77,21 +83,9 @@ variable "su_utilization_disabled_warning" {
 }
 
 variable "su_utilization_notifications" {
-  description = "Notification recipients list for every alerting rules of su_utilization detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "su_utilization_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of su_utilization detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "su_utilization_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of su_utilization detector"
-  type        = list(string)
-  default     = []
+  description = "Notification recipients list per severity overridden for su_utilization detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "su_utilization_aggregation_function" {
@@ -139,21 +133,9 @@ variable "failed_function_requests_disabled_warning" {
 }
 
 variable "failed_function_requests_notifications" {
-  description = "Notification recipients list for every alerting rules of failed_function_requests detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "failed_function_requests_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of failed_function_requests detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "failed_function_requests_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of failed_function_requests detector"
-  type        = list(string)
-  default     = []
+  description = "Notification recipients list per severity overridden for failed_function_requests detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "failed_function_requests_aggregation_function" {
@@ -201,21 +183,9 @@ variable "conversion_errors_disabled_warning" {
 }
 
 variable "conversion_errors_notifications" {
-  description = "Notification recipients list for every alerting rules of conversion_errors detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "conversion_errors_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of conversion_errors detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "conversion_errors_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of conversion_errors detector"
-  type        = list(string)
-  default     = []
+  description = "Notification recipients list per severity overridden for conversion_errors detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "conversion_errors_aggregation_function" {
@@ -263,21 +233,9 @@ variable "runtime_errors_disabled_warning" {
 }
 
 variable "runtime_errors_notifications" {
-  description = "Notification recipients list for every alerting rules of runtime_errors detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "runtime_errors_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of runtime_errors detector"
-  type        = list(string)
-  default     = []
-}
-
-variable "runtime_errors_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of runtime_errors detector"
-  type        = list(string)
-  default     = []
+  description = "Notification recipients list per severity overridden for runtime_errors detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "runtime_errors_aggregation_function" {

@@ -8,8 +8,14 @@ variable "environment" {
 # SignalFx module specific
 
 variable "notifications" {
-  description = "Notification recipients list for every detectors"
-  type        = list
+  description = "Default notification recipients list per severity"
+  type = object({
+    critical = list(string)
+    major    = list(string)
+    minor    = list(string)
+    warning  = list(string)
+    info     = list(string)
+  })
 }
 
 variable "prefixes" {
@@ -45,9 +51,9 @@ variable "heartbeat_disabled" {
 }
 
 variable "heartbeat_notifications" {
-  description = "Notification recipients list for every alerting rules of heartbeat detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for heartbeat detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "heartbeat_timeframe" {
@@ -77,21 +83,9 @@ variable "error_rate_disabled_warning" {
 }
 
 variable "error_rate_notifications" {
-  description = "Notification recipients list for every alerting rules of error_rate detector"
-  type        = list
-  default     = []
-}
-
-variable "error_rate_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of error_rate detector"
-  type        = list
-  default     = []
-}
-
-variable "error_rate_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of error_rate detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for error_rate detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "error_rate_aggregation_function" {
@@ -139,21 +133,9 @@ variable "apdex_disabled_warning" {
 }
 
 variable "apdex_notifications" {
-  description = "Notification recipients list for every alerting rules of apdex detector"
-  type        = list
-  default     = []
-}
-
-variable "apdex_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of apdex detector"
-  type        = list
-  default     = []
-}
-
-variable "apdex_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of apdex detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for apdex detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "apdex_aggregation_function" {

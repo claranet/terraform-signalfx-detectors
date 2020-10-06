@@ -8,8 +8,14 @@ variable "environment" {
 # SignalFx module specific
 
 variable "notifications" {
-  description = "Notification recipients list for every detectors"
-  type        = list
+  description = "Default notification recipients list per severity"
+  type = object({
+    critical = list(string)
+    major    = list(string)
+    minor    = list(string)
+    warning  = list(string)
+    info     = list(string)
+  })
 }
 
 variable "prefixes" {
@@ -45,9 +51,9 @@ variable "heartbeat_disabled" {
 }
 
 variable "heartbeat_notifications" {
-  description = "Notification recipients list for every alerting rules of heartbeat detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for heartbeat detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "heartbeat_timeframe" {
@@ -77,21 +83,9 @@ variable "health_disabled_warning" {
 }
 
 variable "health_notifications" {
-  description = "Notification recipients list for every alerting rules of health detector"
-  type        = list
-  default     = []
-}
-
-variable "health_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of health detector"
-  type        = list
-  default     = []
-}
-
-variable "health_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of health detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for health detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "health_aggregation_function" {
@@ -139,21 +133,9 @@ variable "latency_p90_disabled_warning" {
 }
 
 variable "latency_p90_notifications" {
-  description = "Notification recipients list for every alerting rules of latency_p90 detector"
-  type        = list
-  default     = []
-}
-
-variable "latency_p90_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of latency_p90 detector"
-  type        = list
-  default     = []
-}
-
-variable "latency_p90_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of latency_p90 detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for latency_p90 detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "latency_p90_aggregation_function" {
@@ -201,21 +183,9 @@ variable "app_5xx_error_rate_disabled_warning" {
 }
 
 variable "app_5xx_error_rate_notifications" {
-  description = "Notification recipients list for every alerting rules of 5xx_error_rate detector"
-  type        = list
-  default     = []
-}
-
-variable "app_5xx_error_rate_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of 5xx_error_rate detector"
-  type        = list
-  default     = []
-}
-
-variable "app_5xx_error_rate_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of 5xx_error_rate detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for 5xx_error_rate detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "app_5xx_error_rate_aggregation_function" {
@@ -263,21 +233,9 @@ variable "root_filesystem_usage_disabled_warning" {
 }
 
 variable "root_filesystem_usage_notifications" {
-  description = "Notification recipients list for every alerting rules of root_filesystem_usage detector"
-  type        = list
-  default     = []
-}
-
-variable "root_filesystem_usage_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of root_filesystem_usage detector"
-  type        = list
-  default     = []
-}
-
-variable "root_filesystem_usage_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of root_filesystem_usage detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for root_filesystem_usage detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "root_filesystem_usage_aggregation_function" {

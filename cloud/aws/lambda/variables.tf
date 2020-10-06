@@ -8,8 +8,14 @@ variable "environment" {
 # SignalFx module specific
 
 variable "notifications" {
-  description = "Notification recipients list for every detectors"
-  type        = list
+  description = "Default notification recipients list per severity"
+  type = object({
+    critical = list(string)
+    major    = list(string)
+    minor    = list(string)
+    warning  = list(string)
+    info     = list(string)
+  })
 }
 
 variable "prefixes" {
@@ -59,21 +65,9 @@ variable "pct_errors_disabled_warning" {
 }
 
 variable "pct_errors_notifications" {
-  description = "Notification recipients list for every alerting rules of pct_errors detector"
-  type        = list
-  default     = []
-}
-
-variable "pct_errors_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of pct_errors detector"
-  type        = list
-  default     = []
-}
-
-variable "pct_errors_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of pct_errors detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for pct_errors detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "pct_errors_aggregation_function" {
@@ -127,21 +121,9 @@ variable "throttles_disabled_warning" {
 }
 
 variable "throttles_notifications" {
-  description = "Notification recipients list for every alerting rules of throttles detector"
-  type        = list
-  default     = []
-}
-
-variable "throttles_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of throttles detector"
-  type        = list
-  default     = []
-}
-
-variable "throttles_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of throttles detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for throttles detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "throttles_aggregation_function" {
@@ -177,9 +159,9 @@ variable "invocations_disabled" {
 }
 
 variable "invocations_notifications" {
-  description = "Notification recipients list for every alerting rules of invocations detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for invocations detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "invocations_aggregation_function" {

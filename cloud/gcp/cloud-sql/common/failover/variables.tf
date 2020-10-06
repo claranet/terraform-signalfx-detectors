@@ -13,8 +13,14 @@ variable "gcp_project_id" {
 # SignalFx module specific
 
 variable "notifications" {
-  description = "Notification recipients list for every detectors"
-  type        = list
+  description = "Default notification recipients list per severity"
+  type = object({
+    critical = list(string)
+    major    = list(string)
+    minor    = list(string)
+    warning  = list(string)
+    info     = list(string)
+  })
 }
 
 variable "prefixes" {
@@ -50,9 +56,9 @@ variable "failover_unavailable_disabled" {
 }
 
 variable "failover_unavailable_notifications" {
-  description = "Notification recipients list for every alerting rules of failover_unavailable detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for failover_unavailable detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "failover_unavailable_aggregation_function" {

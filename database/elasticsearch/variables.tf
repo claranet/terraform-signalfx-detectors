@@ -8,8 +8,14 @@ variable "environment" {
 # SignalFx module specific
 
 variable "notifications" {
-  description = "Notification recipients list for every detectors"
-  type        = list
+  description = "Default notification recipients list per severity"
+  type = object({
+    critical = list(string)
+    major    = list(string)
+    minor    = list(string)
+    warning  = list(string)
+    info     = list(string)
+  })
 }
 
 variable "prefixes" {
@@ -45,9 +51,9 @@ variable "heartbeat_disabled" {
 }
 
 variable "heartbeat_notifications" {
-  description = "Notification recipients list for every alerting rules of heartbeat detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for heartbeat detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "heartbeat_timeframe" {
@@ -77,21 +83,9 @@ variable "cluster_status_disabled_warning" {
 }
 
 variable "cluster_status_notifications" {
-  description = "Notification recipients list for every alerting rules of cluster_status_not_green detector"
-  type        = list
-  default     = []
-}
-
-variable "cluster_status_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of cluster_status_not_green detector"
-  type        = list
-  default     = []
-}
-
-variable "cluster_status_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of cluster_status_not_green detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for cluster_status_not_green detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "cluster_status_aggregation_function" {
@@ -127,21 +121,9 @@ variable "cluster_initializing_shards_disabled_warning" {
 }
 
 variable "cluster_initializing_shards_notifications" {
-  description = "Notification recipients list for every alerting rules of cluster_initializing_shards detector"
-  type        = list
-  default     = []
-}
-
-variable "cluster_initializing_shards_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of cluster_initializing_shards detector"
-  type        = list
-  default     = []
-}
-
-variable "cluster_initializing_shards_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of cluster_initializing_shards detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for cluster_initializing_shards detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "cluster_initializing_shards_aggregation_function" {
@@ -189,21 +171,9 @@ variable "cluster_relocating_shards_disabled_warning" {
 }
 
 variable "cluster_relocating_shards_notifications" {
-  description = "Notification recipients list for every alerting rules of cluster_relocating_shards detector"
-  type        = list
-  default     = []
-}
-
-variable "cluster_relocating_shards_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of cluster_relocating_shards detector"
-  type        = list
-  default     = []
-}
-
-variable "cluster_relocating_shards_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of cluster_relocating_shards detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for cluster_relocating_shards detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "cluster_relocating_shards_aggregation_function" {
@@ -251,21 +221,9 @@ variable "cluster_unassigned_shards_disabled_warning" {
 }
 
 variable "cluster_unassigned_shards_notifications" {
-  description = "Notification recipients list for every alerting rules of cluster_unassigned_shards detector"
-  type        = list
-  default     = []
-}
-
-variable "cluster_unassigned_shards_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of cluster_unassigned_shards detector"
-  type        = list
-  default     = []
-}
-
-variable "cluster_unassigned_shards_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of cluster_unassigned_shards detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for cluster_unassigned_shards detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "cluster_unassigned_shards_aggregation_function" {
@@ -313,21 +271,9 @@ variable "pending_tasks_disabled_warning" {
 }
 
 variable "pending_tasks_notifications" {
-  description = "Notification recipients list for every alerting rules of pending_tasks detector"
-  type        = list
-  default     = []
-}
-
-variable "pending_tasks_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of pending_tasks detector"
-  type        = list
-  default     = []
-}
-
-variable "pending_tasks_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of pending_tasks detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for pending_tasks detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "pending_tasks_aggregation_function" {
@@ -375,21 +321,9 @@ variable "jvm_heap_memory_usage_disabled_warning" {
 }
 
 variable "jvm_heap_memory_usage_notifications" {
-  description = "Notification recipients list for every alerting rules of jvm_heap_memory_usage detector"
-  type        = list
-  default     = []
-}
-
-variable "jvm_heap_memory_usage_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of jvm_heap_memory_usage detector"
-  type        = list
-  default     = []
-}
-
-variable "jvm_heap_memory_usage_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of jvm_heap_memory_usage detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for jvm_heap_memory_usage detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "jvm_heap_memory_usage_aggregation_function" {
@@ -437,21 +371,9 @@ variable "cpu_usage_disabled_warning" {
 }
 
 variable "cpu_usage_notifications" {
-  description = "Notification recipients list for every alerting rules of cpu_usage detector"
-  type        = list
-  default     = []
-}
-
-variable "cpu_usage_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of cpu_usage detector"
-  type        = list
-  default     = []
-}
-
-variable "cpu_usage_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of cpu_usage detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for cpu_usage detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "cpu_usage_aggregation_function" {
@@ -499,21 +421,9 @@ variable "file_descriptors_disabled_warning" {
 }
 
 variable "file_descriptors_notifications" {
-  description = "Notification recipients list for every alerting rules of file_descriptors detector"
-  type        = list
-  default     = []
-}
-
-variable "file_descriptors_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of file_descriptors detector"
-  type        = list
-  default     = []
-}
-
-variable "file_descriptors_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of file_descriptors detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for file_descriptors detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "file_descriptors_aggregation_function" {
@@ -561,21 +471,9 @@ variable "jvm_memory_young_usage_disabled_major" {
 }
 
 variable "jvm_memory_young_usage_notifications" {
-  description = "Notification recipients list for every alerting rules of jvm_memory_young_usage detector"
-  type        = list
-  default     = []
-}
-
-variable "jvm_memory_young_usage_notifications_major" {
-  description = "Notification recipients list for major alerting rule of jvm_memory_young_usage detector"
-  type        = list
-  default     = []
-}
-
-variable "jvm_memory_young_usage_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of jvm_memory_young_usage detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for jvm_memory_young_usage detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "jvm_memory_young_usage_aggregation_function" {
@@ -623,21 +521,9 @@ variable "jvm_memory_old_usage_disabled_major" {
 }
 
 variable "jvm_memory_old_usage_notifications" {
-  description = "Notification recipients list for every alerting rules of jvm_memory_old_usage detector"
-  type        = list
-  default     = []
-}
-
-variable "jvm_memory_old_usage_notifications_major" {
-  description = "Notification recipients list for major alerting rule of jvm_memory_old_usage detector"
-  type        = list
-  default     = []
-}
-
-variable "jvm_memory_old_usage_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of jvm_memory_old_usage detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for jvm_memory_old_usage detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "jvm_memory_old_usage_aggregation_function" {
@@ -685,21 +571,9 @@ variable "jvm_gc_old_collection_latency_disabled_major" {
 }
 
 variable "jvm_gc_old_collection_latency_notifications" {
-  description = "Notification recipients list for every alerting rules of jvm_gc_old_collection_latency detector"
-  type        = list
-  default     = []
-}
-
-variable "jvm_gc_old_collection_latency_notifications_major" {
-  description = "Notification recipients list for major alerting rule of jvm_gc_old_collection_latency detector"
-  type        = list
-  default     = []
-}
-
-variable "jvm_gc_old_collection_latency_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of jvm_gc_old_collection_latency detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for jvm_gc_old_collection_latency detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "jvm_gc_old_collection_latency_aggregation_function" {
@@ -747,21 +621,9 @@ variable "jvm_gc_young_collection_latency_disabled_major" {
 }
 
 variable "jvm_gc_young_collection_latency_notifications" {
-  description = "Notification recipients list for every alerting rules of jvm_gc_young_collection_latency detector"
-  type        = list
-  default     = []
-}
-
-variable "jvm_gc_young_collection_latency_notifications_major" {
-  description = "Notification recipients list for major alerting rule of jvm_gc_young_collection_latency detector"
-  type        = list
-  default     = []
-}
-
-variable "jvm_gc_young_collection_latency_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of jvm_gc_young_collection_latency detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for jvm_gc_young_collection_latency detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "jvm_gc_young_collection_latency_aggregation_function" {
@@ -809,21 +671,9 @@ variable "indexing_latency_disabled_major" {
 }
 
 variable "indexing_latency_notifications" {
-  description = "Notification recipients list for every alerting rules of indexing_latency detector"
-  type        = list
-  default     = []
-}
-
-variable "indexing_latency_notifications_major" {
-  description = "Notification recipients list for major alerting rule of indexing_latency detector"
-  type        = list
-  default     = []
-}
-
-variable "indexing_latency_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of indexing_latency detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for indexing_latency detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "indexing_latency_aggregation_function" {
@@ -871,21 +721,9 @@ variable "flush_latency_disabled_major" {
 }
 
 variable "flush_latency_notifications" {
-  description = "Notification recipients list for every alerting rules of flush_latency detector"
-  type        = list
-  default     = []
-}
-
-variable "flush_latency_notifications_major" {
-  description = "Notification recipients list for major alerting rule of flush_latency detector"
-  type        = list
-  default     = []
-}
-
-variable "flush_latency_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of flush_latency detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for flush_latency detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "flush_latency_aggregation_function" {
@@ -933,21 +771,9 @@ variable "search_latency_disabled_major" {
 }
 
 variable "search_latency_notifications" {
-  description = "Notification recipients list for every alerting rules of search_latency detector"
-  type        = list
-  default     = []
-}
-
-variable "search_latency_notifications_major" {
-  description = "Notification recipients list for major alerting rule of search_latency detector"
-  type        = list
-  default     = []
-}
-
-variable "search_latency_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of search_latency detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for search_latency detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "search_latency_aggregation_function" {
@@ -995,21 +821,9 @@ variable "fetch_latency_disabled_major" {
 }
 
 variable "fetch_latency_notifications" {
-  description = "Notification recipients list for every alerting rules of fetch_latency detector"
-  type        = list
-  default     = []
-}
-
-variable "fetch_latency_notifications_major" {
-  description = "Notification recipients list for major alerting rule of fetch_latency detector"
-  type        = list
-  default     = []
-}
-
-variable "fetch_latency_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of fetch_latency detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for fetch_latency detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "fetch_latency_aggregation_function" {
@@ -1057,21 +871,9 @@ variable "field_data_evictions_change_disabled_major" {
 }
 
 variable "field_data_evictions_change_notifications" {
-  description = "Notification recipients list for every alerting rules of field_data_evictions_change detector"
-  type        = list
-  default     = []
-}
-
-variable "field_data_evictions_change_notifications_major" {
-  description = "Notification recipients list for major alerting rule of field_data_evictions_change detector"
-  type        = list
-  default     = []
-}
-
-variable "field_data_evictions_change_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of field_data_evictions_change detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for field_data_evictions_change detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "field_data_evictions_change_aggregation_function" {
@@ -1119,21 +921,9 @@ variable "query_cache_evictions_change_disabled_major" {
 }
 
 variable "query_cache_evictions_change_notifications" {
-  description = "Notification recipients list for every alerting rules of query_cache_evictions_change detector"
-  type        = list
-  default     = []
-}
-
-variable "query_cache_evictions_change_notifications_major" {
-  description = "Notification recipients list for major alerting rule of query_cache_evictions_change detector"
-  type        = list
-  default     = []
-}
-
-variable "query_cache_evictions_change_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of query_cache_evictions_change detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for query_cache_evictions_change detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "query_cache_evictions_change_aggregation_function" {
@@ -1181,21 +971,9 @@ variable "request_cache_evictions_change_disabled_major" {
 }
 
 variable "request_cache_evictions_change_notifications" {
-  description = "Notification recipients list for every alerting rules of request_cache_evictions_change detector"
-  type        = list
-  default     = []
-}
-
-variable "request_cache_evictions_change_notifications_major" {
-  description = "Notification recipients list for major alerting rule of request_cache_evictions_change detector"
-  type        = list
-  default     = []
-}
-
-variable "request_cache_evictions_change_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of request_cache_evictions_change detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for request_cache_evictions_change detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "request_cache_evictions_change_aggregation_function" {
@@ -1243,21 +1021,9 @@ variable "task_time_in_queue_change_disabled_major" {
 }
 
 variable "task_time_in_queue_change_notifications" {
-  description = "Notification recipients list for every alerting rules of task_time_in_queue_change detector"
-  type        = list
-  default     = []
-}
-
-variable "task_time_in_queue_change_notifications_major" {
-  description = "Notification recipients list for major alerting rule of task_time_in_queue_change detector"
-  type        = list
-  default     = []
-}
-
-variable "task_time_in_queue_change_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of task_time_in_queue_change detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for task_time_in_queue_change detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "task_time_in_queue_change_aggregation_function" {

@@ -13,8 +13,14 @@ variable "gcp_project_id" {
 # SignalFx module specific
 
 variable "notifications" {
-  description = "Notification recipients list for every detectors"
-  type        = list
+  description = "Default notification recipients list per severity"
+  type = object({
+    critical = list(string)
+    major    = list(string)
+    minor    = list(string)
+    warning  = list(string)
+    info     = list(string)
+  })
 }
 
 variable "prefixes" {
@@ -70,21 +76,9 @@ variable "error_rate_4xx_disabled_warning" {
 }
 
 variable "error_rate_4xx_notifications" {
-  description = "Notification recipients list for every alerting rules of error_rate_4xx detector"
-  type        = list
-  default     = []
-}
-
-variable "error_rate_4xx_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of error_rate_4xx detector"
-  type        = list
-  default     = []
-}
-
-variable "error_rate_4xx_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of error_rate_4xx detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for error_rate_4xx detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "error_rate_4xx_aggregation_function" {
@@ -144,21 +138,9 @@ variable "error_rate_5xx_disabled_warning" {
 }
 
 variable "error_rate_5xx_notifications" {
-  description = "Notification recipients list for every alerting rules of error_rate_5xx detector"
-  type        = list
-  default     = []
-}
-
-variable "error_rate_5xx_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of error_rate_5xx detector"
-  type        = list
-  default     = []
-}
-
-variable "error_rate_5xx_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of error_rate_5xx detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for error_rate_5xx detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "error_rate_5xx_aggregation_function" {
@@ -218,21 +200,9 @@ variable "backend_latency_service_disabled_warning" {
 }
 
 variable "backend_latency_service_notifications" {
-  description = "Notification recipients list for every alerting rules of backend_latency_service detector"
-  type        = list
-  default     = []
-}
-
-variable "backend_latency_service_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of backend_latency_service detector"
-  type        = list
-  default     = []
-}
-
-variable "backend_latency_service_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of backend_latency_service detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for backend_latency_service detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "backend_latency_service_aggregation_function" {
@@ -292,21 +262,9 @@ variable "backend_latency_bucket_disabled_warning" {
 }
 
 variable "backend_latency_bucket_notifications" {
-  description = "Notification recipients list for every alerting rules of backend_latency_bucket detector"
-  type        = list
-  default     = []
-}
-
-variable "backend_latency_bucket_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of backend_latency_bucket detector"
-  type        = list
-  default     = []
-}
-
-variable "backend_latency_bucket_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of backend_latency_bucket detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for backend_latency_bucket detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "backend_latency_bucket_aggregation_function" {
@@ -354,9 +312,9 @@ variable "request_count_disabled" {
 }
 
 variable "request_count_notifications" {
-  description = "Notification recipients list for every alerting rules of request_count detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for request_count detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "request_count_aggregation_function" {

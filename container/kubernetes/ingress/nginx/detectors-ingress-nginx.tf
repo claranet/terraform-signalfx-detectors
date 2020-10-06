@@ -14,7 +14,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.ingress_5xx_disabled_critical, var.ingress_5xx_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.ingress_5xx_notifications_critical, var.ingress_5xx_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.ingress_5xx_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
@@ -23,7 +23,7 @@ EOF
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.ingress_5xx_disabled_warning, var.ingress_5xx_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.ingress_5xx_notifications_warning, var.ingress_5xx_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.ingress_5xx_notifications, "warning", []), var.notifications.warning)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -44,7 +44,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.ingress_4xx_disabled_critical, var.ingress_4xx_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.ingress_4xx_notifications_critical, var.ingress_4xx_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.ingress_4xx_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
@@ -53,7 +53,7 @@ EOF
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.ingress_4xx_disabled_warning, var.ingress_4xx_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.ingress_4xx_notifications_warning, var.ingress_4xx_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.ingress_4xx_notifications, "warning", []), var.notifications.warning)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -72,7 +72,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.ingress_latency_disabled_critical, var.ingress_latency_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.ingress_latency_notifications_critical, var.ingress_latency_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.ingress_latency_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
@@ -81,7 +81,7 @@ EOF
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.ingress_latency_disabled_warning, var.ingress_latency_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.ingress_latency_notifications_warning, var.ingress_latency_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.ingress_latency_notifications, "warning", []), var.notifications.warning)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }

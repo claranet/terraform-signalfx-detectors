@@ -8,8 +8,14 @@ variable "environment" {
 # SignalFx Module specific
 
 variable "notifications" {
-  description = "Notification recipients list for every detectors"
-  type        = list
+  description = "Default notification recipients list per severity"
+  type = object({
+    critical = list(string)
+    major    = list(string)
+    minor    = list(string)
+    warning  = list(string)
+    info     = list(string)
+  })
 }
 
 variable "prefixes" {
@@ -45,9 +51,9 @@ variable "heartbeat_disabled" {
 }
 
 variable "heartbeat_notifications" {
-  description = "Notification recipients list for every alerting rules of heartbeat detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for heartbeat detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "heartbeat_timeframe" {
@@ -77,21 +83,9 @@ variable "treatment_limit_disabled_warning" {
 }
 
 variable "treatment_limit_notifications" {
-  description = "Notification recipients list for every alerting rules of treatment limit detector"
-  type        = list
-  default     = []
-}
-
-variable "treatment_limit_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of treatment limit detector"
-  type        = list
-  default     = []
-}
-
-variable "treatment_limit_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of treatment limit detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for treatment limit detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "treatment_limit_aggregation_function" {

@@ -13,8 +13,14 @@ variable "gcp_project_id" {
 # SignalFx module specific
 
 variable "notifications" {
-  description = "Notification recipients list for every detectors"
-  type        = list
+  description = "Default notification recipients list per severity"
+  type = object({
+    critical = list(string)
+    major    = list(string)
+    minor    = list(string)
+    warning  = list(string)
+    info     = list(string)
+  })
 }
 
 variable "prefixes" {
@@ -50,9 +56,9 @@ variable "heartbeat_disabled" {
 }
 
 variable "heartbeat_notifications" {
-  description = "Notification recipients list for every alerting rules of heartbeat detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for heartbeat detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "heartbeat_timeframe" {
@@ -82,21 +88,9 @@ variable "oldest_unacked_message_disabled_warning" {
 }
 
 variable "oldest_unacked_message_notifications" {
-  description = "Notification recipients list for every alerting rules of oldest_unacked_message detector"
-  type        = list
-  default     = []
-}
-
-variable "oldest_unacked_message_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of oldest_unacked_message detector"
-  type        = list
-  default     = []
-}
-
-variable "oldest_unacked_message_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of oldest_unacked_message detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for oldest_unacked_message detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "oldest_unacked_message_aggregation_function" {
@@ -144,21 +138,9 @@ variable "push_latency_disabled_warning" {
 }
 
 variable "push_latency_notifications" {
-  description = "Notification recipients list for every alerting rules of push_latency detector"
-  type        = list
-  default     = []
-}
-
-variable "push_latency_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of push_latency detector"
-  type        = list
-  default     = []
-}
-
-variable "push_latency_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of push_latency detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for push_latency detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "push_latency_aggregation_function" {

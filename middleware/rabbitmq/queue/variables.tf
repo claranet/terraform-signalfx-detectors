@@ -8,8 +8,14 @@ variable "environment" {
 # SignalFx module specific
 
 variable "notifications" {
-  description = "Notification recipients list for every detectors"
-  type        = list
+  description = "Default notification recipients list per severity"
+  type = object({
+    critical = list(string)
+    major    = list(string)
+    minor    = list(string)
+    warning  = list(string)
+    info     = list(string)
+  })
 }
 
 variable "prefixes" {
@@ -57,21 +63,9 @@ variable "messages_ready_disabled_warning" {
 }
 
 variable "messages_ready_notifications" {
-  description = "Notification recipients list for every alerting rules of messages_ready detector"
-  type        = list
-  default     = []
-}
-
-variable "messages_ready_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of messages_ready detector"
-  type        = list
-  default     = []
-}
-
-variable "messages_ready_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of messages_ready detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for messages_ready detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "messages_ready_aggregation_function" {
@@ -117,21 +111,9 @@ variable "messages_unacknowledged_disabled_warning" {
 }
 
 variable "messages_unacknowledged_notifications" {
-  description = "Notification recipients list for every alerting rules of messages_unacknowledged detector"
-  type        = list
-  default     = []
-}
-
-variable "messages_unacknowledged_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of messages_unacknowledged detector"
-  type        = list
-  default     = []
-}
-
-variable "messages_unacknowledged_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of messages_unacknowledged detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for messages_unacknowledged detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "messages_unacknowledged_aggregation_function" {
@@ -177,21 +159,9 @@ variable "messages_ack_rate_disabled_warning" {
 }
 
 variable "messages_ack_rate_notifications" {
-  description = "Notification recipients list for every alerting rules of messages_ack_rate detector"
-  type        = list
-  default     = []
-}
-
-variable "messages_ack_rate_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of messages_ack_rate detector"
-  type        = list
-  default     = []
-}
-
-variable "messages_ack_rate_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of messages_ack_rate detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for messages_ack_rate detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "messages_ack_rate_aggregation_function" {
@@ -243,21 +213,9 @@ variable "consumer_use_disabled_warning" {
 }
 
 variable "consumer_use_notifications" {
-  description = "Notification recipients list for every alerting rules of consumer_use detector"
-  type        = list
-  default     = []
-}
-
-variable "consumer_use_notifications_warning" {
-  description = "Notification recipients list for warning alerting rule of consumer_use detector"
-  type        = list
-  default     = []
-}
-
-variable "consumer_use_notifications_critical" {
-  description = "Notification recipients list for critical alerting rule of consumer_use detector"
-  type        = list
-  default     = []
+  description = "Notification recipients list per severity overridden for consumer_use detector"
+  type        = map(list(string))
+  default     = {}
 }
 
 variable "consumer_use_aggregation_function" {
