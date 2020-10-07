@@ -76,8 +76,8 @@ variable "cpu_90_15min_disabled_critical" {
   default     = null
 }
 
-variable "cpu_90_15min_disabled_warning" {
-  description = "Disable warning alerting rule for cpu_90_15min detector"
+variable "cpu_90_15min_disabled_major" {
+  description = "Disable major alerting rule for cpu_90_15min detector"
   type        = bool
   default     = null
 }
@@ -106,8 +106,8 @@ variable "cpu_90_15min_threshold_critical" {
   default     = 90
 }
 
-variable "cpu_90_15min_threshold_warning" {
-  description = "Warning threshold for cpu_90_15min detector"
+variable "cpu_90_15min_threshold_major" {
+  description = "Major threshold for cpu_90_15min detector"
   type        = number
   default     = 80
 }
@@ -126,8 +126,8 @@ variable "free_space_low_disabled_critical" {
   default     = null
 }
 
-variable "free_space_low_disabled_warning" {
-  description = "Disable warning alerting rule for free_space_low detector"
+variable "free_space_low_disabled_major" {
+  description = "Disable major alerting rule for free_space_low detector"
   type        = bool
   default     = null
 }
@@ -156,8 +156,8 @@ variable "free_space_low_threshold_critical" {
   default     = 20
 }
 
-variable "free_space_low_threshold_warning" {
-  description = "Warning threshold for free_space_low detector"
+variable "free_space_low_threshold_major" {
+  description = "Major threshold for free_space_low detector"
   type        = number
   default     = 40
 }
@@ -176,8 +176,8 @@ variable "replica_lag_disabled_critical" {
   default     = null
 }
 
-variable "replica_lag_disabled_warning" {
-  description = "Disable warning alerting rule for replica_lag detector"
+variable "replica_lag_disabled_major" {
+  description = "Disable major alerting rule for replica_lag detector"
   type        = bool
   default     = null
 }
@@ -206,8 +206,8 @@ variable "replica_lag_threshold_critical" {
   default     = 300
 }
 
-variable "replica_lag_threshold_warning" {
-  description = "Warning threshold for replica_lag detector"
+variable "replica_lag_threshold_major" {
+  description = "Major threshold for replica_lag detector"
   type        = number
   default     = 200
 }

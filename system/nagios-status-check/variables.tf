@@ -11,9 +11,9 @@ variable "notifications" {
   description = "Default notification recipients list per severity"
   type = object({
     critical = list(string)
+    warning  = list(string)
     major    = list(string)
     minor    = list(string)
-    warning  = list(string)
     info     = list(string)
   })
 }

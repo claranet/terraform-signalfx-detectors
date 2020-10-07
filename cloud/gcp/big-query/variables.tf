@@ -63,8 +63,8 @@ variable "concurrent_queries_disabled_critical" {
   default     = null
 }
 
-variable "concurrent_queries_disabled_warning" {
-  description = "Disable warning alerting rule for concurrent_queries detector"
+variable "concurrent_queries_disabled_major" {
+  description = "Disable major alerting rule for concurrent_queries detector"
   type        = bool
   default     = null
 }
@@ -93,8 +93,8 @@ variable "concurrent_queries_threshold_critical" {
   default     = 45
 }
 
-variable "concurrent_queries_threshold_warning" {
-  description = "Warning threshold for concurrent_queries detector"
+variable "concurrent_queries_threshold_major" {
+  description = "Major threshold for concurrent_queries detector"
   type        = number
   default     = 40
 }
@@ -131,8 +131,8 @@ variable "execution_time_disabled_critical" {
   default     = null
 }
 
-variable "execution_time_disabled_warning" {
-  description = "Disable warning alerting rule for execution_time detector"
+variable "execution_time_disabled_major" {
+  description = "Disable major alerting rule for execution_time detector"
   type        = bool
   default     = null
 }
@@ -161,8 +161,8 @@ variable "execution_time_threshold_critical" {
   default     = 150
 }
 
-variable "execution_time_threshold_warning" {
-  description = "Warning threshold for execution_time detector"
+variable "execution_time_threshold_major" {
+  description = "Major threshold for execution_time detector"
   type        = number
   default     = 100
 }
@@ -199,8 +199,8 @@ variable "scanned_bytes_disabled_critical" {
   default     = null
 }
 
-variable "scanned_bytes_disabled_warning" {
-  description = "Disable warning alerting rule for scanned_bytes detector"
+variable "scanned_bytes_disabled_major" {
+  description = "Disable major alerting rule for scanned_bytes detector"
   type        = bool
   default     = null
 }
@@ -229,8 +229,8 @@ variable "scanned_bytes_threshold_critical" {
   default     = 1
 }
 
-variable "scanned_bytes_threshold_warning" {
-  description = "Warning threshold for scanned_bytes detector"
+variable "scanned_bytes_threshold_major" {
+  description = "Major threshold for scanned_bytes detector"
   type        = number
   default     = 0
 }
@@ -267,8 +267,8 @@ variable "scanned_bytes_billed_disabled_critical" {
   default     = null
 }
 
-variable "scanned_bytes_billed_disabled_warning" {
-  description = "Disable warning alerting rule for scanned_bytes_billed detector"
+variable "scanned_bytes_billed_disabled_major" {
+  description = "Disable major alerting rule for scanned_bytes_billed detector"
   type        = bool
   default     = null
 }
@@ -297,8 +297,8 @@ variable "scanned_bytes_billed_threshold_critical" {
   default     = 1
 }
 
-variable "scanned_bytes_billed_threshold_warning" {
-  description = "Warning threshold for scanned_bytes_billed detector"
+variable "scanned_bytes_billed_threshold_major" {
+  description = "Major threshold for scanned_bytes_billed detector"
   type        = number
   default     = 0
 }
@@ -335,8 +335,8 @@ variable "available_slots_disabled_critical" {
   default     = null
 }
 
-variable "available_slots_disabled_warning" {
-  description = "Disable warning alerting rule for available_slots detector"
+variable "available_slots_disabled_major" {
+  description = "Disable major alerting rule for available_slots detector"
   type        = bool
   default     = null
 }
@@ -365,8 +365,8 @@ variable "available_slots_threshold_critical" {
   default     = 200
 }
 
-variable "available_slots_threshold_warning" {
-  description = "Warning threshold for available_slots detector"
+variable "available_slots_threshold_major" {
+  description = "Major threshold for available_slots detector"
   type        = number
   default     = 300
 }
@@ -403,8 +403,8 @@ variable "stored_bytes_disabled_critical" {
   default     = null
 }
 
-variable "stored_bytes_disabled_warning" {
-  description = "Disable warning alerting rule for stored_bytes detector"
+variable "stored_bytes_disabled_major" {
+  description = "Disable major alerting rule for stored_bytes detector"
   type        = bool
   default     = null
 }
@@ -433,8 +433,8 @@ variable "stored_bytes_threshold_critical" {
   default     = 1
 }
 
-variable "stored_bytes_threshold_warning" {
-  description = "Warning threshold for stored_bytes detector"
+variable "stored_bytes_threshold_major" {
+  description = "Major threshold for stored_bytes detector"
   type        = number
   default     = 0
 }
@@ -471,8 +471,8 @@ variable "table_count_disabled_critical" {
   default     = null
 }
 
-variable "table_count_disabled_warning" {
-  description = "Disable warning alerting rule for table_count detector"
+variable "table_count_disabled_major" {
+  description = "Disable major alerting rule for table_count detector"
   type        = bool
   default     = null
 }
@@ -501,8 +501,8 @@ variable "table_count_threshold_critical" {
   default     = 1
 }
 
-variable "table_count_threshold_warning" {
-  description = "Warning threshold for table_count detector"
+variable "table_count_threshold_major" {
+  description = "Major threshold for table_count detector"
   type        = number
   default     = 0
 }
@@ -539,8 +539,8 @@ variable "uploaded_bytes_disabled_critical" {
   default     = null
 }
 
-variable "uploaded_bytes_disabled_warning" {
-  description = "Disable warning alerting rule for uploaded_bytes detector"
+variable "uploaded_bytes_disabled_major" {
+  description = "Disable major alerting rule for uploaded_bytes detector"
   type        = bool
   default     = null
 }
@@ -569,8 +569,8 @@ variable "uploaded_bytes_threshold_critical" {
   default     = 1
 }
 
-variable "uploaded_bytes_threshold_warning" {
-  description = "Warning threshold for uploaded_bytes detector"
+variable "uploaded_bytes_threshold_major" {
+  description = "Major threshold for uploaded_bytes detector"
   type        = number
   default     = 0
 }
@@ -607,8 +607,8 @@ variable "uploaded_bytes_billed_disabled_critical" {
   default     = null
 }
 
-variable "uploaded_bytes_billed_disabled_warning" {
-  description = "Disable warning alerting rule for uploaded_bytes_billed detector"
+variable "uploaded_bytes_billed_disabled_major" {
+  description = "Disable major alerting rule for uploaded_bytes_billed detector"
   type        = bool
   default     = null
 }
@@ -637,8 +637,8 @@ variable "uploaded_bytes_billed_threshold_critical" {
   default     = 1
 }
 
-variable "uploaded_bytes_billed_threshold_warning" {
-  description = "Warning threshold for uploaded_bytes_billed detector"
+variable "uploaded_bytes_billed_threshold_major" {
+  description = "Major threshold for uploaded_bytes_billed detector"
   type        = number
   default     = 0
 }

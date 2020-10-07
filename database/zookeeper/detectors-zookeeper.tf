@@ -42,7 +42,7 @@ resource "signalfx_detector" "zookeeper_latency" {
   program_text = <<-EOF
     signal = data('gauge.zk_avg_latency', filter=filter('plugin', 'zookeeper') and ${module.filter-tags.filter_custom})${var.zookeeper_latency_aggregation_function}${var.zookeeper_latency_transformation_function}.publish('signal')
     detect(when(signal > ${var.zookeeper_latency_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.zookeeper_latency_threshold_warning}) and when(signal <= ${var.zookeeper_latency_threshold_critical})).publish('WARN')
+    detect(when(signal > ${var.zookeeper_latency_threshold_major}) and when(signal <= ${var.zookeeper_latency_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -55,11 +55,11 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.zookeeper_latency_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.zookeeper_latency_disabled_warning, var.zookeeper_latency_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.zookeeper_latency_notifications, "warning", []), var.notifications.warning)
+    description           = "is too high > ${var.zookeeper_latency_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.zookeeper_latency_disabled_major, var.zookeeper_latency_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.zookeeper_latency_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -72,7 +72,7 @@ resource "signalfx_detector" "file_descriptors" {
     B = data('gauge.zk_max_file_descriptor_count', filter=filter('plugin', 'zookeeper') and ${module.filter-tags.filter_custom}, rollup='average')${var.file_descriptors_aggregation_function}${var.file_descriptors_transformation_function}
     signal = (A/B).scale(100).publish('signal')
     detect(when(signal > ${var.file_descriptors_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.file_descriptors_threshold_warning}) and when(signal <= ${var.file_descriptors_threshold_critical})).publish('WARN')
+    detect(when(signal > ${var.file_descriptors_threshold_major}) and when(signal <= ${var.file_descriptors_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -85,11 +85,11 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.file_descriptors_threshold_warning}%"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.file_descriptors_disabled_warning, var.file_descriptors_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.file_descriptors_notifications, "warning", []), var.notifications.warning)
+    description           = "is too high > ${var.file_descriptors_threshold_major}%"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.file_descriptors_disabled_major, var.file_descriptors_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.file_descriptors_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }

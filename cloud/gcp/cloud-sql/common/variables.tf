@@ -81,8 +81,8 @@ variable "cpu_utilization_disabled_critical" {
   default     = null
 }
 
-variable "cpu_utilization_disabled_warning" {
-  description = "Disable warning alerting rule for cpu_utilization detector"
+variable "cpu_utilization_disabled_major" {
+  description = "Disable major alerting rule for cpu_utilization detector"
   type        = bool
   default     = null
 }
@@ -111,8 +111,8 @@ variable "cpu_utilization_threshold_critical" {
   default     = 95
 }
 
-variable "cpu_utilization_threshold_warning" {
-  description = "Warning threshold for cpu_utilization detector"
+variable "cpu_utilization_threshold_major" {
+  description = "Major threshold for cpu_utilization detector"
   type        = number
   default     = 80
 }
@@ -131,8 +131,8 @@ variable "disk_utilization_disabled_critical" {
   default     = null
 }
 
-variable "disk_utilization_disabled_warning" {
-  description = "Disable warning alerting rule for disk_utilization detector"
+variable "disk_utilization_disabled_major" {
+  description = "Disable major alerting rule for disk_utilization detector"
   type        = bool
   default     = null
 }
@@ -161,8 +161,8 @@ variable "disk_utilization_threshold_critical" {
   default     = 95
 }
 
-variable "disk_utilization_threshold_warning" {
-  description = "Warning threshold for disk_utilization detector"
+variable "disk_utilization_threshold_major" {
+  description = "Major threshold for disk_utilization detector"
   type        = number
   default     = 86
 }
@@ -243,8 +243,8 @@ variable "memory_utilization_disabled_critical" {
   default     = null
 }
 
-variable "memory_utilization_disabled_warning" {
-  description = "Disable warning alerting rule for memory_utilization detector"
+variable "memory_utilization_disabled_major" {
+  description = "Disable major alerting rule for memory_utilization detector"
   type        = bool
   default     = null
 }
@@ -273,8 +273,8 @@ variable "memory_utilization_threshold_critical" {
   default     = 95
 }
 
-variable "memory_utilization_threshold_warning" {
-  description = "Warning threshold for memory_utilization detector"
+variable "memory_utilization_threshold_major" {
+  description = "Major threshold for memory_utilization detector"
   type        = number
   default     = 90
 }

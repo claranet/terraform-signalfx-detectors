@@ -76,8 +76,8 @@ variable "su_utilization_disabled_critical" {
   default     = null
 }
 
-variable "su_utilization_disabled_warning" {
-  description = "Disable warning alerting rule for su_utilization detector"
+variable "su_utilization_disabled_major" {
+  description = "Disable major alerting rule for su_utilization detector"
   type        = bool
   default     = null
 }
@@ -106,8 +106,8 @@ variable "su_utilization_threshold_critical" {
   default     = 95
 }
 
-variable "su_utilization_threshold_warning" {
-  description = "Warning threshold for su_utilization detector"
+variable "su_utilization_threshold_major" {
+  description = "Major threshold for su_utilization detector"
   type        = number
   default     = 80
 }
@@ -126,8 +126,8 @@ variable "failed_function_requests_disabled_critical" {
   default     = null
 }
 
-variable "failed_function_requests_disabled_warning" {
-  description = "Disable warning alerting rule for failed_function_requests detector"
+variable "failed_function_requests_disabled_major" {
+  description = "Disable major alerting rule for failed_function_requests detector"
   type        = bool
   default     = null
 }
@@ -156,8 +156,8 @@ variable "failed_function_requests_threshold_critical" {
   default     = 10
 }
 
-variable "failed_function_requests_threshold_warning" {
-  description = "Warning threshold for failed_function_requests detector"
+variable "failed_function_requests_threshold_major" {
+  description = "Major threshold for failed_function_requests detector"
   type        = number
   default     = 0
 }
@@ -176,8 +176,8 @@ variable "conversion_errors_disabled_critical" {
   default     = null
 }
 
-variable "conversion_errors_disabled_warning" {
-  description = "Disable warning alerting rule for conversion_errors detector"
+variable "conversion_errors_disabled_major" {
+  description = "Disable major alerting rule for conversion_errors detector"
   type        = bool
   default     = null
 }
@@ -206,8 +206,8 @@ variable "conversion_errors_threshold_critical" {
   default     = 10
 }
 
-variable "conversion_errors_threshold_warning" {
-  description = "Warning threshold for conversion_errors detector"
+variable "conversion_errors_threshold_major" {
+  description = "Major threshold for conversion_errors detector"
   type        = number
   default     = 0
 }
@@ -226,8 +226,8 @@ variable "runtime_errors_disabled_critical" {
   default     = null
 }
 
-variable "runtime_errors_disabled_warning" {
-  description = "Disable warning alerting rule for runtime_errors detector"
+variable "runtime_errors_disabled_major" {
+  description = "Disable major alerting rule for runtime_errors detector"
   type        = bool
   default     = null
 }
@@ -256,8 +256,8 @@ variable "runtime_errors_threshold_critical" {
   default     = 10
 }
 
-variable "runtime_errors_threshold_warning" {
-  description = "Warning threshold for runtime_errors detector"
+variable "runtime_errors_threshold_major" {
+  description = "Major threshold for runtime_errors detector"
   type        = number
   default     = 0
 }

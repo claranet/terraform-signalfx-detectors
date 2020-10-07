@@ -26,7 +26,7 @@ resource "signalfx_detector" "php_fpm_connect_idle" {
     B = data('phpfpm_processes.idle', ${module.filter-tags.filter_custom})${var.php_fpm_connect_idle_aggregation_function}${var.php_fpm_connect_idle_transformation_function}
     signal = ((A / (A+B)).scale(100)).publish('signal')
     detect(when(signal > ${var.php_fpm_connect_idle_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.php_fpm_connect_idle_threshold_warning}) and when(signal <= ${var.php_fpm_connect_idle_threshold_critical})).publish('WARN')
+    detect(when(signal > ${var.php_fpm_connect_idle_threshold_major}) and when(signal <= ${var.php_fpm_connect_idle_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -39,11 +39,11 @@ EOF
   }
 
   rule {
-    description           = "are too high > ${var.php_fpm_connect_idle_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.php_fpm_connect_idle_disabled_warning, var.php_fpm_connect_idle_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.php_fpm_connect_idle_notifications, "warning", []), var.notifications.warning)
+    description           = "are too high > ${var.php_fpm_connect_idle_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.php_fpm_connect_idle_disabled_major, var.php_fpm_connect_idle_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.php_fpm_connect_idle_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }

@@ -76,8 +76,8 @@ variable "visible_messages_disabled_critical" {
   default     = null
 }
 
-variable "visible_messages_disabled_warning" {
-  description = "Disable warning alerting rule for visible_messages detector"
+variable "visible_messages_disabled_major" {
+  description = "Disable major alerting rule for visible_messages detector"
   type        = bool
   default     = null
 }
@@ -106,8 +106,8 @@ variable "visible_messages_threshold_critical" {
   default     = 2
 }
 
-variable "visible_messages_threshold_warning" {
-  description = "Warning threshold for visible_messages detector"
+variable "visible_messages_threshold_major" {
+  description = "Major threshold for visible_messages detector"
   type        = number
   default     = 1
 }
@@ -126,8 +126,8 @@ variable "age_of_oldest_message_disabled_critical" {
   default     = null
 }
 
-variable "age_of_oldest_message_disabled_warning" {
-  description = "Disable warning alerting rule for age_of_oldest_message detector"
+variable "age_of_oldest_message_disabled_major" {
+  description = "Disable major alerting rule for age_of_oldest_message detector"
   type        = bool
   default     = null
 }
@@ -156,8 +156,8 @@ variable "age_of_oldest_message_threshold_critical" {
   default     = 600
 }
 
-variable "age_of_oldest_message_threshold_warning" {
-  description = "Warning threshold for age_of_oldest_message detector"
+variable "age_of_oldest_message_threshold_major" {
+  description = "Major threshold for age_of_oldest_message detector"
   type        = number
   default     = 300
 }

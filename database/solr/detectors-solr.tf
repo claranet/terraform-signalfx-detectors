@@ -24,7 +24,7 @@ resource "signalfx_detector" "errors" {
   program_text = <<-EOF
     signal = data('counter.solr.zookeeper_errors', ${module.filter-tags.filter_custom})${var.errors_aggregation_function}${var.errors_transformation_function}.publish('signal')
     detect(when(signal >= ${var.errors_threshold_critical})).publish('CRIT')
-    detect(when(signal >= ${var.errors_threshold_warning}) and when(signal <= ${var.errors_threshold_critical})).publish('WARN')
+    detect(when(signal >= ${var.errors_threshold_major}) and when(signal <= ${var.errors_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -37,11 +37,11 @@ EOF
   }
 
   rule {
-    description           = "is too high >= ${var.errors_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.errors_disabled_warning, var.errors_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.errors_notifications, "warning", []), var.notifications.warning)
+    description           = "is too high >= ${var.errors_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.errors_disabled_major, var.errors_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.errors_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -52,7 +52,7 @@ resource "signalfx_detector" "searcher_warmup_time" {
   program_text = <<-EOF
     signal = data('gauge.solr.searcher_warmup', ${module.filter-tags.filter_custom})${var.searcher_warmup_time_aggregation_function}${var.searcher_warmup_time_transformation_function}.publish('signal')
     detect(when(signal >= ${var.searcher_warmup_time_threshold_critical})).publish('CRIT')
-    detect(when(signal >= ${var.searcher_warmup_time_threshold_warning}) and when(signal <= ${var.searcher_warmup_time_threshold_critical})).publish('WARN')
+    detect(when(signal >= ${var.searcher_warmup_time_threshold_major}) and when(signal <= ${var.searcher_warmup_time_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -65,11 +65,11 @@ EOF
   }
 
   rule {
-    description           = "is too high >= ${var.searcher_warmup_time_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.searcher_warmup_time_disabled_warning, var.searcher_warmup_time_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.searcher_warmup_time_notifications, "warning", []), var.notifications.warning)
+    description           = "is too high >= ${var.searcher_warmup_time_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.searcher_warmup_time_disabled_major, var.searcher_warmup_time_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.searcher_warmup_time_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }

@@ -76,8 +76,8 @@ variable "cpu_usage_disabled_critical" {
   default     = null
 }
 
-variable "cpu_usage_disabled_warning" {
-  description = "Disable warning alerting rule for cpu_usage detector"
+variable "cpu_usage_disabled_major" {
+  description = "Disable major alerting rule for cpu_usage detector"
   type        = bool
   default     = null
 }
@@ -106,8 +106,8 @@ variable "cpu_usage_threshold_critical" {
   default     = 90
 }
 
-variable "cpu_usage_threshold_warning" {
-  description = "Warning threshold for cpu_usage detector"
+variable "cpu_usage_threshold_major" {
+  description = "Major threshold for cpu_usage detector"
   type        = number
   default     = 80
 }
@@ -126,8 +126,8 @@ variable "free_storage_disabled_critical" {
   default     = null
 }
 
-variable "free_storage_disabled_warning" {
-  description = "Disable warning alerting rule for free_storage detector"
+variable "free_storage_disabled_major" {
+  description = "Disable major alerting rule for free_storage detector"
   type        = bool
   default     = null
 }
@@ -156,8 +156,8 @@ variable "free_storage_threshold_critical" {
   default     = 10
 }
 
-variable "free_storage_threshold_warning" {
-  description = "Warning threshold for free_storage detector"
+variable "free_storage_threshold_major" {
+  description = "Major threshold for free_storage detector"
   type        = number
   default     = 20
 }
@@ -176,8 +176,8 @@ variable "io_consumption_disabled_critical" {
   default     = null
 }
 
-variable "io_consumption_disabled_warning" {
-  description = "Disable warning alerting rule for io_consumption detector"
+variable "io_consumption_disabled_major" {
+  description = "Disable major alerting rule for io_consumption detector"
   type        = bool
   default     = null
 }
@@ -206,8 +206,8 @@ variable "io_consumption_threshold_critical" {
   default     = 90
 }
 
-variable "io_consumption_threshold_warning" {
-  description = "Warning threshold for io_consumption detector"
+variable "io_consumption_threshold_major" {
+  description = "Major threshold for io_consumption detector"
   type        = number
   default     = 80
 }
@@ -226,8 +226,8 @@ variable "memory_usage_disabled_critical" {
   default     = null
 }
 
-variable "memory_usage_disabled_warning" {
-  description = "Disable warning alerting rule for memory_usage detector"
+variable "memory_usage_disabled_major" {
+  description = "Disable major alerting rule for memory_usage detector"
   type        = bool
   default     = null
 }
@@ -256,8 +256,8 @@ variable "memory_usage_threshold_critical" {
   default     = 90
 }
 
-variable "memory_usage_threshold_warning" {
-  description = "Warning threshold for memory_usage detector"
+variable "memory_usage_threshold_major" {
+  description = "Major threshold for memory_usage detector"
   type        = number
   default     = 80
 }
@@ -276,8 +276,8 @@ variable "replication_lag_disabled_critical" {
   default     = null
 }
 
-variable "replication_lag_disabled_warning" {
-  description = "Disable warning alerting rule for replication_lag detector"
+variable "replication_lag_disabled_major" {
+  description = "Disable major alerting rule for replication_lag detector"
   type        = bool
   default     = null
 }
@@ -306,8 +306,8 @@ variable "replication_lag_threshold_critical" {
   default     = 200
 }
 
-variable "replication_lag_threshold_warning" {
-  description = "Warning threshold in seconds for replication_lag detector"
+variable "replication_lag_threshold_major" {
+  description = "Major threshold in seconds for replication_lag detector"
   type        = number
   default     = 100
 }

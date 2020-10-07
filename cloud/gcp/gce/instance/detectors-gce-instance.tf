@@ -23,7 +23,7 @@ resource "signalfx_detector" "cpu_utilization" {
   program_text = <<-EOF
     signal = data('instance/cpu/utilization', ${module.filter-tags.filter_custom})${var.cpu_utilization_aggregation_function}${var.cpu_utilization_transformation_function}.scale(100).publish('signal')
     detect(when(signal > ${var.cpu_utilization_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.cpu_utilization_threshold_warning}) and when(signal <= ${var.cpu_utilization_threshold_critical})).publish('WARN')
+    detect(when(signal > ${var.cpu_utilization_threshold_major}) and when(signal <= ${var.cpu_utilization_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -36,11 +36,11 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.cpu_utilization_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.cpu_utilization_disabled_warning, var.cpu_utilization_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.cpu_utilization_notifications, "warning", []), var.notifications.warning)
+    description           = "is too high > ${var.cpu_utilization_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.cpu_utilization_disabled_major, var.cpu_utilization_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.cpu_utilization_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -55,7 +55,7 @@ resource "signalfx_detector" "disk_throttled_bps" {
     D = data('instance/disk/write_bytes_count', ${module.filter-tags.filter_custom})${var.disk_throttled_bps_aggregation_function}${var.disk_throttled_bps_transformation_function}
     signal = ((A+B) / (C+D)).scale(100).publish('signal')
     detect(when(signal > ${var.disk_throttled_bps_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.disk_throttled_bps_threshold_warning}) and when(signal <= ${var.disk_throttled_bps_threshold_critical})).publish('WARN')
+    detect(when(signal > ${var.disk_throttled_bps_threshold_major}) and when(signal <= ${var.disk_throttled_bps_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -68,11 +68,11 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.disk_throttled_bps_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.disk_throttled_bps_disabled_warning, var.disk_throttled_bps_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.disk_throttled_bps_notifications, "warning", []), var.notifications.warning)
+    description           = "is too high > ${var.disk_throttled_bps_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.disk_throttled_bps_disabled_major, var.disk_throttled_bps_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.disk_throttled_bps_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -87,7 +87,7 @@ resource "signalfx_detector" "disk_throttled_ops" {
     D = data('instance/disk/write_ops_count', ${module.filter-tags.filter_custom})${var.disk_throttled_ops_aggregation_function}${var.disk_throttled_ops_transformation_function}
     signal = ((A+B) / (C+D)).scale(100).publish('signal')
     detect(when(signal > ${var.disk_throttled_ops_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.disk_throttled_ops_threshold_warning}) and when(signal <= ${var.disk_throttled_ops_threshold_critical})).publish('WARN')
+    detect(when(signal > ${var.disk_throttled_ops_threshold_major}) and when(signal <= ${var.disk_throttled_ops_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -100,11 +100,11 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.disk_throttled_ops_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.disk_throttled_ops_disabled_warning, var.disk_throttled_ops_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.disk_throttled_ops_notifications, "warning", []), var.notifications.warning)
+    description           = "is too high > ${var.disk_throttled_ops_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.disk_throttled_ops_disabled_major, var.disk_throttled_ops_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.disk_throttled_ops_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }

@@ -76,8 +76,8 @@ variable "cpu_percentage_disabled_critical" {
   default     = null
 }
 
-variable "cpu_percentage_disabled_warning" {
-  description = "Disable warning alerting rule for cpu_percentage detector"
+variable "cpu_percentage_disabled_major" {
+  description = "Disable major alerting rule for cpu_percentage detector"
   type        = bool
   default     = null
 }
@@ -106,8 +106,8 @@ variable "cpu_percentage_threshold_critical" {
   default     = 95
 }
 
-variable "cpu_percentage_threshold_warning" {
-  description = "Warning threshold for cpu_percentage detector"
+variable "cpu_percentage_threshold_major" {
+  description = "Major threshold for cpu_percentage detector"
   type        = number
   default     = 90
 }
@@ -126,8 +126,8 @@ variable "memory_percentage_disabled_critical" {
   default     = null
 }
 
-variable "memory_percentage_disabled_warning" {
-  description = "Disable warning alerting rule for memory_percentage detector"
+variable "memory_percentage_disabled_major" {
+  description = "Disable major alerting rule for memory_percentage detector"
   type        = bool
   default     = null
 }
@@ -156,8 +156,8 @@ variable "memory_percentage_threshold_critical" {
   default     = 95
 }
 
-variable "memory_percentage_threshold_warning" {
-  description = "Warning threshold for memory_percentage detector"
+variable "memory_percentage_threshold_major" {
+  description = "Major threshold for memory_percentage detector"
   type        = number
   default     = 90
 }

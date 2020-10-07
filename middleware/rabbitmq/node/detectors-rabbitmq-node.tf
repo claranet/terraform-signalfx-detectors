@@ -26,7 +26,7 @@ resource "signalfx_detector" "file_descriptors" {
     B = data('gauge.node.fd_total', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom})${var.file_descriptors_aggregation_function}${var.file_descriptors_transformation_function}
     signal = (A/B).scale(100).publish('signal')
     detect(when(signal > ${var.file_descriptors_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.file_descriptors_threshold_warning}) and when(signal <= ${var.file_descriptors_threshold_critical})).publish('WARN')
+    detect(when(signal > ${var.file_descriptors_threshold_major}) and when(signal <= ${var.file_descriptors_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -39,11 +39,11 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.file_descriptors_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.file_descriptors_disabled_warning, var.file_descriptors_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.file_descriptors_notifications, "warning", []), var.notifications.warning)
+    description           = "is too high > ${var.file_descriptors_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.file_descriptors_disabled_major, var.file_descriptors_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.file_descriptors_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -56,7 +56,7 @@ resource "signalfx_detector" "processes" {
     B = data('gauge.node.proc_total', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom})${var.processes_aggregation_function}${var.processes_transformation_function}
     signal = (A/B).scale(100).publish('signal')
     detect(when(signal > ${var.processes_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.processes_threshold_warning}) and when(signal <= ${var.processes_threshold_critical})).publish('WARN')
+    detect(when(signal > ${var.processes_threshold_major}) and when(signal <= ${var.processes_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -69,11 +69,11 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.processes_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.processes_disabled_warning, var.processes_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.processes_notifications, "warning", []), var.notifications.warning)
+    description           = "is too high > ${var.processes_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.processes_disabled_major, var.processes_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.processes_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -86,7 +86,7 @@ resource "signalfx_detector" "sockets" {
     B = data('gauge.node.sockets_total', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom})${var.sockets_aggregation_function}${var.sockets_transformation_function}
     signal = (A/B).scale(100).publish('signal')
     detect(when(signal > ${var.sockets_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.sockets_threshold_warning}) and when(signal < ${var.sockets_threshold_critical})).publish('WARN')
+    detect(when(signal > ${var.sockets_threshold_major}) and when(signal < ${var.sockets_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -99,11 +99,11 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.sockets_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.sockets_disabled_warning, var.sockets_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.sockets_notifications, "warning", []), var.notifications.warning)
+    description           = "is too high > ${var.sockets_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.sockets_disabled_major, var.sockets_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.sockets_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -116,7 +116,7 @@ resource "signalfx_detector" "vm_memory" {
     B = data('gauge.node.mem_limit', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom})${var.vm_memory_aggregation_function}${var.vm_memory_transformation_function}
     signal = (A/B).scale(100).publish('signal')
     detect(when(signal > ${var.vm_memory_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.vm_memory_threshold_warning}) and when(signal < ${var.vm_memory_threshold_critical})).publish('WARN')
+    detect(when(signal > ${var.vm_memory_threshold_major}) and when(signal < ${var.vm_memory_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -130,10 +130,10 @@ EOF
 
   rule {
     description           = "is approaching the limit"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.vm_memory_disabled_warning, var.vm_memory_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.vm_memory_notifications, "warning", []), var.notifications.warning)
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.vm_memory_disabled_major, var.vm_memory_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.vm_memory_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }

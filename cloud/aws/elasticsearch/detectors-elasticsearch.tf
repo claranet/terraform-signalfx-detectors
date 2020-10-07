@@ -24,7 +24,7 @@ resource "signalfx_detector" "cluster_status" {
     A = data('ClusterStatus.red', filter=filter('namespace', 'AWS/ES') and filter('stat', 'upper') and ${module.filter-tags.filter_custom})${var.cluster_status_aggregation_function}${var.cluster_status_transformation_function}.publish('A')
     B = data('ClusterStatus.yellow', filter=filter('namespace', 'AWS/ES') and filter('stat', 'upper') and ${module.filter-tags.filter_custom})${var.cluster_status_aggregation_function}${var.cluster_status_transformation_function}.publish('B')
     detect(when(A >= 1)).publish('CRIT')
-    detect(when(B >= 1)).publish('WARN')
+    detect(when(B >= 1)).publish('MAJOR')
 EOF
 
   rule {
@@ -38,10 +38,10 @@ EOF
 
   rule {
     description           = "is yellow"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.cluster_status_disabled_warning, var.cluster_status_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.cluster_status_notifications, "warning", []), var.notifications.warning)
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.cluster_status_disabled_major, var.cluster_status_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.cluster_status_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} on {{{dimensions}}}"
   }
 }
@@ -52,7 +52,7 @@ resource "signalfx_detector" "free_space" {
   program_text = <<-EOF
     signal = data('FreeStorageSpace', filter=filter('namespace', 'AWS/ES') and filter('stat', 'lower') and filter('NodeId', '*') and ${module.filter-tags.filter_custom})${var.free_space_aggregation_function}${var.free_space_transformation_function}.publish('signal')
     detect(when(signal < ${var.free_space_threshold_critical})).publish('CRIT')
-    detect(when(signal < ${var.free_space_threshold_warning}) and when(signal >= ${var.free_space_threshold_critical})).publish('WARN')
+    detect(when(signal < ${var.free_space_threshold_major}) and when(signal >= ${var.free_space_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -65,11 +65,11 @@ EOF
   }
 
   rule {
-    description           = "is too low < ${var.free_space_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.free_space_disabled_warning, var.free_space_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.free_space_notifications, "warning", []), var.notifications.warning)
+    description           = "is too low < ${var.free_space_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.free_space_disabled_major, var.free_space_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.free_space_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -80,7 +80,7 @@ resource "signalfx_detector" "cpu_90_15min" {
   program_text = <<-EOF
     signal = data('CPUUtilization', filter=filter('namespace', 'AWS/ES') and filter('stat', 'upper') and filter('NodeId', '*') and ${module.filter-tags.filter_custom})${var.cpu_90_15min_aggregation_function}${var.cpu_90_15min_transformation_function}.publish('signal')
     detect(when(signal > ${var.cpu_90_15min_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.cpu_90_15min_threshold_warning}) and when(signal <= ${var.cpu_90_15min_threshold_critical})).publish('WARN')
+    detect(when(signal > ${var.cpu_90_15min_threshold_major}) and when(signal <= ${var.cpu_90_15min_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -93,11 +93,11 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.cpu_90_15min_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.cpu_90_15min_disabled_warning, var.cpu_90_15min_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.cpu_90_15min_notifications, "warning", []), var.notifications.warning)
+    description           = "is too high > ${var.cpu_90_15min_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.cpu_90_15min_disabled_major, var.cpu_90_15min_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.cpu_90_15min_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }

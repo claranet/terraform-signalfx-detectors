@@ -22,25 +22,25 @@ resource "signalfx_detector" "node_ready" {
 
   program_text = <<-EOF
     signal = data('kubernetes.node_ready', filter=${module.filter-tags.filter_custom})${var.node_ready_aggregation_function}${var.node_ready_transformation_function}.fill(1).publish('signal')
-    detect(when(signal == 0, lasting='${var.node_ready_lasting_duration_seconds}s')).publish('WARN')
-    detect(when(signal == -1, lasting='${var.node_ready_lasting_duration_seconds / 2}s')).publish('MAJOR')
+    detect(when(signal == 0, lasting='${var.node_ready_lasting_duration_seconds}s')).publish('MAJOR')
+    detect(when(signal == -1, lasting='${var.node_ready_lasting_duration_seconds / 2}s')).publish('MINOR')
 EOF
 
   rule {
     description           = "is not ready"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.node_ready_disabled_warning, var.node_ready_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.node_ready_notifications, "warning", []), var.notifications.warning)
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.node_ready_disabled_major, var.node_ready_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.node_ready_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
   rule {
     description           = "in an unknown state"
-    severity              = "Major"
-    detect_label          = "MAJOR"
-    disabled              = coalesce(var.node_ready_disabled_major, var.node_ready_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.node_ready_notifications, "major", []), var.notifications.major)
+    severity              = "Minor"
+    detect_label          = "MINOR"
+    disabled              = coalesce(var.node_ready_disabled_minor, var.node_ready_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.node_ready_notifications, "minor", []), var.notifications.minor)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -50,15 +50,15 @@ resource "signalfx_detector" "pod_phase_status" {
 
   program_text = <<-EOF
     signal = data('kubernetes.pod_phase', filter=(not filter('job', '*')) and (not filter('cronjob', '*')) and ${module.filter-tags.filter_custom})${var.pod_phase_status_aggregation_function}${var.pod_phase_status_transformation_function}.fill(2).publish('signal')
-    detect(when(signal < threshold(2), lasting='${var.pod_phase_status_lasting_duration_seconds}s') or when(signal > threshold(3), lasting='${var.pod_phase_status_lasting_duration_seconds}s')).publish('WARN')
+    detect(when(signal < threshold(2), lasting='${var.pod_phase_status_lasting_duration_seconds}s') or when(signal > threshold(3), lasting='${var.pod_phase_status_lasting_duration_seconds}s')).publish('MAJOR')
 EOF
 
   rule {
     description           = "is in a non-ready state for too long"
-    severity              = "Warning"
-    detect_label          = "WARN"
+    severity              = "Major"
+    detect_label          = "MAJOR"
     disabled              = coalesce(var.pod_phase_status_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.pod_phase_status_notifications, "warning", []), var.notifications.warning)
+    notifications         = coalescelist(lookup(var.pod_phase_status_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -68,15 +68,15 @@ resource "signalfx_detector" "terminated" {
 
   program_text = <<-EOF
     signal = data('kubernetes.container_ready', filter=filter('container_status', 'terminated') and (not filter('container_status_reason', 'Completed')) and ${module.filter-tags.filter_custom})${var.terminated_aggregation_function}${var.terminated_transformation_function}.publish('signal')
-    detect(when(signal > ${var.terminated_threshold_warning}, lasting='${var.terminated_lasting_duration_seconds}s')).publish('WARN')
+    detect(when(signal > ${var.terminated_threshold_major}, lasting='${var.terminated_lasting_duration_seconds}s')).publish('MAJOR')
 EOF
 
   rule {
-    description           = "is too high > ${var.terminated_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
+    description           = "is too high > ${var.terminated_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
     disabled              = coalesce(var.terminated_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.terminated_notifications, "warning", []), var.notifications.warning)
+    notifications         = coalescelist(lookup(var.terminated_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -86,15 +86,15 @@ resource "signalfx_detector" "oom_killed" {
 
   program_text = <<-EOF
     signal = data('kubernetes.container_ready', filter=filter('container_status', 'terminated') and filter('container_status_reason', 'OOMKilled') and ${module.filter-tags.filter_custom})${var.oom_killed_aggregation_function}${var.oom_killed_transformation_function}.count().publish('signal')
-    detect(when(signal > ${var.oom_killed_threshold_warning})).publish('WARN')
+    detect(when(signal > ${var.oom_killed_threshold_major})).publish('MAJOR')
 EOF
 
   rule {
-    description           = "is too high > ${var.oom_killed_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
+    description           = "is too high > ${var.oom_killed_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
     disabled              = coalesce(var.oom_killed_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.oom_killed_notifications, "warning", []), var.notifications.warning)
+    notifications         = coalescelist(lookup(var.oom_killed_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -104,15 +104,15 @@ resource "signalfx_detector" "deployment_crashloopbackoff" {
 
   program_text = <<-EOF
     signal = data('kubernetes.container_restart_count', filter=filter('container_status', 'waiting') and filter('deployment', '*') and filter('container_status_reason', 'CrashLoopBackOff') and ${module.filter-tags.filter_custom}, extrapolation='zero')${var.deployment_crashloopbackoff_aggregation_function}${var.deployment_crashloopbackoff_transformation_function}.publish('signal')
-    detect(when(signal > ${var.deployment_crashloopbackoff_threshold_warning})).publish('WARN')
+    detect(when(signal > ${var.deployment_crashloopbackoff_threshold_major})).publish('MAJOR')
 EOF
 
   rule {
-    description           = "is too high > ${var.deployment_crashloopbackoff_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
+    description           = "is too high > ${var.deployment_crashloopbackoff_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
     disabled              = coalesce(var.deployment_crashloopbackoff_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.deployment_crashloopbackoff_notifications, "warning", []), var.notifications.warning)
+    notifications         = coalescelist(lookup(var.deployment_crashloopbackoff_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -122,15 +122,15 @@ resource "signalfx_detector" "daemonset_crashloopbackoff" {
 
   program_text = <<-EOF
     signal = data('kubernetes.container_restart_count', filter=filter('container_status', 'waiting') and filter('daemonSet', '*') and filter('container_status_reason', 'CrashLoopBackOff') and ${module.filter-tags.filter_custom}, extrapolation='zero')${var.daemonset_crashloopbackoff_aggregation_function}${var.daemonset_crashloopbackoff_transformation_function}.publish('signal')
-    detect(when(signal > ${var.daemonset_crashloopbackoff_threshold_warning})).publish('WARN')
+    detect(when(signal > ${var.daemonset_crashloopbackoff_threshold_major})).publish('MAJOR')
 EOF
 
   rule {
-    description           = "is too high > ${var.daemonset_crashloopbackoff_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
+    description           = "is too high > ${var.daemonset_crashloopbackoff_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
     disabled              = coalesce(var.daemonset_crashloopbackoff_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.daemonset_crashloopbackoff_notifications, "warning", []), var.notifications.warning)
+    notifications         = coalescelist(lookup(var.daemonset_crashloopbackoff_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -143,15 +143,15 @@ resource "signalfx_detector" "job_failed" {
     B = data('kubernetes.job.active', extrapolation='zero', filter=${module.filter-tags.filter_custom})${var.job_failed_aggregation_function}${var.job_failed_transformation_function}
     C = data('kubernetes.job.succeeded', extrapolation='zero', filter=${module.filter-tags.filter_custom}, rollup='max')${var.job_failed_aggregation_function}${var.job_failed_transformation_function}
     signal = (A-B-C).publish('signal')
-    detect(when(signal > ${var.job_failed_threshold_warning}, lasting='${var.job_failed_lasting_duration_seconds}s')).publish('WARN')
+    detect(when(signal > ${var.job_failed_threshold_major}, lasting='${var.job_failed_lasting_duration_seconds}s')).publish('MAJOR')
 EOF
 
   rule {
-    description           = "is too high > ${var.job_failed_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
+    description           = "is too high > ${var.job_failed_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
     disabled              = coalesce(var.job_failed_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.job_failed_notifications, "warning", []), var.notifications.warning)
+    notifications         = coalescelist(lookup(var.job_failed_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }

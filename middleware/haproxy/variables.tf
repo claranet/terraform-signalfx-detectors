@@ -128,8 +128,8 @@ variable "session_limit_disabled" {
   default     = null
 }
 
-variable "session_limit_disabled_warning" {
-  description = "Disable warning alerting rule for session limit detector"
+variable "session_limit_disabled_major" {
+  description = "Disable major alerting rule for session limit detector"
   type        = bool
   default     = null
 }
@@ -158,7 +158,7 @@ variable "session_limit_transformation_function" {
   default     = ".min(over='10m')"
 }
 
-variable "session_limit_threshold_warning" {
+variable "session_limit_threshold_major" {
   description = "Critical threshold for session limit detector"
   type        = number
   default     = 80
@@ -176,8 +176,8 @@ variable "http_5xx_response_disabled" {
   default     = null
 }
 
-variable "http_5xx_response_disabled_warning" {
-  description = "Disable warning alerting rule for http_5xx_response detector"
+variable "http_5xx_response_disabled_major" {
+  description = "Disable major alerting rule for http_5xx_response detector"
   type        = bool
   default     = null
 }
@@ -206,7 +206,7 @@ variable "http_5xx_response_transformation_function" {
   default     = ".min(over='10m')"
 }
 
-variable "http_5xx_response_threshold_warning" {
+variable "http_5xx_response_threshold_major" {
   description = "Critical threshold for http_5xx_response detector"
   type        = number
   default     = 50
@@ -224,8 +224,8 @@ variable "http_4xx_response_disabled" {
   default     = null
 }
 
-variable "http_4xx_response_disabled_warning" {
-  description = "Disable warning alerting rule for http_4xx_response detector"
+variable "http_4xx_response_disabled_major" {
+  description = "Disable major alerting rule for http_4xx_response detector"
   type        = bool
   default     = null
 }
@@ -254,7 +254,7 @@ variable "http_4xx_response_transformation_function" {
   default     = ".min(over='10m')"
 }
 
-variable "http_4xx_response_threshold_warning" {
+variable "http_4xx_response_threshold_major" {
   description = "Critical threshold for http_4xx_response detector"
   type        = number
   default     = 50

@@ -76,8 +76,8 @@ variable "cpu_disabled_critical" {
   default     = null
 }
 
-variable "cpu_disabled_warning" {
-  description = "Disable warning alerting rule for cpu detector"
+variable "cpu_disabled_major" {
+  description = "Disable major alerting rule for cpu detector"
   type        = bool
   default     = null
 }
@@ -106,8 +106,8 @@ variable "cpu_threshold_critical" {
   default     = 90
 }
 
-variable "cpu_threshold_warning" {
-  description = "Warning threshold for cpu detector"
+variable "cpu_threshold_major" {
+  description = "Major threshold for cpu detector"
   type        = number
   default     = 80
 }
@@ -126,8 +126,8 @@ variable "free_space_disabled_critical" {
   default     = null
 }
 
-variable "free_space_disabled_warning" {
-  description = "Disable warning alerting rule for free_space detector"
+variable "free_space_disabled_major" {
+  description = "Disable major alerting rule for free_space detector"
   type        = bool
   default     = null
 }
@@ -156,8 +156,8 @@ variable "free_space_threshold_critical" {
   default     = 90
 }
 
-variable "free_space_threshold_warning" {
-  description = "Warning threshold for free_space detector"
+variable "free_space_threshold_major" {
+  description = "Major threshold for free_space detector"
   type        = number
   default     = 80
 }
@@ -176,8 +176,8 @@ variable "dtu_consumption_disabled_critical" {
   default     = null
 }
 
-variable "dtu_consumption_disabled_warning" {
-  description = "Disable warning alerting rule for dtu_consumption detector"
+variable "dtu_consumption_disabled_major" {
+  description = "Disable major alerting rule for dtu_consumption detector"
   type        = bool
   default     = null
 }
@@ -206,8 +206,8 @@ variable "dtu_consumption_threshold_critical" {
   default     = 90
 }
 
-variable "dtu_consumption_threshold_warning" {
-  description = "Warning threshold for dtu_consumption detector"
+variable "dtu_consumption_threshold_major" {
+  description = "Major threshold for dtu_consumption detector"
   type        = number
   default     = 85
 }

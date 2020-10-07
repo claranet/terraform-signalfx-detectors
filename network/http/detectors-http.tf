@@ -62,7 +62,7 @@ resource "signalfx_detector" "http_response_time" {
   program_text = <<-EOF
     signal = data('http.response_time', ${module.filter-tags.filter_custom})${var.http_response_time_aggregation_function}${var.http_response_time_transformation_function}.publish('signal')
     detect(when(signal > ${var.http_response_time_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.http_response_time_threshold_warning}) and when(signal <= ${var.http_response_time_threshold_critical})).publish('WARN')
+    detect(when(signal > ${var.http_response_time_threshold_major}) and when(signal <= ${var.http_response_time_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -75,11 +75,11 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.http_response_time_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.http_response_time_disabled_warning, var.http_response_time_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.http_response_time_notifications, "warning", []), var.notifications.warning)
+    description           = "is too high > ${var.http_response_time_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.http_response_time_disabled_major, var.http_response_time_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.http_response_time_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -89,15 +89,15 @@ resource "signalfx_detector" "http_content_length" {
 
   program_text = <<-EOF
     signal = data('http.content_length', ${module.filter-tags.filter_custom})${var.http_content_length_aggregation_function}${var.http_content_length_transformation_function}.publish('signal')
-    detect(when(signal < ${var.http_content_length_threshold_warning})).publish('WARN')
+    detect(when(signal < ${var.http_content_length_threshold_major})).publish('MAJOR')
 EOF
 
   rule {
-    description           = "is too low < ${var.http_content_length_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
+    description           = "is too low < ${var.http_content_length_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
     disabled              = coalesce(var.http_content_length_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.http_content_length_notifications, "warning", []), var.notifications.warning)
+    notifications         = coalescelist(lookup(var.http_content_length_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -109,7 +109,7 @@ resource "signalfx_detector" "certificate_expiration_date" {
     A = data('http.cert_expiry', ${module.filter-tags.filter_custom})${var.certificate_expiration_date_aggregation_function}${var.certificate_expiration_date_transformation_function}
     signal = (A/86400).publish('signal')
     detect(when(signal < ${var.certificate_expiration_date_threshold_critical})).publish('CRIT')
-    detect(when(signal < ${var.certificate_expiration_date_threshold_warning}) and when(signal >= ${var.certificate_expiration_date_threshold_critical})).publish('WARN')
+    detect(when(signal < ${var.certificate_expiration_date_threshold_major}) and when(signal >= ${var.certificate_expiration_date_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -122,11 +122,11 @@ EOF
   }
 
   rule {
-    description           = " < ${var.certificate_expiration_date_threshold_warning} days"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.certificate_expiration_date_disabled_warning, var.certificate_expiration_date_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.certificate_expiration_date_notifications, "warning", []), var.notifications.warning)
+    description           = " < ${var.certificate_expiration_date_threshold_major} days"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.certificate_expiration_date_disabled_major, var.certificate_expiration_date_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.certificate_expiration_date_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }

@@ -23,7 +23,7 @@ resource "signalfx_detector" "incoming_records" {
   program_text = <<-EOF
     signal = data('IncomingRecords', filter=filter('namespace', 'AWS/Kinesis') and filter('stat', 'lower') and (not filter('ShardId', '*')) and ${module.filter-tags.filter_custom})${var.incoming_records_aggregation_function}${var.incoming_records_transformation_function}.publish('signal')
     detect(when(signal <= ${var.incoming_records_threshold_critical})).publish('CRIT')
-    detect(when(signal <= ${var.incoming_records_threshold_warning}) and when(signal > ${var.incoming_records_threshold_critical})).publish('WARN')
+    detect(when(signal <= ${var.incoming_records_threshold_major}) and when(signal > ${var.incoming_records_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -36,11 +36,11 @@ EOF
   }
 
   rule {
-    description           = "are too low <= ${var.incoming_records_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.incoming_records_disabled_warning, var.incoming_records_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.incoming_records_notifications, "warning", []), var.notifications.warning)
+    description           = "are too low <= ${var.incoming_records_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.incoming_records_disabled_major, var.incoming_records_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.incoming_records_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }

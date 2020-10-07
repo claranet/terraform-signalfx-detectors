@@ -76,8 +76,8 @@ variable "cpu_disabled_critical" {
   default     = null
 }
 
-variable "cpu_disabled_warning" {
-  description = "Disable warning alerting rule for cpu detector"
+variable "cpu_disabled_major" {
+  description = "Disable major alerting rule for cpu detector"
   type        = bool
   default     = null
 }
@@ -106,8 +106,8 @@ variable "cpu_threshold_critical" {
   default     = 90
 }
 
-variable "cpu_threshold_warning" {
-  description = "Warning threshold for cpu detector"
+variable "cpu_threshold_major" {
+  description = "Major threshold for cpu detector"
   type        = number
   default     = 85
 }
@@ -126,8 +126,8 @@ variable "load_disabled_critical" {
   default     = null
 }
 
-variable "load_disabled_warning" {
-  description = "Disable warning alerting rule for load detector"
+variable "load_disabled_major" {
+  description = "Disable major alerting rule for load detector"
   type        = bool
   default     = null
 }
@@ -156,8 +156,8 @@ variable "load_threshold_critical" {
   default     = 2.5
 }
 
-variable "load_threshold_warning" {
-  description = "Warning threshold for load detector"
+variable "load_threshold_major" {
+  description = "Major threshold for load detector"
   type        = number
   default     = 2
 }
@@ -176,8 +176,8 @@ variable "disk_space_disabled_critical" {
   default     = null
 }
 
-variable "disk_space_disabled_warning" {
-  description = "Disable warning alerting rule for disk space detector"
+variable "disk_space_disabled_major" {
+  description = "Disable major alerting rule for disk space detector"
   type        = bool
   default     = null
 }
@@ -206,8 +206,8 @@ variable "disk_space_threshold_critical" {
   default     = 90
 }
 
-variable "disk_space_threshold_warning" {
-  description = "Warning threshold for disk space detector"
+variable "disk_space_threshold_major" {
+  description = "Major threshold for disk space detector"
   type        = number
   default     = 80
 }
@@ -226,8 +226,8 @@ variable "disk_inodes_disabled_critical" {
   default     = null
 }
 
-variable "disk_inodes_disabled_warning" {
-  description = "Disable warning alerting rule for dsik_inodes detector"
+variable "disk_inodes_disabled_major" {
+  description = "Disable major alerting rule for dsik_inodes detector"
   type        = bool
   default     = null
 }
@@ -256,8 +256,8 @@ variable "disk_inodes_threshold_critical" {
   default     = 95
 }
 
-variable "disk_inodes_threshold_warning" {
-  description = "Warning threshold for disk inodes detector"
+variable "disk_inodes_threshold_major" {
+  description = "Major threshold for disk inodes detector"
   type        = number
   default     = 90
 }
@@ -338,8 +338,8 @@ variable "memory_disabled_critical" {
   default     = null
 }
 
-variable "memory_disabled_warning" {
-  description = "Disable warning alerting rule for memory detector"
+variable "memory_disabled_major" {
+  description = "Disable major alerting rule for memory detector"
   type        = bool
   default     = null
 }
@@ -368,8 +368,8 @@ variable "memory_threshold_critical" {
   default     = 95
 }
 
-variable "memory_threshold_warning" {
-  description = "Warning threshold for memory detector"
+variable "memory_threshold_major" {
+  description = "Major threshold for memory detector"
   type        = number
   default     = 90
 }

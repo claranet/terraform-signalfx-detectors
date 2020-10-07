@@ -76,8 +76,8 @@ variable "evicted_keys_disabled_critical" {
   default     = null
 }
 
-variable "evicted_keys_disabled_warning" {
-  description = "Disable warning alerting rule for evicted_keys detector"
+variable "evicted_keys_disabled_major" {
+  description = "Disable major alerting rule for evicted_keys detector"
   type        = bool
   default     = null
 }
@@ -106,8 +106,8 @@ variable "evicted_keys_threshold_critical" {
   default     = 50
 }
 
-variable "evicted_keys_threshold_warning" {
-  description = "Warning threshold for evicted_keys detector"
+variable "evicted_keys_threshold_major" {
+  description = "Major threshold for evicted_keys detector"
   type        = number
   default     = 25
 }
@@ -126,8 +126,8 @@ variable "expirations_disabled_critical" {
   default     = null
 }
 
-variable "expirations_disabled_warning" {
-  description = "Disable warning alerting rule for expirations detector"
+variable "expirations_disabled_major" {
+  description = "Disable major alerting rule for expirations detector"
   type        = bool
   default     = null
 }
@@ -156,8 +156,8 @@ variable "expirations_threshold_critical" {
   default     = 100
 }
 
-variable "expirations_threshold_warning" {
-  description = "Warning threshold for expirations detector"
+variable "expirations_threshold_major" {
+  description = "Major threshold for expirations detector"
   type        = number
   default     = 50
 }
@@ -170,14 +170,14 @@ variable "blocked_clients_disabled" {
   default     = null
 }
 
-variable "blocked_clients_disabled_major" {
-  description = "Disable major alerting rule for blocked_clients detector"
+variable "blocked_clients_disabled_minor" {
+  description = "Disable minor alerting rule for blocked_clients detector"
   type        = bool
   default     = null
 }
 
-variable "blocked_clients_disabled_minor" {
-  description = "Disable minor alerting rule for blocked_clients detector"
+variable "blocked_clients_disabled_warning" {
+  description = "Disable warning alerting rule for blocked_clients detector"
   type        = bool
   default     = null
 }
@@ -200,14 +200,14 @@ variable "blocked_clients_transformation_function" {
   default     = ".mean(over='1h')"
 }
 
-variable "blocked_clients_threshold_major" {
-  description = "major threshold for blocked_clients detector"
+variable "blocked_clients_threshold_minor" {
+  description = "minor threshold for blocked_clients detector"
   type        = number
   default     = 5
 }
 
-variable "blocked_clients_threshold_minor" {
-  description = "minor threshold for blocked_clients detector"
+variable "blocked_clients_threshold_warning" {
+  description = "warning threshold for blocked_clients detector"
   type        = number
   default     = 0
 }
@@ -252,8 +252,8 @@ variable "memory_used_max_disabled_critical" {
   default     = null
 }
 
-variable "memory_used_max_disabled_warning" {
-  description = "Disable warning alerting rule for memory_used_max detector"
+variable "memory_used_max_disabled_major" {
+  description = "Disable major alerting rule for memory_used_max detector"
   type        = bool
   default     = null
 }
@@ -282,8 +282,8 @@ variable "memory_used_max_threshold_critical" {
   default     = 95
 }
 
-variable "memory_used_max_threshold_warning" {
-  description = "Warning threshold for memory_used_max detector"
+variable "memory_used_max_threshold_major" {
+  description = "Major threshold for memory_used_max detector"
   type        = number
   default     = 85
 }
@@ -302,8 +302,8 @@ variable "memory_used_total_disabled_critical" {
   default     = null
 }
 
-variable "memory_used_total_disabled_warning" {
-  description = "Disable warning alerting rule for memory_used_total detector"
+variable "memory_used_total_disabled_major" {
+  description = "Disable major alerting rule for memory_used_total detector"
   type        = bool
   default     = null
 }
@@ -332,8 +332,8 @@ variable "memory_used_total_threshold_critical" {
   default     = 95
 }
 
-variable "memory_used_total_threshold_warning" {
-  description = "Warning threshold for memory_used_total detector"
+variable "memory_used_total_threshold_major" {
+  description = "Major threshold for memory_used_total detector"
   type        = number
   default     = 85
 }
@@ -352,8 +352,8 @@ variable "memory_frag_high_disabled_critical" {
   default     = null
 }
 
-variable "memory_frag_high_disabled_warning" {
-  description = "Disable warning alerting rule for memory_frag_high detector"
+variable "memory_frag_high_disabled_major" {
+  description = "Disable major alerting rule for memory_frag_high detector"
   type        = bool
   default     = null
 }
@@ -382,8 +382,8 @@ variable "memory_frag_high_threshold_critical" {
   default     = 5
 }
 
-variable "memory_frag_high_threshold_warning" {
-  description = "Warning threshold for memory_frag_high detector"
+variable "memory_frag_high_threshold_major" {
+  description = "Major threshold for memory_frag_high detector"
   type        = number
   default     = 2
 }
@@ -402,8 +402,8 @@ variable "memory_frag_low_disabled_critical" {
   default     = null
 }
 
-variable "memory_frag_low_disabled_warning" {
-  description = "Disable warning alerting rule for memory_frag_low detector"
+variable "memory_frag_low_disabled_major" {
+  description = "Disable major alerting rule for memory_frag_low detector"
   type        = bool
   default     = null
 }
@@ -432,8 +432,8 @@ variable "memory_frag_low_threshold_critical" {
   default     = 0.75
 }
 
-variable "memory_frag_low_threshold_warning" {
-  description = "Warning threshold for memory_frag_low detector"
+variable "memory_frag_low_threshold_major" {
+  description = "Major threshold for memory_frag_low detector"
   type        = number
   default     = 1
 }
@@ -452,8 +452,8 @@ variable "rejected_connections_disabled_critical" {
   default     = null
 }
 
-variable "rejected_connections_disabled_warning" {
-  description = "Disable warning alerting rule for rejected_connections detector"
+variable "rejected_connections_disabled_major" {
+  description = "Disable major alerting rule for rejected_connections detector"
   type        = bool
   default     = null
 }
@@ -482,8 +482,8 @@ variable "rejected_connections_threshold_critical" {
   default     = 5
 }
 
-variable "rejected_connections_threshold_warning" {
-  description = "Warning threshold for rejected_connections detector"
+variable "rejected_connections_threshold_major" {
+  description = "Major threshold for rejected_connections detector"
   type        = number
   default     = 0
 }
@@ -502,8 +502,8 @@ variable "hitrate_disabled_critical" {
   default     = null
 }
 
-variable "hitrate_disabled_warning" {
-  description = "Disable warning alerting rule for hitrate detector"
+variable "hitrate_disabled_major" {
+  description = "Disable major alerting rule for hitrate detector"
   type        = bool
   default     = null
 }
@@ -532,8 +532,8 @@ variable "hitrate_threshold_critical" {
   default     = 10
 }
 
-variable "hitrate_threshold_warning" {
-  description = "Warning threshold for hitrate detector"
+variable "hitrate_threshold_major" {
+  description = "Major threshold for hitrate detector"
   type        = number
   default     = 30
 }

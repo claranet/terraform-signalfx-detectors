@@ -114,8 +114,8 @@ variable "user_errors_disabled_critical" {
   default     = null
 }
 
-variable "user_errors_disabled_warning" {
-  description = "Disable warning alerting rule for user_errors detector"
+variable "user_errors_disabled_major" {
+  description = "Disable major alerting rule for user_errors detector"
   type        = bool
   default     = null
 }
@@ -144,8 +144,8 @@ variable "user_errors_threshold_critical" {
   default     = 90
 }
 
-variable "user_errors_threshold_warning" {
-  description = "Warning threshold for user_errors detector"
+variable "user_errors_threshold_major" {
+  description = "Major threshold for user_errors detector"
   type        = number
   default     = 50
 }
@@ -164,8 +164,8 @@ variable "server_errors_disabled_critical" {
   default     = null
 }
 
-variable "server_errors_disabled_warning" {
-  description = "Disable warning alerting rule for server_errors detector"
+variable "server_errors_disabled_major" {
+  description = "Disable major alerting rule for server_errors detector"
   type        = bool
   default     = null
 }
@@ -194,8 +194,8 @@ variable "server_errors_threshold_critical" {
   default     = 90
 }
 
-variable "server_errors_threshold_warning" {
-  description = "Warning threshold for server_errors detector"
+variable "server_errors_threshold_major" {
+  description = "Major threshold for server_errors detector"
   type        = number
   default     = 50
 }

@@ -76,8 +76,8 @@ variable "apache_workers_disabled_critical" {
   default     = null
 }
 
-variable "apache_workers_disabled_warning" {
-  description = "Disable warning alerting rule for apache_workers detector"
+variable "apache_workers_disabled_major" {
+  description = "Disable major alerting rule for apache_workers detector"
   type        = bool
   default     = null
 }
@@ -106,8 +106,8 @@ variable "apache_workers_threshold_critical" {
   default     = 90
 }
 
-variable "apache_workers_threshold_warning" {
-  description = "Warning threshold for apache_workers detector"
+variable "apache_workers_threshold_major" {
+  description = "Major threshold for apache_workers detector"
   type        = number
   default     = 80
 }

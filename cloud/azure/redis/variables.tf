@@ -76,8 +76,8 @@ variable "evictedkeys_disabled_critical" {
   default     = null
 }
 
-variable "evictedkeys_disabled_warning" {
-  description = "Disable warning alerting rule for evictedkeys detector"
+variable "evictedkeys_disabled_major" {
+  description = "Disable major alerting rule for evictedkeys detector"
   type        = bool
   default     = null
 }
@@ -106,8 +106,8 @@ variable "evictedkeys_threshold_critical" {
   default     = 100
 }
 
-variable "evictedkeys_threshold_warning" {
-  description = "Warning threshold for evictedkeys detector"
+variable "evictedkeys_threshold_major" {
+  description = "Major threshold for evictedkeys detector"
   type        = number
   default     = 0
 }
@@ -126,8 +126,8 @@ variable "percent_processor_time_disabled_critical" {
   default     = null
 }
 
-variable "percent_processor_time_disabled_warning" {
-  description = "Disable warning alerting rule for percent_processor_time detector"
+variable "percent_processor_time_disabled_major" {
+  description = "Disable major alerting rule for percent_processor_time detector"
   type        = bool
   default     = null
 }
@@ -156,8 +156,8 @@ variable "percent_processor_time_threshold_critical" {
   default     = 80
 }
 
-variable "percent_processor_time_threshold_warning" {
-  description = "Warning threshold for percent_processor_time detector"
+variable "percent_processor_time_threshold_major" {
+  description = "Major threshold for percent_processor_time detector"
   type        = number
   default     = 60
 }
@@ -176,8 +176,8 @@ variable "load_disabled_critical" {
   default     = null
 }
 
-variable "load_disabled_warning" {
-  description = "Disable warning alerting rule for load detector"
+variable "load_disabled_major" {
+  description = "Disable major alerting rule for load detector"
   type        = bool
   default     = null
 }
@@ -206,8 +206,8 @@ variable "load_threshold_critical" {
   default     = 90
 }
 
-variable "load_threshold_warning" {
-  description = "Warning threshold for load detector"
+variable "load_threshold_major" {
+  description = "Major threshold for load detector"
   type        = number
   default     = 70
 }

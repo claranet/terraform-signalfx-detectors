@@ -6,7 +6,7 @@ resource "signalfx_detector" "volume_space" {
     B = data('kubernetes.volume_capacity_bytes', ${module.filter-tags.filter_custom} and not filter('volume_type', 'configMap', 'secret'))${var.volume_space_aggregation_function}${var.volume_space_transformation_function}
     signal = ((B-A)/B).scale(100).publish('signal')
     detect(when(signal > ${var.volume_space_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.volume_space_threshold_warning}) and when(signal < ${var.volume_space_threshold_critical})).publish('WARN')
+    detect(when(signal > ${var.volume_space_threshold_major}) and when(signal < ${var.volume_space_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -19,11 +19,11 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.volume_space_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.volume_space_disabled_warning, var.volume_space_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.volume_space_notifications, "warning", []), var.notifications.warning)
+    description           = "is too high > ${var.volume_space_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.volume_space_disabled_major, var.volume_space_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.volume_space_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -36,7 +36,7 @@ resource "signalfx_detector" "volume_inodes" {
     B = data('kubernetes.volume_inodes', ${module.filter-tags.filter_custom} and not filter('volume_type', 'configMap', 'secret'))${var.volume_inodes_aggregation_function}${var.volume_inodes_transformation_function}
     signal = ((B-A)/B).scale(100).publish('signal')
     detect(when(signal > ${var.volume_inodes_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.volume_inodes_threshold_warning}) and when(signal < ${var.volume_inodes_threshold_critical})).publish('WARN')
+    detect(when(signal > ${var.volume_inodes_threshold_major}) and when(signal < ${var.volume_inodes_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -49,11 +49,11 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.volume_inodes_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.volume_inodes_disabled_warning, var.volume_inodes_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.volume_inodes_notifications, "warning", []), var.notifications.warning)
+    description           = "is too high > ${var.volume_inodes_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.volume_inodes_disabled_major, var.volume_inodes_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.volume_inodes_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }

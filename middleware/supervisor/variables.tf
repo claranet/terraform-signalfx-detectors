@@ -74,8 +74,8 @@ variable "process_state_disabled_critical" {
   default     = null
 }
 
-variable "process_state_disabled_warning" {
-  description = "Disable warning alerting rule for process state detector"
+variable "process_state_disabled_major" {
+  description = "Disable major alerting rule for process state detector"
   type        = bool
   default     = null
 }
@@ -104,8 +104,8 @@ variable "process_state_threshold_critical" {
   default     = 20
 }
 
-variable "process_state_threshold_warning" {
-  description = "Warning threshold for process state detector (default to be less then 20 (process has been stopped manually or is starting), see http://supervisord.org/subprocess.html#process-states "
+variable "process_state_threshold_major" {
+  description = "Major threshold for process state detector (default to be less then 20 (process has been stopped manually or is starting), see http://supervisord.org/subprocess.html#process-states "
   type        = number
   default     = 20
 }

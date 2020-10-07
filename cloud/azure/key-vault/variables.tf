@@ -56,8 +56,8 @@ variable "api_result_disabled_critical" {
   default     = null
 }
 
-variable "api_result_disabled_warning" {
-  description = "Disable warning alerting rule for api_result detector"
+variable "api_result_disabled_major" {
+  description = "Disable major alerting rule for api_result detector"
   type        = bool
   default     = null
 }
@@ -86,8 +86,8 @@ variable "api_result_threshold_critical" {
   default     = 10
 }
 
-variable "api_result_threshold_warning" {
-  description = "Warning threshold for api_result detector"
+variable "api_result_threshold_major" {
+  description = "Major threshold for api_result detector"
   type        = number
   default     = 30
 }
@@ -106,8 +106,8 @@ variable "api_latency_disabled_critical" {
   default     = null
 }
 
-variable "api_latency_disabled_warning" {
-  description = "Disable warning alerting rule for api_latency detector"
+variable "api_latency_disabled_major" {
+  description = "Disable major alerting rule for api_latency detector"
   type        = bool
   default     = null
 }
@@ -136,8 +136,8 @@ variable "api_latency_threshold_critical" {
   default     = 100
 }
 
-variable "api_latency_threshold_warning" {
-  description = "Warning threshold for api_latency detector"
+variable "api_latency_threshold_major" {
+  description = "Major threshold for api_latency detector"
   type        = number
   default     = 80
 }

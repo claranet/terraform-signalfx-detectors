@@ -4,7 +4,7 @@ resource "signalfx_detector" "aurora_mysql_replica_lag" {
   program_text = <<-EOF
     signal = data('AuroraReplicaLag', filter=filter('namespace', 'AWS/RDS') and filter('stat', 'mean') and filter('DBInstanceIdentifier', '*') and ${module.filter-tags.filter_custom})${var.aurora_mysql_replica_lag_aggregation_function}${var.aurora_mysql_replica_lag_transformation_function}.publish('signal')
     detect(when(signal > ${var.aurora_mysql_replica_lag_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.aurora_mysql_replica_lag_threshold_warning}) and when(signal <= ${var.aurora_mysql_replica_lag_threshold_critical})).publish('WARN')
+    detect(when(signal > ${var.aurora_mysql_replica_lag_threshold_major}) and when(signal <= ${var.aurora_mysql_replica_lag_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -17,11 +17,11 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.aurora_mysql_replica_lag_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.aurora_mysql_replica_lag_disabled_warning, var.aurora_mysql_replica_lag_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.aurora_mysql_replica_lag_notifications, "warning", []), var.notifications.warning)
+    description           = "is too high > ${var.aurora_mysql_replica_lag_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.aurora_mysql_replica_lag_disabled_major, var.aurora_mysql_replica_lag_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.aurora_mysql_replica_lag_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }

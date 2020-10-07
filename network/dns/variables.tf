@@ -76,8 +76,8 @@ variable "dns_query_time_disabled_critical" {
   default     = null
 }
 
-variable "dns_query_time_disabled_warning" {
-  description = "Disable warning alerting rule for dns_query_time detector"
+variable "dns_query_time_disabled_major" {
+  description = "Disable major alerting rule for dns_query_time detector"
   type        = bool
   default     = null
 }
@@ -106,8 +106,8 @@ variable "dns_query_time_threshold_critical" {
   default     = 1000
 }
 
-variable "dns_query_time_threshold_warning" {
-  description = "Warning threshold for dns_query_time detector"
+variable "dns_query_time_threshold_major" {
+  description = "Major threshold for dns_query_time detector"
   type        = number
   default     = 500
 }

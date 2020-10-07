@@ -63,8 +63,8 @@ variable "replication_lag_disabled_critical" {
   default     = null
 }
 
-variable "replication_lag_disabled_warning" {
-  description = "Disable warning alerting rule for replication_lag detector"
+variable "replication_lag_disabled_major" {
+  description = "Disable major alerting rule for replication_lag detector"
   type        = bool
   default     = null
 }
@@ -93,8 +93,8 @@ variable "replication_lag_threshold_critical" {
   default     = 180
 }
 
-variable "replication_lag_threshold_warning" {
-  description = "Warning threshold for replication_lag detector"
+variable "replication_lag_threshold_major" {
+  description = "Major threshold for replication_lag detector"
   type        = number
   default     = 90
 }

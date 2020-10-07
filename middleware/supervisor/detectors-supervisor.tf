@@ -24,7 +24,7 @@ resource "signalfx_detector" "process_state" {
   program_text = <<-EOF
     signal = data('supervisor.state', filter=${module.filter-tags.filter_custom})${var.process_state_aggregation_function}${var.process_state_transformation_function}.publish('signal')
     detect(when(signal > ${var.process_state_threshold_critical})).publish('CRIT')
-    detect(when(signal < ${var.process_state_threshold_warning})).publish('WARN')
+    detect(when(signal < ${var.process_state_threshold_major})).publish('MAJOR')
 EOF
 
   rule {
@@ -38,10 +38,10 @@ EOF
 
   rule {
     description           = "is stopped"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.process_state_disabled_warning, var.process_state_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.process_state_notifications, "warning", []), var.notifications.warning)
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.process_state_disabled_major, var.process_state_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.process_state_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }

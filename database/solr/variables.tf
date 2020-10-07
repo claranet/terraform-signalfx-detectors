@@ -76,8 +76,8 @@ variable "errors_disabled_critical" {
   default     = null
 }
 
-variable "errors_disabled_warning" {
-  description = "Disable warning alerting rule for errors detector"
+variable "errors_disabled_major" {
+  description = "Disable major alerting rule for errors detector"
   type        = bool
   default     = null
 }
@@ -106,8 +106,8 @@ variable "errors_threshold_critical" {
   default     = 5
 }
 
-variable "errors_threshold_warning" {
-  description = "Warning threshold for errors detector"
+variable "errors_threshold_major" {
+  description = "Major threshold for errors detector"
   type        = number
   default     = 0
 }
@@ -126,8 +126,8 @@ variable "searcher_warmup_time_disabled_critical" {
   default     = null
 }
 
-variable "searcher_warmup_time_disabled_warning" {
-  description = "Disable warning alerting rule for searcher_warmup_time detector"
+variable "searcher_warmup_time_disabled_major" {
+  description = "Disable major alerting rule for searcher_warmup_time detector"
   type        = bool
   default     = null
 }
@@ -156,8 +156,8 @@ variable "searcher_warmup_time_threshold_critical" {
   default     = 5000
 }
 
-variable "searcher_warmup_time_threshold_warning" {
-  description = "Warning threshold for searcher_warmup_time detector"
+variable "searcher_warmup_time_threshold_major" {
+  description = "Major threshold for searcher_warmup_time detector"
   type        = number
   default     = 2000
 }

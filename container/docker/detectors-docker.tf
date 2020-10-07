@@ -23,18 +23,9 @@ resource "signalfx_detector" "cpu" {
 
   program_text = <<-EOF
 		signal = data('cpu.percent', filter=filter('plugin', 'docker') and ${module.filter-tags.filter_custom})${var.cpu_aggregation_function}${var.cpu_transformation_function}.publish('signal')
-		detect(when(signal > ${var.cpu_threshold_warning})).publish('WARN')
-		detect(when(signal > ${var.cpu_threshold_major}) and when(signal <= ${var.cpu_threshold_warning})).publish('MAJOR')
+		detect(when(signal > ${var.cpu_threshold_major})).publish('MAJOR')
+		detect(when(signal > ${var.cpu_threshold_minor}) and when(signal <= ${var.cpu_threshold_major})).publish('MINOR')
 EOF
-
-  rule {
-    description           = "is too high > ${var.cpu_threshold_warning}%"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.cpu_disabled_warning, var.cpu_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.cpu_notifications, "warning", []), var.notifications.warning)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-  }
 
   rule {
     description           = "is too high > ${var.cpu_threshold_major}%"
@@ -42,6 +33,15 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.cpu_disabled_major, var.cpu_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.cpu_notifications, "major", []), var.notifications.major)
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+  }
+
+  rule {
+    description           = "is too high > ${var.cpu_threshold_minor}%"
+    severity              = "Minor"
+    detect_label          = "MINOR"
+    disabled              = coalesce(var.cpu_disabled_minor, var.cpu_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.cpu_notifications, "minor", []), var.notifications.minor)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -53,18 +53,9 @@ resource "signalfx_detector" "throttling" {
 		A = data('cpu.throttling_data.throttled_time', filter=filter('plugin', 'docker') and ${module.filter-tags.filter_custom}, rollup='delta')${var.throttling_aggregation_function}${var.throttling_transformation_function}
 		B = data('cpu.throttling_data.throttled_time', filter=filter('plugin', 'docker') and ${module.filter-tags.filter_custom}, rollup='delta')${var.throttling_aggregation_function}${var.throttling_transformation_function}
 		signal = (A/B).scale(100).publish('signal')
-		detect(when(signal > ${var.throttling_threshold_warning})).publish('WARN')
-		detect(when(signal > ${var.throttling_threshold_major}) and when(signal <= ${var.throttling_threshold_warning})).publish('MAJOR')
+		detect(when(signal > ${var.throttling_threshold_major})).publish('MAJOR')
+		detect(when(signal > ${var.throttling_threshold_minor}) and when(signal <= ${var.throttling_threshold_major})).publish('MINOR')
 EOF
-
-  rule {
-    description           = "is too high > ${var.throttling_threshold_warning}ns"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.throttling_disabled_warning, var.throttling_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.throttling_notifications, "warning", []), var.notifications.warning)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-  }
 
   rule {
     description           = "is too high > ${var.throttling_threshold_major}ns"
@@ -72,6 +63,15 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.throttling_disabled_major, var.throttling_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.throttling_notifications, "major", []), var.notifications.major)
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+  }
+
+  rule {
+    description           = "is too high > ${var.throttling_threshold_minor}ns"
+    severity              = "Minor"
+    detect_label          = "MINOR"
+    disabled              = coalesce(var.throttling_disabled_minor, var.throttling_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.throttling_notifications, "minor", []), var.notifications.minor)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -83,18 +83,9 @@ resource "signalfx_detector" "memory" {
 		A = data('memory.usage.total', filter=filter('plugin', 'docker') and ${module.filter-tags.filter_custom})${var.memory_aggregation_function}${var.memory_transformation_function}
 		B = data('memory.usage.limit', filter=filter('plugin', 'docker') and ${module.filter-tags.filter_custom})${var.memory_aggregation_function}${var.memory_transformation_function}
 		signal = (A/B).scale(100).publish('signal')
-		detect(when(signal > ${var.memory_threshold_warning})).publish('WARN')
-		detect(when(signal > ${var.memory_threshold_major}) and when(signal <= ${var.memory_threshold_warning})).publish('MAJOR')
+		detect(when(signal > ${var.memory_threshold_major})).publish('MAJOR')
+		detect(when(signal > ${var.memory_threshold_minor}) and when(signal <= ${var.memory_threshold_major})).publish('MINOR')
 EOF
-
-  rule {
-    description           = "is too high > ${var.memory_threshold_warning}%"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.memory_disabled_warning, var.memory_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.memory_notifications, "warning", []), var.notifications.warning)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-  }
 
   rule {
     description           = "is too high > ${var.memory_threshold_major}%"
@@ -102,6 +93,15 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.memory_disabled_major, var.memory_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.memory_notifications, "major", []), var.notifications.major)
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+  }
+
+  rule {
+    description           = "is too high > ${var.memory_threshold_minor}%"
+    severity              = "Minor"
+    detect_label          = "MINOR"
+    disabled              = coalesce(var.memory_disabled_minor, var.memory_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.memory_notifications, "minor", []), var.notifications.minor)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }

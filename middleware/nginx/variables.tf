@@ -74,8 +74,8 @@ variable "dropped_connections_disabled_critical" {
   default     = null
 }
 
-variable "dropped_connections_disabled_warning" {
-  description = "Disable warning alerting rule for dropped connections detector"
+variable "dropped_connections_disabled_major" {
+  description = "Disable major alerting rule for dropped connections detector"
   type        = bool
   default     = null
 }
@@ -104,8 +104,8 @@ variable "dropped_connections_threshold_critical" {
   default     = 1
 }
 
-variable "dropped_connections_threshold_warning" {
-  description = "Warning threshold for dropped connections detector"
+variable "dropped_connections_threshold_major" {
+  description = "Major threshold for dropped connections detector"
   type        = number
   default     = 0
 }

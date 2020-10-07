@@ -88,8 +88,8 @@ variable "ntp_transformation_function" {
   default     = ".min(over='5m')"
 }
 
-variable "ntp_threshold_warning" {
-  description = "Warning threshold for ntp detector"
+variable "ntp_threshold_major" {
+  description = "Major threshold for ntp detector"
   type        = number
   default     = 1500
 }

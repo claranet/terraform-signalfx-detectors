@@ -70,14 +70,14 @@ variable "deadlocks_disabled" {
   default     = null
 }
 
-variable "deadlocks_disabled_major" {
-  description = "Disable major alerting rule for deadlocks detector"
+variable "deadlocks_disabled_minor" {
+  description = "Disable minor alerting rule for deadlocks detector"
   type        = bool
   default     = null
 }
 
-variable "deadlocks_disabled_warning" {
-  description = "Disable warning alerting rule for deadlocks detector"
+variable "deadlocks_disabled_major" {
+  description = "Disable major alerting rule for deadlocks detector"
   type        = bool
   default     = null
 }
@@ -100,14 +100,14 @@ variable "deadlocks_transformation_function" {
   default     = ".max(over='5m')"
 }
 
-variable "deadlocks_threshold_major" {
-  description = "major threshold for deadlocks detector"
+variable "deadlocks_threshold_minor" {
+  description = "minor threshold for deadlocks detector"
   type        = number
   default     = 0
 }
 
-variable "deadlocks_threshold_warning" {
-  description = "Warning threshold for deadlocks detector"
+variable "deadlocks_threshold_major" {
+  description = "Major threshold for deadlocks detector"
   type        = number
   default     = 0.1
 }
@@ -120,14 +120,14 @@ variable "hit_ratio_disabled" {
   default     = null
 }
 
-variable "hit_ratio_disabled_minor" {
-  description = "Disable minor alerting rule for hit_ratio detector"
+variable "hit_ratio_disabled_warning" {
+  description = "Disable warning alerting rule for hit_ratio detector"
   type        = bool
   default     = null
 }
 
-variable "hit_ratio_disabled_major" {
-  description = "Disable major alerting rule for hit_ratio detector"
+variable "hit_ratio_disabled_minor" {
+  description = "Disable minor alerting rule for hit_ratio detector"
   type        = bool
   default     = null
 }
@@ -150,14 +150,14 @@ variable "hit_ratio_transformation_function" {
   default     = ".max(over='1h')"
 }
 
-variable "hit_ratio_threshold_minor" {
-  description = "minor threshold for hit_ratio detector"
+variable "hit_ratio_threshold_warning" {
+  description = "warning threshold for hit_ratio detector"
   type        = number
   default     = 50
 }
 
-variable "hit_ratio_threshold_major" {
-  description = "Major threshold for hit_ratio detector"
+variable "hit_ratio_threshold_minor" {
+  description = "Minor threshold for hit_ratio detector"
   type        = number
   default     = 75
 }
@@ -170,14 +170,14 @@ variable "rollbacks_disabled" {
   default     = null
 }
 
-variable "rollbacks_disabled_warning" {
-  description = "Disable warning alerting rule for rollbacks detector"
+variable "rollbacks_disabled_major" {
+  description = "Disable major alerting rule for rollbacks detector"
   type        = bool
   default     = null
 }
 
-variable "rollbacks_disabled_major" {
-  description = "Disable major alerting rule for rollbacks detector"
+variable "rollbacks_disabled_minor" {
+  description = "Disable minor alerting rule for rollbacks detector"
   type        = bool
   default     = null
 }
@@ -200,14 +200,14 @@ variable "rollbacks_transformation_function" {
   default     = ".min(over='10m')"
 }
 
-variable "rollbacks_threshold_warning" {
-  description = "Warning threshold for rollbacks detector"
+variable "rollbacks_threshold_major" {
+  description = "Major threshold for rollbacks detector"
   type        = number
   default     = 20
 }
 
-variable "rollbacks_threshold_major" {
-  description = "Major threshold for rollbacks detector"
+variable "rollbacks_threshold_minor" {
+  description = "Minor threshold for rollbacks detector"
   type        = number
   default     = 10
 }
@@ -220,14 +220,14 @@ variable "conflicts_disabled" {
   default     = null
 }
 
-variable "conflicts_disabled_major" {
-  description = "Disable major alerting rule for conflicts detector"
+variable "conflicts_disabled_minor" {
+  description = "Disable minor alerting rule for conflicts detector"
   type        = bool
   default     = null
 }
 
-variable "conflicts_disabled_warning" {
-  description = "Disable warning alerting rule for conflicts detector"
+variable "conflicts_disabled_major" {
+  description = "Disable major alerting rule for conflicts detector"
   type        = bool
   default     = null
 }
@@ -250,14 +250,14 @@ variable "conflicts_transformation_function" {
   default     = ".max(over='5m')"
 }
 
-variable "conflicts_threshold_major" {
-  description = "major threshold for conflicts detector"
+variable "conflicts_threshold_minor" {
+  description = "minor threshold for conflicts detector"
   type        = number
   default     = 0
 }
 
-variable "conflicts_threshold_warning" {
-  description = "warning threshold for conflicts detector"
+variable "conflicts_threshold_major" {
+  description = "major threshold for conflicts detector"
   type        = number
   default     = 1
 }
@@ -276,8 +276,8 @@ variable "max_connections_disabled_critical" {
   default     = null
 }
 
-variable "max_connections_disabled_warning" {
-  description = "Disable warning alerting rule for max_connections detector"
+variable "max_connections_disabled_major" {
+  description = "Disable major alerting rule for max_connections detector"
   type        = bool
   default     = null
 }
@@ -306,8 +306,8 @@ variable "max_connections_threshold_critical" {
   default     = 90
 }
 
-variable "max_connections_threshold_warning" {
-  description = "Warning threshold for max_connections detector"
+variable "max_connections_threshold_major" {
+  description = "Major threshold for max_connections detector"
   type        = number
   default     = 80
 }
@@ -326,8 +326,8 @@ variable "replication_lag_disabled_critical" {
   default     = null
 }
 
-variable "replication_lag_disabled_warning" {
-  description = "Disable warning alerting rule for replication_lag detector"
+variable "replication_lag_disabled_major" {
+  description = "Disable major alerting rule for replication_lag detector"
   type        = bool
   default     = null
 }
@@ -356,8 +356,8 @@ variable "replication_lag_threshold_critical" {
   default     = 200
 }
 
-variable "replication_lag_threshold_warning" {
-  description = "Warning threshold for replication_lag detector"
+variable "replication_lag_threshold_major" {
+  description = "Major threshold for replication_lag detector"
   type        = number
   default     = 100
 }

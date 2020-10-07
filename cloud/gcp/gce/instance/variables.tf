@@ -76,8 +76,8 @@ variable "cpu_utilization_disabled_critical" {
   default     = null
 }
 
-variable "cpu_utilization_disabled_warning" {
-  description = "Disable warning alerting rule for cpu_utilization detector"
+variable "cpu_utilization_disabled_major" {
+  description = "Disable major alerting rule for cpu_utilization detector"
   type        = bool
   default     = null
 }
@@ -106,8 +106,8 @@ variable "cpu_utilization_threshold_critical" {
   default     = 90
 }
 
-variable "cpu_utilization_threshold_warning" {
-  description = "Warning threshold for cpu_utilization detector"
+variable "cpu_utilization_threshold_major" {
+  description = "Major threshold for cpu_utilization detector"
   type        = number
   default     = 85
 }
@@ -126,8 +126,8 @@ variable "disk_throttled_bps_disabled_critical" {
   default     = null
 }
 
-variable "disk_throttled_bps_disabled_warning" {
-  description = "Disable warning alerting rule for disk_throttled_bps detector"
+variable "disk_throttled_bps_disabled_major" {
+  description = "Disable major alerting rule for disk_throttled_bps detector"
   type        = bool
   default     = null
 }
@@ -156,8 +156,8 @@ variable "disk_throttled_bps_threshold_critical" {
   default     = 50
 }
 
-variable "disk_throttled_bps_threshold_warning" {
-  description = "Warning threshold for disk_throttled_bps detector"
+variable "disk_throttled_bps_threshold_major" {
+  description = "Major threshold for disk_throttled_bps detector"
   type        = number
   default     = 30
 }
@@ -176,8 +176,8 @@ variable "disk_throttled_ops_disabled_critical" {
   default     = null
 }
 
-variable "disk_throttled_ops_disabled_warning" {
-  description = "Disable warning alerting rule for disk_throttled_ops detector"
+variable "disk_throttled_ops_disabled_major" {
+  description = "Disable major alerting rule for disk_throttled_ops detector"
   type        = bool
   default     = null
 }
@@ -206,8 +206,8 @@ variable "disk_throttled_ops_threshold_critical" {
   default     = 50
 }
 
-variable "disk_throttled_ops_threshold_warning" {
-  description = "Warning threshold for disk_throttled_ops detector"
+variable "disk_throttled_ops_threshold_major" {
+  description = "Major threshold for disk_throttled_ops detector"
   type        = number
   default     = 30
 }

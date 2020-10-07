@@ -82,8 +82,8 @@ variable "no_healthy_instances_disabled_critical" {
   default     = null
 }
 
-variable "no_healthy_instances_disabled_warning" {
-  description = "Disable warning alerting rule for no_healthy_instances detector"
+variable "no_healthy_instances_disabled_major" {
+  description = "Disable major alerting rule for no_healthy_instances detector"
   type        = bool
   default     = null
 }
@@ -112,8 +112,8 @@ variable "no_healthy_instances_threshold_critical" {
   default     = 1
 }
 
-variable "no_healthy_instances_threshold_warning" {
-  description = "Warning threshold for no_healthy_instances detector"
+variable "no_healthy_instances_threshold_major" {
+  description = "Major threshold for no_healthy_instances detector"
   type        = number
   default     = 100
 }
@@ -132,8 +132,8 @@ variable "elb_4xx_disabled_critical" {
   default     = null
 }
 
-variable "elb_4xx_disabled_warning" {
-  description = "Disable warning alerting rule for httpcode 4xx erros detector"
+variable "elb_4xx_disabled_major" {
+  description = "Disable major alerting rule for httpcode 4xx erros detector"
   type        = bool
   default     = null
 }
@@ -174,8 +174,8 @@ variable "elb_4xx_threshold_critical" {
   default     = 40
 }
 
-variable "elb_4xx_threshold_warning" {
-  description = "Warning threshold for 4xx detector"
+variable "elb_4xx_threshold_major" {
+  description = "Major threshold for 4xx detector"
   type        = number
   default     = 20
 }
@@ -194,8 +194,8 @@ variable "elb_5xx_disabled_critical" {
   default     = null
 }
 
-variable "elb_5xx_disabled_warning" {
-  description = "Disable warning alerting rule for 5xx detector"
+variable "elb_5xx_disabled_major" {
+  description = "Disable major alerting rule for 5xx detector"
   type        = bool
   default     = null
 }
@@ -236,8 +236,8 @@ variable "elb_5xx_threshold_critical" {
   default     = 10
 }
 
-variable "elb_5xx_threshold_warning" {
-  description = "Warning threshold for 5xx detector"
+variable "elb_5xx_threshold_major" {
+  description = "Major threshold for 5xx detector"
   type        = number
   default     = 5
 }
@@ -256,8 +256,8 @@ variable "backend_4xx_disabled_critical" {
   default     = null
 }
 
-variable "backend_4xx_disabled_warning" {
-  description = "Disable warning alerting rule for backend_4xx detector"
+variable "backend_4xx_disabled_major" {
+  description = "Disable major alerting rule for backend_4xx detector"
   type        = bool
   default     = null
 }
@@ -298,8 +298,8 @@ variable "backend_4xx_threshold_critical" {
   default     = 40
 }
 
-variable "backend_4xx_threshold_warning" {
-  description = "Warning threshold for backend_4xx detector"
+variable "backend_4xx_threshold_major" {
+  description = "Major threshold for backend_4xx detector"
   type        = number
   default     = 20
 }
@@ -318,8 +318,8 @@ variable "backend_5xx_disabled_critical" {
   default     = null
 }
 
-variable "backend_5xx_disabled_warning" {
-  description = "Disable warning alerting rule for backend_5xx detector"
+variable "backend_5xx_disabled_major" {
+  description = "Disable major alerting rule for backend_5xx detector"
   type        = bool
   default     = null
 }
@@ -360,8 +360,8 @@ variable "backend_5xx_threshold_critical" {
   default     = 10
 }
 
-variable "backend_5xx_threshold_warning" {
-  description = "Warning threshold for backend_5xx detector"
+variable "backend_5xx_threshold_major" {
+  description = "Major threshold for backend_5xx detector"
   type        = number
   default     = 5
 }
@@ -380,8 +380,8 @@ variable "backend_latency_disabled_critical" {
   default     = null
 }
 
-variable "backend_latency_disabled_warning" {
-  description = "Disable warning alerting rule for backend_latency detector"
+variable "backend_latency_disabled_major" {
+  description = "Disable major alerting rule for backend_latency detector"
   type        = bool
   default     = null
 }
@@ -422,8 +422,8 @@ variable "backend_latency_threshold_critical" {
   default     = 3
 }
 
-variable "backend_latency_threshold_warning" {
-  description = "Warning threshold for backend_latency detector"
+variable "backend_latency_threshold_major" {
+  description = "Major threshold for backend_latency detector"
   type        = number
   default     = 1
 }

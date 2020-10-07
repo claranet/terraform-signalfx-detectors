@@ -76,8 +76,8 @@ variable "cpu_usage_disabled_critical" {
   default     = null
 }
 
-variable "cpu_usage_disabled_warning" {
-  description = "Disable warning alerting rule for cpu_usage detector"
+variable "cpu_usage_disabled_major" {
+  description = "Disable major alerting rule for cpu_usage detector"
   type        = bool
   default     = null
 }
@@ -106,8 +106,8 @@ variable "cpu_usage_threshold_critical" {
   default     = 90
 }
 
-variable "cpu_usage_threshold_warning" {
-  description = "Warning threshold for cpu_usage detector"
+variable "cpu_usage_threshold_major" {
+  description = "Major threshold for cpu_usage detector"
   type        = number
   default     = 80
 }
@@ -126,8 +126,8 @@ variable "credit_cpu_disabled_critical" {
   default     = null
 }
 
-variable "credit_cpu_disabled_warning" {
-  description = "Disable warning alerting rule for credit_cpu detector"
+variable "credit_cpu_disabled_major" {
+  description = "Disable major alerting rule for credit_cpu detector"
   type        = bool
   default     = null
 }
@@ -162,8 +162,8 @@ variable "credit_cpu_threshold_critical" {
   default     = 15
 }
 
-variable "credit_cpu_threshold_warning" {
-  description = "Warning threshold for credit_cpu detector"
+variable "credit_cpu_threshold_major" {
+  description = "Major threshold for credit_cpu detector"
   type        = number
   default     = 30
 }

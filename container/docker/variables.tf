@@ -70,14 +70,14 @@ variable "cpu_disabled" {
   default     = false
 }
 
-variable "cpu_disabled_major" {
-  description = "Disable major alerting rule for cpu detector"
+variable "cpu_disabled_minor" {
+  description = "Disable minor alerting rule for cpu detector"
   type        = bool
   default     = null
 }
 
-variable "cpu_disabled_warning" {
-  description = "Disable warning alerting rule for cpu detector"
+variable "cpu_disabled_major" {
+  description = "Disable major alerting rule for cpu detector"
   type        = bool
   default     = null
 }
@@ -100,14 +100,14 @@ variable "cpu_transformation_function" {
   default     = ".min(over='1h')"
 }
 
-variable "cpu_threshold_major" {
-  description = "major threshold for cpu detector"
+variable "cpu_threshold_minor" {
+  description = "minor threshold for cpu detector"
   type        = number
   default     = 50
 }
 
-variable "cpu_threshold_warning" {
-  description = "Warning threshold for cpu detector"
+variable "cpu_threshold_major" {
+  description = "Major threshold for cpu detector"
   type        = number
   default     = 75
 }
@@ -120,14 +120,14 @@ variable "throttling_disabled" {
   default     = false
 }
 
-variable "throttling_disabled_major" {
-  description = "Disable major alerting rule for throttling detector"
+variable "throttling_disabled_minor" {
+  description = "Disable minor alerting rule for throttling detector"
   type        = bool
   default     = null
 }
 
-variable "throttling_disabled_warning" {
-  description = "Disable warning alerting rule for throttling detector"
+variable "throttling_disabled_major" {
+  description = "Disable major alerting rule for throttling detector"
   type        = bool
   default     = null
 }
@@ -150,14 +150,14 @@ variable "throttling_transformation_function" {
   default     = ".max(over='5m')"
 }
 
-variable "throttling_threshold_major" {
-  description = "major threshold for throttling detector"
+variable "throttling_threshold_minor" {
+  description = "minor threshold for throttling detector"
   type        = number
   default     = 1000 # = 1 millisecond in nanoseconds
 }
 
-variable "throttling_threshold_warning" {
-  description = "Warning threshold for throttling detector"
+variable "throttling_threshold_major" {
+  description = "Major threshold for throttling detector"
   type        = number
   default     = 1000000000 # = 1 second in nanoseconds
 }
@@ -170,14 +170,14 @@ variable "memory_disabled" {
   default     = false
 }
 
-variable "memory_disabled_major" {
-  description = "Disable major alerting rule for memory detector"
+variable "memory_disabled_minor" {
+  description = "Disable minor alerting rule for memory detector"
   type        = bool
   default     = null
 }
 
-variable "memory_disabled_warning" {
-  description = "Disable warning alerting rule for memory detector"
+variable "memory_disabled_major" {
+  description = "Disable major alerting rule for memory detector"
   type        = bool
   default     = null
 }
@@ -200,14 +200,14 @@ variable "memory_transformation_function" {
   default     = ".min(over='15m')"
 }
 
-variable "memory_threshold_major" {
-  description = "major threshold for memory detector"
+variable "memory_threshold_minor" {
+  description = "minor threshold for memory detector"
   type        = number
   default     = 90
 }
 
-variable "memory_threshold_warning" {
-  description = "Warning threshold for memory detector"
+variable "memory_threshold_major" {
+  description = "Major threshold for memory detector"
   type        = number
   default     = 95
 }

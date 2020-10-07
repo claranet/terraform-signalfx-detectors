@@ -108,8 +108,8 @@ variable "zookeeper_latency_disabled_critical" {
   default     = null
 }
 
-variable "zookeeper_latency_disabled_warning" {
-  description = "Disable warning alerting rule for zookeeper_latency detector"
+variable "zookeeper_latency_disabled_major" {
+  description = "Disable major alerting rule for zookeeper_latency detector"
   type        = bool
   default     = null
 }
@@ -138,8 +138,8 @@ variable "zookeeper_latency_threshold_critical" {
   default     = 300000
 }
 
-variable "zookeeper_latency_threshold_warning" {
-  description = "Warning threshold for zookeeper_latency detector"
+variable "zookeeper_latency_threshold_major" {
+  description = "Major threshold for zookeeper_latency detector"
   type        = number
   default     = 250000
 }
@@ -158,8 +158,8 @@ variable "file_descriptors_disabled_critical" {
   default     = null
 }
 
-variable "file_descriptors_disabled_warning" {
-  description = "Disable warning alerting rule for file_descriptors detector"
+variable "file_descriptors_disabled_major" {
+  description = "Disable major alerting rule for file_descriptors detector"
   type        = bool
   default     = null
 }
@@ -188,8 +188,8 @@ variable "file_descriptors_threshold_critical" {
   default     = 95
 }
 
-variable "file_descriptors_threshold_warning" {
-  description = "Warning threshold for file_descriptors detector"
+variable "file_descriptors_threshold_major" {
+  description = "Major threshold for file_descriptors detector"
   type        = number
   default     = 90
 }

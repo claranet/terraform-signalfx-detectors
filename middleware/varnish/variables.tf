@@ -81,14 +81,14 @@ variable "varnish_cache_hit_rate_disabled" {
   default     = null
 }
 
-variable "varnish_cache_hit_rate_disabled_warning" {
-  description = "Disable warning alerting rule for cache_hit_rate detector"
+variable "varnish_cache_hit_rate_disabled_major" {
+  description = "Disable major alerting rule for cache_hit_rate detector"
   type        = bool
   default     = null
 }
 
-variable "varnish_cache_hit_rate_disabled_major" {
-  description = "Disable major alerting rule for cache_hit_rate detector"
+variable "varnish_cache_hit_rate_disabled_minor" {
+  description = "Disable minor alerting rule for cache_hit_rate detector"
   type        = bool
   default     = null
 }
@@ -111,8 +111,8 @@ variable "varnish_memory_usage_disabled_critical" {
   default     = null
 }
 
-variable "varnish_memory_usage_disabled_warning" {
-  description = "Disable warning alerting rule for memory_usage detector"
+variable "varnish_memory_usage_disabled_major" {
+  description = "Disable major alerting rule for memory_usage detector"
   type        = bool
   default     = null
 }
@@ -199,14 +199,14 @@ variable "varnish_session_dropped_threshold_critical" {
   default     = 0
 }
 
-variable "varnish_cache_hit_rate_threshold_major" {
-  description = "Varnish cache hit rate threshold major"
+variable "varnish_cache_hit_rate_threshold_minor" {
+  description = "Varnish cache hit rate threshold minor"
   type        = number
   default     = 90
 }
 
-variable "varnish_cache_hit_rate_threshold_warning" {
-  description = "Varnish cache hit rate threshold warning"
+variable "varnish_cache_hit_rate_threshold_major" {
+  description = "Varnish cache hit rate threshold major"
   type        = number
   default     = 80
 }
@@ -217,8 +217,8 @@ variable "varnish_threads_threshold_critical" {
   default     = 1
 }
 
-variable "varnish_memory_usage_threshold_warning" {
-  description = "Varnish memory usage threshold warning"
+variable "varnish_memory_usage_threshold_major" {
+  description = "Varnish memory usage threshold major"
   type        = number
   default     = 80
 }

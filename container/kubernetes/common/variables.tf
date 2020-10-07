@@ -70,14 +70,14 @@ variable "node_ready_disabled" {
   default     = null
 }
 
-variable "node_ready_disabled_major" {
-  description = "Disable major alerting rule for node_ready detector"
+variable "node_ready_disabled_minor" {
+  description = "Disable minor alerting rule for node_ready detector"
   type        = bool
   default     = null
 }
 
-variable "node_ready_disabled_warning" {
-  description = "Disable warning alerting rule for node_ready detector"
+variable "node_ready_disabled_major" {
+  description = "Disable major alerting rule for node_ready detector"
   type        = bool
   default     = null
 }
@@ -164,8 +164,8 @@ variable "terminated_transformation_function" {
   default     = ""
 }
 
-variable "terminated_threshold_warning" {
-  description = "Warning threshold for terminated detector"
+variable "terminated_threshold_major" {
+  description = "Major threshold for terminated detector"
   type        = number
   default     = 0
 }
@@ -202,8 +202,8 @@ variable "oom_killed_transformation_function" {
   default     = ""
 }
 
-variable "oom_killed_threshold_warning" {
-  description = "Warning threshold for oom_killed detector"
+variable "oom_killed_threshold_major" {
+  description = "Major threshold for oom_killed detector"
   type        = number
   default     = 0
 }
@@ -234,8 +234,8 @@ variable "deployment_crashloopbackoff_transformation_function" {
   default     = ".sum(over='15m')"
 }
 
-variable "deployment_crashloopbackoff_threshold_warning" {
-  description = "Warning threshold for deployment_crashloopbackoff detector"
+variable "deployment_crashloopbackoff_threshold_major" {
+  description = "Major threshold for deployment_crashloopbackoff detector"
   type        = number
   default     = 0
 }
@@ -266,8 +266,8 @@ variable "daemonset_crashloopbackoff_transformation_function" {
   default     = ".sum(over='15m')"
 }
 
-variable "daemonset_crashloopbackoff_threshold_warning" {
-  description = "Warning threshold for daemonset_crashloopbackoff detector"
+variable "daemonset_crashloopbackoff_threshold_major" {
+  description = "Major threshold for daemonset_crashloopbackoff detector"
   type        = number
   default     = 0
 }
@@ -298,8 +298,8 @@ variable "job_failed_transformation_function" {
   default     = ""
 }
 
-variable "job_failed_threshold_warning" {
-  description = "Warning threshold for job_failed detector"
+variable "job_failed_threshold_major" {
+  description = "Major threshold for job_failed detector"
   type        = number
   default     = 0
 }

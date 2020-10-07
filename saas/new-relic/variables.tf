@@ -76,8 +76,8 @@ variable "error_rate_disabled_critical" {
   default     = null
 }
 
-variable "error_rate_disabled_warning" {
-  description = "Disable warning alerting rule for error_rate detector"
+variable "error_rate_disabled_major" {
+  description = "Disable major alerting rule for error_rate detector"
   type        = bool
   default     = null
 }
@@ -106,8 +106,8 @@ variable "error_rate_threshold_critical" {
   default     = 5
 }
 
-variable "error_rate_threshold_warning" {
-  description = "Warning threshold for error_rate detector"
+variable "error_rate_threshold_major" {
+  description = "Major threshold for error_rate detector"
   type        = number
   default     = 1
 }
@@ -126,8 +126,8 @@ variable "apdex_disabled_critical" {
   default     = null
 }
 
-variable "apdex_disabled_warning" {
-  description = "Disable warning alerting rule for apdex detector"
+variable "apdex_disabled_major" {
+  description = "Disable major alerting rule for apdex detector"
   type        = bool
   default     = null
 }
@@ -156,8 +156,8 @@ variable "apdex_threshold_critical" {
   default     = 0.25
 }
 
-variable "apdex_threshold_warning" {
-  description = "Warning threshold for apdex detector"
+variable "apdex_threshold_major" {
+  description = "Major threshold for apdex detector"
   type        = number
   default     = 0.5
 }

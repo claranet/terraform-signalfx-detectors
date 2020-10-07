@@ -25,7 +25,7 @@ resource "signalfx_detector" "evictedkeys" {
         base_filter = filter('resource_type', 'Microsoft.Cache/Redis') and filter('primary_aggregation_type', 'true')
         signal = data('evictedkeys', filter=base_filter and ${module.filter-tags.filter_custom})${var.evictedkeys_aggregation_function}.publish('signal')
         detect(when(signal > threshold(${var.evictedkeys_threshold_critical}), lasting="${var.evictedkeys_timer}")).publish('CRIT')
-        detect(when(signal > threshold(${var.evictedkeys_threshold_warning}), lasting="${var.evictedkeys_timer}") and when(signal <= ${var.evictedkeys_threshold_critical})).publish('WARN')
+        detect(when(signal > threshold(${var.evictedkeys_threshold_major}), lasting="${var.evictedkeys_timer}") and when(signal <= ${var.evictedkeys_threshold_critical})).publish('MAJOR')
     EOF
 
   rule {
@@ -38,11 +38,11 @@ resource "signalfx_detector" "evictedkeys" {
   }
 
   rule {
-    description           = "are too high > ${var.evictedkeys_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.evictedkeys_disabled_warning, var.evictedkeys_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.evictedkeys_notifications, "warning", []), var.notifications.warning)
+    description           = "are too high > ${var.evictedkeys_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.evictedkeys_disabled_major, var.evictedkeys_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.evictedkeys_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -54,7 +54,7 @@ resource "signalfx_detector" "percent_processor_time" {
         base_filter = filter('resource_type', 'Microsoft.Cache/Redis') and filter('primary_aggregation_type', 'true')
         signal = data('percentProcessorTime', filter=base_filter and ${module.filter-tags.filter_custom})${var.percent_processor_time_aggregation_function}.publish('signal')
         detect(when(signal > threshold(${var.percent_processor_time_threshold_critical}), lasting="${var.percent_processor_time_timer}")).publish('CRIT')
-        detect(when(signal > threshold(${var.percent_processor_time_threshold_warning}), lasting="${var.percent_processor_time_timer}") and when(signal <= ${var.percent_processor_time_threshold_critical})).publish('WARN')
+        detect(when(signal > threshold(${var.percent_processor_time_threshold_major}), lasting="${var.percent_processor_time_timer}") and when(signal <= ${var.percent_processor_time_threshold_critical})).publish('MAJOR')
     EOF
 
   rule {
@@ -67,11 +67,11 @@ resource "signalfx_detector" "percent_processor_time" {
   }
 
   rule {
-    description           = "is too high > ${var.percent_processor_time_threshold_warning}%"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.percent_processor_time_disabled_warning, var.percent_processor_time_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.percent_processor_time_notifications, "warning", []), var.notifications.warning)
+    description           = "is too high > ${var.percent_processor_time_threshold_major}%"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.percent_processor_time_disabled_major, var.percent_processor_time_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.percent_processor_time_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -83,7 +83,7 @@ resource "signalfx_detector" "load" {
         base_filter = filter('resource_type', 'Microsoft.Cache/Redis') and filter('primary_aggregation_type', 'true')
         signal = data('serverLoad', filter=base_filter and ${module.filter-tags.filter_custom})${var.load_aggregation_function}.publish('signal')
         detect(when(signal > threshold(${var.load_threshold_critical}), lasting="${var.load_timer}")).publish('CRIT')
-        detect(when(signal > threshold(${var.load_threshold_warning}), lasting="${var.load_timer}") and when(signal <= ${var.load_threshold_critical})).publish('WARN')
+        detect(when(signal > threshold(${var.load_threshold_major}), lasting="${var.load_timer}") and when(signal <= ${var.load_threshold_critical})).publish('MAJOR')
     EOF
 
   rule {
@@ -96,11 +96,11 @@ resource "signalfx_detector" "load" {
   }
 
   rule {
-    description           = "is too high > ${var.load_threshold_warning}%"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.load_disabled_warning, var.load_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.load_notifications, "warning", []), var.notifications.warning)
+    description           = "is too high > ${var.load_threshold_major}%"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.load_disabled_major, var.load_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.load_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }

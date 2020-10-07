@@ -6,7 +6,7 @@ resource "signalfx_detector" "pct_errors" {
     B = data('Invocations', filter=filter('namespace', 'AWS/Lambda') and filter('stat', 'mean') and filter('Resource', '*') and ${module.filter-tags.filter_custom}, extrapolation='last_value', rollup='average')${var.pct_errors_aggregation_function}${var.pct_errors_transformation_function}
     signal = (A/B).scale(100).fill(value=0).publish('signal')
     detect(when(signal > threshold(${var.pct_errors_threshold_critical}), lasting='${var.pct_errors_lasting_duration_seconds}s')).publish('CRIT')
-    detect((when(signal > threshold(${var.pct_errors_threshold_warning}), lasting='${var.pct_errors_lasting_duration_seconds}s') and when(signal <= ${var.pct_errors_threshold_critical}, lasting='${var.pct_errors_lasting_duration_seconds}s'))).publish('WARN')
+    detect((when(signal > threshold(${var.pct_errors_threshold_major}), lasting='${var.pct_errors_lasting_duration_seconds}s') and when(signal <= ${var.pct_errors_threshold_critical}, lasting='${var.pct_errors_lasting_duration_seconds}s'))).publish('MAJOR')
 EOF
 
   rule {
@@ -19,11 +19,11 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.pct_errors_threshold_warning}%"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.pct_errors_disabled_warning, var.pct_errors_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.pct_errors_notifications, "warning", []), var.notifications.warning)
+    description           = "is too high > ${var.pct_errors_threshold_major}%"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.pct_errors_disabled_major, var.pct_errors_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.pct_errors_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -34,7 +34,7 @@ resource "signalfx_detector" "throttles" {
   program_text = <<-EOF
     signal = data('Throttles', filter=filter('namespace', 'AWS/Lambda') and filter('stat', 'mean') and filter('Resource', '*') and ${module.filter-tags.filter_custom}, extrapolation='last_value', rollup='average')${var.throttles_aggregation_function}${var.throttles_transformation_function}.publish('signal')
     detect(when(signal > threshold(${var.throttles_threshold_critical}))).publish('CRIT')
-    detect((when(signal > threshold(${var.throttles_threshold_warning})) and when(signal <= ${var.throttles_threshold_critical}))).publish('WARN')
+    detect((when(signal > threshold(${var.throttles_threshold_major})) and when(signal <= ${var.throttles_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {
@@ -47,11 +47,11 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.throttles_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.throttles_disabled_warning, var.throttles_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.throttles_notifications, "warning", []), var.notifications.warning)
+    description           = "is too high > ${var.throttles_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.throttles_disabled_major, var.throttles_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.throttles_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -61,15 +61,15 @@ resource "signalfx_detector" "invocations" {
 
   program_text = <<-EOF
     signal = data('Invocations', filter=filter('namespace', 'AWS/Lambda') and filter('stat', 'mean') and filter('Resource', '*') and ${module.filter-tags.filter_custom}, extrapolation='last_value', rollup='average')${var.invocations_aggregation_function}${var.invocations_transformation_function}.publish('signal')
-    detect(when(signal < threshold(${var.invocations_threshold_warning}))).publish('WARN')
+    detect(when(signal < threshold(${var.invocations_threshold_major}))).publish('MAJOR')
 EOF
 
   rule {
-    description           = "is too low < ${var.invocations_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
+    description           = "is too low < ${var.invocations_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
     disabled              = coalesce(var.invocations_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.invocations_notifications, "warning", []), var.notifications.warning)
+    notifications         = coalescelist(lookup(var.invocations_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }

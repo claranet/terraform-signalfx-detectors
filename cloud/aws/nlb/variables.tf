@@ -76,8 +76,8 @@ variable "no_healthy_instances_disabled_critical" {
   default     = null
 }
 
-variable "no_healthy_instances_disabled_warning" {
-  description = "Disable warning alerting rule for no_healthy_instances detector"
+variable "no_healthy_instances_disabled_major" {
+  description = "Disable major alerting rule for no_healthy_instances detector"
   type        = bool
   default     = null
 }
@@ -106,8 +106,8 @@ variable "no_healthy_instances_threshold_critical" {
   default     = 1
 }
 
-variable "no_healthy_instances_threshold_warning" {
-  description = "Warning threshold for no_healthy_instances detector"
+variable "no_healthy_instances_threshold_major" {
+  description = "Major threshold for no_healthy_instances detector"
   type        = number
   default     = 100
 }
