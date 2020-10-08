@@ -1053,9 +1053,9 @@ variable "task_time_in_queue_change_threshold_major" {
 # Snapshot_failure_detector detectors
 
 variable "automated_snapshot_aggregation_function" {
-  description = "Notification recipients list per severity overridden for automated_snapshot_failure detector"
-  type        = map(list(string))
-  default     = {}
+  description = "Aggregation function and group by for automated_snapshot_failure detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ""
 }
 
 variable "automated_snapshot_transformation_function" {
@@ -1077,7 +1077,7 @@ variable "automated_snapshot_failure_disabled" {
 }
 
 variable "automated_snapshot_failure_notifications" {
-  description = "Notification recipients list per severity overridden for cluster_status_not_green detector"
+  description = "Notification recipients list per severity overridden for automated_snapshot_failure detector"
   type        = map(list(string))
   default     = {}
 }
