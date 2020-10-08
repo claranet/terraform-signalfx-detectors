@@ -77,7 +77,7 @@ variable "aurora_postgresql_replica_lag_aggregation_function" {
 }
 
 variable "aurora_postgresql_replica_lag_transformation_function" {
-  description = "Transformation function for aurora_postgresql_replica_lag detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for aurora_postgresql_replica_lag detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='5m')"
 }

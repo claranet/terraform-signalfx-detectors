@@ -95,7 +95,7 @@ variable "cpu_utilization_aggregation_function" {
 }
 
 variable "cpu_utilization_transformation_function" {
-  description = "Transformation function for cpu_utilization detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for cpu_utilization detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='5m')"
 }
@@ -145,7 +145,7 @@ variable "memory_utilization_aggregation_function" {
 }
 
 variable "memory_utilization_transformation_function" {
-  description = "Transformation function for memory_utilization detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for memory_utilization detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='5m')"
 }

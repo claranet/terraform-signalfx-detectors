@@ -95,7 +95,7 @@ variable "evictions_aggregation_function" {
 }
 
 variable "evictions_transformation_function" {
-  description = "Transformation function for evictions detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for evictions detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".sum(over='15m')"
 }
@@ -139,7 +139,7 @@ variable "max_connection_aggregation_function" {
 }
 
 variable "max_connection_transformation_function" {
-  description = "Transformation function for max_connection detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for max_connection detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".max(over='5m')"
 }
@@ -177,7 +177,7 @@ variable "no_connection_aggregation_function" {
 }
 
 variable "no_connection_transformation_function" {
-  description = "Transformation function for no_connection detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for no_connection detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='5m')"
 }
@@ -221,7 +221,7 @@ variable "swap_aggregation_function" {
 }
 
 variable "swap_transformation_function" {
-  description = "Transformation function for swap detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for swap detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='5m')"
 }
@@ -271,7 +271,7 @@ variable "free_memory_aggregation_function" {
 }
 
 variable "free_memory_transformation_function" {
-  description = "Transformation function for free_memory detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for free_memory detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='15m')"
 }
@@ -321,7 +321,7 @@ variable "evictions_growing_aggregation_function" {
 }
 
 variable "evictions_growing_transformation_function" {
-  description = "Transformation function for evictions_growing detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for evictions_growing detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='5m')"
 }

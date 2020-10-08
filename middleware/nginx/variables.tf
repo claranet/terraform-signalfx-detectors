@@ -87,13 +87,13 @@ variable "dropped_connections_notifications" {
 }
 
 variable "dropped_connections_aggregation_function" {
-  description = "Aggregation function and group by for dropped connections detector (i.e. \".mean(by=['host']).\")"
+  description = "Aggregation function and group by for dropped connections detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
 }
 
 variable "dropped_connections_transformation_function" {
-  description = "Transformation function for dropped connections detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for dropped connections detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='5m')"
 }

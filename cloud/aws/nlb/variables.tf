@@ -95,7 +95,7 @@ variable "no_healthy_instances_aggregation_function" {
 }
 
 variable "no_healthy_instances_transformation_function" {
-  description = "Transformation function for no_healthy_instances detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for no_healthy_instances detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='5m')"
 }

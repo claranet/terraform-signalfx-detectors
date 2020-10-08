@@ -95,7 +95,7 @@ variable "incoming_records_aggregation_function" {
 }
 
 variable "incoming_records_transformation_function" {
-  description = "Transformation function for incoming_records detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for incoming_records detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".sum(over='15m')"
 }

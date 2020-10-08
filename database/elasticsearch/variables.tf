@@ -95,7 +95,7 @@ variable "cluster_status_aggregation_function" {
 }
 
 variable "cluster_status_transformation_function" {
-  description = "Transformation function for cluster_status_not_green detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for cluster_status_not_green detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='5m')"
 }
@@ -133,7 +133,7 @@ variable "cluster_initializing_shards_aggregation_function" {
 }
 
 variable "cluster_initializing_shards_transformation_function" {
-  description = "Transformation function for cluster_initializing_shards detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for cluster_initializing_shards detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='15m')"
 }
@@ -183,7 +183,7 @@ variable "cluster_relocating_shards_aggregation_function" {
 }
 
 variable "cluster_relocating_shards_transformation_function" {
-  description = "Transformation function for cluster_relocating_shards detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for cluster_relocating_shards detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='15m')"
 }
@@ -233,7 +233,7 @@ variable "cluster_unassigned_shards_aggregation_function" {
 }
 
 variable "cluster_unassigned_shards_transformation_function" {
-  description = "Transformation function for cluster_unassigned_shards detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for cluster_unassigned_shards detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='10m')"
 }
@@ -283,7 +283,7 @@ variable "pending_tasks_aggregation_function" {
 }
 
 variable "pending_tasks_transformation_function" {
-  description = "Transformation function for pending_tasks detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for pending_tasks detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='15m')"
 }
@@ -333,7 +333,7 @@ variable "jvm_heap_memory_usage_aggregation_function" {
 }
 
 variable "jvm_heap_memory_usage_transformation_function" {
-  description = "Transformation function for jvm_heap_memory_usage detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for jvm_heap_memory_usage detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='5m')"
 }
@@ -383,7 +383,7 @@ variable "cpu_usage_aggregation_function" {
 }
 
 variable "cpu_usage_transformation_function" {
-  description = "Transformation function for cpu_usage detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for cpu_usage detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='30m')"
 }
@@ -433,7 +433,7 @@ variable "file_descriptors_aggregation_function" {
 }
 
 variable "file_descriptors_transformation_function" {
-  description = "Transformation function for file_descriptors detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for file_descriptors detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".max(over='15m')"
 }
@@ -483,7 +483,7 @@ variable "jvm_memory_young_usage_aggregation_function" {
 }
 
 variable "jvm_memory_young_usage_transformation_function" {
-  description = "Transformation function for jvm_memory_young_usage detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for jvm_memory_young_usage detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='10m')"
 }
@@ -533,7 +533,7 @@ variable "jvm_memory_old_usage_aggregation_function" {
 }
 
 variable "jvm_memory_old_usage_transformation_function" {
-  description = "Transformation function for jvm_memory_old_usage detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for jvm_memory_old_usage detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='10m')"
 }
@@ -583,7 +583,7 @@ variable "jvm_gc_old_collection_latency_aggregation_function" {
 }
 
 variable "jvm_gc_old_collection_latency_transformation_function" {
-  description = "Transformation function for jvm_gc_old_collection_latency detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for jvm_gc_old_collection_latency detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='15m')"
 }
@@ -633,7 +633,7 @@ variable "jvm_gc_young_collection_latency_aggregation_function" {
 }
 
 variable "jvm_gc_young_collection_latency_transformation_function" {
-  description = "Transformation function for jvm_gc_young_collection_latency detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for jvm_gc_young_collection_latency detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='15m')"
 }
@@ -683,7 +683,7 @@ variable "indexing_latency_aggregation_function" {
 }
 
 variable "indexing_latency_transformation_function" {
-  description = "Transformation function for indexing_latency detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for indexing_latency detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='15m')"
 }
@@ -733,7 +733,7 @@ variable "flush_latency_aggregation_function" {
 }
 
 variable "flush_latency_transformation_function" {
-  description = "Transformation function for flush_latency detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for flush_latency detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='15m')"
 }
@@ -783,7 +783,7 @@ variable "search_latency_aggregation_function" {
 }
 
 variable "search_latency_transformation_function" {
-  description = "Transformation function for search_latency detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for search_latency detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='30m')"
 }
@@ -833,7 +833,7 @@ variable "fetch_latency_aggregation_function" {
 }
 
 variable "fetch_latency_transformation_function" {
-  description = "Transformation function for fetch_latency detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for fetch_latency detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='15m')"
 }
@@ -883,7 +883,7 @@ variable "field_data_evictions_change_aggregation_function" {
 }
 
 variable "field_data_evictions_change_transformation_function" {
-  description = "Transformation function for field_data_evictions_change detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for field_data_evictions_change detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='15m')"
 }
@@ -933,7 +933,7 @@ variable "query_cache_evictions_change_aggregation_function" {
 }
 
 variable "query_cache_evictions_change_transformation_function" {
-  description = "Transformation function for query_cache_evictions_change detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for query_cache_evictions_change detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='15m')"
 }
@@ -983,7 +983,7 @@ variable "request_cache_evictions_change_aggregation_function" {
 }
 
 variable "request_cache_evictions_change_transformation_function" {
-  description = "Transformation function for request_cache_evictions_change detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for request_cache_evictions_change detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='15m')"
 }
@@ -1033,7 +1033,7 @@ variable "task_time_in_queue_change_aggregation_function" {
 }
 
 variable "task_time_in_queue_change_transformation_function" {
-  description = "Transformation function for task_time_in_queue_change detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for task_time_in_queue_change detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='15m')"
 }

@@ -89,7 +89,7 @@ variable "http_code_matched_aggregation_function" {
 }
 
 variable "http_code_matched_transformation_function" {
-  description = "Transformation function for http_code_matched detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for http_code_matched detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".max(over='1m')"
 }
@@ -121,7 +121,7 @@ variable "http_regex_matched_aggregation_function" {
 }
 
 variable "http_regex_matched_transformation_function" {
-  description = "Transformation function for http_regex_matched detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for http_regex_matched detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".max(over='5m')"
 }
@@ -159,7 +159,7 @@ variable "http_response_time_aggregation_function" {
 }
 
 variable "http_response_time_transformation_function" {
-  description = "Transformation function for http_response_time detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for http_response_time detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='15m')"
 }
@@ -197,7 +197,7 @@ variable "http_content_length_aggregation_function" {
 }
 
 variable "http_content_length_transformation_function" {
-  description = "Transformation function for http_content_length detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for http_content_length detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".max(over='15m')"
 }
@@ -241,7 +241,7 @@ variable "certificate_expiration_date_aggregation_function" {
 }
 
 variable "certificate_expiration_date_transformation_function" {
-  description = "Transformation function for certificate_expiration_date detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for certificate_expiration_date detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".max(over='5m')"
 }
@@ -285,7 +285,7 @@ variable "invalid_tls_certificate_aggregation_function" {
 }
 
 variable "invalid_tls_certificate_transformation_function" {
-  description = "Transformation function for invalid_tls_certificate detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for invalid_tls_certificate detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".max(over='5m')"
 }

@@ -89,7 +89,7 @@ variable "latency_aggregation_function" {
 }
 
 variable "latency_transformation_function" {
-  description = "Transformation function for latency detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for latency detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
 }
@@ -151,7 +151,7 @@ variable "http_5xx_aggregation_function" {
 }
 
 variable "http_5xx_transformation_function" {
-  description = "Transformation function for http_5xx detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for http_5xx detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
 }
@@ -213,7 +213,7 @@ variable "http_4xx_aggregation_function" {
 }
 
 variable "http_4xx_transformation_function" {
-  description = "Transformation function for http_4xx detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for http_4xx detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
 }

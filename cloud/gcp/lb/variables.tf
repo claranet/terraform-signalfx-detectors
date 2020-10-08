@@ -88,7 +88,7 @@ variable "error_rate_4xx_aggregation_function" {
 }
 
 variable "error_rate_4xx_transformation_function" {
-  description = "Transformation function for error_rate_4xx detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for error_rate_4xx detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
 }
@@ -150,7 +150,7 @@ variable "error_rate_5xx_aggregation_function" {
 }
 
 variable "error_rate_5xx_transformation_function" {
-  description = "Transformation function for error_rate_5xx detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for error_rate_5xx detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
 }
@@ -212,7 +212,7 @@ variable "backend_latency_service_aggregation_function" {
 }
 
 variable "backend_latency_service_transformation_function" {
-  description = "Transformation function for backend_latency_service detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for backend_latency_service detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
 }
@@ -274,7 +274,7 @@ variable "backend_latency_bucket_aggregation_function" {
 }
 
 variable "backend_latency_bucket_transformation_function" {
-  description = "Transformation function for backend_latency_bucket detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for backend_latency_bucket detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
 }
@@ -324,7 +324,7 @@ variable "request_count_aggregation_function" {
 }
 
 variable "request_count_transformation_function" {
-  description = "Transformation function for request_count detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for request_count detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
 }

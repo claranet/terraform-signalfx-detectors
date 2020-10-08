@@ -89,7 +89,7 @@ variable "zookeeper_health_aggregation_function" {
 }
 
 variable "zookeeper_health_transformation_function" {
-  description = "Transformation function for zookeeper_health detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for zookeeper_health detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='5m')"
 }
@@ -127,7 +127,7 @@ variable "zookeeper_latency_aggregation_function" {
 }
 
 variable "zookeeper_latency_transformation_function" {
-  description = "Transformation function for zookeeper_latency detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for zookeeper_latency detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='5m')"
 }
@@ -177,7 +177,7 @@ variable "file_descriptors_aggregation_function" {
 }
 
 variable "file_descriptors_transformation_function" {
-  description = "Transformation function for file_descriptors detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for file_descriptors detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".max(over='15m')"
 }

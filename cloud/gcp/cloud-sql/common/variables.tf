@@ -100,7 +100,7 @@ variable "cpu_utilization_aggregation_function" {
 }
 
 variable "cpu_utilization_transformation_function" {
-  description = "Transformation function for cpu_utilization detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for cpu_utilization detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='30m')"
 }
@@ -150,7 +150,7 @@ variable "disk_utilization_aggregation_function" {
 }
 
 variable "disk_utilization_transformation_function" {
-  description = "Transformation function for disk_utilization detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for disk_utilization detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='10m')"
 }
@@ -262,7 +262,7 @@ variable "memory_utilization_aggregation_function" {
 }
 
 variable "memory_utilization_transformation_function" {
-  description = "Transformation function for memory_utilization detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for memory_utilization detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='15m')"
 }

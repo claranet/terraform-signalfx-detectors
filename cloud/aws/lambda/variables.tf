@@ -77,7 +77,7 @@ variable "pct_errors_aggregation_function" {
 }
 
 variable "pct_errors_transformation_function" {
-  description = "Transformation function for pct_errors detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for pct_errors detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
 }
@@ -133,7 +133,7 @@ variable "throttles_aggregation_function" {
 }
 
 variable "throttles_transformation_function" {
-  description = "Transformation function for throttles detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for throttles detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".sum(over='1h')"
 }
@@ -171,7 +171,7 @@ variable "invocations_aggregation_function" {
 }
 
 variable "invocations_transformation_function" {
-  description = "Transformation function for invocations detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for invocations detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".sum(over='1h')"
 }

@@ -101,7 +101,7 @@ variable "no_healthy_instances_aggregation_function" {
 }
 
 variable "no_healthy_instances_transformation_function" {
-  description = "Transformation function for no_healthy_instances detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for no_healthy_instances detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='5m')"
 }
@@ -151,7 +151,7 @@ variable "elb_4xx_aggregation_function" {
 }
 
 variable "elb_4xx_transformation_function" {
-  description = "Transformation function for elb_4xx detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for elb_4xx detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
 }
@@ -213,7 +213,7 @@ variable "elb_5xx_aggregation_function" {
 }
 
 variable "elb_5xx_transformation_function" {
-  description = "Transformation function for elb_5xx detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for elb_5xx detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
 }
@@ -275,7 +275,7 @@ variable "backend_4xx_aggregation_function" {
 }
 
 variable "backend_4xx_transformation_function" {
-  description = "Transformation function for backend_4xx detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for backend_4xx detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
 }
@@ -337,7 +337,7 @@ variable "backend_5xx_aggregation_function" {
 }
 
 variable "backend_5xx_transformation_function" {
-  description = "Transformation function for backend_5xx detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for backend_5xx detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
 }
@@ -399,7 +399,7 @@ variable "backend_latency_aggregation_function" {
 }
 
 variable "backend_latency_transformation_function" {
-  description = "Transformation function for backend_latency detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for backend_latency detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
 }

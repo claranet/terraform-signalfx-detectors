@@ -69,13 +69,13 @@ variable "messages_ready_notifications" {
 }
 
 variable "messages_ready_aggregation_function" {
-  description = "Aggregation function and group by for messages_ready detector (i.e. \".mean(by=['host']).\")"
+  description = "Aggregation function and group by for messages_ready detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
 }
 
 variable "messages_ready_transformation_function" {
-  description = "Transformation function for messages_ready detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for messages_ready detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='20m')"
 }
@@ -117,13 +117,13 @@ variable "messages_unacknowledged_notifications" {
 }
 
 variable "messages_unacknowledged_aggregation_function" {
-  description = "Aggregation function and group by for messages_unacknowledged detector (i.e. \".mean(by=['host']).\")"
+  description = "Aggregation function and group by for messages_unacknowledged detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
 }
 
 variable "messages_unacknowledged_transformation_function" {
-  description = "Transformation function for messages_unacknowledged detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for messages_unacknowledged detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='20m')"
 }
@@ -165,7 +165,7 @@ variable "messages_ack_rate_notifications" {
 }
 
 variable "messages_ack_rate_aggregation_function" {
-  description = "Aggregation function and group by for messages_ack_rate detector (i.e. \".mean(by=['host']).\")"
+  description = "Aggregation function and group by for messages_ack_rate detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
 }
@@ -219,7 +219,7 @@ variable "consumer_use_notifications" {
 }
 
 variable "consumer_use_aggregation_function" {
-  description = "Aggregation function and group by for consumer_use detector (i.e. \".mean(by=['host']).\")"
+  description = "Aggregation function and group by for consumer_use detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
 }

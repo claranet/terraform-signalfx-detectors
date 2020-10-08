@@ -95,7 +95,7 @@ variable "cpu_aggregation_function" {
 }
 
 variable "cpu_transformation_function" {
-  description = "Transformation function for cpu detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for cpu detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='1h')"
 }
@@ -145,7 +145,7 @@ variable "throttling_aggregation_function" {
 }
 
 variable "throttling_transformation_function" {
-  description = "Transformation function for throttling detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for throttling detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".max(over='5m')"
 }
@@ -195,7 +195,7 @@ variable "memory_aggregation_function" {
 }
 
 variable "memory_transformation_function" {
-  description = "Transformation function for memory detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for memory detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='15m')"
 }

@@ -95,7 +95,7 @@ variable "php_fpm_connect_idle_aggregation_function" {
 }
 
 variable "php_fpm_connect_idle_transformation_function" {
-  description = "Transformation function for php_fpm_connect_idle detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for php_fpm_connect_idle detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='10m')"
 }

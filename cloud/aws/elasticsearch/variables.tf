@@ -95,7 +95,7 @@ variable "cluster_status_aggregation_function" {
 }
 
 variable "cluster_status_transformation_function" {
-  description = "Transformation function for cluster_status detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for cluster_status detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".max(over='30m')"
 }
@@ -133,7 +133,7 @@ variable "free_space_aggregation_function" {
 }
 
 variable "free_space_transformation_function" {
-  description = "Transformation function for free_space detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for free_space detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='15m')"
 }
@@ -183,7 +183,7 @@ variable "cpu_90_15min_aggregation_function" {
 }
 
 variable "cpu_90_15min_transformation_function" {
-  description = "Transformation function for cpu_90_15min detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for cpu_90_15min detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".max(over='15m')"
 }

@@ -95,7 +95,7 @@ variable "visible_messages_aggregation_function" {
 }
 
 variable "visible_messages_transformation_function" {
-  description = "Transformation function for visible_messages detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for visible_messages detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='30m')"
 }
@@ -145,7 +145,7 @@ variable "age_of_oldest_message_aggregation_function" {
 }
 
 variable "age_of_oldest_message_transformation_function" {
-  description = "Transformation function for age_of_oldest_message detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for age_of_oldest_message detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='30m')"
 }

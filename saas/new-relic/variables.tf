@@ -95,7 +95,7 @@ variable "error_rate_aggregation_function" {
 }
 
 variable "error_rate_transformation_function" {
-  description = "Transformation function for error_rate detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for error_rate detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='5m')"
 }
@@ -145,7 +145,7 @@ variable "apdex_aggregation_function" {
 }
 
 variable "apdex_transformation_function" {
-  description = "Transformation function for apdex detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for apdex detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='15m')"
 }

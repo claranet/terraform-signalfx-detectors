@@ -95,7 +95,7 @@ variable "cpu_90_15min_aggregation_function" {
 }
 
 variable "cpu_90_15min_transformation_function" {
-  description = "Transformation function for cpu_90_15min detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for cpu_90_15min detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='15m')"
 }
@@ -145,7 +145,7 @@ variable "free_space_low_aggregation_function" {
 }
 
 variable "free_space_low_transformation_function" {
-  description = "Transformation function for free_space_low detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for free_space_low detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='15m')"
 }
@@ -195,7 +195,7 @@ variable "replica_lag_aggregation_function" {
 }
 
 variable "replica_lag_transformation_function" {
-  description = "Transformation function for replica_lag detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for replica_lag detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='5m')"
 }

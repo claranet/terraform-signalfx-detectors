@@ -95,7 +95,7 @@ variable "apache_workers_aggregation_function" {
 }
 
 variable "apache_workers_transformation_function" {
-  description = "Transformation function for apache_workers detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for apache_workers detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='10m')"
 }

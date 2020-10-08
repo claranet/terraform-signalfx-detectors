@@ -95,7 +95,7 @@ variable "dns_query_time_aggregation_function" {
 }
 
 variable "dns_query_time_transformation_function" {
-  description = "Transformation function for dns_query_time detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for dns_query_time detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".max(over='15m')"
 }
@@ -139,7 +139,7 @@ variable "dns_result_code_aggregation_function" {
 }
 
 variable "dns_result_code_transformation_function" {
-  description = "Transformation function for dns_result_code detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for dns_result_code detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='5m')"
 }

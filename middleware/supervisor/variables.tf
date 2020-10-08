@@ -87,13 +87,13 @@ variable "process_state_notifications" {
 }
 
 variable "process_state_aggregation_function" {
-  description = "Aggregation function and group by for process state detector (i.e. \".mean(by=['host']).\")"
+  description = "Aggregation function and group by for process state detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
 }
 
 variable "process_state_transformation_function" {
-  description = "Transformation function for process state detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for process state detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='10m')"
 }

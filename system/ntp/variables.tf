@@ -77,13 +77,13 @@ variable "ntp_notifications" {
 }
 
 variable "ntp_aggregation_function" {
-  description = "Aggregation function and group by for ntp detector (i.e. \".mean(by=['host']).\")"
+  description = "Aggregation function and group by for ntp detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
 }
 
 variable "ntp_transformation_function" {
-  description = "Transformation function for ntp detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for ntp detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='5m')"
 }

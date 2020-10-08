@@ -81,13 +81,13 @@ variable "server_status_notifications" {
 }
 
 variable "server_status_aggregation_function" {
-  description = "Aggregation function and group by for server status detector (i.e. \".mean(by=['host']).\")"
+  description = "Aggregation function and group by for server status detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
 }
 
 variable "server_status_transformation_function" {
-  description = "Transformation function for server status detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for server status detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='5m')"
 }
@@ -111,13 +111,13 @@ variable "backend_status_notifications" {
 }
 
 variable "backend_status_aggregation_function" {
-  description = "Aggregation function and group by for backend status detector (i.e. \".mean(by=['host']).\")"
+  description = "Aggregation function and group by for backend status detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
 }
 
 variable "backend_status_transformation_function" {
-  description = "Transformation function for backend status detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for backend status detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='5m')"
 }
@@ -147,13 +147,13 @@ variable "session_limit_notifications" {
 }
 
 variable "session_limit_aggregation_function" {
-  description = "Aggregation function and group by for session limit detector (i.e. \".mean(by=['host']).\")"
+  description = "Aggregation function and group by for session limit detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
 }
 
 variable "session_limit_transformation_function" {
-  description = "Transformation function for session limit detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for session limit detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='10m')"
 }
@@ -195,13 +195,13 @@ variable "http_5xx_response_notifications" {
 }
 
 variable "http_5xx_response_aggregation_function" {
-  description = "Aggregation function and group by for http_5xx_response detector (i.e. \".mean(by=['host']).\")"
+  description = "Aggregation function and group by for http_5xx_response detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
 }
 
 variable "http_5xx_response_transformation_function" {
-  description = "Transformation function for http_5xx_response detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for http_5xx_response detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='10m')"
 }
@@ -243,13 +243,13 @@ variable "http_4xx_response_notifications" {
 }
 
 variable "http_4xx_response_aggregation_function" {
-  description = "Aggregation function and group by for http_4xx_response detector (i.e. \".mean(by=['host']).\")"
+  description = "Aggregation function and group by for http_4xx_response detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
 }
 
 variable "http_4xx_response_transformation_function" {
-  description = "Transformation function for http_4xx_response detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for http_4xx_response detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='10m')"
 }

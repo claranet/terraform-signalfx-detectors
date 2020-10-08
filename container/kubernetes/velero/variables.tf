@@ -65,7 +65,7 @@ variable "velero_scheduled_backup_missing_aggregation_function" {
 }
 
 variable "velero_scheduled_backup_missing_transformation_function" {
-  description = "Transformation function for velero_scheduled_backup_missing detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for velero_scheduled_backup_missing detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".sum(over='1d')"
 }
@@ -91,7 +91,7 @@ variable "velero_backup_failure_aggregation_function" {
 }
 
 variable "velero_backup_failure_transformation_function" {
-  description = "Transformation function for velero_backup_failure detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for velero_backup_failure detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".sum(over='1d')"
 }
@@ -117,7 +117,7 @@ variable "velero_backup_partial_failure_aggregation_function" {
 }
 
 variable "velero_backup_partial_failure_transformation_function" {
-  description = "Transformation function for velero_backup_partial_failure detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for velero_backup_partial_failure detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".sum(over='1d')"
 }
@@ -143,7 +143,7 @@ variable "velero_backup_deletion_failure_aggregation_function" {
 }
 
 variable "velero_backup_deletion_failure_transformation_function" {
-  description = "Transformation function for velero_backup_deletion_failure detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for velero_backup_deletion_failure detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".sum(over='1d')"
 }
@@ -169,7 +169,7 @@ variable "velero_volume_snapshot_failure_aggregation_function" {
 }
 
 variable "velero_volume_snapshot_failure_transformation_function" {
-  description = "Transformation function for velero_volume_snapshot_failure detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for velero_volume_snapshot_failure detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".sum(over='1d')"
 }
