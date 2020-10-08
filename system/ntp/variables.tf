@@ -57,7 +57,7 @@ variable "heartbeat_notifications" {
 }
 
 variable "heartbeat_timeframe" {
-  description = "Timeframe for system not reporting detector (i.e. \"10m\")"
+  description = "Timeframe for heartbeat detector (i.e. \"10m\")"
   type        = string
   default     = "12h"
 }
