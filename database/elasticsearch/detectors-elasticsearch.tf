@@ -609,7 +609,8 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.automated_snapshot_failure_disabled_critical, var.automated_snapshot_failure_disabled, var.detectors_disabled)
-    notifications         = coalescelist(var.automated_snapshot_failure_notifications_critical, var.automated_snapshot_failure_notifications, var.notifications)
+    notifications         = coalescelist(lookup(var.automated_snapshot_failure_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} on {{{dimensions}}}"
   }
 }
+

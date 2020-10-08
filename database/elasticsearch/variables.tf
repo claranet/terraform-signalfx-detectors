@@ -1050,3 +1050,34 @@ variable "task_time_in_queue_change_threshold_major" {
   default     = 100
 }
 
+# Snapshot_failure_detector detectors
+
+variable "automated_snapshot_aggregation_function" {
+  description = "Notification recipients list per severity overridden for automated_snapshot_failure detector"
+  type        = map(list(string))
+  default     = {}
+}
+
+variable "automated_snapshot_transformation_function" {
+  description = "Transformation function for automated_snapshot_failure detector (i.e. \".mean(over='5m')\"))"
+  type        = string
+  default     = ".mean(over='15m')"
+}
+
+variable "automated_snapshot_failure_disabled_critical" {
+  description = "Disable critical alerting rule for automated_snapshot_failure detector"
+  type        = bool
+  default     = null
+}
+
+variable "automated_snapshot_failure_disabled" {
+  description = "Disable all alerting rules for automated_snapshot_failure detector"
+  type        = bool
+  default     = null
+}
+
+variable "automated_snapshot_failure_notifications" {
+  description = "Notification recipients list per severity overridden for cluster_status_not_green detector"
+  type        = map(list(string))
+  default     = {}
+}
