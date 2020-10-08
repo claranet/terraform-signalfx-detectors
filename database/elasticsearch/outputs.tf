@@ -103,3 +103,7 @@ output "task_time_in_queue_change" {
   value       = signalfx_detector.task_time_in_queue_change
 }
 
+output "automated_snapshot_failure" {
+  description = "Detector resource for automated_snapshot_failure"
+  value       = signalfx_detector.automated_snapshot_failure
+}
