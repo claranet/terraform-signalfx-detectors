@@ -107,3 +107,4 @@ output "automated_snapshot_failure" {
   description = "Detector resource for automated_snapshot_failure"
   value       = signalfx_detector.automated_snapshot_failure
 }
+
