@@ -596,3 +596,20 @@ EOF
   }
 }
 
+resource "signalfx_detector" "automated_snapshot_failure" {
+  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ElasticSearch AutomatedSnapshotFailure"
+
+  program_text = <<-EOF
+    A = data('AutomatedSnapshotFailure', filter=filter('namespace', 'AWS/ES') and filter('stat', 'upper') and ${module.filter-tags.filter_custom})${var.automated_snapshot_aggregation_function}${var.automated_snapshot_transformation_function}.publish('A')
+    detect(when(A > threshold(0))).publish('CRIT')
+EOF
+
+  rule {
+    description           = "is above 0"
+    severity              = "Critical"
+    detect_label          = "CRIT"
+    disabled              = coalesce(var.automated_snapshot_failure_disabled_critical, var.automated_snapshot_failure_disabled, var.detectors_disabled)
+    notifications         = coalescelist(var.automated_snapshot_failure_notifications_critical, var.automated_snapshot_failure_notifications, var.notifications)
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} on {{{dimensions}}}"
+  }
+}
