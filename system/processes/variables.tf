@@ -56,8 +56,8 @@ variable "processes_disabled_critical" {
   default     = null
 }
 
-variable "processes_disabled_warning" {
-  description = "Disable warning alerting rule for processes detector"
+variable "processes_disabled_major" {
+  description = "Disable major alerting rule for processes detector"
   type        = bool
   default     = true
 }
@@ -80,8 +80,8 @@ variable "processes_transformation_function" {
   default     = ".min(over='15m')"
 }
 
-variable "processes_threshold_warning" {
-  description = "Warning threshold for processes detector"
+variable "processes_threshold_major" {
+  description = "Major threshold for processes detector"
   type        = number
   default     = 2
 }

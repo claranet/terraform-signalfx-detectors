@@ -23,15 +23,15 @@ resource "signalfx_detector" "ntp" {
 
   program_text = <<-EOF
         signal = data('ntp.offset_seconds', filter=${module.filter-tags.filter_custom})${var.ntp_aggregation_function}${var.ntp_transformation_function}.publish('signal')
-        detect(when(signal > ${var.ntp_threshold_warning})).publish('WARN')
+        detect(when(signal > ${var.ntp_threshold_major})).publish('MAJOR')
 EOF
 
   rule {
-    description           = "is too high > ${var.ntp_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
+    description           = "is too high > ${var.ntp_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
     disabled              = coalesce(var.ntp_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.ntp_notifications, "warning", []), var.notifications.warning)
+    notifications         = coalescelist(lookup(var.ntp_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }

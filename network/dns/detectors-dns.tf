@@ -24,7 +24,7 @@ resource "signalfx_detector" "dns_query_time" {
   program_text = <<-EOF
     signal = data('dns.query_time_ms', filter=filter('plugin', 'telegraf/dns') and ${module.filter-tags.filter_custom})${var.dns_query_time_aggregation_function}${var.dns_query_time_transformation_function}.publish('signal')
     detect(when(signal > ${var.dns_query_time_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.dns_query_time_threshold_warning}) and when(signal <= ${var.dns_query_time_threshold_critical})).publish('WARN')
+    detect(when(signal > ${var.dns_query_time_threshold_major}) and when(signal <= ${var.dns_query_time_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -37,11 +37,11 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.dns_query_time_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.dns_query_time_disabled_warning, var.dns_query_time_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.dns_query_time_notifications, "warning", []), var.notifications.warning)
+    description           = "is too high > ${var.dns_query_time_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.dns_query_time_disabled_major, var.dns_query_time_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.dns_query_time_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }

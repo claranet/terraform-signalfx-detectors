@@ -76,8 +76,8 @@ variable "cluster_status_disabled_critical" {
   default     = null
 }
 
-variable "cluster_status_disabled_warning" {
-  description = "Disable warning alerting rule for cluster_status detector"
+variable "cluster_status_disabled_major" {
+  description = "Disable major alerting rule for cluster_status detector"
   type        = bool
   default     = null
 }
@@ -114,8 +114,8 @@ variable "free_space_disabled_critical" {
   default     = null
 }
 
-variable "free_space_disabled_warning" {
-  description = "Disable warning alerting rule for free_space detector"
+variable "free_space_disabled_major" {
+  description = "Disable major alerting rule for free_space detector"
   type        = bool
   default     = null
 }
@@ -144,8 +144,8 @@ variable "free_space_threshold_critical" {
   default     = 20480
 }
 
-variable "free_space_threshold_warning" {
-  description = "Warning threshold for free_space detector"
+variable "free_space_threshold_major" {
+  description = "Major threshold for free_space detector"
   type        = number
   default     = 40960
 }
@@ -164,8 +164,8 @@ variable "cpu_90_15min_disabled_critical" {
   default     = null
 }
 
-variable "cpu_90_15min_disabled_warning" {
-  description = "Disable warning alerting rule for cpu_90_15min detector"
+variable "cpu_90_15min_disabled_major" {
+  description = "Disable major alerting rule for cpu_90_15min detector"
   type        = bool
   default     = null
 }
@@ -194,8 +194,8 @@ variable "cpu_90_15min_threshold_critical" {
   default     = 90
 }
 
-variable "cpu_90_15min_threshold_warning" {
-  description = "Warning threshold for cpu_90_15min detector"
+variable "cpu_90_15min_threshold_major" {
+  description = "Major threshold for cpu_90_15min detector"
   type        = number
   default     = 80
 }

@@ -4,15 +4,15 @@ resource "signalfx_detector" "hosts_limit" {
   program_text = <<-EOF
     signal = data('${"sf.org.${var.is_parent ? "child." : ""}numResourcesMonitored"}', filter=filter('resourceType', 'host'))${local.aggregation_function}${var.hosts_limit_transformation_function}.publish('signal')
     limit = data('${"sf.org.${var.is_parent ? "child." : ""}subscription.hosts"}')${local.aggregation_function}${var.hosts_limit_transformation_function}
-    detect(when(signal > threshold(limit))).publish('WARN')
+    detect(when(signal > threshold(limit))).publish('MAJOR')
 EOF
 
   rule {
     description           = "is exceeded"
-    severity              = "Warning"
-    detect_label          = "WARN"
+    severity              = "Major"
+    detect_label          = "MAJOR"
     disabled              = coalesce(var.hosts_limit_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.hosts_limit_notifications, "warning", []), var.notifications.warning)
+    notifications         = coalescelist(lookup(var.hosts_limit_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}} > {{inputs.limit.value}}) on {{{dimensions}}}"
     parameterized_body    = local.parameterized_body
     runbook_url           = var.runbook_url
@@ -28,15 +28,15 @@ resource "signalfx_detector" "containers_limit" {
   program_text = <<-EOF
     signal = data('${"sf.org.${var.is_parent ? "child." : ""}numResourcesMonitored"}', filter=filter('resourceType', 'container'))${local.aggregation_function}${var.containers_limit_transformation_function}.publish('signal')
     limit = data('${"sf.org.${var.is_parent ? "child." : ""}subscription.containers"}')${local.aggregation_function}${var.containers_limit_transformation_function}
-    detect(when(signal > threshold(limit))).publish('WARN')
+    detect(when(signal > threshold(limit))).publish('MAJOR')
 EOF
 
   rule {
     description           = "is exceeded"
-    severity              = "Warning"
-    detect_label          = "WARN"
+    severity              = "Major"
+    detect_label          = "MAJOR"
     disabled              = coalesce(var.containers_limit_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.containers_limit_notifications, "warning", []), var.notifications.warning)
+    notifications         = coalescelist(lookup(var.containers_limit_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}} > {{inputs.limit.value}}) on {{{dimensions}}}"
     parameterized_body    = local.parameterized_body
     runbook_url           = var.runbook_url
@@ -52,15 +52,15 @@ resource "signalfx_detector" "custom_metrics_limit" {
   program_text = <<-EOF
     signal = data('${"sf.org.${var.is_parent ? "child." : ""}numCustomMetrics"}')${local.aggregation_function}${var.custom_metrics_limit_transformation_function}.publish('signal')
     limit = data('${"sf.org.${var.is_parent ? "child." : ""}subscription.customMetrics"}')${local.aggregation_function}${var.custom_metrics_limit_transformation_function}
-    detect(when(signal > threshold(limit))).publish('WARN')
+    detect(when(signal > threshold(limit))).publish('MAJOR')
 EOF
 
   rule {
     description           = "is exceeded"
-    severity              = "Warning"
-    detect_label          = "WARN"
+    severity              = "Major"
+    detect_label          = "MAJOR"
     disabled              = coalesce(var.custom_metrics_limit_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.custom_metrics_limit_notifications, "warning", []), var.notifications.warning)
+    notifications         = coalescelist(lookup(var.custom_metrics_limit_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}} > {{inputs.limit.value}}) on {{{dimensions}}}"
     parameterized_body    = local.parameterized_body
     runbook_url           = var.runbook_url
@@ -77,15 +77,15 @@ resource "signalfx_detector" "containers_ratio" {
     containers = data('${"sf.org.${var.is_parent ? "child." : ""}numResourcesMonitored"}', filter=filter('resourceType', 'container'))${local.aggregation_function}${var.containers_ratio_transformation_function}
     hosts = data('${"sf.org.${var.is_parent ? "child." : ""}numResourcesMonitored"}', filter=filter('resourceType', 'host'))${local.aggregation_function}${var.containers_ratio_transformation_function}
     signal = (containers / (hosts*${var.multiplier}0)).scale(100).fill(value=0).publish('signal')
-    detect(when(signal > threshold(${var.containers_ratio_threshold_warning}))).publish('WARN')
+    detect(when(signal > threshold(${var.containers_ratio_threshold_major}))).publish('MAJOR')
 EOF
 
   rule {
-    description           = "is exceeded > ${var.containers_ratio_threshold_warning}%"
-    severity              = "Warning"
-    detect_label          = "WARN"
+    description           = "is exceeded > ${var.containers_ratio_threshold_major}%"
+    severity              = "Major"
+    detect_label          = "MAJOR"
     disabled              = coalesce(var.containers_ratio_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.containers_ratio_notifications, "warning", []), var.notifications.warning)
+    notifications         = coalescelist(lookup(var.containers_ratio_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
     parameterized_body    = local.parameterized_body
     runbook_url           = var.runbook_url
@@ -104,15 +104,15 @@ resource "signalfx_detector" "custom_metrics_ratio" {
     custom_metrics = data('${"sf.org.${var.is_parent ? "child." : ""}numCustomMetrics"}')${local.aggregation_function}${var.custom_metrics_ratio_transformation_function}
     hosts = data('${"sf.org.${var.is_parent ? "child." : ""}numResourcesMonitored"}', filter=filter('resourceType', 'host'))${local.aggregation_function}${var.custom_metrics_ratio_transformation_function}
     signal = (custom_metrics / (hosts*${var.multiplier}00)).scale(100).fill(value=0).publish('signal')
-    detect(when(signal > threshold(${var.custom_metrics_ratio_threshold_warning}))).publish('WARN')
+    detect(when(signal > threshold(${var.custom_metrics_ratio_threshold_major}))).publish('MAJOR')
 EOF
 
   rule {
-    description           = "is exceeded > ${var.custom_metrics_ratio_threshold_warning}%"
-    severity              = "Warning"
-    detect_label          = "WARN"
+    description           = "is exceeded > ${var.custom_metrics_ratio_threshold_major}%"
+    severity              = "Major"
+    detect_label          = "MAJOR"
     disabled              = coalesce(var.custom_metrics_ratio_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.custom_metrics_ratio_notifications, "warning", []), var.notifications.warning)
+    notifications         = coalescelist(lookup(var.custom_metrics_ratio_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
     parameterized_body    = local.parameterized_body
     runbook_url           = var.runbook_url

@@ -23,7 +23,7 @@ resource "signalfx_detector" "visible_messages" {
   program_text = <<-EOF
     signal = data('ApproximateNumberOfMessagesVisible', filter=filter('namespace', 'AWS/SQS') and filter('stat', 'upper') and ${module.filter-tags.filter_custom})${var.visible_messages_aggregation_function}${var.visible_messages_transformation_function}.publish('signal')
     detect(when(signal > ${var.visible_messages_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.visible_messages_threshold_warning}) and when(signal <= ${var.visible_messages_threshold_critical})).publish('WARN')
+    detect(when(signal > ${var.visible_messages_threshold_major}) and when(signal <= ${var.visible_messages_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -36,11 +36,11 @@ EOF
   }
 
   rule {
-    description           = "are too high > ${var.visible_messages_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.visible_messages_disabled_warning, var.visible_messages_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.visible_messages_notifications, "warning", []), var.notifications.warning)
+    description           = "are too high > ${var.visible_messages_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.visible_messages_disabled_major, var.visible_messages_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.visible_messages_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -51,7 +51,7 @@ resource "signalfx_detector" "age_of_oldest_message" {
   program_text = <<-EOF
     signal = data('ApproximateAgeOfOldestMessage', filter=filter('namespace', 'AWS/SQS') and filter('stat', 'upper') and ${module.filter-tags.filter_custom})${var.age_of_oldest_message_aggregation_function}${var.age_of_oldest_message_transformation_function}.publish('signal')
     detect(when(signal > ${var.age_of_oldest_message_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.age_of_oldest_message_threshold_warning}) and when(signal <= ${var.age_of_oldest_message_threshold_critical})).publish('WARN')
+    detect(when(signal > ${var.age_of_oldest_message_threshold_major}) and when(signal <= ${var.age_of_oldest_message_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -64,11 +64,11 @@ EOF
   }
 
   rule {
-    description           = "is too old > ${var.age_of_oldest_message_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.age_of_oldest_message_disabled_warning, var.age_of_oldest_message_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.age_of_oldest_message_notifications, "warning", []), var.notifications.warning)
+    description           = "is too old > ${var.age_of_oldest_message_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.age_of_oldest_message_disabled_major, var.age_of_oldest_message_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.age_of_oldest_message_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }

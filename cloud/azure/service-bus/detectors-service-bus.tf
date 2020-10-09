@@ -47,7 +47,7 @@ resource "signalfx_detector" "user_errors" {
         B = data('IncomingRequests', extrapolation='zero', filter=base_filter)${var.user_errors_aggregation_function}
         signal = (A/B).scale(100).fill(0).publish('signal')
         detect(when(signal > threshold(${var.user_errors_threshold_critical}), lasting="${var.user_errors_timer}")).publish('CRIT')
-        detect(when(signal > threshold(${var.user_errors_threshold_warning}), lasting="${var.user_errors_timer}") and when(signal <= ${var.user_errors_threshold_critical})).publish('WARN')
+        detect(when(signal > threshold(${var.user_errors_threshold_major}), lasting="${var.user_errors_timer}") and when(signal <= ${var.user_errors_threshold_critical})).publish('MAJOR')
     EOF
 
   rule {
@@ -60,11 +60,11 @@ resource "signalfx_detector" "user_errors" {
   }
 
   rule {
-    description           = "is too high > ${var.user_errors_threshold_warning}%"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.user_errors_disabled_warning, var.user_errors_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.user_errors_notifications, "warning", []), var.notifications.warning)
+    description           = "is too high > ${var.user_errors_threshold_major}%"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.user_errors_disabled_major, var.user_errors_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.user_errors_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -78,7 +78,7 @@ resource "signalfx_detector" "server_errors" {
         B = data('IncomingRequests', extrapolation='zero', filter=base_filter)${var.server_errors_aggregation_function}
         signal = (A/B).scale(100).fill(0).publish('signal')
         detect(when(signal > threshold(${var.server_errors_threshold_critical}), lasting="${var.server_errors_timer}")).publish('CRIT')
-        detect(when(signal > threshold(${var.server_errors_threshold_warning}), lasting="${var.server_errors_timer}") and when(signal <= ${var.server_errors_threshold_critical})).publish('WARN')
+        detect(when(signal > threshold(${var.server_errors_threshold_major}), lasting="${var.server_errors_timer}") and when(signal <= ${var.server_errors_threshold_critical})).publish('MAJOR')
     EOF
 
   rule {
@@ -91,11 +91,11 @@ resource "signalfx_detector" "server_errors" {
   }
 
   rule {
-    description           = "is too high > ${var.server_errors_threshold_warning}%"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.server_errors_disabled_warning, var.server_errors_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.server_errors_notifications, "warning", []), var.notifications.warning)
+    description           = "is too high > ${var.server_errors_threshold_major}%"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.server_errors_disabled_major, var.server_errors_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.server_errors_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }

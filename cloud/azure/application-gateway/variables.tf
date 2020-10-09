@@ -108,8 +108,8 @@ variable "backend_connect_time_disabled_critical" {
   default     = null
 }
 
-variable "backend_connect_time_disabled_warning" {
-  description = "Disable warning alerting rule for backend_connect_time detector"
+variable "backend_connect_time_disabled_major" {
+  description = "Disable major alerting rule for backend_connect_time detector"
   type        = bool
   default     = null
 }
@@ -138,8 +138,8 @@ variable "backend_connect_time_threshold_critical" {
   default     = 50
 }
 
-variable "backend_connect_time_threshold_warning" {
-  description = "Warning threshold for backend_connect_time detector"
+variable "backend_connect_time_threshold_major" {
+  description = "Major threshold for backend_connect_time detector"
   type        = number
   default     = 40
 }
@@ -158,8 +158,8 @@ variable "failed_requests_disabled_critical" {
   default     = null
 }
 
-variable "failed_requests_disabled_warning" {
-  description = "Disable warning alerting rule for failed_requests detector"
+variable "failed_requests_disabled_major" {
+  description = "Disable major alerting rule for failed_requests detector"
   type        = bool
   default     = null
 }
@@ -188,8 +188,8 @@ variable "failed_requests_threshold_critical" {
   default     = 95
 }
 
-variable "failed_requests_threshold_warning" {
-  description = "Warning threshold for failed_requests detector"
+variable "failed_requests_threshold_major" {
+  description = "Major threshold for failed_requests detector"
   type        = number
   default     = 80
 }
@@ -208,8 +208,8 @@ variable "unhealthy_host_ratio_disabled_critical" {
   default     = null
 }
 
-variable "unhealthy_host_ratio_disabled_warning" {
-  description = "Disable warning alerting rule for unhealthy_host_ratio detector"
+variable "unhealthy_host_ratio_disabled_major" {
+  description = "Disable major alerting rule for unhealthy_host_ratio detector"
   type        = bool
   default     = null
 }
@@ -238,8 +238,8 @@ variable "unhealthy_host_ratio_threshold_critical" {
   default     = 75
 }
 
-variable "unhealthy_host_ratio_threshold_warning" {
-  description = "Warning threshold for unhealthy_host_ratio detector"
+variable "unhealthy_host_ratio_threshold_major" {
+  description = "Major threshold for unhealthy_host_ratio detector"
   type        = number
   default     = 50
 }
@@ -258,8 +258,8 @@ variable "http_4xx_errors_disabled_critical" {
   default     = null
 }
 
-variable "http_4xx_errors_disabled_warning" {
-  description = "Disable warning alerting rule for http_4xx_errors detector"
+variable "http_4xx_errors_disabled_major" {
+  description = "Disable major alerting rule for http_4xx_errors detector"
   type        = bool
   default     = null
 }
@@ -288,8 +288,8 @@ variable "http_4xx_errors_threshold_critical" {
   default     = 95
 }
 
-variable "http_4xx_errors_threshold_warning" {
-  description = "Warning threshold for http_4xx_errors detector"
+variable "http_4xx_errors_threshold_major" {
+  description = "Major threshold for http_4xx_errors detector"
   type        = number
   default     = 80
 }
@@ -308,8 +308,8 @@ variable "http_5xx_errors_disabled_critical" {
   default     = null
 }
 
-variable "http_5xx_errors_disabled_warning" {
-  description = "Disable warning alerting rule for http_5xx_errors detector"
+variable "http_5xx_errors_disabled_major" {
+  description = "Disable major alerting rule for http_5xx_errors detector"
   type        = bool
   default     = null
 }
@@ -338,8 +338,8 @@ variable "http_5xx_errors_threshold_critical" {
   default     = 95
 }
 
-variable "http_5xx_errors_threshold_warning" {
-  description = "Warning threshold for http_5xx_errors detector"
+variable "http_5xx_errors_threshold_major" {
+  description = "Major threshold for http_5xx_errors detector"
   type        = number
   default     = 80
 }
@@ -358,8 +358,8 @@ variable "backend_http_4xx_errors_disabled_critical" {
   default     = null
 }
 
-variable "backend_http_4xx_errors_disabled_warning" {
-  description = "Disable warning alerting rule for backend_http_4xx_errors detector"
+variable "backend_http_4xx_errors_disabled_major" {
+  description = "Disable major alerting rule for backend_http_4xx_errors detector"
   type        = bool
   default     = null
 }
@@ -388,8 +388,8 @@ variable "backend_http_4xx_errors_threshold_critical" {
   default     = 95
 }
 
-variable "backend_http_4xx_errors_threshold_warning" {
-  description = "Warning threshold for backend_http_4xx_errors detector"
+variable "backend_http_4xx_errors_threshold_major" {
+  description = "Major threshold for backend_http_4xx_errors detector"
   type        = number
   default     = 80
 }
@@ -408,8 +408,8 @@ variable "backend_http_5xx_errors_disabled_critical" {
   default     = null
 }
 
-variable "backend_http_5xx_errors_disabled_warning" {
-  description = "Disable warning alerting rule for backend_http_5xx_errors detector"
+variable "backend_http_5xx_errors_disabled_major" {
+  description = "Disable major alerting rule for backend_http_5xx_errors detector"
   type        = bool
   default     = null
 }
@@ -438,8 +438,8 @@ variable "backend_http_5xx_errors_threshold_critical" {
   default     = 95
 }
 
-variable "backend_http_5xx_errors_threshold_warning" {
-  description = "Warning threshold for backend_http_5xx_errors detector"
+variable "backend_http_5xx_errors_threshold_major" {
+  description = "Major threshold for backend_http_5xx_errors detector"
   type        = number
   default     = 80
 }

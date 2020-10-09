@@ -76,8 +76,8 @@ variable "response_time_disabled_critical" {
   default     = null
 }
 
-variable "response_time_disabled_warning" {
-  description = "Disable warning alerting rule for response_time detector"
+variable "response_time_disabled_major" {
+  description = "Disable major alerting rule for response_time detector"
   type        = bool
   default     = null
 }
@@ -106,8 +106,8 @@ variable "response_time_threshold_critical" {
   default     = 10
 }
 
-variable "response_time_threshold_warning" {
-  description = "Warning threshold for response_time detector"
+variable "response_time_threshold_major" {
+  description = "Major threshold for response_time detector"
   type        = number
   default     = 5
 }
@@ -126,8 +126,8 @@ variable "memory_usage_count_disabled_critical" {
   default     = null
 }
 
-variable "memory_usage_count_disabled_warning" {
-  description = "Disable warning alerting rule for memory_usage_count detector"
+variable "memory_usage_count_disabled_major" {
+  description = "Disable major alerting rule for memory_usage_count detector"
   type        = bool
   default     = null
 }
@@ -156,8 +156,8 @@ variable "memory_usage_count_threshold_critical" {
   default     = 1073741824 # 1Gb
 }
 
-variable "memory_usage_count_threshold_warning" {
-  description = "Warning threshold for memory_usage_count detector"
+variable "memory_usage_count_threshold_major" {
+  description = "Major threshold for memory_usage_count detector"
   type        = number
   default     = 536870912 # 512Mb
 }
@@ -176,8 +176,8 @@ variable "http_5xx_errors_count_disabled_critical" {
   default     = null
 }
 
-variable "http_5xx_errors_count_disabled_warning" {
-  description = "Disable warning alerting rule for http_5xx_errors_count detector"
+variable "http_5xx_errors_count_disabled_major" {
+  description = "Disable major alerting rule for http_5xx_errors_count detector"
   type        = bool
   default     = null
 }
@@ -206,8 +206,8 @@ variable "http_5xx_errors_count_threshold_critical" {
   default     = 90
 }
 
-variable "http_5xx_errors_count_threshold_warning" {
-  description = "Warning threshold for http_5xx_errors_count detector"
+variable "http_5xx_errors_count_threshold_major" {
+  description = "Major threshold for http_5xx_errors_count detector"
   type        = number
   default     = 50
 }
@@ -226,8 +226,8 @@ variable "http_4xx_errors_count_disabled_critical" {
   default     = null
 }
 
-variable "http_4xx_errors_count_disabled_warning" {
-  description = "Disable warning alerting rule for http_4xx_errors_count detector"
+variable "http_4xx_errors_count_disabled_major" {
+  description = "Disable major alerting rule for http_4xx_errors_count detector"
   type        = bool
   default     = null
 }
@@ -256,8 +256,8 @@ variable "http_4xx_errors_count_threshold_critical" {
   default     = 90
 }
 
-variable "http_4xx_errors_count_threshold_warning" {
-  description = "Warning threshold for http_4xx_errors_count detector"
+variable "http_4xx_errors_count_threshold_major" {
+  description = "Major threshold for http_4xx_errors_count detector"
   type        = number
   default     = 50
 }
@@ -276,8 +276,8 @@ variable "http_success_status_rate_disabled_critical" {
   default     = null
 }
 
-variable "http_success_status_rate_disabled_warning" {
-  description = "Disable warning alerting rule for http_success_status_rate detector"
+variable "http_success_status_rate_disabled_major" {
+  description = "Disable major alerting rule for http_success_status_rate detector"
   type        = bool
   default     = null
 }
@@ -306,8 +306,8 @@ variable "http_success_status_rate_threshold_critical" {
   default     = 10
 }
 
-variable "http_success_status_rate_threshold_warning" {
-  description = "Warning threshold for http_success_status_rate detector"
+variable "http_success_status_rate_threshold_major" {
+  description = "Major threshold for http_success_status_rate detector"
   type        = number
   default     = 30
 }

@@ -58,8 +58,8 @@ variable "volume_space_disabled_critical" {
   default     = null
 }
 
-variable "volume_space_disabled_warning" {
-  description = "Disable warning alerting rule for volume_space detector"
+variable "volume_space_disabled_major" {
+  description = "Disable major alerting rule for volume_space detector"
   type        = bool
   default     = null
 }
@@ -88,8 +88,8 @@ variable "volume_space_threshold_critical" {
   default     = 95
 }
 
-variable "volume_space_threshold_warning" {
-  description = "Warning threshold for volume_space detector"
+variable "volume_space_threshold_major" {
+  description = "Major threshold for volume_space detector"
   type        = number
   default     = 90
 }
@@ -108,8 +108,8 @@ variable "volume_inodes_disabled_critical" {
   default     = null
 }
 
-variable "volume_inodes_disabled_warning" {
-  description = "Disable warning alerting rule for volume_inodes detector"
+variable "volume_inodes_disabled_major" {
+  description = "Disable major alerting rule for volume_inodes detector"
   type        = bool
   default     = null
 }
@@ -138,8 +138,8 @@ variable "volume_inodes_threshold_critical" {
   default     = 95
 }
 
-variable "volume_inodes_threshold_warning" {
-  description = "Warning threshold for volume_inodes detector"
+variable "volume_inodes_threshold_major" {
+  description = "Major threshold for volume_inodes detector"
   type        = number
   default     = 90
 }

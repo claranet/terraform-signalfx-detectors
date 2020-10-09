@@ -76,8 +76,8 @@ variable "db_4xx_requests_disabled_critical" {
   default     = null
 }
 
-variable "db_4xx_requests_disabled_warning" {
-  description = "Disable warning alerting rule for db_4xx_requests detector"
+variable "db_4xx_requests_disabled_major" {
+  description = "Disable major alerting rule for db_4xx_requests detector"
   type        = bool
   default     = null
 }
@@ -106,8 +106,8 @@ variable "db_4xx_requests_threshold_critical" {
   default     = 80
 }
 
-variable "db_4xx_requests_threshold_warning" {
-  description = "Warning threshold for db_4xx_requests detector"
+variable "db_4xx_requests_threshold_major" {
+  description = "Major threshold for db_4xx_requests detector"
   type        = number
   default     = 50
 }
@@ -126,8 +126,8 @@ variable "db_5xx_requests_disabled_critical" {
   default     = null
 }
 
-variable "db_5xx_requests_disabled_warning" {
-  description = "Disable warning alerting rule for db_5xx_requests detector"
+variable "db_5xx_requests_disabled_major" {
+  description = "Disable major alerting rule for db_5xx_requests detector"
   type        = bool
   default     = null
 }
@@ -156,8 +156,8 @@ variable "db_5xx_requests_threshold_critical" {
   default     = 80
 }
 
-variable "db_5xx_requests_threshold_warning" {
-  description = "Warning threshold for db_5xx_requests detector"
+variable "db_5xx_requests_threshold_major" {
+  description = "Major threshold for db_5xx_requests detector"
   type        = number
   default     = 50
 }
@@ -176,8 +176,8 @@ variable "scaling_disabled_critical" {
   default     = null
 }
 
-variable "scaling_disabled_warning" {
-  description = "Disable warning alerting rule for scaling detector"
+variable "scaling_disabled_major" {
+  description = "Disable major alerting rule for scaling detector"
   type        = bool
   default     = null
 }
@@ -206,8 +206,8 @@ variable "scaling_threshold_critical" {
   default     = 10
 }
 
-variable "scaling_threshold_warning" {
-  description = "Warning threshold for scaling detector"
+variable "scaling_threshold_major" {
+  description = "Major threshold for scaling detector"
   type        = number
   default     = 5
 }

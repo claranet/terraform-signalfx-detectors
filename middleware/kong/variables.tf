@@ -76,8 +76,8 @@ variable "treatment_limit_disabled_critical" {
   default     = null
 }
 
-variable "treatment_limit_disabled_warning" {
-  description = "Disable warning alerting rule for treatment limit detector"
+variable "treatment_limit_disabled_major" {
+  description = "Disable major alerting rule for treatment limit detector"
   type        = bool
   default     = null
 }
@@ -106,8 +106,8 @@ variable "treatment_limit_threshold_critical" {
   default     = 20
 }
 
-variable "treatment_limit_threshold_warning" {
-  description = "Warning threshold for treatment limit detector"
+variable "treatment_limit_threshold_major" {
+  description = "Major threshold for treatment limit detector"
   type        = number
   default     = 0
 }

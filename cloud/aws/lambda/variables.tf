@@ -58,8 +58,8 @@ variable "pct_errors_disabled_critical" {
   default     = null
 }
 
-variable "pct_errors_disabled_warning" {
-  description = "Disable warning alerting rule for pct_errors detector"
+variable "pct_errors_disabled_major" {
+  description = "Disable major alerting rule for pct_errors detector"
   type        = bool
   default     = null
 }
@@ -94,8 +94,8 @@ variable "pct_errors_threshold_critical" {
   default     = 25
 }
 
-variable "pct_errors_threshold_warning" {
-  description = "Warning threshold for pct_errors detector"
+variable "pct_errors_threshold_major" {
+  description = "Major threshold for pct_errors detector"
   type        = number
   default     = 0
 }
@@ -114,8 +114,8 @@ variable "throttles_disabled_critical" {
   default     = null
 }
 
-variable "throttles_disabled_warning" {
-  description = "Disable warning alerting rule for throttles detector"
+variable "throttles_disabled_major" {
+  description = "Disable major alerting rule for throttles detector"
   type        = bool
   default     = null
 }
@@ -144,8 +144,8 @@ variable "throttles_threshold_critical" {
   default     = 1
 }
 
-variable "throttles_threshold_warning" {
-  description = "Warning threshold for throttles detector"
+variable "throttles_threshold_major" {
+  description = "Major threshold for throttles detector"
   type        = number
   default     = 0
 }
@@ -176,8 +176,8 @@ variable "invocations_transformation_function" {
   default     = ".sum(over='1h')"
 }
 
-variable "invocations_threshold_warning" {
-  description = "Warning threshold for invocations detector"
+variable "invocations_threshold_major" {
+  description = "Major threshold for invocations detector"
   type        = number
   default     = 1
 }

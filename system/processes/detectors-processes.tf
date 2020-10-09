@@ -4,7 +4,7 @@ resource "signalfx_detector" "processes" {
   program_text = <<-EOF
         signal = data('ps_count.processes', filter=${module.filter-tags.filter_custom})${var.processes_aggregation_function}${var.processes_transformation_function}.publish('signal')
         detect(when(signal < 1)).publish('CRIT')
-        detect(when(signal < ${var.processes_threshold_warning}) and when (signal >= 1)).publish('WARN')
+        detect(when(signal < ${var.processes_threshold_major}) and when (signal >= 1)).publish('MAJOR')
 EOF
 
   rule {
@@ -17,11 +17,11 @@ EOF
   }
 
   rule {
-    description           = "count is too low < ${var.processes_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.processes_disabled_warning, var.processes_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.processes_notifications, "warning", []), var.notifications.warning)
+    description           = "count is too low < ${var.processes_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.processes_disabled_major, var.processes_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.processes_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }

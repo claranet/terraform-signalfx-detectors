@@ -58,8 +58,8 @@ variable "cache_hits_disabled_critical" {
   default     = null
 }
 
-variable "cache_hits_disabled_warning" {
-  description = "Disable warning alerting rule for cache_hits detector"
+variable "cache_hits_disabled_major" {
+  description = "Disable major alerting rule for cache_hits detector"
   type        = bool
   default     = null
 }
@@ -100,8 +100,8 @@ variable "cache_hits_threshold_critical" {
   default     = 60
 }
 
-variable "cache_hits_threshold_warning" {
-  description = "Warning threshold for cache_hits detector"
+variable "cache_hits_threshold_major" {
+  description = "Major threshold for cache_hits detector"
   type        = number
   default     = 80
 }
@@ -120,8 +120,8 @@ variable "cpu_high_disabled_critical" {
   default     = null
 }
 
-variable "cpu_high_disabled_warning" {
-  description = "Disable warning alerting rule for httpcode 5xx erros detector"
+variable "cpu_high_disabled_major" {
+  description = "Disable major alerting rule for httpcode 5xx erros detector"
   type        = bool
   default     = null
 }
@@ -150,8 +150,8 @@ variable "cpu_high_threshold_critical" {
   default     = 90
 }
 
-variable "cpu_high_threshold_warning" {
-  description = "Warning threshold for cpu_high detector"
+variable "cpu_high_threshold_major" {
+  description = "Major threshold for cpu_high detector"
   type        = number
   default     = 75
 }
@@ -170,8 +170,8 @@ variable "replication_lag_disabled_critical" {
   default     = null
 }
 
-variable "replication_lag_disabled_warning" {
-  description = "Disable warning alerting rule for replication_lag detector"
+variable "replication_lag_disabled_major" {
+  description = "Disable major alerting rule for replication_lag detector"
   type        = bool
   default     = null
 }
@@ -200,8 +200,8 @@ variable "replication_lag_threshold_critical" {
   default     = 180
 }
 
-variable "replication_lag_threshold_warning" {
-  description = "Warning threshold for replication_lag detector"
+variable "replication_lag_threshold_major" {
+  description = "Major threshold for replication_lag detector"
   type        = number
   default     = 90
 }
@@ -220,8 +220,8 @@ variable "commands_disabled_critical" {
   default     = null
 }
 
-variable "commands_disabled_warning" {
-  description = "Disable warning alerting rule for commands detector"
+variable "commands_disabled_major" {
+  description = "Disable major alerting rule for commands detector"
   type        = bool
   default     = null
 }
@@ -251,8 +251,8 @@ variable "commands_threshold_critical" {
   default = -1 # impossible to raise alert by default but make it possible to customize
 }
 
-variable "commands_threshold_warning" {
-  description = "Warning threshold for commands detector"
+variable "commands_threshold_major" {
+  description = "Major threshold for commands detector"
   type        = number
   default     = 0
 }

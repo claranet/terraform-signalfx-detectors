@@ -23,7 +23,7 @@ resource "signalfx_detector" "cluster_status" {
 
   program_text = <<-EOF
     signal = data('elasticsearch.cluster.status', filter=filter('plugin', 'elasticsearch') and ${module.filter-tags.filter_custom})${var.cluster_status_aggregation_function}${var.cluster_status_transformation_function}.publish('signal')
-    detect(when(signal == 1)).publish('WARN')
+    detect(when(signal == 1)).publish('MAJOR')
     detect(when(signal == 2)).publish('CRIT')
 EOF
 
@@ -38,10 +38,10 @@ EOF
 
   rule {
     description           = "is yellow"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.cluster_status_disabled_warning, var.cluster_status_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.cluster_status_notifications, "warning", []), var.notifications.warning)
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.cluster_status_disabled_major, var.cluster_status_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.cluster_status_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -52,7 +52,7 @@ resource "signalfx_detector" "cluster_initializing_shards" {
   program_text = <<-EOF
     signal = data('elasticsearch.cluster.initializing-shards', filter=filter('plugin', 'elasticsearch') and ${module.filter-tags.filter_custom}, rollup='average')${var.cluster_initializing_shards_aggregation_function}${var.cluster_initializing_shards_transformation_function}.publish('signal')
     detect(when(signal > ${var.cluster_initializing_shards_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.cluster_initializing_shards_threshold_warning}) and when(signal <= ${var.cluster_initializing_shards_threshold_critical})).publish('WARN')
+    detect(when(signal > ${var.cluster_initializing_shards_threshold_major}) and when(signal <= ${var.cluster_initializing_shards_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -65,11 +65,11 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.cluster_initializing_shards_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.cluster_initializing_shards_disabled_warning, var.cluster_initializing_shards_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.cluster_initializing_shards_notifications, "warning", []), var.notifications.warning)
+    description           = "is too high > ${var.cluster_initializing_shards_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.cluster_initializing_shards_disabled_major, var.cluster_initializing_shards_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.cluster_initializing_shards_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -80,7 +80,7 @@ resource "signalfx_detector" "cluster_relocating_shards" {
   program_text = <<-EOF
     signal = data('elasticsearch.cluster.relocating-shards', filter=filter('plugin', 'elasticsearch') and ${module.filter-tags.filter_custom}, rollup='average')${var.cluster_relocating_shards_aggregation_function}${var.cluster_relocating_shards_transformation_function}.publish('signal')
     detect(when(signal > ${var.cluster_relocating_shards_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.cluster_relocating_shards_threshold_warning}) and when(signal <= ${var.cluster_relocating_shards_threshold_critical})).publish('WARN')
+    detect(when(signal > ${var.cluster_relocating_shards_threshold_major}) and when(signal <= ${var.cluster_relocating_shards_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -93,11 +93,11 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.cluster_relocating_shards_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.cluster_relocating_shards_disabled_warning, var.cluster_relocating_shards_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.cluster_relocating_shards_notifications, "warning", []), var.notifications.warning)
+    description           = "is too high > ${var.cluster_relocating_shards_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.cluster_relocating_shards_disabled_major, var.cluster_relocating_shards_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.cluster_relocating_shards_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -108,7 +108,7 @@ resource "signalfx_detector" "cluster_unassigned_shards" {
   program_text = <<-EOF
     signal = data('elasticsearch.cluster.unassigned-shards', filter=filter('plugin', 'elasticsearch') and ${module.filter-tags.filter_custom}, rollup='average')${var.cluster_unassigned_shards_aggregation_function}${var.cluster_unassigned_shards_transformation_function}.publish('signal')
     detect(when(signal > ${var.cluster_unassigned_shards_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.cluster_unassigned_shards_threshold_warning}) and when(signal <= ${var.cluster_unassigned_shards_threshold_critical})).publish('WARN')
+    detect(when(signal > ${var.cluster_unassigned_shards_threshold_major}) and when(signal <= ${var.cluster_unassigned_shards_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -121,11 +121,11 @@ EOF
   }
 
   rule {
-    description           = "are too high > ${var.cluster_unassigned_shards_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.cluster_unassigned_shards_disabled_warning, var.cluster_unassigned_shards_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.cluster_unassigned_shards_notifications, "warning", []), var.notifications.warning)
+    description           = "are too high > ${var.cluster_unassigned_shards_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.cluster_unassigned_shards_disabled_major, var.cluster_unassigned_shards_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.cluster_unassigned_shards_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -136,7 +136,7 @@ resource "signalfx_detector" "pending_tasks" {
   program_text = <<-EOF
     signal = data('elasticsearch.cluster.pending-tasks', filter=filter('plugin', 'elasticsearch') and ${module.filter-tags.filter_custom}, rollup='average')${var.pending_tasks_aggregation_function}${var.pending_tasks_transformation_function}.publish('signal')
     detect(when(signal > ${var.pending_tasks_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.pending_tasks_threshold_warning}) and when(signal <= ${var.pending_tasks_threshold_critical})).publish('WARN')
+    detect(when(signal > ${var.pending_tasks_threshold_major}) and when(signal <= ${var.pending_tasks_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -149,11 +149,11 @@ EOF
   }
 
   rule {
-    description           = "are too high > ${var.pending_tasks_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.pending_tasks_disabled_warning, var.pending_tasks_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.pending_tasks_notifications, "warning", []), var.notifications.warning)
+    description           = "are too high > ${var.pending_tasks_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.pending_tasks_disabled_major, var.pending_tasks_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.pending_tasks_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -164,7 +164,7 @@ resource "signalfx_detector" "cpu_usage" {
   program_text = <<-EOF
     signal = data('elasticsearch.process.cpu.percent', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, rollup='average')${var.cpu_usage_aggregation_function}${var.cpu_usage_transformation_function}.publish('signal')
     detect(when(signal > ${var.cpu_usage_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.cpu_usage_threshold_warning}) and when(signal <= ${var.cpu_usage_threshold_critical})).publish('WARN')
+    detect(when(signal > ${var.cpu_usage_threshold_major}) and when(signal <= ${var.cpu_usage_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -177,11 +177,11 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.cpu_usage_threshold_warning}%"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.cpu_usage_disabled_warning, var.cpu_usage_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.cpu_usage_notifications, "warning", []), var.notifications.warning)
+    description           = "is too high > ${var.cpu_usage_threshold_major}%"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.cpu_usage_disabled_major, var.cpu_usage_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.cpu_usage_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -194,7 +194,7 @@ resource "signalfx_detector" "file_descriptors" {
     B = data('elasticsearch.process.max_file_descriptors', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, rollup='average')${var.file_descriptors_aggregation_function}${var.file_descriptors_transformation_function}
     signal = (A/B).scale(100).publish('signal')
     detect(when(signal > ${var.file_descriptors_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.file_descriptors_threshold_warning}) and when(signal <= ${var.file_descriptors_threshold_critical})).publish('WARN')
+    detect(when(signal > ${var.file_descriptors_threshold_major}) and when(signal <= ${var.file_descriptors_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -207,11 +207,11 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.file_descriptors_threshold_warning}%"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.file_descriptors_disabled_warning, var.file_descriptors_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.file_descriptors_notifications, "warning", []), var.notifications.warning)
+    description           = "is too high > ${var.file_descriptors_threshold_major}%"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.file_descriptors_disabled_major, var.file_descriptors_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.file_descriptors_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -222,7 +222,7 @@ resource "signalfx_detector" "jvm_heap_memory_usage" {
   program_text = <<-EOF
     signal = data('elasticsearch.jvm.mem.heap-used-percent', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, rollup='average')${var.jvm_heap_memory_usage_aggregation_function}${var.jvm_heap_memory_usage_transformation_function}.publish('signal')
     detect(when(signal > ${var.jvm_heap_memory_usage_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.jvm_heap_memory_usage_threshold_warning}) and when(signal <= ${var.jvm_heap_memory_usage_threshold_critical})).publish('WARN')
+    detect(when(signal > ${var.jvm_heap_memory_usage_threshold_major}) and when(signal <= ${var.jvm_heap_memory_usage_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -235,11 +235,11 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.jvm_heap_memory_usage_threshold_warning}%"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.jvm_heap_memory_usage_disabled_warning, var.jvm_heap_memory_usage_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.jvm_heap_memory_usage_notifications, "warning", []), var.notifications.warning)
+    description           = "is too high > ${var.jvm_heap_memory_usage_threshold_major}%"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.jvm_heap_memory_usage_disabled_major, var.jvm_heap_memory_usage_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.jvm_heap_memory_usage_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -251,18 +251,9 @@ resource "signalfx_detector" "jvm_memory_young_usage" {
     A = data('elasticsearch.jvm.mem.pools.young.used_in_bytes', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, rollup='average')${var.jvm_memory_young_usage_aggregation_function}${var.jvm_memory_young_usage_transformation_function}
     B = data('elasticsearch.jvm.mem.pools.young.max_in_bytes', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, rollup='average')${var.jvm_memory_young_usage_aggregation_function}${var.jvm_memory_young_usage_transformation_function}
     signal = (A/B).fill(0).scale(100).publish('signal')
-    detect(when(signal > ${var.jvm_memory_young_usage_threshold_warning})).publish('WARN')
-    detect(when(signal > ${var.jvm_memory_young_usage_threshold_major}) and when(signal <= ${var.jvm_memory_young_usage_threshold_warning})).publish('MAJOR')
+    detect(when(signal > ${var.jvm_memory_young_usage_threshold_major})).publish('MAJOR')
+    detect(when(signal > ${var.jvm_memory_young_usage_threshold_minor}) and when(signal <= ${var.jvm_memory_young_usage_threshold_major})).publish('MINOR')
 EOF
-
-  rule {
-    description           = "is too high > ${var.jvm_memory_young_usage_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.jvm_memory_young_usage_disabled_warning, var.jvm_memory_young_usage_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.jvm_memory_young_usage_notifications, "warning", []), var.notifications.warning)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-  }
 
   rule {
     description           = "is too high > ${var.jvm_memory_young_usage_threshold_major}"
@@ -270,6 +261,15 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.jvm_memory_young_usage_disabled_major, var.jvm_memory_young_usage_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.jvm_memory_young_usage_notifications, "major", []), var.notifications.major)
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+  }
+
+  rule {
+    description           = "is too high > ${var.jvm_memory_young_usage_threshold_minor}"
+    severity              = "Minor"
+    detect_label          = "MINOR"
+    disabled              = coalesce(var.jvm_memory_young_usage_disabled_minor, var.jvm_memory_young_usage_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.jvm_memory_young_usage_notifications, "minor", []), var.notifications.minor)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -281,18 +281,9 @@ resource "signalfx_detector" "jvm_memory_old_usage" {
     A = data('elasticsearch.jvm.mem.pools.old.used_in_bytes', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, rollup='average')${var.jvm_memory_old_usage_aggregation_function}${var.jvm_memory_old_usage_transformation_function}
     B = data('elasticsearch.jvm.mem.pools.old.max_in_bytes', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, rollup='average')${var.jvm_memory_old_usage_aggregation_function}${var.jvm_memory_old_usage_transformation_function}
     signal = (A/B).fill(0).scale(100).publish('signal')
-    detect(when(signal > ${var.jvm_memory_old_usage_threshold_warning})).publish('WARN')
-    detect(when(signal > ${var.jvm_memory_old_usage_threshold_major}) and when(signal <= ${var.jvm_memory_old_usage_threshold_warning})).publish('MAJOR')
+    detect(when(signal > ${var.jvm_memory_old_usage_threshold_major})).publish('MAJOR')
+    detect(when(signal > ${var.jvm_memory_old_usage_threshold_minor}) and when(signal <= ${var.jvm_memory_old_usage_threshold_major})).publish('MINOR')
 EOF
-
-  rule {
-    description           = "is too high > ${var.jvm_memory_old_usage_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.jvm_memory_old_usage_disabled_warning, var.jvm_memory_old_usage_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.jvm_memory_old_usage_notifications, "warning", []), var.notifications.warning)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-  }
 
   rule {
     description           = "is too high > ${var.jvm_memory_old_usage_threshold_major}"
@@ -300,6 +291,15 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.jvm_memory_old_usage_disabled_major, var.jvm_memory_old_usage_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.jvm_memory_old_usage_notifications, "major", []), var.notifications.major)
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+  }
+
+  rule {
+    description           = "is too high > ${var.jvm_memory_old_usage_threshold_minor}"
+    severity              = "Minor"
+    detect_label          = "MINOR"
+    disabled              = coalesce(var.jvm_memory_old_usage_disabled_minor, var.jvm_memory_old_usage_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.jvm_memory_old_usage_notifications, "minor", []), var.notifications.minor)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -311,18 +311,9 @@ resource "signalfx_detector" "jvm_gc_old_collection_latency" {
     A = data('elasticsearch.jvm.gc.old-time', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.jvm_gc_old_collection_latency_aggregation_function}${var.jvm_gc_old_collection_latency_transformation_function}
     B = data('elasticsearch.jvm.gc.old-count', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.jvm_gc_old_collection_latency_aggregation_function}${var.jvm_gc_old_collection_latency_transformation_function}
     signal = (A/B).fill(0).publish('signal')
-    detect(when(signal > ${var.jvm_gc_old_collection_latency_threshold_warning})).publish('WARN')
-    detect(when(signal > ${var.jvm_gc_old_collection_latency_threshold_major}) and when(signal <= ${var.jvm_gc_old_collection_latency_threshold_warning})).publish('MAJOR')
+    detect(when(signal > ${var.jvm_gc_old_collection_latency_threshold_major})).publish('MAJOR')
+    detect(when(signal > ${var.jvm_gc_old_collection_latency_threshold_minor}) and when(signal <= ${var.jvm_gc_old_collection_latency_threshold_major})).publish('MINOR')
 EOF
-
-  rule {
-    description           = "is too high > ${var.jvm_gc_old_collection_latency_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.jvm_gc_old_collection_latency_disabled_warning, var.jvm_gc_old_collection_latency_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.jvm_gc_old_collection_latency_notifications, "warning", []), var.notifications.warning)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-  }
 
   rule {
     description           = "is too high > ${var.jvm_gc_old_collection_latency_threshold_major}"
@@ -330,6 +321,15 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.jvm_gc_old_collection_latency_disabled_major, var.jvm_gc_old_collection_latency_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.jvm_gc_old_collection_latency_notifications, "major", []), var.notifications.major)
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+  }
+
+  rule {
+    description           = "is too high > ${var.jvm_gc_old_collection_latency_threshold_minor}"
+    severity              = "Minor"
+    detect_label          = "MINOR"
+    disabled              = coalesce(var.jvm_gc_old_collection_latency_disabled_minor, var.jvm_gc_old_collection_latency_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.jvm_gc_old_collection_latency_notifications, "minor", []), var.notifications.minor)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -341,18 +341,9 @@ resource "signalfx_detector" "jvm_gc_young_collection_latency" {
     A = data('elasticsearch.jvm.gc.time', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.jvm_gc_young_collection_latency_aggregation_function}${var.jvm_gc_young_collection_latency_transformation_function}
     B = data('elasticsearch.jvm.gc.count', filter=filter('plugin', 'elasticsearch') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.jvm_gc_young_collection_latency_aggregation_function}${var.jvm_gc_young_collection_latency_transformation_function}
     signal = (A/B).fill(0).publish('signal')
-    detect(when(signal > ${var.jvm_gc_young_collection_latency_threshold_warning})).publish('WARN')
-    detect(when(signal > ${var.jvm_gc_young_collection_latency_threshold_major}) and when(signal <= ${var.jvm_gc_young_collection_latency_threshold_warning})).publish('MAJOR')
+    detect(when(signal > ${var.jvm_gc_young_collection_latency_threshold_major})).publish('MAJOR')
+    detect(when(signal > ${var.jvm_gc_young_collection_latency_threshold_minor}) and when(signal <= ${var.jvm_gc_young_collection_latency_threshold_major})).publish('MINOR')
 EOF
-
-  rule {
-    description           = "is too high > ${var.jvm_gc_young_collection_latency_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.jvm_gc_young_collection_latency_disabled_warning, var.jvm_gc_young_collection_latency_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.jvm_gc_young_collection_latency_notifications, "warning", []), var.notifications.warning)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-  }
 
   rule {
     description           = "is too high > ${var.jvm_gc_young_collection_latency_threshold_major}"
@@ -360,6 +351,15 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.jvm_gc_young_collection_latency_disabled_major, var.jvm_gc_young_collection_latency_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.jvm_gc_young_collection_latency_notifications, "major", []), var.notifications.major)
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+  }
+
+  rule {
+    description           = "is too high > ${var.jvm_gc_young_collection_latency_threshold_minor}"
+    severity              = "Minor"
+    detect_label          = "MINOR"
+    disabled              = coalesce(var.jvm_gc_young_collection_latency_disabled_minor, var.jvm_gc_young_collection_latency_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.jvm_gc_young_collection_latency_notifications, "minor", []), var.notifications.minor)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -371,18 +371,9 @@ resource "signalfx_detector" "indexing_latency" {
     A = data('elasticsearch.indices.indexing.index-time', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.indexing_latency_aggregation_function}${var.indexing_latency_transformation_function}
     B = data('elasticsearch.indices.indexing.index-total', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.indexing_latency_aggregation_function}${var.indexing_latency_transformation_function}
     signal = (A/B).fill(0).publish('signal')
-    detect(when(signal > ${var.indexing_latency_threshold_warning})).publish('WARN')
-    detect(when(signal > ${var.indexing_latency_threshold_major}) and when(signal <= ${var.indexing_latency_threshold_warning})).publish('MAJOR')
+    detect(when(signal > ${var.indexing_latency_threshold_major})).publish('MAJOR')
+    detect(when(signal > ${var.indexing_latency_threshold_minor}) and when(signal <= ${var.indexing_latency_threshold_major})).publish('MINOR')
 EOF
-
-  rule {
-    description           = "is too high > ${var.indexing_latency_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.indexing_latency_disabled_warning, var.indexing_latency_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.indexing_latency_notifications, "warning", []), var.notifications.warning)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-  }
 
   rule {
     description           = "is too high > ${var.indexing_latency_threshold_major}"
@@ -390,6 +381,15 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.indexing_latency_disabled_major, var.indexing_latency_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.indexing_latency_notifications, "major", []), var.notifications.major)
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+  }
+
+  rule {
+    description           = "is too high > ${var.indexing_latency_threshold_minor}"
+    severity              = "Minor"
+    detect_label          = "MINOR"
+    disabled              = coalesce(var.indexing_latency_disabled_minor, var.indexing_latency_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.indexing_latency_notifications, "minor", []), var.notifications.minor)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -401,18 +401,9 @@ resource "signalfx_detector" "flush_latency" {
     A = data('elasticsearch.indices.flush.total-time', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.flush_latency_aggregation_function}${var.flush_latency_transformation_function}
     B = data('elasticsearch.indices.flush.total', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.flush_latency_aggregation_function}${var.flush_latency_transformation_function}
     signal = (A/B).fill(0).publish('signal')
-    detect(when(signal > ${var.flush_latency_threshold_warning})).publish('WARN')
-    detect(when(signal > ${var.flush_latency_threshold_major}) and when(signal <= ${var.flush_latency_threshold_warning})).publish('MAJOR')
+    detect(when(signal > ${var.flush_latency_threshold_major})).publish('MAJOR')
+    detect(when(signal > ${var.flush_latency_threshold_minor}) and when(signal <= ${var.flush_latency_threshold_major})).publish('MINOR')
 EOF
-
-  rule {
-    description           = "is too high > ${var.flush_latency_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.flush_latency_disabled_warning, var.flush_latency_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.flush_latency_notifications, "warning", []), var.notifications.warning)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-  }
 
   rule {
     description           = "is too high > ${var.flush_latency_threshold_major}"
@@ -420,6 +411,15 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.flush_latency_disabled_major, var.flush_latency_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.flush_latency_notifications, "major", []), var.notifications.major)
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+  }
+
+  rule {
+    description           = "is too high > ${var.flush_latency_threshold_minor}"
+    severity              = "Minor"
+    detect_label          = "MINOR"
+    disabled              = coalesce(var.flush_latency_disabled_minor, var.flush_latency_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.flush_latency_notifications, "minor", []), var.notifications.minor)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -431,18 +431,9 @@ resource "signalfx_detector" "search_latency" {
     A = data('elasticsearch.indices.search.query-time', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.search_latency_aggregation_function}${var.search_latency_transformation_function}
     B = data('elasticsearch.indices.search.query-total', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.search_latency_aggregation_function}${var.search_latency_transformation_function}
     signal = (A/B).fill(0).publish('signal')
-    detect(when(signal > ${var.search_latency_threshold_warning})).publish('WARN')
-    detect(when(signal > ${var.search_latency_threshold_major}) and when(signal <= ${var.search_latency_threshold_warning})).publish('MAJOR')
+    detect(when(signal > ${var.search_latency_threshold_major})).publish('MAJOR')
+    detect(when(signal > ${var.search_latency_threshold_minor}) and when(signal <= ${var.search_latency_threshold_major})).publish('MINOR')
 EOF
-
-  rule {
-    description           = "is too high > ${var.search_latency_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.search_latency_disabled_warning, var.search_latency_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.search_latency_notifications, "warning", []), var.notifications.warning)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-  }
 
   rule {
     description           = "is too high > ${var.search_latency_threshold_major}"
@@ -450,6 +441,15 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.search_latency_disabled_major, var.search_latency_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.search_latency_notifications, "major", []), var.notifications.major)
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+  }
+
+  rule {
+    description           = "is too high > ${var.search_latency_threshold_minor}"
+    severity              = "Minor"
+    detect_label          = "MINOR"
+    disabled              = coalesce(var.search_latency_disabled_minor, var.search_latency_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.search_latency_notifications, "minor", []), var.notifications.minor)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -461,18 +461,9 @@ resource "signalfx_detector" "fetch_latency" {
     A = data('elasticsearch.indices.search.fetch-time', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.fetch_latency_aggregation_function}${var.fetch_latency_transformation_function}
     B = data('elasticsearch.indices.search.fetch-total', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.fetch_latency_aggregation_function}${var.fetch_latency_transformation_function}
     signal = (A/B).fill(0).publish('signal')
-    detect(when(signal > ${var.fetch_latency_threshold_warning})).publish('WARN')
-    detect(when(signal > ${var.fetch_latency_threshold_major}) and when(signal <= ${var.fetch_latency_threshold_warning})).publish('MAJOR')
+    detect(when(signal > ${var.fetch_latency_threshold_major})).publish('MAJOR')
+    detect(when(signal > ${var.fetch_latency_threshold_minor}) and when(signal <= ${var.fetch_latency_threshold_major})).publish('MINOR')
 EOF
-
-  rule {
-    description           = "is too high > ${var.fetch_latency_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.fetch_latency_disabled_warning, var.fetch_latency_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.fetch_latency_notifications, "warning", []), var.notifications.warning)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-  }
 
   rule {
     description           = "is too high > ${var.fetch_latency_threshold_major}"
@@ -482,6 +473,15 @@ EOF
     notifications         = coalescelist(lookup(var.fetch_latency_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
+
+  rule {
+    description           = "is too high > ${var.fetch_latency_threshold_minor}"
+    severity              = "Minor"
+    detect_label          = "MINOR"
+    disabled              = coalesce(var.fetch_latency_disabled_minor, var.fetch_latency_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.fetch_latency_notifications, "minor", []), var.notifications.minor)
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+  }
 }
 
 resource "signalfx_detector" "field_data_evictions_change" {
@@ -489,18 +489,9 @@ resource "signalfx_detector" "field_data_evictions_change" {
 
   program_text = <<-EOF
     signal = data('elasticsearch.indices.fielddata.evictions', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta').rateofchange()${var.field_data_evictions_change_aggregation_function}${var.field_data_evictions_change_transformation_function}.publish('signal')
-    detect(when(signal > ${var.field_data_evictions_change_threshold_warning})).publish('WARN')
-    detect(when(signal > ${var.field_data_evictions_change_threshold_major}) and when(signal <= ${var.field_data_evictions_change_threshold_warning})).publish('MAJOR')
+    detect(when(signal > ${var.field_data_evictions_change_threshold_major})).publish('MAJOR')
+    detect(when(signal > ${var.field_data_evictions_change_threshold_minor}) and when(signal <= ${var.field_data_evictions_change_threshold_major})).publish('MINOR')
 EOF
-
-  rule {
-    description           = "is too high > ${var.field_data_evictions_change_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.field_data_evictions_change_disabled_warning, var.field_data_evictions_change_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.field_data_evictions_change_notifications, "warning", []), var.notifications.warning)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-  }
 
   rule {
     description           = "is too high > ${var.field_data_evictions_change_threshold_major}"
@@ -510,6 +501,15 @@ EOF
     notifications         = coalescelist(lookup(var.field_data_evictions_change_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
+
+  rule {
+    description           = "is too high > ${var.field_data_evictions_change_threshold_minor}"
+    severity              = "Minor"
+    detect_label          = "MINOR"
+    disabled              = coalesce(var.field_data_evictions_change_disabled_minor, var.field_data_evictions_change_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.field_data_evictions_change_notifications, "minor", []), var.notifications.minor)
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+  }
 }
 
 resource "signalfx_detector" "query_cache_evictions_change" {
@@ -517,18 +517,9 @@ resource "signalfx_detector" "query_cache_evictions_change" {
 
   program_text = <<-EOF
     signal = data('elasticsearch.indices.query-cache.evictions', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta').rateofchange()${var.query_cache_evictions_change_aggregation_function}${var.query_cache_evictions_change_transformation_function}.publish('signal')
-    detect(when(signal > ${var.query_cache_evictions_change_threshold_warning})).publish('WARN')
-    detect(when(signal > ${var.query_cache_evictions_change_threshold_major}) and when(signal <= ${var.query_cache_evictions_change_threshold_warning})).publish('MAJOR')
+    detect(when(signal > ${var.query_cache_evictions_change_threshold_major})).publish('MAJOR')
+    detect(when(signal > ${var.query_cache_evictions_change_threshold_minor}) and when(signal <= ${var.query_cache_evictions_change_threshold_major})).publish('MINOR')
 EOF
-
-  rule {
-    description           = "is too high > ${var.query_cache_evictions_change_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.query_cache_evictions_change_disabled_warning, var.query_cache_evictions_change_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.query_cache_evictions_change_notifications, "warning", []), var.notifications.warning)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-  }
 
   rule {
     description           = "is too high > ${var.query_cache_evictions_change_threshold_major}"
@@ -538,6 +529,15 @@ EOF
     notifications         = coalescelist(lookup(var.query_cache_evictions_change_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
+
+  rule {
+    description           = "is too high > ${var.query_cache_evictions_change_threshold_minor}"
+    severity              = "Minor"
+    detect_label          = "MINOR"
+    disabled              = coalesce(var.query_cache_evictions_change_disabled_minor, var.query_cache_evictions_change_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.query_cache_evictions_change_notifications, "minor", []), var.notifications.minor)
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+  }
 }
 
 resource "signalfx_detector" "request_cache_evictions_change" {
@@ -545,18 +545,9 @@ resource "signalfx_detector" "request_cache_evictions_change" {
 
   program_text = <<-EOF
     signal = data('elasticsearch.indices.request-cache.evictions', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta').rateofchange()${var.request_cache_evictions_change_aggregation_function}${var.request_cache_evictions_change_transformation_function}.publish('signal')
-    detect(when(signal > ${var.request_cache_evictions_change_threshold_warning})).publish('WARN')
-    detect(when(signal > ${var.request_cache_evictions_change_threshold_major}) and when(signal <= ${var.request_cache_evictions_change_threshold_warning})).publish('MAJOR')
+    detect(when(signal > ${var.request_cache_evictions_change_threshold_major})).publish('MAJOR')
+    detect(when(signal > ${var.request_cache_evictions_change_threshold_minor}) and when(signal <= ${var.request_cache_evictions_change_threshold_major})).publish('MINOR')
 EOF
-
-  rule {
-    description           = "is too high > ${var.request_cache_evictions_change_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.request_cache_evictions_change_disabled_warning, var.request_cache_evictions_change_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.request_cache_evictions_change_notifications, "warning", []), var.notifications.warning)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-  }
 
   rule {
     description           = "is too high > ${var.request_cache_evictions_change_threshold_major}"
@@ -566,6 +557,15 @@ EOF
     notifications         = coalescelist(lookup(var.request_cache_evictions_change_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
+
+  rule {
+    description           = "is too high > ${var.request_cache_evictions_change_threshold_minor}"
+    severity              = "Minor"
+    detect_label          = "MINOR"
+    disabled              = coalesce(var.request_cache_evictions_change_disabled_minor, var.request_cache_evictions_change_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.request_cache_evictions_change_notifications, "minor", []), var.notifications.minor)
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+  }
 }
 
 resource "signalfx_detector" "task_time_in_queue_change" {
@@ -573,18 +573,9 @@ resource "signalfx_detector" "task_time_in_queue_change" {
 
   program_text = <<-EOF
     signal = data('elasticsearch.cluster.task-max-wait-time', filter=filter('plugin', 'elasticsearch') and ${module.filter-tags.filter_custom}, rollup='average').rateofchange()${var.task_time_in_queue_change_aggregation_function}${var.task_time_in_queue_change_transformation_function}.publish('signal')
-    detect(when(signal > ${var.task_time_in_queue_change_threshold_warning})).publish('WARN')
-    detect(when(signal > ${var.task_time_in_queue_change_threshold_major}) and when(signal <= ${var.task_time_in_queue_change_threshold_warning})).publish('MAJOR')
+    detect(when(signal > ${var.task_time_in_queue_change_threshold_major})).publish('MAJOR')
+    detect(when(signal > ${var.task_time_in_queue_change_threshold_minor}) and when(signal <= ${var.task_time_in_queue_change_threshold_major})).publish('MINOR')
 EOF
-
-  rule {
-    description           = "is too high > ${var.task_time_in_queue_change_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.task_time_in_queue_change_disabled_warning, var.task_time_in_queue_change_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.task_time_in_queue_change_notifications, "warning", []), var.notifications.warning)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-  }
 
   rule {
     description           = "is too high > ${var.task_time_in_queue_change_threshold_major}"
@@ -592,6 +583,15 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.task_time_in_queue_change_disabled_major, var.task_time_in_queue_change_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.task_time_in_queue_change_notifications, "major", []), var.notifications.major)
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+  }
+
+  rule {
+    description           = "is too high > ${var.task_time_in_queue_change_threshold_minor}"
+    severity              = "Minor"
+    detect_label          = "MINOR"
+    disabled              = coalesce(var.task_time_in_queue_change_disabled_minor, var.task_time_in_queue_change_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.task_time_in_queue_change_notifications, "minor", []), var.notifications.minor)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }

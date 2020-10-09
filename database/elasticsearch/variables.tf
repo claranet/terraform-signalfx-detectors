@@ -76,8 +76,8 @@ variable "cluster_status_disabled_critical" {
   default     = null
 }
 
-variable "cluster_status_disabled_warning" {
-  description = "Disable warning alerting rule for cluster_status_not_green detector"
+variable "cluster_status_disabled_major" {
+  description = "Disable major alerting rule for cluster_status_not_green detector"
   type        = bool
   default     = null
 }
@@ -114,8 +114,8 @@ variable "cluster_initializing_shards_disabled_critical" {
   default     = null
 }
 
-variable "cluster_initializing_shards_disabled_warning" {
-  description = "Disable warning alerting rule for cluster_initializing_shards detector"
+variable "cluster_initializing_shards_disabled_major" {
+  description = "Disable major alerting rule for cluster_initializing_shards detector"
   type        = bool
   default     = null
 }
@@ -144,8 +144,8 @@ variable "cluster_initializing_shards_threshold_critical" {
   default     = 1
 }
 
-variable "cluster_initializing_shards_threshold_warning" {
-  description = "Warning threshold for cluster_initializing_shards detector"
+variable "cluster_initializing_shards_threshold_major" {
+  description = "Major threshold for cluster_initializing_shards detector"
   type        = number
   default     = 0
 }
@@ -164,8 +164,8 @@ variable "cluster_relocating_shards_disabled_critical" {
   default     = null
 }
 
-variable "cluster_relocating_shards_disabled_warning" {
-  description = "Disable warning alerting rule for cluster_relocating_shards detector"
+variable "cluster_relocating_shards_disabled_major" {
+  description = "Disable major alerting rule for cluster_relocating_shards detector"
   type        = bool
   default     = true
 }
@@ -194,8 +194,8 @@ variable "cluster_relocating_shards_threshold_critical" {
   default     = 0
 }
 
-variable "cluster_relocating_shards_threshold_warning" {
-  description = "Warning threshold for cluster_relocating_shards detector"
+variable "cluster_relocating_shards_threshold_major" {
+  description = "Major threshold for cluster_relocating_shards detector"
   type        = number
   default     = -1
 }
@@ -214,8 +214,8 @@ variable "cluster_unassigned_shards_disabled_critical" {
   default     = null
 }
 
-variable "cluster_unassigned_shards_disabled_warning" {
-  description = "Disable warning alerting rule for cluster_unassigned_shards detector"
+variable "cluster_unassigned_shards_disabled_major" {
+  description = "Disable major alerting rule for cluster_unassigned_shards detector"
   type        = bool
   default     = true
 }
@@ -244,8 +244,8 @@ variable "cluster_unassigned_shards_threshold_critical" {
   default     = 0
 }
 
-variable "cluster_unassigned_shards_threshold_warning" {
-  description = "Warning threshold for cluster_unassigned_shards detector"
+variable "cluster_unassigned_shards_threshold_major" {
+  description = "Major threshold for cluster_unassigned_shards detector"
   type        = number
   default     = -1
 }
@@ -264,8 +264,8 @@ variable "pending_tasks_disabled_critical" {
   default     = null
 }
 
-variable "pending_tasks_disabled_warning" {
-  description = "Disable warning alerting rule for pending_tasks detector"
+variable "pending_tasks_disabled_major" {
+  description = "Disable major alerting rule for pending_tasks detector"
   type        = bool
   default     = null
 }
@@ -294,8 +294,8 @@ variable "pending_tasks_threshold_critical" {
   default     = 5
 }
 
-variable "pending_tasks_threshold_warning" {
-  description = "Warning threshold for pending_tasks detector"
+variable "pending_tasks_threshold_major" {
+  description = "Major threshold for pending_tasks detector"
   type        = number
   default     = 0
 }
@@ -314,8 +314,8 @@ variable "jvm_heap_memory_usage_disabled_critical" {
   default     = null
 }
 
-variable "jvm_heap_memory_usage_disabled_warning" {
-  description = "Disable warning alerting rule for jvm_heap_memory_usage detector"
+variable "jvm_heap_memory_usage_disabled_major" {
+  description = "Disable major alerting rule for jvm_heap_memory_usage detector"
   type        = bool
   default     = null
 }
@@ -344,8 +344,8 @@ variable "jvm_heap_memory_usage_threshold_critical" {
   default     = 90
 }
 
-variable "jvm_heap_memory_usage_threshold_warning" {
-  description = "Warning threshold for jvm_heap_memory_usage detector"
+variable "jvm_heap_memory_usage_threshold_major" {
+  description = "Major threshold for jvm_heap_memory_usage detector"
   type        = number
   default     = 80
 }
@@ -364,8 +364,8 @@ variable "cpu_usage_disabled_critical" {
   default     = null
 }
 
-variable "cpu_usage_disabled_warning" {
-  description = "Disable warning alerting rule for cpu_usage detector"
+variable "cpu_usage_disabled_major" {
+  description = "Disable major alerting rule for cpu_usage detector"
   type        = bool
   default     = null
 }
@@ -394,8 +394,8 @@ variable "cpu_usage_threshold_critical" {
   default     = 95
 }
 
-variable "cpu_usage_threshold_warning" {
-  description = "Warning threshold for cpu_usage detector"
+variable "cpu_usage_threshold_major" {
+  description = "Major threshold for cpu_usage detector"
   type        = number
   default     = 85
 }
@@ -414,8 +414,8 @@ variable "file_descriptors_disabled_critical" {
   default     = null
 }
 
-variable "file_descriptors_disabled_warning" {
-  description = "Disable warning alerting rule for file_descriptors detector"
+variable "file_descriptors_disabled_major" {
+  description = "Disable major alerting rule for file_descriptors detector"
   type        = bool
   default     = null
 }
@@ -444,8 +444,8 @@ variable "file_descriptors_threshold_critical" {
   default     = 95
 }
 
-variable "file_descriptors_threshold_warning" {
-  description = "Warning threshold for file_descriptors detector"
+variable "file_descriptors_threshold_major" {
+  description = "Major threshold for file_descriptors detector"
   type        = number
   default     = 90
 }
@@ -458,14 +458,14 @@ variable "jvm_memory_young_usage_disabled" {
   default     = null
 }
 
-variable "jvm_memory_young_usage_disabled_warning" {
-  description = "Disable warning alerting rule for jvm_memory_young_usage detector"
+variable "jvm_memory_young_usage_disabled_major" {
+  description = "Disable major alerting rule for jvm_memory_young_usage detector"
   type        = bool
   default     = null
 }
 
-variable "jvm_memory_young_usage_disabled_major" {
-  description = "Disable major alerting rule for jvm_memory_young_usage detector"
+variable "jvm_memory_young_usage_disabled_minor" {
+  description = "Disable minor alerting rule for jvm_memory_young_usage detector"
   type        = bool
   default     = null
 }
@@ -488,14 +488,14 @@ variable "jvm_memory_young_usage_transformation_function" {
   default     = ".mean(over='10m')"
 }
 
-variable "jvm_memory_young_usage_threshold_warning" {
-  description = "warning threshold for jvm_memory_young_usage detector"
+variable "jvm_memory_young_usage_threshold_major" {
+  description = "major threshold for jvm_memory_young_usage detector"
   type        = number
   default     = 90
 }
 
-variable "jvm_memory_young_usage_threshold_major" {
-  description = "major threshold for jvm_memory_young_usage detector"
+variable "jvm_memory_young_usage_threshold_minor" {
+  description = "minor threshold for jvm_memory_young_usage detector"
   type        = number
   default     = 80
 }
@@ -508,14 +508,14 @@ variable "jvm_memory_old_usage_disabled" {
   default     = null
 }
 
-variable "jvm_memory_old_usage_disabled_warning" {
-  description = "Disable warning alerting rule for jvm_memory_old_usage detector"
+variable "jvm_memory_old_usage_disabled_major" {
+  description = "Disable major alerting rule for jvm_memory_old_usage detector"
   type        = bool
   default     = null
 }
 
-variable "jvm_memory_old_usage_disabled_major" {
-  description = "Disable major alerting rule for jvm_memory_old_usage detector"
+variable "jvm_memory_old_usage_disabled_minor" {
+  description = "Disable minor alerting rule for jvm_memory_old_usage detector"
   type        = bool
   default     = null
 }
@@ -538,14 +538,14 @@ variable "jvm_memory_old_usage_transformation_function" {
   default     = ".mean(over='10m')"
 }
 
-variable "jvm_memory_old_usage_threshold_warning" {
-  description = "warning threshold for jvm_memory_old_usage detector"
+variable "jvm_memory_old_usage_threshold_major" {
+  description = "major threshold for jvm_memory_old_usage detector"
   type        = number
   default     = 90
 }
 
-variable "jvm_memory_old_usage_threshold_major" {
-  description = "major threshold for jvm_memory_old_usage detector"
+variable "jvm_memory_old_usage_threshold_minor" {
+  description = "minor threshold for jvm_memory_old_usage detector"
   type        = number
   default     = 80
 }
@@ -558,14 +558,14 @@ variable "jvm_gc_old_collection_latency_disabled" {
   default     = null
 }
 
-variable "jvm_gc_old_collection_latency_disabled_warning" {
-  description = "Disable warning alerting rule for jvm_gc_old_collection_latency detector"
+variable "jvm_gc_old_collection_latency_disabled_major" {
+  description = "Disable major alerting rule for jvm_gc_old_collection_latency detector"
   type        = bool
   default     = null
 }
 
-variable "jvm_gc_old_collection_latency_disabled_major" {
-  description = "Disable major alerting rule for jvm_gc_old_collection_latency detector"
+variable "jvm_gc_old_collection_latency_disabled_minor" {
+  description = "Disable minor alerting rule for jvm_gc_old_collection_latency detector"
   type        = bool
   default     = null
 }
@@ -588,14 +588,14 @@ variable "jvm_gc_old_collection_latency_transformation_function" {
   default     = ".mean(over='15m')"
 }
 
-variable "jvm_gc_old_collection_latency_threshold_warning" {
-  description = "warning threshold for jvm_gc_old_collection_latency detector"
+variable "jvm_gc_old_collection_latency_threshold_major" {
+  description = "major threshold for jvm_gc_old_collection_latency detector"
   type        = number
   default     = 300
 }
 
-variable "jvm_gc_old_collection_latency_threshold_major" {
-  description = "major threshold for jvm_gc_old_collection_latency detector"
+variable "jvm_gc_old_collection_latency_threshold_minor" {
+  description = "minor threshold for jvm_gc_old_collection_latency detector"
   type        = number
   default     = 200
 }
@@ -608,14 +608,14 @@ variable "jvm_gc_young_collection_latency_disabled" {
   default     = null
 }
 
-variable "jvm_gc_young_collection_latency_disabled_warning" {
-  description = "Disable warning alerting rule for jvm_gc_young_collection_latency detector"
+variable "jvm_gc_young_collection_latency_disabled_major" {
+  description = "Disable major alerting rule for jvm_gc_young_collection_latency detector"
   type        = bool
   default     = null
 }
 
-variable "jvm_gc_young_collection_latency_disabled_major" {
-  description = "Disable major alerting rule for jvm_gc_young_collection_latency detector"
+variable "jvm_gc_young_collection_latency_disabled_minor" {
+  description = "Disable minor alerting rule for jvm_gc_young_collection_latency detector"
   type        = bool
   default     = null
 }
@@ -638,14 +638,14 @@ variable "jvm_gc_young_collection_latency_transformation_function" {
   default     = ".mean(over='15m')"
 }
 
-variable "jvm_gc_young_collection_latency_threshold_warning" {
-  description = "warning threshold for jvm_gc_young_collection_latency detector"
+variable "jvm_gc_young_collection_latency_threshold_major" {
+  description = "major threshold for jvm_gc_young_collection_latency detector"
   type        = number
   default     = 40
 }
 
-variable "jvm_gc_young_collection_latency_threshold_major" {
-  description = "major threshold for jvm_gc_young_collection_latency detector"
+variable "jvm_gc_young_collection_latency_threshold_minor" {
+  description = "minor threshold for jvm_gc_young_collection_latency detector"
   type        = number
   default     = 20
 }
@@ -658,14 +658,14 @@ variable "indexing_latency_disabled" {
   default     = null
 }
 
-variable "indexing_latency_disabled_warning" {
-  description = "Disable warning alerting rule for indexing_latency detector"
+variable "indexing_latency_disabled_major" {
+  description = "Disable major alerting rule for indexing_latency detector"
   type        = bool
   default     = null
 }
 
-variable "indexing_latency_disabled_major" {
-  description = "Disable major alerting rule for indexing_latency detector"
+variable "indexing_latency_disabled_minor" {
+  description = "Disable minor alerting rule for indexing_latency detector"
   type        = bool
   default     = null
 }
@@ -688,14 +688,14 @@ variable "indexing_latency_transformation_function" {
   default     = ".mean(over='15m')"
 }
 
-variable "indexing_latency_threshold_warning" {
-  description = "warning threshold for indexing_latency detector"
+variable "indexing_latency_threshold_major" {
+  description = "major threshold for indexing_latency detector"
   type        = number
   default     = 30
 }
 
-variable "indexing_latency_threshold_major" {
-  description = "major threshold for indexing_latency detector"
+variable "indexing_latency_threshold_minor" {
+  description = "minor threshold for indexing_latency detector"
   type        = number
   default     = 15
 }
@@ -708,14 +708,14 @@ variable "flush_latency_disabled" {
   default     = null
 }
 
-variable "flush_latency_disabled_warning" {
-  description = "Disable warning alerting rule for flush_latency detector"
+variable "flush_latency_disabled_major" {
+  description = "Disable major alerting rule for flush_latency detector"
   type        = bool
   default     = null
 }
 
-variable "flush_latency_disabled_major" {
-  description = "Disable major alerting rule for flush_latency detector"
+variable "flush_latency_disabled_minor" {
+  description = "Disable minor alerting rule for flush_latency detector"
   type        = bool
   default     = null
 }
@@ -738,14 +738,14 @@ variable "flush_latency_transformation_function" {
   default     = ".mean(over='15m')"
 }
 
-variable "flush_latency_threshold_warning" {
-  description = "warning threshold for flush_latency detector"
+variable "flush_latency_threshold_major" {
+  description = "major threshold for flush_latency detector"
   type        = number
   default     = 150
 }
 
-variable "flush_latency_threshold_major" {
-  description = "major threshold for flush_latency detector"
+variable "flush_latency_threshold_minor" {
+  description = "minor threshold for flush_latency detector"
   type        = number
   default     = 100
 }
@@ -758,14 +758,14 @@ variable "search_latency_disabled" {
   default     = null
 }
 
-variable "search_latency_disabled_warning" {
-  description = "Disable warning alerting rule for search_latency detector"
+variable "search_latency_disabled_major" {
+  description = "Disable major alerting rule for search_latency detector"
   type        = bool
   default     = null
 }
 
-variable "search_latency_disabled_major" {
-  description = "Disable major alerting rule for search_latency detector"
+variable "search_latency_disabled_minor" {
+  description = "Disable minor alerting rule for search_latency detector"
   type        = bool
   default     = null
 }
@@ -788,14 +788,14 @@ variable "search_latency_transformation_function" {
   default     = ".min(over='30m')"
 }
 
-variable "search_latency_threshold_warning" {
-  description = "warning threshold for search_latency detector"
+variable "search_latency_threshold_major" {
+  description = "major threshold for search_latency detector"
   type        = number
   default     = 20
 }
 
-variable "search_latency_threshold_major" {
-  description = "major threshold for search_latency detector"
+variable "search_latency_threshold_minor" {
+  description = "minor threshold for search_latency detector"
   type        = number
   default     = 10
 }
@@ -808,14 +808,14 @@ variable "fetch_latency_disabled" {
   default     = null
 }
 
-variable "fetch_latency_disabled_warning" {
-  description = "Disable warning alerting rule for fetch_latency detector"
+variable "fetch_latency_disabled_major" {
+  description = "Disable major alerting rule for fetch_latency detector"
   type        = bool
   default     = null
 }
 
-variable "fetch_latency_disabled_major" {
-  description = "Disable major alerting rule for fetch_latency detector"
+variable "fetch_latency_disabled_minor" {
+  description = "Disable minor alerting rule for fetch_latency detector"
   type        = bool
   default     = null
 }
@@ -838,14 +838,14 @@ variable "fetch_latency_transformation_function" {
   default     = ".min(over='15m')"
 }
 
-variable "fetch_latency_threshold_warning" {
-  description = "warning threshold for fetch_latency detector"
+variable "fetch_latency_threshold_major" {
+  description = "major threshold for fetch_latency detector"
   type        = number
   default     = 20
 }
 
-variable "fetch_latency_threshold_major" {
-  description = "major threshold for fetch_latency detector"
+variable "fetch_latency_threshold_minor" {
+  description = "minor threshold for fetch_latency detector"
   type        = number
   default     = 10
 }
@@ -858,14 +858,14 @@ variable "field_data_evictions_change_disabled" {
   default     = null
 }
 
-variable "field_data_evictions_change_disabled_warning" {
-  description = "Disable warning alerting rule for field_data_evictions_change detector"
+variable "field_data_evictions_change_disabled_major" {
+  description = "Disable major alerting rule for field_data_evictions_change detector"
   type        = bool
   default     = null
 }
 
-variable "field_data_evictions_change_disabled_major" {
-  description = "Disable major alerting rule for field_data_evictions_change detector"
+variable "field_data_evictions_change_disabled_minor" {
+  description = "Disable minor alerting rule for field_data_evictions_change detector"
   type        = bool
   default     = null
 }
@@ -888,14 +888,14 @@ variable "field_data_evictions_change_transformation_function" {
   default     = ".mean(over='15m')"
 }
 
-variable "field_data_evictions_change_threshold_warning" {
-  description = "warning threshold for field_data_evictions_change detector"
+variable "field_data_evictions_change_threshold_major" {
+  description = "major threshold for field_data_evictions_change detector"
   type        = number
   default     = 120
 }
 
-variable "field_data_evictions_change_threshold_major" {
-  description = "major threshold for field_data_evictions_change detector"
+variable "field_data_evictions_change_threshold_minor" {
+  description = "minor threshold for field_data_evictions_change detector"
   type        = number
   default     = 60
 }
@@ -908,14 +908,14 @@ variable "query_cache_evictions_change_disabled" {
   default     = null
 }
 
-variable "query_cache_evictions_change_disabled_warning" {
-  description = "Disable warning alerting rule for query_cache_evictions_change detector"
+variable "query_cache_evictions_change_disabled_major" {
+  description = "Disable major alerting rule for query_cache_evictions_change detector"
   type        = bool
   default     = null
 }
 
-variable "query_cache_evictions_change_disabled_major" {
-  description = "Disable major alerting rule for query_cache_evictions_change detector"
+variable "query_cache_evictions_change_disabled_minor" {
+  description = "Disable minor alerting rule for query_cache_evictions_change detector"
   type        = bool
   default     = null
 }
@@ -938,14 +938,14 @@ variable "query_cache_evictions_change_transformation_function" {
   default     = ".mean(over='15m')"
 }
 
-variable "query_cache_evictions_change_threshold_warning" {
-  description = "warning threshold for query_cache_evictions_change detector"
+variable "query_cache_evictions_change_threshold_major" {
+  description = "major threshold for query_cache_evictions_change detector"
   type        = number
   default     = 120
 }
 
-variable "query_cache_evictions_change_threshold_major" {
-  description = "major threshold for query_cache_evictions_change detector"
+variable "query_cache_evictions_change_threshold_minor" {
+  description = "minor threshold for query_cache_evictions_change detector"
   type        = number
   default     = 60
 }
@@ -958,14 +958,14 @@ variable "request_cache_evictions_change_disabled" {
   default     = null
 }
 
-variable "request_cache_evictions_change_disabled_warning" {
-  description = "Disable warning alerting rule for request_cache_evictions_change detector"
+variable "request_cache_evictions_change_disabled_major" {
+  description = "Disable major alerting rule for request_cache_evictions_change detector"
   type        = bool
   default     = null
 }
 
-variable "request_cache_evictions_change_disabled_major" {
-  description = "Disable major alerting rule for request_cache_evictions_change detector"
+variable "request_cache_evictions_change_disabled_minor" {
+  description = "Disable minor alerting rule for request_cache_evictions_change detector"
   type        = bool
   default     = null
 }
@@ -988,14 +988,14 @@ variable "request_cache_evictions_change_transformation_function" {
   default     = ".mean(over='15m')"
 }
 
-variable "request_cache_evictions_change_threshold_warning" {
-  description = "warning threshold for request_cache_evictions_change detector"
+variable "request_cache_evictions_change_threshold_major" {
+  description = "major threshold for request_cache_evictions_change detector"
   type        = number
   default     = 120
 }
 
-variable "request_cache_evictions_change_threshold_major" {
-  description = "major threshold for request_cache_evictions_change detector"
+variable "request_cache_evictions_change_threshold_minor" {
+  description = "minor threshold for request_cache_evictions_change detector"
   type        = number
   default     = 60
 }
@@ -1008,14 +1008,14 @@ variable "task_time_in_queue_change_disabled" {
   default     = null
 }
 
-variable "task_time_in_queue_change_disabled_warning" {
-  description = "Disable warning alerting rule for task_time_in_queue_change detector"
+variable "task_time_in_queue_change_disabled_major" {
+  description = "Disable major alerting rule for task_time_in_queue_change detector"
   type        = bool
   default     = null
 }
 
-variable "task_time_in_queue_change_disabled_major" {
-  description = "Disable major alerting rule for task_time_in_queue_change detector"
+variable "task_time_in_queue_change_disabled_minor" {
+  description = "Disable minor alerting rule for task_time_in_queue_change detector"
   type        = bool
   default     = null
 }
@@ -1038,14 +1038,14 @@ variable "task_time_in_queue_change_transformation_function" {
   default     = ".mean(over='15m')"
 }
 
-variable "task_time_in_queue_change_threshold_warning" {
-  description = "warning threshold for task_time_in_queue_change detector"
+variable "task_time_in_queue_change_threshold_major" {
+  description = "major threshold for task_time_in_queue_change detector"
   type        = number
   default     = 200
 }
 
-variable "task_time_in_queue_change_threshold_major" {
-  description = "major threshold for task_time_in_queue_change detector"
+variable "task_time_in_queue_change_threshold_minor" {
+  description = "minor threshold for task_time_in_queue_change detector"
   type        = number
   default     = 100
 }

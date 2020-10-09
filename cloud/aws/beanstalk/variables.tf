@@ -76,8 +76,8 @@ variable "health_disabled_critical" {
   default     = null
 }
 
-variable "health_disabled_warning" {
-  description = "Disable warning alerting rule for health detector"
+variable "health_disabled_major" {
+  description = "Disable major alerting rule for health detector"
   type        = bool
   default     = null
 }
@@ -106,8 +106,8 @@ variable "health_threshold_critical" {
   default     = 20
 }
 
-variable "health_threshold_warning" {
-  description = "Warning threshold for health detector"
+variable "health_threshold_major" {
+  description = "Major threshold for health detector"
   type        = number
   default     = 15
 }
@@ -126,8 +126,8 @@ variable "latency_p90_disabled_critical" {
   default     = null
 }
 
-variable "latency_p90_disabled_warning" {
-  description = "Disable warning alerting rule for latency_p90 detector"
+variable "latency_p90_disabled_major" {
+  description = "Disable major alerting rule for latency_p90 detector"
   type        = bool
   default     = null
 }
@@ -156,8 +156,8 @@ variable "latency_p90_threshold_critical" {
   default     = 0.5
 }
 
-variable "latency_p90_threshold_warning" {
-  description = "Warning threshold for latency_p90 detector"
+variable "latency_p90_threshold_major" {
+  description = "Major threshold for latency_p90 detector"
   type        = number
   default     = 0.3
 }
@@ -176,8 +176,8 @@ variable "app_5xx_error_rate_disabled_critical" {
   default     = null
 }
 
-variable "app_5xx_error_rate_disabled_warning" {
-  description = "Disable warning alerting rule for 5xx_error_rate detector"
+variable "app_5xx_error_rate_disabled_major" {
+  description = "Disable major alerting rule for 5xx_error_rate detector"
   type        = bool
   default     = null
 }
@@ -206,8 +206,8 @@ variable "app_5xx_error_rate_threshold_critical" {
   default     = 5
 }
 
-variable "app_5xx_error_rate_threshold_warning" {
-  description = "Warning threshold for 5xx_error_rate detector"
+variable "app_5xx_error_rate_threshold_major" {
+  description = "Major threshold for 5xx_error_rate detector"
   type        = number
   default     = 3
 }
@@ -226,8 +226,8 @@ variable "root_filesystem_usage_disabled_critical" {
   default     = null
 }
 
-variable "root_filesystem_usage_disabled_warning" {
-  description = "Disable warning alerting rule for root_filesystem_usage detector"
+variable "root_filesystem_usage_disabled_major" {
+  description = "Disable major alerting rule for root_filesystem_usage detector"
   type        = bool
   default     = null
 }
@@ -256,8 +256,8 @@ variable "root_filesystem_usage_threshold_critical" {
   default     = 90
 }
 
-variable "root_filesystem_usage_threshold_warning" {
-  description = "Warning threshold for root_filesystem_usage detector"
+variable "root_filesystem_usage_threshold_major" {
+  description = "Major threshold for root_filesystem_usage detector"
   type        = number
   default     = 80
 }

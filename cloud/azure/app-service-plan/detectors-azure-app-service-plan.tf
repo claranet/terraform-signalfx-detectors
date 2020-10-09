@@ -25,7 +25,7 @@ resource "signalfx_detector" "cpu_percentage" {
         base_filter = filter('resource_type', 'Microsoft.Web/serverFarms') and filter('primary_aggregation_type', 'true')
         signal = data('CpuPercentage', filter=base_filter and ${module.filter-tags.filter_custom})${var.cpu_percentage_aggregation_function}.publish('signal')
         detect(when(signal > threshold(${var.cpu_percentage_threshold_critical}), lasting="${var.cpu_percentage_timer}")).publish('CRIT')
-        detect(when(signal > threshold(${var.cpu_percentage_threshold_warning}), lasting="${var.cpu_percentage_timer}") and when(signal <= ${var.cpu_percentage_threshold_critical})).publish('WARN')
+        detect(when(signal > threshold(${var.cpu_percentage_threshold_major}), lasting="${var.cpu_percentage_timer}") and when(signal <= ${var.cpu_percentage_threshold_critical})).publish('MAJOR')
     EOF
 
   rule {
@@ -38,11 +38,11 @@ resource "signalfx_detector" "cpu_percentage" {
   }
 
   rule {
-    description           = "is too high > ${var.cpu_percentage_threshold_warning}%"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.cpu_percentage_disabled_warning, var.cpu_percentage_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.cpu_percentage_notifications, "warning", []), var.notifications.warning)
+    description           = "is too high > ${var.cpu_percentage_threshold_major}%"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.cpu_percentage_disabled_major, var.cpu_percentage_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.cpu_percentage_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -54,7 +54,7 @@ resource "signalfx_detector" "memory_percentage" {
         base_filter = filter('resource_type', 'Microsoft.Web/serverFarms') and filter('primary_aggregation_type', 'true')
         signal = data('MemoryPercentage', filter=base_filter and ${module.filter-tags.filter_custom})${var.memory_percentage_aggregation_function}.publish('signal')
         detect(when(signal > threshold(${var.memory_percentage_threshold_critical}), lasting="${var.memory_percentage_timer}")).publish('CRIT')
-        detect(when(signal > threshold(${var.memory_percentage_threshold_warning}), lasting="${var.memory_percentage_timer}") and when(signal <= ${var.memory_percentage_threshold_critical})).publish('WARN')
+        detect(when(signal > threshold(${var.memory_percentage_threshold_major}), lasting="${var.memory_percentage_timer}") and when(signal <= ${var.memory_percentage_threshold_critical})).publish('MAJOR')
     EOF
 
   rule {
@@ -67,11 +67,11 @@ resource "signalfx_detector" "memory_percentage" {
   }
 
   rule {
-    description           = "is too high > ${var.memory_percentage_threshold_warning}%"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.memory_percentage_disabled_warning, var.memory_percentage_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.memory_percentage_notifications, "warning", []), var.notifications.warning)
+    description           = "is too high > ${var.memory_percentage_threshold_major}%"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.memory_percentage_disabled_major, var.memory_percentage_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.memory_percentage_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }

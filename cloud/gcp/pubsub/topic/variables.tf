@@ -75,8 +75,8 @@ variable "sending_operations_transformation_function" {
   default     = ".sum(over='30m')"
 }
 
-variable "sending_operations_threshold_warning" {
-  description = "Warning threshold for sending_operations detector"
+variable "sending_operations_threshold_major" {
+  description = "Major threshold for sending_operations detector"
   type        = number
   default     = 1
 }
@@ -95,8 +95,8 @@ variable "unavailable_sending_operations_disabled_critical" {
   default     = null
 }
 
-variable "unavailable_sending_operations_disabled_warning" {
-  description = "Disable warning alerting rule for unavailable_sending_operations detector"
+variable "unavailable_sending_operations_disabled_major" {
+  description = "Disable major alerting rule for unavailable_sending_operations detector"
   type        = bool
   default     = null
 }
@@ -125,8 +125,8 @@ variable "unavailable_sending_operations_threshold_critical" {
   default     = 5
 }
 
-variable "unavailable_sending_operations_threshold_warning" {
-  description = "Warning threshold for unavailable_sending_operations detector"
+variable "unavailable_sending_operations_threshold_major" {
+  description = "Major threshold for unavailable_sending_operations detector"
   type        = number
   default     = 0
 }
@@ -145,8 +145,8 @@ variable "unavailable_sending_operations_ratio_disabled_critical" {
   default     = null
 }
 
-variable "unavailable_sending_operations_ratio_disabled_warning" {
-  description = "Disable warning alerting rule for unavailable_sending_operations_ratio detector"
+variable "unavailable_sending_operations_ratio_disabled_major" {
+  description = "Disable major alerting rule for unavailable_sending_operations_ratio detector"
   type        = bool
   default     = null
 }
@@ -175,8 +175,8 @@ variable "unavailable_sending_operations_ratio_threshold_critical" {
   default     = 20
 }
 
-variable "unavailable_sending_operations_ratio_threshold_warning" {
-  description = "Warning threshold for unavailable_sending_operations_ratio detector"
+variable "unavailable_sending_operations_ratio_threshold_major" {
+  description = "Major threshold for unavailable_sending_operations_ratio detector"
   type        = number
   default     = 0
 }

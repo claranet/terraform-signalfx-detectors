@@ -74,8 +74,8 @@ variable "file_descriptors_disabled_critical" {
   default     = null
 }
 
-variable "file_descriptors_disabled_warning" {
-  description = "Disable warning alerting rule for file descriptors detector"
+variable "file_descriptors_disabled_major" {
+  description = "Disable major alerting rule for file descriptors detector"
   type        = bool
   default     = null
 }
@@ -104,8 +104,8 @@ variable "file_descriptors_threshold_critical" {
   default     = 90
 }
 
-variable "file_descriptors_threshold_warning" {
-  description = "Warning threshold for file descriptors detector"
+variable "file_descriptors_threshold_major" {
+  description = "Major threshold for file descriptors detector"
   type        = number
   default     = 80
 }
@@ -122,8 +122,8 @@ variable "processes_disabled_critical" {
   default     = null
 }
 
-variable "processes_disabled_warning" {
-  description = "Disable warning alerting rule for processes detector"
+variable "processes_disabled_major" {
+  description = "Disable major alerting rule for processes detector"
   type        = bool
   default     = null
 }
@@ -152,8 +152,8 @@ variable "processes_threshold_critical" {
   default     = 90
 }
 
-variable "processes_threshold_warning" {
-  description = "Warning threshold for processes detector"
+variable "processes_threshold_major" {
+  description = "Major threshold for processes detector"
   type        = number
   default     = 80
 }
@@ -170,8 +170,8 @@ variable "sockets_disabled_critical" {
   default     = null
 }
 
-variable "sockets_disabled_warning" {
-  description = "Disable warning alerting rule for sockets detector"
+variable "sockets_disabled_major" {
+  description = "Disable major alerting rule for sockets detector"
   type        = bool
   default     = null
 }
@@ -200,8 +200,8 @@ variable "sockets_threshold_critical" {
   default     = 90
 }
 
-variable "sockets_threshold_warning" {
-  description = "Warning threshold for sockets detector"
+variable "sockets_threshold_major" {
+  description = "Major threshold for sockets detector"
   type        = number
   default     = 80
 }
@@ -218,8 +218,8 @@ variable "vm_memory_disabled_critical" {
   default     = null
 }
 
-variable "vm_memory_disabled_warning" {
-  description = "Disable warning alerting rule for vm_memory detector"
+variable "vm_memory_disabled_major" {
+  description = "Disable major alerting rule for vm_memory detector"
   type        = bool
   default     = null
 }
@@ -248,8 +248,8 @@ variable "vm_memory_threshold_critical" {
   default     = 90
 }
 
-variable "vm_memory_threshold_warning" {
-  description = "Warning threshold for vm_memory detector"
+variable "vm_memory_threshold_major" {
+  description = "Major threshold for vm_memory detector"
   type        = number
   default     = 80
 }

@@ -26,7 +26,7 @@ resource "signalfx_detector" "treatment_limit" {
     B = data('kong_nginx_http_current_connections', filter=filter('state', 'accepted') and ${module.filter-tags.filter_custom})${var.treatment_limit_aggregation_function}${var.treatment_limit_transformation_function}
     signal = ((A-B)/A).scale(100).publish('signal')
     detect(when(signal > ${var.treatment_limit_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.treatment_limit_threshold_warning}) and when(signal <= ${var.treatment_limit_threshold_critical})).publish('WARN')
+    detect(when(signal > ${var.treatment_limit_threshold_major}) and when(signal <= ${var.treatment_limit_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -39,11 +39,11 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.treatment_limit_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.treatment_limit_disabled_warning, var.treatment_limit_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.treatment_limit_notifications, "warning", []), var.notifications.warning)
+    description           = "is too high > ${var.treatment_limit_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.treatment_limit_disabled_major, var.treatment_limit_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.treatment_limit_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }

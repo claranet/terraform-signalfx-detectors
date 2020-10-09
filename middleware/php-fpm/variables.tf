@@ -76,8 +76,8 @@ variable "php_fpm_connect_idle_disabled_critical" {
   default     = null
 }
 
-variable "php_fpm_connect_idle_disabled_warning" {
-  description = "Disable warning alerting rule for php_fpm_connect_idle detector"
+variable "php_fpm_connect_idle_disabled_major" {
+  description = "Disable major alerting rule for php_fpm_connect_idle detector"
   type        = bool
   default     = null
 }
@@ -106,8 +106,8 @@ variable "php_fpm_connect_idle_threshold_critical" {
   default     = 90
 }
 
-variable "php_fpm_connect_idle_threshold_warning" {
-  description = "Warning threshold for php_fpm_connect_idle detector"
+variable "php_fpm_connect_idle_threshold_major" {
+  description = "Major threshold for php_fpm_connect_idle detector"
   type        = number
   default     = 80
 }

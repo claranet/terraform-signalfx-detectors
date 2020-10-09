@@ -62,7 +62,7 @@ resource "signalfx_detector" "session_limit" {
     B = data('haproxy_session_limit', filter=${module.filter-tags.filter_custom})${var.session_limit_aggregation_function}${var.session_limit_transformation_function}
     signal = (A/B).scale(100).publish('signal')
     detect(when(signal > ${var.session_limit_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.session_limit_threshold_warning}) and when(signal <= ${var.session_limit_threshold_critical})).publish('WARN')
+    detect(when(signal > ${var.session_limit_threshold_major}) and when(signal <= ${var.session_limit_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -75,11 +75,11 @@ EOF
   }
 
   rule {
-    description           = "is approaching the limit > ${var.session_limit_threshold_warning}%"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.session_limit_disabled_warning, var.session_limit_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.session_limit_notifications, "warning", []), var.notifications.warning)
+    description           = "is approaching the limit > ${var.session_limit_threshold_major}%"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.session_limit_disabled_major, var.session_limit_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.session_limit_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -92,7 +92,7 @@ resource "signalfx_detector" "http_5xx_response" {
     B = data('haproxy_request_total', filter=${module.filter-tags.filter_custom}, rollup='delta')${var.http_5xx_response_aggregation_function}${var.http_5xx_response_transformation_function}
     signal = (A/B).scale(100).publish('signal')
     detect(when(signal > ${var.http_5xx_response_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.http_5xx_response_threshold_warning}) and when(signal <= ${var.http_5xx_response_threshold_critical})).publish('WARN')
+    detect(when(signal > ${var.http_5xx_response_threshold_major}) and when(signal <= ${var.http_5xx_response_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -105,11 +105,11 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.http_5xx_response_threshold_warning}%"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.http_5xx_response_disabled_warning, var.http_5xx_response_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.http_5xx_response_notifications, "warning", []), var.notifications.warning)
+    description           = "is too high > ${var.http_5xx_response_threshold_major}%"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.http_5xx_response_disabled_major, var.http_5xx_response_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.http_5xx_response_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -122,7 +122,7 @@ resource "signalfx_detector" "http_4xx_response" {
     B = data('haproxy_request_total', filter=${module.filter-tags.filter_custom}, rollup='delta')${var.http_4xx_response_aggregation_function}${var.http_4xx_response_transformation_function}
     signal = (A/B).scale(100).publish('signal')
     detect(when(signal > ${var.http_4xx_response_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.http_4xx_response_threshold_warning}) and when(signal <= ${var.http_4xx_response_threshold_critical})).publish('WARN')
+    detect(when(signal > ${var.http_4xx_response_threshold_major}) and when(signal <= ${var.http_4xx_response_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -135,11 +135,11 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.http_4xx_response_threshold_warning}%"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.http_4xx_response_disabled_warning, var.http_4xx_response_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.http_4xx_response_notifications, "warning", []), var.notifications.warning)
+    description           = "is too high > ${var.http_4xx_response_threshold_major}%"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.http_4xx_response_disabled_major, var.http_4xx_response_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.http_4xx_response_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }

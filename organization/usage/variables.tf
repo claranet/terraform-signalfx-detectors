@@ -131,8 +131,8 @@ variable "containers_ratio_transformation_function" {
   default     = ".mean(over='4w')"
 }
 
-variable "containers_ratio_threshold_warning" {
-  description = "Warning threshold for containers_ratio detector"
+variable "containers_ratio_threshold_major" {
+  description = "Major threshold for containers_ratio detector"
   type        = number
   default     = 100
 }
@@ -157,8 +157,8 @@ variable "custom_metrics_ratio_transformation_function" {
   default     = ".mean(over='4w')"
 }
 
-variable "custom_metrics_ratio_threshold_warning" {
-  description = "Warning threshold for custom_metrics_ratio detector"
+variable "custom_metrics_ratio_threshold_major" {
+  description = "Major threshold for custom_metrics_ratio detector"
   type        = number
   default     = 100
 }

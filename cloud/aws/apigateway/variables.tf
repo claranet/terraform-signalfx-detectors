@@ -70,8 +70,8 @@ variable "latency_disabled_critical" {
   default     = null
 }
 
-variable "latency_disabled_warning" {
-  description = "Disable warning alerting rule for latency detector"
+variable "latency_disabled_major" {
+  description = "Disable major alerting rule for latency detector"
   type        = bool
   default     = null
 }
@@ -112,8 +112,8 @@ variable "latency_threshold_critical" {
   default     = 3000
 }
 
-variable "latency_threshold_warning" {
-  description = "Warning threshold for latency detector"
+variable "latency_threshold_major" {
+  description = "Major threshold for latency detector"
   type        = number
   default     = 1000
 }
@@ -132,8 +132,8 @@ variable "http_5xx_disabled_critical" {
   default     = null
 }
 
-variable "http_5xx_disabled_warning" {
-  description = "Disable warning alerting rule for http_5xx detector"
+variable "http_5xx_disabled_major" {
+  description = "Disable major alerting rule for http_5xx detector"
   type        = bool
   default     = null
 }
@@ -174,8 +174,8 @@ variable "http_5xx_threshold_critical" {
   default     = 10
 }
 
-variable "http_5xx_threshold_warning" {
-  description = "Warning threshold for http_5xx detector"
+variable "http_5xx_threshold_major" {
+  description = "Major threshold for http_5xx detector"
   type        = number
   default     = 5
 }
@@ -194,8 +194,8 @@ variable "http_4xx_disabled_critical" {
   default     = null
 }
 
-variable "http_4xx_disabled_warning" {
-  description = "Disable warning alerting rule for http_4xx detector"
+variable "http_4xx_disabled_major" {
+  description = "Disable major alerting rule for http_4xx detector"
   type        = bool
   default     = null
 }
@@ -236,8 +236,8 @@ variable "http_4xx_threshold_critical" {
   default     = 40
 }
 
-variable "http_4xx_threshold_warning" {
-  description = "Warning threshold for http_4xx detector"
+variable "http_4xx_threshold_major" {
+  description = "Major threshold for http_4xx detector"
   type        = number
   default     = 20
 }

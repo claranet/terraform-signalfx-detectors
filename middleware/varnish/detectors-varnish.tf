@@ -63,24 +63,24 @@ resource "signalfx_detector" "varnish_cache_hit_rate" {
     A = data('varnish.cache_hit', filter=filter('plugin', 'telegraf/varnish') and ${module.filter-tags.filter_custom})${var.varnish_cache_hit_rate_aggregation_function}${var.varnish_cache_hit_rate_transformation_function}.publish('A')
     B = data('varnish.cache_miss', filter=filter('plugin', 'telegraf/varnish') and ${module.filter-tags.filter_custom})${var.varnish_cache_hit_rate_aggregation_function}${var.varnish_cache_hit_rate_transformation_function}.publish('B')
     signal = ((A/(A+B)).fill(0).scale(100)).publish('signal')
-    detect(when(signal < ${var.varnish_cache_hit_rate_threshold_major})).publish('MAJOR')
-    detect(when(signal < ${var.varnish_cache_hit_rate_threshold_warning}) and (signal > ${var.varnish_cache_hit_rate_threshold_major})).publish('WARN')
+    detect(when(signal < ${var.varnish_cache_hit_rate_threshold_minor})).publish('MINOR')
+    detect(when(signal < ${var.varnish_cache_hit_rate_threshold_major}) and (signal > ${var.varnish_cache_hit_rate_threshold_minor})).publish('MAJOR')
 EOF
 
-  rule {
-    description           = "is too low > ${var.varnish_cache_hit_rate_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.varnish_cache_hit_rate_disabled_warning, var.varnish_cache_hit_rate_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.varnish_cache_hit_rate_notifications, "warning", []), var.notifications.warning)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} on {{{dimensions}}}"
-  }
   rule {
     description           = "is too low > ${var.varnish_cache_hit_rate_threshold_major}"
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.varnish_cache_hit_rate_disabled_major, var.varnish_cache_hit_rate_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.varnish_cache_hit_rate_notifications, "major", []), var.notifications.major)
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} on {{{dimensions}}}"
+  }
+  rule {
+    description           = "is too low > ${var.varnish_cache_hit_rate_threshold_minor}"
+    severity              = "Minor"
+    detect_label          = "MINOR"
+    disabled              = coalesce(var.varnish_cache_hit_rate_disabled_minor, var.varnish_cache_hit_rate_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.varnish_cache_hit_rate_notifications, "minor", []), var.notifications.minor)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} on {{{dimensions}}}"
   }
 }
@@ -94,11 +94,11 @@ resource "signalfx_detector" "varnish_memory_usage" {
     B = data('varnish.s0.g_space', filter=filter('plugin', 'telegraf/varnish') and ${module.filter-tags.filter_custom})${var.varnish_memory_usage_aggregation_function}${var.varnish_memory_usage_transformation_function}
     signal = (A / (A+B)).scale(100).fill(0).publish('signal')
     detect(when(signal > ${var.varnish_memory_usage_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.varnish_memory_usage_threshold_warning}) and (signal < ${var.varnish_memory_usage_threshold_critical})).publish('WARN')
+    detect(when(signal > ${var.varnish_memory_usage_threshold_major}) and (signal < ${var.varnish_memory_usage_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
-    description           = "is too low > ${var.varnish_memory_usage_threshold_warning}"
+    description           = "is too low > ${var.varnish_memory_usage_threshold_major}"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.varnish_memory_usage_disabled_critical, var.varnish_memory_usage_disabled, var.detectors_disabled)
@@ -106,11 +106,11 @@ EOF
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} on {{{dimensions}}}"
   }
   rule {
-    description           = "is too low > ${var.varnish_memory_usage_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.varnish_memory_usage_disabled_warning, var.varnish_memory_usage_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.varnish_memory_usage_notifications, "warning", []), var.notifications.warning)
+    description           = "is too low > ${var.varnish_memory_usage_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.varnish_memory_usage_disabled_major, var.varnish_memory_usage_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.varnish_memory_usage_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} on {{{dimensions}}}"
   }
 }

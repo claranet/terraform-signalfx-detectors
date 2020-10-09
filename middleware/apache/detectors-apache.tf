@@ -26,7 +26,7 @@ resource "signalfx_detector" "apache_workers" {
     B = data('apache_idle_workers', ${module.filter-tags.filter_custom})${var.apache_workers_aggregation_function}${var.apache_workers_transformation_function}
     signal = ((A / (A+B)).scale(100)).publish('signal')
     detect(when(signal > ${var.apache_workers_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.apache_workers_threshold_warning}) and when(signal <= ${var.apache_workers_threshold_critical})).publish('WARN')
+    detect(when(signal > ${var.apache_workers_threshold_major}) and when(signal <= ${var.apache_workers_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -39,11 +39,11 @@ EOF
   }
 
   rule {
-    description           = "are too high > ${var.apache_workers_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.apache_workers_disabled_warning, var.apache_workers_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.apache_workers_notifications, "warning", []), var.notifications.warning)
+    description           = "are too high > ${var.apache_workers_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.apache_workers_disabled_major, var.apache_workers_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.apache_workers_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }

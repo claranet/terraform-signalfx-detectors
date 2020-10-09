@@ -26,7 +26,7 @@ resource "signalfx_detector" "mysql_connections" {
     B = data('mysql_max_connections', filter=${module.filter-tags.filter_custom}, rollup='average')${var.mysql_connections_aggregation_function}${var.mysql_connections_transformation_function}
     signal = (A/B).scale(100).publish('signal')
     detect(when(signal > ${var.mysql_connections_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.mysql_connections_threshold_warning}) and when(signal <= ${var.mysql_connections_threshold_critical})).publish('WARN')
+    detect(when(signal > ${var.mysql_connections_threshold_major}) and when(signal <= ${var.mysql_connections_threshold_critical})).publish('MAJOR')
   EOF
 
   rule {
@@ -39,11 +39,11 @@ resource "signalfx_detector" "mysql_connections" {
   }
 
   rule {
-    description           = "is too high > ${var.mysql_connections_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.mysql_connections_disabled_warning, var.mysql_connections_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.mysql_connections_notifications, "warning", []), var.notifications.warning)
+    description           = "is too high > ${var.mysql_connections_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.mysql_connections_disabled_major, var.mysql_connections_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.mysql_connections_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -56,7 +56,7 @@ resource "signalfx_detector" "mysql_slow" {
     B = data('mysql_queries', filter=(not filter('plugin', 'mysql')) and ${module.filter-tags.filter_custom}, rollup='delta')${var.mysql_slow_aggregation_function}${var.mysql_slow_transformation_function}
     signal = (A/B).scale(100).publish('signal')
     detect(when(signal > ${var.mysql_slow_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.mysql_slow_threshold_warning}) and when(signal <= ${var.mysql_slow_threshold_critical})).publish('WARN')
+    detect(when(signal > ${var.mysql_slow_threshold_major}) and when(signal <= ${var.mysql_slow_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -69,11 +69,11 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.mysql_slow_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.mysql_slow_disabled_warning, var.mysql_slow_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.mysql_slow_notifications, "warning", []), var.notifications.warning)
+    description           = "is too high > ${var.mysql_slow_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.mysql_slow_disabled_major, var.mysql_slow_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.mysql_slow_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -85,18 +85,9 @@ resource "signalfx_detector" "mysql_pool_efficiency" {
     A = data('mysql_bpool_counters.reads', filter=filter('plugin', 'mysql') and ${module.filter-tags.filter_custom}, rollup='delta')${var.mysql_pool_efficiency_aggregation_function}${var.mysql_pool_efficiency_transformation_function}
     B = data('mysql_bpool_counters.read_requests', filter=filter('plugin', 'mysql') and ${module.filter-tags.filter_custom}, rollup='delta')${var.mysql_pool_efficiency_aggregation_function}${var.mysql_pool_efficiency_transformation_function}
     signal = (A/B).fill(0).scale(100).publish('signal')
-    detect(when(signal > ${var.mysql_pool_efficiency_threshold_major})).publish('MAJOR')
-    detect(when(signal > ${var.mysql_pool_efficiency_threshold_minor}) and when(signal <= ${var.mysql_pool_efficiency_threshold_major})).publish('MINOR')
+    detect(when(signal > ${var.mysql_pool_efficiency_threshold_minor})).publish('MINOR')
+    detect(when(signal > ${var.mysql_pool_efficiency_threshold_warning}) and when(signal <= ${var.mysql_pool_efficiency_threshold_minor})).publish('WARN')
 EOF
-
-  rule {
-    description           = "is too high > ${var.mysql_pool_efficiency_threshold_major}"
-    severity              = "Major"
-    detect_label          = "MAJOR"
-    disabled              = coalesce(var.mysql_pool_efficiency_disabled_major, var.mysql_pool_efficiency_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.mysql_pool_efficiency_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-  }
 
   rule {
     description           = "is too high > ${var.mysql_pool_efficiency_threshold_minor}"
@@ -104,6 +95,15 @@ EOF
     detect_label          = "MINOR"
     disabled              = coalesce(var.mysql_pool_efficiency_disabled_minor, var.mysql_pool_efficiency_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.mysql_pool_efficiency_notifications, "minor", []), var.notifications.minor)
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+  }
+
+  rule {
+    description           = "is too high > ${var.mysql_pool_efficiency_threshold_warning}"
+    severity              = "Warning"
+    detect_label          = "WARN"
+    disabled              = coalesce(var.mysql_pool_efficiency_disabled_warning, var.mysql_pool_efficiency_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.mysql_pool_efficiency_notifications, "warning", []), var.notifications.warning)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -115,18 +115,9 @@ resource "signalfx_detector" "mysql_pool_utilization" {
     A = data('mysql_bpool_pages.free', filter=filter('plugin', 'mysql') and ${module.filter-tags.filter_custom}, rollup='average')${var.mysql_pool_utilization_aggregation_function}${var.mysql_pool_utilization_transformation_function}
     B = data('mysql_bpool_pages.total', filter=filter('plugin', 'mysql') and ${module.filter-tags.filter_custom}, rollup='average')${var.mysql_pool_utilization_aggregation_function}${var.mysql_pool_utilization_transformation_function}
     signal = ((B-A)/B).scale(100).publish('signal')
-    detect(when(signal > ${var.mysql_pool_utilization_threshold_major})).publish('MAJOR')
-    detect(when(signal > ${var.mysql_pool_utilization_threshold_minor}) and when(signal <= ${var.mysql_pool_utilization_threshold_major})).publish('MINOR')
+    detect(when(signal > ${var.mysql_pool_utilization_threshold_minor})).publish('MINOR')
+    detect(when(signal > ${var.mysql_pool_utilization_threshold_warning}) and when(signal <= ${var.mysql_pool_utilization_threshold_minor})).publish('WARN')
 EOF
-
-  rule {
-    description           = "is too high > ${var.mysql_pool_utilization_threshold_major}"
-    severity              = "Major"
-    detect_label          = "MAJOR"
-    disabled              = coalesce(var.mysql_pool_utilization_disabled_major, var.mysql_pool_utilization_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.mysql_pool_utilization_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-  }
 
   rule {
     description           = "is too high > ${var.mysql_pool_utilization_threshold_minor}"
@@ -134,6 +125,15 @@ EOF
     detect_label          = "MINOR"
     disabled              = coalesce(var.mysql_pool_utilization_disabled_minor, var.mysql_pool_utilization_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.mysql_pool_utilization_notifications, "minor", []), var.notifications.minor)
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+  }
+
+  rule {
+    description           = "is too high > ${var.mysql_pool_utilization_threshold_warning}"
+    severity              = "Warning"
+    detect_label          = "WARN"
+    disabled              = coalesce(var.mysql_pool_utilization_disabled_warning, var.mysql_pool_utilization_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.mysql_pool_utilization_notifications, "warning", []), var.notifications.warning)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -182,7 +182,7 @@ resource "signalfx_detector" "mysql_replication_lag" {
   program_text = <<-EOF
     signal = data('mysql_seconds_behind_master', filter=${module.filter-tags.filter_custom}, rollup='average')${var.mysql_replication_lag_aggregation_function}${var.mysql_replication_lag_transformation_function}.publish('signal')
     detect(when(signal > ${var.mysql_replication_lag_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.mysql_replication_lag_threshold_warning}) and when(signal <= ${var.mysql_replication_lag_threshold_critical})).publish('WARN')
+    detect(when(signal > ${var.mysql_replication_lag_threshold_major}) and when(signal <= ${var.mysql_replication_lag_threshold_critical})).publish('MAJOR')
   EOF
 
   rule {
@@ -195,11 +195,11 @@ resource "signalfx_detector" "mysql_replication_lag" {
   }
 
   rule {
-    description           = "is too high > ${var.mysql_replication_lag_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.mysql_replication_lag_disabled_warning, var.mysql_replication_lag_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.mysql_replication_lag_notifications, "warning", []), var.notifications.warning)
+    description           = "is too high > ${var.mysql_replication_lag_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.mysql_replication_lag_disabled_major, var.mysql_replication_lag_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.mysql_replication_lag_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }

@@ -24,7 +24,7 @@ resource "signalfx_detector" "cpu_utilization" {
   program_text = <<-EOF
     signal = data('CPUUtilization', filter=filter('namespace', 'AWS/ECS') and filter('stat', 'mean') and filter('ServiceName', '*') and ${module.filter-tags.filter_custom}).mean(by=['ServiceName'])${var.cpu_utilization_aggregation_function}${var.cpu_utilization_transformation_function}.publish('signal')
     detect(when(signal > ${var.cpu_utilization_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.cpu_utilization_threshold_warning}) and when(signal <= ${var.cpu_utilization_threshold_critical})).publish('WARN')
+    detect(when(signal > ${var.cpu_utilization_threshold_major}) and when(signal <= ${var.cpu_utilization_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -37,11 +37,11 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.cpu_utilization_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.cpu_utilization_disabled_warning, var.cpu_utilization_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.cpu_utilization_notifications, "warning", []), var.notifications.warning)
+    description           = "is too high > ${var.cpu_utilization_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.cpu_utilization_disabled_major, var.cpu_utilization_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.cpu_utilization_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -52,7 +52,7 @@ resource "signalfx_detector" "memory_utilization" {
   program_text = <<-EOF
     signal = data('Memoryutilization', filter=filter('namespace', 'AWS/ECS') and filter('stat', 'mean') and filter('ServiceName', '*') and ${module.filter-tags.filter_custom}).mean(by=['ServiceName'])${var.memory_utilization_aggregation_function}${var.memory_utilization_transformation_function}.publish('signal')
     detect(when(signal > ${var.memory_utilization_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.memory_utilization_threshold_warning}) and when(signal <= ${var.memory_utilization_threshold_critical})).publish('WARN')
+    detect(when(signal > ${var.memory_utilization_threshold_major}) and when(signal <= ${var.memory_utilization_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -65,11 +65,11 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.memory_utilization_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.memory_utilization_disabled_warning, var.memory_utilization_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.memory_utilization_notifications, "warning", []), var.notifications.warning)
+    description           = "is too high > ${var.memory_utilization_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.memory_utilization_disabled_major, var.memory_utilization_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.memory_utilization_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }

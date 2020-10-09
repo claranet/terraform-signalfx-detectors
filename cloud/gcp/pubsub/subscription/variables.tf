@@ -81,8 +81,8 @@ variable "oldest_unacked_message_disabled_critical" {
   default     = null
 }
 
-variable "oldest_unacked_message_disabled_warning" {
-  description = "Disable warning alerting rule for oldest_unacked_message detector"
+variable "oldest_unacked_message_disabled_major" {
+  description = "Disable major alerting rule for oldest_unacked_message detector"
   type        = bool
   default     = null
 }
@@ -111,8 +111,8 @@ variable "oldest_unacked_message_threshold_critical" {
   default     = 120
 }
 
-variable "oldest_unacked_message_threshold_warning" {
-  description = "Warning threshold for oldest_unacked_message detector"
+variable "oldest_unacked_message_threshold_major" {
+  description = "Major threshold for oldest_unacked_message detector"
   type        = number
   default     = 30
 }
@@ -131,8 +131,8 @@ variable "push_latency_disabled_critical" {
   default     = null
 }
 
-variable "push_latency_disabled_warning" {
-  description = "Disable warning alerting rule for push_latency detector"
+variable "push_latency_disabled_major" {
+  description = "Disable major alerting rule for push_latency detector"
   type        = bool
   default     = null
 }
@@ -161,8 +161,8 @@ variable "push_latency_threshold_critical" {
   default     = 5000000
 }
 
-variable "push_latency_threshold_warning" {
-  description = "Warning threshold for push_latency detector"
+variable "push_latency_threshold_major" {
+  description = "Major threshold for push_latency detector"
   type        = number
   default     = 1000000
 }

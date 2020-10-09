@@ -25,7 +25,7 @@ resource "signalfx_detector" "su_utilization" {
         base_filter = filter('resource_type', 'Microsoft.StreamAnalytics/streamingjobs') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}
         signal = data('ResourceUtilization', filter=base_filter)${var.su_utilization_aggregation_function}.publish('signal')
         detect(when(signal > threshold(${var.su_utilization_threshold_critical}), lasting="${var.su_utilization_timer}")).publish('CRIT')
-        detect(when(signal > threshold(${var.su_utilization_threshold_warning}), lasting="${var.su_utilization_timer}") and when(signal <= ${var.su_utilization_threshold_critical})).publish('WARN')
+        detect(when(signal > threshold(${var.su_utilization_threshold_major}), lasting="${var.su_utilization_timer}") and when(signal <= ${var.su_utilization_threshold_critical})).publish('MAJOR')
     EOF
 
   rule {
@@ -38,11 +38,11 @@ resource "signalfx_detector" "su_utilization" {
   }
 
   rule {
-    description           = "is too high > ${var.su_utilization_threshold_warning}%"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.su_utilization_disabled_warning, var.su_utilization_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.su_utilization_notifications, "warning", []), var.notifications.warning)
+    description           = "is too high > ${var.su_utilization_threshold_major}%"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.su_utilization_disabled_major, var.su_utilization_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.su_utilization_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -56,7 +56,7 @@ resource "signalfx_detector" "failed_function_requests" {
         B = data('AMLCalloutRequests', extrapolation='zero', filter=base_filter)${var.failed_function_requests_aggregation_function}
         signal = (A/B).scale(100).fill(0).publish('signal')
         detect(when(signal > threshold(${var.failed_function_requests_threshold_critical}), lasting="${var.failed_function_requests_timer}")).publish('CRIT')
-        detect(when(signal > threshold(${var.failed_function_requests_threshold_warning}), lasting="${var.failed_function_requests_timer}") and when(signal <= ${var.failed_function_requests_threshold_critical})).publish('WARN')
+        detect(when(signal > threshold(${var.failed_function_requests_threshold_major}), lasting="${var.failed_function_requests_timer}") and when(signal <= ${var.failed_function_requests_threshold_critical})).publish('MAJOR')
     EOF
 
   rule {
@@ -69,11 +69,11 @@ resource "signalfx_detector" "failed_function_requests" {
   }
 
   rule {
-    description           = "is too high > ${var.failed_function_requests_threshold_warning}%"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.failed_function_requests_disabled_warning, var.failed_function_requests_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.failed_function_requests_notifications, "warning", []), var.notifications.warning)
+    description           = "is too high > ${var.failed_function_requests_threshold_major}%"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.failed_function_requests_disabled_major, var.failed_function_requests_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.failed_function_requests_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -85,7 +85,7 @@ resource "signalfx_detector" "conversion_errors" {
         base_filter = filter('resource_type', 'Microsoft.StreamAnalytics/streamingjobs') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}
         signal = data('ConversionErrors', filter=base_filter)${var.conversion_errors_aggregation_function}. publish('signal')
         detect(when(signal > threshold(${var.conversion_errors_threshold_critical}), lasting="${var.conversion_errors_timer}")).publish('CRIT')
-        detect(when(signal > threshold(${var.conversion_errors_threshold_warning}), lasting="${var.conversion_errors_timer}") and when(signal <= ${var.conversion_errors_threshold_critical})).publish('WARN')
+        detect(when(signal > threshold(${var.conversion_errors_threshold_major}), lasting="${var.conversion_errors_timer}") and when(signal <= ${var.conversion_errors_threshold_critical})).publish('MAJOR')
     EOF
 
   rule {
@@ -98,11 +98,11 @@ resource "signalfx_detector" "conversion_errors" {
   }
 
   rule {
-    description           = "is too high > ${var.conversion_errors_threshold_warning}%"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.conversion_errors_disabled_warning, var.conversion_errors_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.conversion_errors_notifications, "warning", []), var.notifications.warning)
+    description           = "is too high > ${var.conversion_errors_threshold_major}%"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.conversion_errors_disabled_major, var.conversion_errors_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.conversion_errors_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -114,7 +114,7 @@ resource "signalfx_detector" "runtime_errors" {
         base_filter = filter('resource_type', 'Microsoft.StreamAnalytics/streamingjobs') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}
         signal = data('Errors', filter=base_filter)${var.runtime_errors_aggregation_function}.publish('signal')
         detect(when(signal > threshold(${var.runtime_errors_threshold_critical}), lasting="${var.runtime_errors_timer}")).publish('CRIT')
-        detect(when(signal > threshold(${var.runtime_errors_threshold_warning}), lasting="${var.runtime_errors_timer}") and when(signal <= ${var.runtime_errors_threshold_critical})).publish('WARN')
+        detect(when(signal > threshold(${var.runtime_errors_threshold_major}), lasting="${var.runtime_errors_timer}") and when(signal <= ${var.runtime_errors_threshold_critical})).publish('MAJOR')
     EOF
 
   rule {
@@ -127,11 +127,11 @@ resource "signalfx_detector" "runtime_errors" {
   }
 
   rule {
-    description           = "is too high > ${var.runtime_errors_threshold_warning}%"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.runtime_errors_disabled_warning, var.runtime_errors_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.runtime_errors_notifications, "warning", []), var.notifications.warning)
+    description           = "is too high > ${var.runtime_errors_threshold_major}%"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.runtime_errors_disabled_major, var.runtime_errors_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.runtime_errors_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }

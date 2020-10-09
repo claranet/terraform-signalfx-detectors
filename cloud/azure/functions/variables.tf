@@ -76,8 +76,8 @@ variable "http_5xx_errors_rate_disabled_critical" {
   default     = null
 }
 
-variable "http_5xx_errors_rate_disabled_warning" {
-  description = "Disable warning alerting rule for http_5xx_errors_rate detector"
+variable "http_5xx_errors_rate_disabled_major" {
+  description = "Disable major alerting rule for http_5xx_errors_rate detector"
   type        = bool
   default     = null
 }
@@ -106,8 +106,8 @@ variable "http_5xx_errors_rate_threshold_critical" {
   default     = 20
 }
 
-variable "http_5xx_errors_rate_threshold_warning" {
-  description = "Warning threshold for http_5xx_errors_rate detector"
+variable "http_5xx_errors_rate_threshold_major" {
+  description = "Major threshold for http_5xx_errors_rate detector"
   type        = number
   default     = 10
 }
@@ -126,8 +126,8 @@ variable "high_connections_count_disabled_critical" {
   default     = null
 }
 
-variable "high_connections_count_disabled_warning" {
-  description = "Disable warning alerting rule for high_connections_count detector"
+variable "high_connections_count_disabled_major" {
+  description = "Disable major alerting rule for high_connections_count detector"
   type        = bool
   default     = null
 }
@@ -156,8 +156,8 @@ variable "high_connections_count_threshold_critical" {
   default     = 590
 }
 
-variable "high_connections_count_threshold_warning" {
-  description = "Warning threshold for high_connections_count detector"
+variable "high_connections_count_threshold_major" {
+  description = "Major threshold for high_connections_count detector"
   type        = number
   default     = 550
 }
@@ -176,8 +176,8 @@ variable "high_threads_count_disabled_critical" {
   default     = null
 }
 
-variable "high_threads_count_disabled_warning" {
-  description = "Disable warning alerting rule for high_threads_count detector"
+variable "high_threads_count_disabled_major" {
+  description = "Disable major alerting rule for high_threads_count detector"
   type        = bool
   default     = null
 }
@@ -206,8 +206,8 @@ variable "high_threads_count_threshold_critical" {
   default     = 510
 }
 
-variable "high_threads_count_threshold_warning" {
-  description = "Warning threshold for high_threads_count detector"
+variable "high_threads_count_threshold_major" {
+  description = "Major threshold for high_threads_count detector"
   type        = number
   default     = 490
 }

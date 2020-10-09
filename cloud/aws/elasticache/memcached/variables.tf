@@ -58,8 +58,8 @@ variable "hit_ratio_disabled_critical" {
   default     = null
 }
 
-variable "hit_ratio_disabled_warning" {
-  description = "Disable warning alerting rule for hit_ratio detector"
+variable "hit_ratio_disabled_major" {
+  description = "Disable major alerting rule for hit_ratio detector"
   type        = bool
   default     = null
 }
@@ -100,8 +100,8 @@ variable "hit_ratio_threshold_critical" {
   default     = 60
 }
 
-variable "hit_ratio_threshold_warning" {
-  description = "Warning threshold for hit_ratio detector"
+variable "hit_ratio_threshold_major" {
+  description = "Major threshold for hit_ratio detector"
   type        = number
   default     = 80
 }
@@ -120,8 +120,8 @@ variable "cpu_disabled_critical" {
   default     = null
 }
 
-variable "cpu_disabled_warning" {
-  description = "Disable warning alerting rule for httpcode 5xx erros detector"
+variable "cpu_disabled_major" {
+  description = "Disable major alerting rule for httpcode 5xx erros detector"
   type        = bool
   default     = null
 }
@@ -150,8 +150,8 @@ variable "cpu_threshold_critical" {
   default     = 90
 }
 
-variable "cpu_threshold_warning" {
-  description = "Warning threshold for cpu detector"
+variable "cpu_threshold_major" {
+  description = "Major threshold for cpu detector"
   type        = number
   default     = 75
 }

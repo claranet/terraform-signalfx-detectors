@@ -58,8 +58,8 @@ variable "search_latency_disabled_critical" {
   default     = null
 }
 
-variable "search_latency_disabled_warning" {
-  description = "Disable warning alerting rule for search_latency detector"
+variable "search_latency_disabled_major" {
+  description = "Disable major alerting rule for search_latency detector"
   type        = bool
   default     = null
 }
@@ -88,8 +88,8 @@ variable "search_latency_threshold_critical" {
   default     = 4
 }
 
-variable "search_latency_threshold_warning" {
-  description = "Warning threshold for search_latency detector"
+variable "search_latency_threshold_major" {
+  description = "Major threshold for search_latency detector"
   type        = number
   default     = 2
 }
@@ -108,8 +108,8 @@ variable "search_throttled_queries_rate_disabled_critical" {
   default     = null
 }
 
-variable "search_throttled_queries_rate_disabled_warning" {
-  description = "Disable warning alerting rule for search_throttled_queries_rate detector"
+variable "search_throttled_queries_rate_disabled_major" {
+  description = "Disable major alerting rule for search_throttled_queries_rate detector"
   type        = bool
   default     = null
 }
@@ -138,8 +138,8 @@ variable "search_throttled_queries_rate_threshold_critical" {
   default     = 50
 }
 
-variable "search_throttled_queries_rate_threshold_warning" {
-  description = "Warning threshold for search_throttled_queries_rate detector"
+variable "search_throttled_queries_rate_threshold_major" {
+  description = "Major threshold for search_throttled_queries_rate detector"
   type        = number
   default     = 20
 }

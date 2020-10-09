@@ -7,7 +7,7 @@ resource "signalfx_detector" "api_result" {
         B = data('ServiceApiResult', extrapolation="zero", filter=base_filter and ${module.filter-tags.filter_custom})${var.api_result_aggregation_function}
         signal = (A/B).scale(100).fill(100).publish('signal')
         detect(when(signal < threshold(${var.api_result_threshold_critical}), lasting="${var.api_result_timer}")).publish('CRIT')
-        detect(when(signal < threshold(${var.api_result_threshold_warning}), lasting="${var.api_result_timer}") and when(signal >= ${var.api_result_threshold_critical})).publish('WARN')
+        detect(when(signal < threshold(${var.api_result_threshold_major}), lasting="${var.api_result_timer}") and when(signal >= ${var.api_result_threshold_critical})).publish('MAJOR')
     EOF
 
   rule {
@@ -20,11 +20,11 @@ resource "signalfx_detector" "api_result" {
   }
 
   rule {
-    description           = "is too low < ${var.api_result_threshold_warning}%"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.api_result_disabled_warning, var.api_result_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.api_result_notifications, "warning", []), var.notifications.warning)
+    description           = "is too low < ${var.api_result_threshold_major}%"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.api_result_disabled_major, var.api_result_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.api_result_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -36,7 +36,7 @@ resource "signalfx_detector" "api_latency" {
         base_filter = filter('resource_type', 'Microsoft.KeyVault/vaults') and filter('primary_aggregation_type', 'true')
         signal = data('ServiceApiLatency', extrapolation="zero", filter=base_filter and not filter('activityname', 'secretlist') and ${module.filter-tags.filter_custom})${var.api_latency_aggregation_function}.publish('signal')
         detect(when(signal > threshold(${var.api_latency_threshold_critical}), lasting="${var.api_latency_timer}")).publish('CRIT')
-        detect(when(signal > threshold(${var.api_latency_threshold_warning}), lasting="${var.api_latency_timer}") and when(signal <= ${var.api_latency_threshold_critical})).publish('WARN')
+        detect(when(signal > threshold(${var.api_latency_threshold_major}), lasting="${var.api_latency_timer}") and when(signal <= ${var.api_latency_threshold_critical})).publish('MAJOR')
     EOF
 
   rule {
@@ -49,11 +49,11 @@ resource "signalfx_detector" "api_latency" {
   }
 
   rule {
-    description           = "is too high > ${var.api_latency_threshold_warning}ms"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.api_latency_disabled_warning, var.api_latency_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.api_latency_notifications, "warning", []), var.notifications.warning)
+    description           = "is too high > ${var.api_latency_threshold_major}ms"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.api_latency_disabled_major, var.api_latency_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.api_latency_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }

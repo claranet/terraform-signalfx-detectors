@@ -76,8 +76,8 @@ variable "evictions_disabled_critical" {
   default     = null
 }
 
-variable "evictions_disabled_warning" {
-  description = "Disable warning alerting rule for evictions detector"
+variable "evictions_disabled_major" {
+  description = "Disable major alerting rule for evictions detector"
   type        = bool
   default     = null
 }
@@ -106,8 +106,8 @@ variable "evictions_threshold_critical" {
   default     = 30
 }
 
-variable "evictions_threshold_warning" {
-  description = "Warning threshold for evictions detector"
+variable "evictions_threshold_major" {
+  description = "Major threshold for evictions detector"
   type        = number
   default     = 0
 }
@@ -202,8 +202,8 @@ variable "swap_disabled_critical" {
   default     = null
 }
 
-variable "swap_disabled_warning" {
-  description = "Disable warning alerting rule for swap detector"
+variable "swap_disabled_major" {
+  description = "Disable major alerting rule for swap detector"
   type        = bool
   default     = null
 }
@@ -232,8 +232,8 @@ variable "swap_threshold_critical" {
   default     = 50000000
 }
 
-variable "swap_threshold_warning" {
-  description = "Warning threshold for swap detector"
+variable "swap_threshold_major" {
+  description = "Major threshold for swap detector"
   type        = number
   default     = 0
 }
@@ -252,8 +252,8 @@ variable "free_memory_disabled_critical" {
   default     = null
 }
 
-variable "free_memory_disabled_warning" {
-  description = "Disable warning alerting rule for free_memory detector"
+variable "free_memory_disabled_major" {
+  description = "Disable major alerting rule for free_memory detector"
   type        = bool
   default     = null
 }
@@ -282,8 +282,8 @@ variable "free_memory_threshold_critical" {
   default     = -70
 }
 
-variable "free_memory_threshold_warning" {
-  description = "Warning threshold for free_memory detector"
+variable "free_memory_threshold_major" {
+  description = "Major threshold for free_memory detector"
   type        = number
   default     = -50
 }
@@ -302,8 +302,8 @@ variable "evictions_growing_disabled_critical" {
   default     = null
 }
 
-variable "evictions_growing_disabled_warning" {
-  description = "Disable warning alerting rule for evictions_growing detector"
+variable "evictions_growing_disabled_major" {
+  description = "Disable major alerting rule for evictions_growing detector"
   type        = bool
   default     = null
 }
@@ -332,8 +332,8 @@ variable "evictions_growing_threshold_critical" {
   default     = 30
 }
 
-variable "evictions_growing_threshold_warning" {
-  description = "Warning threshold for evictions_growing detector"
+variable "evictions_growing_threshold_major" {
+  description = "Major threshold for evictions_growing detector"
   type        = number
   default     = 10
 }

@@ -25,7 +25,7 @@ resource "signalfx_detector" "no_healthy_instances" {
     B = data('UnHealthyHostCount', filter=filter('namespace', 'AWS/NetworkELB') and filter('stat', 'upper') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom})${var.no_healthy_instances_aggregation_function}${var.no_healthy_instances_transformation_function}
     signal = (A / (A+B)).scale(100).publish('signal')
     detect(when(signal < ${var.no_healthy_instances_threshold_critical})).publish('CRIT')
-    detect(when(signal < ${var.no_healthy_instances_threshold_warning}) and when(signal >= ${var.no_healthy_instances_threshold_critical})).publish('WARN')
+    detect(when(signal < ${var.no_healthy_instances_threshold_major}) and when(signal >= ${var.no_healthy_instances_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -38,11 +38,11 @@ EOF
   }
 
   rule {
-    description           = "is below nominal capacity < ${var.no_healthy_instances_threshold_warning}%"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.no_healthy_instances_disabled_warning, var.no_healthy_instances_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.no_healthy_instances_notifications, "warning", []), var.notifications.warning)
+    description           = "is below nominal capacity < ${var.no_healthy_instances_threshold_major}%"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.no_healthy_instances_disabled_major, var.no_healthy_instances_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.no_healthy_instances_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }

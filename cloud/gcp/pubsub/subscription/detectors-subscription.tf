@@ -23,7 +23,7 @@ resource "signalfx_detector" "oldest_unacked_message" {
   program_text = <<-EOF
     signal = data('subscription/oldest_unacked_message_age', filter=filter('monitored_resource', 'pubsub_subscription') and ${module.filter-tags.filter_custom})${var.oldest_unacked_message_aggregation_function}${var.oldest_unacked_message_transformation_function}.publish('signal')
     detect(when(signal >= ${var.oldest_unacked_message_threshold_critical})).publish('CRIT')
-    detect(when(signal >= ${var.oldest_unacked_message_threshold_warning}) and when(signal < ${var.oldest_unacked_message_threshold_critical})).publish('WARN')
+    detect(when(signal >= ${var.oldest_unacked_message_threshold_major}) and when(signal < ${var.oldest_unacked_message_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -36,11 +36,11 @@ EOF
   }
 
   rule {
-    description           = "is too old >= ${var.oldest_unacked_message_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.oldest_unacked_message_disabled_warning, var.oldest_unacked_message_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.oldest_unacked_message_notifications, "warning", []), var.notifications.warning)
+    description           = "is too old >= ${var.oldest_unacked_message_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.oldest_unacked_message_disabled_major, var.oldest_unacked_message_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.oldest_unacked_message_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -51,7 +51,7 @@ resource "signalfx_detector" "push_latency" {
   program_text = <<-EOF
     signal = data('subscription/push_request_latencies', filter=filter('monitored_resource', 'pubsub_subscription') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='average')${var.push_latency_aggregation_function}${var.push_latency_transformation_function}.publish('signal')
     detect(when(signal >= ${var.push_latency_threshold_critical})).publish('CRIT')
-    detect(when(signal >= ${var.push_latency_threshold_warning}) and when(signal < ${var.push_latency_threshold_critical})).publish('WARN')
+    detect(when(signal >= ${var.push_latency_threshold_major}) and when(signal < ${var.push_latency_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -64,11 +64,11 @@ EOF
   }
 
   rule {
-    description           = "is too high >= ${var.push_latency_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.push_latency_disabled_warning, var.push_latency_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.push_latency_notifications, "warning", []), var.notifications.warning)
+    description           = "is too high >= ${var.push_latency_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.push_latency_disabled_major, var.push_latency_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.push_latency_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }

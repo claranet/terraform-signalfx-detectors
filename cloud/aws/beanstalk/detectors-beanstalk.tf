@@ -23,7 +23,7 @@ resource "signalfx_detector" "health" {
   program_text = <<-EOF
     signal = data('EnvironmentHealth', filter=filter('namespace', 'AWS/ElasticBeanstalk') and filter('stat', 'upper') and ${module.filter-tags.filter_custom})${var.health_aggregation_function}${var.health_transformation_function}.publish('signal')
     detect(when(signal >= ${var.health_threshold_critical})).publish('CRIT')
-    detect(when(signal >= ${var.health_threshold_warning}) and when(signal < ${var.health_threshold_critical})).publish('WARN')
+    detect(when(signal >= ${var.health_threshold_major}) and when(signal < ${var.health_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -36,11 +36,11 @@ EOF
   }
 
   rule {
-    description           = "is too high >= ${var.health_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.health_disabled_warning, var.health_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.health_notifications, "warning", []), var.notifications.warning)
+    description           = "is too high >= ${var.health_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.health_disabled_major, var.health_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.health_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -51,7 +51,7 @@ resource "signalfx_detector" "latency_p90" {
   program_text = <<-EOF
     signal = data('ApplicationLatencyP90', filter=filter('namespace', 'AWS/ElasticBeanstalk') and filter('stat', 'lower') and (not filter('InstanceId', '*')) and ${module.filter-tags.filter_custom})${var.latency_p90_aggregation_function}${var.latency_p90_transformation_function}.publish('signal')
     detect(when(signal >= ${var.latency_p90_threshold_critical})).publish('CRIT')
-    detect(when(signal >= ${var.latency_p90_threshold_warning}) and when(signal < ${var.latency_p90_threshold_critical})).publish('WARN')
+    detect(when(signal >= ${var.latency_p90_threshold_major}) and when(signal < ${var.latency_p90_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -64,11 +64,11 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.latency_p90_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.latency_p90_disabled_warning, var.latency_p90_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.latency_p90_notifications, "warning", []), var.notifications.warning)
+    description           = "is too high > ${var.latency_p90_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.latency_p90_disabled_major, var.latency_p90_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.latency_p90_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -81,7 +81,7 @@ resource "signalfx_detector" "app_5xx_error_rate" {
     B = data('ApplicationRequestsTotal', filter=filter('namespace', 'AWS/ElasticBeanstalk') and filter('stat', 'sum') and (not filter('InstanceId', '*')) and ${module.filter-tags.filter_custom})${var.app_5xx_error_rate_aggregation_function}${var.app_5xx_error_rate_transformation_function}
     signal = (A/B).scale(100).publish('signal')
     detect(when(signal > ${var.app_5xx_error_rate_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.app_5xx_error_rate_threshold_warning}) and when(signal <= ${var.app_5xx_error_rate_threshold_critical})).publish('WARN')
+    detect(when(signal > ${var.app_5xx_error_rate_threshold_major}) and when(signal <= ${var.app_5xx_error_rate_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -94,11 +94,11 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.app_5xx_error_rate_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.app_5xx_error_rate_disabled_warning, var.app_5xx_error_rate_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.app_5xx_error_rate_notifications, "warning", []), var.notifications.warning)
+    description           = "is too high > ${var.app_5xx_error_rate_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.app_5xx_error_rate_disabled_major, var.app_5xx_error_rate_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.app_5xx_error_rate_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
@@ -110,7 +110,7 @@ resource "signalfx_detector" "root_filesystem_usage" {
   program_text = <<-EOF
     signal = data('RootFilesystemUtil', filter=filter('namespace', 'AWS/ElasticBeanstalk') and filter('stat', 'lower') and (not filter('InstanceId', '*')) and ${module.filter-tags.filter_custom})${var.root_filesystem_usage_aggregation_function}${var.root_filesystem_usage_transformation_function}.publish('signal')
     detect(when(signal > ${var.root_filesystem_usage_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.root_filesystem_usage_threshold_warning}) and when(signal <= ${var.root_filesystem_usage_threshold_critical})).publish('WARN')
+    detect(when(signal > ${var.root_filesystem_usage_threshold_major}) and when(signal <= ${var.root_filesystem_usage_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -123,11 +123,11 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.root_filesystem_usage_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.root_filesystem_usage_disabled_warning, var.root_filesystem_usage_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.root_filesystem_usage_notifications, "warning", []), var.notifications.warning)
+    description           = "is too high > ${var.root_filesystem_usage_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.root_filesystem_usage_disabled_major, var.root_filesystem_usage_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.root_filesystem_usage_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }

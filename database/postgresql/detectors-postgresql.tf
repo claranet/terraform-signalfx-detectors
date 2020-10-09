@@ -23,18 +23,9 @@ resource "signalfx_detector" "deadlocks" {
 
   program_text = <<-EOF
     signal = data('postgres_deadlocks', filter=${module.filter-tags.filter_custom}, rollup='delta')${var.deadlocks_aggregation_function}${var.deadlocks_transformation_function}.publish('signal')
-    detect(when(signal > ${var.deadlocks_threshold_warning})).publish('WARN')
-    detect(when(signal > ${var.deadlocks_threshold_major}) and when(signal <= ${var.deadlocks_threshold_warning})).publish('MAJOR')
+    detect(when(signal > ${var.deadlocks_threshold_major})).publish('MAJOR')
+    detect(when(signal > ${var.deadlocks_threshold_minor}) and when(signal <= ${var.deadlocks_threshold_major})).publish('MINOR')
 EOF
-
-  rule {
-    description           = "are too high > ${var.deadlocks_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.deadlocks_disabled_warning, var.deadlocks_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.deadlocks_notifications, "warning", []), var.notifications.warning)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-  }
 
   rule {
     description           = "are too high > ${var.deadlocks_threshold_major}"
@@ -44,6 +35,15 @@ EOF
     notifications         = coalescelist(lookup(var.deadlocks_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
+
+  rule {
+    description           = "are too high > ${var.deadlocks_threshold_minor}"
+    severity              = "Minor"
+    detect_label          = "MINOR"
+    disabled              = coalesce(var.deadlocks_disabled_minor, var.deadlocks_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.deadlocks_notifications, "minor", []), var.notifications.minor)
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+  }
 }
 
 resource "signalfx_detector" "hit_ratio" {
@@ -51,25 +51,25 @@ resource "signalfx_detector" "hit_ratio" {
 
   program_text = <<-EOF
     signal = data('postgres_block_hit_ratio', filter=(not filter('index', '*')) and (not filter('schemaname', '*')) and (not filter('type', '*')) and (not filter('table', '*')) and ${module.filter-tags.filter_custom}, rollup='average').scale(100)${var.hit_ratio_aggregation_function}${var.hit_ratio_transformation_function}.publish('signal')
-    detect(when(signal < ${var.hit_ratio_threshold_major})).publish('MAJOR')
-    detect(when(signal < ${var.hit_ratio_threshold_minor}) and when(signal >= ${var.hit_ratio_threshold_major})).publish('MINOR')
+    detect(when(signal < ${var.hit_ratio_threshold_minor})).publish('MINOR')
+    detect(when(signal < ${var.hit_ratio_threshold_warning}) and when(signal >= ${var.hit_ratio_threshold_minor})).publish('WARN')
 EOF
 
   rule {
-    description           = "is too low < ${var.hit_ratio_threshold_major}"
-    severity              = "Major"
-    detect_label          = "MAJOR"
-    disabled              = coalesce(var.hit_ratio_disabled_major, var.hit_ratio_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.hit_ratio_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-  }
-
-  rule {
-    description           = "is too low > ${var.hit_ratio_threshold_minor}"
+    description           = "is too low < ${var.hit_ratio_threshold_minor}"
     severity              = "Minor"
     detect_label          = "MINOR"
     disabled              = coalesce(var.hit_ratio_disabled_minor, var.hit_ratio_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.hit_ratio_notifications, "minor", []), var.notifications.minor)
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+  }
+
+  rule {
+    description           = "is too low > ${var.hit_ratio_threshold_warning}"
+    severity              = "Warning"
+    detect_label          = "WARN"
+    disabled              = coalesce(var.hit_ratio_disabled_warning, var.hit_ratio_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.hit_ratio_notifications, "warning", []), var.notifications.warning)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -81,18 +81,9 @@ resource "signalfx_detector" "rollbacks" {
     A = data('postgres_xact_rollbacks', filter=${module.filter-tags.filter_custom}, rollup='delta')${var.rollbacks_aggregation_function}${var.rollbacks_transformation_function}
     B = data('postgres_xact_commits', filter=${module.filter-tags.filter_custom}, rollup='delta')${var.rollbacks_aggregation_function}${var.rollbacks_transformation_function}
     signal = (A/B).scale(100).publish('signal')
-    detect(when(signal > ${var.rollbacks_threshold_warning})).publish('WARN')
-    detect(when(signal > ${var.rollbacks_threshold_major}) and when(signal <= ${var.rollbacks_threshold_warning})).publish('MAJOR')
+    detect(when(signal > ${var.rollbacks_threshold_major})).publish('MAJOR')
+    detect(when(signal > ${var.rollbacks_threshold_minor}) and when(signal <= ${var.rollbacks_threshold_major})).publish('MINOR')
 EOF
-
-  rule {
-    description           = "is too high > ${var.rollbacks_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.rollbacks_disabled_warning, var.rollbacks_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.rollbacks_notifications, "warning", []), var.notifications.warning)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-  }
 
   rule {
     description           = "is too high > ${var.rollbacks_threshold_major}"
@@ -102,6 +93,15 @@ EOF
     notifications         = coalescelist(lookup(var.rollbacks_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
+
+  rule {
+    description           = "is too high > ${var.rollbacks_threshold_minor}"
+    severity              = "Minor"
+    detect_label          = "MINOR"
+    disabled              = coalesce(var.rollbacks_disabled_minor, var.rollbacks_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.rollbacks_notifications, "minor", []), var.notifications.minor)
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+  }
 }
 
 resource "signalfx_detector" "conflicts" {
@@ -109,18 +109,9 @@ resource "signalfx_detector" "conflicts" {
 
   program_text = <<-EOF
     signal = data('postgres_conflicts', filter=${module.filter-tags.filter_custom}, rollup='average')${var.conflicts_aggregation_function}${var.conflicts_transformation_function}.publish('signal')
-    detect(when(signal > ${var.conflicts_threshold_warning})).publish('WARN')
-    detect(when(signal > ${var.conflicts_threshold_major}) and when(signal <= ${var.conflicts_threshold_warning})).publish('MAJOR')
+    detect(when(signal > ${var.conflicts_threshold_major})).publish('MAJOR')
+    detect(when(signal > ${var.conflicts_threshold_minor}) and when(signal <= ${var.conflicts_threshold_major})).publish('MINOR')
 EOF
-
-  rule {
-    description           = "are too high > ${var.conflicts_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.conflicts_disabled_warning, var.conflicts_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.conflicts_notifications, "warning", []), var.notifications.warning)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-  }
 
   rule {
     description           = "are too high > ${var.conflicts_threshold_major}"
@@ -128,6 +119,15 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.conflicts_disabled_major, var.conflicts_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.conflicts_notifications, "major", []), var.notifications.major)
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+  }
+
+  rule {
+    description           = "are too high > ${var.conflicts_threshold_minor}"
+    severity              = "Minor"
+    detect_label          = "MINOR"
+    disabled              = coalesce(var.conflicts_disabled_minor, var.conflicts_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.conflicts_notifications, "minor", []), var.notifications.minor)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -138,7 +138,7 @@ resource "signalfx_detector" "max_connections" {
   program_text = <<-EOF
     signal = data('postgres_pct_connections', filter=${module.filter-tags.filter_custom}, rollup='average').scale(100)${var.max_connections_aggregation_function}${var.max_connections_transformation_function}.publish('signal')
     detect(when(signal > ${var.max_connections_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.max_connections_threshold_warning}) and when(signal <= ${var.max_connections_threshold_critical})).publish('WARN')
+    detect(when(signal > ${var.max_connections_threshold_major}) and when(signal <= ${var.max_connections_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -151,11 +151,11 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.max_connections_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.max_connections_disabled_warning, var.max_connections_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.max_connections_notifications, "warning", []), var.notifications.warning)
+    description           = "is too high > ${var.max_connections_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.max_connections_disabled_major, var.max_connections_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.max_connections_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
@@ -166,7 +166,7 @@ resource "signalfx_detector" "replication_lag" {
   program_text = <<-EOF
     signal = data('postgres_replication_lag', filter=${module.filter-tags.filter_custom}, rollup='average')${var.replication_lag_aggregation_function}${var.replication_lag_transformation_function}.publish('signal')
     detect(when(signal > ${var.replication_lag_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.replication_lag_threshold_warning}) and when(signal <= ${var.replication_lag_threshold_critical})).publish('WARN')
+    detect(when(signal > ${var.replication_lag_threshold_major}) and when(signal <= ${var.replication_lag_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -179,11 +179,11 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.replication_lag_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.replication_lag_disabled_warning, var.replication_lag_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.replication_lag_notifications, "warning", []), var.notifications.warning)
+    description           = "is too high > ${var.replication_lag_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.replication_lag_disabled_major, var.replication_lag_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.replication_lag_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }

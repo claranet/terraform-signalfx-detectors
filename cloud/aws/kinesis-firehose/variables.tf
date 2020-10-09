@@ -76,8 +76,8 @@ variable "incoming_records_disabled_critical" {
   default     = null
 }
 
-variable "incoming_records_disabled_warning" {
-  description = "Disable warning alerting rule for incoming_records detector"
+variable "incoming_records_disabled_major" {
+  description = "Disable major alerting rule for incoming_records detector"
   type        = bool
   default     = null
 }
@@ -106,8 +106,8 @@ variable "incoming_records_threshold_critical" {
   default     = 0
 }
 
-variable "incoming_records_threshold_warning" {
-  description = "Warning threshold for incoming_records detector"
+variable "incoming_records_threshold_major" {
+  description = "Major threshold for incoming_records detector"
   type        = number
   default     = 1
 }

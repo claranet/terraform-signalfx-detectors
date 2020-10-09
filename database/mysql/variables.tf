@@ -76,8 +76,8 @@ variable "mysql_connections_disabled_critical" {
   default     = null
 }
 
-variable "mysql_connections_disabled_warning" {
-  description = "Disable warning alerting rule for mysql_connection detector"
+variable "mysql_connections_disabled_major" {
+  description = "Disable major alerting rule for mysql_connection detector"
   type        = bool
   default     = null
 }
@@ -106,8 +106,8 @@ variable "mysql_connections_threshold_critical" {
   default     = 90
 }
 
-variable "mysql_connections_threshold_warning" {
-  description = "Warning threshold for mysql_connection detector"
+variable "mysql_connections_threshold_major" {
+  description = "Major threshold for mysql_connection detector"
   type        = number
   default     = 70
 }
@@ -120,14 +120,14 @@ variable "mysql_pool_efficiency_disabled" {
   default     = null
 }
 
-variable "mysql_pool_efficiency_disabled_major" {
-  description = "Disable major alerting rule for mysql_pool_efficiency detector"
+variable "mysql_pool_efficiency_disabled_minor" {
+  description = "Disable minor alerting rule for mysql_pool_efficiency detector"
   type        = bool
   default     = null
 }
 
-variable "mysql_pool_efficiency_disabled_minor" {
-  description = "Disable minor alerting rule for mysql_pool_efficiency detector"
+variable "mysql_pool_efficiency_disabled_warning" {
+  description = "Disable warning alerting rule for mysql_pool_efficiency detector"
   type        = bool
   default     = null
 }
@@ -150,14 +150,14 @@ variable "mysql_pool_efficiency_transformation_function" {
   default     = ".min(over='1h')"
 }
 
-variable "mysql_pool_efficiency_threshold_major" {
-  description = "major threshold for mysql_pool_efficiency detector"
+variable "mysql_pool_efficiency_threshold_minor" {
+  description = "minor threshold for mysql_pool_efficiency detector"
   type        = number
   default     = 30
 }
 
-variable "mysql_pool_efficiency_threshold_minor" {
-  description = "minor threshold for mysql_pool_efficiency detector"
+variable "mysql_pool_efficiency_threshold_warning" {
+  description = "warning threshold for mysql_pool_efficiency detector"
   type        = number
   default     = 20
 }
@@ -170,14 +170,14 @@ variable "mysql_pool_utilization_disabled" {
   default     = null
 }
 
-variable "mysql_pool_utilization_disabled_major" {
-  description = "Disable major alerting rule for mysql_pool_utilization detector"
+variable "mysql_pool_utilization_disabled_minor" {
+  description = "Disable minor alerting rule for mysql_pool_utilization detector"
   type        = bool
   default     = null
 }
 
-variable "mysql_pool_utilization_disabled_minor" {
-  description = "Disable minor alerting rule for mysql_pool_utilization detector"
+variable "mysql_pool_utilization_disabled_warning" {
+  description = "Disable warning alerting rule for mysql_pool_utilization detector"
   type        = bool
   default     = null
 }
@@ -200,14 +200,14 @@ variable "mysql_pool_utilization_transformation_function" {
   default     = ".min(over='1h')"
 }
 
-variable "mysql_pool_utilization_threshold_major" {
-  description = "major threshold for mysql_pool_utilization detector"
+variable "mysql_pool_utilization_threshold_minor" {
+  description = "minor threshold for mysql_pool_utilization detector"
   type        = number
   default     = 95
 }
 
-variable "mysql_pool_utilization_threshold_minor" {
-  description = "minor threshold for mysql_pool_utilization detector"
+variable "mysql_pool_utilization_threshold_warning" {
+  description = "warning threshold for mysql_pool_utilization detector"
   type        = number
   default     = 80
 }
@@ -226,8 +226,8 @@ variable "mysql_slow_disabled_critical" {
   default     = null
 }
 
-variable "mysql_slow_disabled_warning" {
-  description = "Disable warning alerting rule for mysql_slow detector"
+variable "mysql_slow_disabled_major" {
+  description = "Disable major alerting rule for mysql_slow detector"
   type        = bool
   default     = null
 }
@@ -256,8 +256,8 @@ variable "mysql_slow_threshold_critical" {
   default     = 25
 }
 
-variable "mysql_slow_threshold_warning" {
-  description = "Warning threshold for mysql_slow detector"
+variable "mysql_slow_threshold_major" {
+  description = "Major threshold for mysql_slow detector"
   type        = number
   default     = 10
 }
@@ -400,8 +400,8 @@ variable "mysql_replication_lag_disabled_critical" {
   default     = null
 }
 
-variable "mysql_replication_lag_disabled_warning" {
-  description = "Disable warning alerting rule for mysql_replication_lag detector"
+variable "mysql_replication_lag_disabled_major" {
+  description = "Disable major alerting rule for mysql_replication_lag detector"
   type        = bool
   default     = null
 }
@@ -430,8 +430,8 @@ variable "mysql_replication_lag_threshold_critical" {
   default     = 200
 }
 
-variable "mysql_replication_lag_threshold_warning" {
-  description = "Warning threshold for mysql_replication_lag detector"
+variable "mysql_replication_lag_threshold_major" {
+  description = "Major threshold for mysql_replication_lag detector"
   type        = number
   default     = 100
 }

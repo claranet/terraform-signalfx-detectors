@@ -69,8 +69,8 @@ variable "error_rate_4xx_disabled_critical" {
   default     = null
 }
 
-variable "error_rate_4xx_disabled_warning" {
-  description = "Disable warning alerting rule for error_rate_4xx detector"
+variable "error_rate_4xx_disabled_major" {
+  description = "Disable major alerting rule for error_rate_4xx detector"
   type        = bool
   default     = null
 }
@@ -111,8 +111,8 @@ variable "error_rate_4xx_threshold_critical" {
   default     = 40
 }
 
-variable "error_rate_4xx_threshold_warning" {
-  description = "Warning threshold for error_rate_4xx detector"
+variable "error_rate_4xx_threshold_major" {
+  description = "Major threshold for error_rate_4xx detector"
   type        = number
   default     = 20
 }
@@ -131,8 +131,8 @@ variable "error_rate_5xx_disabled_critical" {
   default     = null
 }
 
-variable "error_rate_5xx_disabled_warning" {
-  description = "Disable warning alerting rule for error_rate_5xx detector"
+variable "error_rate_5xx_disabled_major" {
+  description = "Disable major alerting rule for error_rate_5xx detector"
   type        = bool
   default     = null
 }
@@ -173,8 +173,8 @@ variable "error_rate_5xx_threshold_critical" {
   default     = 10
 }
 
-variable "error_rate_5xx_threshold_warning" {
-  description = "Warning threshold for error_rate_5xx detector"
+variable "error_rate_5xx_threshold_major" {
+  description = "Major threshold for error_rate_5xx detector"
   type        = number
   default     = 5
 }
@@ -193,8 +193,8 @@ variable "backend_latency_service_disabled_critical" {
   default     = null
 }
 
-variable "backend_latency_service_disabled_warning" {
-  description = "Disable warning alerting rule for backend_latency_service detector"
+variable "backend_latency_service_disabled_major" {
+  description = "Disable major alerting rule for backend_latency_service detector"
   type        = bool
   default     = null
 }
@@ -235,8 +235,8 @@ variable "backend_latency_service_threshold_critical" {
   default     = 3000
 }
 
-variable "backend_latency_service_threshold_warning" {
-  description = "Warning threshold for backend_latency_service detector"
+variable "backend_latency_service_threshold_major" {
+  description = "Major threshold for backend_latency_service detector"
   type        = number
   default     = 1000
 }
@@ -255,8 +255,8 @@ variable "backend_latency_bucket_disabled_critical" {
   default     = null
 }
 
-variable "backend_latency_bucket_disabled_warning" {
-  description = "Disable warning alerting rule for backend_latency_bucket detector"
+variable "backend_latency_bucket_disabled_major" {
+  description = "Disable major alerting rule for backend_latency_bucket detector"
   type        = bool
   default     = null
 }
@@ -297,8 +297,8 @@ variable "backend_latency_bucket_threshold_critical" {
   default     = 8000
 }
 
-variable "backend_latency_bucket_threshold_warning" {
-  description = "Warning threshold for backend_latency_bucket detector"
+variable "backend_latency_bucket_threshold_major" {
+  description = "Major threshold for backend_latency_bucket detector"
   type        = number
   default     = 5000
 }
@@ -329,8 +329,8 @@ variable "request_count_transformation_function" {
   default     = ""
 }
 
-variable "request_count_threshold_warning" {
-  description = "Warning threshold for request_count detector"
+variable "request_count_threshold_major" {
+  description = "Major threshold for request_count detector"
   type        = number
   default     = 250
 }

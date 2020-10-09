@@ -82,8 +82,8 @@ variable "no_healthy_instances_disabled_critical" {
   default     = null
 }
 
-variable "no_healthy_instances_disabled_warning" {
-  description = "Disable warning alerting rule for No_healthy_instances detector"
+variable "no_healthy_instances_disabled_major" {
+  description = "Disable major alerting rule for No_healthy_instances detector"
   type        = bool
   default     = null
 }
@@ -112,8 +112,8 @@ variable "no_healthy_instances_threshold_critical" {
   default     = 1
 }
 
-variable "no_healthy_instances_threshold_warning" {
-  description = "Warning threshold for No_healthy_instances detector"
+variable "no_healthy_instances_threshold_major" {
+  description = "Major threshold for No_healthy_instances detector"
   type        = number
   default     = 100
 }
@@ -132,8 +132,8 @@ variable "latency_disabled_critical" {
   default     = null
 }
 
-variable "latency_disabled_warning" {
-  description = "Disable warning alerting rule for latency detector"
+variable "latency_disabled_major" {
+  description = "Disable major alerting rule for latency detector"
   type        = bool
   default     = null
 }
@@ -174,8 +174,8 @@ variable "latency_threshold_critical" {
   default     = 3
 }
 
-variable "latency_threshold_warning" {
-  description = "Warning threshold for latency detector"
+variable "latency_threshold_major" {
+  description = "Major threshold for latency detector"
   type        = number
   default     = 1
 }
@@ -194,8 +194,8 @@ variable "alb_5xx_disabled_critical" {
   default     = null
 }
 
-variable "alb_5xx_disabled_warning" {
-  description = "Disable warning alerting rule for alb_5xx detector"
+variable "alb_5xx_disabled_major" {
+  description = "Disable major alerting rule for alb_5xx detector"
   type        = bool
   default     = null
 }
@@ -236,8 +236,8 @@ variable "alb_5xx_threshold_critical" {
   default     = 10
 }
 
-variable "alb_5xx_threshold_warning" {
-  description = "Warning threshold for alb_5xx detector"
+variable "alb_5xx_threshold_major" {
+  description = "Major threshold for alb_5xx detector"
   type        = number
   default     = 5
 }
@@ -256,8 +256,8 @@ variable "alb_4xx_disabled_critical" {
   default     = null
 }
 
-variable "alb_4xx_disabled_warning" {
-  description = "Disable warning alerting rule for alb_4xx detector"
+variable "alb_4xx_disabled_major" {
+  description = "Disable major alerting rule for alb_4xx detector"
   type        = bool
   default     = null
 }
@@ -298,8 +298,8 @@ variable "alb_4xx_threshold_critical" {
   default     = 40
 }
 
-variable "alb_4xx_threshold_warning" {
-  description = "Warning threshold for alb_4xx detector"
+variable "alb_4xx_threshold_major" {
+  description = "Major threshold for alb_4xx detector"
   type        = number
   default     = 20
 }
@@ -318,8 +318,8 @@ variable "target_5xx_disabled_critical" {
   default     = null
 }
 
-variable "target_5xx_disabled_warning" {
-  description = "Disable warning alerting rule for target_5xx detector"
+variable "target_5xx_disabled_major" {
+  description = "Disable major alerting rule for target_5xx detector"
   type        = bool
   default     = null
 }
@@ -360,8 +360,8 @@ variable "target_5xx_threshold_critical" {
   default     = 10
 }
 
-variable "target_5xx_threshold_warning" {
-  description = "Warning threshold for target_5xx detector"
+variable "target_5xx_threshold_major" {
+  description = "Major threshold for target_5xx detector"
   type        = number
   default     = 5
 }
@@ -380,8 +380,8 @@ variable "target_4xx_disabled_critical" {
   default     = null
 }
 
-variable "target_4xx_disabled_warning" {
-  description = "Disable warning alerting rule for target_4xx detector"
+variable "target_4xx_disabled_major" {
+  description = "Disable major alerting rule for target_4xx detector"
   type        = bool
   default     = null
 }
@@ -422,8 +422,8 @@ variable "target_4xx_threshold_critical" {
   default     = 40
 }
 
-variable "target_4xx_threshold_warning" {
-  description = "Warning threshold for target_4xx detector"
+variable "target_4xx_threshold_major" {
+  description = "Major threshold for target_4xx detector"
   type        = number
   default     = 20
 }

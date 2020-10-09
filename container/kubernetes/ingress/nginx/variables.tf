@@ -64,8 +64,8 @@ variable "ingress_5xx_disabled_critical" {
   default     = null
 }
 
-variable "ingress_5xx_disabled_warning" {
-  description = "Disable warning alerting rule for ingress_5xx detector"
+variable "ingress_5xx_disabled_major" {
+  description = "Disable major alerting rule for ingress_5xx detector"
   type        = bool
   default     = null
 }
@@ -108,8 +108,8 @@ variable "ingress_5xx_threshold_critical" {
   default     = 10
 }
 
-variable "ingress_5xx_threshold_warning" {
-  description = "Warning threshold for ingress_5xx detector"
+variable "ingress_5xx_threshold_major" {
+  description = "Major threshold for ingress_5xx detector"
   type        = number
   default     = 5
 }
@@ -128,8 +128,8 @@ variable "ingress_4xx_disabled_critical" {
   default     = null
 }
 
-variable "ingress_4xx_disabled_warning" {
-  description = "Disable warning alerting rule for ingress_4xx detector"
+variable "ingress_4xx_disabled_major" {
+  description = "Disable major alerting rule for ingress_4xx detector"
   type        = bool
   default     = null
 }
@@ -172,8 +172,8 @@ variable "ingress_4xx_threshold_critical" {
   default     = 40
 }
 
-variable "ingress_4xx_threshold_warning" {
-  description = "Warning threshold for ingress_4xx detector"
+variable "ingress_4xx_threshold_major" {
+  description = "Major threshold for ingress_4xx detector"
   type        = number
   default     = 20
 }
@@ -192,8 +192,8 @@ variable "ingress_latency_disabled_critical" {
   default     = null
 }
 
-variable "ingress_latency_disabled_warning" {
-  description = "Disable warning alerting rule for ingress_latency detector"
+variable "ingress_latency_disabled_major" {
+  description = "Disable major alerting rule for ingress_latency detector"
   type        = bool
   default     = null
 }
@@ -236,8 +236,8 @@ variable "ingress_latency_threshold_critical" {
   default     = 10
 }
 
-variable "ingress_latency_threshold_warning" {
-  description = "Warning threshold for ingress_latency detector"
+variable "ingress_latency_threshold_major" {
+  description = "Major threshold for ingress_latency detector"
   type        = number
   default     = 5
 }
