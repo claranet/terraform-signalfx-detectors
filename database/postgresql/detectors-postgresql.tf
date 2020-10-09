@@ -15,6 +15,7 @@ EOF
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 }
 
@@ -34,6 +35,7 @@ EOF
     disabled              = coalesce(var.deadlocks_disabled_major, var.deadlocks_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.deadlocks_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 
   rule {
@@ -43,6 +45,7 @@ EOF
     disabled              = coalesce(var.deadlocks_disabled_minor, var.deadlocks_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.deadlocks_notifications, "minor", []), var.notifications.minor)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 }
 
@@ -62,6 +65,7 @@ EOF
     disabled              = coalesce(var.hit_ratio_disabled_minor, var.hit_ratio_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.hit_ratio_notifications, "minor", []), var.notifications.minor)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 
   rule {
@@ -71,6 +75,7 @@ EOF
     disabled              = coalesce(var.hit_ratio_disabled_warning, var.hit_ratio_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.hit_ratio_notifications, "warning", []), var.notifications.warning)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 }
 
@@ -92,6 +97,7 @@ EOF
     disabled              = coalesce(var.rollbacks_disabled_major, var.rollbacks_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.rollbacks_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 
   rule {
@@ -101,6 +107,7 @@ EOF
     disabled              = coalesce(var.rollbacks_disabled_minor, var.rollbacks_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.rollbacks_notifications, "minor", []), var.notifications.minor)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 }
 
@@ -120,6 +127,7 @@ EOF
     disabled              = coalesce(var.conflicts_disabled_major, var.conflicts_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.conflicts_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 
   rule {
@@ -129,6 +137,7 @@ EOF
     disabled              = coalesce(var.conflicts_disabled_minor, var.conflicts_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.conflicts_notifications, "minor", []), var.notifications.minor)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 }
 
@@ -148,6 +157,7 @@ EOF
     disabled              = coalesce(var.max_connections_disabled_critical, var.max_connections_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.max_connections_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 
   rule {
@@ -157,6 +167,7 @@ EOF
     disabled              = coalesce(var.max_connections_disabled_major, var.max_connections_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.max_connections_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 }
 
@@ -176,6 +187,7 @@ EOF
     disabled              = coalesce(var.replication_lag_disabled_critical, var.replication_lag_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.replication_lag_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 
   rule {
@@ -185,6 +197,7 @@ EOF
     disabled              = coalesce(var.replication_lag_disabled_major, var.replication_lag_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.replication_lag_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 }
 
@@ -203,6 +216,7 @@ EOF
     disabled              = coalesce(var.replication_state_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.replication_state_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 }
 

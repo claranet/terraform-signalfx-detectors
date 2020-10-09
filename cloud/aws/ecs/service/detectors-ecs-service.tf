@@ -14,6 +14,7 @@ EOF
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 }
 
@@ -34,6 +35,7 @@ EOF
     disabled              = coalesce(var.cpu_utilization_disabled_critical, var.cpu_utilization_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.cpu_utilization_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 
   rule {
@@ -43,6 +45,7 @@ EOF
     disabled              = coalesce(var.cpu_utilization_disabled_major, var.cpu_utilization_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.cpu_utilization_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 }
 
@@ -62,6 +65,7 @@ EOF
     disabled              = coalesce(var.memory_utilization_disabled_critical, var.memory_utilization_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.memory_utilization_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 
   rule {
@@ -71,6 +75,7 @@ EOF
     disabled              = coalesce(var.memory_utilization_disabled_major, var.memory_utilization_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.memory_utilization_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 }
 

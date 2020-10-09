@@ -15,6 +15,7 @@ resource "signalfx_detector" "heartbeat" {
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 }
 
@@ -38,6 +39,7 @@ resource "signalfx_detector" "db_4xx_requests" {
     disabled              = coalesce(var.db_4xx_requests_disabled_critical, var.db_4xx_requests_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.db_4xx_requests_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 
   rule {
@@ -47,6 +49,7 @@ resource "signalfx_detector" "db_4xx_requests" {
     disabled              = coalesce(var.db_4xx_requests_disabled_major, var.db_4xx_requests_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.db_4xx_requests_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 }
 
@@ -70,6 +73,7 @@ resource "signalfx_detector" "db_5xx_requests" {
     disabled              = coalesce(var.db_5xx_requests_disabled_critical, var.db_5xx_requests_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.db_5xx_requests_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 
   rule {
@@ -79,6 +83,7 @@ resource "signalfx_detector" "db_5xx_requests" {
     disabled              = coalesce(var.db_5xx_requests_disabled_major, var.db_5xx_requests_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.db_5xx_requests_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 }
 
@@ -102,6 +107,7 @@ resource "signalfx_detector" "scaling" {
     disabled              = coalesce(var.scaling_disabled_critical, var.scaling_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.scaling_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 
   rule {
@@ -111,5 +117,6 @@ resource "signalfx_detector" "scaling" {
     disabled              = coalesce(var.scaling_disabled_major, var.scaling_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.scaling_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 }

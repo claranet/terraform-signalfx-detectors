@@ -14,6 +14,7 @@ EOF
     disabled              = coalesce(var.sending_operations_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.sending_operations_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 }
 
@@ -34,6 +35,7 @@ EOF
     disabled              = coalesce(var.unavailable_sending_operations_disabled_critical, var.unavailable_sending_operations_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.unavailable_sending_operations_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 
   rule {
@@ -43,6 +45,7 @@ EOF
     disabled              = coalesce(var.unavailable_sending_operations_disabled_major, var.unavailable_sending_operations_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.unavailable_sending_operations_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 }
 
@@ -65,6 +68,7 @@ EOF
     disabled              = coalesce(var.unavailable_sending_operations_ratio_disabled_critical, var.unavailable_sending_operations_ratio_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.unavailable_sending_operations_ratio_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 
   rule {
@@ -74,6 +78,7 @@ EOF
     disabled              = coalesce(var.unavailable_sending_operations_ratio_disabled_major, var.unavailable_sending_operations_ratio_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.unavailable_sending_operations_ratio_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 }
 

@@ -15,6 +15,7 @@ resource "signalfx_detector" "search_latency" {
     disabled              = coalesce(var.search_latency_disabled_critical, var.search_latency_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.search_latency_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 
   rule {
@@ -24,6 +25,7 @@ resource "signalfx_detector" "search_latency" {
     disabled              = coalesce(var.search_latency_disabled_major, var.search_latency_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.search_latency_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 }
 
@@ -44,6 +46,7 @@ resource "signalfx_detector" "search_throttled_queries_rate" {
     disabled              = coalesce(var.search_throttled_queries_rate_disabled_critical, var.search_throttled_queries_rate_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.search_throttled_queries_rate_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 
   rule {
@@ -53,6 +56,7 @@ resource "signalfx_detector" "search_throttled_queries_rate" {
     disabled              = coalesce(var.search_throttled_queries_rate_disabled_major, var.search_throttled_queries_rate_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.search_throttled_queries_rate_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 
 }

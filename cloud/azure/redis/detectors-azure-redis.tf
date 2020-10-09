@@ -15,6 +15,7 @@ resource "signalfx_detector" "heartbeat" {
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 }
 
@@ -35,6 +36,7 @@ resource "signalfx_detector" "evictedkeys" {
     disabled              = coalesce(var.evictedkeys_disabled_critical, var.evictedkeys_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.evictedkeys_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 
   rule {
@@ -44,6 +46,7 @@ resource "signalfx_detector" "evictedkeys" {
     disabled              = coalesce(var.evictedkeys_disabled_major, var.evictedkeys_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.evictedkeys_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 }
 
@@ -64,6 +67,7 @@ resource "signalfx_detector" "percent_processor_time" {
     disabled              = coalesce(var.percent_processor_time_disabled_critical, var.percent_processor_time_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.percent_processor_time_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 
   rule {
@@ -73,6 +77,7 @@ resource "signalfx_detector" "percent_processor_time" {
     disabled              = coalesce(var.percent_processor_time_disabled_major, var.percent_processor_time_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.percent_processor_time_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 }
 
@@ -93,6 +98,7 @@ resource "signalfx_detector" "load" {
     disabled              = coalesce(var.load_disabled_critical, var.load_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.load_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 
   rule {
@@ -102,5 +108,6 @@ resource "signalfx_detector" "load" {
     disabled              = coalesce(var.load_disabled_major, var.load_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.load_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 }

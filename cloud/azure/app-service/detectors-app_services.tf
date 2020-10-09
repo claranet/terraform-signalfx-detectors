@@ -15,6 +15,7 @@ resource "signalfx_detector" "heartbeat" {
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 }
 
@@ -35,6 +36,7 @@ resource "signalfx_detector" "response_time" {
     disabled              = coalesce(var.response_time_disabled_critical, var.response_time_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.response_time_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 
   rule {
@@ -44,6 +46,7 @@ resource "signalfx_detector" "response_time" {
     disabled              = coalesce(var.response_time_disabled_major, var.response_time_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.response_time_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 
 }
@@ -65,6 +68,7 @@ resource "signalfx_detector" "memory_usage_count" {
     disabled              = coalesce(var.memory_usage_count_disabled_critical, var.memory_usage_count_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.memory_usage_count_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 
   rule {
@@ -74,6 +78,7 @@ resource "signalfx_detector" "memory_usage_count" {
     disabled              = coalesce(var.memory_usage_count_disabled_major, var.memory_usage_count_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.memory_usage_count_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 
 }
@@ -97,6 +102,7 @@ resource "signalfx_detector" "http_5xx_errors_count" {
     disabled              = coalesce(var.http_5xx_errors_count_disabled_critical, var.http_5xx_errors_count_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.http_5xx_errors_count_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 
   rule {
@@ -106,6 +112,7 @@ resource "signalfx_detector" "http_5xx_errors_count" {
     disabled              = coalesce(var.http_5xx_errors_count_disabled_major, var.http_5xx_errors_count_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.http_5xx_errors_count_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 
 }
@@ -129,6 +136,7 @@ resource "signalfx_detector" "http_4xx_errors_count" {
     disabled              = coalesce(var.http_4xx_errors_count_disabled_critical, var.http_4xx_errors_count_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.http_4xx_errors_count_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 
   rule {
@@ -138,6 +146,7 @@ resource "signalfx_detector" "http_4xx_errors_count" {
     disabled              = coalesce(var.http_4xx_errors_count_disabled_major, var.http_4xx_errors_count_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.http_4xx_errors_count_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 }
 
@@ -161,6 +170,7 @@ resource "signalfx_detector" "http_success_status_rate" {
     disabled              = coalesce(var.http_success_status_rate_disabled_critical, var.http_success_status_rate_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.http_success_status_rate_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 
   rule {
@@ -170,5 +180,6 @@ resource "signalfx_detector" "http_success_status_rate" {
     disabled              = coalesce(var.http_success_status_rate_disabled_major, var.http_success_status_rate_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.http_success_status_rate_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 }

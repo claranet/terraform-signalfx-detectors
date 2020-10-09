@@ -15,6 +15,7 @@ EOF
     disabled              = coalesce(var.latency_disabled_critical, var.latency_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.latency_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 
   rule {
@@ -24,6 +25,7 @@ EOF
     disabled              = coalesce(var.latency_disabled_major, var.latency_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.latency_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 }
 
@@ -46,6 +48,7 @@ EOF
     disabled              = coalesce(var.http_5xx_disabled_critical, var.http_5xx_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.http_5xx_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 
   rule {
@@ -55,6 +58,7 @@ EOF
     disabled              = coalesce(var.http_5xx_disabled_major, var.http_5xx_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.http_5xx_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 }
 
@@ -77,6 +81,7 @@ EOF
     disabled              = coalesce(var.http_4xx_disabled_critical, var.http_4xx_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.http_4xx_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 
   rule {
@@ -86,6 +91,7 @@ EOF
     disabled              = coalesce(var.http_4xx_disabled_major, var.http_4xx_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.http_4xx_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 }
 

@@ -13,6 +13,7 @@ EOF
     disabled              = coalesce(var.failover_unavailable_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.failover_unavailable_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 }
 

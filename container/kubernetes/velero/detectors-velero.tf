@@ -13,6 +13,7 @@ EOF
     disabled              = coalesce(var.velero_scheduled_backup_missing_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.velero_scheduled_backup_missing_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 }
 
@@ -31,6 +32,7 @@ EOF
     disabled              = coalesce(var.velero_backup_failure_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.velero_backup_failure_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 }
 
@@ -49,6 +51,7 @@ EOF
     disabled              = coalesce(var.velero_backup_partial_failure_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.velero_backup_partial_failure_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 }
 
@@ -67,6 +70,7 @@ EOF
     disabled              = coalesce(var.velero_backup_deletion_failure_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.velero_backup_deletion_failure_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 }
 
@@ -85,6 +89,7 @@ EOF
     disabled              = coalesce(var.velero_volume_snapshot_failure_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.velero_volume_snapshot_failure_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_body    = local.parameterized_body
   }
 }
 
