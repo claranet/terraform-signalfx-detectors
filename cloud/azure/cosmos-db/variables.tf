@@ -62,6 +62,12 @@ variable "heartbeat_timeframe" {
   default     = "20m"
 }
 
+variable "heartbeat_aggregation_function" {
+  description = "Aggregation function and group by for heartbeat detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+}
+
 # db_4xx_requests detectors
 
 variable "db_4xx_requests_disabled" {

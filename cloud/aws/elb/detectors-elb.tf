@@ -3,8 +3,8 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    signal = data('HealthyHostCount', filter=filter('stat', 'mean') and filter('namespace', 'AWS/ELB') and ${module.filter-tags.filter_custom}).mean(by=['LoadBalancerName']).publish('signal')
-    not_reporting.detector(stream=signal, resource_identifier=['LoadBalancerName'], duration='${var.heartbeat_timeframe}').publish('CRIT')
+    signal = data('HealthyHostCount', filter=filter('stat', 'mean') and filter('namespace', 'AWS/ELB') and ${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')
+    not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}').publish('CRIT')
 EOF
 
   rule {

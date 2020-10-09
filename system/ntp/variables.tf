@@ -62,6 +62,12 @@ variable "heartbeat_timeframe" {
   default     = "12h"
 }
 
+variable "heartbeat_aggregation_function" {
+  description = "Aggregation function and group by for heartbeat detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ""
+}
+
 #####
 
 variable "ntp_disabled" {

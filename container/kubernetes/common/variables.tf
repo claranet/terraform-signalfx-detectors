@@ -62,6 +62,12 @@ variable "heartbeat_timeframe" {
   default     = "20m"
 }
 
+variable "heartbeat_aggregation_function" {
+  description = "Aggregation function and group by for heartbeat detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ".mean(by=['kubernetes_cluster'])"
+}
+
 # node_ready detectors
 
 variable "node_ready_disabled" {
