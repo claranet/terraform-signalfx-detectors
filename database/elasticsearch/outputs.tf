@@ -1,3 +1,8 @@
+output "automated_snapshot_failure" {
+  description = "Detector resource for automated_snapshot_failure"
+  value       = signalfx_detector.automated_snapshot_failure
+}
+
 output "cluster_initializing_shards" {
   description = "Detector resource for cluster_initializing_shards"
   value       = signalfx_detector.cluster_initializing_shards
@@ -102,9 +107,3 @@ output "task_time_in_queue_change" {
   description = "Detector resource for task_time_in_queue_change"
   value       = signalfx_detector.task_time_in_queue_change
 }
-
-output "automated_snapshot_failure" {
-  description = "Detector resource for automated_snapshot_failure"
-  value       = signalfx_detector.automated_snapshot_failure
-}
-
