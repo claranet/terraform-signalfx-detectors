@@ -3,8 +3,8 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting
-        base_filter = filter('resource_type', 'Microsoft.ServiceBus/namespaces') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}
-        signal = data('Size', filter=base_filter).publish('signal')
+        base_filter = filter('resource_type', 'Microsoft.ServiceBus/namespaces') and filter('primary_aggregation_type', 'true')
+        signal = data('Size', filter=base_filter and ${module.filter-tags.filter_custom}).publish('signal')
         not_reporting.detector(stream=signal, resource_identifier=['entityname', 'azure_resource_name', 'azure_resource_group_name'], duration='${var.heartbeat_timeframe}').publish('CRIT')
     EOF
 
