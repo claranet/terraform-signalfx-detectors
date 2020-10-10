@@ -1,5 +1,5 @@
 resource "signalfx_detector" "aurora_mysql_replica_lag" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS RDS Aurora Mysql replica lag"
+  name = format("%s %s", local.name_start, "AWS RDS Aurora Mysql replica lag")
 
   program_text = <<-EOF
     signal = data('AuroraReplicaLag', filter=filter('namespace', 'AWS/RDS') and filter('stat', 'mean') and filter('DBInstanceIdentifier', '*') and ${module.filter-tags.filter_custom})${var.aurora_mysql_replica_lag_aggregation_function}${var.aurora_mysql_replica_lag_transformation_function}.publish('signal')

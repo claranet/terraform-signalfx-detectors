@@ -1,5 +1,5 @@
 resource "signalfx_detector" "nginx_ingress_5xx" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Kubernetes Ingress Nginx 5xx errors ratio"
+  name = format("%s %s", local.name_start, "Kubernetes Ingress Nginx 5xx errors ratio")
 
   program_text = <<-EOF
     A = data('nginx_ingress_controller_requests', filter=filter('status', '5*') and ${module.filter-tags.filter_custom}, rollup='delta', extrapolation='zero')${var.ingress_5xx_aggregation_function}${var.ingress_5xx_transformation_function}
@@ -31,7 +31,7 @@ EOF
 }
 
 resource "signalfx_detector" "nginx_ingress_4xx" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Kubernetes Ingress Nginx 4xx errors ratio"
+  name = format("%s %s", local.name_start, "Kubernetes Ingress Nginx 4xx errors ratio")
 
   program_text = <<-EOF
     A = data('nginx_ingress_controller_requests', filter=filter('status', '4*') and ${module.filter-tags.filter_custom}, rollup='delta', extrapolation='zero')${var.ingress_4xx_aggregation_function}${var.ingress_4xx_transformation_function}
@@ -63,7 +63,7 @@ EOF
 }
 
 resource "signalfx_detector" "nginx_ingress_latency" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Kubernetes Ingress Nginx latency"
+  name = format("%s %s", local.name_start, "Kubernetes Ingress Nginx latency")
 
   program_text = <<-EOF
     signal = data('nginx_ingress_controller_ingress_upstream_latency_seconds', ${module.filter-tags.filter_custom}, rollup='delta', extrapolation='zero')${var.ingress_latency_aggregation_function}${var.ingress_latency_transformation_function}.publish('signal')

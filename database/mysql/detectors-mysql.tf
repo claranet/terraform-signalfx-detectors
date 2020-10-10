@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name      = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] MySQL heartbeat"
+  name      = format("%s %s", local.name_start, "MySQL heartbeat")
   max_delay = 900
 
   program_text = <<-EOF
@@ -20,7 +20,7 @@ EOF
 }
 
 resource "signalfx_detector" "mysql_connections" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] MySQL number of connections over max capacity"
+  name = format("%s %s", local.name_start, "MySQL number of connections over max capacity")
 
   program_text = <<-EOF
     A = data('mysql_threads_connected', filter=${module.filter-tags.filter_custom}, rollup='average')${var.mysql_connections_aggregation_function}${var.mysql_connections_transformation_function}
@@ -52,7 +52,7 @@ resource "signalfx_detector" "mysql_connections" {
 }
 
 resource "signalfx_detector" "mysql_slow" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] MySQL slow queries percentage"
+  name = format("%s %s", local.name_start, "MySQL slow queries percentage")
 
   program_text = <<-EOF
     A = data('mysql_slow_queries', filter=(not filter('plugin', 'mysql')) and ${module.filter-tags.filter_custom}, rollup='delta')${var.mysql_slow_aggregation_function}${var.mysql_slow_transformation_function}
@@ -84,7 +84,7 @@ EOF
 }
 
 resource "signalfx_detector" "mysql_pool_efficiency" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] MySQL Innodb buffer pool efficiency"
+  name = format("%s %s", local.name_start, "MySQL Innodb buffer pool efficiency")
 
   program_text = <<-EOF
     A = data('mysql_bpool_counters.reads', filter=filter('plugin', 'mysql') and ${module.filter-tags.filter_custom}, rollup='delta')${var.mysql_pool_efficiency_aggregation_function}${var.mysql_pool_efficiency_transformation_function}
@@ -116,7 +116,7 @@ EOF
 }
 
 resource "signalfx_detector" "mysql_pool_utilization" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] MySQL Innodb buffer pool utilization"
+  name = format("%s %s", local.name_start, "MySQL Innodb buffer pool utilization")
 
   program_text = <<-EOF
     A = data('mysql_bpool_pages.free', filter=filter('plugin', 'mysql') and ${module.filter-tags.filter_custom}, rollup='average')${var.mysql_pool_utilization_aggregation_function}${var.mysql_pool_utilization_transformation_function}
@@ -148,7 +148,7 @@ EOF
 }
 
 resource "signalfx_detector" "mysql_threads_anomaly" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] MySQL running threads changed abruptly"
+  name = format("%s %s", local.name_start, "MySQL running threads changed abruptly")
 
   program_text = <<-EOF
     from signalfx.detectors.against_periods import against_periods
@@ -168,7 +168,7 @@ EOF
 }
 
 resource "signalfx_detector" "mysql_questions_anomaly" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] MySQL running queries changed abruptly"
+  name = format("%s %s", local.name_start, "MySQL running queries changed abruptly")
 
   program_text = <<-EOF
     from signalfx.detectors.against_periods import against_periods
@@ -188,7 +188,7 @@ EOF
 }
 
 resource "signalfx_detector" "mysql_replication_lag" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] MySQL replication lag"
+  name = format("%s %s", local.name_start, "MySQL replication lag")
 
   program_text = <<-EOF
     signal = data('mysql_seconds_behind_master', filter=${module.filter-tags.filter_custom}, rollup='average')${var.mysql_replication_lag_aggregation_function}${var.mysql_replication_lag_transformation_function}.publish('signal')
@@ -218,7 +218,7 @@ resource "signalfx_detector" "mysql_replication_lag" {
 }
 
 resource "signalfx_detector" "mysql_replication_status" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] MySQL replication status"
+  name = format("%s %s", local.name_start, "MySQL replication status")
 
   program_text = <<-EOF
     signal = data('mysql_slave_sql_running', filter=${module.filter-tags.filter_custom}, rollup='average')${var.mysql_replication_status_aggregation_function}${var.mysql_replication_status_transformation_function}.publish('signal')

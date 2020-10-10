@@ -1,5 +1,5 @@
 resource "signalfx_detector" "messages_ready" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] RabbitMQ Queue messages ready"
+  name = format("%s %s", local.name_start, "RabbitMQ Queue messages ready")
 
   program_text = <<-EOF
     signal = data('gauge.queue.messages_ready', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom})${var.messages_ready_aggregation_function}${var.messages_ready_transformation_function}.publish('signal')
@@ -29,7 +29,7 @@ EOF
 }
 
 resource "signalfx_detector" "messages_unacknowledged" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] RabbitMQ Queue messages unacknowledged"
+  name = format("%s %s", local.name_start, "RabbitMQ Queue messages unacknowledged")
 
   program_text = <<-EOF
     signal = data('gauge.queue.messages_unacknowledged', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom})${var.messages_unacknowledged_aggregation_function}${var.messages_unacknowledged_transformation_function}.publish('signal')
@@ -59,7 +59,7 @@ EOF
 }
 
 resource "signalfx_detector" "messages_ack_rate" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] RabbitMQ Queue messages ack rate"
+  name = format("%s %s", local.name_start, "RabbitMQ Queue messages ack rate")
 
   program_text = <<-EOF
     signal = data('counter.queue.message_stats.ack', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom})${var.messages_ack_rate_aggregation_function}.publish('signal')
@@ -90,7 +90,7 @@ EOF
 }
 
 resource "signalfx_detector" "consumer_use" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] RabbitMQ Queue consumer use"
+  name = format("%s %s", local.name_start, "RabbitMQ Queue consumer use")
 
   program_text = <<-EOF
     signal = data('gauge.queue.consumer_use', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom})${var.consumer_use_aggregation_function}.publish('util')

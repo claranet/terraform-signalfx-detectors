@@ -1,4 +1,5 @@
 locals {
+  name_start      = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}]"
   subject_start   = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}}"
   subject_end     = "on {{{dimensions}}}"
   subject         = format("%s ({{inputs.signal.value}}) %s", local.subject_start, local.subject_end)

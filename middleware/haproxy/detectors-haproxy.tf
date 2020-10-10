@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name      = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Haproxy heartbeat"
+  name      = format("%s %s", local.name_start, "Haproxy heartbeat")
   max_delay = 900
 
   program_text = <<-EOF
@@ -20,7 +20,7 @@ EOF
 }
 
 resource "signalfx_detector" "server_status" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Haproxy server status"
+  name = format("%s %s", local.name_start, "Haproxy server status")
 
   program_text = <<-EOF
     signal = data('haproxy_status', filter=filter('type', '2') and ${module.filter-tags.filter_custom})${var.server_status_aggregation_function}${var.server_status_transformation_function}.publish('signal')
@@ -39,7 +39,7 @@ EOF
 }
 
 resource "signalfx_detector" "backend_status" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Haproxy backend status"
+  name = format("%s %s", local.name_start, "Haproxy backend status")
 
   program_text = <<-EOF
     signal = data('haproxy_status', filter=filter('type', '1') and ${module.filter-tags.filter_custom})${var.backend_status_aggregation_function}${var.backend_status_transformation_function}.publish('signal')
@@ -58,7 +58,7 @@ EOF
 }
 
 resource "signalfx_detector" "session_limit" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Haproxy session"
+  name = format("%s %s", local.name_start, "Haproxy session")
 
   program_text = <<-EOF
     A = data('haproxy_session_current', filter=${module.filter-tags.filter_custom})${var.session_limit_aggregation_function}${var.session_limit_transformation_function}
@@ -90,7 +90,7 @@ EOF
 }
 
 resource "signalfx_detector" "http_5xx_response" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Haproxy 5xx response rate"
+  name = format("%s %s", local.name_start, "Haproxy 5xx response rate")
 
   program_text = <<-EOF
     A = data('haproxy_response_5xx', filter=${module.filter-tags.filter_custom}, rollup='delta')${var.http_5xx_response_aggregation_function}${var.http_5xx_response_transformation_function}
@@ -122,7 +122,7 @@ EOF
 }
 
 resource "signalfx_detector" "http_4xx_response" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Haproxy 4xx response rate"
+  name = format("%s %s", local.name_start, "Haproxy 4xx response rate")
 
   program_text = <<-EOF
     A = data('haproxy_response_4xx', filter=${module.filter-tags.filter_custom}, rollup='delta')${var.http_4xx_response_aggregation_function}${var.http_4xx_response_transformation_function}

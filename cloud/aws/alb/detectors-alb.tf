@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ALB heartbeat"
+  name = format("%s %s", local.name_start, "AWS ALB heartbeat")
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
@@ -19,7 +19,7 @@ EOF
 }
 
 resource "signalfx_detector" "no_healthy_instances" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ALB healthy instances percentage"
+  name = format("%s %s", local.name_start, "AWS ALB healthy instances percentage")
 
   program_text = <<-EOF
     A = data('HealthyHostCount', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'lower') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom})${var.no_healthy_instances_aggregation_function}${var.no_healthy_instances_transformation_function}
@@ -51,7 +51,7 @@ EOF
 }
 
 resource "signalfx_detector" "latency" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ALB latency"
+  name = format("%s %s", local.name_start, "AWS ALB latency")
 
   program_text = <<-EOF
     signal = data('TargetResponseTime', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'mean') and filter('TargetGroup', '*') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='average')${var.latency_aggregation_function}${var.latency_transformation_function}.publish('signal')
@@ -81,7 +81,7 @@ EOF
 }
 
 resource "signalfx_detector" "alb_5xx" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ALB 5xx error rate"
+  name = format("%s %s", local.name_start, "AWS ALB 5xx error rate")
 
   program_text = <<-EOF
     A = data('HTTPCode_ELB_5XX_Count', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.alb_5xx_aggregation_function}${var.alb_5xx_transformation_function}
@@ -113,7 +113,7 @@ EOF
 }
 
 resource "signalfx_detector" "alb_4xx" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ALB 4xx error rate"
+  name = format("%s %s", local.name_start, "AWS ALB 4xx error rate")
 
   program_text = <<-EOF
     A = data('HTTPCode_ELB_4XX_Count', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.alb_4xx_aggregation_function}${var.alb_4xx_transformation_function}
@@ -145,7 +145,7 @@ EOF
 }
 
 resource "signalfx_detector" "target_5xx" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ALB target 5xx error rate"
+  name = format("%s %s", local.name_start, "AWS ALB target 5xx error rate")
 
   program_text = <<-EOF
     A = data('HTTPCode_Target_5XX_Count', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and filter('TargetGroup', '*') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.target_5xx_aggregation_function}${var.target_5xx_transformation_function}
@@ -177,7 +177,7 @@ EOF
 }
 
 resource "signalfx_detector" "target_4xx" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ALB target 4xx error rate"
+  name = format("%s %s", local.name_start, "AWS ALB target 4xx error rate")
 
   program_text = <<-EOF
     A = data('HTTPCode_Target_4XX_Count', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and filter('TargetGroup', '*') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.target_4xx_aggregation_function}${var.target_4xx_transformation_function}

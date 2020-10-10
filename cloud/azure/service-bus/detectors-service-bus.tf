@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Service Bus heartbeat"
+  name = format("%s %s", local.name_start, "Azure Service Bus heartbeat")
 
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting
@@ -20,7 +20,7 @@ resource "signalfx_detector" "heartbeat" {
 }
 
 resource "signalfx_detector" "active_connections" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Service Bus no active connections"
+  name = format("%s %s", local.name_start, "Azure Service Bus no active connections")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.ServiceBus/namespaces') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}
@@ -41,7 +41,7 @@ resource "signalfx_detector" "active_connections" {
 }
 
 resource "signalfx_detector" "user_errors" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Service Bus user error rate"
+  name = format("%s %s", local.name_start, "Azure Service Bus user error rate")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.ServiceBus/namespaces') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}
@@ -74,7 +74,7 @@ resource "signalfx_detector" "user_errors" {
 }
 
 resource "signalfx_detector" "server_errors" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Service Bus server error rate"
+  name = format("%s %s", local.name_start, "Azure Service Bus server error rate")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.ServiceBus/namespaces') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}

@@ -1,5 +1,5 @@
 resource "signalfx_detector" "concurrent_queries" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] GCP BigQuery concurrent queries"
+  name = format("%s %s", local.name_start, "GCP BigQuery concurrent queries")
 
   program_text = <<-EOF
     from signalfx.detectors.aperiodic import conditions
@@ -33,7 +33,7 @@ EOF
 }
 
 resource "signalfx_detector" "execution_time" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] GCP BigQuery execution time"
+  name = format("%s %s", local.name_start, "GCP BigQuery execution time")
 
   program_text = <<-EOF
     from signalfx.detectors.aperiodic import conditions
@@ -67,7 +67,7 @@ EOF
 }
 
 resource "signalfx_detector" "scanned_bytes" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] GCP BigQuery scanned bytes"
+  name = format("%s %s", local.name_start, "GCP BigQuery scanned bytes")
 
   program_text = <<-EOF
     from signalfx.detectors.aperiodic import conditions
@@ -101,7 +101,7 @@ EOF
 }
 
 resource "signalfx_detector" "scanned_bytes_billed" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] GCP BigQuery scanned bytes billed"
+  name = format("%s %s", local.name_start, "GCP BigQuery scanned bytes billed")
 
   program_text = <<-EOF
     from signalfx.detectors.aperiodic import conditions
@@ -135,7 +135,7 @@ EOF
 }
 
 resource "signalfx_detector" "available_slots" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] GCP BigQuery available slots"
+  name = format("%s %s", local.name_start, "GCP BigQuery available slots")
 
   program_text = <<-EOF
     from signalfx.detectors.aperiodic import conditions
@@ -169,7 +169,7 @@ EOF
 }
 
 resource "signalfx_detector" "stored_bytes" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] GCP BigQuery stored bytes"
+  name = format("%s %s", local.name_start, "GCP BigQuery stored bytes")
 
   program_text = <<-EOF
     from signalfx.detectors.aperiodic import conditions
@@ -203,7 +203,7 @@ EOF
 }
 
 resource "signalfx_detector" "table_count" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] GCP BigQuery table count"
+  name = format("%s %s", local.name_start, "GCP BigQuery table count")
 
   program_text = <<-EOF
     from signalfx.detectors.aperiodic import conditions
@@ -237,7 +237,7 @@ EOF
 }
 
 resource "signalfx_detector" "uploaded_bytes" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] GCP BigQuery uploaded bytes"
+  name = format("%s %s", local.name_start, "GCP BigQuery uploaded bytes")
 
   program_text = <<-EOF
     from signalfx.detectors.aperiodic import conditions
@@ -271,7 +271,7 @@ EOF
 }
 
 resource "signalfx_detector" "uploaded_bytes_billed" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] GCP BigQuery uploaded bytes billed"
+  name = format("%s %s", local.name_start, "GCP BigQuery uploaded bytes billed")
 
   program_text = <<-EOF
     from signalfx.detectors.aperiodic import conditions

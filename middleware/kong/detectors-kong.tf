@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name      = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Kong heartbeat"
+  name      = format("%s %s", local.name_start, "Kong heartbeat")
   max_delay = 900
 
   program_text = <<-EOF
@@ -20,7 +20,7 @@ EOF
 }
 
 resource "signalfx_detector" "treatment_limit" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Kong treatment limit"
+  name = format("%s %s", local.name_start, "Kong treatment limit")
 
   program_text = <<-EOF
     A = data('kong_nginx_http_current_connections', filter=filter('state', 'handled') and ${module.filter-tags.filter_custom})${var.treatment_limit_aggregation_function}${var.treatment_limit_transformation_function}

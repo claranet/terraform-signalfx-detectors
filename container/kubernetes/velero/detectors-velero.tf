@@ -1,5 +1,5 @@
 resource "signalfx_detector" "velero_scheduled_backup_missing" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Kubernetes velero successful backup"
+  name = format("%s %s", local.name_start, "Kubernetes velero successful backup")
 
   program_text = <<-EOF
     signal = data('velero_backup_success_total', filter=filter('schedule', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.velero_scheduled_backup_missing_aggregation_function}${var.velero_scheduled_backup_missing_transformation_function}.publish('signal')
@@ -18,7 +18,7 @@ EOF
 }
 
 resource "signalfx_detector" "velero_backup_failure" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Kubernetes velero failed backup"
+  name = format("%s %s", local.name_start, "Kubernetes velero failed backup")
 
   program_text = <<-EOF
     signal = data('velero_backup_failure_total', filter=filter('schedule', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.velero_backup_failure_aggregation_function}${var.velero_backup_failure_transformation_function}.publish('signal')
@@ -37,7 +37,7 @@ EOF
 }
 
 resource "signalfx_detector" "velero_backup_partial_failure" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Kubernetes velero failed partial backup"
+  name = format("%s %s", local.name_start, "Kubernetes velero failed partial backup")
 
   program_text = <<-EOF
     signal = data('velero_backup_partial_failure_total', filter=filter('schedule', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.velero_backup_partial_failure_aggregation_function}${var.velero_backup_partial_failure_transformation_function}.publish('signal')
@@ -56,7 +56,7 @@ EOF
 }
 
 resource "signalfx_detector" "velero_backup_deletion_failure" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Kubernetes velero failed backup deletion"
+  name = format("%s %s", local.name_start, "Kubernetes velero failed backup deletion")
 
   program_text = <<-EOF
     signal = data('velero_backup_deletion_failure_total', filter=filter('schedule', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.velero_backup_deletion_failure_aggregation_function}${var.velero_backup_deletion_failure_transformation_function}.publish('signal')
@@ -75,7 +75,7 @@ EOF
 }
 
 resource "signalfx_detector" "velero_volume_snapshot_failure" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Kubernetes velero failed volume snapshot"
+  name = format("%s %s", local.name_start, "Kubernetes velero failed volume snapshot")
 
   program_text = <<-EOF
     signal = data('velero_volume_snapshot_failure_total', filter=filter('schedule', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.velero_volume_snapshot_failure_aggregation_function}${var.velero_volume_snapshot_failure_transformation_function}.publish('signal')

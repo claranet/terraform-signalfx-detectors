@@ -1,5 +1,5 @@
 resource "signalfx_detector" "sending_operations" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] GCP Pub/Sub Topic sending messages operations"
+  name = format("%s %s", local.name_start, "GCP Pub/Sub Topic sending messages operations")
 
   program_text = <<-EOF
     reserved_topics = (not filter('topic_id', 'container-analysis-occurrences*', 'container-analysis-notes*', 'cloud-builds', 'gcr'))
@@ -19,7 +19,7 @@ EOF
 }
 
 resource "signalfx_detector" "unavailable_sending_operations" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] GCP Pub/Sub Topic sending unavailable messages"
+  name = format("%s %s", local.name_start, "GCP Pub/Sub Topic sending unavailable messages")
 
   program_text = <<-EOF
     reserved_topics = (not filter('topic_id', 'container-analysis-occurrences*', 'container-analysis-notes*', 'cloud-builds', 'gcr'))
@@ -50,7 +50,7 @@ EOF
 }
 
 resource "signalfx_detector" "unavailable_sending_operations_ratio" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] GCP Pub/Sub Topic sending unavailable messages ratio"
+  name = format("%s %s", local.name_start, "GCP Pub/Sub Topic sending unavailable messages ratio")
 
   program_text = <<-EOF
     reserved_topics = (not filter('topic_id', 'container-analysis-occurrences*', 'container-analysis-notes*', 'cloud-builds', 'gcr'))

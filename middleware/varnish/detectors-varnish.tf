@@ -1,6 +1,6 @@
 # failed backend in varnish detection
 resource "signalfx_detector" "varnish_backend_failed" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Varnish Backend Failed"
+  name = format("%s %s", local.name_start, "Varnish Backend Failed")
 
   program_text = <<-EOF
     signal = data('varnish.backend_fail', filter=filter('plugin', 'telegraf/varnish') and ${module.filter-tags.filter_custom})${var.varnish_backend_failed_aggregation_function}${var.varnish_backend_failed_transformation_function}.publish('signal')
@@ -20,7 +20,7 @@ EOF
 
 # varnish threads
 resource "signalfx_detector" "varnish_threads_number" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Varnish Threads Number"
+  name = format("%s %s", local.name_start, "Varnish Threads Number")
 
   program_text = <<-EOF
     signal = data('varnish.threads', filter=filter('plugin', 'telegraf/varnish') and ${module.filter-tags.filter_custom})${var.varnish_threads_number_aggregation_function}${var.varnish_threads_number_transformation_function}.publish('signal')
@@ -40,7 +40,7 @@ EOF
 
 # session dropped in varnish detection
 resource "signalfx_detector" "varnish_session_dropped" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Varnish Session Dropped"
+  name = format("%s %s", local.name_start, "Varnish Session Dropped")
 
   program_text = <<-EOF
     signal = data('varnish.sess_dropped', filter=filter('plugin', 'telegraf/varnish') and ${module.filter-tags.filter_custom})${var.varnish_session_dropped_aggregation_function}${var.varnish_session_dropped_transformation_function}.publish('signal')
@@ -60,7 +60,7 @@ EOF
 
 # session dropped in varnish detection
 resource "signalfx_detector" "varnish_cache_hit_rate" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Varnish Hit Rate"
+  name = format("%s %s", local.name_start, "Varnish Hit Rate")
 
   program_text = <<-EOF
     A = data('varnish.cache_hit', filter=filter('plugin', 'telegraf/varnish') and ${module.filter-tags.filter_custom})${var.varnish_cache_hit_rate_aggregation_function}${var.varnish_cache_hit_rate_transformation_function}.publish('A')
@@ -92,7 +92,7 @@ EOF
 
 # memory used
 resource "signalfx_detector" "varnish_memory_usage" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Varnish Memory Usage"
+  name = format("%s %s", local.name_start, "Varnish Memory Usage")
 
   program_text = <<-EOF
     A = data('varnish.s0.g_bytes', filter=filter('plugin', 'telegraf/varnish') and ${module.filter-tags.filter_custom})${var.varnish_memory_usage_aggregation_function}${var.varnish_memory_usage_transformation_function}

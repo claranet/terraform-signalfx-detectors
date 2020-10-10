@@ -1,6 +1,6 @@
 # Monitoring Api Gateway latency
 resource "signalfx_detector" "latency" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ApiGateway latency"
+  name = format("%s %s", local.name_start, "AWS ApiGateway latency")
 
   program_text = <<-EOF
     signal = data('Latency', filter=filter('namespace', 'AWS/ApiGateway') and filter('stat', 'sum') and (not filter('Stage', '*')) and (not filter('Method', '*')) and (not filter('Resource', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='average')${var.latency_aggregation_function}${var.latency_transformation_function}.publish('signal')
@@ -31,7 +31,7 @@ EOF
 
 # Monitoring API Gateway 5xx errors percent
 resource "signalfx_detector" "http_5xx" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ApiGateway HTTP 5xx error rate"
+  name = format("%s %s", local.name_start, "AWS ApiGateway HTTP 5xx error rate")
 
   program_text = <<-EOF
     A = data('${var.is_v2 ? "5xx" : "5XXError"}', filter=filter('namespace', 'AWS/ApiGateway') and filter('stat', 'sum') and (not filter('Stage', '*')) and (not filter('Method', '*')) and (not filter('Resource', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.http_5xx_aggregation_function}${var.http_5xx_transformation_function}
@@ -64,7 +64,7 @@ EOF
 
 # Monitoring API Gateway 4xx errors percent
 resource "signalfx_detector" "http_4xx" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ApiGateway HTTP 4xx error rate"
+  name = format("%s %s", local.name_start, "AWS ApiGateway HTTP 4xx error rate")
 
   program_text = <<-EOF
     A = data('${var.is_v2 ? "4xx" : "4XXError"}', filter=filter('namespace', 'AWS/ApiGateway') and filter('stat', 'sum') and (not filter('Stage', '*')) and (not filter('Method', '*')) and (not filter('Resource', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.http_4xx_aggregation_function}${var.http_4xx_transformation_function}

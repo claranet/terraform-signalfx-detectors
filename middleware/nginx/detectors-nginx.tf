@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name      = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Nginx heartbeat"
+  name      = format("%s %s", local.name_start, "Nginx heartbeat")
   max_delay = 900
 
   program_text = <<-EOF
@@ -20,7 +20,7 @@ EOF
 }
 
 resource "signalfx_detector" "dropped_connections" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Nginx dropped connections"
+  name = format("%s %s", local.name_start, "Nginx dropped connections")
 
   program_text = <<-EOF
     signal = data('connections.failed', filter=${module.filter-tags.filter_custom})${var.dropped_connections_aggregation_function}${var.dropped_connections_transformation_function}.publish('signal')

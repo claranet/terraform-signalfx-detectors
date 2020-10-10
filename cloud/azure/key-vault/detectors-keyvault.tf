@@ -1,5 +1,5 @@
 resource "signalfx_detector" "api_result" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Key Vault API result rate"
+  name = format("%s %s", local.name_start, "Azure Key Vault API result rate")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.KeyVault/vaults') and filter('primary_aggregation_type', 'true')
@@ -32,7 +32,7 @@ resource "signalfx_detector" "api_result" {
 }
 
 resource "signalfx_detector" "api_latency" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Key Vault API latency"
+  name = format("%s %s", local.name_start, "Azure Key Vault API latency")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.KeyVault/vaults') and filter('primary_aggregation_type', 'true')

@@ -1,5 +1,5 @@
 resource "signalfx_detector" "pct_errors" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS Lambda errors rate"
+  name = format("%s %s", local.name_start, "AWS Lambda errors rate")
 
   program_text = <<-EOF
     A = data('Errors', filter=filter('namespace', 'AWS/Lambda') and filter('stat', 'mean') and filter('Resource', '*') and ${module.filter-tags.filter_custom}, extrapolation='last_value', rollup='average')${var.pct_errors_aggregation_function}${var.pct_errors_transformation_function}
@@ -31,7 +31,7 @@ EOF
 }
 
 resource "signalfx_detector" "throttles" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS Lambda invocations throttled"
+  name = format("%s %s", local.name_start, "AWS Lambda invocations throttled")
 
   program_text = <<-EOF
     signal = data('Throttles', filter=filter('namespace', 'AWS/Lambda') and filter('stat', 'mean') and filter('Resource', '*') and ${module.filter-tags.filter_custom}, extrapolation='last_value', rollup='average')${var.throttles_aggregation_function}${var.throttles_transformation_function}.publish('signal')
@@ -61,7 +61,7 @@ EOF
 }
 
 resource "signalfx_detector" "invocations" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS Lambda invocations"
+  name = format("%s %s", local.name_start, "AWS Lambda invocations")
 
   program_text = <<-EOF
     signal = data('Invocations', filter=filter('namespace', 'AWS/Lambda') and filter('stat', 'mean') and filter('Resource', '*') and ${module.filter-tags.filter_custom}, extrapolation='last_value', rollup='average')${var.invocations_aggregation_function}${var.invocations_transformation_function}.publish('signal')

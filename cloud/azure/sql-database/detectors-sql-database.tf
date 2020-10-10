@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure SQL Database heartbeat"
+  name = format("%s %s", local.name_start, "Azure SQL Database heartbeat")
 
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting
@@ -20,7 +20,7 @@ resource "signalfx_detector" "heartbeat" {
 }
 
 resource "signalfx_detector" "cpu" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Sql Database CPU"
+  name = format("%s %s", local.name_start, "Azure Sql Database CPU")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Sql/servers/databases') and filter('primary_aggregation_type', 'true')
@@ -51,7 +51,7 @@ resource "signalfx_detector" "cpu" {
 }
 
 resource "signalfx_detector" "free_space" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure SQL Database disk usage"
+  name = format("%s %s", local.name_start, "Azure SQL Database disk usage")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Sql/servers/databases') and filter('primary_aggregation_type', 'true')
@@ -82,7 +82,7 @@ resource "signalfx_detector" "free_space" {
 }
 
 resource "signalfx_detector" "dtu_consumption" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure SQL Database DTU consumption"
+  name = format("%s %s", local.name_start, "Azure SQL Database DTU consumption")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Sql/servers/databases') and filter('primary_aggregation_type', 'true')
@@ -113,7 +113,7 @@ resource "signalfx_detector" "dtu_consumption" {
 }
 
 resource "signalfx_detector" "deadlocks_count" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure SQL Database deadlocks count"
+  name = format("%s %s", local.name_start, "Azure SQL Database deadlocks count")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Sql/servers/databases') and filter('primary_aggregation_type', 'true')

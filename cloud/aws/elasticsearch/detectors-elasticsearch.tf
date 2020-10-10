@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ElasticSearch heartbeat"
+  name = format("%s %s", local.name_start, "AWS ElasticSearch heartbeat")
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
@@ -19,7 +19,7 @@ EOF
 }
 
 resource "signalfx_detector" "cluster_status" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ElasticSearch cluster status"
+  name = format("%s %s", local.name_start, "AWS ElasticSearch cluster status")
 
   program_text = <<-EOF
     A = data('ClusterStatus.red', filter=filter('namespace', 'AWS/ES') and filter('stat', 'upper') and ${module.filter-tags.filter_custom})${var.cluster_status_aggregation_function}${var.cluster_status_transformation_function}.publish('A')
@@ -50,7 +50,7 @@ EOF
 }
 
 resource "signalfx_detector" "free_space" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ElasticSearch cluster free storage space"
+  name = format("%s %s", local.name_start, "AWS ElasticSearch cluster free storage space")
 
   program_text = <<-EOF
     signal = data('FreeStorageSpace', filter=filter('namespace', 'AWS/ES') and filter('stat', 'lower') and filter('NodeId', '*') and ${module.filter-tags.filter_custom})${var.free_space_aggregation_function}${var.free_space_transformation_function}.publish('signal')
@@ -80,7 +80,7 @@ EOF
 }
 
 resource "signalfx_detector" "cpu_90_15min" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ElasticSearch cluster CPU"
+  name = format("%s %s", local.name_start, "AWS ElasticSearch cluster CPU")
 
   program_text = <<-EOF
     signal = data('CPUUtilization', filter=filter('namespace', 'AWS/ES') and filter('stat', 'upper') and filter('NodeId', '*') and ${module.filter-tags.filter_custom})${var.cpu_90_15min_aggregation_function}${var.cpu_90_15min_transformation_function}.publish('signal')

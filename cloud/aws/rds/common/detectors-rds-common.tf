@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS RDS heartbeat"
+  name = format("%s %s", local.name_start, "AWS RDS heartbeat")
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
@@ -19,7 +19,7 @@ EOF
 }
 
 resource "signalfx_detector" "cpu_90_15min" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS RDS instance CPU"
+  name = format("%s %s", local.name_start, "AWS RDS instance CPU")
 
   program_text = <<-EOF
     signal = data('CPUUtilization', filter=filter('namespace', 'AWS/RDS') and filter('stat', 'mean') and filter('DBInstanceIdentifier', '*') and ${module.filter-tags.filter_custom})${var.cpu_90_15min_aggregation_function}${var.cpu_90_15min_transformation_function}.publish('signal')
@@ -49,7 +49,7 @@ EOF
 }
 
 resource "signalfx_detector" "free_space_low" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS RDS instance free space"
+  name = format("%s %s", local.name_start, "AWS RDS instance free space")
 
   program_text = <<-EOF
     signal = data('FreeStorageSpace', filter=filter('namespace', 'AWS/RDS') and filter('stat', 'mean') and filter('DBInstanceIdentifier', '*') and ${module.filter-tags.filter_custom})${var.free_space_low_aggregation_function}${var.free_space_low_transformation_function}.publish('signal')
@@ -79,7 +79,7 @@ EOF
 }
 
 resource "signalfx_detector" "replica_lag" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS RDS replica lag"
+  name = format("%s %s", local.name_start, "AWS RDS replica lag")
 
   program_text = <<-EOF
     signal = data('ReplicaLag', filter=filter('namespace', 'AWS/RDS') and filter('stat', 'mean') and filter('DBInstanceIdentifier', '*') and ${module.filter-tags.filter_custom})${var.replica_lag_aggregation_function}${var.replica_lag_transformation_function}.publish('signal')

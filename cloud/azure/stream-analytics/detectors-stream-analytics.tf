@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Stream Analytics heartbeat"
+  name = format("%s %s", local.name_start, "Azure Stream Analytics heartbeat")
 
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting
@@ -20,7 +20,7 @@ resource "signalfx_detector" "heartbeat" {
 }
 
 resource "signalfx_detector" "su_utilization" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Stream Analytics resource utilization"
+  name = format("%s %s", local.name_start, "Azure Stream Analytics resource utilization")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.StreamAnalytics/streamingjobs') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}
@@ -51,7 +51,7 @@ resource "signalfx_detector" "su_utilization" {
 }
 
 resource "signalfx_detector" "failed_function_requests" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Stream Analytics failed function requests rate"
+  name = format("%s %s", local.name_start, "Azure Stream Analytics failed function requests rate")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.StreamAnalytics/streamingjobs') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}
@@ -84,7 +84,7 @@ resource "signalfx_detector" "failed_function_requests" {
 }
 
 resource "signalfx_detector" "conversion_errors" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Stream Analytics conversion errors rate"
+  name = format("%s %s", local.name_start, "Azure Stream Analytics conversion errors rate")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.StreamAnalytics/streamingjobs') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}
@@ -115,7 +115,7 @@ resource "signalfx_detector" "conversion_errors" {
 }
 
 resource "signalfx_detector" "runtime_errors" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Stream Analytics runtime errors rate"
+  name = format("%s %s", local.name_start, "Azure Stream Analytics runtime errors rate")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.StreamAnalytics/streamingjobs') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}

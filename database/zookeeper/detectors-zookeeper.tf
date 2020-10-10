@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name      = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Zookeeper heartbeat"
+  name      = format("%s %s", local.name_start, "Zookeeper heartbeat")
   max_delay = 900
 
   program_text = <<-EOF
@@ -20,7 +20,7 @@ EOF
 }
 
 resource "signalfx_detector" "zookeeper_health" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Zookeeper service health"
+  name = format("%s %s", local.name_start, "Zookeeper service health")
 
   program_text = <<-EOF
     signal = data('gauge.zk_service_health', filter=filter('plugin', 'zookeeper') and ${module.filter-tags.filter_custom})${var.zookeeper_health_aggregation_function}${var.zookeeper_health_transformation_function}.publish('signal')
@@ -39,7 +39,7 @@ EOF
 }
 
 resource "signalfx_detector" "zookeeper_latency" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Zookeeper latency"
+  name = format("%s %s", local.name_start, "Zookeeper latency")
 
   program_text = <<-EOF
     signal = data('gauge.zk_avg_latency', filter=filter('plugin', 'zookeeper') and ${module.filter-tags.filter_custom})${var.zookeeper_latency_aggregation_function}${var.zookeeper_latency_transformation_function}.publish('signal')
@@ -69,7 +69,7 @@ EOF
 }
 
 resource "signalfx_detector" "file_descriptors" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Zookeeper file descriptors usage"
+  name = format("%s %s", local.name_start, "Zookeeper file descriptors usage")
 
   program_text = <<-EOF
     A = data('gauge.zk_open_file_descriptor_count', filter=filter('plugin', 'zookeeper') and ${module.filter-tags.filter_custom}, rollup='average')${var.file_descriptors_aggregation_function}${var.file_descriptors_transformation_function}

@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ECS heartbeat"
+  name = format("%s %s", local.name_start, "AWS ECS heartbeat")
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
@@ -20,7 +20,7 @@ EOF
 
 # Monitors related to services
 resource "signalfx_detector" "cpu_utilization" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ECS service CPU utilization"
+  name = format("%s %s", local.name_start, "AWS ECS service CPU utilization")
 
   program_text = <<-EOF
     signal = data('CPUUtilization', filter=filter('namespace', 'AWS/ECS') and filter('stat', 'mean') and filter('ServiceName', '*') and ${module.filter-tags.filter_custom}).mean(by=['ServiceName'])${var.cpu_utilization_aggregation_function}${var.cpu_utilization_transformation_function}.publish('signal')
@@ -50,7 +50,7 @@ EOF
 }
 
 resource "signalfx_detector" "memory_utilization" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS ECS service memory utilization"
+  name = format("%s %s", local.name_start, "AWS ECS service memory utilization")
 
   program_text = <<-EOF
     signal = data('Memoryutilization', filter=filter('namespace', 'AWS/ECS') and filter('stat', 'mean') and filter('ServiceName', '*') and ${module.filter-tags.filter_custom}).mean(by=['ServiceName'])${var.memory_utilization_aggregation_function}${var.memory_utilization_transformation_function}.publish('signal')

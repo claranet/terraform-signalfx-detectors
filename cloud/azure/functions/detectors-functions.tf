@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Functions heartbeat"
+  name = format("%s %s", local.name_start, "Azure Functions heartbeat")
 
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting
@@ -20,7 +20,7 @@ resource "signalfx_detector" "heartbeat" {
 }
 
 resource "signalfx_detector" "http_5xx_errors_rate" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Functions HTTP 5xx error rate"
+  name = format("%s %s", local.name_start, "Azure Functions HTTP 5xx error rate")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'true') and filter('primary_aggregation_type', 'true')
@@ -53,7 +53,7 @@ resource "signalfx_detector" "http_5xx_errors_rate" {
 }
 
 resource "signalfx_detector" "high_connections_count" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Functions connections count"
+  name = format("%s %s", local.name_start, "Azure Functions connections count")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'true') and filter('primary_aggregation_type', 'true')
@@ -84,7 +84,7 @@ resource "signalfx_detector" "high_connections_count" {
 }
 
 resource "signalfx_detector" "high_threads_count" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Functions thread count"
+  name = format("%s %s", local.name_start, "Azure Functions thread count")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'true') and filter('primary_aggregation_type', 'true')

@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Service Plan heartbeat"
+  name = format("%s %s", local.name_start, "Azure App Service Plan heartbeat")
 
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting
@@ -20,7 +20,7 @@ resource "signalfx_detector" "heartbeat" {
 }
 
 resource "signalfx_detector" "cpu_percentage" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Service Plan CPU percentage"
+  name = format("%s %s", local.name_start, "Azure App Service Plan CPU percentage")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Web/serverFarms') and filter('primary_aggregation_type', 'true')
@@ -51,7 +51,7 @@ resource "signalfx_detector" "cpu_percentage" {
 }
 
 resource "signalfx_detector" "memory_percentage" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Service Plan memory percentage"
+  name = format("%s %s", local.name_start, "Azure App Service Plan memory percentage")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Web/serverFarms') and filter('primary_aggregation_type', 'true')
