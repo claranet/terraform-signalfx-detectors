@@ -33,7 +33,7 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.varnish_threads_number_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.varnish_threads_number_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} on {{{dimensions}}}"
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
     parameterized_body    = local.parameterized_body
   }
 }
@@ -53,7 +53,7 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.varnish_session_dropped_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.varnish_session_dropped_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} on {{{dimensions}}}"
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
     parameterized_body    = local.parameterized_body
   }
 }
@@ -76,7 +76,7 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.varnish_cache_hit_rate_disabled_major, var.varnish_cache_hit_rate_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.varnish_cache_hit_rate_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} on {{{dimensions}}}"
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
     parameterized_body    = local.parameterized_body
   }
   rule {
@@ -85,7 +85,7 @@ EOF
     detect_label          = "MINOR"
     disabled              = coalesce(var.varnish_cache_hit_rate_disabled_minor, var.varnish_cache_hit_rate_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.varnish_cache_hit_rate_notifications, "minor", []), var.notifications.minor)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} on {{{dimensions}}}"
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
     parameterized_body    = local.parameterized_body
   }
 }
@@ -108,7 +108,7 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.varnish_memory_usage_disabled_critical, var.varnish_memory_usage_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.varnish_memory_usage_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} on {{{dimensions}}}"
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
     parameterized_body    = local.parameterized_body
   }
   rule {
@@ -117,7 +117,7 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.varnish_memory_usage_disabled_major, var.varnish_memory_usage_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.varnish_memory_usage_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} on {{{dimensions}}}"
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
     parameterized_body    = local.parameterized_body
   }
 }
