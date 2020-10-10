@@ -16,8 +16,8 @@ resource "signalfx_detector" "api_result" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.api_result_disabled_critical, var.api_result_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.api_result_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 
   rule {
@@ -26,8 +26,8 @@ resource "signalfx_detector" "api_result" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.api_result_disabled_major, var.api_result_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.api_result_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 }
 
@@ -47,8 +47,8 @@ resource "signalfx_detector" "api_latency" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.api_latency_disabled_critical, var.api_latency_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.api_latency_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 
   rule {
@@ -57,7 +57,7 @@ resource "signalfx_detector" "api_latency" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.api_latency_disabled_major, var.api_latency_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.api_latency_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 }

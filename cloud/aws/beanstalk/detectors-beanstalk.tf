@@ -13,8 +13,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject_novalue
+    parameterized_body    = local.body
   }
 }
 
@@ -33,8 +33,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.health_disabled_critical, var.health_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.health_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 
   rule {
@@ -43,8 +43,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.health_disabled_major, var.health_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.health_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 }
 
@@ -63,8 +63,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.latency_p90_disabled_critical, var.latency_p90_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.latency_p90_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 
   rule {
@@ -73,8 +73,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.latency_p90_disabled_major, var.latency_p90_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.latency_p90_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 }
 
@@ -95,8 +95,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.app_5xx_error_rate_disabled_critical, var.app_5xx_error_rate_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.app_5xx_error_rate_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 
   rule {
@@ -105,8 +105,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.app_5xx_error_rate_disabled_major, var.app_5xx_error_rate_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.app_5xx_error_rate_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 
 }
@@ -126,8 +126,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.root_filesystem_usage_disabled_critical, var.root_filesystem_usage_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.root_filesystem_usage_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 
   rule {
@@ -136,8 +136,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.root_filesystem_usage_disabled_major, var.root_filesystem_usage_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.root_filesystem_usage_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 }
 

@@ -15,8 +15,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.hit_ratio_disabled_critical, var.hit_ratio_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.hit_ratio_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 
   rule {
@@ -25,8 +25,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.hit_ratio_disabled_major, var.hit_ratio_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.hit_ratio_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 }
 
@@ -45,8 +45,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.cpu_disabled_critical, var.cpu_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.cpu_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 
   rule {
@@ -55,8 +55,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.cpu_disabled_major, var.cpu_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.cpu_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 }
 

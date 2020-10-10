@@ -14,8 +14,8 @@ resource "signalfx_detector" "heartbeat" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject_novalue
+    parameterized_body    = local.body
   }
 }
 
@@ -35,8 +35,8 @@ resource "signalfx_detector" "cpu_usage" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.cpu_usage_disabled_critical, var.cpu_usage_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.cpu_usage_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 
   rule {
@@ -45,8 +45,8 @@ resource "signalfx_detector" "cpu_usage" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.cpu_usage_disabled_major, var.cpu_usage_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.cpu_usage_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 }
 
@@ -68,8 +68,8 @@ resource "signalfx_detector" "credit_cpu" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.credit_cpu_disabled_critical, var.credit_cpu_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.credit_cpu_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 
   rule {
@@ -78,7 +78,7 @@ resource "signalfx_detector" "credit_cpu" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.credit_cpu_disabled_major, var.credit_cpu_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.credit_cpu_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 }

@@ -14,8 +14,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject_novalue
+    parameterized_body    = local.body
   }
 }
 
@@ -36,8 +36,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.php_fpm_connect_idle_disabled_critical, var.php_fpm_connect_idle_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.php_fpm_connect_idle_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 
   rule {
@@ -46,8 +46,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.php_fpm_connect_idle_disabled_major, var.php_fpm_connect_idle_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.php_fpm_connect_idle_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 }
 

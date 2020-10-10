@@ -15,8 +15,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.ingress_5xx_disabled_critical, var.ingress_5xx_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.ingress_5xx_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 
   rule {
@@ -25,8 +25,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.ingress_5xx_disabled_major, var.ingress_5xx_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.ingress_5xx_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 }
 
@@ -47,8 +47,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.ingress_4xx_disabled_critical, var.ingress_4xx_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.ingress_4xx_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 
   rule {
@@ -57,8 +57,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.ingress_4xx_disabled_major, var.ingress_4xx_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.ingress_4xx_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 }
 
@@ -77,8 +77,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.ingress_latency_disabled_critical, var.ingress_latency_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.ingress_latency_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 
   rule {
@@ -87,8 +87,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.ingress_latency_disabled_major, var.ingress_latency_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.ingress_latency_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 }
 

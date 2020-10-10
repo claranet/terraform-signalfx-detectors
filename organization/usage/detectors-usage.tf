@@ -14,7 +14,7 @@ EOF
     disabled              = coalesce(var.hosts_limit_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.hosts_limit_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}} > {{inputs.limit.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_body    = local.body
     runbook_url           = var.runbook_url
     tip                   = <<-EOF
       To avoid overbilling, limits are set per organization and per resources type.
@@ -38,7 +38,7 @@ EOF
     disabled              = coalesce(var.containers_limit_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.containers_limit_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}} > {{inputs.limit.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_body    = local.body
     runbook_url           = var.runbook_url
     tip                   = <<-EOF
       To avoid overbilling, limits are set per organization and per resources type.
@@ -62,7 +62,7 @@ EOF
     disabled              = coalesce(var.custom_metrics_limit_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.custom_metrics_limit_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}} > {{inputs.limit.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_body    = local.body
     runbook_url           = var.runbook_url
     tip                   = <<-EOF
       To avoid overbilling, limits are set per organization and per resources type.
@@ -86,8 +86,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.containers_ratio_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.containers_ratio_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
     runbook_url           = var.runbook_url
     tip                   = <<-EOF
       Enterprise plan includes ${var.multiplier}0 containers per host.
@@ -113,8 +113,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.custom_metrics_ratio_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.custom_metrics_ratio_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
     runbook_url           = var.runbook_url
     tip                   = <<-EOF
       Enterprise plan includes ${var.multiplier}00 custom metrics per host.

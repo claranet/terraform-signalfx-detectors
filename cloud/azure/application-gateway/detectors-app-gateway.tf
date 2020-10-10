@@ -14,8 +14,8 @@ resource "signalfx_detector" "heartbeat" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject_novalue
+    parameterized_body    = local.body
   }
 }
 
@@ -34,8 +34,8 @@ resource "signalfx_detector" "total_requests" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.total_requests_disabled_critical, var.total_requests_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.total_requests_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 
 }
@@ -56,8 +56,8 @@ resource "signalfx_detector" "backend_connect_time" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.backend_connect_time_disabled_critical, var.backend_connect_time_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.backend_connect_time_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 
   rule {
@@ -66,8 +66,8 @@ resource "signalfx_detector" "backend_connect_time" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.backend_connect_time_disabled_major, var.backend_connect_time_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.backend_connect_time_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 }
 
@@ -90,8 +90,8 @@ resource "signalfx_detector" "failed_requests" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.failed_requests_disabled_critical, var.failed_requests_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.failed_requests_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 
   rule {
@@ -100,8 +100,8 @@ resource "signalfx_detector" "failed_requests" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.failed_requests_disabled_major, var.failed_requests_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.failed_requests_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 }
 
@@ -123,8 +123,8 @@ resource "signalfx_detector" "unhealthy_host_ratio" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.unhealthy_host_ratio_disabled_critical, var.unhealthy_host_ratio_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.unhealthy_host_ratio_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 
   rule {
@@ -133,8 +133,8 @@ resource "signalfx_detector" "unhealthy_host_ratio" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.unhealthy_host_ratio_disabled_major, var.unhealthy_host_ratio_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.unhealthy_host_ratio_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 }
 
@@ -156,8 +156,8 @@ resource "signalfx_detector" "http_4xx_errors" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.http_4xx_errors_disabled_critical, var.http_4xx_errors_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.http_4xx_errors_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 
   rule {
@@ -166,8 +166,8 @@ resource "signalfx_detector" "http_4xx_errors" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.http_4xx_errors_disabled_major, var.http_4xx_errors_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.http_4xx_errors_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 }
 
@@ -189,8 +189,8 @@ resource "signalfx_detector" "http_5xx_errors" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.http_5xx_errors_disabled_critical, var.http_5xx_errors_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.http_5xx_errors_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 
   rule {
@@ -199,8 +199,8 @@ resource "signalfx_detector" "http_5xx_errors" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.http_5xx_errors_disabled_major, var.http_5xx_errors_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.http_5xx_errors_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 }
 
@@ -222,8 +222,8 @@ resource "signalfx_detector" "backend_http_4xx_errors" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.backend_http_4xx_errors_disabled_critical, var.backend_http_4xx_errors_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.backend_http_4xx_errors_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 
   rule {
@@ -232,8 +232,8 @@ resource "signalfx_detector" "backend_http_4xx_errors" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.backend_http_4xx_errors_disabled_major, var.backend_http_4xx_errors_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.backend_http_4xx_errors_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 }
 
@@ -255,8 +255,8 @@ resource "signalfx_detector" "backend_http_5xx_errors" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.backend_http_5xx_errors_disabled_critical, var.backend_http_5xx_errors_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.backend_http_5xx_errors_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 
   rule {
@@ -265,7 +265,7 @@ resource "signalfx_detector" "backend_http_5xx_errors" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.backend_http_5xx_errors_disabled_major, var.backend_http_5xx_errors_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.backend_http_5xx_errors_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 }

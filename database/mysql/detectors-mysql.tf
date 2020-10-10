@@ -14,8 +14,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject_novalue
+    parameterized_body    = local.body
   }
 }
 
@@ -36,8 +36,8 @@ resource "signalfx_detector" "mysql_connections" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.mysql_connections_disabled_critical, var.mysql_connections_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.mysql_connections_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 
   rule {
@@ -46,8 +46,8 @@ resource "signalfx_detector" "mysql_connections" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.mysql_connections_disabled_major, var.mysql_connections_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.mysql_connections_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 }
 
@@ -68,8 +68,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.mysql_slow_disabled_critical, var.mysql_slow_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.mysql_slow_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 
   rule {
@@ -78,8 +78,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.mysql_slow_disabled_major, var.mysql_slow_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.mysql_slow_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 }
 
@@ -100,8 +100,8 @@ EOF
     detect_label          = "MINOR"
     disabled              = coalesce(var.mysql_pool_efficiency_disabled_minor, var.mysql_pool_efficiency_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.mysql_pool_efficiency_notifications, "minor", []), var.notifications.minor)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 
   rule {
@@ -110,8 +110,8 @@ EOF
     detect_label          = "WARN"
     disabled              = coalesce(var.mysql_pool_efficiency_disabled_warning, var.mysql_pool_efficiency_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.mysql_pool_efficiency_notifications, "warning", []), var.notifications.warning)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 }
 
@@ -132,8 +132,8 @@ EOF
     detect_label          = "MINOR"
     disabled              = coalesce(var.mysql_pool_utilization_disabled_minor, var.mysql_pool_utilization_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.mysql_pool_utilization_notifications, "minor", []), var.notifications.minor)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 
   rule {
@@ -142,8 +142,8 @@ EOF
     detect_label          = "WARN"
     disabled              = coalesce(var.mysql_pool_utilization_disabled_warning, var.mysql_pool_utilization_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.mysql_pool_utilization_notifications, "warning", []), var.notifications.warning)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 }
 
@@ -162,8 +162,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.mysql_threads_anomaly_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.mysql_threads_anomaly_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 }
 
@@ -182,8 +182,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.mysql_questions_anomaly_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.mysql_questions_anomaly_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 }
 
@@ -202,8 +202,8 @@ resource "signalfx_detector" "mysql_replication_lag" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.mysql_replication_lag_disabled_critical, var.mysql_replication_lag_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.mysql_replication_lag_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 
   rule {
@@ -212,8 +212,8 @@ resource "signalfx_detector" "mysql_replication_lag" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.mysql_replication_lag_disabled_major, var.mysql_replication_lag_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.mysql_replication_lag_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 }
 
@@ -231,8 +231,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.mysql_replication_status_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.mysql_replication_status_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.subject
+    parameterized_body    = local.body
   }
 }
 
