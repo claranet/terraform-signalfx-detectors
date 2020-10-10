@@ -1,5 +1,9 @@
 locals {
-  parameterized_body = <<-EOF
+  subject_start   = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}}"
+  subject_end     = "on {{{dimensions}}}"
+  subject         = format("%s ({{inputs.signal.value}}) %s", local.subject_start, local.subject_end)
+  subject_novalue = format("%s %s", local.subject_start, local.subject_end)
+  body            = <<-EOF
     **Alert**:
     *[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}})*
     {{#if anomalous}}
