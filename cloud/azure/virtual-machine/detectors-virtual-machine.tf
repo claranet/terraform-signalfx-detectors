@@ -3,7 +3,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting
-        base_filter = filter('resource_type', 'Microsoft.Compute/virtualMachines') and filter('primary_aggregation_type', 'true') and (not filter('azure_power_state', 'PowerState/stopping', 'PowerState/stopped', 'PowerState/deallocating', 'PowerState/deallocated'))
+        base_filter = filter('resource_type', 'Microsoft.Compute/virtualMachines') and filter('primary_aggregation_type', 'true') and ${local.heartbeat_filters_azure}
         signal = data('Percentage CPU', filter=base_filter and ${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')
         not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}').publish('CRIT')
     EOF
@@ -23,7 +23,7 @@ resource "signalfx_detector" "cpu_usage" {
   name = format("%s %s", local.name_start, "Azure Virtual Machine CPU usage")
 
   program_text = <<-EOF
-        base_filter = filter('resource_type', 'Microsoft.Compute/virtualMachines') and filter('primary_aggregation_type', 'true') and (not filter('azure_power_state', 'PowerState/stopping', 'PowerState/stopped', 'PowerState/deallocating', 'PowerState/deallocated'))
+        base_filter = filter('resource_type', 'Microsoft.Compute/virtualMachines') and filter('primary_aggregation_type', 'true') and ${local.heartbeat_filters_azure}
         signal = data('Percentage CPU', filter=base_filter and ${module.filter-tags.filter_custom})${var.cpu_usage_aggregation_function}.publish('signal')
         detect(when(signal > threshold(${var.cpu_usage_threshold_critical}), lasting="${var.cpu_usage_timer}")).publish('CRIT')
         detect(when(signal > threshold(${var.cpu_usage_threshold_major}), lasting="${var.cpu_usage_timer}") and when(signal <= ${var.cpu_usage_threshold_critical})).publish('MAJOR')
@@ -54,7 +54,7 @@ resource "signalfx_detector" "credit_cpu" {
   name = format("%s %s", local.name_start, "Azure Virtual Machine remaining CPU credit")
 
   program_text = <<-EOF
-        base_filter = filter('resource_type', 'Microsoft.Compute/virtualMachines') and filter('primary_aggregation_type', 'true') and (not filter('azure_power_state', 'PowerState/stopping', 'PowerState/stopped', 'PowerState/deallocating', 'PowerState/deallocated'))
+        base_filter = filter('resource_type', 'Microsoft.Compute/virtualMachines') and filter('primary_aggregation_type', 'true') and ${local.heartbeat_filters_azure}
         A = data('CPU Credits Remaining', filter=base_filter and ${module.filter-tags.filter_custom})${var.credit_cpu_aggregation_function}
         B = data('CPU Credits Consumed', filter=base_filter and ${module.filter-tags.filter_custom})${var.credit_cpu_aggregation_function}
         signal = ((A/(A+B))*100).fill(100).${var.credit_cpu_transformation_function}(over='${var.credit_cpu_timer}').publish('signal')
