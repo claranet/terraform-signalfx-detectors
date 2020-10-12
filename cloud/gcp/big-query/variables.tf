@@ -82,7 +82,7 @@ variable "concurrent_queries_aggregation_function" {
 }
 
 variable "concurrent_queries_transformation_function" {
-  description = "Transformation function for concurrent_queries detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for concurrent_queries detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='5m')"
 }
@@ -150,7 +150,7 @@ variable "execution_time_aggregation_function" {
 }
 
 variable "execution_time_transformation_function" {
-  description = "Transformation function for execution_time detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for execution_time detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='5m')"
 }
@@ -218,7 +218,7 @@ variable "scanned_bytes_aggregation_function" {
 }
 
 variable "scanned_bytes_transformation_function" {
-  description = "Transformation function for scanned_bytes detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for scanned_bytes detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='4h')"
 }
@@ -286,7 +286,7 @@ variable "scanned_bytes_billed_aggregation_function" {
 }
 
 variable "scanned_bytes_billed_transformation_function" {
-  description = "Transformation function for scanned_bytes_billed detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for scanned_bytes_billed detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='4h')"
 }
@@ -354,7 +354,7 @@ variable "available_slots_aggregation_function" {
 }
 
 variable "available_slots_transformation_function" {
-  description = "Transformation function for available_slots detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for available_slots detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='5m')"
 }
@@ -422,7 +422,7 @@ variable "stored_bytes_aggregation_function" {
 }
 
 variable "stored_bytes_transformation_function" {
-  description = "Transformation function for stored_bytes detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for stored_bytes detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='5m')"
 }
@@ -490,7 +490,7 @@ variable "table_count_aggregation_function" {
 }
 
 variable "table_count_transformation_function" {
-  description = "Transformation function for table_count detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for table_count detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='4h')"
 }
@@ -558,7 +558,7 @@ variable "uploaded_bytes_aggregation_function" {
 }
 
 variable "uploaded_bytes_transformation_function" {
-  description = "Transformation function for uploaded_bytes detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for uploaded_bytes detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='4h')"
 }
@@ -626,7 +626,7 @@ variable "uploaded_bytes_billed_aggregation_function" {
 }
 
 variable "uploaded_bytes_billed_transformation_function" {
-  description = "Transformation function for uploaded_bytes_billed detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for uploaded_bytes_billed detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='4h')"
 }

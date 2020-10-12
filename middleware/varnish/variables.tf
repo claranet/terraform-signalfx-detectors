@@ -126,61 +126,61 @@ variable "varnish_memory_usage_notifications" {
 # Varnish detectors specific
 
 variable "varnish_backend_failed_aggregation_function" {
-  description = "Aggregation function and group by for varnish backend failed detector (i.e. \".mean(by=['host']).\")"
+  description = "Aggregation function and group by for varnish backend failed detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
 }
 
 variable "varnish_backend_failed_transformation_function" {
-  description = "Transformation function for varnish backend failed detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for varnish backend failed detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='5m')"
 }
 
 variable "varnish_session_dropped_aggregation_function" {
-  description = "Aggregation function and group by for varnish session dropped detector (i.e. \".mean(by=['host']).\")"
+  description = "Aggregation function and group by for varnish session dropped detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
 }
 
 variable "varnish_session_dropped_transformation_function" {
-  description = "Transformation function for varnish session dropped detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for varnish session dropped detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='5m')"
 }
 
 variable "varnish_threads_number_aggregation_function" {
-  description = "Aggregation function and group by for varnish threads number detector (i.e. \".mean(by=['host']).\")"
+  description = "Aggregation function and group by for varnish threads number detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
 }
 
 variable "varnish_threads_number_transformation_function" {
-  description = "Transformation function for varnish threads number detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for varnish threads number detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='5m')"
 }
 
 variable "varnish_cache_hit_rate_aggregation_function" {
-  description = "Aggregation function and group by for varnish cache hit rate detector (i.e. \".mean(by=['host']).\")"
+  description = "Aggregation function and group by for varnish cache hit rate detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
 }
 
 variable "varnish_cache_hit_rate_transformation_function" {
-  description = "Transformation function for varnish cache hit rate detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for varnish cache hit rate detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='5m')"
 }
 
 variable "varnish_memory_usage_aggregation_function" {
-  description = "Aggregation function and group by for varnish memory usage aggregation detector (i.e. \".mean(by=['host']).\")"
+  description = "Aggregation function and group by for varnish memory usage aggregation detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
 }
 
 variable "varnish_memory_usage_transformation_function" {
-  description = "Transformation function for varnish memory usage aggregation detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for varnish memory usage aggregation detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='5m')"
 }

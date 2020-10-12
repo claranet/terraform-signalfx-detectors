@@ -85,7 +85,7 @@ variable "ingress_5xx_aggregation_function" {
 }
 
 variable "ingress_5xx_transformation_function" {
-  description = "Transformation function for ingress_5xx detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for ingress_5xx detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
 }
@@ -149,7 +149,7 @@ variable "ingress_4xx_aggregation_function" {
 }
 
 variable "ingress_4xx_transformation_function" {
-  description = "Transformation function for ingress_4xx detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for ingress_4xx detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
 }
@@ -213,7 +213,7 @@ variable "ingress_latency_aggregation_function" {
 }
 
 variable "ingress_latency_transformation_function" {
-  description = "Transformation function for ingress_latency detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for ingress_latency detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
 }

@@ -57,9 +57,15 @@ variable "heartbeat_notifications" {
 }
 
 variable "heartbeat_timeframe" {
-  description = "Timeframe for system not reporting detector (i.e. \"10m\")"
+  description = "Timeframe for heartbeat detector (i.e. \"10m\")"
   type        = string
   default     = "20m"
+}
+
+variable "heartbeat_aggregation_function" {
+  description = "Aggregation function and group by for heartbeat detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ""
 }
 
 # deadlocks detectors
@@ -95,7 +101,7 @@ variable "deadlocks_aggregation_function" {
 }
 
 variable "deadlocks_transformation_function" {
-  description = "Transformation function for deadlocks detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for deadlocks detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".max(over='5m')"
 }
@@ -145,7 +151,7 @@ variable "hit_ratio_aggregation_function" {
 }
 
 variable "hit_ratio_transformation_function" {
-  description = "Transformation function for hit_ratio detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for hit_ratio detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".max(over='1h')"
 }
@@ -195,7 +201,7 @@ variable "rollbacks_aggregation_function" {
 }
 
 variable "rollbacks_transformation_function" {
-  description = "Transformation function for rollbacks detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for rollbacks detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='10m')"
 }
@@ -245,7 +251,7 @@ variable "conflicts_aggregation_function" {
 }
 
 variable "conflicts_transformation_function" {
-  description = "Transformation function for conflicts detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for conflicts detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".max(over='5m')"
 }
@@ -295,7 +301,7 @@ variable "max_connections_aggregation_function" {
 }
 
 variable "max_connections_transformation_function" {
-  description = "Transformation function for max_connections detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for max_connections detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='1m')"
 }
@@ -345,7 +351,7 @@ variable "replication_lag_aggregation_function" {
 }
 
 variable "replication_lag_transformation_function" {
-  description = "Transformation function for replication_lag detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for replication_lag detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='5m')"
 }
@@ -383,7 +389,7 @@ variable "replication_state_aggregation_function" {
 }
 
 variable "replication_state_transformation_function" {
-  description = "Transformation function for replication_state detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for replication_state detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".max(over='5m')"
 }

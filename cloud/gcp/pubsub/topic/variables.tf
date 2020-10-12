@@ -70,7 +70,7 @@ variable "sending_operations_aggregation_function" {
 }
 
 variable "sending_operations_transformation_function" {
-  description = "Transformation function for sending_operations detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for sending_operations detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".sum(over='30m')"
 }
@@ -114,7 +114,7 @@ variable "unavailable_sending_operations_aggregation_function" {
 }
 
 variable "unavailable_sending_operations_transformation_function" {
-  description = "Transformation function for unavailable_sending_operations detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for unavailable_sending_operations detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".sum(over='15m')"
 }
@@ -164,7 +164,7 @@ variable "unavailable_sending_operations_ratio_aggregation_function" {
 }
 
 variable "unavailable_sending_operations_ratio_transformation_function" {
-  description = "Transformation function for unavailable_sending_operations_ratio detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for unavailable_sending_operations_ratio detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".sum(over='15m')"
 }

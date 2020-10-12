@@ -57,9 +57,15 @@ variable "heartbeat_notifications" {
 }
 
 variable "heartbeat_timeframe" {
-  description = "Timeframe for system not reporting detector (i.e. \"10m\")"
+  description = "Timeframe for heartbeat detector (i.e. \"10m\")"
   type        = string
   default     = "20m"
+}
+
+variable "heartbeat_aggregation_function" {
+  description = "Aggregation function and group by for heartbeat detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ""
 }
 
 # error_rate detectors
@@ -95,7 +101,7 @@ variable "error_rate_aggregation_function" {
 }
 
 variable "error_rate_transformation_function" {
-  description = "Transformation function for error_rate detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for error_rate detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='5m')"
 }
@@ -145,7 +151,7 @@ variable "apdex_aggregation_function" {
 }
 
 variable "apdex_transformation_function" {
-  description = "Transformation function for apdex detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for apdex detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='15m')"
 }

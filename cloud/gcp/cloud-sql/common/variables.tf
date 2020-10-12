@@ -62,9 +62,15 @@ variable "heartbeat_notifications" {
 }
 
 variable "heartbeat_timeframe" {
-  description = "Timeframe for system not reporting detector (i.e. \"10m\")"
+  description = "Timeframe for heartbeat detector (i.e. \"10m\")"
   type        = string
   default     = "20m"
+}
+
+variable "heartbeat_aggregation_function" {
+  description = "Aggregation function and group by for heartbeat detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ".mean(by=['database_id'])"
 }
 
 # CPU_utilization detectors
@@ -100,7 +106,7 @@ variable "cpu_utilization_aggregation_function" {
 }
 
 variable "cpu_utilization_transformation_function" {
-  description = "Transformation function for cpu_utilization detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for cpu_utilization detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='30m')"
 }
@@ -150,7 +156,7 @@ variable "disk_utilization_aggregation_function" {
 }
 
 variable "disk_utilization_transformation_function" {
-  description = "Transformation function for disk_utilization detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for disk_utilization detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='10m')"
 }
@@ -262,7 +268,7 @@ variable "memory_utilization_aggregation_function" {
 }
 
 variable "memory_utilization_transformation_function" {
-  description = "Transformation function for memory_utilization detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for memory_utilization detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='15m')"
 }

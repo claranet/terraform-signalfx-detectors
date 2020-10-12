@@ -57,9 +57,15 @@ variable "heartbeat_notifications" {
 }
 
 variable "heartbeat_timeframe" {
-  description = "Timeframe for system not reporting detector (i.e. \"10m\")"
+  description = "Timeframe for heartbeat detector (i.e. \"10m\")"
   type        = string
   default     = "20m"
+}
+
+variable "heartbeat_aggregation_function" {
+  description = "Aggregation function and group by for heartbeat detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ""
 }
 
 # PHP_fpm_connect_idle detectors
@@ -95,7 +101,7 @@ variable "php_fpm_connect_idle_aggregation_function" {
 }
 
 variable "php_fpm_connect_idle_transformation_function" {
-  description = "Transformation function for php_fpm_connect_idle detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for php_fpm_connect_idle detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='10m')"
 }

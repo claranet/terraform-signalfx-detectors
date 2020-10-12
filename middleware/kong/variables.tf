@@ -57,9 +57,15 @@ variable "heartbeat_notifications" {
 }
 
 variable "heartbeat_timeframe" {
-  description = "Timeframe for system not reporting detector (i.e. \"10m\")"
+  description = "Timeframe for heartbeat detector (i.e. \"10m\")"
   type        = string
   default     = "20m"
+}
+
+variable "heartbeat_aggregation_function" {
+  description = "Aggregation function and group by for heartbeat detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ""
 }
 
 #####
@@ -89,13 +95,13 @@ variable "treatment_limit_notifications" {
 }
 
 variable "treatment_limit_aggregation_function" {
-  description = "Aggregation function and group by for treatment limit detector (i.e. \".mean(by=['host']).\")"
+  description = "Aggregation function and group by for treatment limit detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
 }
 
 variable "treatment_limit_transformation_function" {
-  description = "Transformation function for treatment limit detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for treatment limit detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='15m')"
 }

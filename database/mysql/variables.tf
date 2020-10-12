@@ -57,9 +57,15 @@ variable "heartbeat_notifications" {
 }
 
 variable "heartbeat_timeframe" {
-  description = "Timeframe for system not reporting detector (i.e. \"10m\")"
+  description = "Timeframe for heartbeat detector (i.e. \"10m\")"
   type        = string
   default     = "20m"
+}
+
+variable "heartbeat_aggregation_function" {
+  description = "Aggregation function and group by for heartbeat detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ""
 }
 
 # Mysql_connection detectors
@@ -95,7 +101,7 @@ variable "mysql_connections_aggregation_function" {
 }
 
 variable "mysql_connections_transformation_function" {
-  description = "Transformation function for mysql_connection detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for mysql_connection detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='1m')"
 }
@@ -145,7 +151,7 @@ variable "mysql_pool_efficiency_aggregation_function" {
 }
 
 variable "mysql_pool_efficiency_transformation_function" {
-  description = "Transformation function for mysql_pool_efficiency detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for mysql_pool_efficiency detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='1h')"
 }
@@ -195,7 +201,7 @@ variable "mysql_pool_utilization_aggregation_function" {
 }
 
 variable "mysql_pool_utilization_transformation_function" {
-  description = "Transformation function for mysql_pool_utilization detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for mysql_pool_utilization detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='1h')"
 }
@@ -245,7 +251,7 @@ variable "mysql_slow_aggregation_function" {
 }
 
 variable "mysql_slow_transformation_function" {
-  description = "Transformation function for mysql_slow detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for mysql_slow detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='15m')"
 }
@@ -283,7 +289,7 @@ variable "mysql_threads_anomaly_aggregation_function" {
 }
 
 variable "mysql_threads_anomaly_transformation_function" {
-  description = "Transformation function for mysql_threads_anomaly detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for mysql_threads_anomaly detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='15m')"
 }
@@ -345,7 +351,7 @@ variable "mysql_questions_anomaly_aggregation_function" {
 }
 
 variable "mysql_questions_anomaly_transformation_function" {
-  description = "Transformation function for mysql_questions_anomaly detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for mysql_questions_anomaly detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='15m')"
 }
@@ -419,7 +425,7 @@ variable "mysql_replication_lag_aggregation_function" {
 }
 
 variable "mysql_replication_lag_transformation_function" {
-  description = "Transformation function for mysql_replication_lag detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for mysql_replication_lag detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='15m')"
 }
@@ -457,7 +463,7 @@ variable "mysql_replication_status_aggregation_function" {
 }
 
 variable "mysql_replication_status_transformation_function" {
-  description = "Transformation function for mysql_replication_status detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for mysql_replication_status detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".max(over='5m')"
 }

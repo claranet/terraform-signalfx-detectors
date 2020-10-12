@@ -57,9 +57,15 @@ variable "heartbeat_notifications" {
 }
 
 variable "heartbeat_timeframe" {
-  description = "Timeframe for system not reporting detector (i.e. \"10m\")"
+  description = "Timeframe for heartbeat detector (i.e. \"10m\")"
   type        = string
   default     = "20m"
+}
+
+variable "heartbeat_aggregation_function" {
+  description = "Aggregation function and group by for heartbeat detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ""
 }
 
 # Evicted_keys detectors
@@ -95,7 +101,7 @@ variable "evicted_keys_aggregation_function" {
 }
 
 variable "evicted_keys_transformation_function" {
-  description = "Transformation function for evicted_keys detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for evicted_keys detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='15m')"
 }
@@ -145,7 +151,7 @@ variable "expirations_aggregation_function" {
 }
 
 variable "expirations_transformation_function" {
-  description = "Transformation function for expirations detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for expirations detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='15m')"
 }
@@ -195,7 +201,7 @@ variable "blocked_clients_aggregation_function" {
 }
 
 variable "blocked_clients_transformation_function" {
-  description = "Transformation function for blocked_clients detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for blocked_clients detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='1h')"
 }
@@ -233,7 +239,7 @@ variable "keyspace_full_aggregation_function" {
 }
 
 variable "keyspace_full_transformation_function" {
-  description = "Transformation function for keyspace_full detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for keyspace_full detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".sum(over='1h')"
 }
@@ -271,7 +277,7 @@ variable "memory_used_max_aggregation_function" {
 }
 
 variable "memory_used_max_transformation_function" {
-  description = "Transformation function for memory_used_max detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for memory_used_max detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='10m')"
 }
@@ -321,7 +327,7 @@ variable "memory_used_total_aggregation_function" {
 }
 
 variable "memory_used_total_transformation_function" {
-  description = "Transformation function for memory_used_total detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for memory_used_total detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='10m')"
 }
@@ -371,7 +377,7 @@ variable "memory_frag_high_aggregation_function" {
 }
 
 variable "memory_frag_high_transformation_function" {
-  description = "Transformation function for memory_frag_high detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for memory_frag_high detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='15m')"
 }
@@ -421,7 +427,7 @@ variable "memory_frag_low_aggregation_function" {
 }
 
 variable "memory_frag_low_transformation_function" {
-  description = "Transformation function for memory_frag_low detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for memory_frag_low detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='15m')"
 }
@@ -471,7 +477,7 @@ variable "rejected_connections_aggregation_function" {
 }
 
 variable "rejected_connections_transformation_function" {
-  description = "Transformation function for rejected_connections detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for rejected_connections detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = "sum(over='5m')"
 }
@@ -521,7 +527,7 @@ variable "hitrate_aggregation_function" {
 }
 
 variable "hitrate_transformation_function" {
-  description = "Transformation function for hitrate (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for hitrate (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".max(over='5m')"
 }

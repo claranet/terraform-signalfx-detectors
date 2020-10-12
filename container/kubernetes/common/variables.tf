@@ -57,9 +57,15 @@ variable "heartbeat_notifications" {
 }
 
 variable "heartbeat_timeframe" {
-  description = "Timeframe for system not reporting detector (i.e. \"10m\")"
+  description = "Timeframe for heartbeat detector (i.e. \"10m\")"
   type        = string
   default     = "20m"
+}
+
+variable "heartbeat_aggregation_function" {
+  description = "Aggregation function and group by for heartbeat detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ".mean(by=['kubernetes_cluster'])"
 }
 
 # node_ready detectors
@@ -101,7 +107,7 @@ variable "node_ready_aggregation_function" {
 }
 
 variable "node_ready_transformation_function" {
-  description = "Transformation function for node_ready detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for node_ready detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
 }
@@ -127,7 +133,7 @@ variable "pod_phase_status_aggregation_function" {
 }
 
 variable "pod_phase_status_transformation_function" {
-  description = "Transformation function for pod_phase_status detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for pod_phase_status detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
 }
@@ -159,7 +165,7 @@ variable "terminated_aggregation_function" {
 }
 
 variable "terminated_transformation_function" {
-  description = "Transformation function for terminated detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for terminated detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
 }
@@ -197,7 +203,7 @@ variable "oom_killed_aggregation_function" {
 }
 
 variable "oom_killed_transformation_function" {
-  description = "Transformation function for oom_killed detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for oom_killed detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
 }
@@ -229,7 +235,7 @@ variable "deployment_crashloopbackoff_aggregation_function" {
 }
 
 variable "deployment_crashloopbackoff_transformation_function" {
-  description = "Transformation function for deployment_crashloopbackoff detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for deployment_crashloopbackoff detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".sum(over='15m')"
 }
@@ -261,7 +267,7 @@ variable "daemonset_crashloopbackoff_aggregation_function" {
 }
 
 variable "daemonset_crashloopbackoff_transformation_function" {
-  description = "Transformation function for daemonset_crashloopbackoff detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for daemonset_crashloopbackoff detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".sum(over='15m')"
 }
@@ -293,7 +299,7 @@ variable "job_failed_aggregation_function" {
 }
 
 variable "job_failed_transformation_function" {
-  description = "Transformation function for job_failed detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for job_failed detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
 }
@@ -331,7 +337,7 @@ variable "daemonset_scheduled_aggregation_function" {
 }
 
 variable "daemonset_scheduled_transformation_function" {
-  description = "Transformation function for daemonset_scheduled detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for daemonset_scheduled detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
 }
@@ -369,7 +375,7 @@ variable "daemonset_ready_lasting_duration_seconds" {
 }
 
 variable "daemonset_ready_transformation_function" {
-  description = "Transformation function for daemonset_ready detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for daemonset_ready detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
 }
@@ -401,7 +407,7 @@ variable "daemonset_misscheduled_aggregation_function" {
 }
 
 variable "daemonset_misscheduled_transformation_function" {
-  description = "Transformation function for daemonset_misscheduled detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for daemonset_misscheduled detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
 }
@@ -439,7 +445,7 @@ variable "deployment_available_aggregation_function" {
 }
 
 variable "deployment_available_transformation_function" {
-  description = "Transformation function for deployment_available detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for deployment_available detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
 }
@@ -471,7 +477,7 @@ variable "replicaset_available_aggregation_function" {
 }
 
 variable "replicaset_available_transformation_function" {
-  description = "Transformation function for replicaset_available detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for replicaset_available detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
 }
@@ -503,7 +509,7 @@ variable "replication_controller_available_aggregation_function" {
 }
 
 variable "replication_controller_available_transformation_function" {
-  description = "Transformation function for replication_controller_available detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for replication_controller_available detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
 }
@@ -535,7 +541,7 @@ variable "satefulset_ready_aggregation_function" {
 }
 
 variable "satefulset_ready_transformation_function" {
-  description = "Transformation function for satefulset_ready detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for satefulset_ready detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
 }

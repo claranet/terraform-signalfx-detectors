@@ -77,7 +77,7 @@ variable "cache_hits_aggregation_function" {
 }
 
 variable "cache_hits_transformation_function" {
-  description = "Transformation function for elb_4xx detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for elb_4xx detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
 }
@@ -139,7 +139,7 @@ variable "cpu_high_aggregation_function" {
 }
 
 variable "cpu_high_transformation_function" {
-  description = "Transformation function for cpu_high detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for cpu_high detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='15m')"
 }
@@ -189,7 +189,7 @@ variable "replication_lag_aggregation_function" {
 }
 
 variable "replication_lag_transformation_function" {
-  description = "Transformation function for replication_lag detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for replication_lag detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='10m')"
 }
@@ -239,7 +239,7 @@ variable "commands_aggregation_function" {
 }
 
 variable "commands_transformation_function" {
-  description = "Transformation function for commands detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for commands detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".sum(over='15m')"
 }

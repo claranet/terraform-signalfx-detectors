@@ -82,7 +82,7 @@ variable "replication_lag_aggregation_function" {
 }
 
 variable "replication_lag_transformation_function" {
-  description = "Transformation function for replication_lag detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for replication_lag detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='10m')"
 }

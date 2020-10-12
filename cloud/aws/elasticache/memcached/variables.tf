@@ -77,7 +77,7 @@ variable "hit_ratio_aggregation_function" {
 }
 
 variable "hit_ratio_transformation_function" {
-  description = "Transformation function for elb_4xx detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for elb_4xx detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
 }
@@ -139,7 +139,7 @@ variable "cpu_aggregation_function" {
 }
 
 variable "cpu_transformation_function" {
-  description = "Transformation function for cpu detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for cpu detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='15m')"
 }

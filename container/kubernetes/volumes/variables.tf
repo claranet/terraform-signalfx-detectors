@@ -77,7 +77,7 @@ variable "volume_space_aggregation_function" {
 }
 
 variable "volume_space_transformation_function" {
-  description = "Transformation function for volume_space detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for volume_space detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='5m')"
 }
@@ -127,7 +127,7 @@ variable "volume_inodes_aggregation_function" {
 }
 
 variable "volume_inodes_transformation_function" {
-  description = "Transformation function for volume_inodes detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for volume_inodes detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='5m')"
 }

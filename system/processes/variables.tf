@@ -69,13 +69,13 @@ variable "processes_notifications" {
 }
 
 variable "processes_aggregation_function" {
-  description = "Aggregation function and group by for processes detector (i.e. \".mean(by=['host']).\")"
+  description = "Aggregation function and group by for processes detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
 }
 
 variable "processes_transformation_function" {
-  description = "Transformation function for processes detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for processes detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='15m')"
 }

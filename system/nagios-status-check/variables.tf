@@ -75,7 +75,7 @@ variable "status_check_notifications" {
 }
 
 variable "status_check_aggregation_function" {
-  description = "Aggregation function and group by for status_check detector (i.e. \".mean(by=['host']).\")"
+  description = "Aggregation function and group by for status_check detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
 }

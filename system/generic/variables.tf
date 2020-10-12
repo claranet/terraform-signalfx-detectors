@@ -57,9 +57,15 @@ variable "heartbeat_notifications" {
 }
 
 variable "heartbeat_timeframe" {
-  description = "Timeframe for system not reporting detector (i.e. \"10m\")"
+  description = "Timeframe for heartbeat detector (i.e. \"10m\")"
   type        = string
   default     = "20m"
+}
+
+variable "heartbeat_aggregation_function" {
+  description = "Aggregation function and group by for heartbeat detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ""
 }
 
 #####
@@ -89,13 +95,13 @@ variable "cpu_notifications" {
 }
 
 variable "cpu_aggregation_function" {
-  description = "Aggregation function and group by for cpu detector (i.e. \".mean(by=['host']).\")"
+  description = "Aggregation function and group by for cpu detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
 }
 
 variable "cpu_transformation_function" {
-  description = "Transformation function for cpu detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for cpu detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='1h')"
 }
@@ -139,13 +145,13 @@ variable "load_notifications" {
 }
 
 variable "load_aggregation_function" {
-  description = "Aggregation function and group by for load detector (i.e. \".mean(by=['host']).\")"
+  description = "Aggregation function and group by for load detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
 }
 
 variable "load_transformation_function" {
-  description = "Transformation function for load detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for load detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='30m')"
 }
@@ -189,13 +195,13 @@ variable "disk_space_notifications" {
 }
 
 variable "disk_space_aggregation_function" {
-  description = "Aggregation function and group by for disk space detector (i.e. \".mean(by=['host']).\")"
+  description = "Aggregation function and group by for disk space detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
 }
 
 variable "disk_space_transformation_function" {
-  description = "Transformation function for disk space detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for disk space detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".max(over='5m')"
 }
@@ -239,13 +245,13 @@ variable "disk_inodes_notifications" {
 }
 
 variable "disk_inodes_aggregation_function" {
-  description = "Aggregation function and group by for disk inodes detector (i.e. \".mean(by=['host']).\")"
+  description = "Aggregation function and group by for disk inodes detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
 }
 
 variable "disk_inodes_transformation_function" {
-  description = "Transformation function for disk inodes detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for disk inodes detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".max(over='5m')"
 }
@@ -351,13 +357,13 @@ variable "memory_notifications" {
 }
 
 variable "memory_aggregation_function" {
-  description = "Aggregation function and group by for memory detector (i.e. \".mean(by=['host']).\")"
+  description = "Aggregation function and group by for memory detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
 }
 
 variable "memory_transformation_function" {
-  description = "Transformation function for memory detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for memory detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='5m')"
 }

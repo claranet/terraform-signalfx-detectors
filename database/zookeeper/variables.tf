@@ -57,9 +57,15 @@ variable "heartbeat_notifications" {
 }
 
 variable "heartbeat_timeframe" {
-  description = "Timeframe for system not reporting detector (i.e. \"10m\")"
+  description = "Timeframe for heartbeat detector (i.e. \"10m\")"
   type        = string
   default     = "20m"
+}
+
+variable "heartbeat_aggregation_function" {
+  description = "Aggregation function and group by for heartbeat detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ""
 }
 
 # zookeeper_health detectors
@@ -89,7 +95,7 @@ variable "zookeeper_health_aggregation_function" {
 }
 
 variable "zookeeper_health_transformation_function" {
-  description = "Transformation function for zookeeper_health detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for zookeeper_health detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='5m')"
 }
@@ -127,7 +133,7 @@ variable "zookeeper_latency_aggregation_function" {
 }
 
 variable "zookeeper_latency_transformation_function" {
-  description = "Transformation function for zookeeper_latency detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for zookeeper_latency detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='5m')"
 }
@@ -177,7 +183,7 @@ variable "file_descriptors_aggregation_function" {
 }
 
 variable "file_descriptors_transformation_function" {
-  description = "Transformation function for file_descriptors detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for file_descriptors detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".max(over='15m')"
 }

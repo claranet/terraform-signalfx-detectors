@@ -66,7 +66,7 @@ variable "hosts_limit_notifications" {
 }
 
 variable "hosts_limit_transformation_function" {
-  description = "Transformation function for hosts_limit detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for hosts_limit detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='4w')"
 }
@@ -86,7 +86,7 @@ variable "containers_limit_notifications" {
 }
 
 variable "containers_limit_transformation_function" {
-  description = "Transformation function for containers_limit detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for containers_limit detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='4w')"
 }
@@ -106,7 +106,7 @@ variable "custom_metrics_limit_notifications" {
 }
 
 variable "custom_metrics_limit_transformation_function" {
-  description = "Transformation function for custom_metrics_limit detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for custom_metrics_limit detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='4w')"
 }
@@ -126,7 +126,7 @@ variable "containers_ratio_notifications" {
 }
 
 variable "containers_ratio_transformation_function" {
-  description = "Transformation function for containers_ratio detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for containers_ratio detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='4w')"
 }
@@ -152,7 +152,7 @@ variable "custom_metrics_ratio_notifications" {
 }
 
 variable "custom_metrics_ratio_transformation_function" {
-  description = "Transformation function for custom_metrics_ratio detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for custom_metrics_ratio detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='4w')"
 }

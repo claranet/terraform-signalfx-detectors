@@ -57,9 +57,15 @@ variable "heartbeat_notifications" {
 }
 
 variable "heartbeat_timeframe" {
-  description = "Timeframe for system not reporting detector (i.e. \"10m\")"
+  description = "Timeframe for heartbeat detector (i.e. \"10m\")"
   type        = string
   default     = "20m"
+}
+
+variable "heartbeat_aggregation_function" {
+  description = "Aggregation function and group by for heartbeat detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ".mean(by=['EnvironmentName'])"
 }
 
 # Health detectors
@@ -95,7 +101,7 @@ variable "health_aggregation_function" {
 }
 
 variable "health_transformation_function" {
-  description = "Transformation function for health detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for health detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='10m')"
 }
@@ -145,7 +151,7 @@ variable "latency_p90_aggregation_function" {
 }
 
 variable "latency_p90_transformation_function" {
-  description = "Transformation function for latency_p90 detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for latency_p90 detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='15m')"
 }
@@ -195,7 +201,7 @@ variable "app_5xx_error_rate_aggregation_function" {
 }
 
 variable "app_5xx_error_rate_transformation_function" {
-  description = "Transformation function for 5xx_error_rate detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for 5xx_error_rate detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".sum(over='15m')"
 }
@@ -245,7 +251,7 @@ variable "root_filesystem_usage_aggregation_function" {
 }
 
 variable "root_filesystem_usage_transformation_function" {
-  description = "Transformation function for root_filesystem_usage detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for root_filesystem_usage detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".max(over='5m')"
 }

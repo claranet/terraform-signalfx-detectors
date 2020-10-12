@@ -63,9 +63,15 @@ variable "heartbeat_notifications" {
 }
 
 variable "heartbeat_timeframe" {
-  description = "Timeframe for system not reporting detector (i.e. \"10m\")"
+  description = "Timeframe for heartbeat detector (i.e. \"10m\")"
   type        = string
   default     = "20m"
+}
+
+variable "heartbeat_aggregation_function" {
+  description = "Aggregation function and group by for heartbeat detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ".mean(by=['LoadBalancer'])"
 }
 
 # No_healthy_instances detectors
@@ -101,7 +107,7 @@ variable "no_healthy_instances_aggregation_function" {
 }
 
 variable "no_healthy_instances_transformation_function" {
-  description = "Transformation function for No_healthy_instances detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for No_healthy_instances detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='5m')"
 }
@@ -151,7 +157,7 @@ variable "latency_aggregation_function" {
 }
 
 variable "latency_transformation_function" {
-  description = "Transformation function for latency detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for latency detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
 }
@@ -213,7 +219,7 @@ variable "alb_5xx_aggregation_function" {
 }
 
 variable "alb_5xx_transformation_function" {
-  description = "Transformation function for alb_5xx detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for alb_5xx detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
 }
@@ -275,7 +281,7 @@ variable "alb_4xx_aggregation_function" {
 }
 
 variable "alb_4xx_transformation_function" {
-  description = "Transformation function for alb_5xx detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for alb_5xx detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
 }
@@ -337,7 +343,7 @@ variable "target_5xx_aggregation_function" {
 }
 
 variable "target_5xx_transformation_function" {
-  description = "Transformation function for target_5xx detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for target_5xx detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
 }
@@ -399,7 +405,7 @@ variable "target_4xx_aggregation_function" {
 }
 
 variable "target_4xx_transformation_function" {
-  description = "Transformation function for target_4xx detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for target_4xx detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
 }

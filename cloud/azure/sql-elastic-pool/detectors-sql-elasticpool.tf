@@ -4,8 +4,8 @@ resource "signalfx_detector" "heartbeat" {
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting
         base_filter = filter('resource_type', 'Microsoft.Sql/servers/elasticpools') and filter('primary_aggregation_type', 'true')
-        signal = data('cpu_percent', filter=base_filter and ${module.filter-tags.filter_custom}).publish('signal')
-        not_reporting.detector(stream=signal, resource_identifier=['databaseresourceid'], duration='${var.heartbeat_timeframe}').publish('CRIT')
+        signal = data('cpu_percent', filter=base_filter and ${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')
+        not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}').publish('CRIT')
     EOF
 
   rule {

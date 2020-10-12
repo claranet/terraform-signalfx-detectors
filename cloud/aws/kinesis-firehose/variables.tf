@@ -57,9 +57,15 @@ variable "heartbeat_notifications" {
 }
 
 variable "heartbeat_timeframe" {
-  description = "Timeframe for system not reporting detector (i.e. \"10m\")"
+  description = "Timeframe for heartbeat detector (i.e. \"10m\")"
   type        = string
   default     = "20m"
+}
+
+variable "heartbeat_aggregation_function" {
+  description = "Aggregation function and group by for heartbeat detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ".mean(by=['StreamName'])"
 }
 
 # incoming_records detectors
@@ -95,7 +101,7 @@ variable "incoming_records_aggregation_function" {
 }
 
 variable "incoming_records_transformation_function" {
-  description = "Transformation function for incoming_records detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for incoming_records detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".sum(over='15m')"
 }

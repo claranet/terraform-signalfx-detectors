@@ -57,9 +57,15 @@ variable "heartbeat_notifications" {
 }
 
 variable "heartbeat_timeframe" {
-  description = "Timeframe for system not reporting detector (i.e. \"10m\")"
+  description = "Timeframe for heartbeat detector (i.e. \"10m\")"
   type        = string
   default     = "20m"
+}
+
+variable "heartbeat_aggregation_function" {
+  description = "Aggregation function and group by for heartbeat detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ""
 }
 
 # Dns_query_time detectors
@@ -95,7 +101,7 @@ variable "dns_query_time_aggregation_function" {
 }
 
 variable "dns_query_time_transformation_function" {
-  description = "Transformation function for dns_query_time detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for dns_query_time detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".max(over='15m')"
 }
@@ -139,7 +145,7 @@ variable "dns_result_code_aggregation_function" {
 }
 
 variable "dns_result_code_transformation_function" {
-  description = "Transformation function for dns_result_code detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for dns_result_code detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='5m')"
 }

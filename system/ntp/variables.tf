@@ -57,9 +57,15 @@ variable "heartbeat_notifications" {
 }
 
 variable "heartbeat_timeframe" {
-  description = "Timeframe for system not reporting detector (i.e. \"10m\")"
+  description = "Timeframe for heartbeat detector (i.e. \"10m\")"
   type        = string
   default     = "12h"
+}
+
+variable "heartbeat_aggregation_function" {
+  description = "Aggregation function and group by for heartbeat detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ""
 }
 
 #####
@@ -77,13 +83,13 @@ variable "ntp_notifications" {
 }
 
 variable "ntp_aggregation_function" {
-  description = "Aggregation function and group by for ntp detector (i.e. \".mean(by=['host']).\")"
+  description = "Aggregation function and group by for ntp detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
 }
 
 variable "ntp_transformation_function" {
-  description = "Transformation function for ntp detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for ntp detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='5m')"
 }

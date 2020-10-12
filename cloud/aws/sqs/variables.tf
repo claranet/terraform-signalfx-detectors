@@ -57,9 +57,15 @@ variable "heartbeat_notifications" {
 }
 
 variable "heartbeat_timeframe" {
-  description = "Timeframe for system not reporting detector (i.e. \"10m\")"
+  description = "Timeframe for heartbeat detector (i.e. \"10m\")"
   type        = string
   default     = "20m"
+}
+
+variable "heartbeat_aggregation_function" {
+  description = "Aggregation function and group by for heartbeat detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ".mean(by=['QueueName'])"
 }
 
 # Visible_messages detectors
@@ -95,7 +101,7 @@ variable "visible_messages_aggregation_function" {
 }
 
 variable "visible_messages_transformation_function" {
-  description = "Transformation function for visible_messages detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for visible_messages detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='30m')"
 }
@@ -145,7 +151,7 @@ variable "age_of_oldest_message_aggregation_function" {
 }
 
 variable "age_of_oldest_message_transformation_function" {
-  description = "Transformation function for age_of_oldest_message detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for age_of_oldest_message detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='30m')"
 }

@@ -62,9 +62,15 @@ variable "heartbeat_notifications" {
 }
 
 variable "heartbeat_timeframe" {
-  description = "Timeframe for system not reporting detector (i.e. \"10m\")"
+  description = "Timeframe for heartbeat detector (i.e. \"10m\")"
   type        = string
   default     = "20m"
+}
+
+variable "heartbeat_aggregation_function" {
+  description = "Aggregation function and group by for heartbeat detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ""
 }
 
 # Oldest_unacked_message detectors
@@ -100,7 +106,7 @@ variable "oldest_unacked_message_aggregation_function" {
 }
 
 variable "oldest_unacked_message_transformation_function" {
-  description = "Transformation function for oldest_unacked_message detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for oldest_unacked_message detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='5m')"
 }
@@ -150,7 +156,7 @@ variable "push_latency_aggregation_function" {
 }
 
 variable "push_latency_transformation_function" {
-  description = "Transformation function for push_latency detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for push_latency detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='15m')"
 }

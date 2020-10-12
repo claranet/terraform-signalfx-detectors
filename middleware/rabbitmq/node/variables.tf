@@ -57,9 +57,15 @@ variable "heartbeat_notifications" {
 }
 
 variable "heartbeat_timeframe" {
-  description = "Timeframe for system not reporting detector (i.e. \"10m\")"
+  description = "Timeframe for heartbeat detector (i.e. \"10m\")"
   type        = string
   default     = "20m"
+}
+
+variable "heartbeat_aggregation_function" {
+  description = "Aggregation function and group by for heartbeat detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ""
 }
 
 variable "file_descriptors_disabled" {
@@ -87,13 +93,13 @@ variable "file_descriptors_notifications" {
 }
 
 variable "file_descriptors_aggregation_function" {
-  description = "Aggregation function and group by for file descriptors detector (i.e. \".mean(by=['host']).\")"
+  description = "Aggregation function and group by for file descriptors detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
 }
 
 variable "file_descriptors_transformation_function" {
-  description = "Transformation function for file descriptors detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for file descriptors detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='10m')"
 }
@@ -135,13 +141,13 @@ variable "processes_notifications" {
 }
 
 variable "processes_aggregation_function" {
-  description = "Aggregation function and group by for processes detector (i.e. \".mean(by=['host']).\")"
+  description = "Aggregation function and group by for processes detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
 }
 
 variable "processes_transformation_function" {
-  description = "Transformation function for processes detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for processes detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='10m')"
 }
@@ -183,13 +189,13 @@ variable "sockets_notifications" {
 }
 
 variable "sockets_aggregation_function" {
-  description = "Aggregation function and group by for sockets detector (i.e. \".mean(by=['host']).\")"
+  description = "Aggregation function and group by for sockets detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
 }
 
 variable "sockets_transformation_function" {
-  description = "Transformation function for sockets detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for sockets detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='10m')"
 }
@@ -231,13 +237,13 @@ variable "vm_memory_notifications" {
 }
 
 variable "vm_memory_aggregation_function" {
-  description = "Aggregation function and group by for vm_memory detector (i.e. \".mean(by=['host']).\")"
+  description = "Aggregation function and group by for vm_memory detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
 }
 
 variable "vm_memory_transformation_function" {
-  description = "Transformation function for vm_memory detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for vm_memory detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='10m')"
 }

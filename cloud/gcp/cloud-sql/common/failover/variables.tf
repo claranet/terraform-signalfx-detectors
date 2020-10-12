@@ -68,7 +68,7 @@ variable "failover_unavailable_aggregation_function" {
 }
 
 variable "failover_unavailable_transformation_function" {
-  description = "Transformation function for failover_unavailable detector (i.e. \".mean(over='5m')\"))"
+  description = "Transformation function for failover_unavailable detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".max(over='10m')"
 }
