@@ -1,48 +1,6 @@
-# Global
+# Module specific
 
-variable "environment" {
-  description = "Infrastructure environment"
-  type        = string
-}
-
-# SignalFx module specific
-
-variable "notifications" {
-  description = "Default notification recipients list per severity"
-  type = object({
-    critical = list(string)
-    major    = list(string)
-    minor    = list(string)
-    warning  = list(string)
-    info     = list(string)
-  })
-}
-
-variable "prefixes" {
-  description = "Prefixes list to prepend between brackets on every monitors names before environment"
-  type        = list(string)
-  default     = []
-}
-
-variable "filter_custom_includes" {
-  description = "List of tags to include when custom filtering is used"
-  type        = list(string)
-  default     = []
-}
-
-variable "filter_custom_excludes" {
-  description = "List of tags to exclude when custom filtering is used"
-  type        = list(string)
-  default     = []
-}
-
-variable "detectors_disabled" {
-  description = "Disable all detectors in this module"
-  type        = bool
-  default     = false
-}
-
-# Azure sqldatabase detectors specific
+# Heartbeat detector
 
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
@@ -68,7 +26,7 @@ variable "heartbeat_aggregation_function" {
   default     = ".mean(by=['azure_resource_name'])"
 }
 
-# cpu detectors
+# cpu detector
 
 variable "cpu_disabled" {
   description = "Disable all alerting rules for cpu detector"
@@ -118,7 +76,7 @@ variable "cpu_threshold_major" {
   default     = 80
 }
 
-# free_space detectors
+# free_space detector
 
 variable "free_space_disabled" {
   description = "Disable all alerting rules for free_space detector"
@@ -168,7 +126,7 @@ variable "free_space_threshold_major" {
   default     = 80
 }
 
-# dtu_consumption detectors
+# dtu_consumption detector
 
 variable "dtu_consumption_disabled" {
   description = "Disable all alerting rules for dtu_consumption detector"
@@ -218,7 +176,7 @@ variable "dtu_consumption_threshold_major" {
   default     = 85
 }
 
-# deadlocks_count detectors
+# deadlocks_count detector
 
 variable "deadlocks_count_disabled" {
   description = "Disable all alerting rules for deadlocks_count detector"

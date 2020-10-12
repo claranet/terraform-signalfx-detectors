@@ -1,5 +1,5 @@
 resource "signalfx_detector" "sending_operations" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] GCP Pub/Sub Topic sending messages operations"
+  name = format("%s %s", local.detector_name_prefix, "GCP Pub/Sub Topic sending messages operations")
 
   program_text = <<-EOF
     reserved_topics = (not filter('topic_id', 'container-analysis-occurrences*', 'container-analysis-notes*', 'cloud-builds', 'gcr'))
@@ -13,12 +13,13 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.sending_operations_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.sending_operations_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "unavailable_sending_operations" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] GCP Pub/Sub Topic sending unavailable messages"
+  name = format("%s %s", local.detector_name_prefix, "GCP Pub/Sub Topic sending unavailable messages")
 
   program_text = <<-EOF
     reserved_topics = (not filter('topic_id', 'container-analysis-occurrences*', 'container-analysis-notes*', 'cloud-builds', 'gcr'))
@@ -33,7 +34,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.unavailable_sending_operations_disabled_critical, var.unavailable_sending_operations_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.unavailable_sending_operations_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -42,12 +44,13 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.unavailable_sending_operations_disabled_major, var.unavailable_sending_operations_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.unavailable_sending_operations_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "unavailable_sending_operations_ratio" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] GCP Pub/Sub Topic sending unavailable messages ratio"
+  name = format("%s %s", local.detector_name_prefix, "GCP Pub/Sub Topic sending unavailable messages ratio")
 
   program_text = <<-EOF
     reserved_topics = (not filter('topic_id', 'container-analysis-occurrences*', 'container-analysis-notes*', 'cloud-builds', 'gcr'))
@@ -64,7 +67,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.unavailable_sending_operations_ratio_disabled_critical, var.unavailable_sending_operations_ratio_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.unavailable_sending_operations_ratio_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -73,7 +77,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.unavailable_sending_operations_ratio_disabled_major, var.unavailable_sending_operations_ratio_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.unavailable_sending_operations_ratio_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 

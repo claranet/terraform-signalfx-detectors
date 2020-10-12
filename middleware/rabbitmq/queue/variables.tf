@@ -1,48 +1,6 @@
-# Global
+# Module specific
 
-variable "environment" {
-  description = "Infrastructure environment"
-  type        = string
-}
-
-# SignalFx module specific
-
-variable "notifications" {
-  description = "Default notification recipients list per severity"
-  type = object({
-    critical = list(string)
-    major    = list(string)
-    minor    = list(string)
-    warning  = list(string)
-    info     = list(string)
-  })
-}
-
-variable "prefixes" {
-  description = "Prefixes list to prepend between brackets on every monitors names before environment"
-  type        = list
-  default     = []
-}
-
-variable "filter_custom_includes" {
-  description = "List of tags to include when custom filtering is used"
-  type        = list
-  default     = []
-}
-
-variable "filter_custom_excludes" {
-  description = "List of tags to exclude when custom filtering is used"
-  type        = list
-  default     = []
-}
-
-variable "detectors_disabled" {
-  description = "Disable all detectors in this module"
-  type        = bool
-  default     = false
-}
-
-# RabbitMQ detectors specific
+# messages_ready detector
 
 variable "messages_ready_disabled" {
   description = "Disable all alerting rules for messages_ready detector"
@@ -92,6 +50,8 @@ variable "messages_ready_threshold_critical" {
   default     = 15000
 }
 
+# messages_unacknowledged detector
+
 variable "messages_unacknowledged_disabled" {
   description = "Disable all alerting rules for messages_unacknowledged detector"
   type        = bool
@@ -139,6 +99,8 @@ variable "messages_unacknowledged_threshold_critical" {
   type        = number
   default     = 15000
 }
+
+# messages_ack_rate detector
 
 variable "messages_ack_rate_disabled" {
   description = "Disable all alerting rules for messages_ack_rate detector"
@@ -193,6 +155,8 @@ variable "messages_ack_rate_threshold_critical" {
   type        = string
   default     = "1/60"
 }
+
+# consumer_use detector
 
 variable "consumer_use_disabled" {
   description = "Disable all alerting rules for consumer_use detector"

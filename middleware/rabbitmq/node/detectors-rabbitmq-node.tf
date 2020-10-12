@@ -1,10 +1,10 @@
 resource "signalfx_detector" "heartbeat" {
-  name      = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] RabbitMQ  heartbeat"
+  name      = format("%s %s", local.detector_name_prefix, "RabbitMQ  heartbeat")
   max_delay = 900
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    signal = data('gauge.node.uptime', filter=(not filter('aws_state', '{Code: 32,Name: shutting-down', '{Code: 48,Name: terminated}', '{Code: 62,Name: stopping}', '{Code: 80,Name: stopped}')) and (not filter('gcp_status', '{Code=3, Name=STOPPING}', '{Code=4, Name=TERMINATED}')) and (not filter('azure_power_state', 'PowerState/stopping', 'PowerState/stopped', 'PowerState/deallocating', 'PowerState/deallocated')) and filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')
+    signal = data('gauge.node.uptime', filter=${local.not_running_vm_filters} and filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}').publish('CRIT')
 EOF
 
@@ -14,12 +14,13 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject_novalue
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "file_descriptors" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] RabbitMQ Node file descriptors usage"
+  name = format("%s %s", local.detector_name_prefix, "RabbitMQ Node file descriptors usage")
 
   program_text = <<-EOF
     A = data('gauge.node.fd_used', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom})${var.file_descriptors_aggregation_function}${var.file_descriptors_transformation_function}
@@ -35,7 +36,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.file_descriptors_disabled_critical, var.file_descriptors_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.file_descriptors_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -44,12 +46,13 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.file_descriptors_disabled_major, var.file_descriptors_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.file_descriptors_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "processes" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] RabbitMQ Node process usage"
+  name = format("%s %s", local.detector_name_prefix, "RabbitMQ Node process usage")
 
   program_text = <<-EOF
     A = data('gauge.node.proc_used', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom})${var.processes_aggregation_function}${var.processes_transformation_function}
@@ -65,7 +68,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.processes_disabled_critical, var.processes_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.processes_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -74,12 +78,13 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.processes_disabled_major, var.processes_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.processes_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "sockets" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] RabbitMQ Node sockets usage"
+  name = format("%s %s", local.detector_name_prefix, "RabbitMQ Node sockets usage")
 
   program_text = <<-EOF
     A = data('gauge.node.sockets_used', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom})${var.sockets_aggregation_function}${var.sockets_transformation_function}
@@ -95,7 +100,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.sockets_disabled_critical, var.sockets_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.sockets_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -104,12 +110,13 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.sockets_disabled_major, var.sockets_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.sockets_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "vm_memory" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] RabbitMQ Node vm_memory usage"
+  name = format("%s %s", local.detector_name_prefix, "RabbitMQ Node vm_memory usage")
 
   program_text = <<-EOF
     A = data('gauge.node.mem_used', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom})${var.vm_memory_aggregation_function}${var.vm_memory_transformation_function}
@@ -125,7 +132,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.vm_memory_disabled_critical, var.vm_memory_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.vm_memory_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -134,7 +142,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.vm_memory_disabled_major, var.vm_memory_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.vm_memory_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 

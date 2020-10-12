@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Cosmos DB heartbeat"
+  name = format("%s %s", local.detector_name_prefix, "Azure Cosmos DB heartbeat")
 
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting
@@ -14,12 +14,13 @@ resource "signalfx_detector" "heartbeat" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject_novalue
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "db_4xx_requests" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Cosmos DB 4xx request rate"
+  name = format("%s %s", local.detector_name_prefix, "Azure Cosmos DB 4xx request rate")
 
   program_text = <<-EOF
         from signalfx.detectors.aperiodic import aperiodic
@@ -37,7 +38,8 @@ resource "signalfx_detector" "db_4xx_requests" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.db_4xx_requests_disabled_critical, var.db_4xx_requests_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.db_4xx_requests_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -46,12 +48,13 @@ resource "signalfx_detector" "db_4xx_requests" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.db_4xx_requests_disabled_major, var.db_4xx_requests_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.db_4xx_requests_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "db_5xx_requests" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Cosmos DB 5xx error rate"
+  name = format("%s %s", local.detector_name_prefix, "Azure Cosmos DB 5xx error rate")
 
   program_text = <<-EOF
         from signalfx.detectors.aperiodic import aperiodic
@@ -69,7 +72,8 @@ resource "signalfx_detector" "db_5xx_requests" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.db_5xx_requests_disabled_critical, var.db_5xx_requests_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.db_5xx_requests_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -78,12 +82,13 @@ resource "signalfx_detector" "db_5xx_requests" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.db_5xx_requests_disabled_major, var.db_5xx_requests_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.db_5xx_requests_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "scaling" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Cosmos DB scaling errors rate"
+  name = format("%s %s", local.detector_name_prefix, "Azure Cosmos DB scaling errors rate")
 
   program_text = <<-EOF
         from signalfx.detectors.aperiodic import aperiodic
@@ -101,7 +106,8 @@ resource "signalfx_detector" "scaling" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.scaling_disabled_critical, var.scaling_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.scaling_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -110,6 +116,7 @@ resource "signalfx_detector" "scaling" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.scaling_disabled_major, var.scaling_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.scaling_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }

@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] New Relic heartbeat"
+  name = format("%s %s", local.detector_name_prefix, "New Relic heartbeat")
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
@@ -13,12 +13,13 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject_novalue
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "error_rate" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] New Relic error rate"
+  name = format("%s %s", local.detector_name_prefix, "New Relic error rate")
 
   program_text = <<-EOF
     signal = data('Errors/all/errors_per_minute/*', ${module.filter-tags.filter_custom})${var.error_rate_aggregation_function}${var.error_rate_transformation_function}.publish('signal')
@@ -32,7 +33,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.error_rate_disabled_critical, var.error_rate_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.error_rate_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -41,13 +43,14 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.error_rate_disabled_major, var.error_rate_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.error_rate_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
 }
 
 resource "signalfx_detector" "apdex" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] New Relic apdex score ratio"
+  name = format("%s %s", local.detector_name_prefix, "New Relic apdex score ratio")
 
   program_text = <<-EOF
     signal = data('Apdex/score/*', ${module.filter-tags.filter_custom})${var.apdex_aggregation_function}${var.apdex_transformation_function}.publish('signal')
@@ -61,7 +64,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.apdex_disabled_critical, var.apdex_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.apdex_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -70,7 +74,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.apdex_disabled_major, var.apdex_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.apdex_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 

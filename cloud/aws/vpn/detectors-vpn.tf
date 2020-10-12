@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS VPN heartbeat"
+  name = format("%s %s", local.detector_name_prefix, "AWS VPN heartbeat")
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
@@ -13,12 +13,13 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject_novalue
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "VPN_status" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] AWS VPN tunnel state"
+  name = format("%s %s", local.detector_name_prefix, "AWS VPN tunnel state")
 
   program_text = <<-EOF
     signal = data('TunnelState', filter=filter('namespace', 'AWS/VPN') and filter('stat', 'mean') and filter('VpnId', '*') and ${module.filter-tags.filter_custom})${var.vpn_status_aggregation_function}${var.vpn_status_transformation_function}.publish('signal')
@@ -31,7 +32,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.vpn_status_disabled_critical, var.vpn_status_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.vpn_status_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 

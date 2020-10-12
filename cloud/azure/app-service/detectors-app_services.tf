@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Service heartbeat"
+  name = format("%s %s", local.detector_name_prefix, "Azure App Service heartbeat")
 
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting
@@ -14,12 +14,13 @@ resource "signalfx_detector" "heartbeat" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject_novalue
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "response_time" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Service response time"
+  name = format("%s %s", local.detector_name_prefix, "Azure App Service response time")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'false') and filter('primary_aggregation_type', 'true')
@@ -34,7 +35,8 @@ resource "signalfx_detector" "response_time" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.response_time_disabled_critical, var.response_time_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.response_time_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -43,13 +45,14 @@ resource "signalfx_detector" "response_time" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.response_time_disabled_major, var.response_time_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.response_time_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
 }
 
 resource "signalfx_detector" "memory_usage_count" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Service memory usage"
+  name = format("%s %s", local.detector_name_prefix, "Azure App Service memory usage")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'false') and filter('primary_aggregation_type', 'true')
@@ -64,7 +67,8 @@ resource "signalfx_detector" "memory_usage_count" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.memory_usage_count_disabled_critical, var.memory_usage_count_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.memory_usage_count_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -73,13 +77,14 @@ resource "signalfx_detector" "memory_usage_count" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.memory_usage_count_disabled_major, var.memory_usage_count_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.memory_usage_count_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
 }
 
 resource "signalfx_detector" "http_5xx_errors_count" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Service 5xx error rate"
+  name = format("%s %s", local.detector_name_prefix, "Azure App Service 5xx error rate")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'false') and filter('primary_aggregation_type', 'true')
@@ -96,7 +101,8 @@ resource "signalfx_detector" "http_5xx_errors_count" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.http_5xx_errors_count_disabled_critical, var.http_5xx_errors_count_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.http_5xx_errors_count_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -105,13 +111,14 @@ resource "signalfx_detector" "http_5xx_errors_count" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.http_5xx_errors_count_disabled_major, var.http_5xx_errors_count_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.http_5xx_errors_count_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
 }
 
 resource "signalfx_detector" "http_4xx_errors_count" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Service 4xx error rate"
+  name = format("%s %s", local.detector_name_prefix, "Azure App Service 4xx error rate")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'false') and filter('primary_aggregation_type', 'true')
@@ -128,7 +135,8 @@ resource "signalfx_detector" "http_4xx_errors_count" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.http_4xx_errors_count_disabled_critical, var.http_4xx_errors_count_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.http_4xx_errors_count_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -137,12 +145,13 @@ resource "signalfx_detector" "http_4xx_errors_count" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.http_4xx_errors_count_disabled_major, var.http_4xx_errors_count_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.http_4xx_errors_count_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "http_success_status_rate" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Service successful response rate"
+  name = format("%s %s", local.detector_name_prefix, "Azure App Service successful response rate")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'false') and filter('primary_aggregation_type', 'true')
@@ -160,7 +169,8 @@ resource "signalfx_detector" "http_success_status_rate" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.http_success_status_rate_disabled_critical, var.http_success_status_rate_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.http_success_status_rate_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -169,6 +179,7 @@ resource "signalfx_detector" "http_success_status_rate" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.http_success_status_rate_disabled_major, var.http_success_status_rate_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.http_success_status_rate_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }

@@ -1,48 +1,6 @@
-# Global
+# Module specific
 
-variable "environment" {
-  description = "Infrastructure environment"
-  type        = string
-}
-
-# SignalFx module specific
-
-variable "notifications" {
-  description = "Default notification recipients list per severity"
-  type = object({
-    critical = list(string)
-    major    = list(string)
-    minor    = list(string)
-    warning  = list(string)
-    info     = list(string)
-  })
-}
-
-variable "prefixes" {
-  description = "Prefixes list to prepend between brackets on every monitors names before environment"
-  type        = list
-  default     = []
-}
-
-variable "filter_custom_includes" {
-  description = "List of tags to include when custom filtering is used"
-  type        = list
-  default     = []
-}
-
-variable "filter_custom_excludes" {
-  description = "List of tags to exclude when custom filtering is used"
-  type        = list
-  default     = []
-}
-
-variable "detectors_disabled" {
-  description = "Disable all detectors in this module"
-  type        = bool
-  default     = false
-}
-
-# AWS RDS detectors specific
+# Heartbeat detector
 
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
@@ -68,7 +26,7 @@ variable "heartbeat_aggregation_function" {
   default     = ".mean(by=['DBInstanceIdentifier'])"
 }
 
-# CPU_90_15min detectors
+# CPU_90_15min detector
 
 variable "cpu_90_15min_disabled" {
   description = "Disable all alerting rules for cpu_90_15min detector"
@@ -118,7 +76,7 @@ variable "cpu_90_15min_threshold_major" {
   default     = 80
 }
 
-# Free_space_low detectors
+# Free_space_low detector
 
 variable "free_space_low_disabled" {
   description = "Disable all alerting rules for free_space_low detector"
@@ -168,7 +126,7 @@ variable "free_space_low_threshold_major" {
   default     = 40
 }
 
-# Replica_lag detectors
+# Replica_lag detector
 
 variable "replica_lag_disabled" {
   description = "Disable all alerting rules for replica_lag detector"

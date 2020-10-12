@@ -1,5 +1,5 @@
 resource "signalfx_detector" "hosts_limit" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Organization usage hosts limit"
+  name = format("%s %s", local.detector_name_prefix, "Organization usage hosts limit")
 
   program_text = <<-EOF
     signal = data('${"sf.org.${var.is_parent ? "child." : ""}numResourcesMonitored"}', filter=filter('resourceType', 'host'))${local.aggregation_function}${var.hosts_limit_transformation_function}.publish('signal')
@@ -14,7 +14,7 @@ EOF
     disabled              = coalesce(var.hosts_limit_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.hosts_limit_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}} > {{inputs.limit.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_body    = local.rule_body
     runbook_url           = var.runbook_url
     tip                   = <<-EOF
       To avoid overbilling, limits are set per organization and per resources type.
@@ -23,7 +23,7 @@ EOF
 }
 
 resource "signalfx_detector" "containers_limit" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Organization usage containers limit"
+  name = format("%s %s", local.detector_name_prefix, "Organization usage containers limit")
 
   program_text = <<-EOF
     signal = data('${"sf.org.${var.is_parent ? "child." : ""}numResourcesMonitored"}', filter=filter('resourceType', 'container'))${local.aggregation_function}${var.containers_limit_transformation_function}.publish('signal')
@@ -38,7 +38,7 @@ EOF
     disabled              = coalesce(var.containers_limit_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.containers_limit_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}} > {{inputs.limit.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_body    = local.rule_body
     runbook_url           = var.runbook_url
     tip                   = <<-EOF
       To avoid overbilling, limits are set per organization and per resources type.
@@ -47,7 +47,7 @@ EOF
 }
 
 resource "signalfx_detector" "custom_metrics_limit" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Organization usage custom metrics limit"
+  name = format("%s %s", local.detector_name_prefix, "Organization usage custom metrics limit")
 
   program_text = <<-EOF
     signal = data('${"sf.org.${var.is_parent ? "child." : ""}numCustomMetrics"}')${local.aggregation_function}${var.custom_metrics_limit_transformation_function}.publish('signal')
@@ -62,7 +62,7 @@ EOF
     disabled              = coalesce(var.custom_metrics_limit_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.custom_metrics_limit_notifications, "major", []), var.notifications.major)
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}} > {{inputs.limit.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_body    = local.rule_body
     runbook_url           = var.runbook_url
     tip                   = <<-EOF
       To avoid overbilling, limits are set per organization and per resources type.
@@ -71,7 +71,7 @@ EOF
 }
 
 resource "signalfx_detector" "containers_ratio" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Organization usage containers ratio per host included"
+  name = format("%s %s", local.detector_name_prefix, "Organization usage containers ratio per host included")
 
   program_text = <<-EOF
     containers = data('${"sf.org.${var.is_parent ? "child." : ""}numResourcesMonitored"}', filter=filter('resourceType', 'container'))${local.aggregation_function}${var.containers_ratio_transformation_function}
@@ -86,8 +86,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.containers_ratio_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.containers_ratio_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
     runbook_url           = var.runbook_url
     tip                   = <<-EOF
       Enterprise plan includes ${var.multiplier}0 containers per host.
@@ -98,7 +98,7 @@ EOF
 }
 
 resource "signalfx_detector" "custom_metrics_ratio" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Organization usage custom metrics ratio per host included"
+  name = format("%s %s", local.detector_name_prefix, "Organization usage custom metrics ratio per host included")
 
   program_text = <<-EOF
     custom_metrics = data('${"sf.org.${var.is_parent ? "child." : ""}numCustomMetrics"}')${local.aggregation_function}${var.custom_metrics_ratio_transformation_function}
@@ -113,8 +113,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.custom_metrics_ratio_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.custom_metrics_ratio_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
-    parameterized_body    = local.parameterized_body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
     runbook_url           = var.runbook_url
     tip                   = <<-EOF
       Enterprise plan includes ${var.multiplier}00 custom metrics per host.

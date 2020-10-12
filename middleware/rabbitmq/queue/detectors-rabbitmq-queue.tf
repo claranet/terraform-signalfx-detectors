@@ -1,5 +1,5 @@
 resource "signalfx_detector" "messages_ready" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] RabbitMQ Queue messages ready"
+  name = format("%s %s", local.detector_name_prefix, "RabbitMQ Queue messages ready")
 
   program_text = <<-EOF
     signal = data('gauge.queue.messages_ready', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom})${var.messages_ready_aggregation_function}${var.messages_ready_transformation_function}.publish('signal')
@@ -13,7 +13,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.messages_ready_disabled_critical, var.messages_ready_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.messages_ready_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -22,12 +23,13 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.messages_ready_disabled_major, var.messages_ready_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.messages_ready_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "messages_unacknowledged" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] RabbitMQ Queue messages unacknowledged"
+  name = format("%s %s", local.detector_name_prefix, "RabbitMQ Queue messages unacknowledged")
 
   program_text = <<-EOF
     signal = data('gauge.queue.messages_unacknowledged', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom})${var.messages_unacknowledged_aggregation_function}${var.messages_unacknowledged_transformation_function}.publish('signal')
@@ -41,7 +43,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.messages_unacknowledged_disabled_critical, var.messages_unacknowledged_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.messages_unacknowledged_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -50,12 +53,13 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.messages_unacknowledged_disabled_major, var.messages_unacknowledged_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.messages_unacknowledged_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "messages_ack_rate" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] RabbitMQ Queue messages ack rate"
+  name = format("%s %s", local.detector_name_prefix, "RabbitMQ Queue messages ack rate")
 
   program_text = <<-EOF
     signal = data('counter.queue.message_stats.ack', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom})${var.messages_ack_rate_aggregation_function}.publish('signal')
@@ -70,7 +74,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.messages_ack_rate_disabled_critical, var.messages_ack_rate_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.messages_ack_rate_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -79,12 +84,13 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.messages_ack_rate_disabled_major, var.messages_ack_rate_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.messages_ack_rate_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "consumer_use" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] RabbitMQ Queue consumer use"
+  name = format("%s %s", local.detector_name_prefix, "RabbitMQ Queue consumer use")
 
   program_text = <<-EOF
     signal = data('gauge.queue.consumer_use', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom})${var.consumer_use_aggregation_function}.publish('util')
@@ -99,7 +105,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.consumer_use_disabled_critical, var.consumer_use_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.consumer_use_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -108,7 +115,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.consumer_use_disabled_major, var.consumer_use_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.consumer_use_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 

@@ -1,5 +1,5 @@
 resource "signalfx_detector" "processes" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Processes aliveness"
+  name = format("%s %s", local.detector_name_prefix, "Processes aliveness")
 
   program_text = <<-EOF
         signal = data('ps_count.processes', filter=${module.filter-tags.filter_custom})${var.processes_aggregation_function}${var.processes_transformation_function}.publish('signal')
@@ -13,7 +13,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.processes_disabled_critical, var.processes_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.processes_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -22,7 +23,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.processes_disabled_major, var.processes_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.processes_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 

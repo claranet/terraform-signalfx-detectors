@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Redis heartbeat"
+  name = format("%s %s", local.detector_name_prefix, "Azure Redis heartbeat")
 
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting
@@ -14,12 +14,13 @@ resource "signalfx_detector" "heartbeat" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject_novalue
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "evictedkeys" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Redis evicted keys"
+  name = format("%s %s", local.detector_name_prefix, "Azure Redis evicted keys")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Cache/Redis') and filter('primary_aggregation_type', 'true')
@@ -34,7 +35,8 @@ resource "signalfx_detector" "evictedkeys" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.evictedkeys_disabled_critical, var.evictedkeys_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.evictedkeys_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -43,12 +45,13 @@ resource "signalfx_detector" "evictedkeys" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.evictedkeys_disabled_major, var.evictedkeys_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.evictedkeys_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "percent_processor_time" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Redis processor time"
+  name = format("%s %s", local.detector_name_prefix, "Azure Redis processor time")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Cache/Redis') and filter('primary_aggregation_type', 'true')
@@ -63,7 +66,8 @@ resource "signalfx_detector" "percent_processor_time" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.percent_processor_time_disabled_critical, var.percent_processor_time_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.percent_processor_time_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -72,12 +76,13 @@ resource "signalfx_detector" "percent_processor_time" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.percent_processor_time_disabled_major, var.percent_processor_time_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.percent_processor_time_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "load" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure Redis load"
+  name = format("%s %s", local.detector_name_prefix, "Azure Redis load")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Cache/Redis') and filter('primary_aggregation_type', 'true')
@@ -92,7 +97,8 @@ resource "signalfx_detector" "load" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.load_disabled_critical, var.load_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.load_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -101,6 +107,7 @@ resource "signalfx_detector" "load" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.load_disabled_major, var.load_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.load_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }

@@ -1,48 +1,6 @@
-# Global
+# Module specific
 
-variable "environment" {
-  description = "Infrastructure environment"
-  type        = string
-}
-
-# SignalFx Module specific
-
-variable "notifications" {
-  description = "Default notification recipients list per severity"
-  type = object({
-    critical = list(string)
-    major    = list(string)
-    minor    = list(string)
-    warning  = list(string)
-    info     = list(string)
-  })
-}
-
-variable "prefixes" {
-  description = "Prefixes list to prepend between brackets on every monitors names before environment"
-  type        = list
-  default     = []
-}
-
-variable "filter_custom_includes" {
-  description = "List of tags to include when custom filtering is used"
-  type        = list
-  default     = []
-}
-
-variable "filter_custom_excludes" {
-  description = "List of tags to exclude when custom filtering is used"
-  type        = list
-  default     = []
-}
-
-variable "detectors_disabled" {
-  description = "Disable all detectors in this module"
-  type        = bool
-  default     = false
-}
-
-# System generic specific
+# Heartbeat detector
 
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
@@ -68,7 +26,7 @@ variable "heartbeat_aggregation_function" {
   default     = ""
 }
 
-#####
+# cpu detector
 
 variable "cpu_disabled" {
   description = "Disable all alerting rules for cpu detector"
@@ -118,7 +76,7 @@ variable "cpu_threshold_major" {
   default     = 85
 }
 
-#####
+# load detector
 
 variable "load_disabled" {
   description = "Disable all alerting rules for load detector"
@@ -168,7 +126,7 @@ variable "load_threshold_major" {
   default     = 2
 }
 
-#####
+# disk_space detector
 
 variable "disk_space_disabled" {
   description = "Disable all alerting rules for disk space detector"
@@ -218,7 +176,7 @@ variable "disk_space_threshold_major" {
   default     = 80
 }
 
-#####
+# disk_inodes detector
 
 variable "disk_inodes_disabled" {
   description = "Disable all alerting rules for disk_inodes detector"
@@ -268,7 +226,7 @@ variable "disk_inodes_threshold_major" {
   default     = 90
 }
 
-#####
+# disk_running_out detector
 
 variable "disk_running_out_disabled" {
   description = "Disable all alerting rules for disk running out detector"
@@ -330,7 +288,7 @@ variable "disk_running_out_notifications" {
   default     = {}
 }
 
-#####
+# memory detector
 
 variable "memory_disabled" {
   description = "Disable all alerting rules for memory detector"

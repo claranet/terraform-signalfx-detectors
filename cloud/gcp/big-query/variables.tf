@@ -1,55 +1,11 @@
-# Global
-
-variable "environment" {
-  description = "Infrastructure environment"
-  type        = string
-}
+# Module specific
 
 variable "gcp_project_id" {
   description = "GCP project id used for default filtering while lables are not synced"
   type        = string
 }
 
-# SignalFx module specific
-
-variable "notifications" {
-  description = "Default notification recipients list per severity"
-  type = object({
-    critical = list(string)
-    major    = list(string)
-    minor    = list(string)
-    warning  = list(string)
-    info     = list(string)
-  })
-}
-
-variable "prefixes" {
-  description = "Prefixes list to prepend between brackets on every monitors names before environment"
-  type        = list
-  default     = []
-}
-
-variable "filter_custom_includes" {
-  description = "List of tags to include when custom filtering is used"
-  type        = list
-  default     = []
-}
-
-variable "filter_custom_excludes" {
-  description = "List of tags to exclude when custom filtering is used"
-  type        = list
-  default     = []
-}
-
-variable "detectors_disabled" {
-  description = "Disable all detectors in this module"
-  type        = bool
-  default     = false
-}
-
-# GCP Bigquery detectors specific
-
-# Concurrent_queries detectors
+# Concurrent_queries detector
 
 variable "concurrent_queries_disabled" {
   description = "Disable all alerting rules for concurrent_queries detector"
@@ -117,7 +73,7 @@ variable "concurrent_queries_clear_duration" {
   default     = "15m"
 }
 
-# Execution_time detectors
+# Execution_time detector
 
 variable "execution_time_disabled" {
   description = "Disable all alerting rules for execution_time detector"
@@ -185,7 +141,7 @@ variable "execution_time_clear_duration" {
   default     = "15m"
 }
 
-# Scanned_bytes detectors
+# Scanned_bytes detector
 
 variable "scanned_bytes_disabled" {
   description = "Disable all alerting rules for scanned_bytes detector"
@@ -253,7 +209,7 @@ variable "scanned_bytes_clear_duration" {
   default     = "15m"
 }
 
-# Scanned_bytes_billed detectors
+# Scanned_bytes_billed detector
 
 variable "scanned_bytes_billed_disabled" {
   description = "Disable all alerting rules for scanned_bytes_billed detector"
@@ -321,7 +277,7 @@ variable "scanned_bytes_billed_clear_duration" {
   default     = "15m"
 }
 
-# Available_slots detectors
+# Available_slots detector
 
 variable "available_slots_disabled" {
   description = "Disable all alerting rules for available_slots detector"
@@ -389,7 +345,7 @@ variable "available_slots_clear_duration" {
   default     = "15m"
 }
 
-# Stored_bytes detectors
+# Stored_bytes detector
 
 variable "stored_bytes_disabled" {
   description = "Disable all alerting rules for stored_bytes detector"
@@ -457,7 +413,7 @@ variable "stored_bytes_clear_duration" {
   default     = "15m"
 }
 
-# table_count detectors
+# table_count detector
 
 variable "table_count_disabled" {
   description = "Disable all alerting rules for table_count detector"
@@ -525,7 +481,7 @@ variable "table_count_clear_duration" {
   default     = "15m"
 }
 
-# uploaded_bytes detectors
+# uploaded_bytes detector
 
 variable "uploaded_bytes_disabled" {
   description = "Disable all alerting rules for uploaded_bytes detector"
@@ -593,7 +549,7 @@ variable "uploaded_bytes_clear_duration" {
   default     = "15m"
 }
 
-# uploaded_bytes_billed detectors
+# uploaded_bytes_billed detector
 
 variable "uploaded_bytes_billed_disabled" {
   description = "Disable all alerting rules for uploaded_bytes_billed detector"

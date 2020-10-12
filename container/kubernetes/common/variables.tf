@@ -1,48 +1,6 @@
-# Global
+# Module specific
 
-variable "environment" {
-  description = "Infrastructure environment"
-  type        = string
-}
-
-# SignalFx module specific
-
-variable "notifications" {
-  description = "Default notification recipients list per severity"
-  type = object({
-    critical = list(string)
-    major    = list(string)
-    minor    = list(string)
-    warning  = list(string)
-    info     = list(string)
-  })
-}
-
-variable "prefixes" {
-  description = "Prefixes list to prepend between brackets on every monitors names before environment"
-  type        = list
-  default     = []
-}
-
-variable "filter_custom_includes" {
-  description = "List of tags to include when custom filtering is used"
-  type        = list
-  default     = []
-}
-
-variable "filter_custom_excludes" {
-  description = "List of tags to exclude when custom filtering is used"
-  type        = list
-  default     = []
-}
-
-variable "detectors_disabled" {
-  description = "Disable all detectors in this module"
-  type        = bool
-  default     = false
-}
-
-# Kubernetes Node detectors specific
+# Heartbeat detector
 
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
@@ -68,7 +26,7 @@ variable "heartbeat_aggregation_function" {
   default     = ".mean(by=['kubernetes_cluster'])"
 }
 
-# node_ready detectors
+# node_ready detector
 
 variable "node_ready_disabled" {
   description = "Disable all alerting rules for node_ready detector"
@@ -112,7 +70,7 @@ variable "node_ready_transformation_function" {
   default     = ""
 }
 
-# Pod_phase_status detectors
+# Pod_phase_status detector
 
 variable "pod_phase_status_disabled" {
   description = "Disable all alerting rules for pod_phase_status detector"
@@ -144,7 +102,7 @@ variable "pod_phase_status_lasting_duration_seconds" {
   default     = 1800
 }
 
-# Terminated detectors
+# Terminated detector
 
 variable "terminated_disabled" {
   description = "Disable all alerting rules for terminated detector"
@@ -182,7 +140,7 @@ variable "terminated_lasting_duration_seconds" {
   default     = 600
 }
 
-# oom_killed detectors
+# oom_killed detector
 
 variable "oom_killed_disabled" {
   description = "Disable all alerting rules for oom_killed detector"
@@ -214,7 +172,7 @@ variable "oom_killed_threshold_major" {
   default     = 0
 }
 
-# deployment_crashloopbackoff detectors
+# deployment_crashloopbackoff detector
 
 variable "deployment_crashloopbackoff_disabled" {
   description = "Disable all alerting rules for deployment_crashloopbackoff detector"
@@ -246,7 +204,7 @@ variable "deployment_crashloopbackoff_threshold_major" {
   default     = 0
 }
 
-# daemonset_crashloopbackoff detectors
+# daemonset_crashloopbackoff detector
 
 variable "daemonset_crashloopbackoff_disabled" {
   description = "Disable all alerting rules for daemonset_crashloopbackoff detector"
@@ -278,7 +236,7 @@ variable "daemonset_crashloopbackoff_threshold_major" {
   default     = 0
 }
 
-# job_failed detectors
+# job_failed detector
 
 variable "job_failed_disabled" {
   description = "Disable all alerting rules for job_failed detector"
@@ -316,7 +274,7 @@ variable "job_failed_lasting_duration_seconds" {
   default     = 60
 }
 
-# daemonset_scheduled detectors
+# daemonset_scheduled detector
 
 variable "daemonset_scheduled_disabled" {
   description = "Disable all alerting rules for daemonset_scheduled detector"
@@ -348,7 +306,7 @@ variable "daemonset_scheduled_lasting_duration_seconds" {
   default     = 300
 }
 
-# daemonset_ready detectors
+# daemonset_ready detector
 
 variable "daemonset_ready_disabled" {
   description = "Disable all alerting rules for daemonset_ready detector"
@@ -386,7 +344,7 @@ variable "daemonset_ready_threshold_critical" {
   default     = 100
 }
 
-# daemonset_misscheduled detectors
+# daemonset_misscheduled detector
 
 variable "daemonset_misscheduled_disabled" {
   description = "Disable all alerting rules for daemonset_misscheduled detector"
@@ -424,7 +382,7 @@ variable "daemonset_misscheduled_threshold_critical" {
   default     = 0
 }
 
-# deployment_available detectors
+# deployment_available detector
 
 variable "deployment_available_disabled" {
   description = "Disable all alerting rules for deployment_available detector"
@@ -456,7 +414,7 @@ variable "deployment_available_lasting_duration_seconds" {
   default     = 300
 }
 
-# replicaset_available detectors
+# replicaset_available detector
 
 variable "replicaset_available_disabled" {
   description = "Disable all alerting rules for replicaset_available detector"
@@ -488,7 +446,7 @@ variable "replicaset_available_lasting_duration_seconds" {
   default     = 300
 }
 
-# replication_controller_available detectors
+# replication_controller_available detector
 
 variable "replication_controller_available_disabled" {
   description = "Disable all alerting rules for replication_controller_available detector"
@@ -520,7 +478,7 @@ variable "replication_controller_available_lasting_duration_seconds" {
   default     = 300
 }
 
-# satefulset_ready detectors
+# satefulset_ready detector
 
 variable "satefulset_ready_disabled" {
   description = "Disable all alerting rules for satefulset_ready detector"

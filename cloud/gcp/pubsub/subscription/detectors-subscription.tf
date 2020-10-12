@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] GCP Pub/Sub Subscription heartbeat"
+  name = format("%s %s", local.detector_name_prefix, "GCP Pub/Sub Subscription heartbeat")
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
@@ -13,12 +13,13 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject_novalue
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "oldest_unacked_message" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] GCP Pub/Sub Subscription oldest unacknowledged message"
+  name = format("%s %s", local.detector_name_prefix, "GCP Pub/Sub Subscription oldest unacknowledged message")
 
   program_text = <<-EOF
     signal = data('subscription/oldest_unacked_message_age', filter=filter('monitored_resource', 'pubsub_subscription') and ${module.filter-tags.filter_custom})${var.oldest_unacked_message_aggregation_function}${var.oldest_unacked_message_transformation_function}.publish('signal')
@@ -32,7 +33,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.oldest_unacked_message_disabled_critical, var.oldest_unacked_message_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.oldest_unacked_message_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -41,12 +43,13 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.oldest_unacked_message_disabled_major, var.oldest_unacked_message_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.oldest_unacked_message_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "push_latency" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] GCP Pub/Sub Subscription latency on push endpoint"
+  name = format("%s %s", local.detector_name_prefix, "GCP Pub/Sub Subscription latency on push endpoint")
 
   program_text = <<-EOF
     signal = data('subscription/push_request_latencies', filter=filter('monitored_resource', 'pubsub_subscription') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='average')${var.push_latency_aggregation_function}${var.push_latency_transformation_function}.publish('signal')
@@ -60,7 +63,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.push_latency_disabled_critical, var.push_latency_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.push_latency_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -69,7 +73,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.push_latency_disabled_major, var.push_latency_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.push_latency_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 

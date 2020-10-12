@@ -1,48 +1,6 @@
-# Global
+# Module specific
 
-variable "environment" {
-  description = "Infrastructure environment"
-  type        = string
-}
-
-# SignalFx module specific
-
-variable "notifications" {
-  description = "Default notification recipients list per severity"
-  type = object({
-    critical = list(string)
-    major    = list(string)
-    minor    = list(string)
-    warning  = list(string)
-    info     = list(string)
-  })
-}
-
-variable "prefixes" {
-  description = "Prefixes list to prepend between brackets on every monitors names before environment"
-  type        = list
-  default     = []
-}
-
-variable "filter_custom_includes" {
-  description = "List of tags to include when custom filtering is used"
-  type        = list
-  default     = []
-}
-
-variable "filter_custom_excludes" {
-  description = "List of tags to exclude when custom filtering is used"
-  type        = list
-  default     = []
-}
-
-variable "detectors_disabled" {
-  description = "Disable all detectors in this module"
-  type        = bool
-  default     = false
-}
-
-# ElasticSearch detectors specific
+# Heartbeat detector
 
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
@@ -68,7 +26,7 @@ variable "heartbeat_aggregation_function" {
   default     = ""
 }
 
-# Cluster_status detectors
+# Cluster_status detector
 
 variable "cluster_status_disabled" {
   description = "Disable all alerting rules for cluster_status_not_green detector"
@@ -106,7 +64,7 @@ variable "cluster_status_transformation_function" {
   default     = ".mean(over='5m')"
 }
 
-# Cluster_initializing_shards detectors
+# Cluster_initializing_shards detector
 
 variable "cluster_initializing_shards_disabled" {
   description = "Disable all alerting rules for cluster_initializing_shards detector"
@@ -156,7 +114,7 @@ variable "cluster_initializing_shards_threshold_major" {
   default     = 0
 }
 
-# Cluster_relocating_shards detectors
+# Cluster_relocating_shards detector
 
 variable "cluster_relocating_shards_disabled" {
   description = "Disable all alerting rules for cluster_relocating_shards detector"
@@ -206,7 +164,7 @@ variable "cluster_relocating_shards_threshold_major" {
   default     = -1
 }
 
-# Cluster_unassigned_shards detectors
+# Cluster_unassigned_shards detector
 
 variable "cluster_unassigned_shards_disabled" {
   description = "Disable all alerting rules for cluster_unassigned_shards detector"
@@ -256,7 +214,7 @@ variable "cluster_unassigned_shards_threshold_major" {
   default     = -1
 }
 
-# pending_tasks detectors
+# pending_tasks detector
 
 variable "pending_tasks_disabled" {
   description = "Disable all alerting rules for pending_tasks detector"
@@ -306,7 +264,7 @@ variable "pending_tasks_threshold_major" {
   default     = 0
 }
 
-# Jvm_heap_memory_usage detectors
+# Jvm_heap_memory_usage detector
 
 variable "jvm_heap_memory_usage_disabled" {
   description = "Disable all alerting rules for jvm_heap_memory_usage detector"
@@ -356,7 +314,7 @@ variable "jvm_heap_memory_usage_threshold_major" {
   default     = 80
 }
 
-# cpu_usage detectors
+# cpu_usage detector
 
 variable "cpu_usage_disabled" {
   description = "Disable all alerting rules for cpu_usage detector"
@@ -406,7 +364,7 @@ variable "cpu_usage_threshold_major" {
   default     = 85
 }
 
-# file_descriptors detectors
+# file_descriptors detector
 
 variable "file_descriptors_disabled" {
   description = "Disable all alerting rules for file_descriptors detector"
@@ -456,7 +414,7 @@ variable "file_descriptors_threshold_major" {
   default     = 90
 }
 
-# Jvm_memory_young_usage detectors
+# Jvm_memory_young_usage detector
 
 variable "jvm_memory_young_usage_disabled" {
   description = "Disable all alerting rules for jvm_memory_young_usage detector"
@@ -506,7 +464,7 @@ variable "jvm_memory_young_usage_threshold_minor" {
   default     = 80
 }
 
-# Jvm_memory_old_usage detectors
+# Jvm_memory_old_usage detector
 
 variable "jvm_memory_old_usage_disabled" {
   description = "Disable all alerting rules for jvm_memory_old_usage detector"
@@ -556,7 +514,7 @@ variable "jvm_memory_old_usage_threshold_minor" {
   default     = 80
 }
 
-# Jvm_gc_old_collection_latency detectors
+# Jvm_gc_old_collection_latency detector
 
 variable "jvm_gc_old_collection_latency_disabled" {
   description = "Disable all alerting rules for jvm_gc_old_collection_latency detector"
@@ -606,7 +564,7 @@ variable "jvm_gc_old_collection_latency_threshold_minor" {
   default     = 200
 }
 
-# Jvm_gc_young_collection_latency detectors
+# Jvm_gc_young_collection_latency detector
 
 variable "jvm_gc_young_collection_latency_disabled" {
   description = "Disable all alerting rules for jvm_gc_young_collection_latency detector"
@@ -656,7 +614,7 @@ variable "jvm_gc_young_collection_latency_threshold_minor" {
   default     = 20
 }
 
-# Indexing_latency detectors
+# Indexing_latency detector
 
 variable "indexing_latency_disabled" {
   description = "Disable all alerting rules for indexing_latency detector"
@@ -706,7 +664,7 @@ variable "indexing_latency_threshold_minor" {
   default     = 15
 }
 
-# Flush_latency detectors
+# Flush_latency detector
 
 variable "flush_latency_disabled" {
   description = "Disable all alerting rules for flush_latency detector"
@@ -756,7 +714,7 @@ variable "flush_latency_threshold_minor" {
   default     = 100
 }
 
-# Search_latency detectors
+# Search_latency detector
 
 variable "search_latency_disabled" {
   description = "Disable all alerting rules for search_latency detector"
@@ -806,7 +764,7 @@ variable "search_latency_threshold_minor" {
   default     = 10
 }
 
-# Fetch_latency detectors
+# Fetch_latency detector
 
 variable "fetch_latency_disabled" {
   description = "Disable all alerting rules for fetch_latency detector"
@@ -856,7 +814,7 @@ variable "fetch_latency_threshold_minor" {
   default     = 10
 }
 
-# Field_data_evictions_change detectors
+# Field_data_evictions_change detector
 
 variable "field_data_evictions_change_disabled" {
   description = "Disable all alerting rules for field_data_evictions_change detector"
@@ -906,7 +864,7 @@ variable "field_data_evictions_change_threshold_minor" {
   default     = 60
 }
 
-# Query_cache_evictions_change detectors
+# Query_cache_evictions_change detector
 
 variable "query_cache_evictions_change_disabled" {
   description = "Disable all alerting rules for query_cache_evictions_change detector"
@@ -956,7 +914,7 @@ variable "query_cache_evictions_change_threshold_minor" {
   default     = 60
 }
 
-# Request_cache_evictions_change detectors
+# Request_cache_evictions_change detector
 
 variable "request_cache_evictions_change_disabled" {
   description = "Disable all alerting rules for request_cache_evictions_change detector"
@@ -1006,7 +964,7 @@ variable "request_cache_evictions_change_threshold_minor" {
   default     = 60
 }
 
-# Task_time_in_queue_change detectors
+# Task_time_in_queue_change detector
 
 variable "task_time_in_queue_change_disabled" {
   description = "Disable all alerting rules for task_time_in_queue_change detector"

@@ -1,5 +1,5 @@
 resource "signalfx_detector" "status_check" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Nagios check status"
+  name = format("%s %s", local.detector_name_prefix, "Nagios check status")
 
   program_text = <<-EOF
         signal = data('nagios_state.state', filter=${module.filter-tags.filter_custom})${var.status_check_aggregation_function}${var.status_check_transformation_function}.publish('signal')
@@ -14,7 +14,8 @@ resource "signalfx_detector" "status_check" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.status_check_disabled_major, var.status_check_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.status_check_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -23,7 +24,8 @@ resource "signalfx_detector" "status_check" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.status_check_disabled_critical, var.status_check_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.status_check_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -32,7 +34,8 @@ resource "signalfx_detector" "status_check" {
     detect_label          = "WARN"
     disabled              = coalesce(var.status_check_disabled_warning, var.status_check_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.status_check_notifications, "warning", []), var.notifications.warning)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 

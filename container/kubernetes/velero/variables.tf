@@ -1,50 +1,6 @@
-# Global
+# Module specific
 
-variable "environment" {
-  description = "Infrastructure environment"
-  type        = string
-}
-
-# SignalFx module specific
-
-variable "notifications" {
-  description = "Default notification recipients list per severity"
-  type = object({
-    critical = list(string)
-    major    = list(string)
-    minor    = list(string)
-    warning  = list(string)
-    info     = list(string)
-  })
-}
-
-variable "prefixes" {
-  description = "Prefixes list to prepend between brackets on every monitors names before environment"
-  type        = list
-  default     = []
-}
-
-variable "filter_custom_includes" {
-  description = "List of tags to include when custom filtering is used"
-  type        = list
-  default     = []
-}
-
-variable "filter_custom_excludes" {
-  description = "List of tags to exclude when custom filtering is used"
-  type        = list
-  default     = []
-}
-
-variable "detectors_disabled" {
-  description = "Disable all detectors in this module"
-  type        = bool
-  default     = false
-}
-
-# Kubernetes velero detectors specific
-
-# Velero_scheduled_backup_missing detectors
+# Velero_scheduled_backup_missing detector
 
 variable "velero_scheduled_backup_missing_disabled" {
   description = "Disable all alerting rules for velero_scheduled_backup_missing detector"
@@ -70,7 +26,7 @@ variable "velero_scheduled_backup_missing_transformation_function" {
   default     = ".sum(over='1d')"
 }
 
-# Velero_backup_failure detectors
+# Velero_backup_failure detector
 
 variable "velero_backup_failure_disabled" {
   description = "Disable all alerting rules for velero_backup_failure detector"
@@ -96,7 +52,7 @@ variable "velero_backup_failure_transformation_function" {
   default     = ".sum(over='1d')"
 }
 
-# Velero_backup_partial_failure detectors
+# Velero_backup_partial_failure detector
 
 variable "velero_backup_partial_failure_disabled" {
   description = "Disable all alerting rules for velero_backup_partial_failure detector"
@@ -122,7 +78,7 @@ variable "velero_backup_partial_failure_transformation_function" {
   default     = ".sum(over='1d')"
 }
 
-# Velero_backup_deletion_failure detectors
+# Velero_backup_deletion_failure detector
 
 variable "velero_backup_deletion_failure_disabled" {
   description = "Disable all alerting rules for velero_backup_deletion_failure detector"
@@ -148,7 +104,7 @@ variable "velero_backup_deletion_failure_transformation_function" {
   default     = ".sum(over='1d')"
 }
 
-# Velero_volume_snapshot_failure detectors
+# Velero_volume_snapshot_failure detector
 
 variable "velero_volume_snapshot_failure_disabled" {
   description = "Disable all alerting rules for velero_volume_snapshot_failure detector"

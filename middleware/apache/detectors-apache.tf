@@ -1,10 +1,10 @@
 resource "signalfx_detector" "heartbeat" {
-  name      = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Apache heartbeat"
+  name      = format("%s %s", local.detector_name_prefix, "Apache heartbeat")
   max_delay = 900
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    signal = data('apache_connections', filter=(not filter('aws_state', '{Code: 32,Name: shutting-down', '{Code: 48,Name: terminated}', '{Code: 62,Name: stopping}', '{Code: 80,Name: stopped}')) and (not filter('gcp_status', '{Code=3, Name=STOPPING}', '{Code=4, Name=TERMINATED}')) and (not filter('azure_power_state', 'PowerState/stopping', 'PowerState/stopped', 'PowerState/deallocating', 'PowerState/deallocated')) and ${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')
+    signal = data('apache_connections', filter=${local.not_running_vm_filters} and ${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}').publish('CRIT')
 EOF
 
@@ -14,12 +14,13 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject_novalue
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "apache_workers" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Apache busy workers"
+  name = format("%s %s", local.detector_name_prefix, "Apache busy workers")
 
   program_text = <<-EOF
     A = data('apache_connections', ${module.filter-tags.filter_custom})${var.apache_workers_aggregation_function}${var.apache_workers_transformation_function}
@@ -35,7 +36,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.apache_workers_disabled_critical, var.apache_workers_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.apache_workers_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -44,7 +46,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.apache_workers_disabled_major, var.apache_workers_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.apache_workers_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 

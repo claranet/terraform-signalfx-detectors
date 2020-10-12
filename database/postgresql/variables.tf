@@ -1,48 +1,6 @@
-# Global
+# Module specific
 
-variable "environment" {
-  description = "Infrastructure environment"
-  type        = string
-}
-
-# SignalFx module specific
-
-variable "notifications" {
-  description = "Default notification recipients list per severity"
-  type = object({
-    critical = list(string)
-    major    = list(string)
-    minor    = list(string)
-    warning  = list(string)
-    info     = list(string)
-  })
-}
-
-variable "prefixes" {
-  description = "Prefixes list to prepend between brackets on every monitors names before environment"
-  type        = list
-  default     = []
-}
-
-variable "filter_custom_includes" {
-  description = "List of tags to include when custom filtering is used"
-  type        = list
-  default     = []
-}
-
-variable "filter_custom_excludes" {
-  description = "List of tags to exclude when custom filtering is used"
-  type        = list
-  default     = []
-}
-
-variable "detectors_disabled" {
-  description = "Disable all detectors in this module"
-  type        = bool
-  default     = false
-}
-
-# MySQL detectors specific
+# Heartbeat detector
 
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
@@ -68,7 +26,7 @@ variable "heartbeat_aggregation_function" {
   default     = ""
 }
 
-# deadlocks detectors
+# deadlocks detector
 
 variable "deadlocks_disabled" {
   description = "Disable all alerting rules for deadlocks detector"
@@ -118,7 +76,7 @@ variable "deadlocks_threshold_major" {
   default     = 0.1
 }
 
-# hit_ratio detectors
+# hit_ratio detector
 
 variable "hit_ratio_disabled" {
   description = "Disable all alerting rules for hit_ratio detector"
@@ -168,7 +126,7 @@ variable "hit_ratio_threshold_minor" {
   default     = 75
 }
 
-# rollbacks detectors
+# rollbacks detector
 
 variable "rollbacks_disabled" {
   description = "Disable all alerting rules for rollbacks detector"
@@ -218,7 +176,7 @@ variable "rollbacks_threshold_minor" {
   default     = 10
 }
 
-# conflicts detectors
+# conflicts detector
 
 variable "conflicts_disabled" {
   description = "Disable all alerting rules for conflicts detector"
@@ -268,7 +226,7 @@ variable "conflicts_threshold_major" {
   default     = 1
 }
 
-# max_connections detectors
+# max_connections detector
 
 variable "max_connections_disabled" {
   description = "Disable all alerting rules for max_connections detector"
@@ -318,7 +276,7 @@ variable "max_connections_threshold_major" {
   default     = 80
 }
 
-# replication_lag detectors
+# replication_lag detector
 
 variable "replication_lag_disabled" {
   description = "Disable all alerting rules for replication_lag detector"
@@ -368,7 +326,7 @@ variable "replication_lag_threshold_major" {
   default     = 100
 }
 
-# replication_state detectors
+# replication_state detector
 
 variable "replication_state_disabled" {
   description = "Disable all alerting rules for replication_state detector"

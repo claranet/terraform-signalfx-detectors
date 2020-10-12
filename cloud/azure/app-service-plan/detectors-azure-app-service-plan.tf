@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Service Plan heartbeat"
+  name = format("%s %s", local.detector_name_prefix, "Azure App Service Plan heartbeat")
 
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting
@@ -14,12 +14,13 @@ resource "signalfx_detector" "heartbeat" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject_novalue
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "cpu_percentage" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Service Plan CPU percentage"
+  name = format("%s %s", local.detector_name_prefix, "Azure App Service Plan CPU percentage")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Web/serverFarms') and filter('primary_aggregation_type', 'true')
@@ -34,7 +35,8 @@ resource "signalfx_detector" "cpu_percentage" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.cpu_percentage_disabled_critical, var.cpu_percentage_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.cpu_percentage_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -43,12 +45,13 @@ resource "signalfx_detector" "cpu_percentage" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.cpu_percentage_disabled_major, var.cpu_percentage_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.cpu_percentage_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "memory_percentage" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure App Service Plan memory percentage"
+  name = format("%s %s", local.detector_name_prefix, "Azure App Service Plan memory percentage")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Web/serverFarms') and filter('primary_aggregation_type', 'true')
@@ -63,7 +66,8 @@ resource "signalfx_detector" "memory_percentage" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.memory_percentage_disabled_critical, var.memory_percentage_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.memory_percentage_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -72,6 +76,7 @@ resource "signalfx_detector" "memory_percentage" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.memory_percentage_disabled_major, var.memory_percentage_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.memory_percentage_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }

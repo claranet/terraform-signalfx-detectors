@@ -1,48 +1,6 @@
-# Global
+# Module specific
 
-variable "environment" {
-  description = "Infrastructure environment"
-  type        = string
-}
-
-# SignalFx module specific
-
-variable "notifications" {
-  description = "Default notification recipients list per severity"
-  type = object({
-    critical = list(string)
-    major    = list(string)
-    minor    = list(string)
-    warning  = list(string)
-    info     = list(string)
-  })
-}
-
-variable "prefixes" {
-  description = "Prefixes list to prepend between brackets on every monitors names before environment"
-  type        = list
-  default     = []
-}
-
-variable "filter_custom_includes" {
-  description = "List of tags to include when custom filtering is used"
-  type        = list
-  default     = []
-}
-
-variable "filter_custom_excludes" {
-  description = "List of tags to exclude when custom filtering is used"
-  type        = list
-  default     = []
-}
-
-variable "detectors_disabled" {
-  description = "Disable all detectors in this module"
-  type        = bool
-  default     = false
-}
-
-# RabbitMQ detectors specific
+# Heartbeat detector
 
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
@@ -67,6 +25,8 @@ variable "heartbeat_aggregation_function" {
   type        = string
   default     = ""
 }
+
+# file_descriptors detector
 
 variable "file_descriptors_disabled" {
   description = "Disable all alerting rules for file descriptors detector"
@@ -116,6 +76,8 @@ variable "file_descriptors_threshold_major" {
   default     = 80
 }
 
+# processes detector
+
 variable "processes_disabled" {
   description = "Disable all alerting rules for processes detector"
   type        = bool
@@ -164,6 +126,8 @@ variable "processes_threshold_major" {
   default     = 80
 }
 
+# sockets detector
+
 variable "sockets_disabled" {
   description = "Disable all alerting rules for sockets detector"
   type        = bool
@@ -211,6 +175,8 @@ variable "sockets_threshold_major" {
   type        = number
   default     = 80
 }
+
+# vm_memory detector
 
 variable "vm_memory_disabled" {
   description = "Disable all alerting rules for vm_memory detector"

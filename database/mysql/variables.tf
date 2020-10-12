@@ -1,48 +1,6 @@
-# Global
+# Module specific
 
-variable "environment" {
-  description = "Infrastructure environment"
-  type        = string
-}
-
-# SignalFx module specific
-
-variable "notifications" {
-  description = "Default notification recipients list per severity"
-  type = object({
-    critical = list(string)
-    major    = list(string)
-    minor    = list(string)
-    warning  = list(string)
-    info     = list(string)
-  })
-}
-
-variable "prefixes" {
-  description = "Prefixes list to prepend between brackets on every monitors names before environment"
-  type        = list
-  default     = []
-}
-
-variable "filter_custom_includes" {
-  description = "List of tags to include when custom filtering is used"
-  type        = list
-  default     = []
-}
-
-variable "filter_custom_excludes" {
-  description = "List of tags to exclude when custom filtering is used"
-  type        = list
-  default     = []
-}
-
-variable "detectors_disabled" {
-  description = "Disable all detectors in this module"
-  type        = bool
-  default     = false
-}
-
-# MySQL detectors specific
+# Heartbeat detector
 
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
@@ -68,7 +26,7 @@ variable "heartbeat_aggregation_function" {
   default     = ""
 }
 
-# Mysql_connection detectors
+# Mysql_connection detector
 
 variable "mysql_connections_disabled" {
   description = "Disable all alerting rules for mysql_connection detector"
@@ -118,7 +76,7 @@ variable "mysql_connections_threshold_major" {
   default     = 70
 }
 
-# Mysql_pool_efficiency detectors
+# Mysql_pool_efficiency detector
 
 variable "mysql_pool_efficiency_disabled" {
   description = "Disable all alerting rules for mysql_pool_efficiency detector"
@@ -168,7 +126,7 @@ variable "mysql_pool_efficiency_threshold_warning" {
   default     = 20
 }
 
-# Mysql_pool_utilization detectors
+# Mysql_pool_utilization detector
 
 variable "mysql_pool_utilization_disabled" {
   description = "Disable all alerting rules for mysql_pool_utilization detector"
@@ -218,7 +176,7 @@ variable "mysql_pool_utilization_threshold_warning" {
   default     = 80
 }
 
-# Mysql_slow detectors
+# Mysql_slow detector
 
 variable "mysql_slow_disabled" {
   description = "Disable all alerting rules for mysql_slow detector"
@@ -268,7 +226,7 @@ variable "mysql_slow_threshold_major" {
   default     = 10
 }
 
-# Mysql_threads_anomaly detectors
+# Mysql_threads_anomaly detector
 
 variable "mysql_threads_anomaly_disabled" {
   description = "Disable all alerting rules for mysql_threads_anomaly detector"
@@ -330,7 +288,7 @@ variable "mysql_threads_anomaly_orientation" {
   default     = "above"
 }
 
-# Mysql_questions_anomaly detectors
+# Mysql_questions_anomaly detector
 
 variable "mysql_questions_anomaly_disabled" {
   description = "Disable all alerting rules for mysql_questions_anomaly detector"
@@ -392,7 +350,7 @@ variable "mysql_questions_anomaly_orientation" {
   default     = "above"
 }
 
-# Mysql_replication_lag detectors
+# Mysql_replication_lag detector
 
 variable "mysql_replication_lag_disabled" {
   description = "Disable all alerting rules for mysql_replication_lag detector"
@@ -442,7 +400,7 @@ variable "mysql_replication_lag_threshold_major" {
   default     = 100
 }
 
-# Mysql_replication_status detectors
+# Mysql_replication_status detector
 
 variable "mysql_replication_status_disabled" {
   description = "Disable all alerting rules for mysql_replication_status detector"

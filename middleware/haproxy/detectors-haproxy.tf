@@ -1,10 +1,10 @@
 resource "signalfx_detector" "heartbeat" {
-  name      = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Haproxy heartbeat"
+  name      = format("%s %s", local.detector_name_prefix, "Haproxy heartbeat")
   max_delay = 900
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    signal = data('haproxy_session_current', filter=(not filter('aws_state', '{Code: 32,Name: shutting-down', '{Code: 48,Name: terminated}', '{Code: 62,Name: stopping}', '{Code: 80,Name: stopped}')) and (not filter('gcp_status', '{Code=3, Name=STOPPING}', '{Code=4, Name=TERMINATED}')) and (not filter('azure_power_state', 'PowerState/stopping', 'PowerState/stopped', 'PowerState/deallocating', 'PowerState/deallocated')) and ${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')
+    signal = data('haproxy_session_current', filter=${local.not_running_vm_filters} and ${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}').publish('CRIT')
 EOF
 
@@ -14,12 +14,13 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject_novalue
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "server_status" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Haproxy server status"
+  name = format("%s %s", local.detector_name_prefix, "Haproxy server status")
 
   program_text = <<-EOF
     signal = data('haproxy_status', filter=filter('type', '2') and ${module.filter-tags.filter_custom})${var.server_status_aggregation_function}${var.server_status_transformation_function}.publish('signal')
@@ -32,12 +33,13 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.server_status_disabled_critical, var.server_status_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.server_status_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "backend_status" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Haproxy backend status"
+  name = format("%s %s", local.detector_name_prefix, "Haproxy backend status")
 
   program_text = <<-EOF
     signal = data('haproxy_status', filter=filter('type', '1') and ${module.filter-tags.filter_custom})${var.backend_status_aggregation_function}${var.backend_status_transformation_function}.publish('signal')
@@ -50,12 +52,13 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.backend_status_disabled_critical, var.backend_status_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.backend_status_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "session_limit" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Haproxy session"
+  name = format("%s %s", local.detector_name_prefix, "Haproxy session")
 
   program_text = <<-EOF
     A = data('haproxy_session_current', filter=${module.filter-tags.filter_custom})${var.session_limit_aggregation_function}${var.session_limit_transformation_function}
@@ -71,7 +74,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.session_limit_disabled_critical, var.session_limit_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.session_limit_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -80,12 +84,13 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.session_limit_disabled_major, var.session_limit_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.session_limit_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "http_5xx_response" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Haproxy 5xx response rate"
+  name = format("%s %s", local.detector_name_prefix, "Haproxy 5xx response rate")
 
   program_text = <<-EOF
     A = data('haproxy_response_5xx', filter=${module.filter-tags.filter_custom}, rollup='delta')${var.http_5xx_response_aggregation_function}${var.http_5xx_response_transformation_function}
@@ -101,7 +106,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.http_5xx_response_disabled_critical, var.http_5xx_response_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.http_5xx_response_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -110,12 +116,13 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.http_5xx_response_disabled_major, var.http_5xx_response_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.http_5xx_response_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "http_4xx_response" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Haproxy 4xx response rate"
+  name = format("%s %s", local.detector_name_prefix, "Haproxy 4xx response rate")
 
   program_text = <<-EOF
     A = data('haproxy_response_4xx', filter=${module.filter-tags.filter_custom}, rollup='delta')${var.http_4xx_response_aggregation_function}${var.http_4xx_response_transformation_function}
@@ -131,7 +138,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.http_4xx_response_disabled_critical, var.http_4xx_response_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.http_4xx_response_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -140,7 +148,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.http_4xx_response_disabled_major, var.http_4xx_response_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.http_4xx_response_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 

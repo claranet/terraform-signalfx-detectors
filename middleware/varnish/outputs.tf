@@ -1,25 +1,25 @@
-output "varnish_backend_failed" {
-  description = "Detector resource for varnish_backend_failed"
-  value       = signalfx_detector.varnish_backend_failed
+output "backend_failed" {
+  description = "Detector resource for backend_failed"
+  value       = signalfx_detector.backend_failed
 }
 
-output "varnish_cache_hit_rate" {
-  description = "Detector resource for varnish_cache_hit_rate"
-  value       = signalfx_detector.varnish_cache_hit_rate
+output "cache_hit_rate" {
+  description = "Detector resource for cache_hit_rate"
+  value       = signalfx_detector.cache_hit_rate
 }
 
-output "varnish_memory_usage" {
-  description = "Detector resource for varnish_memory_usage"
-  value       = signalfx_detector.varnish_memory_usage
+output "memory_usage" {
+  description = "Detector resource for memory_usage"
+  value       = signalfx_detector.memory_usage
 }
 
-output "varnish_session_dropped" {
-  description = "Detector resource for varnish_session_dropped"
-  value       = signalfx_detector.varnish_session_dropped
+output "session_dropped" {
+  description = "Detector resource for session_dropped"
+  value       = signalfx_detector.session_dropped
 }
 
-output "varnish_threads_number" {
-  description = "Detector resource for varnish_threads_number"
-  value       = signalfx_detector.varnish_threads_number
+output "threads_number" {
+  description = "Detector resource for threads_number"
+  value       = signalfx_detector.threads_number
 }
 

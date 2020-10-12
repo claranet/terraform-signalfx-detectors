@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure PostgreSQL heartbeat"
+  name = format("%s %s", local.detector_name_prefix, "Azure PostgreSQL heartbeat")
 
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting
@@ -14,12 +14,13 @@ resource "signalfx_detector" "heartbeat" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject_novalue
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "cpu_usage" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure PostgreSQL CPU usage"
+  name = format("%s %s", local.detector_name_prefix, "Azure PostgreSQL CPU usage")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.DBforPostgreSQL/servers') and filter('primary_aggregation_type', 'true')
@@ -34,7 +35,8 @@ resource "signalfx_detector" "cpu_usage" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.cpu_usage_disabled_critical, var.cpu_usage_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.cpu_usage_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -43,12 +45,13 @@ resource "signalfx_detector" "cpu_usage" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.cpu_usage_disabled_major, var.cpu_usage_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.cpu_usage_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "no_connection" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure PostgreSQL has no connection"
+  name = format("%s %s", local.detector_name_prefix, "Azure PostgreSQL has no connection")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.DBforPostgreSQL/servers') and filter('primary_aggregation_type', 'true')
@@ -61,12 +64,13 @@ resource "signalfx_detector" "no_connection" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.no_connection_disabled_critical, var.no_connection_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.no_connection_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "free_storage" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure PostgreSQL free storage"
+  name = format("%s %s", local.detector_name_prefix, "Azure PostgreSQL free storage")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.DBforPostgreSQL/servers') and filter('primary_aggregation_type', 'true')
@@ -82,7 +86,8 @@ resource "signalfx_detector" "free_storage" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.free_storage_disabled_critical, var.free_storage_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.free_storage_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -91,12 +96,13 @@ resource "signalfx_detector" "free_storage" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.free_storage_disabled_major, var.free_storage_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.free_storage_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "io_consumption" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure PostgreSQL IO consumption"
+  name = format("%s %s", local.detector_name_prefix, "Azure PostgreSQL IO consumption")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.DBforPostgreSQL/servers') and filter('primary_aggregation_type', 'true')
@@ -111,7 +117,8 @@ resource "signalfx_detector" "io_consumption" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.io_consumption_disabled_critical, var.io_consumption_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.io_consumption_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -120,12 +127,13 @@ resource "signalfx_detector" "io_consumption" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.io_consumption_disabled_major, var.io_consumption_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.io_consumption_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "memory_usage" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure PostgreSQL memory usage "
+  name = format("%s %s", local.detector_name_prefix, "Azure PostgreSQL memory usage ")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.DBforPostgreSQL/servers') and filter('primary_aggregation_type', 'true')
@@ -140,7 +148,8 @@ resource "signalfx_detector" "memory_usage" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.memory_usage_disabled_critical, var.memory_usage_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.memory_usage_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -149,6 +158,7 @@ resource "signalfx_detector" "memory_usage" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.memory_usage_disabled_major, var.memory_usage_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.memory_usage_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
