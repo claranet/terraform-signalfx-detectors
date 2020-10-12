@@ -1,48 +1,6 @@
-# Global
+# Module specific
 
-variable "environment" {
-  description = "Infrastructure environment"
-  type        = string
-}
-
-# SignalFx module specific
-
-variable "notifications" {
-  description = "Default notification recipients list per severity"
-  type = object({
-    critical = list(string)
-    major    = list(string)
-    minor    = list(string)
-    warning  = list(string)
-    info     = list(string)
-  })
-}
-
-variable "prefixes" {
-  description = "Prefixes list to prepend between brackets on every monitors names before environment"
-  type        = list
-  default     = []
-}
-
-variable "filter_custom_includes" {
-  description = "List of tags to include when custom filtering is used"
-  type        = list
-  default     = []
-}
-
-variable "filter_custom_excludes" {
-  description = "List of tags to exclude when custom filtering is used"
-  type        = list
-  default     = []
-}
-
-variable "detectors_disabled" {
-  description = "Disable all detectors in this module"
-  type        = bool
-  default     = false
-}
-
-# AWS ElastiCache detectors specific
+# Heartbeat detector
 
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
@@ -68,7 +26,7 @@ variable "heartbeat_aggregation_function" {
   default     = ".mean(by=['CacheClusterId'])"
 }
 
-# Evictions detectors
+# Evictions detector
 
 variable "evictions_disabled" {
   description = "Disable all alerting rules for evictions detector"
@@ -118,7 +76,7 @@ variable "evictions_threshold_major" {
   default     = 0
 }
 
-# Max_connection detectors
+# Max_connection detector
 
 variable "max_connection_disabled" {
   description = "Disable all alerting rules for max_connection detector"
@@ -156,7 +114,7 @@ variable "max_connection_threshold_critical" {
   default     = 64999
 }
 
-# No_connection detectors
+# No_connection detector
 
 variable "no_connection_disabled" {
   description = "Disable all alerting rules for no_connection detector"
@@ -194,7 +152,7 @@ variable "no_connection_threshold_critical" {
   default     = 0
 }
 
-# Swap detectors
+# Swap detector
 
 variable "swap_disabled" {
   description = "Disable all alerting rules for swap detector"
@@ -244,7 +202,7 @@ variable "swap_threshold_major" {
   default     = 0
 }
 
-# Free_memory detectors
+# Free_memory detector
 
 variable "free_memory_disabled" {
   description = "Disable all alerting rules for free_memory detector"
@@ -294,7 +252,7 @@ variable "free_memory_threshold_major" {
   default     = -50
 }
 
-# Evictions_growing detectors
+# Evictions_growing detector
 
 variable "evictions_growing_disabled" {
   description = "Disable all alerting rules for evictions_growing detector"

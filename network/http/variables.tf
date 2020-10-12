@@ -1,48 +1,6 @@
-# Global
+# Module specific
 
-variable "environment" {
-  description = "Infrastructure environment"
-  type        = string
-}
-
-# SignalFx module specific
-
-variable "notifications" {
-  description = "Default notification recipients list per severity"
-  type = object({
-    critical = list(string)
-    major    = list(string)
-    minor    = list(string)
-    warning  = list(string)
-    info     = list(string)
-  })
-}
-
-variable "prefixes" {
-  description = "Prefixes list to prepend between brackets on every monitors names before environment"
-  type        = list
-  default     = []
-}
-
-variable "filter_custom_includes" {
-  description = "List of tags to include when custom filtering is used"
-  type        = list
-  default     = []
-}
-
-variable "filter_custom_excludes" {
-  description = "List of tags to exclude when custom filtering is used"
-  type        = list
-  default     = []
-}
-
-variable "detectors_disabled" {
-  description = "Disable all detectors in this module"
-  type        = bool
-  default     = false
-}
-
-# HTTP detectors specific
+# Heartbeat detector
 
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
@@ -68,7 +26,7 @@ variable "heartbeat_aggregation_function" {
   default     = ""
 }
 
-# Http_code_matched detectors
+# Http_code_matched detector
 
 variable "http_code_matched_disabled" {
   description = "Disable all alerting rules for http_code_matched detector"
@@ -100,7 +58,7 @@ variable "http_code_matched_transformation_function" {
   default     = ".max(over='1m')"
 }
 
-# Http_regex_matched detectors
+# Http_regex_matched detector
 
 variable "http_regex_matched_disabled" {
   description = "Disable all alerting rules for http_regex_matched detector"
@@ -132,7 +90,7 @@ variable "http_regex_matched_transformation_function" {
   default     = ".max(over='5m')"
 }
 
-# Http_response_time detectors
+# Http_response_time detector
 
 variable "http_response_time_disabled" {
   description = "Disable all alerting rules for http_response_time detector"
@@ -182,7 +140,7 @@ variable "http_response_time_threshold_major" {
   default     = 1
 }
 
-# http_content_length detectors
+# http_content_length detector
 
 variable "http_content_length_disabled" {
   description = "Disable all alerting rules for http_content_length detector"
@@ -214,7 +172,7 @@ variable "http_content_length_threshold_major" {
   default     = 10
 }
 
-# Certificate_expiration_date detectors
+# Certificate_expiration_date detector
 
 variable "certificate_expiration_date_disabled" {
   description = "Disable all alerting rules for certificate_expiration_date detector"
@@ -264,7 +222,7 @@ variable "certificate_expiration_date_threshold_major" {
   default     = 30
 }
 
-# Invalid_tls_certificate detectors
+# Invalid_tls_certificate detector
 
 variable "invalid_tls_certificate_disabled" {
   description = "Disable all alerting rules for invalid_tls_certificate detector"

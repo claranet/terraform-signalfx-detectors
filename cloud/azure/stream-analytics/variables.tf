@@ -1,48 +1,6 @@
-# Global
+# Module specific
 
-variable "environment" {
-  description = "Infrastructure environment"
-  type        = string
-}
-
-# SignalFx module specific
-
-variable "notifications" {
-  description = "Default notification recipients list per severity"
-  type = object({
-    critical = list(string)
-    major    = list(string)
-    minor    = list(string)
-    warning  = list(string)
-    info     = list(string)
-  })
-}
-
-variable "prefixes" {
-  description = "Prefixes list to prepend between brackets on every monitors names before environment"
-  type        = list(string)
-  default     = []
-}
-
-variable "filter_custom_includes" {
-  description = "List of tags to include when custom filtering is used"
-  type        = list(string)
-  default     = []
-}
-
-variable "filter_custom_excludes" {
-  description = "List of tags to exclude when custom filtering is used"
-  type        = list(string)
-  default     = []
-}
-
-variable "detectors_disabled" {
-  description = "Disable all detectors in this module"
-  type        = bool
-  default     = false
-}
-
-# Azure stream analytics detectors specific
+# Heartbeat detector
 
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
@@ -68,7 +26,7 @@ variable "heartbeat_aggregation_function" {
   default     = ".mean(by=['logicalname', 'azure_resource_name', 'azure_resource_group_name'])"
 }
 
-# SU_utilization detectors
+# SU_utilization detector
 
 variable "su_utilization_disabled" {
   description = "Disable all alerting rules for su_utilization detector"
@@ -118,7 +76,7 @@ variable "su_utilization_threshold_major" {
   default     = 80
 }
 
-# failed_function_requests detectors
+# failed_function_requests detector
 
 variable "failed_function_requests_disabled" {
   description = "Disable all alerting rules for failed_function_requests detector"
@@ -168,7 +126,7 @@ variable "failed_function_requests_threshold_major" {
   default     = 0
 }
 
-# Conversion_errors detectors
+# Conversion_errors detector
 
 variable "conversion_errors_disabled" {
   description = "Disable all alerting rules for conversion_errors detector"
@@ -218,7 +176,7 @@ variable "conversion_errors_threshold_major" {
   default     = 0
 }
 
-# Runtime_errors detectors
+# Runtime_errors detector
 
 variable "runtime_errors_disabled" {
   description = "Disable all alerting rules for runtime_errors detector"

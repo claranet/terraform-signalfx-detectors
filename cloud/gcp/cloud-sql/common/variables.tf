@@ -1,53 +1,11 @@
-# Global
-
-variable "environment" {
-  description = "Infrastructure environment"
-  type        = string
-}
+# Module specific
 
 variable "gcp_project_id" {
   description = "GCP project id used for default filtering while lables are not synced"
   type        = string
 }
 
-# SignalFx module specific
-
-variable "notifications" {
-  description = "Default notification recipients list per severity"
-  type = object({
-    critical = list(string)
-    major    = list(string)
-    minor    = list(string)
-    warning  = list(string)
-    info     = list(string)
-  })
-}
-
-variable "prefixes" {
-  description = "Prefixes list to prepend between brackets on every monitors names before environment"
-  type        = list
-  default     = []
-}
-
-variable "filter_custom_includes" {
-  description = "List of tags to include when custom filtering is used"
-  type        = list
-  default     = []
-}
-
-variable "filter_custom_excludes" {
-  description = "List of tags to exclude when custom filtering is used"
-  type        = list
-  default     = []
-}
-
-variable "detectors_disabled" {
-  description = "Disable all detectors in this module"
-  type        = bool
-  default     = false
-}
-
-# GCP Cloud SQL detectors specific
+# Heartbeat detector
 
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
@@ -73,7 +31,7 @@ variable "heartbeat_aggregation_function" {
   default     = ".mean(by=['database_id'])"
 }
 
-# CPU_utilization detectors
+# CPU_utilization detector
 
 variable "cpu_utilization_disabled" {
   description = "Disable all alerting rules for cpu_utilization detector"
@@ -123,7 +81,7 @@ variable "cpu_utilization_threshold_major" {
   default     = 80
 }
 
-# Disk_utilization detectors
+# Disk_utilization detector
 
 variable "disk_utilization_disabled" {
   description = "Disable all alerting rules for disk_utilization detector"
@@ -173,7 +131,7 @@ variable "disk_utilization_threshold_major" {
   default     = 86
 }
 
-# Disk_utilization_forecast detectors
+# Disk_utilization_forecast detector
 
 variable "disk_utilization_forecast_disabled" {
   description = "Disable all alerting rules for disk_utilization_forecast detector"
@@ -235,7 +193,7 @@ variable "disk_utilization_forecast_notifications" {
   default     = {}
 }
 
-# Memory_utilization detectors
+# Memory_utilization detector
 
 variable "memory_utilization_disabled" {
   description = "Disable all alerting rules for memory_utilization detector"
@@ -285,7 +243,7 @@ variable "memory_utilization_threshold_major" {
   default     = 90
 }
 
-# Memory_utilization_forecast detectors
+# Memory_utilization_forecast detector
 
 variable "memory_utilization_forecast_disabled" {
   description = "Disable all alerting rules for memory_utilization_forecast detector"

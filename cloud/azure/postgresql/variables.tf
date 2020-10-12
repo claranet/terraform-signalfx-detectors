@@ -1,48 +1,6 @@
-# Global
+# Module specific
 
-variable "environment" {
-  description = "Infrastructure environment"
-  type        = string
-}
-
-# SignalFx module specific
-
-variable "notifications" {
-  description = "Default notification recipients list per severity"
-  type = object({
-    critical = list(string)
-    major    = list(string)
-    minor    = list(string)
-    warning  = list(string)
-    info     = list(string)
-  })
-}
-
-variable "prefixes" {
-  description = "Prefixes list to prepend between brackets on every monitors names before environment"
-  type        = list(string)
-  default     = []
-}
-
-variable "filter_custom_includes" {
-  description = "List of tags to include when custom filtering is used"
-  type        = list(string)
-  default     = []
-}
-
-variable "filter_custom_excludes" {
-  description = "List of tags to exclude when custom filtering is used"
-  type        = list(string)
-  default     = []
-}
-
-variable "detectors_disabled" {
-  description = "Disable all detectors in this module"
-  type        = bool
-  default     = false
-}
-
-# Azure postgresql detectors specific
+# Heartbeat detector
 
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
@@ -68,7 +26,7 @@ variable "heartbeat_aggregation_function" {
   default     = ".mean(by=['azure_resource_id'])"
 }
 
-# CPU_usage detectors
+# CPU_usage detector
 
 variable "cpu_usage_disabled" {
   description = "Disable all alerting rules for cpu_usage detector"
@@ -118,7 +76,7 @@ variable "cpu_usage_threshold_major" {
   default     = 80
 }
 
-# no_connection detectors
+# no_connection detector
 
 variable "no_connection_disabled" {
   description = "Disable all alerting rules for no_connection detector"
@@ -150,7 +108,7 @@ variable "no_connection_timer" {
   default     = "5m"
 }
 
-# free_storage detectors
+# free_storage detector
 
 variable "free_storage_disabled" {
   description = "Disable all alerting rules for free_storage detector"
@@ -200,7 +158,7 @@ variable "free_storage_threshold_major" {
   default     = 20
 }
 
-# io_consumption detectors
+# io_consumption detector
 
 variable "io_consumption_disabled" {
   description = "Disable all alerting rules for io_consumption detector"
@@ -250,7 +208,7 @@ variable "io_consumption_threshold_major" {
   default     = 80
 }
 
-# memory_usage detectors
+# memory_usage detector
 
 variable "memory_usage_disabled" {
   description = "Disable all alerting rules for memory_usage detector"

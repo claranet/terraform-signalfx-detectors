@@ -1,54 +1,12 @@
-# Global
-
-variable "environment" {
-  description = "Infrastructure environment"
-  type        = string
-}
-
-# SignalFx module specific
-
-variable "notifications" {
-  description = "Default notification recipients list per severity"
-  type = object({
-    critical = list(string)
-    major    = list(string)
-    minor    = list(string)
-    warning  = list(string)
-    info     = list(string)
-  })
-}
-
-variable "prefixes" {
-  description = "Prefixes list to prepend between brackets on every monitors names before environment"
-  type        = list
-  default     = []
-}
-
-variable "filter_custom_includes" {
-  description = "List of tags to include when custom filtering is used"
-  type        = list
-  default     = []
-}
-
-variable "filter_custom_excludes" {
-  description = "List of tags to exclude when custom filtering is used"
-  type        = list
-  default     = []
-}
-
-variable "detectors_disabled" {
-  description = "Disable all detectors in this module"
-  type        = bool
-  default     = false
-}
-
-# AWS ELB detectors specific
+# Module specific
 
 variable "minimum_traffic" {
   description = "Minimum required traffic to evaluate rate of errors detectors"
   type        = number
   default     = 4
 }
+
+# Heartbeat detector
 
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
@@ -74,7 +32,7 @@ variable "heartbeat_aggregation_function" {
   default     = ".mean(by=['LoadBalancerName'])"
 }
 
-# no_healthy_instances detectors
+# no_healthy_instances detector
 
 variable "no_healthy_instances_disabled" {
   description = "Disable all alerting rules for no_healthy_instances detector"
@@ -124,7 +82,7 @@ variable "no_healthy_instances_threshold_major" {
   default     = 100
 }
 
-# 4xx detectors
+# 4xx detector
 
 variable "elb_4xx_disabled" {
   description = "Disable all alerting rules for 4xx detector"
@@ -186,7 +144,7 @@ variable "elb_4xx_threshold_major" {
   default     = 20
 }
 
-# 5xx detectors
+# 5xx detector
 
 variable "elb_5xx_disabled" {
   description = "Disable all alerting rules for 5xx detector"
@@ -248,7 +206,7 @@ variable "elb_5xx_threshold_major" {
   default     = 5
 }
 
-# backend_4xx detectors
+# backend_4xx detector
 
 variable "backend_4xx_disabled" {
   description = "Disable all alerting rules for backend_4xx detector"
@@ -310,7 +268,7 @@ variable "backend_4xx_threshold_major" {
   default     = 20
 }
 
-# backend_5xx detectors
+# backend_5xx detector
 
 variable "backend_5xx_disabled" {
   description = "Disable all alerting rules for backend_5xx detector"
@@ -372,7 +330,7 @@ variable "backend_5xx_threshold_major" {
   default     = 5
 }
 
-# Backend_latency detectors
+# Backend_latency detector
 
 variable "backend_latency_disabled" {
   description = "Disable all alerting rules for backend_latency detector"

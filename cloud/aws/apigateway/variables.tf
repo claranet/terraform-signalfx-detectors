@@ -1,54 +1,4 @@
-# Global
-
-variable "environment" {
-  description = "Infrastructure environment"
-  type        = string
-}
-
-# SignalFx module specific
-
-variable "is_v2" {
-  description = "Flag to use HTTP API Gateway (v2) instead of REST API Gateway (v1)"
-  type        = bool
-  default     = false
-}
-
-variable "notifications" {
-  description = "Default notification recipients list per severity"
-  type = object({
-    critical = list(string)
-    major    = list(string)
-    minor    = list(string)
-    warning  = list(string)
-    info     = list(string)
-  })
-}
-
-variable "prefixes" {
-  description = "Prefixes list to prepend between brackets on every monitors names before environment"
-  type        = list
-  default     = []
-}
-
-variable "filter_custom_includes" {
-  description = "List of tags to include when custom filtering is used"
-  type        = list
-  default     = []
-}
-
-variable "filter_custom_excludes" {
-  description = "List of tags to exclude when custom filtering is used"
-  type        = list
-  default     = []
-}
-
-variable "detectors_disabled" {
-  description = "Disable all detectors in this module"
-  type        = bool
-  default     = false
-}
-
-# AWS ApiGateway detectors specific
+# Module specific
 
 variable "minimum_traffic" {
   description = "Minimum required traffic to evaluate rate of errors detectors"
@@ -56,7 +6,13 @@ variable "minimum_traffic" {
   default     = 4
 }
 
-# Latency detectors
+variable "is_v2" {
+  description = "Flag to use HTTP API Gateway (v2) instead of REST API Gateway (v1)"
+  type        = bool
+  default     = false
+}
+
+# Latency detector
 
 variable "latency_disabled" {
   description = "Disable all alerting rules for latency detector"
@@ -118,7 +74,7 @@ variable "latency_threshold_major" {
   default     = 1000
 }
 
-# Http_5xx detectors
+# Http_5xx detector
 
 variable "http_5xx_disabled" {
   description = "Disable all alerting rules for http_5xx detector"
@@ -180,7 +136,7 @@ variable "http_5xx_threshold_major" {
   default     = 5
 }
 
-# Http_4xx detectors
+# Http_4xx detector
 
 variable "http_4xx_disabled" {
   description = "Disable all alerting rules for http_4xx detector"

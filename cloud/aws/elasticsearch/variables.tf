@@ -1,48 +1,6 @@
-# Global
+# Module specific
 
-variable "environment" {
-  description = "Infrastructure environment"
-  type        = string
-}
-
-# SignalFx module specific
-
-variable "notifications" {
-  description = "Default notification recipients list per severity"
-  type = object({
-    critical = list(string)
-    major    = list(string)
-    minor    = list(string)
-    warning  = list(string)
-    info     = list(string)
-  })
-}
-
-variable "prefixes" {
-  description = "Prefixes list to prepend between brackets on every monitors names before environment"
-  type        = list
-  default     = []
-}
-
-variable "filter_custom_includes" {
-  description = "List of tags to include when custom filtering is used"
-  type        = list
-  default     = []
-}
-
-variable "filter_custom_excludes" {
-  description = "List of tags to exclude when custom filtering is used"
-  type        = list
-  default     = []
-}
-
-variable "detectors_disabled" {
-  description = "Disable all detectors in this module"
-  type        = bool
-  default     = false
-}
-
-# AWS ElasticSearch detectors specific
+# Heartbeat detector
 
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
@@ -68,7 +26,7 @@ variable "heartbeat_aggregation_function" {
   default     = ".mean(by=['DomainName'])"
 }
 
-# Cluster_status detectors
+# Cluster_status detector
 
 variable "cluster_status_disabled" {
   description = "Disable all alerting rules for cluster_status detector"
@@ -106,7 +64,7 @@ variable "cluster_status_transformation_function" {
   default     = ".max(over='30m')"
 }
 
-# Free_space detectors
+# Free_space detector
 
 variable "free_space_disabled" {
   description = "Disable all alerting rules for free_space detector"
@@ -156,7 +114,7 @@ variable "free_space_threshold_major" {
   default     = 40960
 }
 
-# CPU_90_15min detectors
+# CPU_90_15min detector
 
 variable "cpu_90_15min_disabled" {
   description = "Disable all alerting rules for cpu_90_15min detector"

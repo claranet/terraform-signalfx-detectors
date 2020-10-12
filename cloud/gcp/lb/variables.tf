@@ -1,53 +1,9 @@
-# Global
-
-variable "environment" {
-  description = "Infrastructure environment"
-  type        = string
-}
+# Module specific
 
 variable "gcp_project_id" {
   description = "GCP project id used for default filtering while lables are not synced"
   type        = string
 }
-
-# SignalFx module specific
-
-variable "notifications" {
-  description = "Default notification recipients list per severity"
-  type = object({
-    critical = list(string)
-    major    = list(string)
-    minor    = list(string)
-    warning  = list(string)
-    info     = list(string)
-  })
-}
-
-variable "prefixes" {
-  description = "Prefixes list to prepend between brackets on every monitors names before environment"
-  type        = list
-  default     = []
-}
-
-variable "filter_custom_includes" {
-  description = "List of tags to include when custom filtering is used"
-  type        = list
-  default     = []
-}
-
-variable "filter_custom_excludes" {
-  description = "List of tags to exclude when custom filtering is used"
-  type        = list
-  default     = []
-}
-
-variable "detectors_disabled" {
-  description = "Disable all detectors in this module"
-  type        = bool
-  default     = false
-}
-
-# GCP LB detectors specific
 
 variable "minimum_traffic" {
   description = "Minimum required traffic to evaluate rate of errors detectors"
@@ -55,7 +11,7 @@ variable "minimum_traffic" {
   default     = 4
 }
 
-# Error_rate_4xx detectors
+# Error_rate_4xx detector
 
 variable "error_rate_4xx_disabled" {
   description = "Disable all alerting rules for error_rate_4xx detector"
@@ -117,7 +73,7 @@ variable "error_rate_4xx_threshold_major" {
   default     = 20
 }
 
-# Error_rate_5xx detectors
+# Error_rate_5xx detector
 
 variable "error_rate_5xx_disabled" {
   description = "Disable all alerting rules for error_rate_5xx detector"
@@ -179,7 +135,7 @@ variable "error_rate_5xx_threshold_major" {
   default     = 5
 }
 
-# backend_latency_service detectors
+# backend_latency_service detector
 
 variable "backend_latency_service_disabled" {
   description = "Disable all alerting rules for backend_latency_service detector"
@@ -241,7 +197,7 @@ variable "backend_latency_service_threshold_major" {
   default     = 1000
 }
 
-# Backend_latency_bucket detectors
+# Backend_latency_bucket detector
 
 variable "backend_latency_bucket_disabled" {
   description = "Disable all alerting rules for backend_latency_bucket detector"
@@ -303,7 +259,7 @@ variable "backend_latency_bucket_threshold_major" {
   default     = 5000
 }
 
-# Request_count detectors
+# Request_count detector
 
 variable "request_count_disabled" {
   description = "Disable all alerting rules for request_count detector"

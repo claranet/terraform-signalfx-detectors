@@ -1,48 +1,4 @@
-# Global
-
-variable "environment" {
-  description = "Infrastructure environment"
-  type        = string
-}
-
-# SignalFx module specific
-
-variable "notifications" {
-  description = "Default notification recipients list per severity"
-  type = object({
-    critical = list(string)
-    major    = list(string)
-    minor    = list(string)
-    warning  = list(string)
-    info     = list(string)
-  })
-}
-
-variable "prefixes" {
-  description = "Prefixes list to prepend between brackets on every monitors names before environment"
-  type        = list
-  default     = []
-}
-
-variable "filter_custom_includes" {
-  description = "List of tags to include when custom filtering is used"
-  type        = list
-  default     = []
-}
-
-variable "filter_custom_excludes" {
-  description = "List of tags to exclude when custom filtering is used"
-  type        = list
-  default     = []
-}
-
-variable "detectors_disabled" {
-  description = "Disable all detectors in this module"
-  type        = bool
-  default     = false
-}
-
-# Kubernetes ingress detectors specific
+# Module specific
 
 variable "minimum_traffic" {
   description = "Minimum required traffic to evaluate rate of errors detectors"
@@ -50,7 +6,7 @@ variable "minimum_traffic" {
   default     = 4
 }
 
-# ingress_5xx detectors
+# ingress_5xx detector
 
 variable "ingress_5xx_disabled" {
   description = "Disable all alerting rules for ingress_5xx detector"
@@ -114,7 +70,7 @@ variable "ingress_5xx_threshold_major" {
   default     = 5
 }
 
-# ingress_4xx detectors
+# ingress_4xx detector
 
 variable "ingress_4xx_disabled" {
   description = "Disable all alerting rules for ingress_4xx detector"
@@ -178,7 +134,7 @@ variable "ingress_4xx_threshold_major" {
   default     = 20
 }
 
-# ingress_latency detectors
+# ingress_latency detector
 
 variable "ingress_latency_disabled" {
   description = "Disable all alerting rules for ingress_latency detector"

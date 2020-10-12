@@ -1,10 +1,4 @@
-# Global
-
-variable "environment" {
-  description = "Infrastructure environment"
-  type        = string
-  default     = "global"
-}
+# Module specific
 
 variable "runbook_url" {
   description = "Runbook url to add in detectors messages"
@@ -23,33 +17,6 @@ variable "multiplier" {
   type        = number
   default     = 2
 }
-
-# SignalFx module specific
-
-variable "notifications" {
-  description = "Default notification recipients list per severity"
-  type = object({
-    critical = list(string)
-    major    = list(string)
-    minor    = list(string)
-    warning  = list(string)
-    info     = list(string)
-  })
-}
-
-variable "prefixes" {
-  description = "Prefixes list to prepend between brackets on every monitors names before environment"
-  type        = list
-  default     = []
-}
-
-variable "detectors_disabled" {
-  description = "Disable all detectors in this module"
-  type        = bool
-  default     = false
-}
-
-# Organization detectors specific
 
 # hosts_limit detector
 

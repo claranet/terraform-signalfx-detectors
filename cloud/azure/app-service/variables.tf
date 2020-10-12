@@ -1,48 +1,6 @@
-# Global
+# Module specific
 
-variable "environment" {
-  description = "Infrastructure environment"
-  type        = string
-}
-
-# SignalFx module specific
-
-variable "notifications" {
-  description = "Default notification recipients list per severity"
-  type = object({
-    critical = list(string)
-    major    = list(string)
-    minor    = list(string)
-    warning  = list(string)
-    info     = list(string)
-  })
-}
-
-variable "prefixes" {
-  description = "Prefixes list to prepend between brackets on every monitors names before environment"
-  type        = list(string)
-  default     = []
-}
-
-variable "filter_custom_includes" {
-  description = "List of tags to include when custom filtering is used"
-  type        = list(string)
-  default     = []
-}
-
-variable "filter_custom_excludes" {
-  description = "List of tags to exclude when custom filtering is used"
-  type        = list(string)
-  default     = []
-}
-
-variable "detectors_disabled" {
-  description = "Disable all detectors in this module"
-  type        = bool
-  default     = false
-}
-
-# Azure app services detectors specific
+# Heartbeat detector
 
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
@@ -68,7 +26,7 @@ variable "heartbeat_aggregation_function" {
   default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
-# Response_time detectors
+# Response_time detector
 
 variable "response_time_disabled" {
   description = "Disable all alerting rules for response_time detector"
@@ -118,7 +76,7 @@ variable "response_time_threshold_major" {
   default     = 5
 }
 
-# Memory_usage_count detectors
+# Memory_usage_count detector
 
 variable "memory_usage_count_disabled" {
   description = "Disable all alerting rules for memory_usage_count detector"
@@ -168,7 +126,7 @@ variable "memory_usage_count_threshold_major" {
   default     = 536870912 # 512Mb
 }
 
-# Http_5xx_errors_count detectors
+# Http_5xx_errors_count detector
 
 variable "http_5xx_errors_count_disabled" {
   description = "Disable all alerting rules for http_5xx_errors_count detector"
@@ -218,7 +176,7 @@ variable "http_5xx_errors_count_threshold_major" {
   default     = 50
 }
 
-# http_4xx_errors_count detectors
+# http_4xx_errors_count detector
 
 variable "http_4xx_errors_count_disabled" {
   description = "Disable all alerting rules for http_4xx_errors_count detector"
@@ -268,7 +226,7 @@ variable "http_4xx_errors_count_threshold_major" {
   default     = 50
 }
 
-# Http_success_status_rate detectors
+# Http_success_status_rate detector
 
 variable "http_success_status_rate_disabled" {
   description = "Disable all alerting rules for http_success_status_rate detector"

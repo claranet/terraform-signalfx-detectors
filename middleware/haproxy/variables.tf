@@ -1,48 +1,6 @@
-# Global
+# Module specific
 
-variable "environment" {
-  description = "Infrastructure environment"
-  type        = string
-}
-
-# SignalFx module specific
-
-variable "notifications" {
-  description = "Default notification recipients list per severity"
-  type = object({
-    critical = list(string)
-    major    = list(string)
-    minor    = list(string)
-    warning  = list(string)
-    info     = list(string)
-  })
-}
-
-variable "prefixes" {
-  description = "Prefixes list to prepend between brackets on every monitors names before environment"
-  type        = list
-  default     = []
-}
-
-variable "filter_custom_includes" {
-  description = "List of tags to include when custom filtering is used"
-  type        = list
-  default     = []
-}
-
-variable "filter_custom_excludes" {
-  description = "List of tags to exclude when custom filtering is used"
-  type        = list
-  default     = []
-}
-
-variable "detectors_disabled" {
-  description = "Disable all detectors in this module"
-  type        = bool
-  default     = false
-}
-
-# Haproxy detectors specific
+# Heartbeat detector
 
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
@@ -67,6 +25,8 @@ variable "heartbeat_aggregation_function" {
   type        = string
   default     = ""
 }
+
+# Server_status detector
 
 variable "server_status_disabled" {
   description = "Disable all alerting rules for server status detector"
@@ -98,6 +58,8 @@ variable "server_status_transformation_function" {
   default     = ".min(over='5m')"
 }
 
+# Backend_status detector
+
 variable "backend_status_disabled" {
   description = "Disable all alerting rules for backend status detector"
   type        = bool
@@ -127,6 +89,8 @@ variable "backend_status_transformation_function" {
   type        = string
   default     = ".min(over='5m')"
 }
+
+# Session_limit detector
 
 variable "session_limit_disabled" {
   description = "Disable all alerting rules for session limit detector"
@@ -176,6 +140,8 @@ variable "session_limit_threshold_critical" {
   default     = 90
 }
 
+# Http_5xx_response detector
+
 variable "http_5xx_response_disabled" {
   description = "Disable all alerting rules for http_5xx_response detector"
   type        = bool
@@ -223,6 +189,8 @@ variable "http_5xx_response_threshold_critical" {
   type        = number
   default     = 80
 }
+
+# Http_4xx_response detector
 
 variable "http_4xx_response_disabled" {
   description = "Disable all alerting rules for http_4xx_response detector"

@@ -1,48 +1,6 @@
-# Global
+# Module specific
 
-variable "environment" {
-  description = "Infrastructure environment"
-  type        = string
-}
-
-# SignalFx module specific
-
-variable "notifications" {
-  description = "Default notification recipients list per severity"
-  type = object({
-    critical = list(string)
-    major    = list(string)
-    minor    = list(string)
-    warning  = list(string)
-    info     = list(string)
-  })
-}
-
-variable "prefixes" {
-  description = "Prefixes list to prepend between brackets on every monitors names before environment"
-  type        = list
-  default     = []
-}
-
-variable "filter_custom_includes" {
-  description = "List of tags to include when custom filtering is used"
-  type        = list
-  default     = []
-}
-
-variable "filter_custom_excludes" {
-  description = "List of tags to exclude when custom filtering is used"
-  type        = list
-  default     = []
-}
-
-variable "detectors_disabled" {
-  description = "Disable all detectors in this module"
-  type        = bool
-  default     = false
-}
-
-# Redis detectors specific
+# Heartbeat detector
 
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
@@ -68,7 +26,7 @@ variable "heartbeat_aggregation_function" {
   default     = ""
 }
 
-# Evicted_keys detectors
+# Evicted_keys detector
 
 variable "evicted_keys_disabled" {
   description = "Disable all alerting rules for evicted_keys detector"
@@ -118,7 +76,7 @@ variable "evicted_keys_threshold_major" {
   default     = 25
 }
 
-# Expirations detectors
+# Expirations detector
 
 variable "expirations_disabled" {
   description = "Disable all alerting rules for expirations detector"
@@ -168,7 +126,7 @@ variable "expirations_threshold_major" {
   default     = 50
 }
 
-# Blocked_clients detectors
+# Blocked_clients detector
 
 variable "blocked_clients_disabled" {
   description = "Disable all alerting rules for blocked_clients detector"
@@ -218,7 +176,7 @@ variable "blocked_clients_threshold_warning" {
   default     = 0
 }
 
-# Keyspace_full detectors
+# Keyspace_full detector
 
 variable "keyspace_full_disabled" {
   description = "Disable all alerting rules for keyspace_full detector"
@@ -244,7 +202,7 @@ variable "keyspace_full_transformation_function" {
   default     = ".sum(over='1h')"
 }
 
-# Memory_used_max detectors
+# Memory_used_max detector
 
 variable "memory_used_max_disabled" {
   description = "Disable all alerting rules for memory_used_max detector"
@@ -294,7 +252,7 @@ variable "memory_used_max_threshold_major" {
   default     = 85
 }
 
-# Memory_used_total detectors
+# Memory_used_total detector
 
 variable "memory_used_total_disabled" {
   description = "Disable all alerting rules for memory_used_total detector"
@@ -344,7 +302,7 @@ variable "memory_used_total_threshold_major" {
   default     = 85
 }
 
-# Memory_frag_high detectors
+# Memory_frag_high detector
 
 variable "memory_frag_high_disabled" {
   description = "Disable all alerting rules for memory_frag_high detector"
@@ -394,7 +352,7 @@ variable "memory_frag_high_threshold_major" {
   default     = 2
 }
 
-# Memory_frag_low detectors
+# Memory_frag_low detector
 
 variable "memory_frag_low_disabled" {
   description = "Disable all alerting rules for memory_frag_low detector"
@@ -444,7 +402,7 @@ variable "memory_frag_low_threshold_major" {
   default     = 1
 }
 
-# rejected_connections detectors
+# rejected_connections detector
 
 variable "rejected_connections_disabled" {
   description = "Disable all alerting rules for rejected_connections detector"
@@ -494,7 +452,7 @@ variable "rejected_connections_threshold_major" {
   default     = 0
 }
 
-# Hitrate detectors
+# Hitrate detector
 
 variable "hitrate_disabled" {
   description = "Disable all alerting rules for hitrate detector"

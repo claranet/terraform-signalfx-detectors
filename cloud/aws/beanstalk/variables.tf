@@ -1,48 +1,6 @@
-# Global
+# Module specific
 
-variable "environment" {
-  description = "Infrastructure environment"
-  type        = string
-}
-
-# SignalFx module specific
-
-variable "notifications" {
-  description = "Default notification recipients list per severity"
-  type = object({
-    critical = list(string)
-    major    = list(string)
-    minor    = list(string)
-    warning  = list(string)
-    info     = list(string)
-  })
-}
-
-variable "prefixes" {
-  description = "Prefixes list to prepend between brackets on every monitors names before environment"
-  type        = list
-  default     = []
-}
-
-variable "filter_custom_includes" {
-  description = "List of tags to include when custom filtering is used"
-  type        = list
-  default     = []
-}
-
-variable "filter_custom_excludes" {
-  description = "List of tags to exclude when custom filtering is used"
-  type        = list
-  default     = []
-}
-
-variable "detectors_disabled" {
-  description = "Disable all detectors in this module"
-  type        = bool
-  default     = false
-}
-
-# AWS beanstalk detectors specific
+# Heartbeat detector
 
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
@@ -68,7 +26,7 @@ variable "heartbeat_aggregation_function" {
   default     = ".mean(by=['EnvironmentName'])"
 }
 
-# Health detectors
+# Health detector
 
 variable "health_disabled" {
   description = "Disable all alerting rules for health detector"
@@ -118,7 +76,7 @@ variable "health_threshold_major" {
   default     = 15
 }
 
-# Latency_p90 detectors
+# Latency_p90 detector
 
 variable "latency_p90_disabled" {
   description = "Disable all alerting rules for latency_p90 detector"
@@ -168,7 +126,7 @@ variable "latency_p90_threshold_major" {
   default     = 0.3
 }
 
-# app_5xx_error_rate detectors
+# app_5xx_error_rate detector
 
 variable "app_5xx_error_rate_disabled" {
   description = "Disable all alerting rules for 5xx_error_rate detector"
@@ -218,7 +176,7 @@ variable "app_5xx_error_rate_threshold_major" {
   default     = 3
 }
 
-# Root_filesystem_usage detectors
+# Root_filesystem_usage detector
 
 variable "root_filesystem_usage_disabled" {
   description = "Disable all alerting rules for root_filesystem_usage detector"

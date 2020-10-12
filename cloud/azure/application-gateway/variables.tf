@@ -1,48 +1,6 @@
-# Global
+# Module specific
 
-variable "environment" {
-  description = "Infrastructure environment"
-  type        = string
-}
-
-# SignalFx module specific
-
-variable "notifications" {
-  description = "Default notification recipients list per severity"
-  type = object({
-    critical = list(string)
-    major    = list(string)
-    minor    = list(string)
-    warning  = list(string)
-    info     = list(string)
-  })
-}
-
-variable "prefixes" {
-  description = "Prefixes list to prepend between brackets on every monitors names before environment"
-  type        = list(string)
-  default     = []
-}
-
-variable "filter_custom_includes" {
-  description = "List of tags to include when custom filtering is used"
-  type        = list(string)
-  default     = []
-}
-
-variable "filter_custom_excludes" {
-  description = "List of tags to exclude when custom filtering is used"
-  type        = list(string)
-  default     = []
-}
-
-variable "detectors_disabled" {
-  description = "Disable all detectors in this module"
-  type        = bool
-  default     = false
-}
-
-# Azure app gateway detectors specific
+# Heartbeat detector
 
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
@@ -68,7 +26,7 @@ variable "heartbeat_aggregation_function" {
   default     = ".mean(by=['subscription_id'])"
 }
 
-# Total_requests detectors
+# Total_requests detector
 
 variable "total_requests_disabled" {
   description = "Disable all alerting rules for total_requests detector"
@@ -100,7 +58,7 @@ variable "total_requests_timer" {
   default     = "5m"
 }
 
-# backend_connect_time detectors
+# backend_connect_time detector
 
 variable "backend_connect_time_disabled" {
   description = "Disable all alerting rules for backend_connect_time detector"
@@ -150,7 +108,7 @@ variable "backend_connect_time_threshold_major" {
   default     = 40
 }
 
-# Failed_requests detectors
+# Failed_requests detector
 
 variable "failed_requests_disabled" {
   description = "Disable all alerting rules for failed_requests detector"
@@ -200,7 +158,7 @@ variable "failed_requests_threshold_major" {
   default     = 80
 }
 
-# Unhealthy_host_ratio detectors
+# Unhealthy_host_ratio detector
 
 variable "unhealthy_host_ratio_disabled" {
   description = "Disable all alerting rules for unhealthy_host_ratio detector"
@@ -250,7 +208,7 @@ variable "unhealthy_host_ratio_threshold_major" {
   default     = 50
 }
 
-# Http_4xx_errors detectors
+# Http_4xx_errors detector
 
 variable "http_4xx_errors_disabled" {
   description = "Disable all alerting rules for http_4xx_errors detector"
@@ -300,7 +258,7 @@ variable "http_4xx_errors_threshold_major" {
   default     = 80
 }
 
-# Http_5xx_errors detectors
+# Http_5xx_errors detector
 
 variable "http_5xx_errors_disabled" {
   description = "Disable all alerting rules for http_5xx_errors detector"
@@ -350,7 +308,7 @@ variable "http_5xx_errors_threshold_major" {
   default     = 80
 }
 
-# Backend_http_4xx_errors detectors
+# Backend_http_4xx_errors detector
 
 variable "backend_http_4xx_errors_disabled" {
   description = "Disable all alerting rules for backend_http_4xx_errors detector"
@@ -400,7 +358,7 @@ variable "backend_http_4xx_errors_threshold_major" {
   default     = 80
 }
 
-# Backend_http_5xx_errors detectors
+# Backend_http_5xx_errors detector
 
 variable "backend_http_5xx_errors_disabled" {
   description = "Disable all alerting rules for backend_http_5xx_errors detector"

@@ -1,48 +1,6 @@
-# Global
+# Module specific
 
-variable "environment" {
-  description = "Infrastructure environment"
-  type        = string
-}
-
-# SignalFx module specific
-
-variable "notifications" {
-  description = "Default notification recipients list per severity"
-  type = object({
-    critical = list(string)
-    major    = list(string)
-    minor    = list(string)
-    warning  = list(string)
-    info     = list(string)
-  })
-}
-
-variable "prefixes" {
-  description = "Prefixes list to prepend between brackets on every monitors names before environment"
-  type        = list(string)
-  default     = []
-}
-
-variable "filter_custom_includes" {
-  description = "List of tags to include when custom filtering is used"
-  type        = list(string)
-  default     = []
-}
-
-variable "filter_custom_excludes" {
-  description = "List of tags to exclude when custom filtering is used"
-  type        = list(string)
-  default     = []
-}
-
-variable "detectors_disabled" {
-  description = "Disable all detectors in this module"
-  type        = bool
-  default     = false
-}
-
-# Azure servicebus detectors specific
+# Heartbeat detector
 
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
@@ -68,7 +26,7 @@ variable "heartbeat_aggregation_function" {
   default     = ".mean(by=['entityname', 'azure_resource_name', 'azure_resource_group_name'])"
 }
 
-# Active_connections detectors
+# Active_connections detector
 
 variable "active_connections_disabled" {
   description = "Disable all alerting rules for active_connections detector"
@@ -106,7 +64,7 @@ variable "active_connections_threshold_critical" {
   default     = 1
 }
 
-# User_errors detectors
+# User_errors detector
 
 variable "user_errors_disabled" {
   description = "Disable all alerting rules for user_errors detector"
@@ -156,7 +114,7 @@ variable "user_errors_threshold_major" {
   default     = 50
 }
 
-# Server_errors detectors
+# Server_errors detector
 
 variable "server_errors_disabled" {
   description = "Disable all alerting rules for server_errors detector"
