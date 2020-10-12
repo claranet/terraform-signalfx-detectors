@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name = format("%s %s", local.name_prefix, "Azure Service Bus heartbeat")
+  name = format("%s %s", local.detector_name_prefix, "Azure Service Bus heartbeat")
 
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting
@@ -14,13 +14,13 @@ resource "signalfx_detector" "heartbeat" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject_novalue
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject_novalue
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "active_connections" {
-  name = format("%s %s", local.name_prefix, "Azure Service Bus no active connections")
+  name = format("%s %s", local.detector_name_prefix, "Azure Service Bus no active connections")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.ServiceBus/namespaces') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}
@@ -34,14 +34,14 @@ resource "signalfx_detector" "active_connections" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.active_connections_disabled_critical, var.active_connections_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.active_connections_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
 }
 
 resource "signalfx_detector" "user_errors" {
-  name = format("%s %s", local.name_prefix, "Azure Service Bus user error rate")
+  name = format("%s %s", local.detector_name_prefix, "Azure Service Bus user error rate")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.ServiceBus/namespaces') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}
@@ -58,8 +58,8 @@ resource "signalfx_detector" "user_errors" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.user_errors_disabled_critical, var.user_errors_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.user_errors_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -68,13 +68,13 @@ resource "signalfx_detector" "user_errors" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.user_errors_disabled_major, var.user_errors_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.user_errors_notifications, "major", []), var.notifications.major)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "server_errors" {
-  name = format("%s %s", local.name_prefix, "Azure Service Bus server error rate")
+  name = format("%s %s", local.detector_name_prefix, "Azure Service Bus server error rate")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.ServiceBus/namespaces') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}
@@ -91,8 +91,8 @@ resource "signalfx_detector" "server_errors" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.server_errors_disabled_critical, var.server_errors_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.server_errors_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -101,7 +101,7 @@ resource "signalfx_detector" "server_errors" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.server_errors_disabled_major, var.server_errors_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.server_errors_notifications, "major", []), var.notifications.major)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }

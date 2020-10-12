@@ -1,5 +1,5 @@
 resource "signalfx_detector" "hit_ratio" {
-  name = format("%s %s", local.name_prefix, "AWS ElastiCache memcached hit ratio")
+  name = format("%s %s", local.detector_name_prefix, "AWS ElastiCache memcached hit ratio")
 
   program_text = <<-EOF
     A = data('GetHits', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.hit_ratio_aggregation_function}${var.hit_ratio_transformation_function}
@@ -15,8 +15,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.hit_ratio_disabled_critical, var.hit_ratio_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.hit_ratio_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -25,13 +25,13 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.hit_ratio_disabled_major, var.hit_ratio_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.hit_ratio_notifications, "major", []), var.notifications.major)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "cpu" {
-  name = format("%s %s", local.name_prefix, "AWS ElastiCache memcached CPU")
+  name = format("%s %s", local.detector_name_prefix, "AWS ElastiCache memcached CPU")
 
   program_text = <<-EOF
     signal = data('CPUUtilization', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.cpu_aggregation_function}${var.cpu_transformation_function}.publish('signal')
@@ -45,8 +45,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.cpu_disabled_critical, var.cpu_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.cpu_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -55,8 +55,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.cpu_disabled_major, var.cpu_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.cpu_notifications, "major", []), var.notifications.major)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 

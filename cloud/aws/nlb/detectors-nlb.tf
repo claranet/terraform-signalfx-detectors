@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name = format("%s %s", local.name_prefix, "AWS NLB heartbeat")
+  name = format("%s %s", local.detector_name_prefix, "AWS NLB heartbeat")
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
@@ -13,13 +13,13 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject_novalue
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject_novalue
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "no_healthy_instances" {
-  name = format("%s %s", local.name_prefix, "AWS NLB healthy instances percentage")
+  name = format("%s %s", local.detector_name_prefix, "AWS NLB healthy instances percentage")
 
   program_text = <<-EOF
     A = data('HealthyHostCount', filter=filter('namespace', 'AWS/NetworkELB') and filter('stat', 'lower') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom})${var.no_healthy_instances_aggregation_function}${var.no_healthy_instances_transformation_function}
@@ -35,8 +35,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.no_healthy_instances_disabled_critical, var.no_healthy_instances_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.no_healthy_instances_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -45,8 +45,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.no_healthy_instances_disabled_major, var.no_healthy_instances_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.no_healthy_instances_notifications, "major", []), var.notifications.major)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 

@@ -1,5 +1,5 @@
 resource "signalfx_detector" "concurrent_queries" {
-  name = format("%s %s", local.name_prefix, "GCP BigQuery concurrent queries")
+  name = format("%s %s", local.detector_name_prefix, "GCP BigQuery concurrent queries")
 
   program_text = <<-EOF
     from signalfx.detectors.aperiodic import conditions
@@ -16,8 +16,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.concurrent_queries_disabled_critical, var.concurrent_queries_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.concurrent_queries_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -26,14 +26,14 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.concurrent_queries_disabled_major, var.concurrent_queries_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.concurrent_queries_notifications, "major", []), var.notifications.major)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
 }
 
 resource "signalfx_detector" "execution_time" {
-  name = format("%s %s", local.name_prefix, "GCP BigQuery execution time")
+  name = format("%s %s", local.detector_name_prefix, "GCP BigQuery execution time")
 
   program_text = <<-EOF
     from signalfx.detectors.aperiodic import conditions
@@ -50,8 +50,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.execution_time_disabled_critical, var.execution_time_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.execution_time_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -60,14 +60,14 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.execution_time_disabled_major, var.execution_time_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.execution_time_notifications, "major", []), var.notifications.major)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
 }
 
 resource "signalfx_detector" "scanned_bytes" {
-  name = format("%s %s", local.name_prefix, "GCP BigQuery scanned bytes")
+  name = format("%s %s", local.detector_name_prefix, "GCP BigQuery scanned bytes")
 
   program_text = <<-EOF
     from signalfx.detectors.aperiodic import conditions
@@ -84,8 +84,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.scanned_bytes_disabled_critical, var.scanned_bytes_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.scanned_bytes_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -94,14 +94,14 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.scanned_bytes_disabled_major, var.scanned_bytes_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.scanned_bytes_notifications, "major", []), var.notifications.major)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
 }
 
 resource "signalfx_detector" "scanned_bytes_billed" {
-  name = format("%s %s", local.name_prefix, "GCP BigQuery scanned bytes billed")
+  name = format("%s %s", local.detector_name_prefix, "GCP BigQuery scanned bytes billed")
 
   program_text = <<-EOF
     from signalfx.detectors.aperiodic import conditions
@@ -118,8 +118,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.scanned_bytes_billed_disabled_critical, var.scanned_bytes_billed_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.scanned_bytes_billed_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -128,14 +128,14 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.scanned_bytes_billed_disabled_major, var.scanned_bytes_billed_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.scanned_bytes_billed_notifications, "major", []), var.notifications.major)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
 }
 
 resource "signalfx_detector" "available_slots" {
-  name = format("%s %s", local.name_prefix, "GCP BigQuery available slots")
+  name = format("%s %s", local.detector_name_prefix, "GCP BigQuery available slots")
 
   program_text = <<-EOF
     from signalfx.detectors.aperiodic import conditions
@@ -152,8 +152,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.available_slots_disabled_critical, var.available_slots_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.available_slots_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -162,14 +162,14 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.available_slots_disabled_major, var.available_slots_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.available_slots_notifications, "major", []), var.notifications.major)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
 }
 
 resource "signalfx_detector" "stored_bytes" {
-  name = format("%s %s", local.name_prefix, "GCP BigQuery stored bytes")
+  name = format("%s %s", local.detector_name_prefix, "GCP BigQuery stored bytes")
 
   program_text = <<-EOF
     from signalfx.detectors.aperiodic import conditions
@@ -186,8 +186,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.stored_bytes_disabled_critical, var.stored_bytes_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.stored_bytes_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -196,14 +196,14 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.stored_bytes_disabled_major, var.stored_bytes_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.stored_bytes_notifications, "major", []), var.notifications.major)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
 }
 
 resource "signalfx_detector" "table_count" {
-  name = format("%s %s", local.name_prefix, "GCP BigQuery table count")
+  name = format("%s %s", local.detector_name_prefix, "GCP BigQuery table count")
 
   program_text = <<-EOF
     from signalfx.detectors.aperiodic import conditions
@@ -220,8 +220,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.table_count_disabled_critical, var.table_count_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.table_count_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -230,14 +230,14 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.table_count_disabled_major, var.table_count_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.table_count_notifications, "major", []), var.notifications.major)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
 }
 
 resource "signalfx_detector" "uploaded_bytes" {
-  name = format("%s %s", local.name_prefix, "GCP BigQuery uploaded bytes")
+  name = format("%s %s", local.detector_name_prefix, "GCP BigQuery uploaded bytes")
 
   program_text = <<-EOF
     from signalfx.detectors.aperiodic import conditions
@@ -254,8 +254,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.uploaded_bytes_disabled_critical, var.uploaded_bytes_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.uploaded_bytes_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -264,14 +264,14 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.uploaded_bytes_disabled_major, var.uploaded_bytes_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.uploaded_bytes_notifications, "major", []), var.notifications.major)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
 }
 
 resource "signalfx_detector" "uploaded_bytes_billed" {
-  name = format("%s %s", local.name_prefix, "GCP BigQuery uploaded bytes billed")
+  name = format("%s %s", local.detector_name_prefix, "GCP BigQuery uploaded bytes billed")
 
   program_text = <<-EOF
     from signalfx.detectors.aperiodic import conditions
@@ -288,8 +288,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.uploaded_bytes_billed_disabled_critical, var.uploaded_bytes_billed_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.uploaded_bytes_billed_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -298,8 +298,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.uploaded_bytes_billed_disabled_major, var.uploaded_bytes_billed_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.uploaded_bytes_billed_notifications, "major", []), var.notifications.major)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
 }

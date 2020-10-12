@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name = format("%s %s", local.name_prefix, "AWS ECS heartbeat")
+  name = format("%s %s", local.detector_name_prefix, "AWS ECS heartbeat")
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
@@ -13,13 +13,13 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject_novalue
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject_novalue
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "cpu_utilization" {
-  name = format("%s %s", local.name_prefix, "AWS ECS cluster CPU utilization")
+  name = format("%s %s", local.detector_name_prefix, "AWS ECS cluster CPU utilization")
 
   program_text = <<-EOF
     signal = data('CPUUtilization', filter=filter('namespace', 'AWS/ECS') and filter('stat', 'mean') and not filter('ServiceName', '*') and ${module.filter-tags.filter_custom}).mean(by=['ClusterName'])${var.cpu_utilization_aggregation_function}${var.cpu_utilization_transformation_function}.publish('signal')
@@ -33,8 +33,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.cpu_utilization_disabled_critical, var.cpu_utilization_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.cpu_utilization_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -43,13 +43,13 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.cpu_utilization_disabled_major, var.cpu_utilization_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.cpu_utilization_notifications, "major", []), var.notifications.major)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "memory_utilization" {
-  name = format("%s %s", local.name_prefix, "AWS ECS cluster memory utilization")
+  name = format("%s %s", local.detector_name_prefix, "AWS ECS cluster memory utilization")
 
   program_text = <<-EOF
     signal = data('MemoryUtilization', filter=filter('namespace', 'AWS/ECS') and filter('stat', 'mean') and not filter('ServiceName', '*') and ${module.filter-tags.filter_custom}).mean(by=['ClusterName'])${var.memory_utilization_aggregation_function}${var.memory_utilization_transformation_function}.publish('signal')
@@ -63,8 +63,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.memory_utilization_disabled_critical, var.memory_utilization_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.memory_utilization_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -73,8 +73,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.memory_utilization_disabled_major, var.memory_utilization_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.memory_utilization_notifications, "major", []), var.notifications.major)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 

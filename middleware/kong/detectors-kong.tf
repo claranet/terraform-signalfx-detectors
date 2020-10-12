@@ -1,10 +1,10 @@
 resource "signalfx_detector" "heartbeat" {
-  name      = format("%s %s", local.name_prefix, "Kong heartbeat")
+  name      = format("%s %s", local.detector_name_prefix, "Kong heartbeat")
   max_delay = 900
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    signal = data('counter.kong.requests.count', filter=${local.heartbeat_filters} and ${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')
+    signal = data('counter.kong.requests.count', filter=${local.not_running_vm_filters} and ${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}').publish('CRIT')
 EOF
 
@@ -14,13 +14,13 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject_novalue
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject_novalue
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "treatment_limit" {
-  name = format("%s %s", local.name_prefix, "Kong treatment limit")
+  name = format("%s %s", local.detector_name_prefix, "Kong treatment limit")
 
   program_text = <<-EOF
     A = data('kong_nginx_http_current_connections', filter=filter('state', 'handled') and ${module.filter-tags.filter_custom})${var.treatment_limit_aggregation_function}${var.treatment_limit_transformation_function}
@@ -36,8 +36,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.treatment_limit_disabled_critical, var.treatment_limit_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.treatment_limit_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -46,8 +46,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.treatment_limit_disabled_major, var.treatment_limit_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.treatment_limit_notifications, "major", []), var.notifications.major)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 

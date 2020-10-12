@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name = format("%s %s", local.name_prefix, "Azure Load balancer heartbeat")
+  name = format("%s %s", local.detector_name_prefix, "Azure Load balancer heartbeat")
 
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting
@@ -14,7 +14,7 @@ resource "signalfx_detector" "heartbeat" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject_novalue
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject_novalue
+    parameterized_body    = local.rule_body
   }
 }

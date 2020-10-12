@@ -1,5 +1,5 @@
 resource "signalfx_detector" "search_latency" {
-  name = format("%s %s", local.name_prefix, "Azure Search latency")
+  name = format("%s %s", local.detector_name_prefix, "Azure Search latency")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Search/searchServices') and filter('primary_aggregation_type', 'true')
@@ -14,8 +14,8 @@ resource "signalfx_detector" "search_latency" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.search_latency_disabled_critical, var.search_latency_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.search_latency_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -24,13 +24,13 @@ resource "signalfx_detector" "search_latency" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.search_latency_disabled_major, var.search_latency_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.search_latency_notifications, "major", []), var.notifications.major)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "search_throttled_queries_rate" {
-  name = format("%s %s", local.name_prefix, "Azure Search throttled queries rate")
+  name = format("%s %s", local.detector_name_prefix, "Azure Search throttled queries rate")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Search/searchServices') and filter('primary_aggregation_type', 'true')
@@ -45,8 +45,8 @@ resource "signalfx_detector" "search_throttled_queries_rate" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.search_throttled_queries_rate_disabled_critical, var.search_throttled_queries_rate_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.search_throttled_queries_rate_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -55,8 +55,8 @@ resource "signalfx_detector" "search_throttled_queries_rate" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.search_throttled_queries_rate_disabled_major, var.search_throttled_queries_rate_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.search_throttled_queries_rate_notifications, "major", []), var.notifications.major)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
 }

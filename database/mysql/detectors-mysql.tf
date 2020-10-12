@@ -1,10 +1,10 @@
 resource "signalfx_detector" "heartbeat" {
-  name      = format("%s %s", local.name_prefix, "MySQL heartbeat")
+  name      = format("%s %s", local.detector_name_prefix, "MySQL heartbeat")
   max_delay = 900
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    signal = data('mysql_octets.rx', filter=filter('plugin', 'mysql') and ${local.heartbeat_filters} and ${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')
+    signal = data('mysql_octets.rx', filter=filter('plugin', 'mysql') and ${local.not_running_vm_filters} and ${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}').publish('CRIT')
 EOF
 
@@ -14,13 +14,13 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject_novalue
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject_novalue
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "mysql_connections" {
-  name = format("%s %s", local.name_prefix, "MySQL number of connections over max capacity")
+  name = format("%s %s", local.detector_name_prefix, "MySQL number of connections over max capacity")
 
   program_text = <<-EOF
     A = data('mysql_threads_connected', filter=${module.filter-tags.filter_custom}, rollup='average')${var.mysql_connections_aggregation_function}${var.mysql_connections_transformation_function}
@@ -36,8 +36,8 @@ resource "signalfx_detector" "mysql_connections" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.mysql_connections_disabled_critical, var.mysql_connections_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.mysql_connections_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -46,13 +46,13 @@ resource "signalfx_detector" "mysql_connections" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.mysql_connections_disabled_major, var.mysql_connections_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.mysql_connections_notifications, "major", []), var.notifications.major)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "mysql_slow" {
-  name = format("%s %s", local.name_prefix, "MySQL slow queries percentage")
+  name = format("%s %s", local.detector_name_prefix, "MySQL slow queries percentage")
 
   program_text = <<-EOF
     A = data('mysql_slow_queries', filter=(not filter('plugin', 'mysql')) and ${module.filter-tags.filter_custom}, rollup='delta')${var.mysql_slow_aggregation_function}${var.mysql_slow_transformation_function}
@@ -68,8 +68,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.mysql_slow_disabled_critical, var.mysql_slow_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.mysql_slow_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -78,13 +78,13 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.mysql_slow_disabled_major, var.mysql_slow_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.mysql_slow_notifications, "major", []), var.notifications.major)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "mysql_pool_efficiency" {
-  name = format("%s %s", local.name_prefix, "MySQL Innodb buffer pool efficiency")
+  name = format("%s %s", local.detector_name_prefix, "MySQL Innodb buffer pool efficiency")
 
   program_text = <<-EOF
     A = data('mysql_bpool_counters.reads', filter=filter('plugin', 'mysql') and ${module.filter-tags.filter_custom}, rollup='delta')${var.mysql_pool_efficiency_aggregation_function}${var.mysql_pool_efficiency_transformation_function}
@@ -100,8 +100,8 @@ EOF
     detect_label          = "MINOR"
     disabled              = coalesce(var.mysql_pool_efficiency_disabled_minor, var.mysql_pool_efficiency_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.mysql_pool_efficiency_notifications, "minor", []), var.notifications.minor)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -110,13 +110,13 @@ EOF
     detect_label          = "WARN"
     disabled              = coalesce(var.mysql_pool_efficiency_disabled_warning, var.mysql_pool_efficiency_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.mysql_pool_efficiency_notifications, "warning", []), var.notifications.warning)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "mysql_pool_utilization" {
-  name = format("%s %s", local.name_prefix, "MySQL Innodb buffer pool utilization")
+  name = format("%s %s", local.detector_name_prefix, "MySQL Innodb buffer pool utilization")
 
   program_text = <<-EOF
     A = data('mysql_bpool_pages.free', filter=filter('plugin', 'mysql') and ${module.filter-tags.filter_custom}, rollup='average')${var.mysql_pool_utilization_aggregation_function}${var.mysql_pool_utilization_transformation_function}
@@ -132,8 +132,8 @@ EOF
     detect_label          = "MINOR"
     disabled              = coalesce(var.mysql_pool_utilization_disabled_minor, var.mysql_pool_utilization_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.mysql_pool_utilization_notifications, "minor", []), var.notifications.minor)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -142,13 +142,13 @@ EOF
     detect_label          = "WARN"
     disabled              = coalesce(var.mysql_pool_utilization_disabled_warning, var.mysql_pool_utilization_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.mysql_pool_utilization_notifications, "warning", []), var.notifications.warning)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "mysql_threads_anomaly" {
-  name = format("%s %s", local.name_prefix, "MySQL running threads changed abruptly")
+  name = format("%s %s", local.detector_name_prefix, "MySQL running threads changed abruptly")
 
   program_text = <<-EOF
     from signalfx.detectors.against_periods import against_periods
@@ -162,13 +162,13 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.mysql_threads_anomaly_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.mysql_threads_anomaly_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "mysql_questions_anomaly" {
-  name = format("%s %s", local.name_prefix, "MySQL running queries changed abruptly")
+  name = format("%s %s", local.detector_name_prefix, "MySQL running queries changed abruptly")
 
   program_text = <<-EOF
     from signalfx.detectors.against_periods import against_periods
@@ -182,13 +182,13 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.mysql_questions_anomaly_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.mysql_questions_anomaly_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "mysql_replication_lag" {
-  name = format("%s %s", local.name_prefix, "MySQL replication lag")
+  name = format("%s %s", local.detector_name_prefix, "MySQL replication lag")
 
   program_text = <<-EOF
     signal = data('mysql_seconds_behind_master', filter=${module.filter-tags.filter_custom}, rollup='average')${var.mysql_replication_lag_aggregation_function}${var.mysql_replication_lag_transformation_function}.publish('signal')
@@ -202,8 +202,8 @@ resource "signalfx_detector" "mysql_replication_lag" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.mysql_replication_lag_disabled_critical, var.mysql_replication_lag_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.mysql_replication_lag_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -212,13 +212,13 @@ resource "signalfx_detector" "mysql_replication_lag" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.mysql_replication_lag_disabled_major, var.mysql_replication_lag_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.mysql_replication_lag_notifications, "major", []), var.notifications.major)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "mysql_replication_status" {
-  name = format("%s %s", local.name_prefix, "MySQL replication status")
+  name = format("%s %s", local.detector_name_prefix, "MySQL replication status")
 
   program_text = <<-EOF
     signal = data('mysql_slave_sql_running', filter=${module.filter-tags.filter_custom}, rollup='average')${var.mysql_replication_status_aggregation_function}${var.mysql_replication_status_transformation_function}.publish('signal')
@@ -231,8 +231,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.mysql_replication_status_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.mysql_replication_status_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 

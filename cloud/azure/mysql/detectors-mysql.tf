@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name = format("%s %s", local.name_prefix, "Azure MySQL heartbeat")
+  name = format("%s %s", local.detector_name_prefix, "Azure MySQL heartbeat")
 
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting
@@ -14,13 +14,13 @@ resource "signalfx_detector" "heartbeat" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject_novalue
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject_novalue
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "cpu_usage" {
-  name = format("%s %s", local.name_prefix, "Azure MySQL CPU usage")
+  name = format("%s %s", local.detector_name_prefix, "Azure MySQL CPU usage")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.DBforMySQL/servers') and filter('primary_aggregation_type', 'true')
@@ -35,8 +35,8 @@ resource "signalfx_detector" "cpu_usage" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.cpu_usage_disabled_critical, var.cpu_usage_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.cpu_usage_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -45,13 +45,13 @@ resource "signalfx_detector" "cpu_usage" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.cpu_usage_disabled_major, var.cpu_usage_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.cpu_usage_notifications, "major", []), var.notifications.major)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "free_storage" {
-  name = format("%s %s", local.name_prefix, "Azure MySQL free storage")
+  name = format("%s %s", local.detector_name_prefix, "Azure MySQL free storage")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.DBforMySQL/servers') and filter('primary_aggregation_type', 'true')
@@ -67,8 +67,8 @@ resource "signalfx_detector" "free_storage" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.free_storage_disabled_critical, var.free_storage_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.free_storage_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -77,13 +77,13 @@ resource "signalfx_detector" "free_storage" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.free_storage_disabled_major, var.free_storage_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.free_storage_notifications, "major", []), var.notifications.major)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "io_consumption" {
-  name = format("%s %s", local.name_prefix, "Azure MySQL IO consumption")
+  name = format("%s %s", local.detector_name_prefix, "Azure MySQL IO consumption")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.DBforMySQL/servers') and filter('primary_aggregation_type', 'true')
@@ -98,8 +98,8 @@ resource "signalfx_detector" "io_consumption" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.io_consumption_disabled_critical, var.io_consumption_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.io_consumption_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -108,13 +108,13 @@ resource "signalfx_detector" "io_consumption" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.io_consumption_disabled_major, var.io_consumption_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.io_consumption_notifications, "major", []), var.notifications.major)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "memory_usage" {
-  name = format("%s %s", local.name_prefix, "Azure MySQL memory usage")
+  name = format("%s %s", local.detector_name_prefix, "Azure MySQL memory usage")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.DBforMySQL/servers') and filter('primary_aggregation_type', 'true')
@@ -129,8 +129,8 @@ resource "signalfx_detector" "memory_usage" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.memory_usage_disabled_critical, var.memory_usage_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.memory_usage_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -139,13 +139,13 @@ resource "signalfx_detector" "memory_usage" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.memory_usage_disabled_major, var.memory_usage_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.memory_usage_notifications, "major", []), var.notifications.major)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "replication_lag" {
-  name = format("%s %s", local.name_prefix, "Azure MySQL replication lag")
+  name = format("%s %s", local.detector_name_prefix, "Azure MySQL replication lag")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.DBforMySQL/servers') and filter('primary_aggregation_type', 'true')
@@ -160,8 +160,8 @@ resource "signalfx_detector" "replication_lag" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.replication_lag_disabled_critical, var.replication_lag_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.replication_lag_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -170,7 +170,7 @@ resource "signalfx_detector" "replication_lag" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.replication_lag_disabled_major, var.replication_lag_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.replication_lag_notifications, "major", []), var.notifications.major)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }

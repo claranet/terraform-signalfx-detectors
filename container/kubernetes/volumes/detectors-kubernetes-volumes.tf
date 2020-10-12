@@ -1,5 +1,5 @@
 resource "signalfx_detector" "volume_space" {
-  name = format("%s %s", local.name_prefix, "Kubernetes node volume space usage")
+  name = format("%s %s", local.detector_name_prefix, "Kubernetes node volume space usage")
 
   program_text = <<-EOF
     A = data('kubernetes.volume_available_bytes', ${module.filter-tags.filter_custom} and not filter('volume_type', 'configMap', 'secret'))${var.volume_space_aggregation_function}${var.volume_space_transformation_function}
@@ -15,8 +15,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.volume_space_disabled_critical, var.volume_space_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.volume_space_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -25,13 +25,13 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.volume_space_disabled_major, var.volume_space_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.volume_space_notifications, "major", []), var.notifications.major)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "volume_inodes" {
-  name = format("%s %s", local.name_prefix, "Kubernetes node volume inodes usage")
+  name = format("%s %s", local.detector_name_prefix, "Kubernetes node volume inodes usage")
 
   program_text = <<-EOF
     A = data('kubernetes.volume_inodes_free', ${module.filter-tags.filter_custom} and not filter('volume_type', 'configMap', 'secret'))${var.volume_inodes_aggregation_function}${var.volume_inodes_transformation_function}
@@ -47,8 +47,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.volume_inodes_disabled_critical, var.volume_inodes_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.volume_inodes_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -57,8 +57,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.volume_inodes_disabled_major, var.volume_inodes_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.volume_inodes_notifications, "major", []), var.notifications.major)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 

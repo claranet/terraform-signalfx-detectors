@@ -1,5 +1,5 @@
 resource "signalfx_detector" "error_rate_4xx" {
-  name = format("%s %s", local.name_prefix, "GCP Load Balancer 4xx error rate")
+  name = format("%s %s", local.detector_name_prefix, "GCP Load Balancer 4xx error rate")
 
   program_text = <<-EOF
     A = data('https/request_count', filter=filter('service', 'loadbalancing') and filter('response_code_class', '400')  and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.error_rate_4xx_aggregation_function}${var.error_rate_4xx_transformation_function}
@@ -15,8 +15,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.error_rate_4xx_disabled_critical, var.error_rate_4xx_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.error_rate_4xx_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -25,13 +25,13 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.error_rate_4xx_disabled_major, var.error_rate_4xx_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.error_rate_4xx_notifications, "major", []), var.notifications.major)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "error_rate_5xx" {
-  name = format("%s %s", local.name_prefix, "GCP Load Balancer 5xx error rate")
+  name = format("%s %s", local.detector_name_prefix, "GCP Load Balancer 5xx error rate")
 
   program_text = <<-EOF
     A = data('https/request_count', filter=filter('service', 'loadbalancing') and filter('response_code_class', '400')  and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.error_rate_5xx_aggregation_function}${var.error_rate_5xx_transformation_function}
@@ -47,8 +47,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.error_rate_5xx_disabled_critical, var.error_rate_5xx_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.error_rate_5xx_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -57,13 +57,13 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.error_rate_5xx_disabled_major, var.error_rate_5xx_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.error_rate_5xx_notifications, "major", []), var.notifications.major)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "backend_latency_service" {
-  name = format("%s %s", local.name_prefix, "GCP Load Balancer backend latency by service")
+  name = format("%s %s", local.detector_name_prefix, "GCP Load Balancer backend latency by service")
 
   program_text = <<-EOF
     signal = data('https/backend_latencies', filter=filter('service', 'loadbalancing') and filter('backend_target_type', 'BACKEND_SERVICE') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='average')${var.backend_latency_service_aggregation_function}${var.backend_latency_service_transformation_function}.publish('signal')
@@ -77,8 +77,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.backend_latency_service_disabled_critical, var.backend_latency_service_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.backend_latency_service_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -87,13 +87,13 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.backend_latency_service_disabled_major, var.backend_latency_service_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.backend_latency_service_notifications, "major", []), var.notifications.major)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "backend_latency_bucket" {
-  name = format("%s %s", local.name_prefix, "GCP Load Balancer backend latency by bucket")
+  name = format("%s %s", local.detector_name_prefix, "GCP Load Balancer backend latency by bucket")
 
   program_text = <<-EOF
     signal = data('https/backend_latencies', filter=filter('service', 'loadbalancing') and filter('backend_target_type', 'BACKEND_BUCKET') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='average')${var.backend_latency_bucket_aggregation_function}${var.backend_latency_bucket_transformation_function}.publish('signal')
@@ -107,8 +107,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.backend_latency_bucket_disabled_critical, var.backend_latency_bucket_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.backend_latency_bucket_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -117,13 +117,13 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.backend_latency_bucket_disabled_major, var.backend_latency_bucket_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.backend_latency_bucket_notifications, "major", []), var.notifications.major)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "request_count" {
-  name = format("%s %s", local.name_prefix, "GCP Load Balancer request count")
+  name = format("%s %s", local.detector_name_prefix, "GCP Load Balancer request count")
 
   program_text = <<-EOF
     signal = data('https/request_count', filter=filter('service', 'loadbalancing') and ${module.filter-tags.filter_custom}, extrapolation='last_value', rollup='sum')${var.request_count_aggregation_function}${var.request_count_transformation_function}.rateofchange().publish('signal')
@@ -136,8 +136,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.request_count_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.request_count_notifications, "major", []), var.notifications.major)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 

@@ -1,9 +1,9 @@
 resource "signalfx_detector" "heartbeat" {
-  name = format("%s %s", local.name_prefix, "GCP GCE Instance heartbeat")
+  name = format("%s %s", local.detector_name_prefix, "GCP GCE Instance heartbeat")
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    signal = data('instance/cpu/usage_time', filter=${local.heartbeat_filters_gcp} and ${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')
+    signal = data('instance/cpu/usage_time', filter=${local.not_running_vm_filters_gcp} and ${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}').publish('CRIT')
 EOF
 
@@ -13,13 +13,13 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject_novalue
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject_novalue
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "cpu_utilization" {
-  name = format("%s %s", local.name_prefix, "GCP GCE Instance CPU utilization")
+  name = format("%s %s", local.detector_name_prefix, "GCP GCE Instance CPU utilization")
 
   program_text = <<-EOF
     signal = data('instance/cpu/utilization', ${module.filter-tags.filter_custom})${var.cpu_utilization_aggregation_function}${var.cpu_utilization_transformation_function}.scale(100).publish('signal')
@@ -33,8 +33,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.cpu_utilization_disabled_critical, var.cpu_utilization_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.cpu_utilization_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -43,13 +43,13 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.cpu_utilization_disabled_major, var.cpu_utilization_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.cpu_utilization_notifications, "major", []), var.notifications.major)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "disk_throttled_bps" {
-  name = format("%s %s", local.name_prefix, "GCP GCE Instance disk throttled bps")
+  name = format("%s %s", local.detector_name_prefix, "GCP GCE Instance disk throttled bps")
 
   program_text = <<-EOF
     A = data('instance/disk/throttled_read_bytes_count', ${module.filter-tags.filter_custom})${var.disk_throttled_bps_aggregation_function}${var.disk_throttled_bps_transformation_function}
@@ -67,8 +67,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.disk_throttled_bps_disabled_critical, var.disk_throttled_bps_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.disk_throttled_bps_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -77,13 +77,13 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.disk_throttled_bps_disabled_major, var.disk_throttled_bps_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.disk_throttled_bps_notifications, "major", []), var.notifications.major)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "disk_throttled_ops" {
-  name = format("%s %s", local.name_prefix, "GCP GCE Instance disk throttled ops")
+  name = format("%s %s", local.detector_name_prefix, "GCP GCE Instance disk throttled ops")
 
   program_text = <<-EOF
     A = data('instance/disk/throttled_read_ops_count', ${module.filter-tags.filter_custom})${var.disk_throttled_ops_aggregation_function}${var.disk_throttled_ops_transformation_function}
@@ -101,8 +101,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.disk_throttled_ops_disabled_critical, var.disk_throttled_ops_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.disk_throttled_ops_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -111,8 +111,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.disk_throttled_ops_disabled_major, var.disk_throttled_ops_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.disk_throttled_ops_notifications, "major", []), var.notifications.major)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 

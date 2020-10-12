@@ -1,19 +1,19 @@
 locals {
-  heartbeat_filters_gcp   = "(not filter('gcp_status', '{Code=3, Name=STOPPING}', '{Code=4, Name=TERMINATED}'))"
-  heartbeat_filters_aws   = "(not filter('aws_state', '{Code: 32,Name: shutting-down', '{Code: 48,Name: terminated}', '{Code: 62,Name: stopping}', '{Code: 80,Name: stopped}'))"
-  heartbeat_filters_azure = "(not filter('azure_power_state', 'PowerState/stopping', 'PowerState/stopped', 'PowerState/deallocating', 'PowerState/deallocated'))"
-  heartbeat_filters = format(
+  not_running_vm_filters_gcp   = "(not filter('gcp_status', '{Code=3, Name=STOPPING}', '{Code=4, Name=TERMINATED}'))"
+  not_running_vm_filters_aws   = "(not filter('aws_state', '{Code: 32,Name: shutting-down', '{Code: 48,Name: terminated}', '{Code: 62,Name: stopping}', '{Code: 80,Name: stopped}'))"
+  not_running_vm_filters_azure = "(not filter('azure_power_state', 'PowerState/stopping', 'PowerState/stopped', 'PowerState/deallocating', 'PowerState/deallocated'))"
+  not_running_vm_filters = format(
     "%s and %s and %s",
-    local.heartbeat_filters_aws,
-    local.heartbeat_filters_gcp,
-    local.heartbeat_filters_azure
+    local.not_running_vm_filters_aws,
+    local.not_running_vm_filters_gcp,
+    local.not_running_vm_filters_azure
   )
-  name_prefix     = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}]"
-  subject_prefix  = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}}"
-  subject_suffix  = "on {{{dimensions}}}"
-  subject         = format("%s ({{inputs.signal.value}}) %s", local.subject_prefix, local.subject_suffix)
-  subject_novalue = format("%s %s", local.subject_prefix, local.subject_suffix)
-  body            = <<-EOF
+  detector_name_prefix = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}]"
+  rule_subject_prefix  = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}}"
+  rule_subject_suffix  = "on {{{dimensions}}}"
+  rule_subject         = format("%s ({{inputs.signal.value}}) %s", local.rule_subject_prefix, local.rule_subject_suffix)
+  rule_subject_novalue = format("%s %s", local.rule_subject_prefix, local.rule_subject_suffix)
+  rule_body            = <<-EOF
     **Alert**:
     *[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}})*
     {{#if anomalous}}

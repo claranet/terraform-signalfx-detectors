@@ -1,6 +1,6 @@
 # failed backend in varnish detection
 resource "signalfx_detector" "varnish_backend_failed" {
-  name = format("%s %s", local.name_prefix, "Varnish Backend Failed")
+  name = format("%s %s", local.detector_name_prefix, "Varnish Backend Failed")
 
   program_text = <<-EOF
     signal = data('varnish.backend_fail', filter=filter('plugin', 'telegraf/varnish') and ${module.filter-tags.filter_custom})${var.varnish_backend_failed_aggregation_function}${var.varnish_backend_failed_transformation_function}.publish('signal')
@@ -13,14 +13,14 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.varnish_backend_failed_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.varnish_backend_failed_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject_novalue
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject_novalue
+    parameterized_body    = local.rule_body
   }
 }
 
 # varnish threads
 resource "signalfx_detector" "varnish_threads_number" {
-  name = format("%s %s", local.name_prefix, "Varnish Threads Number")
+  name = format("%s %s", local.detector_name_prefix, "Varnish Threads Number")
 
   program_text = <<-EOF
     signal = data('varnish.threads', filter=filter('plugin', 'telegraf/varnish') and ${module.filter-tags.filter_custom})${var.varnish_threads_number_aggregation_function}${var.varnish_threads_number_transformation_function}.publish('signal')
@@ -33,14 +33,14 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.varnish_threads_number_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.varnish_threads_number_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 # session dropped in varnish detection
 resource "signalfx_detector" "varnish_session_dropped" {
-  name = format("%s %s", local.name_prefix, "Varnish Session Dropped")
+  name = format("%s %s", local.detector_name_prefix, "Varnish Session Dropped")
 
   program_text = <<-EOF
     signal = data('varnish.sess_dropped', filter=filter('plugin', 'telegraf/varnish') and ${module.filter-tags.filter_custom})${var.varnish_session_dropped_aggregation_function}${var.varnish_session_dropped_transformation_function}.publish('signal')
@@ -53,14 +53,14 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.varnish_session_dropped_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.varnish_session_dropped_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 # session dropped in varnish detection
 resource "signalfx_detector" "varnish_cache_hit_rate" {
-  name = format("%s %s", local.name_prefix, "Varnish Hit Rate")
+  name = format("%s %s", local.detector_name_prefix, "Varnish Hit Rate")
 
   program_text = <<-EOF
     A = data('varnish.cache_hit', filter=filter('plugin', 'telegraf/varnish') and ${module.filter-tags.filter_custom})${var.varnish_cache_hit_rate_aggregation_function}${var.varnish_cache_hit_rate_transformation_function}.publish('A')
@@ -76,8 +76,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.varnish_cache_hit_rate_disabled_major, var.varnish_cache_hit_rate_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.varnish_cache_hit_rate_notifications, "major", []), var.notifications.major)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
   rule {
     description           = "is too low > ${var.varnish_cache_hit_rate_threshold_minor}"
@@ -85,14 +85,14 @@ EOF
     detect_label          = "MINOR"
     disabled              = coalesce(var.varnish_cache_hit_rate_disabled_minor, var.varnish_cache_hit_rate_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.varnish_cache_hit_rate_notifications, "minor", []), var.notifications.minor)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 # memory used
 resource "signalfx_detector" "varnish_memory_usage" {
-  name = format("%s %s", local.name_prefix, "Varnish Memory Usage")
+  name = format("%s %s", local.detector_name_prefix, "Varnish Memory Usage")
 
   program_text = <<-EOF
     A = data('varnish.s0.g_bytes', filter=filter('plugin', 'telegraf/varnish') and ${module.filter-tags.filter_custom})${var.varnish_memory_usage_aggregation_function}${var.varnish_memory_usage_transformation_function}
@@ -108,8 +108,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.varnish_memory_usage_disabled_critical, var.varnish_memory_usage_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.varnish_memory_usage_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
   rule {
     description           = "is too low > ${var.varnish_memory_usage_threshold_major}"
@@ -117,8 +117,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.varnish_memory_usage_disabled_major, var.varnish_memory_usage_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.varnish_memory_usage_notifications, "major", []), var.notifications.major)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 

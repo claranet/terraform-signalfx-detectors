@@ -1,5 +1,5 @@
 resource "signalfx_detector" "api_result" {
-  name = format("%s %s", local.name_prefix, "Azure Key Vault API result rate")
+  name = format("%s %s", local.detector_name_prefix, "Azure Key Vault API result rate")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.KeyVault/vaults') and filter('primary_aggregation_type', 'true')
@@ -16,8 +16,8 @@ resource "signalfx_detector" "api_result" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.api_result_disabled_critical, var.api_result_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.api_result_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -26,13 +26,13 @@ resource "signalfx_detector" "api_result" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.api_result_disabled_major, var.api_result_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.api_result_notifications, "major", []), var.notifications.major)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "api_latency" {
-  name = format("%s %s", local.name_prefix, "Azure Key Vault API latency")
+  name = format("%s %s", local.detector_name_prefix, "Azure Key Vault API latency")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.KeyVault/vaults') and filter('primary_aggregation_type', 'true')
@@ -47,8 +47,8 @@ resource "signalfx_detector" "api_latency" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.api_latency_disabled_critical, var.api_latency_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.api_latency_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -57,7 +57,7 @@ resource "signalfx_detector" "api_latency" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.api_latency_disabled_major, var.api_latency_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.api_latency_notifications, "major", []), var.notifications.major)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }

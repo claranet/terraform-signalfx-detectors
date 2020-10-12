@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name = format("%s %s", local.name_prefix, "AWS Kinesis heartbeat")
+  name = format("%s %s", local.detector_name_prefix, "AWS Kinesis heartbeat")
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
@@ -13,13 +13,13 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject_novalue
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject_novalue
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "incoming_records" {
-  name = format("%s %s", local.name_prefix, "AWS Kinesis incoming records")
+  name = format("%s %s", local.detector_name_prefix, "AWS Kinesis incoming records")
 
   program_text = <<-EOF
     signal = data('IncomingRecords', filter=filter('namespace', 'AWS/Kinesis') and filter('stat', 'lower') and (not filter('ShardId', '*')) and ${module.filter-tags.filter_custom})${var.incoming_records_aggregation_function}${var.incoming_records_transformation_function}.publish('signal')
@@ -33,8 +33,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.incoming_records_disabled_critical, var.incoming_records_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.incoming_records_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -43,8 +43,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.incoming_records_disabled_major, var.incoming_records_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.incoming_records_notifications, "major", []), var.notifications.major)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 

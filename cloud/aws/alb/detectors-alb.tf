@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name = format("%s %s", local.name_prefix, "AWS ALB heartbeat")
+  name = format("%s %s", local.detector_name_prefix, "AWS ALB heartbeat")
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
@@ -13,13 +13,13 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject_novalue
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject_novalue
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "no_healthy_instances" {
-  name = format("%s %s", local.name_prefix, "AWS ALB healthy instances percentage")
+  name = format("%s %s", local.detector_name_prefix, "AWS ALB healthy instances percentage")
 
   program_text = <<-EOF
     A = data('HealthyHostCount', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'lower') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom})${var.no_healthy_instances_aggregation_function}${var.no_healthy_instances_transformation_function}
@@ -35,8 +35,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.no_healthy_instances_disabled_critical, var.no_healthy_instances_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.no_healthy_instances_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -45,13 +45,13 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.no_healthy_instances_disabled_major, var.no_healthy_instances_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.no_healthy_instances_notifications, "major", []), var.notifications.major)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "latency" {
-  name = format("%s %s", local.name_prefix, "AWS ALB latency")
+  name = format("%s %s", local.detector_name_prefix, "AWS ALB latency")
 
   program_text = <<-EOF
     signal = data('TargetResponseTime', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'mean') and filter('TargetGroup', '*') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='average')${var.latency_aggregation_function}${var.latency_transformation_function}.publish('signal')
@@ -65,8 +65,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.latency_disabled_critical, var.latency_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.latency_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -75,13 +75,13 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.latency_disabled_major, var.latency_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.latency_notifications, "major", []), var.notifications.major)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "alb_5xx" {
-  name = format("%s %s", local.name_prefix, "AWS ALB 5xx error rate")
+  name = format("%s %s", local.detector_name_prefix, "AWS ALB 5xx error rate")
 
   program_text = <<-EOF
     A = data('HTTPCode_ELB_5XX_Count', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.alb_5xx_aggregation_function}${var.alb_5xx_transformation_function}
@@ -97,8 +97,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.alb_5xx_disabled_critical, var.alb_5xx_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.alb_5xx_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -107,13 +107,13 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.alb_5xx_disabled_major, var.alb_5xx_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.alb_5xx_notifications, "major", []), var.notifications.major)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "alb_4xx" {
-  name = format("%s %s", local.name_prefix, "AWS ALB 4xx error rate")
+  name = format("%s %s", local.detector_name_prefix, "AWS ALB 4xx error rate")
 
   program_text = <<-EOF
     A = data('HTTPCode_ELB_4XX_Count', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.alb_4xx_aggregation_function}${var.alb_4xx_transformation_function}
@@ -129,8 +129,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.alb_4xx_disabled_critical, var.alb_4xx_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.alb_4xx_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -139,13 +139,13 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.alb_4xx_disabled_major, var.alb_4xx_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.alb_4xx_notifications, "major", []), var.notifications.major)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "target_5xx" {
-  name = format("%s %s", local.name_prefix, "AWS ALB target 5xx error rate")
+  name = format("%s %s", local.detector_name_prefix, "AWS ALB target 5xx error rate")
 
   program_text = <<-EOF
     A = data('HTTPCode_Target_5XX_Count', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and filter('TargetGroup', '*') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.target_5xx_aggregation_function}${var.target_5xx_transformation_function}
@@ -161,8 +161,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.target_5xx_disabled_critical, var.target_5xx_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.target_5xx_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -171,13 +171,13 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.target_5xx_disabled_major, var.target_5xx_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.target_5xx_notifications, "major", []), var.notifications.major)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
 resource "signalfx_detector" "target_4xx" {
-  name = format("%s %s", local.name_prefix, "AWS ALB target 4xx error rate")
+  name = format("%s %s", local.detector_name_prefix, "AWS ALB target 4xx error rate")
 
   program_text = <<-EOF
     A = data('HTTPCode_Target_4XX_Count', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and filter('TargetGroup', '*') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.target_4xx_aggregation_function}${var.target_4xx_transformation_function}
@@ -193,8 +193,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.target_4xx_disabled_critical, var.target_4xx_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.target_4xx_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -203,8 +203,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.target_4xx_disabled_major, var.target_4xx_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.target_4xx_notifications, "major", []), var.notifications.major)
-    parameterized_subject = local.subject
-    parameterized_body    = local.body
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
