@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name = format("%s %s", local.name_start, "Azure Virtual Machine heartbeat")
+  name = format("%s %s", local.name_prefix, "Azure Virtual Machine heartbeat")
 
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting
@@ -20,7 +20,7 @@ resource "signalfx_detector" "heartbeat" {
 }
 
 resource "signalfx_detector" "cpu_usage" {
-  name = format("%s %s", local.name_start, "Azure Virtual Machine CPU usage")
+  name = format("%s %s", local.name_prefix, "Azure Virtual Machine CPU usage")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Compute/virtualMachines') and filter('primary_aggregation_type', 'true') and ${local.heartbeat_filters_azure}
@@ -51,7 +51,7 @@ resource "signalfx_detector" "cpu_usage" {
 }
 
 resource "signalfx_detector" "credit_cpu" {
-  name = format("%s %s", local.name_start, "Azure Virtual Machine remaining CPU credit")
+  name = format("%s %s", local.name_prefix, "Azure Virtual Machine remaining CPU credit")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Compute/virtualMachines') and filter('primary_aggregation_type', 'true') and ${local.heartbeat_filters_azure}

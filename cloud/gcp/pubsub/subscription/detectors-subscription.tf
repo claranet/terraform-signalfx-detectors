@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name = format("%s %s", local.name_start, "GCP Pub/Sub Subscription heartbeat")
+  name = format("%s %s", local.name_prefix, "GCP Pub/Sub Subscription heartbeat")
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
@@ -19,7 +19,7 @@ EOF
 }
 
 resource "signalfx_detector" "oldest_unacked_message" {
-  name = format("%s %s", local.name_start, "GCP Pub/Sub Subscription oldest unacknowledged message")
+  name = format("%s %s", local.name_prefix, "GCP Pub/Sub Subscription oldest unacknowledged message")
 
   program_text = <<-EOF
     signal = data('subscription/oldest_unacked_message_age', filter=filter('monitored_resource', 'pubsub_subscription') and ${module.filter-tags.filter_custom})${var.oldest_unacked_message_aggregation_function}${var.oldest_unacked_message_transformation_function}.publish('signal')
@@ -49,7 +49,7 @@ EOF
 }
 
 resource "signalfx_detector" "push_latency" {
-  name = format("%s %s", local.name_start, "GCP Pub/Sub Subscription latency on push endpoint")
+  name = format("%s %s", local.name_prefix, "GCP Pub/Sub Subscription latency on push endpoint")
 
   program_text = <<-EOF
     signal = data('subscription/push_request_latencies', filter=filter('monitored_resource', 'pubsub_subscription') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='average')${var.push_latency_aggregation_function}${var.push_latency_transformation_function}.publish('signal')

@@ -1,5 +1,5 @@
 resource "signalfx_detector" "hosts_limit" {
-  name = format("%s %s", local.name_start, "Organization usage hosts limit")
+  name = format("%s %s", local.name_prefix, "Organization usage hosts limit")
 
   program_text = <<-EOF
     signal = data('${"sf.org.${var.is_parent ? "child." : ""}numResourcesMonitored"}', filter=filter('resourceType', 'host'))${local.aggregation_function}${var.hosts_limit_transformation_function}.publish('signal')
@@ -23,7 +23,7 @@ EOF
 }
 
 resource "signalfx_detector" "containers_limit" {
-  name = format("%s %s", local.name_start, "Organization usage containers limit")
+  name = format("%s %s", local.name_prefix, "Organization usage containers limit")
 
   program_text = <<-EOF
     signal = data('${"sf.org.${var.is_parent ? "child." : ""}numResourcesMonitored"}', filter=filter('resourceType', 'container'))${local.aggregation_function}${var.containers_limit_transformation_function}.publish('signal')
@@ -47,7 +47,7 @@ EOF
 }
 
 resource "signalfx_detector" "custom_metrics_limit" {
-  name = format("%s %s", local.name_start, "Organization usage custom metrics limit")
+  name = format("%s %s", local.name_prefix, "Organization usage custom metrics limit")
 
   program_text = <<-EOF
     signal = data('${"sf.org.${var.is_parent ? "child." : ""}numCustomMetrics"}')${local.aggregation_function}${var.custom_metrics_limit_transformation_function}.publish('signal')
@@ -71,7 +71,7 @@ EOF
 }
 
 resource "signalfx_detector" "containers_ratio" {
-  name = format("%s %s", local.name_start, "Organization usage containers ratio per host included")
+  name = format("%s %s", local.name_prefix, "Organization usage containers ratio per host included")
 
   program_text = <<-EOF
     containers = data('${"sf.org.${var.is_parent ? "child." : ""}numResourcesMonitored"}', filter=filter('resourceType', 'container'))${local.aggregation_function}${var.containers_ratio_transformation_function}
@@ -98,7 +98,7 @@ EOF
 }
 
 resource "signalfx_detector" "custom_metrics_ratio" {
-  name = format("%s %s", local.name_start, "Organization usage custom metrics ratio per host included")
+  name = format("%s %s", local.name_prefix, "Organization usage custom metrics ratio per host included")
 
   program_text = <<-EOF
     custom_metrics = data('${"sf.org.${var.is_parent ? "child." : ""}numCustomMetrics"}')${local.aggregation_function}${var.custom_metrics_ratio_transformation_function}

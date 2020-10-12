@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name      = format("%s %s", local.name_start, "Apache Solr heartbeat")
+  name      = format("%s %s", local.name_prefix, "Apache Solr heartbeat")
   max_delay = 900
 
   program_text = <<-EOF
@@ -20,7 +20,7 @@ EOF
 }
 
 resource "signalfx_detector" "errors" {
-  name = format("%s %s", local.name_start, "Apache Solr errors count")
+  name = format("%s %s", local.name_prefix, "Apache Solr errors count")
 
   program_text = <<-EOF
     signal = data('counter.solr.zookeeper_errors', ${module.filter-tags.filter_custom})${var.errors_aggregation_function}${var.errors_transformation_function}.publish('signal')
@@ -50,7 +50,7 @@ EOF
 }
 
 resource "signalfx_detector" "searcher_warmup_time" {
-  name = format("%s %s", local.name_start, "Apache Solr searcher warmup time")
+  name = format("%s %s", local.name_prefix, "Apache Solr searcher warmup time")
 
   program_text = <<-EOF
     signal = data('gauge.solr.searcher_warmup', ${module.filter-tags.filter_custom})${var.searcher_warmup_time_aggregation_function}${var.searcher_warmup_time_transformation_function}.publish('signal')

@@ -1,5 +1,5 @@
 resource "signalfx_detector" "processes" {
-  name = format("%s %s", local.name_start, "Processes aliveness")
+  name = format("%s %s", local.name_prefix, "Processes aliveness")
 
   program_text = <<-EOF
         signal = data('ps_count.processes', filter=${module.filter-tags.filter_custom})${var.processes_aggregation_function}${var.processes_transformation_function}.publish('signal')

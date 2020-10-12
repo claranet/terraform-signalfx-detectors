@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name = format("%s %s", local.name_start, "Azure Cosmos DB heartbeat")
+  name = format("%s %s", local.name_prefix, "Azure Cosmos DB heartbeat")
 
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting
@@ -20,7 +20,7 @@ resource "signalfx_detector" "heartbeat" {
 }
 
 resource "signalfx_detector" "db_4xx_requests" {
-  name = format("%s %s", local.name_start, "Azure Cosmos DB 4xx request rate")
+  name = format("%s %s", local.name_prefix, "Azure Cosmos DB 4xx request rate")
 
   program_text = <<-EOF
         from signalfx.detectors.aperiodic import aperiodic
@@ -54,7 +54,7 @@ resource "signalfx_detector" "db_4xx_requests" {
 }
 
 resource "signalfx_detector" "db_5xx_requests" {
-  name = format("%s %s", local.name_start, "Azure Cosmos DB 5xx error rate")
+  name = format("%s %s", local.name_prefix, "Azure Cosmos DB 5xx error rate")
 
   program_text = <<-EOF
         from signalfx.detectors.aperiodic import aperiodic
@@ -88,7 +88,7 @@ resource "signalfx_detector" "db_5xx_requests" {
 }
 
 resource "signalfx_detector" "scaling" {
-  name = format("%s %s", local.name_start, "Azure Cosmos DB scaling errors rate")
+  name = format("%s %s", local.name_prefix, "Azure Cosmos DB scaling errors rate")
 
   program_text = <<-EOF
         from signalfx.detectors.aperiodic import aperiodic

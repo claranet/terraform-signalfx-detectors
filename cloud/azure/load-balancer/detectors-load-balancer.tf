@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name = format("%s %s", local.name_start, "Azure Load balancer heartbeat")
+  name = format("%s %s", local.name_prefix, "Azure Load balancer heartbeat")
 
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting

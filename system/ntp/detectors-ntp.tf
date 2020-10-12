@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name      = format("%s %s", local.name_start, "NTP heartbeat")
+  name      = format("%s %s", local.name_prefix, "NTP heartbeat")
   max_delay = 900
 
   program_text = <<-EOF
@@ -20,7 +20,7 @@ EOF
 }
 
 resource "signalfx_detector" "ntp" {
-  name = format("%s %s", local.name_start, "NTP offset")
+  name = format("%s %s", local.name_prefix, "NTP offset")
 
   program_text = <<-EOF
         signal = data('ntp.offset_seconds', filter=${module.filter-tags.filter_custom})${var.ntp_aggregation_function}${var.ntp_transformation_function}.publish('signal')

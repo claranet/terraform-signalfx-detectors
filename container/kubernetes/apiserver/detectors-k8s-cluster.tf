@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name = format("%s %s", local.name_start, "Kubernetes API server heartbeat")
+  name = format("%s %s", local.name_prefix, "Kubernetes API server heartbeat")
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting

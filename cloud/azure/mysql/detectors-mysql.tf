@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name = format("%s %s", local.name_start, "Azure MySQL heartbeat")
+  name = format("%s %s", local.name_prefix, "Azure MySQL heartbeat")
 
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting
@@ -20,7 +20,7 @@ resource "signalfx_detector" "heartbeat" {
 }
 
 resource "signalfx_detector" "cpu_usage" {
-  name = format("%s %s", local.name_start, "Azure MySQL CPU usage")
+  name = format("%s %s", local.name_prefix, "Azure MySQL CPU usage")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.DBforMySQL/servers') and filter('primary_aggregation_type', 'true')
@@ -51,7 +51,7 @@ resource "signalfx_detector" "cpu_usage" {
 }
 
 resource "signalfx_detector" "free_storage" {
-  name = format("%s %s", local.name_start, "Azure MySQL free storage")
+  name = format("%s %s", local.name_prefix, "Azure MySQL free storage")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.DBforMySQL/servers') and filter('primary_aggregation_type', 'true')
@@ -83,7 +83,7 @@ resource "signalfx_detector" "free_storage" {
 }
 
 resource "signalfx_detector" "io_consumption" {
-  name = format("%s %s", local.name_start, "Azure MySQL IO consumption")
+  name = format("%s %s", local.name_prefix, "Azure MySQL IO consumption")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.DBforMySQL/servers') and filter('primary_aggregation_type', 'true')
@@ -114,7 +114,7 @@ resource "signalfx_detector" "io_consumption" {
 }
 
 resource "signalfx_detector" "memory_usage" {
-  name = format("%s %s", local.name_start, "Azure MySQL memory usage")
+  name = format("%s %s", local.name_prefix, "Azure MySQL memory usage")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.DBforMySQL/servers') and filter('primary_aggregation_type', 'true')
@@ -145,7 +145,7 @@ resource "signalfx_detector" "memory_usage" {
 }
 
 resource "signalfx_detector" "replication_lag" {
-  name = format("%s %s", local.name_start, "Azure MySQL replication lag")
+  name = format("%s %s", local.name_prefix, "Azure MySQL replication lag")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.DBforMySQL/servers') and filter('primary_aggregation_type', 'true')

@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name = format("%s %s", local.name_start, "Azure App Service heartbeat")
+  name = format("%s %s", local.name_prefix, "Azure App Service heartbeat")
 
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting
@@ -20,7 +20,7 @@ resource "signalfx_detector" "heartbeat" {
 }
 
 resource "signalfx_detector" "response_time" {
-  name = format("%s %s", local.name_start, "Azure App Service response time")
+  name = format("%s %s", local.name_prefix, "Azure App Service response time")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'false') and filter('primary_aggregation_type', 'true')
@@ -52,7 +52,7 @@ resource "signalfx_detector" "response_time" {
 }
 
 resource "signalfx_detector" "memory_usage_count" {
-  name = format("%s %s", local.name_start, "Azure App Service memory usage")
+  name = format("%s %s", local.name_prefix, "Azure App Service memory usage")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'false') and filter('primary_aggregation_type', 'true')
@@ -84,7 +84,7 @@ resource "signalfx_detector" "memory_usage_count" {
 }
 
 resource "signalfx_detector" "http_5xx_errors_count" {
-  name = format("%s %s", local.name_start, "Azure App Service 5xx error rate")
+  name = format("%s %s", local.name_prefix, "Azure App Service 5xx error rate")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'false') and filter('primary_aggregation_type', 'true')
@@ -118,7 +118,7 @@ resource "signalfx_detector" "http_5xx_errors_count" {
 }
 
 resource "signalfx_detector" "http_4xx_errors_count" {
-  name = format("%s %s", local.name_start, "Azure App Service 4xx error rate")
+  name = format("%s %s", local.name_prefix, "Azure App Service 4xx error rate")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'false') and filter('primary_aggregation_type', 'true')
@@ -151,7 +151,7 @@ resource "signalfx_detector" "http_4xx_errors_count" {
 }
 
 resource "signalfx_detector" "http_success_status_rate" {
-  name = format("%s %s", local.name_start, "Azure App Service successful response rate")
+  name = format("%s %s", local.name_prefix, "Azure App Service successful response rate")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'false') and filter('primary_aggregation_type', 'true')

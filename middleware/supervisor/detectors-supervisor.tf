@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name      = format("%s %s", local.name_start, "Supervisor heartbeat")
+  name      = format("%s %s", local.name_prefix, "Supervisor heartbeat")
   max_delay = 900
 
   program_text = <<-EOF
@@ -20,7 +20,7 @@ EOF
 }
 
 resource "signalfx_detector" "process_state" {
-  name = format("%s %s", local.name_start, "Supervisor process")
+  name = format("%s %s", local.name_prefix, "Supervisor process")
 
   program_text = <<-EOF
     signal = data('supervisor.state', filter=${module.filter-tags.filter_custom})${var.process_state_aggregation_function}${var.process_state_transformation_function}.publish('signal')

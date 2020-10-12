@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name = format("%s %s", local.name_start, "GCP Cloud SQL heartbeat")
+  name = format("%s %s", local.name_prefix, "GCP Cloud SQL heartbeat")
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
@@ -19,7 +19,7 @@ EOF
 }
 
 resource "signalfx_detector" "cpu_utilization" {
-  name = format("%s %s", local.name_start, "GCP Cloud SQL CPU utilization")
+  name = format("%s %s", local.name_prefix, "GCP Cloud SQL CPU utilization")
 
   program_text = <<-EOF
     signal = data('database/cpu/utilization', ${module.filter-tags.filter_custom})${var.cpu_utilization_aggregation_function}${var.cpu_utilization_transformation_function}.scale(100).publish('signal')
@@ -49,7 +49,7 @@ EOF
 }
 
 resource "signalfx_detector" "disk_utilization" {
-  name = format("%s %s", local.name_start, "GCP Cloud SQL disk utilization")
+  name = format("%s %s", local.name_prefix, "GCP Cloud SQL disk utilization")
 
   program_text = <<-EOF
     signal = data('database/disk/utilization', ${module.filter-tags.filter_custom})${var.disk_utilization_aggregation_function}${var.disk_utilization_transformation_function}.scale(100).publish('signal')
@@ -79,7 +79,7 @@ EOF
 }
 
 resource "signalfx_detector" "disk_utilization_forecast" {
-  name = format("%s %s", local.name_start, "GCP Cloud SQL disk space is running out")
+  name = format("%s %s", local.name_prefix, "GCP Cloud SQL disk space is running out")
 
   program_text = <<-EOF
     from signalfx.detectors.countdown import countdown
@@ -99,7 +99,7 @@ EOF
 }
 
 resource "signalfx_detector" "memory_utilization" {
-  name = format("%s %s", local.name_start, "GCP Cloud SQL memory utilization")
+  name = format("%s %s", local.name_prefix, "GCP Cloud SQL memory utilization")
 
   program_text = <<-EOF
     signal = data('database/memory/utilization', ${module.filter-tags.filter_custom})${var.memory_utilization_aggregation_function}${var.memory_utilization_transformation_function}.scale(100).publish('signal')
@@ -129,7 +129,7 @@ EOF
 }
 
 resource "signalfx_detector" "memory_utilization_forecast" {
-  name = format("%s %s", local.name_start, "GCP Cloud SQL memory is running out")
+  name = format("%s %s", local.name_prefix, "GCP Cloud SQL memory is running out")
 
   program_text = <<-EOF
     from signalfx.detectors.countdown import countdown

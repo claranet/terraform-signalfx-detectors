@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name = format("%s %s", local.name_start, "New Relic heartbeat")
+  name = format("%s %s", local.name_prefix, "New Relic heartbeat")
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
@@ -19,7 +19,7 @@ EOF
 }
 
 resource "signalfx_detector" "error_rate" {
-  name = format("%s %s", local.name_start, "New Relic error rate")
+  name = format("%s %s", local.name_prefix, "New Relic error rate")
 
   program_text = <<-EOF
     signal = data('Errors/all/errors_per_minute/*', ${module.filter-tags.filter_custom})${var.error_rate_aggregation_function}${var.error_rate_transformation_function}.publish('signal')
@@ -50,7 +50,7 @@ EOF
 }
 
 resource "signalfx_detector" "apdex" {
-  name = format("%s %s", local.name_start, "New Relic apdex score ratio")
+  name = format("%s %s", local.name_prefix, "New Relic apdex score ratio")
 
   program_text = <<-EOF
     signal = data('Apdex/score/*', ${module.filter-tags.filter_custom})${var.apdex_aggregation_function}${var.apdex_transformation_function}.publish('signal')

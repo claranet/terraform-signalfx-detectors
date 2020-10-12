@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name = format("%s %s", local.name_start, "Azure Application Gateway heartbeat")
+  name = format("%s %s", local.name_prefix, "Azure Application Gateway heartbeat")
 
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting
@@ -20,7 +20,7 @@ resource "signalfx_detector" "heartbeat" {
 }
 
 resource "signalfx_detector" "total_requests" {
-  name = format("%s %s", local.name_start, "Azure Application Gateway has no request")
+  name = format("%s %s", local.name_prefix, "Azure Application Gateway has no request")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true')
@@ -41,7 +41,7 @@ resource "signalfx_detector" "total_requests" {
 }
 
 resource "signalfx_detector" "backend_connect_time" {
-  name = format("%s %s", local.name_start, "Azure Application Gateway backend connect time")
+  name = format("%s %s", local.name_prefix, "Azure Application Gateway backend connect time")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true')
@@ -72,7 +72,7 @@ resource "signalfx_detector" "backend_connect_time" {
 }
 
 resource "signalfx_detector" "failed_requests" {
-  name = format("%s %s", local.name_start, "Azure Application Gateway failed request rate")
+  name = format("%s %s", local.name_prefix, "Azure Application Gateway failed request rate")
 
   program_text = <<-EOF
         from signalfx.detectors.aperiodic import conditions
@@ -106,7 +106,7 @@ resource "signalfx_detector" "failed_requests" {
 }
 
 resource "signalfx_detector" "unhealthy_host_ratio" {
-  name = format("%s %s", local.name_start, "Azure Application Gateway backend unhealthy host ratio")
+  name = format("%s %s", local.name_prefix, "Azure Application Gateway backend unhealthy host ratio")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true')
@@ -139,7 +139,7 @@ resource "signalfx_detector" "unhealthy_host_ratio" {
 }
 
 resource "signalfx_detector" "http_4xx_errors" {
-  name = format("%s %s", local.name_start, "Azure Application Gateway 4xx error rate")
+  name = format("%s %s", local.name_prefix, "Azure Application Gateway 4xx error rate")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true')
@@ -172,7 +172,7 @@ resource "signalfx_detector" "http_4xx_errors" {
 }
 
 resource "signalfx_detector" "http_5xx_errors" {
-  name = format("%s %s", local.name_start, "Azure Application Gateway 5xx error rate")
+  name = format("%s %s", local.name_prefix, "Azure Application Gateway 5xx error rate")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true')
@@ -205,7 +205,7 @@ resource "signalfx_detector" "http_5xx_errors" {
 }
 
 resource "signalfx_detector" "backend_http_4xx_errors" {
-  name = format("%s %s", local.name_start, "Azure Application Gateway backend 4xx error rate")
+  name = format("%s %s", local.name_prefix, "Azure Application Gateway backend 4xx error rate")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true')
@@ -238,7 +238,7 @@ resource "signalfx_detector" "backend_http_4xx_errors" {
 }
 
 resource "signalfx_detector" "backend_http_5xx_errors" {
-  name = format("%s %s", local.name_start, "Azure Application Gateway backend 5xx error rate")
+  name = format("%s %s", local.name_prefix, "Azure Application Gateway backend 5xx error rate")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true')

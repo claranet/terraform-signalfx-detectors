@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name      = format("%s %s", local.name_start, "Docker host heartbeat")
+  name      = format("%s %s", local.name_prefix, "Docker host heartbeat")
   max_delay = 900
 
   program_text = <<-EOF
@@ -20,7 +20,7 @@ EOF
 }
 
 resource "signalfx_detector" "cpu" {
-  name = format("%s %s", local.name_start, "Docker container usage of cpu host")
+  name = format("%s %s", local.name_prefix, "Docker container usage of cpu host")
 
   program_text = <<-EOF
 		signal = data('cpu.percent', filter=filter('plugin', 'docker') and ${module.filter-tags.filter_custom})${var.cpu_aggregation_function}${var.cpu_transformation_function}.publish('signal')
@@ -50,7 +50,7 @@ EOF
 }
 
 resource "signalfx_detector" "throttling" {
-  name = format("%s %s", local.name_start, "Docker container cpu throttling time")
+  name = format("%s %s", local.name_prefix, "Docker container cpu throttling time")
 
   program_text = <<-EOF
 		A = data('cpu.throttling_data.throttled_time', filter=filter('plugin', 'docker') and ${module.filter-tags.filter_custom}, rollup='delta')${var.throttling_aggregation_function}${var.throttling_transformation_function}
@@ -82,7 +82,7 @@ EOF
 }
 
 resource "signalfx_detector" "memory" {
-  name = format("%s %s", local.name_start, "Docker memory usage")
+  name = format("%s %s", local.name_prefix, "Docker memory usage")
 
   program_text = <<-EOF
 		A = data('memory.usage.total', filter=filter('plugin', 'docker') and ${module.filter-tags.filter_custom})${var.memory_aggregation_function}${var.memory_transformation_function}

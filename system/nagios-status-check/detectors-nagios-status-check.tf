@@ -1,5 +1,5 @@
 resource "signalfx_detector" "status_check" {
-  name = format("%s %s", local.name_start, "Nagios check status")
+  name = format("%s %s", local.name_prefix, "Nagios check status")
 
   program_text = <<-EOF
         signal = data('nagios_state.state', filter=${module.filter-tags.filter_custom})${var.status_check_aggregation_function}${var.status_check_transformation_function}.publish('signal')

@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name      = format("%s %s", local.name_start, "Apache heartbeat")
+  name      = format("%s %s", local.name_prefix, "Apache heartbeat")
   max_delay = 900
 
   program_text = <<-EOF
@@ -20,7 +20,7 @@ EOF
 }
 
 resource "signalfx_detector" "apache_workers" {
-  name = format("%s %s", local.name_start, "Apache busy workers")
+  name = format("%s %s", local.name_prefix, "Apache busy workers")
 
   program_text = <<-EOF
     A = data('apache_connections', ${module.filter-tags.filter_custom})${var.apache_workers_aggregation_function}${var.apache_workers_transformation_function}

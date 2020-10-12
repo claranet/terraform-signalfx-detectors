@@ -1,5 +1,5 @@
 resource "signalfx_detector" "hit_ratio" {
-  name = format("%s %s", local.name_start, "AWS ElastiCache memcached hit ratio")
+  name = format("%s %s", local.name_prefix, "AWS ElastiCache memcached hit ratio")
 
   program_text = <<-EOF
     A = data('GetHits', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.hit_ratio_aggregation_function}${var.hit_ratio_transformation_function}
@@ -31,7 +31,7 @@ EOF
 }
 
 resource "signalfx_detector" "cpu" {
-  name = format("%s %s", local.name_start, "AWS ElastiCache memcached CPU")
+  name = format("%s %s", local.name_prefix, "AWS ElastiCache memcached CPU")
 
   program_text = <<-EOF
     signal = data('CPUUtilization', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.cpu_aggregation_function}${var.cpu_transformation_function}.publish('signal')

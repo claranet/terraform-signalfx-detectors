@@ -1,5 +1,5 @@
 resource "signalfx_detector" "volume_space" {
-  name = format("%s %s", local.name_start, "Kubernetes node volume space usage")
+  name = format("%s %s", local.name_prefix, "Kubernetes node volume space usage")
 
   program_text = <<-EOF
     A = data('kubernetes.volume_available_bytes', ${module.filter-tags.filter_custom} and not filter('volume_type', 'configMap', 'secret'))${var.volume_space_aggregation_function}${var.volume_space_transformation_function}
@@ -31,7 +31,7 @@ EOF
 }
 
 resource "signalfx_detector" "volume_inodes" {
-  name = format("%s %s", local.name_start, "Kubernetes node volume inodes usage")
+  name = format("%s %s", local.name_prefix, "Kubernetes node volume inodes usage")
 
   program_text = <<-EOF
     A = data('kubernetes.volume_inodes_free', ${module.filter-tags.filter_custom} and not filter('volume_type', 'configMap', 'secret'))${var.volume_inodes_aggregation_function}${var.volume_inodes_transformation_function}

@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name = format("%s %s", local.name_start, "Azure PostgreSQL heartbeat")
+  name = format("%s %s", local.name_prefix, "Azure PostgreSQL heartbeat")
 
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting
@@ -20,7 +20,7 @@ resource "signalfx_detector" "heartbeat" {
 }
 
 resource "signalfx_detector" "cpu_usage" {
-  name = format("%s %s", local.name_start, "Azure PostgreSQL CPU usage")
+  name = format("%s %s", local.name_prefix, "Azure PostgreSQL CPU usage")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.DBforPostgreSQL/servers') and filter('primary_aggregation_type', 'true')
@@ -51,7 +51,7 @@ resource "signalfx_detector" "cpu_usage" {
 }
 
 resource "signalfx_detector" "no_connection" {
-  name = format("%s %s", local.name_start, "Azure PostgreSQL has no connection")
+  name = format("%s %s", local.name_prefix, "Azure PostgreSQL has no connection")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.DBforPostgreSQL/servers') and filter('primary_aggregation_type', 'true')
@@ -70,7 +70,7 @@ resource "signalfx_detector" "no_connection" {
 }
 
 resource "signalfx_detector" "free_storage" {
-  name = format("%s %s", local.name_start, "Azure PostgreSQL free storage")
+  name = format("%s %s", local.name_prefix, "Azure PostgreSQL free storage")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.DBforPostgreSQL/servers') and filter('primary_aggregation_type', 'true')
@@ -102,7 +102,7 @@ resource "signalfx_detector" "free_storage" {
 }
 
 resource "signalfx_detector" "io_consumption" {
-  name = format("%s %s", local.name_start, "Azure PostgreSQL IO consumption")
+  name = format("%s %s", local.name_prefix, "Azure PostgreSQL IO consumption")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.DBforPostgreSQL/servers') and filter('primary_aggregation_type', 'true')
@@ -133,7 +133,7 @@ resource "signalfx_detector" "io_consumption" {
 }
 
 resource "signalfx_detector" "memory_usage" {
-  name = format("%s %s", local.name_start, "Azure PostgreSQL memory usage ")
+  name = format("%s %s", local.name_prefix, "Azure PostgreSQL memory usage ")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.DBforPostgreSQL/servers') and filter('primary_aggregation_type', 'true')

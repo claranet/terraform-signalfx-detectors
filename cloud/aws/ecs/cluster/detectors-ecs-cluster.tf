@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name = format("%s %s", local.name_start, "AWS ECS heartbeat")
+  name = format("%s %s", local.name_prefix, "AWS ECS heartbeat")
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
@@ -19,7 +19,7 @@ EOF
 }
 
 resource "signalfx_detector" "cpu_utilization" {
-  name = format("%s %s", local.name_start, "AWS ECS cluster CPU utilization")
+  name = format("%s %s", local.name_prefix, "AWS ECS cluster CPU utilization")
 
   program_text = <<-EOF
     signal = data('CPUUtilization', filter=filter('namespace', 'AWS/ECS') and filter('stat', 'mean') and not filter('ServiceName', '*') and ${module.filter-tags.filter_custom}).mean(by=['ClusterName'])${var.cpu_utilization_aggregation_function}${var.cpu_utilization_transformation_function}.publish('signal')
@@ -49,7 +49,7 @@ EOF
 }
 
 resource "signalfx_detector" "memory_utilization" {
-  name = format("%s %s", local.name_start, "AWS ECS cluster memory utilization")
+  name = format("%s %s", local.name_prefix, "AWS ECS cluster memory utilization")
 
   program_text = <<-EOF
     signal = data('MemoryUtilization', filter=filter('namespace', 'AWS/ECS') and filter('stat', 'mean') and not filter('ServiceName', '*') and ${module.filter-tags.filter_custom}).mean(by=['ClusterName'])${var.memory_utilization_aggregation_function}${var.memory_utilization_transformation_function}.publish('signal')

@@ -8,11 +8,11 @@ locals {
     local.heartbeat_filters_gcp,
     local.heartbeat_filters_azure
   )
-  name_start      = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}]"
-  subject_start   = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}}"
-  subject_end     = "on {{{dimensions}}}"
-  subject         = format("%s ({{inputs.signal.value}}) %s", local.subject_start, local.subject_end)
-  subject_novalue = format("%s %s", local.subject_start, local.subject_end)
+  name_prefix     = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}]"
+  subject_prefix  = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}}"
+  subject_suffix  = "on {{{dimensions}}}"
+  subject         = format("%s ({{inputs.signal.value}}) %s", local.subject_prefix, local.subject_suffix)
+  subject_novalue = format("%s %s", local.subject_prefix, local.subject_suffix)
   body            = <<-EOF
     **Alert**:
     *[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}})*

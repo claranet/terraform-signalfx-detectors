@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name = format("%s %s", local.name_start, "AWS VPN heartbeat")
+  name = format("%s %s", local.name_prefix, "AWS VPN heartbeat")
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
@@ -19,7 +19,7 @@ EOF
 }
 
 resource "signalfx_detector" "VPN_status" {
-  name = format("%s %s", local.name_start, "AWS VPN tunnel state")
+  name = format("%s %s", local.name_prefix, "AWS VPN tunnel state")
 
   program_text = <<-EOF
     signal = data('TunnelState', filter=filter('namespace', 'AWS/VPN') and filter('stat', 'mean') and filter('VpnId', '*') and ${module.filter-tags.filter_custom})${var.vpn_status_aggregation_function}${var.vpn_status_transformation_function}.publish('signal')

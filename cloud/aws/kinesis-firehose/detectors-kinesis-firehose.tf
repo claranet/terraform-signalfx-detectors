@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name = format("%s %s", local.name_start, "AWS Kinesis heartbeat")
+  name = format("%s %s", local.name_prefix, "AWS Kinesis heartbeat")
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
@@ -19,7 +19,7 @@ EOF
 }
 
 resource "signalfx_detector" "incoming_records" {
-  name = format("%s %s", local.name_start, "AWS Kinesis incoming records")
+  name = format("%s %s", local.name_prefix, "AWS Kinesis incoming records")
 
   program_text = <<-EOF
     signal = data('IncomingRecords', filter=filter('namespace', 'AWS/Kinesis') and filter('stat', 'lower') and (not filter('ShardId', '*')) and ${module.filter-tags.filter_custom})${var.incoming_records_aggregation_function}${var.incoming_records_transformation_function}.publish('signal')

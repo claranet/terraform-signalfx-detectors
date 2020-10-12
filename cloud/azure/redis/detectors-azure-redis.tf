@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name = format("%s %s", local.name_start, "Azure Redis heartbeat")
+  name = format("%s %s", local.name_prefix, "Azure Redis heartbeat")
 
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting
@@ -20,7 +20,7 @@ resource "signalfx_detector" "heartbeat" {
 }
 
 resource "signalfx_detector" "evictedkeys" {
-  name = format("%s %s", local.name_start, "Azure Redis evicted keys")
+  name = format("%s %s", local.name_prefix, "Azure Redis evicted keys")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Cache/Redis') and filter('primary_aggregation_type', 'true')
@@ -51,7 +51,7 @@ resource "signalfx_detector" "evictedkeys" {
 }
 
 resource "signalfx_detector" "percent_processor_time" {
-  name = format("%s %s", local.name_start, "Azure Redis processor time")
+  name = format("%s %s", local.name_prefix, "Azure Redis processor time")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Cache/Redis') and filter('primary_aggregation_type', 'true')
@@ -82,7 +82,7 @@ resource "signalfx_detector" "percent_processor_time" {
 }
 
 resource "signalfx_detector" "load" {
-  name = format("%s %s", local.name_start, "Azure Redis load")
+  name = format("%s %s", local.name_prefix, "Azure Redis load")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Cache/Redis') and filter('primary_aggregation_type', 'true')

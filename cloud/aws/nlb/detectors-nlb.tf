@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name = format("%s %s", local.name_start, "AWS NLB heartbeat")
+  name = format("%s %s", local.name_prefix, "AWS NLB heartbeat")
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
@@ -19,7 +19,7 @@ EOF
 }
 
 resource "signalfx_detector" "no_healthy_instances" {
-  name = format("%s %s", local.name_start, "AWS NLB healthy instances percentage")
+  name = format("%s %s", local.name_prefix, "AWS NLB healthy instances percentage")
 
   program_text = <<-EOF
     A = data('HealthyHostCount', filter=filter('namespace', 'AWS/NetworkELB') and filter('stat', 'lower') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom})${var.no_healthy_instances_aggregation_function}${var.no_healthy_instances_transformation_function}

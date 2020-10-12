@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name = format("%s %s", local.name_start, "AWS Beanstalk heartbeat")
+  name = format("%s %s", local.name_prefix, "AWS Beanstalk heartbeat")
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
@@ -19,7 +19,7 @@ EOF
 }
 
 resource "signalfx_detector" "health" {
-  name = format("%s %s", local.name_start, "AWS Beanstalk environment health")
+  name = format("%s %s", local.name_prefix, "AWS Beanstalk environment health")
 
   program_text = <<-EOF
     signal = data('EnvironmentHealth', filter=filter('namespace', 'AWS/ElasticBeanstalk') and filter('stat', 'upper') and ${module.filter-tags.filter_custom})${var.health_aggregation_function}${var.health_transformation_function}.publish('signal')
@@ -49,7 +49,7 @@ EOF
 }
 
 resource "signalfx_detector" "latency_p90" {
-  name = format("%s %s", local.name_start, "AWS Beanstalk application latency p90")
+  name = format("%s %s", local.name_prefix, "AWS Beanstalk application latency p90")
 
   program_text = <<-EOF
     signal = data('ApplicationLatencyP90', filter=filter('namespace', 'AWS/ElasticBeanstalk') and filter('stat', 'lower') and (not filter('InstanceId', '*')) and ${module.filter-tags.filter_custom})${var.latency_p90_aggregation_function}${var.latency_p90_transformation_function}.publish('signal')
@@ -79,7 +79,7 @@ EOF
 }
 
 resource "signalfx_detector" "app_5xx_error_rate" {
-  name = format("%s %s", local.name_start, "AWS Beanstalk application 5xx error rate")
+  name = format("%s %s", local.name_prefix, "AWS Beanstalk application 5xx error rate")
 
   program_text = <<-EOF
     A = data('ApplicationRequests5xx', filter=filter('namespace', 'AWS/ElasticBeanstalk') and filter('stat', 'sum') and (not filter('InstanceId', '*')) and ${module.filter-tags.filter_custom})${var.app_5xx_error_rate_aggregation_function}${var.app_5xx_error_rate_transformation_function}
@@ -112,7 +112,7 @@ EOF
 }
 
 resource "signalfx_detector" "root_filesystem_usage" {
-  name = format("%s %s", local.name_start, "AWS Beanstalk instance root filesystem usage")
+  name = format("%s %s", local.name_prefix, "AWS Beanstalk instance root filesystem usage")
 
   program_text = <<-EOF
     signal = data('RootFilesystemUtil', filter=filter('namespace', 'AWS/ElasticBeanstalk') and filter('stat', 'lower') and (not filter('InstanceId', '*')) and ${module.filter-tags.filter_custom})${var.root_filesystem_usage_aggregation_function}${var.root_filesystem_usage_transformation_function}.publish('signal')

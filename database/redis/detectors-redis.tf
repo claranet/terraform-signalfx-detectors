@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name      = format("%s %s", local.name_start, "Redis heartbeat")
+  name      = format("%s %s", local.name_prefix, "Redis heartbeat")
   max_delay = 900
 
   program_text = <<-EOF
@@ -20,7 +20,7 @@ EOF
 }
 
 resource "signalfx_detector" "evicted_keys" {
-  name = format("%s %s", local.name_start, "Redis evicted keys rate of change")
+  name = format("%s %s", local.name_prefix, "Redis evicted keys rate of change")
 
   program_text = <<-EOF
     signal = data('counter.evicted_keys', filter=filter('plugin', 'redis_info') and ${module.filter-tags.filter_custom}, rollup='delta').rateofchange()${var.evicted_keys_aggregation_function}${var.evicted_keys_transformation_function}.publish('signal')
@@ -50,7 +50,7 @@ EOF
 }
 
 resource "signalfx_detector" "expirations" {
-  name = format("%s %s", local.name_start, "Redis expired keys rate of change")
+  name = format("%s %s", local.name_prefix, "Redis expired keys rate of change")
 
   program_text = <<-EOF
     signal = data('counter.expired_keys', filter=filter('plugin', 'redis_info') and ${module.filter-tags.filter_custom}, rollup='delta').rateofchange()${var.expirations_aggregation_function}${var.expirations_transformation_function}.publish('signal')
@@ -80,7 +80,7 @@ EOF
 }
 
 resource "signalfx_detector" "blocked_clients" {
-  name = format("%s %s", local.name_start, "Redis blocked client rate")
+  name = format("%s %s", local.name_prefix, "Redis blocked client rate")
 
   program_text = <<-EOF
     A = data('gauge.blocked_clients', filter=filter('plugin', 'redis_info') and ${module.filter-tags.filter_custom})${var.blocked_clients_aggregation_function}${var.blocked_clients_transformation_function}
@@ -112,7 +112,7 @@ EOF
 }
 
 resource "signalfx_detector" "keyspace_full" {
-  name = format("%s %s", local.name_start, "Redis keyspace seems full")
+  name = format("%s %s", local.name_prefix, "Redis keyspace seems full")
 
   program_text = <<-EOF
     signal = data('gauge.db0_keys', filter=filter('plugin', 'redis_info') and ${module.filter-tags.filter_custom}).rateofchange().abs()${var.keyspace_full_aggregation_function}${var.keyspace_full_transformation_function}.publish('signal')
@@ -131,7 +131,7 @@ EOF
 }
 
 resource "signalfx_detector" "memory_used_max" {
-  name = format("%s %s", local.name_start, "Redis memory used over max memory (if configured)")
+  name = format("%s %s", local.name_prefix, "Redis memory used over max memory (if configured)")
 
   program_text = <<-EOF
     A = data('bytes.used_memory', filter=filter('plugin', 'redis_info') and ${module.filter-tags.filter_custom})${var.memory_used_max_aggregation_function}${var.memory_used_max_transformation_function}
@@ -163,7 +163,7 @@ EOF
 }
 
 resource "signalfx_detector" "memory_used_total" {
-  name = format("%s %s", local.name_start, "Redis memory used over total system memory")
+  name = format("%s %s", local.name_prefix, "Redis memory used over total system memory")
 
   program_text = <<-EOF
     A = data('bytes.used_memory', filter=filter('plugin', 'redis_info') and ${module.filter-tags.filter_custom})${var.memory_used_total_aggregation_function}${var.memory_used_total_transformation_function}
@@ -195,7 +195,7 @@ EOF
 }
 
 resource "signalfx_detector" "memory_frag_high" {
-  name = format("%s %s", local.name_start, "Redis memory fragmentation ratio (excessive fragmentation)")
+  name = format("%s %s", local.name_prefix, "Redis memory fragmentation ratio (excessive fragmentation)")
 
   program_text = <<-EOF
     A = data('bytes.used_memory_rss', filter=filter('plugin', 'redis_info') and ${module.filter-tags.filter_custom}, rollup='average')${var.memory_frag_high_aggregation_function}${var.memory_frag_high_transformation_function}
@@ -227,7 +227,7 @@ EOF
 }
 
 resource "signalfx_detector" "memory_frag_low" {
-  name = format("%s %s", local.name_start, "Redis memory fragmentation ratio (missing memory)")
+  name = format("%s %s", local.name_prefix, "Redis memory fragmentation ratio (missing memory)")
 
   program_text = <<-EOF
     A = data('bytes.used_memory_rss', filter=filter('plugin', 'redis_info') and ${module.filter-tags.filter_custom}, rollup='average')${var.memory_frag_low_aggregation_function}${var.memory_frag_low_transformation_function}
@@ -259,7 +259,7 @@ EOF
 }
 
 resource "signalfx_detector" "rejected_connections" {
-  name = format("%s %s", local.name_start, "Redis rejected connections (maxclient reached)")
+  name = format("%s %s", local.name_prefix, "Redis rejected connections (maxclient reached)")
 
   program_text = <<-EOF
     signal = data('counter.rejected_connections', filter=filter('plugin', 'redis_info') and ${module.filter-tags.filter_custom}, rollup='delta').${var.rejected_connections_aggregation_function}${var.rejected_connections_transformation_function}.publish('signal')
@@ -289,7 +289,7 @@ EOF
 }
 
 resource "signalfx_detector" "hitrate" {
-  name = format("%s %s", local.name_start, "Redis hitrate")
+  name = format("%s %s", local.name_prefix, "Redis hitrate")
 
   program_text = <<-EOF
     A = data('derive.keyspace_hits', filter=filter('plugin', 'redis_info') and ${module.filter-tags.filter_custom}, rollup='delta')${var.hitrate_aggregation_function}${var.hitrate_transformation_function}
