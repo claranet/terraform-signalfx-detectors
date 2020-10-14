@@ -76,54 +76,54 @@ variable "cpu_usage_threshold_major" {
   default     = 80
 }
 
-# free_storage detector
+# storage_usage detectors
 
-variable "free_storage_disabled" {
-  description = "Disable all alerting rules for free_storage detector"
+variable "storage_usage_disabled" {
+  description = "Disable all alerting rules for storage_usage detector"
   type        = bool
   default     = null
 }
 
-variable "free_storage_disabled_critical" {
-  description = "Disable critical alerting rule for free_storage detector"
+variable "storage_usage_disabled_critical" {
+  description = "Disable critical alerting rule for storage_usage detector"
   type        = bool
   default     = null
 }
 
-variable "free_storage_disabled_major" {
-  description = "Disable major alerting rule for free_storage detector"
+variable "storage_usage_disabled_major" {
+  description = "Disable major alerting rule for storage_usage detector"
   type        = bool
   default     = null
 }
 
-variable "free_storage_notifications" {
-  description = "Notification recipients list per severity overridden for free_storage detector"
+variable "storage_usage_notifications" {
+  description = "Notification recipients list per severity overridden for storage_usage detector"
   type        = map(list(string))
   default     = {}
 }
 
-variable "free_storage_aggregation_function" {
-  description = "Aggregation function and group by for free_storage detector (i.e. \".mean(by=['host'])\")"
+variable "storage_usage_aggregation_function" {
+  description = "Aggregation function and group by for storage_usage detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
-variable "free_storage_timer" {
-  description = "Transformation window for free_storage detector (i.e. 5m, 20m, 1h, 1d)"
+variable "storage_usage_timer" {
+  description = "Transformation window for storage_usage detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "15m"
 }
 
-variable "free_storage_threshold_critical" {
-  description = "Critical threshold for free_storage detector"
+variable "storage_usage_threshold_critical" {
+  description = "Critical threshold for storage_usage detector"
   type        = number
-  default     = 10
+  default     = 90
 }
 
-variable "free_storage_threshold_major" {
-  description = "Major threshold for free_storage detector"
+variable "storage_usage_threshold_major" {
+  description = "Major threshold for storage_usage detector"
   type        = number
-  default     = 20
+  default     = 80
 }
 
 # io_consumption detector
