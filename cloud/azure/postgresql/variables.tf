@@ -257,3 +257,53 @@ variable "memory_usage_threshold_major" {
   type        = number
   default     = 80
 }
+
+# serverlog_free_storage detectors
+
+variable "serverlog_free_storage_disabled" {
+  description = "Disable all alerting rules for serverlog_free_storage detector"
+  type        = bool
+  default     = null
+}
+
+variable "serverlog_free_storage_disabled_critical" {
+  description = "Disable critical alerting rule for serverlog_free_storage detector"
+  type        = bool
+  default     = null
+}
+
+variable "serverlog_free_storage_disabled_major" {
+  description = "Disable major alerting rule for serverlog_free_storage detector"
+  type        = bool
+  default     = null
+}
+
+variable "serverlog_free_storage_notifications" {
+  description = "Notification recipients list per severity overridden for serverlog_free_storage detector"
+  type        = map(list(string))
+  default     = {}
+}
+
+variable "serverlog_free_storage_aggregation_function" {
+  description = "Aggregation function and group by for serverlog_free_storage detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+}
+
+variable "serverlog_free_storage_timer" {
+  description = "Evaluation window for serverlog_free_storage detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "15m"
+}
+
+variable "serverlog_free_storage_threshold_critical" {
+  description = "Critical threshold for serverlog_free_storage detector"
+  type        = number
+  default     = 10
+}
+
+variable "serverlog_free_storage_threshold_major" {
+  description = "Major threshold for serverlog_free_storage detector"
+  type        = number
+  default     = 20
+}

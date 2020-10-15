@@ -28,3 +28,8 @@ output "no_connection" {
   value       = signalfx_detector.no_connection
 }
 
+output "serverlog_free_storage" {
+  description = "Detector resource for serverlog_free_storage"
+  value       = signalfx_detector.serverlog_free_storage
+}
+
