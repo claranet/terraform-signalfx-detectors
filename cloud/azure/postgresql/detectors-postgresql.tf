@@ -164,7 +164,7 @@ resource "signalfx_detector" "memory_usage" {
 }
 
 resource "signalfx_detector" "serverlog_free_storage" {
-  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure PostgreSQL free storage"
+  name = format("%s %s", local.detector_name_prefix, "Azure PostgreSQL free storage")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.DBforPostgreSQL/servers') and filter('primary_aggregation_type', 'true')
@@ -180,7 +180,8 @@ resource "signalfx_detector" "serverlog_free_storage" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.serverlog_free_storage_disabled_critical, var.serverlog_free_storage_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.serverlog_free_storage_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -189,6 +190,7 @@ resource "signalfx_detector" "serverlog_free_storage" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.serverlog_free_storage_disabled_major, var.serverlog_free_storage_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.serverlog_free_storage_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
