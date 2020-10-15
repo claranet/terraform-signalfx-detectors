@@ -3,14 +3,14 @@ output "cpu_usage" {
   value       = signalfx_detector.cpu_usage
 }
 
+output "free_storage" {
+  description = "Detector resource for free_storage"
+  value       = signalfx_detector.free_storage
+}
+
 output "heartbeat" {
   description = "Detector resource for heartbeat"
   value       = signalfx_detector.heartbeat
-}
-
-output "storage_usage" {
-  description = "Detector resource for storage_usage"
-  value       = signalfx_detector.storage_usage
 }
 
 output "io_consumption" {
