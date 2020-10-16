@@ -58,6 +58,12 @@ variable "http_code_matched_transformation_function" {
   default     = ".max(over='1m')"
 }
 
+variable "http_code_matched_lasting_duration" {
+  description = "Duration that indicates how long we wait before triggering the http_code_matched alert. Specified as s, m, h, d"
+  type        = string
+  default     = "1s"
+}
+
 # Http_regex_matched detector
 
 variable "http_regex_matched_disabled" {
@@ -88,6 +94,12 @@ variable "http_regex_matched_transformation_function" {
   description = "Transformation function for http_regex_matched detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".max(over='5m')"
+}
+
+variable "http_regex_matched_lasting_duration" {
+  description = "Duration that indicates how long we wait before triggering the http_regex_matched alert. Specified as s, m, h, d"
+  type        = string
+  default     = "1s"
 }
 
 # Http_response_time detector
