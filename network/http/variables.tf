@@ -55,7 +55,19 @@ variable "http_code_matched_aggregation_function" {
 variable "http_code_matched_transformation_function" {
   description = "Transformation function for http_code_matched detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".max(over='1m')"
+  default     = ""
+}
+
+variable "http_code_matched_lasting_duration_seconds" {
+  description = "Duration that indicates how long we wait before triggering the http_code_matched alert. Specified as s, m, h, d"
+  type        = number
+  default     = 60
+}
+
+variable "http_code_matched_at_least_percentage" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
 }
 
 # Http_regex_matched detector
@@ -87,7 +99,19 @@ variable "http_regex_matched_aggregation_function" {
 variable "http_regex_matched_transformation_function" {
   description = "Transformation function for http_regex_matched detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".max(over='5m')"
+  default     = ""
+}
+
+variable "http_regex_matched_lasting_duration_seconds" {
+  description = "Duration that indicates how long we wait before triggering the http_regex_matched alert. Specified as s, m, h, d"
+  type        = number
+  default     = 60
+}
+
+variable "http_regex_matched_at_least_percentage" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
 }
 
 # Http_response_time detector
