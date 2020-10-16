@@ -74,6 +74,7 @@ Here is a full configuration example working with these detectors:
       - query: 'SHOW SLAVE STATUS;'
         datapointExpressions:
           - 'GAUGE("mysql_slave_sql_running", {master_uuid: Master_UUID, channel: Channel_name}, Slave_SQL_Running == "Yes" ? 1 : 0)'
+          - 'GAUGE("mysql_slave_io_running", {master_uuid: Master_UUID, channel: Channel_name}, Slave_IO_Running == "Yes" ? 1 : 0)'
           - 'GAUGE("mysql_seconds_behind_master", {master_uuid: Master_UUID, channel: Channel_name}, Seconds_Behind_Master)'
       # Works for older agent versions but does not support "seconds_behind_master" metric
       #- query: "SELECT IF(VARIABLE_VALUE LIKE 'ON', 1, 0) AS slave_sql_running FROM information_schema.GLOBAL_STATUS WHERE VARIABLE_NAME LIKE 'SLAVE_RUNNING';"

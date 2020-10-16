@@ -28,9 +28,14 @@ output "mysql_replication_lag" {
   value       = signalfx_detector.mysql_replication_lag
 }
 
-output "mysql_replication_status" {
-  description = "Detector resource for mysql_replication_status"
-  value       = signalfx_detector.mysql_replication_status
+output "mysql_slave_io_status" {
+  description = "Detector resource for mysql_slave_io_status"
+  value       = signalfx_detector.mysql_slave_io_status
+}
+
+output "mysql_slave_sql_status" {
+  description = "Detector resource for mysql_slave_sql_status"
+  value       = signalfx_detector.mysql_slave_sql_status
 }
 
 output "mysql_slow" {
