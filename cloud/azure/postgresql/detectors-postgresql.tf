@@ -69,33 +69,32 @@ resource "signalfx_detector" "no_connection" {
   }
 }
 
-resource "signalfx_detector" "free_storage" {
-  name = format("%s %s", local.detector_name_prefix, "Azure PostgreSQL free storage")
+resource "signalfx_detector" "storage_usage" {
+  name = format("%s %s", local.detector_name_prefix, "Azure PostgreSQL storage usage")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.DBforPostgreSQL/servers') and filter('primary_aggregation_type', 'true')
-        A = data('storage_percent', filter=base_filter and ${module.filter-tags.filter_custom})${var.free_storage_aggregation_function}
-        signal = (100-A).publish('signal')
-        detect(when(signal < threshold(${var.free_storage_threshold_critical}), lasting="${var.free_storage_timer}")).publish('CRIT')
-        detect(when(signal < threshold(${var.free_storage_threshold_major}), lasting="${var.free_storage_timer}") and when(signal >= ${var.free_storage_threshold_critical})).publish('MAJOR')
+        signal = data('storage_percent', filter=base_filter and ${module.filter-tags.filter_custom})${var.storage_usage_aggregation_function}.publish('signal')
+        detect(when(signal > threshold(${var.storage_usage_threshold_critical}), lasting="${var.storage_usage_timer}")).publish('CRIT')
+        detect(when(signal > threshold(${var.storage_usage_threshold_major}), lasting="${var.storage_usage_timer}") and when(signal <= ${var.storage_usage_threshold_critical})).publish('MAJOR')
     EOF
 
   rule {
-    description           = "is too low < ${var.free_storage_threshold_critical}%"
+    description           = "is too high > ${var.storage_usage_threshold_critical}%"
     severity              = "Critical"
     detect_label          = "CRIT"
-    disabled              = coalesce(var.free_storage_disabled_critical, var.free_storage_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.free_storage_notifications, "critical", []), var.notifications.critical)
+    disabled              = coalesce(var.storage_usage_disabled_critical, var.storage_usage_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.storage_usage_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
 
   rule {
-    description           = "is too low < ${var.free_storage_threshold_major}%"
+    description           = "is too high > ${var.storage_usage_threshold_major}%"
     severity              = "Major"
     detect_label          = "MAJOR"
-    disabled              = coalesce(var.free_storage_disabled_major, var.free_storage_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.free_storage_notifications, "major", []), var.notifications.major)
+    disabled              = coalesce(var.storage_usage_disabled_major, var.storage_usage_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.storage_usage_notifications, "major", []), var.notifications.major)
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -163,34 +162,32 @@ resource "signalfx_detector" "memory_usage" {
   }
 }
 
-resource "signalfx_detector" "serverlog_free_storage" {
-  name = format("%s %s", local.detector_name_prefix, "Azure PostgreSQL free storage")
+resource "signalfx_detector" "serverlog_storage_usage" {
+  name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure PostgreSQL serverlog storage usage"
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.DBforPostgreSQL/servers') and filter('primary_aggregation_type', 'true')
-        A = data('serverlog_storage_percent', filter=base_filter and ${module.filter-tags.filter_custom})${var.serverlog_free_storage_aggregation_function}
-        signal = (100-A).publish('signal')
-        detect(when(signal < threshold(${var.serverlog_free_storage_threshold_critical}), lasting="${var.serverlog_free_storage_timer}")).publish('CRIT')
-        detect(when(signal < threshold(${var.serverlog_free_storage_threshold_major}), lasting="${var.serverlog_free_storage_timer}") and when(signal >= ${var.serverlog_free_storage_threshold_critical})).publish('MAJOR')
+        signal = data('serverlog_storage_percent', filter=base_filter and ${module.filter-tags.filter_custom})${var.serverlog_storage_usage_aggregation_function}.publish('signal')
+        detect(when(signal > threshold(${var.serverlog_storage_usage_threshold_critical}), lasting="${var.serverlog_storage_usage_timer}")).publish('CRIT')
+        detect(when(signal > threshold(${var.serverlog_storage_usage_threshold_major}), lasting="${var.serverlog_storage_usage_timer}") and when(signal <= ${var.serverlog_storage_usage_threshold_critical})).publish('MAJOR')
     EOF
 
   rule {
-    description           = "is too low < ${var.serverlog_free_storage_threshold_critical}%"
+    description           = "is too high > ${var.serverlog_storage_usage_threshold_critical}%"
     severity              = "Critical"
     detect_label          = "CRIT"
-    disabled              = coalesce(var.serverlog_free_storage_disabled_critical, var.serverlog_free_storage_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.serverlog_free_storage_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    disabled              = coalesce(var.serverlog_storage_usage_disabled_critical, var.serverlog_storage_usage_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.serverlog_storage_usage_notifications, "critical", []), var.notifications.critical)
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 
   rule {
-    description           = "is too low < ${var.serverlog_free_storage_threshold_major}%"
+    description           = "is too high > ${var.serverlog_storage_usage_threshold_major}%"
     severity              = "Major"
     detect_label          = "MAJOR"
-    disabled              = coalesce(var.serverlog_free_storage_disabled_major, var.serverlog_free_storage_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.serverlog_free_storage_notifications, "major", []), var.notifications.major)
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    disabled              = coalesce(var.serverlog_storage_usage_disabled_major, var.serverlog_storage_usage_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.serverlog_storage_usage_notifications, "major", []), var.notifications.major)
+    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
   }
 }
+

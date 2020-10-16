@@ -51,32 +51,31 @@ resource "signalfx_detector" "cpu_usage" {
 }
 
 resource "signalfx_detector" "free_storage" {
-  name = format("%s %s", local.detector_name_prefix, "Azure MySQL free storage")
+  name = format("%s %s", local.detector_name_prefix, "Azure MySQL storage usage")
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.DBforMySQL/servers') and filter('primary_aggregation_type', 'true')
-        A = data('storage_percent', filter=base_filter and ${module.filter-tags.filter_custom})${var.free_storage_aggregation_function}
-        signal = (100-A).publish('signal')
-        detect(when(signal < threshold(${var.free_storage_threshold_critical}), lasting="${var.free_storage_timer}")).publish('CRIT')
-        detect(when(signal < threshold(${var.free_storage_threshold_major}), lasting="${var.free_storage_timer}") and when(signal >= ${var.free_storage_threshold_critical})).publish('MAJOR')
+        signal = data('storage_percent', filter=base_filter and ${module.filter-tags.filter_custom})${var.storage_usage_aggregation_function}.publish('signal')
+        detect(when(signal > threshold(${var.storage_usage_threshold_critical}), lasting="${var.storage_usage_timer}")).publish('CRIT')
+        detect(when(signal > threshold(${var.storage_usage_threshold_major}), lasting="${var.storage_usage_timer}") and when(signal <= ${var.storage_usage_threshold_critical})).publish('MAJOR')
     EOF
 
   rule {
-    description           = "is too low < ${var.free_storage_threshold_critical}%"
+    description           = "is too high > ${var.storage_usage_threshold_critical}%"
     severity              = "Critical"
     detect_label          = "CRIT"
-    disabled              = coalesce(var.free_storage_disabled_critical, var.free_storage_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.free_storage_notifications, "critical", []), var.notifications.critical)
+    disabled              = coalesce(var.storage_usage_disabled_critical, var.storage_usage_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.storage_usage_notifications, "critical", []), var.notifications.critical)
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
 
   rule {
-    description           = "is too low < ${var.free_storage_threshold_major}%"
+    description           = "is too high > ${var.storage_usage_threshold_major}%"
     severity              = "Major"
     detect_label          = "MAJOR"
-    disabled              = coalesce(var.free_storage_disabled_major, var.free_storage_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.free_storage_notifications, "major", []), var.notifications.major)
+    disabled              = coalesce(var.storage_usage_disabled_major, var.storage_usage_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.storage_usage_notifications, "major", []), var.notifications.major)
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }

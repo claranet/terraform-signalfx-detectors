@@ -3,11 +3,6 @@ output "cpu_usage" {
   value       = signalfx_detector.cpu_usage
 }
 
-output "free_storage" {
-  description = "Detector resource for free_storage"
-  value       = signalfx_detector.free_storage
-}
-
 output "heartbeat" {
   description = "Detector resource for heartbeat"
   value       = signalfx_detector.heartbeat
@@ -28,8 +23,13 @@ output "no_connection" {
   value       = signalfx_detector.no_connection
 }
 
-output "serverlog_free_storage" {
-  description = "Detector resource for serverlog_free_storage"
-  value       = signalfx_detector.serverlog_free_storage
+output "serverlog_storage_usage" {
+  description = "Detector resource for serverlog_storage_usage"
+  value       = signalfx_detector.serverlog_storage_usage
+}
+
+output "storage_usage" {
+  description = "Detector resource for storage_usage"
+  value       = signalfx_detector.storage_usage
 }
 
