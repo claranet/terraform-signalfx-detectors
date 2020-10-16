@@ -1,8 +1,6 @@
 # Network/Http SignalFx detectors
 
-This module creates some detectors associated with "Check URL". For code match and regex match we assumed that we don't want the alert to be triggered immediately after an error because errors can occurs sometime without to be an incident.
-
-So we introduced the lasting option to check if all datapoint on a period are in error and so to be sure it's an incident on the platform.
+This module creates some detectors to check web urls and optionally their associated tls certificates.
 
 ## How to use this module
 
@@ -96,3 +94,49 @@ module "signalfx-detectors-http" {
 | http\_regex\_matched | Detector resource for http\_regex\_matched |
 | http\_response\_time | Detector resource for http\_response\_time |
 | invalid\_tls\_certificate | Detector resource for invalid\_tls\_certificate |
+
+## Notes
+
+* By default, `signalfx-agent` collection interval is `10s`. Depending of webservices 
+checked this could dangerous or useless to requet them as often so you can change 
+`intervalSeconds` monitor(s) parameter as you prefer.
+
+* The transformation allows to adapt sensitivity applying its function on a timeframe
+which will change the evaluated value. The alert will be raised as soon the conditions are
+met but comapared to a transformed value not true to reality and obviously more favorable.
+This also affect the chart which could be not desired especially for troubleshooting
+(webchecks often require accuracy). I.e. `max(over='15m')` on `http_code_matched` will
+always be OK (`1`) on alert (and so chart also) even if more than `50%` of checks done
+on the timeframe are failed.
+
+* The `lasting` function does not change the value. It could apply on an evaluated value
+different from the orginal (i.e. if you set `transformation_function` explicitely).
+The chart will show the exact real value and even alert condition itself will be met
+strictly immediately but alert will be raised only at the end of lasting timeframe
+if the conditions have always remained.
+
+* The `http.code_matched` and `http.regex.matched` based detectors are the most critical
+They have only one severity (`Critical`) and use `lasting` function in addition to usual
+transformation function (by default, not set only for them) which could affect 
+their "sensitivity".
+
+* By default, this module will raise alerts these detectors with moderate sensitivity in 
+combination with `10s` collection interval and `lasting('60s')`: `6` datapoints for 1m
+so the webcheck could fail 5 consecutive times before raising alert.
+
+* Feel free to use variables to adapt this sensitivity depending of your needs to make 
+detectors more tolerant (increasing lasting timeframe or even adding transformation) or
+more strict (decreasing lasting timeframe or changing transformation function from `max`
+to `min`).
+
+* If you have multiple webhecks which require different sensitivity level so you can add
+common dimension using `addExtraDimensions` to set of similar monitors on agent. Then,
+you can import as many times this module with different value for `filter_custom_*` variables 
+to match these different dimension(s) value(s).
+
+* The certificate metrics will be collected only if `useHTTPS: true` (or if using the
+deprecated `urls`) monitor option AND if the website supports and redirects `https`.
+
+* The `http_content_length` based detector is disabled by default because not considered
+as generic purpose but `disabled` variables allow to change this.
+
