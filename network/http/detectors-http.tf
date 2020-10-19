@@ -24,7 +24,7 @@ resource "signalfx_detector" "http_code_matched" {
 
   program_text = <<-EOF
     signal = data('http.code_matched', ${module.filter-tags.filter_custom})${var.http_code_matched_aggregation_function}${var.http_code_matched_transformation_function}.publish('signal')
-    detect(when(signal < 1)).publish('CRIT')
+    detect(when(signal < 1, lasting='${var.http_code_matched_lasting_duration_seconds}s', at_least=${var.http_code_matched_at_least_percentage})).publish('CRIT')
 EOF
 
   rule {
@@ -44,7 +44,7 @@ resource "signalfx_detector" "http_regex_matched" {
 
   program_text = <<-EOF
     signal = data('http.regex_matched', ${module.filter-tags.filter_custom})${var.http_regex_matched_aggregation_function}${var.http_regex_matched_transformation_function}.publish('signal')
-    detect(when(signal < 1)).publish('CRIT')
+    detect(when(signal < 1, lasting='${var.http_regex_matched_lasting_duration_seconds}s', at_least=${var.http_regex_matched_at_least_percentage})).publish('CRIT')
 EOF
 
   rule {
