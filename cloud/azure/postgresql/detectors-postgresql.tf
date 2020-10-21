@@ -178,7 +178,8 @@ resource "signalfx_detector" "serverlog_storage_usage" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.serverlog_storage_usage_disabled_critical, var.serverlog_storage_usage_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.serverlog_storage_usage_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 
   rule {
@@ -187,7 +188,8 @@ resource "signalfx_detector" "serverlog_storage_usage" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.serverlog_storage_usage_disabled_major, var.serverlog_storage_usage_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.serverlog_storage_usage_notifications, "major", []), var.notifications.major)
-    parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}}) on {{{dimensions}}}"
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
   }
 }
 
