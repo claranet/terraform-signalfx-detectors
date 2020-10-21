@@ -27,28 +27,37 @@ module_vars=$(cat <<-EOF
 	  notifications = local.notifications
 EOF
 )
+exclude_vars="[$(echo "$module_vars" | sed 's/^[[:space:]]*\([a-zA-z0-9_]*\)[[:space:]]*=.*$/"\1"/' | sed ':a;N;$!ba;s/\n/, /g')]"
 env_vars=$(terraform-config-inspect $(dirname $0)/../test --json | jq -cr '.variables[] | select(.required) | .name')
 
 for i in $(find ${TARGET} -type f -not -path "*/.terraform/*" -name 'detectors-*.tf'); do
     dir=$(dirname $i)
-    vars_string=""
-    vars_list=$(terraform-config-inspect ${dir} --json | jq -cr '.variables[] | select(.required) | select(.type=="string") | .name')
-    for var in ${vars_list}; do
+    vars_rendering=""
+    unset vars
+    declare -A vars
+    while IFS="=" read -r key value; do
+        vars[$key]="$value"
+    done < <(terraform-config-inspect ${dir} --json | jq --argjson ex "${exclude_vars}" -cr '.variables[] | select(.required) | select( .name as $a | $ex | index($a) | not ) | "\(.name)=\(.type)"')
+    for var in ${!vars[@]}; do
+        case ${vars[$var]} in
+            string)
+                val='"fillme"'
+                ;;
+            number)
+                val=42
+                ;;
+            *)
+                val=null
+                ;;
+        esac
         [[ ${env_vars} =~ (^|[[:space:]])$var($|[[:space:]]) ]] ||
-        echo "${module_vars}" | grep -q "^[[:space:]]*${var}" ||
-        vars_string="${vars_string}\n${var}=\"fillme\""
-    done
-    vars_list=$(terraform-config-inspect ${dir} --json | jq -cr '.variables[] | select(.required) | select(.type=="number") | .name')
-    for var in ${vars_list}; do
-        [[ ${env_vars} =~ (^|[[:space:]])$var($|[[:space:]]) ]] ||
-        echo "${module_vars}" | grep -q "^[[:space:]]*${var}" ||
-        vars_string="${vars_string}\n${var}=0"
+        vars_rendering="${vars_rendering}\n${var}=$val"
     done
     cat <<-EOF > ${TMP}
 	module "signalfx-detectors-${dir//\//-}" {
 	  source = "github.com/claranet/terraform-signalfx-detectors.git//${dir}?ref=${REF}"
 
-	  ${module_vars}$(echo -e ${vars_string})
+	  ${module_vars}$(echo -e ${vars_rendering})
 	}
 
 EOF
