@@ -1,0 +1,14 @@
+## Example
+module: database
+name: "real time requests latency"
+
+transformation: true
+aggregation: false
+
+signals:
+  signal:
+    metric: "read_latency_ns_p99"
+rules:
+  critical:
+    threshold: 1000
+    comparator: ">"
