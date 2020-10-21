@@ -32,11 +32,17 @@ env_vars=$(terraform-config-inspect $(dirname $0)/../test --json | jq -cr '.vari
 for i in $(find ${TARGET} -type f -not -path "*/.terraform/*" -name 'detectors-*.tf'); do
     dir=$(dirname $i)
     vars_string=""
-    vars_list=$(terraform-config-inspect ${dir} --json | jq -cr '.variables[] | select(.required) | .name')
+    vars_list=$(terraform-config-inspect ${dir} --json | jq -cr '.variables[] | select(.required) | select(.type=="string") | .name')
     for var in ${vars_list}; do
         [[ ${env_vars} =~ (^|[[:space:]])$var($|[[:space:]]) ]] ||
         echo "${module_vars}" | grep -q "^[[:space:]]*${var}" ||
         vars_string="${vars_string}\n${var}=\"fillme\""
+    done
+    vars_list=$(terraform-config-inspect ${dir} --json | jq -cr '.variables[] | select(.required) | select(.type=="number") | .name')
+    for var in ${vars_list}; do
+        [[ ${env_vars} =~ (^|[[:space:]])$var($|[[:space:]]) ]] ||
+        echo "${module_vars}" | grep -q "^[[:space:]]*${var}" ||
+        vars_string="${vars_string}\n${var}=0"
     done
     cat <<-EOF > ${TMP}
 	module "signalfx-detectors-${dir//\//-}" {
