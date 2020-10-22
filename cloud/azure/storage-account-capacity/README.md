@@ -11,8 +11,8 @@ module "signalfx-detectors-cloud-azure-storage-account-capacity" {
   environment   = var.environment
   notifications = local.notifications
 
-  storage_capacity_threshold_major    = 90 * 1024 * 1024 * 1024  # 90GB
-  storage_capacity_threshold_critical = 100 * 1024 * 1024 * 1024 # 100GB
+  used_capacity_threshold_major    = 90  # 90GB
+  used_capacity_threshold_critical = 100 # 100GB
 }
 ```
 
@@ -38,17 +38,17 @@ Creates SignalFx detectors with the following checks:
 | filter\_custom\_includes | List of tags to include when custom filtering is used | `list` | `[]` | no |
 | notifications | Default notification recipients list per severity | <pre>object({<br>    critical = list(string)<br>    major    = list(string)<br>    minor    = list(string)<br>    warning  = list(string)<br>    info     = list(string)<br>  })</pre> | n/a | yes |
 | prefixes | Prefixes list to prepend between brackets on every monitors names before environment | `list` | `[]` | no |
-| storage\_capacity\_aggregation\_function | Aggregation function and group by for storage\_capacity detector (i.e. ".mean(by=['host'])") | `string` | `".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"` | no |
-| storage\_capacity\_disabled | Disable all alerting rules for storage\_capacity detector | `bool` | `null` | no |
-| storage\_capacity\_disabled\_critical | Disable critical alerting rule for storage\_capacity detector | `bool` | `null` | no |
-| storage\_capacity\_disabled\_major | Disable major alerting rule for storage\_capacity detector | `bool` | `null` | no |
-| storage\_capacity\_notifications | Notification recipients list per severity overridden for storage\_capacity detector | `map(list(string))` | `{}` | no |
-| storage\_capacity\_threshold\_critical | Critical threshold for storage\_capacity detector (in octets) | `number` | n/a | yes |
-| storage\_capacity\_threshold\_major | Major threshold for storage\_capacity detector (in octets) | `number` | `107374182400` | no |
-| storage\_capacity\_timer | Evaluation window for storage\_capacity detector (i.e. 5m, 20m, 1h, 1d) | `string` | `"12h"` | no |
+| used\_capacity\_aggregation\_function | Aggregation function and group by for used\_capacity detector (i.e. ".mean(by=['host'])") | `string` | `".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"` | no |
+| used\_capacity\_disabled | Disable all alerting rules for used\_capacity detector | `bool` | `null` | no |
+| used\_capacity\_disabled\_critical | Disable critical alerting rule for used\_capacity detector | `bool` | `null` | no |
+| used\_capacity\_disabled\_major | Disable major alerting rule for used\_capacity detector | `bool` | `null` | no |
+| used\_capacity\_notifications | Notification recipients list per severity overridden for used\_capacity detector | `map(list(string))` | `{}` | no |
+| used\_capacity\_threshold\_critical | Critical threshold for used\_capacity detector (in GB) | `number` | n/a | yes |
+| used\_capacity\_threshold\_major | Major threshold for used\_capacity detector (in GB) | `number` | n/a | yes |
+| used\_capacity\_transformation\_function | Transformation function for used\_capacity detector (i.e. ".mean(over='5m')") | `string` | `".max(over='12h')"` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| storage\_capacity | Detector resource for storage\_capacity |
+| used\_capacity | Detector resource for used\_capacity |

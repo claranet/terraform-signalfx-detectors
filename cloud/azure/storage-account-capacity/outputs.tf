@@ -1,5 +1,5 @@
-output "storage_capacity" {
-  description = "Detector resource for storage_capacity"
-  value       = signalfx_detector.storage_capacity
+output "used_capacity" {
+  description = "Detector resource for used_capacity"
+  value       = signalfx_detector.used_capacity
 }
 
