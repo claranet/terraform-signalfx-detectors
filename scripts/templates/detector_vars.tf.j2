@@ -1,0 +1,72 @@
+{%- set id = name | replace(' ', '_') -%}
+{%- if name | lower == 'heartbeat' -%}
+  {%- set type = 'heartbeat' -%}
+{%- else -%}
+  {%- set type = 'threshold' -%}
+{%- endif -%}
+{%- set default_aggregation = aggregation | default(true) -%}
+{%- set default_transformation = transformation | default(true) -%}
+# {{ id }} detector
+
+variable "{{ id }}_notifications" {
+  description = "Notification recipients list per severity overridden for {{ id }} detector"
+  type        = map(list(string))
+  default     = {}
+}
+
+{% if default_aggregation -%}
+variable "{{ id }}_aggregation_function" {
+  description = "Aggregation function and group by for {{ id }} detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = "{% if default_aggregation != true %}{{ aggregation | default("") }}{% endif %}"
+}
+
+{% endif -%}
+
+{% if default_transformation -%}
+variable "{{ id }}_transformation_function" {
+  description = "Transformation function for {{ id }} detector (i.e. \".mean(over='5m')\")"
+  type        = string
+  default     = "{% if default_transformation != true %}{{ transformation | default("") }}{% endif %}"
+}
+
+{% endif -%}
+
+variable "{{ id }}_disabled" {
+  description = "Disable all alerting rules for {{ id }} detector"
+  type        = bool
+  default     = null
+}
+
+{% if rules | length > 1 -%}
+  {% for key, rule in rules.items() -%}
+    {%- set severity = key | lower -%}
+variable "{{ id }}_disabled_{{ severity }}" {
+  description = "Disable {{ severity }} alerting rule for {{ id }} detector"
+  type        = bool
+  default     = null
+}
+
+  {% endfor -%}
+{% endif -%}
+
+{% if type == 'heartbeat' -%}
+variable "{{ id }}_timeframe" {
+  description = "Timeframe for heartbeat detector (i.e. \"10m\")"
+  type        = string
+  default     = "20m"
+}
+
+{% else -%}
+  {% for key, rule in rules.items() -%}
+    {%- set severity = key | lower -%}
+variable "{{ id }}_threshold_{{ severity }}" {
+  description = "{{ severity | capitalize }} threshold for {{ id }} detector"
+  type        = number
+    {%- if (rule.threshold is defined and rule.threshold | int) %}
+  default     = {{ rule.threshold }}
+    {%- endif %}
+}
+
+  {% endfor -%}
+{% endif -%}

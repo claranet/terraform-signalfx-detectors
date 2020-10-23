@@ -1,0 +1,87 @@
+{%- set id = name | replace(' ', '_') -%}
+{%- if name | lower == 'heartbeat' -%}
+  {%- set type = 'heartbeat' -%}
+{%- else -%}
+  {%- set type = 'threshold' -%}
+{%- endif -%}
+
+{%- for key, signal in signals.items() -%}
+  {%- if loop.last -%}
+    {%- set last_signal = key -%}
+  {%- endif %}
+{%- endfor %}
+resource "signalfx_detector" "{{ id }}" {
+  name = format("%s %s", local.detector_name_prefix, "{{ module | capitalize }} {{ name | capitalize }}")
+  {%- if type == 'heartbeat' %}
+  max_delay = 900
+  {%- endif %}
+
+  program_text = <<-EOF
+    {%- if type == 'heartbeat' %}
+    from signalfx.detectors.not_reporting import not_reporting
+    {%- endif %}
+
+    {%- for key, signal in signals.items() -%}
+      {%- if 'metric' in signal %}
+    {{ key }} = data('{{ signal.metric }}', filter=${module.filter-tags.filter_custom})
+        {%- if aggregation | default(true) %}${var.{{ id }}_aggregation_function}{%- endif %}
+        {%- if transformation | default(true)%}${var.{{ id }}_transformation_function}{%- endif %}
+      {%- endif -%}
+      {%- if 'formula' in signal %}
+    {{ key }} = {{ signal.formula }}
+      {%- endif -%}
+      {%- if loop.last -%}
+    .publish('{{ key }}')
+      {%- endif %}
+    {%- endfor %}
+    {%- for key, rule in rules.items() %}
+      {%- set severity = key | lower %}
+      {%- set severity_label = severity | replace('critical', 'crit') | replace('warning', 'warn') | upper %}
+      {%- if type == 'heartbeat' -%}
+        {%- for key, signal in signals.items() -%}
+          {%- if loop.last %}
+    not_reporting.detector(stream={{ key }}, resource_identifier=None, duration='${var.heartbeat_timeframe}')
+          {%- endif -%}
+        {%- endfor -%}
+      {%- else %}
+        {%- if '>' in rule.comparator %}
+          {%- set reverse_comparator = '<' %}
+        {%- else %}
+          {%- set reverse_comparator = '>' %}
+        {%- endif %}
+        {%- if '=' in rule.comparator %}
+          {%- set negative_comparator = reverse_comparator %}
+        {%- else %}
+          {%- set negative_comparator = reverse_comparator ~ '=' %}
+        {%- endif %}
+    detect(when(signal > ${var.{{ id }}_threshold_{{ severity }}})
+        {%- if 'dependency' in rule %} and when(signal {{ negative_comparator }} ${var.{{ id }}_threshold_{{ rule.dependency }}}){%- endif -%})
+      {%- endif -%}
+    .publish('{{ severity_label }}')
+    {%- endfor %}
+EOF
+
+  {%- for key, rule in rules.items() %}
+
+  rule {
+    {%- set severity = key | lower %}
+    {%- if type == 'heartbeat' %}
+    description           = "has not reported in ${var.heartbeat_timeframe}"
+    {%- else %}
+      {%- if '>' in rule.comparator %}
+        {%- set compare_string = 'is too high' %}
+      {%- else %}
+        {%- set compare_string = 'is too low' %}
+      {%- endif %}
+    description           = "{{ compare_string }} {{ rule.comparator }} ${var.{{ id }}_threshold_{{ severity }}}"
+    {%- endif %}
+    severity              = "{{ severity | capitalize }}"
+    detect_label          = "{{ severity | replace('critical', 'crit') | replace ('warning', 'warn') | upper }}"
+    disabled              = coalesce({% if rules | length > 1 %}var.{{ id }}_disabled_{{ severity }}, {% endif %}var.{{ id }}_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.{{ id }}_notifications, "{{ severity }}", []), var.notifications.{{ severity }})
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
+  }
+  {%- endfor %}
+}
+

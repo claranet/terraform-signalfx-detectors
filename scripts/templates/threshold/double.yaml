@@ -1,0 +1,19 @@
+## Example
+module: loadbalancer
+name: "requests errors 5xx percentage"
+transformation: ".min(over='10m')"
+signals:
+  A:
+    metric: myelb_req_5xx
+  B:
+    metric: myelb_req_total
+  signal:
+    formula: "(A/B).scale(100)"
+rules:
+  critical:
+    threshold: 1337
+    comparator: ">"
+  major:
+    threshold: 42
+    comparator: ">"
+    dependency: critical

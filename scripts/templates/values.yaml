@@ -1,0 +1,116 @@
+## Detector generator configuration
+#
+## Based on jinja2 see the official documentation:
+## https://jinja.palletsprojects.com/en/2.10.x/templates/
+#
+
+## @param module - string - mandatory
+## Terraform module name (last directory in path).
+## Used before {{name}} for alert subject.
+#
+## Use "-" as separator, no spaces or underscores.
+## Aims to be passed from env var by script or cli.
+#
+module: 
+
+## @param name - string - mandatory
+## Detector entire readable name (what it checks).
+## Used after {{module}} for alert subject and as prefix for variables.
+#
+## The name will determine the detector type to create. If equals to 
+## "heartbeat", it will use "not_reporting.detector()" function and add
+## "max_delay=900". Else, it writes threshold detector type using 
+## "detect()" function. The rendered alert subject will be:
+## `[{{ rules.severity }}][tfenv] {{ module }} {{ name }} (XX {{comparator}} {{threshold}) on` ..
+#
+## Aims to be passed from env var by script or cli.
+## You should use spaces and even full sentence to describe the check.
+#
+name:
+
+## @param aggregation - string/bool - optional - default: true
+## Determine aggregation function added only to {{rules.severity}} with 
+## {{metric}} defined (not used for {{formula}}).
+## If set as bool to true (the default) it declares an empty aggregation 
+## variable but if set as string it defines the "default" of this variable.
+## If set as bool to false, it does not declare or use any variable.
+#
+#aggregation: ".mean(by=['host'])"
+aggregation: true
+
+## @param transformation - string - optional - defaut: true
+## Determine aggregation function added only to {{rules.severity}} with 
+## {{metric}} defined (not used for {{formula}}).
+## By default or set to true (bool), it uses an empty string variable.
+## If set as bool to true (the default) it declares an empty aggregation 
+## variable but if set as string it defines the "default" of this variable.
+## If set as bool to false, it does not declare or use any variable.
+#
+#transformation: ".mean(over='5m')"
+transformation: true
+
+## @param signals - object - mandatory
+## List of signals of the detector. Attribute key is the {{signal_label}} 
+## used in signalflow programm.
+## The last attribute (by convention "signal") is shown on the detector
+## chart and used to define alert rules.
+## Before it, optional not published  signals could be defined (by 
+## convention A, B, C, ..) to use them into the last "signal" as formula.
+#
+signals:
+  ## @param {{signal_label}} - object - optional
+  ## Requires to define either metric or formula attribute.
+  ## In general the last "signal" is of type formula which uses previous
+  ## signals of type metric.
+  #
+  #signal:
+  signal_label:
+
+    ## @param metric - string - optional
+    ## The metric's name to use for this signal in "data()" function.
+    ## Conflicts with "formula" parameter.
+    #
+    metric:
+
+    ## @param formula - string - optional
+    ## The signalflow formula which could use previous signals and 
+    ## analytics functions and methods, see:
+    ## https://dev.splunk.com/observability/docs/signalflow/function_method_list
+    #
+    formula:
+
+## @param rules - object - mandatory
+## List of rules assigned to this detector. Attribute key is the {{severity}}.
+## Every rule could define a {{dependency}} which is the key of another one.
+#
+rules:
+  ## @param {{severity}} - object - optional
+  ## The severity: https://docs.signalfx.com/en/latest/detect-alert/set-up-detectors.html#severity
+  ## Used as label to publish alerts depending on the detector type like "detect()"
+  ## block for "threshold" detector type.
+  # 
+  #info:
+  #warning:
+  #minor:
+  #major:
+  #critical:
+  severity:
+
+    ## @param threshold - number - optional
+    ## The threshold value for this severity alert rule used in "when()" 
+    ## function to create the condition.
+    ## Required for "threshold" detector type" only. 
+    threshold:
+
+    ## @param comparator - string - optional
+    ## The comparator to use against last signal value used in "when()"
+    ### function to create the condition.
+    ## Should be one of ">", ">=", "<", "<=".
+    ## Required for "threshold" detector type" only.
+    comparator:
+
+    ## @param dependency - string - optional
+    ## Add dependency to a previously defined rule {{severity}}.
+    ## This will add another condition to negate the dependecy like:
+    ## when(signal > {{severity}}) and when(signal <= {{severity.dependency}})
+    #dependency:
