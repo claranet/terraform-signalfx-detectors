@@ -1,10 +1,27 @@
 # Contributing
 
-All contributions and pull requests are welcome!
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+:link: **Contents**
 
-## Workflow
+- [General](#general)
+- [Detectors](#detectors)
+- [Scope](#scope)
+- [Example](#example)
+- [Limits](#limits)
+- [Criteria](#criteria)
+- [Templating tips and rules](#templating-tips-and-rules)
+  - [Modules structure](#modules-structure)
+  - [Variables](#variables)
+  - [Default values](#default-values)
+  - [Filtering](#filtering)
+  - [Severity](#severity)
+  - [No data](#no-data)
+  - [Documentation](#documentation)
 
-### General
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+## General
 
 * to propose change, simply submit a pull request (no issue required).
 * if you are not sure, create it as draft this will allow code owners 
@@ -14,7 +31,7 @@ discuss.
 * there are several issue templates available for common needs, please 
 select it appropriately.
 
-# Detectors
+## Detectors
 
 * to update existing detectors do the change directly in code.
 * to add new detectors in existing modules use [the jinja 
