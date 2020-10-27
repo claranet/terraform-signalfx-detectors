@@ -1,4 +1,4 @@
-{%- set id = name | replace(' ', '_') -%}
+{%- set id = name | replace(' ', '_') | lower -%}
 {%- if name | lower == 'heartbeat' -%}
   {%- set type = 'heartbeat' -%}
 {%- else -%}
@@ -9,9 +9,9 @@
   {%- if loop.last -%}
     {%- set last_signal = key -%}
   {%- endif %}
-{%- endfor %}
+{%- endfor -%}
 resource "signalfx_detector" "{{ id }}" {
-  name = format("%s %s", local.detector_name_prefix, "{{ module | capitalize }} {{ name | capitalize }}")
+  name = format("%s %s", local.detector_name_prefix, "{{ module | capitalize }} {{ name }}")
   {%- if type == 'heartbeat' %}
   max_delay = 900
   {%- endif %}

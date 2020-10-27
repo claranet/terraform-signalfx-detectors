@@ -22,11 +22,7 @@ case $# in
 esac
 #echo "${REF} : ${TARGET}"
 
-module_vars=$(cat <<-EOF
-	  environment   = var.environment
-	  notifications = local.notifications
-EOF
-)
+module_vars=$(cat common/modules-args.txt)
 exclude_vars="[$(echo "$module_vars" | sed 's/^[[:space:]]*\([a-zA-z0-9_]*\)[[:space:]]*=.*$/"\1"/' | sed ':a;N;$!ba;s/\n/, /g')]"
 env_vars=$(terraform-config-inspect $(dirname $0)/../test --json | jq -cr '.variables[] | select(.required) | .name')
 
