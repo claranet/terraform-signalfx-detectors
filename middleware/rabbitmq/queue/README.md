@@ -9,6 +9,7 @@ module "signalfx-detectors-middleware-rabbitmq-queue" {
   environment = var.environment
   notifications = var.notifications
 }
+```
 
 In order to work properly, this module needs some [extraMetrics](https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-rabbitmq.html#non-default-metrics-version-4-7-0), the agent needs a least the following configuration for the [collectd/rabbitmq](https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-rabbitmq.html) monitor :
 
@@ -17,7 +18,7 @@ monitors:
   - type: collectd/rabbitmq
     collectNodes: true
     collectQueues: true
-    verbosityLevel: true
+    verbosityLevel: debug
     extraMetrics:
       - gauge.queue.messages_unacknowledged
       - counter.queue.message_stats.ack
