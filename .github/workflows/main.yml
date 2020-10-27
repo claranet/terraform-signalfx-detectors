@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Minimal CI
+name: Detectors
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
@@ -12,7 +12,7 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  test:
+  deployment:
     # The type of runner that the job will run on
     #runs-on: hashicorp/terraform:full
     runs-on: ubuntu-latest
@@ -42,8 +42,8 @@ jobs:
         ./scripts/gen_tf.sh "${TF_REF}" > test/${TF_REF}.tf
         cat test/${TF_REF}.tf
     
-    - name: Terraform version
-      run: terraform version
+    #- name: Terraform version
+    #  run: terraform version
 
     - name: Terraform fmt
       run: terraform fmt -recursive -write=false -diff -check .
@@ -54,16 +54,19 @@ jobs:
     - name: Terraform validate
       run: terraform validate test
 
-    - name: Terraform Plan
-      run: terraform plan -input=false -lock=false -detailed-exitcode test || if [ $? -ne 2 ]; then exit $?; fi
+    #- name: Terraform Plan
+    #  run: terraform plan -input=false -lock=false -detailed-exitcode test || if [ $? -ne 2 ]; then exit $?; fi
+
+    - name: Enable destroy
+      run: echo ::set-output name=enabled::1
+      id: destroy
 
     - name: Terraform Apply
-      #if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+      #if: github.ref == 'refs/heads/master' && github.event_name == 'push' && ${{ always() }}
       run: terraform apply -input=false -lock=false -auto-approve test
 
     - name: Terraform Destroy
-      #if: github.ref == 'refs/heads/master' && github.event_name == 'push' && ${{ always() }}
-      if: ${{ always() }}
+      if: always() && steps.destroy.outputs.enabled == '1'
       run: terraform destroy -input=false -lock=false -auto-approve test
 
   compliance:
