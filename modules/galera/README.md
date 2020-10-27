@@ -26,8 +26,8 @@ Here is a full configuration example working with these detectors:
 ```yaml
   - type: sql
     dbDriver: mysql
-    host: localhost
-    port: 3306
+    host: &mysqlHost localhost
+    port: &mysqlPort 3306
     extraDimensions:
       mysql_port: *mysqlPort
     params:

@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name = format("%s %s", local.detector_name_prefix, "Galera heartbeat")
+  name      = format("%s %s", local.detector_name_prefix, "Galera heartbeat")
   max_delay = 900
 
   program_text = <<-EOF
