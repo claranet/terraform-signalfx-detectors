@@ -1,4 +1,4 @@
-# AWS ECS CLUSTER SignalFx detectors
+# AWS ECS SERVICE SignalFx detectors
 
 ## How to use this module
 
@@ -14,7 +14,7 @@ module "signalfx-detectors-middleware-nginx" {
 
 ## Notes
 
-This module applies only on AWS ECS of type `EC2` (not `Fargate`). The difference compared to [Fargate 
-module](../service/README.md) lies in the dimension filtering out `ServiceName`. See the [official cloudwatch 
+This module applies only on AWS ECS of type `Fargate` (not `EC2`). The difference compared to [EC2 
+module](../cluster/README.md) lies in the dimension filtering in `ServiceName`. See the [official cloudwatch 
 documentation](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/cloudwatch-metrics.html#available_cloudwatch_metrics)
 for more information.
