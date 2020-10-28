@@ -13,6 +13,11 @@ output "server_errors" {
   value       = signalfx_detector.server_errors
 }
 
+output "throttled_requests" {
+  description = "Detector resource for throttled_requests"
+  value       = signalfx_detector.throttled_requests
+}
+
 output "user_errors" {
   description = "Detector resource for user_errors"
   value       = signalfx_detector.user_errors
