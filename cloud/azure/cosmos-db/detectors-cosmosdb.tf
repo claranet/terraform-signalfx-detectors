@@ -23,7 +23,6 @@ resource "signalfx_detector" "db_4xx_requests" {
   name = format("%s %s", local.detector_name_prefix, "Azure Cosmos DB 4xx request rate")
 
   program_text = <<-EOF
-        from signalfx.detectors.aperiodic import aperiodic
         base_filter = filter('resource_type', 'Microsoft.DocumentDB/databaseAccounts') and filter('primary_aggregation_type', 'true')
         A = data('TotalRequests', extrapolation='zero', filter=base_filter and filter('statuscode', '4*') and ${module.filter-tags.filter_custom})${var.db_4xx_requests_aggregation_function}
         B = data('TotalRequests', extrapolation='zero', filter=base_filter and ${module.filter-tags.filter_custom})${var.db_4xx_requests_aggregation_function}
@@ -57,7 +56,6 @@ resource "signalfx_detector" "db_5xx_requests" {
   name = format("%s %s", local.detector_name_prefix, "Azure Cosmos DB 5xx error rate")
 
   program_text = <<-EOF
-        from signalfx.detectors.aperiodic import aperiodic
         base_filter = filter('resource_type', 'Microsoft.DocumentDB/databaseAccounts') and filter('primary_aggregation_type', 'true')
         A = data('TotalRequests', extrapolation='zero', filter=base_filter and filter('statuscode', '5*') and ${module.filter-tags.filter_custom})${var.db_5xx_requests_aggregation_function}
         B = data('TotalRequests', extrapolation='zero', filter=base_filter and ${module.filter-tags.filter_custom})${var.db_5xx_requests_aggregation_function}
@@ -91,7 +89,6 @@ resource "signalfx_detector" "scaling" {
   name = format("%s %s", local.detector_name_prefix, "Azure Cosmos DB scaling errors rate")
 
   program_text = <<-EOF
-        from signalfx.detectors.aperiodic import aperiodic
         base_filter = filter('resource_type', 'Microsoft.DocumentDB/databaseAccounts') and filter('primary_aggregation_type', 'true')
         A = data('TotalRequests', extrapolation='zero', filter=base_filter and filter('statuscode', '429') and ${module.filter-tags.filter_custom})${var.scaling_aggregation_function}
         B = data('TotalRequests', extrapolation='zero', filter=base_filter and ${module.filter-tags.filter_custom})${var.scaling_aggregation_function}
