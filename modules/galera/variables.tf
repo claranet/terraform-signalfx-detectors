@@ -87,3 +87,102 @@ variable "wsrep_local_state_threshold_critical" {
   type        = number
   default     = 4
 }
+# wsrep_flow_control_paused detector
+
+variable "wsrep_flow_control_paused_notifications" {
+  description = "Notification recipients list per severity overridden for wsrep_flow_control_paused detector"
+  type        = map(list(string))
+  default     = {}
+}
+
+variable "wsrep_flow_control_paused_aggregation_function" {
+  description = "Aggregation function and group by for wsrep_flow_control_paused detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ""
+}
+
+variable "wsrep_flow_control_paused_transformation_function" {
+  description = "Transformation function for wsrep_flow_control_paused detector (i.e. \".mean(over='5m')\")"
+  type        = string
+  default     = ""
+}
+
+variable "wsrep_flow_control_paused_disabled" {
+  description = "Disable all alerting rules for wsrep_flow_control_paused detector"
+  type        = bool
+  default     = null
+}
+
+variable "wsrep_flow_control_paused_disabled_critical" {
+  description = "Disable critical alerting rule for wsrep_flow_control_paused detector"
+  type        = bool
+  default     = null
+}
+
+variable "wsrep_flow_control_paused_disabled_major" {
+  description = "Disable major alerting rule for wsrep_flow_control_paused detector"
+  type        = bool
+  default     = null
+}
+
+variable "wsrep_flow_control_paused_threshold_critical" {
+  description = "Critical threshold for wsrep_flow_control_paused detector"
+  type        = number
+  default     = 1
+}
+
+variable "wsrep_flow_control_paused_threshold_major" {
+  description = "Major threshold for wsrep_flow_control_paused detector"
+  type        = number
+  default     = 0
+}
+
+# wsrep_local_recv_queue_avg detector
+
+variable "wsrep_local_recv_queue_avg_notifications" {
+  description = "Notification recipients list per severity overridden for wsrep_local_recv_queue_avg detector"
+  type        = map(list(string))
+  default     = {}
+}
+
+variable "wsrep_local_recv_queue_avg_aggregation_function" {
+  description = "Aggregation function and group by for wsrep_local_recv_queue_avg detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ""
+}
+
+variable "wsrep_local_recv_queue_avg_transformation_function" {
+  description = "Transformation function for wsrep_local_recv_queue_avg detector (i.e. \".mean(over='5m')\")"
+  type        = string
+  default     = ""
+}
+
+variable "wsrep_local_recv_queue_avg_disabled" {
+  description = "Disable all alerting rules for wsrep_local_recv_queue_avg detector"
+  type        = bool
+  default     = null
+}
+
+variable "wsrep_local_recv_queue_avg_disabled_critical" {
+  description = "Disable critical alerting rule for wsrep_local_recv_queue_avg detector"
+  type        = bool
+  default     = null
+}
+
+variable "wsrep_local_recv_queue_avg_disabled_major" {
+  description = "Disable major alerting rule for wsrep_local_recv_queue_avg detector"
+  type        = bool
+  default     = null
+}
+
+variable "wsrep_local_recv_queue_avg_threshold_critical" {
+  description = "Critical threshold for wsrep_local_recv_queue_avg detector"
+  type        = number
+  default     = 0.1
+}
+
+variable "wsrep_local_recv_queue_avg_threshold_major" {
+  description = "Major threshold for wsrep_local_recv_queue_avg detector"
+  type        = number
+  default     = 0
+}

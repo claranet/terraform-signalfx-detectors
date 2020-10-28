@@ -46,6 +46,16 @@ Here is a full configuration example working with these detectors:
         metrics:
           - metricName: "mysql_wsrep_local_state"
             valueColumn: "Value"
+ 
+      - query: 'SHOW STATUS LIKE "wsrep_flow_control_paused";'
+        metrics:
+          - metricName: "mysql_wsrep_flow_control_paused"
+            valueColumn: "Value"
+
+      - query: 'SHOW STATUS LIKE "wsrep_local_recv_queue_avg";'
+        metrics:
+          - metricName: "mysql_wsrep_local_recv_queue_avg"
+            valueColumn: "Value"
 ```
 
 If you already use the MySQL module, you can just merge the `queries` attribute with the one already present in your configuration.
@@ -54,3 +64,4 @@ If you already use the MySQL module, you can just merge the `queries` attribute 
 
 * [Official SQL documentation](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.mysql.html)
 * [Galera Status variables](https://galeracluster.com/library/documentation/galera-status-variables.html)
+* [Galera monitoring](https://galeracluster.com/library/documentation/monitoring-cluster.html)
