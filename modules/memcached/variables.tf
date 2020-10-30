@@ -41,7 +41,7 @@ variable "memcached_max_conn_aggregation_function" {
 variable "memcached_max_conn_transformation_function" {
   description = "Transformation function for memcached_max_conn detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".min(over='5m')"
+  default     = ".max(over='5m')"
 }
 
 variable "memcached_max_conn_disabled" {
