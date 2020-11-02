@@ -547,66 +547,6 @@ EOF
   }
 }
 
-resource "signalfx_detector" "query_cache_evictions_change" {
-  name = format("%s %s", local.detector_name_prefix, "Elasticsearch query cache evictions rate of change")
-
-  program_text = <<-EOF
-    signal = data('elasticsearch.indices.query-cache.evictions', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta').rateofchange()${var.query_cache_evictions_change_aggregation_function}${var.query_cache_evictions_change_transformation_function}.publish('signal')
-    detect(when(signal > ${var.query_cache_evictions_change_threshold_major})).publish('MAJOR')
-    detect(when(signal > ${var.query_cache_evictions_change_threshold_minor}) and when(signal <= ${var.query_cache_evictions_change_threshold_major})).publish('MINOR')
-EOF
-
-  rule {
-    description           = "is too high > ${var.query_cache_evictions_change_threshold_major}"
-    severity              = "Major"
-    detect_label          = "MAJOR"
-    disabled              = coalesce(var.query_cache_evictions_change_disabled_major, var.query_cache_evictions_change_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.query_cache_evictions_change_notifications, "major", []), var.notifications.major)
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
-  }
-
-  rule {
-    description           = "is too high > ${var.query_cache_evictions_change_threshold_minor}"
-    severity              = "Minor"
-    detect_label          = "MINOR"
-    disabled              = coalesce(var.query_cache_evictions_change_disabled_minor, var.query_cache_evictions_change_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.query_cache_evictions_change_notifications, "minor", []), var.notifications.minor)
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
-  }
-}
-
-resource "signalfx_detector" "request_cache_evictions_change" {
-  name = format("%s %s", local.detector_name_prefix, "Elasticsearch request cache evictions rate of change")
-
-  program_text = <<-EOF
-    signal = data('elasticsearch.indices.request-cache.evictions', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta').rateofchange()${var.request_cache_evictions_change_aggregation_function}${var.request_cache_evictions_change_transformation_function}.publish('signal')
-    detect(when(signal > ${var.request_cache_evictions_change_threshold_major})).publish('MAJOR')
-    detect(when(signal > ${var.request_cache_evictions_change_threshold_minor}) and when(signal <= ${var.request_cache_evictions_change_threshold_major})).publish('MINOR')
-EOF
-
-  rule {
-    description           = "is too high > ${var.request_cache_evictions_change_threshold_major}"
-    severity              = "Major"
-    detect_label          = "MAJOR"
-    disabled              = coalesce(var.request_cache_evictions_change_disabled_major, var.request_cache_evictions_change_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.request_cache_evictions_change_notifications, "major", []), var.notifications.major)
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
-  }
-
-  rule {
-    description           = "is too high > ${var.request_cache_evictions_change_threshold_minor}"
-    severity              = "Minor"
-    detect_label          = "MINOR"
-    disabled              = coalesce(var.request_cache_evictions_change_disabled_minor, var.request_cache_evictions_change_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.request_cache_evictions_change_notifications, "minor", []), var.notifications.minor)
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
-  }
-}
-
 resource "signalfx_detector" "task_time_in_queue_change" {
   name = format("%s %s", local.detector_name_prefix, "Elasticsearch max time spent by task in queue rate of change")
 
