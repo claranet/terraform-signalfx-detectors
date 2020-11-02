@@ -41,8 +41,8 @@ resource "signalfx_detector" "wsrep_flow_control_paused" {
 
   program_text = <<-EOF
     signal = data('mysql_wsrep_flow_control_paused', filter=${module.filter-tags.filter_custom})${var.wsrep_flow_control_paused_aggregation_function}${var.wsrep_flow_control_paused_transformation_function}.publish('signal')
-    detect(when(signal > ${var.wsrep_flow_control_paused_threshold_critical})).publish('MAJOR')
-    detect(when(signal > ${var.wsrep_flow_control_paused_threshold_major}) and when(signal < ${var.wsrep_flow_control_paused_threshold_critical})).publish('MINOR')
+    detect(when(signal > ${var.wsrep_flow_control_paused_threshold_major})).publish('MAJOR')
+    detect(when(signal > ${var.wsrep_flow_control_paused_threshold_minor}) and when(signal < ${var.wsrep_flow_control_paused_threshold_major})).publish('MINOR')
 EOF
 
   rule {
@@ -71,8 +71,8 @@ resource "signalfx_detector" "wsrep_local_recv_queue_avg" {
 
   program_text = <<-EOF
     signal = data('mysql_wsrep_local_recv_queue_avg', filter=${module.filter-tags.filter_custom})${var.wsrep_local_recv_queue_avg_aggregation_function}${var.wsrep_local_recv_queue_avg_transformation_function}.publish('signal')
-    detect(when(signal > ${var.wsrep_local_recv_queue_avg_threshold_critical})).publish('MAJOR')
-    detect(when(signal > ${var.wsrep_local_recv_queue_avg_threshold_major}) and when(signal < ${var.wsrep_local_recv_queue_avg_threshold_critical})).publish('MINOR')
+    detect(when(signal > ${var.wsrep_local_recv_queue_avg_threshold_major})).publish('MAJOR')
+    detect(when(signal > ${var.wsrep_local_recv_queue_avg_threshold_minor}) and when(signal < ${var.wsrep_local_recv_queue_avg_threshold_major})).publish('MINOR')
 EOF
 
   rule {

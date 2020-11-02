@@ -1,8 +1,3 @@
-output "heartbeat" {
-  description = "Detector resource for heartbeat"
-  value       = signalfx_detector.heartbeat
-}
-
 output "wsrep_flow_control_paused" {
   description = "Detector resource for wsrep_flow_control_paused"
   value       = signalfx_detector.wsrep_flow_control_paused
