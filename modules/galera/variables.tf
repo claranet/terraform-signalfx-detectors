@@ -1,29 +1,3 @@
-# heartbeat detector
-
-variable "heartbeat_notifications" {
-  description = "Notification recipients list per severity overridden for heartbeat detector"
-  type        = map(list(string))
-  default     = {}
-}
-
-variable "heartbeat_aggregation_function" {
-  description = "Aggregation function and group by for heartbeat detector (i.e. \".mean(by=['host'])\")"
-  type        = string
-  default     = ""
-}
-
-variable "heartbeat_disabled" {
-  description = "Disable all alerting rules for heartbeat detector"
-  type        = bool
-  default     = null
-}
-
-variable "heartbeat_timeframe" {
-  description = "Timeframe for heartbeat detector (i.e. \"10m\")"
-  type        = string
-  default     = "20m"
-}
-
 # wsrep_ready detector
 
 variable "wsrep_ready_notifications" {
@@ -113,26 +87,26 @@ variable "wsrep_flow_control_paused_disabled" {
   default     = null
 }
 
-variable "wsrep_flow_control_paused_disabled_critical" {
-  description = "Disable critical alerting rule for wsrep_flow_control_paused detector"
-  type        = bool
-  default     = null
-}
-
 variable "wsrep_flow_control_paused_disabled_major" {
   description = "Disable major alerting rule for wsrep_flow_control_paused detector"
   type        = bool
   default     = null
 }
 
-variable "wsrep_flow_control_paused_threshold_critical" {
-  description = "Critical threshold for wsrep_flow_control_paused detector"
-  type        = number
-  default     = 1
+variable "wsrep_flow_control_paused_disabled_minor" {
+  description = "Disable minor alerting rule for wsrep_flow_control_paused detector"
+  type        = bool
+  default     = null
 }
 
 variable "wsrep_flow_control_paused_threshold_major" {
   description = "Major threshold for wsrep_flow_control_paused detector"
+  type        = number
+  default     = 0.05
+}
+
+variable "wsrep_flow_control_paused_threshold_minor" {
+  description = "Minor threshold for wsrep_flow_control_paused detector"
   type        = number
   default     = 0
 }
@@ -163,26 +137,26 @@ variable "wsrep_local_recv_queue_avg_disabled" {
   default     = null
 }
 
-variable "wsrep_local_recv_queue_avg_disabled_critical" {
-  description = "Disable critical alerting rule for wsrep_local_recv_queue_avg detector"
-  type        = bool
-  default     = null
-}
-
 variable "wsrep_local_recv_queue_avg_disabled_major" {
   description = "Disable major alerting rule for wsrep_local_recv_queue_avg detector"
   type        = bool
   default     = null
 }
 
-variable "wsrep_local_recv_queue_avg_threshold_critical" {
-  description = "Critical threshold for wsrep_local_recv_queue_avg detector"
-  type        = number
-  default     = 0.1
+variable "wsrep_local_recv_queue_avg_disabled_minor" {
+  description = "Disable minor alerting rule for wsrep_local_recv_queue_avg detector"
+  type        = bool
+  default     = null
 }
 
 variable "wsrep_local_recv_queue_avg_threshold_major" {
   description = "Major threshold for wsrep_local_recv_queue_avg detector"
+  type        = number
+  default     = 0.1
+}
+
+variable "wsrep_local_recv_queue_avg_threshold_minor" {
+  description = "Minor threshold for wsrep_local_recv_queue_avg detector"
   type        = number
   default     = 0
 }

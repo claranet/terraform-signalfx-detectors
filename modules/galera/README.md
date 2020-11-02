@@ -4,7 +4,7 @@
 
 ```hcl
 
-module "signalfx-detectors-database-mysql" {
+module "signalfx-detectors-database-galera" {
   source        = "github.com/claranet/terraform-signalfx-detectors.git//modules/database/galera?ref={revision}"
   environment   = var.environment
   notifications = var.notifications
