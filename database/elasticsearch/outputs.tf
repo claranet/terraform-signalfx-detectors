@@ -83,16 +83,6 @@ output "pending_tasks" {
   value       = signalfx_detector.pending_tasks
 }
 
-output "query_cache_evictions_change" {
-  description = "Detector resource for query_cache_evictions_change"
-  value       = signalfx_detector.query_cache_evictions_change
-}
-
-output "request_cache_evictions_change" {
-  description = "Detector resource for request_cache_evictions_change"
-  value       = signalfx_detector.request_cache_evictions_change
-}
-
 output "search_latency" {
   description = "Detector resource for search_latency"
   value       = signalfx_detector.search_latency
