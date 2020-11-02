@@ -1,7 +1,7 @@
 ---
 name: Documentation
 about: Additions, Improvement or patch about documentation
-title: "[DOC]"
+title: "[DOC] ..."
 labels: documentation, enhancement
 assignees: ''
 
@@ -11,4 +11,4 @@ assignees: ''
 Like I don't understand how to do this, or it miss context for that..
 
 **Give us some suggestions**
-Here are some suggestions or better here is a pull request.
+Here are some suggestions or, even better, here is a pull request.

@@ -1,8 +1,8 @@
 ---
 name: Feature request
 about: Suggest an idea for this project which does not concern detectors
-title: "[RFE]"
-labels: enhancement
+title: "[RFE] ..."
+labels: new feature, templating
 assignees: ''
 
 ---

@@ -1,17 +1,23 @@
 ---
 name: Improve existing detectors
 about: Suggest an improvement for existing detector
-title: "[RFE][DETECTORS][IMPROVE]"
+title: "[IMPROVE] Detector ..."
 labels: detectors, enhancement
 assignees: ''
 
 ---
 
-**Is your feature request related to a known monitoring limitations? Please describe.**
+**What is the module?**
+Please give the module name or link where detectors belongs to.
+
+**What is the detector?**
+Please provide the detector name, id or link concerned.
+
+**Is your improvement related to a known monitoring limitations? Please describe.**
 A clear and concise description of what sort of problem monitoring should detect or ignore.
 
 **Describe the solution you'd like**
-A clear and concise description of what you want to happen.
+A clear and concise description of what you want to happen (or not if you want to make a detector less sensitive).
 
 **Describe alternatives you've considered**
 A clear and concise description of any alternative solutions or features you've considered.

@@ -1,7 +1,7 @@
 ---
 name: Bug report on templating
 about: Modules templating, config or deployment bugs
-title: "[BUG][TEMPLATE]"
+title: "[BUG] Templating ..."
 labels: bug, templating
 assignees: ''
 
