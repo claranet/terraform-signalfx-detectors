@@ -8,3 +8,7 @@ output "memcached_max_conn" {
   value       = signalfx_detector.memcached_max_conn
 }
 
+output "memcached_hit_ratio" {
+  description = "Detector resource for memcached_hit_ratio"
+  value       = signalfx_detector.memcached_hit_ratio
+}

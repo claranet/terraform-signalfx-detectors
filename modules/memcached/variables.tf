@@ -65,11 +65,61 @@ variable "memcached_max_conn_disabled_major" {
 variable "memcached_max_conn_threshold_critical" {
   description = "Critical threshold for memcached_max_conn detector"
   type        = number
-  default     = 10
+  default     = 5
 }
 
 variable "memcached_max_conn_threshold_major" {
   description = "Major threshold for memcached_max_conn detector"
   type        = number
-  default     = 5
+  default     = 0
+}
+
+# memcached_hit_ratio detector
+
+variable "memcached_hit_ratio_notifications" {
+  description = "Notification recipients list per severity overridden for memcached_hit_ratio detector"
+  type        = map(list(string))
+  default     = {}
+}
+
+variable "memcached_hit_ratio_aggregation_function" {
+  description = "Aggregation function and group by for memcached_hit_ratio detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ""
+}
+
+variable "memcached_hit_ratio_transformation_function" {
+  description = "Transformation function for memcached_hit_ratio detector (i.e. \".mean(over='5m')\")"
+  type        = string
+  default     = ""
+}
+
+variable "memcached_hit_ratio_disabled" {
+  description = "Disable all alerting rules for memcached_hit_ratio detector"
+  type        = bool
+  default     = null
+}
+
+variable "memcached_hit_ratio_disabled_major" {
+  description = "Disable major alerting rule for memcached_hit_ratio detector"
+  type        = bool
+  default     = null
+}
+
+variable "memcached_hit_ratio_disabled_minor" {
+  description = "Disable minor alerting rule for memcached_hit_ratio detector"
+  type        = bool
+  default     = null
+}
+
+variable "memcached_hit_ratio_threshold_major" {
+  description = "Major threshold for memcached_hit_ratio detector"
+  type        = number
+  default     = 60
+}
+
+variable "memcached_hit_ratio_threshold_minor" {
+  description = "Minor threshold for memcached_hit_ratio detector"
+  type        = number
+  default     = 80
 }

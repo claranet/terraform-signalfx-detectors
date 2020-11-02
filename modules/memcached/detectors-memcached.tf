@@ -48,3 +48,36 @@ EOF
     parameterized_body    = local.rule_body
   }
 }
+
+
+resource "signalfx_detector" "memcached_hit_ratio" {
+  name = format("%s %s", local.detector_name_prefix, "Memcached hit ratio")
+
+  program_text = <<-EOF
+    A = data('memcached_ops.hits', filter=${module.filter-tags.filter_custom})${var.memcached_hit_ratio_aggregation_function}${var.memcached_hit_ratio_transformation_function}
+    B = data('memcached_ops.misses', filter=${module.filter-tags.filter_custom})${var.memcached_hit_ratio_aggregation_function}${var.memcached_hit_ratio_transformation_function}
+    signal = (A / (A+B) * 100).publish('signal')
+    detect(when(signal < ${var.memcached_hit_ratio_threshold_major})).publish('MAJOR')
+    detect(when(signal < ${var.memcached_hit_ratio_threshold_minor}) and when(signal >= ${var.memcached_hit_ratio_threshold_major})).publish('MINOR')
+EOF
+
+  rule {
+    description           = "is too low < ${var.memcached_hit_ratio_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.memcached_hit_ratio_disabled_major, var.memcached_hit_ratio_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.memcached_hit_ratio_notifications, "major", []), var.notifications.major)
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
+  }
+
+  rule {
+    description           = "is too low < ${var.memcached_hit_ratio_threshold_minor}"
+    severity              = "Minor"
+    detect_label          = "MINOR"
+    disabled              = coalesce(var.memcached_hit_ratio_disabled_minor, var.memcached_hit_ratio_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.memcached_hit_ratio_notifications, "minor", []), var.notifications.minor)
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
+  }
+}
