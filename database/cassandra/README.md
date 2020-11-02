@@ -18,3 +18,5 @@ Requires SignalFx Agent >= `5.5.5` and enable the following extra metrics:
       - "gauge.cassandra.ClientRequest.CASWrite.Latency.99thPercentile"
 ```
 
+You can use [genericjmx](../../middleware/genericjmx/README.md) as complement 
+to this module to monitor generic JMX metrics.
