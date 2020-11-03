@@ -13,6 +13,18 @@
 #
 module: 
 
+## @param id - string - optional
+## Detector id (shorter canonical name).
+## Used as prefix for terraform variables, resources and outputs names.
+#
+## If not defined it will result in lower {{name}} with spaces replaced by `_`.
+## This is why this is highly recommended to explicitly set {{id}} if 
+## {{name}} is too long or use special chars like `()`.
+#
+## Aims to be passed from env var by script or cli.
+#
+id: 
+
 ## @param name - string - mandatory
 ## Detector entire readable name (what it checks).
 ## Used after {{module}} for alert subject and as prefix for variables.
@@ -48,6 +60,18 @@ aggregation: true
 #
 #transformation: ".mean(over='5m')"
 transformation: true
+
+## @param filtering - string - optional
+## Determine base filtering added only to {{rules.severity}} with 
+## {{metric}} defined (not used for {{formula}}).
+## It will define a `base_filtering` variable at start of signalflow 
+## programm then use it in `filter` parameter of `data()` function.
+#
+## Should be a valid `filter` object, see:
+## https://dev.splunk.com/observability/docs/signalflow/functions/filter_function/
+#
+#filtering: "filter('primary_aggregation_type', 'true')"
+filtering:
 
 ## @param signals - object - mandatory
 ## List of signals of the detector. Attribute key is the {{signal_label}} 

@@ -1,9 +1,15 @@
-{%- set id = name | replace(' ', '_') | lower -%}
+{%- if id is defined and id -%}
+  {%- set id = id | lower -%}
+{%- else -%}
+  {%- set id = name | replace(' ', '_') | lower -%}
+{% endif -%}
 {%- if name | lower == 'heartbeat' -%}
   {%- set type = 'heartbeat' -%}
+  {%- set arg_format = '     ' -%}
 {%- else -%}
   {%- set type = 'threshold' -%}
 {%- endif -%}
+{%- set filtering_variable = 'base_filtering' -%}
 
 {%- for key, signal in signals.items() -%}
   {%- if loop.last -%}
@@ -11,7 +17,7 @@
   {%- endif %}
 {%- endfor -%}
 resource "signalfx_detector" "{{ id }}" {
-  name = format("%s %s", local.detector_name_prefix, "{{ module | capitalize }} {{ name }}")
+  name{{ arg_format | default('') }} = format("%s %s", local.detector_name_prefix, "{{ module[0]|upper}}{{module[1:] }} {{ name | lower }}")
   {%- if type == 'heartbeat' %}
   max_delay = 900
   {%- endif %}
@@ -20,10 +26,13 @@ resource "signalfx_detector" "{{ id }}" {
     {%- if type == 'heartbeat' %}
     from signalfx.detectors.not_reporting import not_reporting
     {%- endif %}
+    {%- if filtering is defined and filtering %}
+    {{ filtering_variable }} = {{ filtering }}
+    {%- endif %}
 
     {%- for key, signal in signals.items() -%}
       {%- if 'metric' in signal %}
-    {{ key }} = data('{{ signal.metric }}', filter=${module.filter-tags.filter_custom})
+    {{ key }} = data('{{ signal.metric }}', filter={%- if filtering is defined and filtering -%}{{ filtering_variable }} and {% endif -%}${module.filter-tags.filter_custom})
         {%- if aggregation | default(true) %}${var.{{ id }}_aggregation_function}{%- endif %}
         {%- if transformation | default(true)%}${var.{{ id }}_transformation_function}{%- endif %}
       {%- endif -%}
@@ -54,7 +63,7 @@ resource "signalfx_detector" "{{ id }}" {
         {%- else %}
           {%- set negative_comparator = reverse_comparator ~ '=' %}
         {%- endif %}
-    detect(when(signal > ${var.{{ id }}_threshold_{{ severity }}})
+    detect(when(signal {{ rule.comparator }} ${var.{{ id }}_threshold_{{ severity }}})
         {%- if 'dependency' in rule %} and when(signal {{ negative_comparator }} ${var.{{ id }}_threshold_{{ rule.dependency }}}){%- endif -%})
       {%- endif -%}
     .publish('{{ severity_label }}')
