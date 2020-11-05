@@ -23,7 +23,7 @@ variable "heartbeat_timeframe" {
 variable "heartbeat_aggregation_function" {
   description = "Aggregation function and group by for heartbeat detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".mean(by=['name'])"
 }
 
 # file_descriptors detector
@@ -55,7 +55,7 @@ variable "file_descriptors_notifications" {
 variable "file_descriptors_aggregation_function" {
   description = "Aggregation function and group by for file descriptors detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".mean(by=['name'])"
 }
 
 variable "file_descriptors_transformation_function" {
@@ -105,7 +105,7 @@ variable "processes_notifications" {
 variable "processes_aggregation_function" {
   description = "Aggregation function and group by for processes detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".mean(by=['name'])"
 }
 
 variable "processes_transformation_function" {
@@ -155,7 +155,7 @@ variable "sockets_notifications" {
 variable "sockets_aggregation_function" {
   description = "Aggregation function and group by for sockets detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".mean(by=['name'])"
 }
 
 variable "sockets_transformation_function" {
@@ -205,7 +205,7 @@ variable "vm_memory_notifications" {
 variable "vm_memory_aggregation_function" {
   description = "Aggregation function and group by for vm_memory detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".mean(by=['name'])"
 }
 
 variable "vm_memory_transformation_function" {
