@@ -6,6 +6,10 @@ name: Detectors
 # events but only for the master branch
 on:
   push:
+    paths:
+    - '**.tf'
+    - 'scripts/*'
+    - '.github/workflows/main.yml'
 #    branches: [ master ]
 #  pull_request:
 #    branches: [ master ]
