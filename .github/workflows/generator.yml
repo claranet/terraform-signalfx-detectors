@@ -4,6 +4,10 @@ name: Generator
 
 on:
   push:
+    paths:
+    - 'scripts/templates/**'
+    - 'scripts/gen_module.sh'
+    - '.github/workflows/generator.yml'
 
 jobs:
   test:
