@@ -23,7 +23,7 @@ resource "signalfx_detector" "http_code_matched" {
   name = format("%s %s", local.detector_name_prefix, "HTTP code ")
 
   program_text = <<-EOF
-    signal = data('http.code_matched', ${module.filter-tags.filter_custom})${var.http_code_matched_aggregation_function}${var.http_code_matched_transformation_function}.publish('signal')
+    signal = data('http.code_matched', filter=${module.filter-tags.filter_custom})${var.http_code_matched_aggregation_function}${var.http_code_matched_transformation_function}.publish('signal')
     detect(when(signal < 1, lasting='${var.http_code_matched_lasting_duration_seconds}s', at_least=${var.http_code_matched_at_least_percentage})).publish('CRIT')
 EOF
 
@@ -43,7 +43,7 @@ resource "signalfx_detector" "http_regex_matched" {
   name = format("%s %s", local.detector_name_prefix, "HTTP regex ")
 
   program_text = <<-EOF
-    signal = data('http.regex_matched', ${module.filter-tags.filter_custom})${var.http_regex_matched_aggregation_function}${var.http_regex_matched_transformation_function}.publish('signal')
+    signal = data('http.regex_matched', filter=${module.filter-tags.filter_custom})${var.http_regex_matched_aggregation_function}${var.http_regex_matched_transformation_function}.publish('signal')
     detect(when(signal < 1, lasting='${var.http_regex_matched_lasting_duration_seconds}s', at_least=${var.http_regex_matched_at_least_percentage})).publish('CRIT')
 EOF
 
@@ -63,7 +63,7 @@ resource "signalfx_detector" "http_response_time" {
   name = format("%s %s", local.detector_name_prefix, "HTTP response time")
 
   program_text = <<-EOF
-    signal = data('http.response_time', ${module.filter-tags.filter_custom})${var.http_response_time_aggregation_function}${var.http_response_time_transformation_function}.publish('signal')
+    signal = data('http.response_time', filter=${module.filter-tags.filter_custom})${var.http_response_time_aggregation_function}${var.http_response_time_transformation_function}.publish('signal')
     detect(when(signal > ${var.http_response_time_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.http_response_time_threshold_major}) and when(signal <= ${var.http_response_time_threshold_critical})).publish('MAJOR')
 EOF
@@ -93,7 +93,7 @@ resource "signalfx_detector" "http_content_length" {
   name = format("%s %s", local.detector_name_prefix, "HTTP content length")
 
   program_text = <<-EOF
-    signal = data('http.content_length', ${module.filter-tags.filter_custom})${var.http_content_length_aggregation_function}${var.http_content_length_transformation_function}.publish('signal')
+    signal = data('http.content_length', filter=${module.filter-tags.filter_custom})${var.http_content_length_aggregation_function}${var.http_content_length_transformation_function}.publish('signal')
     detect(when(signal < ${var.http_content_length_threshold_major})).publish('MAJOR')
 EOF
 
@@ -112,7 +112,7 @@ resource "signalfx_detector" "certificate_expiration_date" {
   name = format("%s %s", local.detector_name_prefix, "TLS certificate expiring in ")
 
   program_text = <<-EOF
-    A = data('http.cert_expiry', ${module.filter-tags.filter_custom})${var.certificate_expiration_date_aggregation_function}${var.certificate_expiration_date_transformation_function}
+    A = data('http.cert_expiry', filter=${module.filter-tags.filter_custom})${var.certificate_expiration_date_aggregation_function}${var.certificate_expiration_date_transformation_function}
     signal = (A/86400).publish('signal')
     detect(when(signal < ${var.certificate_expiration_date_threshold_critical})).publish('CRIT')
     detect(when(signal < ${var.certificate_expiration_date_threshold_major}) and when(signal >= ${var.certificate_expiration_date_threshold_critical})).publish('MAJOR')
@@ -143,7 +143,7 @@ resource "signalfx_detector" "invalid_tls_certificate" {
   name = format("%s %s", local.detector_name_prefix, "TLS certificate")
 
   program_text = <<-EOF
-    signal = data('http.cert_valid', ${module.filter-tags.filter_custom})${var.invalid_tls_certificate_aggregation_function}${var.invalid_tls_certificate_transformation_function}.publish('signal')
+    signal = data('http.cert_valid', filter=${module.filter-tags.filter_custom})${var.invalid_tls_certificate_aggregation_function}${var.invalid_tls_certificate_transformation_function}.publish('signal')
     detect(when(signal < 1)).publish('CRIT')
 EOF
 

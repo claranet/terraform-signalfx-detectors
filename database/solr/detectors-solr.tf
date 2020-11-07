@@ -23,7 +23,7 @@ resource "signalfx_detector" "errors" {
   name = format("%s %s", local.detector_name_prefix, "Apache Solr errors count")
 
   program_text = <<-EOF
-    signal = data('counter.solr.zookeeper_errors', ${module.filter-tags.filter_custom})${var.errors_aggregation_function}${var.errors_transformation_function}.publish('signal')
+    signal = data('counter.solr.zookeeper_errors', filter=${module.filter-tags.filter_custom})${var.errors_aggregation_function}${var.errors_transformation_function}.publish('signal')
     detect(when(signal >= ${var.errors_threshold_critical})).publish('CRIT')
     detect(when(signal >= ${var.errors_threshold_major}) and when(signal <= ${var.errors_threshold_critical})).publish('MAJOR')
 EOF
@@ -53,7 +53,7 @@ resource "signalfx_detector" "searcher_warmup_time" {
   name = format("%s %s", local.detector_name_prefix, "Apache Solr searcher warmup time")
 
   program_text = <<-EOF
-    signal = data('gauge.solr.searcher_warmup', ${module.filter-tags.filter_custom})${var.searcher_warmup_time_aggregation_function}${var.searcher_warmup_time_transformation_function}.publish('signal')
+    signal = data('gauge.solr.searcher_warmup', filter=${module.filter-tags.filter_custom})${var.searcher_warmup_time_aggregation_function}${var.searcher_warmup_time_transformation_function}.publish('signal')
     detect(when(signal >= ${var.searcher_warmup_time_threshold_critical})).publish('CRIT')
     detect(when(signal >= ${var.searcher_warmup_time_threshold_major}) and when(signal <= ${var.searcher_warmup_time_threshold_critical})).publish('MAJOR')
 EOF
