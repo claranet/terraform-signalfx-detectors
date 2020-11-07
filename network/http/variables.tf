@@ -190,8 +190,8 @@ variable "http_content_length_transformation_function" {
   default     = ".max(over='15m')"
 }
 
-variable "http_content_length_threshold_major" {
-  description = "Critical threshold for http_content_length detector"
+variable "http_content_length_threshold_warning" {
+  description = "Warning threshold for http_content_length detector"
   type        = number
   default     = 10
 }
@@ -204,14 +204,14 @@ variable "certificate_expiration_date_disabled" {
   default     = null
 }
 
-variable "certificate_expiration_date_disabled_critical" {
-  description = "Disable critical alerting rule for certificate_expiration_date detector"
+variable "certificate_expiration_date_disabled_major" {
+  description = "Disable major alerting rule for certificate_expiration_date detector"
   type        = bool
   default     = null
 }
 
-variable "certificate_expiration_date_disabled_major" {
-  description = "Disable major alerting rule for certificate_expiration_date detector"
+variable "certificate_expiration_date_disabled_minor" {
+  description = "Disable minor alerting rule for certificate_expiration_date detector"
   type        = bool
   default     = null
 }
@@ -234,14 +234,14 @@ variable "certificate_expiration_date_transformation_function" {
   default     = ".max(over='5m')"
 }
 
-variable "certificate_expiration_date_threshold_critical" {
-  description = "Critical threshold for certificate_expiration_date detector"
+variable "certificate_expiration_date_threshold_major" {
+  description = "Major threshold for certificate_expiration_date detector"
   type        = number
   default     = 15
 }
 
-variable "certificate_expiration_date_threshold_major" {
-  description = "Major threshold for certificate_expiration_date detector"
+variable "certificate_expiration_date_threshold_minor" {
+  description = "Minor threshold for certificate_expiration_date detector"
   type        = number
   default     = 30
 }
