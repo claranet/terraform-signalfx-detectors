@@ -1,7 +1,7 @@
 # Templates
 
 A list of [jinja](https://jinja.palletsprojects.com/) 
-based templates renderingterraform code from [SignalFx 
+based templates rendering terraform code from [SignalFx 
 provider](https://github.com/splunk-terraform/terraform-provider-signalfx).
 
 ## Generator
@@ -60,14 +60,14 @@ At the root of this directory there are:
 
 * [values.yaml](./values.yaml) with all configuration options available.
 Copy it to create your own preset config.
-* jinja templates files `*.j2` like [the detector resource](./detector-res.tf.j2).
+* jinja templates files `*.j2` like [the detector resource](./detector.tf.j2).
 * Sub-directories containing preset configs to generate common detectors on this repo.
 
 The templates files are splitted into different files depending on the destination
 where to append code:
 
-* `variables.tf` file from [./detector-vars.tf.j2](./detector-vars.tf.j2).
-* `detectors-{mymodule}.tf` file from [./detector-res.tf.j2](./detector-res.tf.j2).
+* `variables.tf` file from [./variables.tf.j2](./variables.tf.j2).
+* `detectors-{mymodule}.tf` file from [./detector.tf.j2](./detector.tf.j2).
 
 ### Usage
 
@@ -80,7 +80,7 @@ $ j2 ./scripts/templates/detector-{template}.tf.j2 {path_to_config_file.yaml}
 You can redirect the output in the destination file on the repo:
 
 ```bash
-$ j2 ./scripts/templates/detector-vars.tf.j2 ./scripts/templates/threshold/nginx.yaml >> ./middleware/nginx/variables.tf
+$ j2 ./scripts/templates/variables.tf.j2 ./scripts/templates/example/nginx.yaml >> ./middleware/nginx/variables.tf
 ```
 
 __Note__: you can duplicate another existing module and empty `variables.tf` and 

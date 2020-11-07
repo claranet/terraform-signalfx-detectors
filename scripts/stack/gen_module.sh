@@ -24,7 +24,7 @@ esac
 
 module_vars=$(cat common/modules-args.txt)
 exclude_vars="[$(echo "$module_vars" | sed 's/^[[:space:]]*\([a-zA-z0-9_]*\)[[:space:]]*=.*$/"\1"/' | sed ':a;N;$!ba;s/\n/, /g')]"
-env_vars=$(terraform-config-inspect $(dirname $0)/../test --json | jq -cr '.variables[] | select(.required) | .name')
+env_vars=$(terraform-config-inspect common --json | jq -cr '.variables[] | select(.required) | .name')
 
 for i in $(find ${TARGET} -type f -not -path "*/.terraform/*" -name 'detectors-*.tf'); do
     dir=$(dirname $i)

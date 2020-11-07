@@ -1,55 +1,83 @@
-# MIDDLEWARE NGINX SignalFx detectors
+# NGINX SignalFx detectors
 
-## How to use this module
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+## How do you use this module?
+
+This directory defines a [Terraform](https://www.terraform.io/) 
+[module](https://www.terraform.io/docs/modules/usage.html) you can use in your
+existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/Getting-started#stack) by adding a 
+`module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
 module "signalfx-detectors-middleware-nginx" {
-  source      = "github.com/claranet/terraform-signalfx-detectors.git//middleware/nginx?ref={revision}"
+  source = "github.com/claranet/terraform-signalfx-detectors.git//middleware/nginx?ref={revision}"
 
-  environment = var.environment
-  notifications = var.notifications
+  environment   = var.environment
+  notifications = local.notifications
 }
-
 ```
 
-## Purpose
+Note the following parameters:
 
-Creates SignalFx detectors with the following checks:
+* `source`: Use this parameter to specify the URL of the module. The double slash (`//`) is intentional  and required. 
+  Terraform uses it to specify subfolders within a Git repo (see [module
+  sources](https://www.terraform.io/docs/modules/sources.html)). The `ref` parameter specifies a specific Git tag in
+  this repository. It is recommended to use the latest "pinned" version in place of `{revision}`. Avoid using a branch 
+  like `master` except for testing purpose. Note that every modules in this repository are available on the Terraform 
+  [registry](https://registry.terraform.io/modules/claranet/detectors/signalfx) and we recommend using it as source 
+  instead of `git` which is more flexible but less future-proof.
 
-- Nginx dropped connections
-- Nginx heartbeat
+* `environment`: Use this parameter to specify the 
+  [environment](https://github.com/claranet/terraform-signalfx-detectors/wiki/Getting-started#environment) used by this 
+  instance of the module.
+  Its value will be added to the `prefixes` list at the start of the [detector 
+  name](https://github.com/claranet/terraform-signalfx-detectors/wiki/Templating#example).
+  In general, it will also be used in `filter-tags` sub-module to apply a
+  [filtering](https://github.com/claranet/terraform-signalfx-detectors/wiki/Guidance#filtering) based on our default 
+  [tagging convention](https://github.com/claranet/terraform-signalfx-detectors/wiki/Tagging-convention) by default.
 
-## Inputs
+* `notifications`: Use this parameter to define where alerts should be sent depending on their severity. It consists 
+  of a Terraform [object](https://www.terraform.io/docs/configuration/types.html#object-) where each key represents an 
+  available [detector rule severity](https://docs.signalfx.com/en/latest/detect-alert/set-up-detectors.html#severity) 
+  and its value is a list of recipients. Every recipients must respect the [detector notification 
+  format](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector#notification-format).
+  Check the [notification binding](https://github.com/claranet/terraform-signalfx-detectors/wiki/Notifications-binding) 
+  documentation to understand the recommended role of each severity.
 
-| Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:-----:|
-| detectors\_disabled | Disable all detectors in this module | `bool` | `false` | no |
-| dropped\_connections\_aggregation\_function | Aggregation function and group by for dropped connections detector (i.e. ".mean(by=['host']).") | `string` | `""` | no |
-| dropped\_connections\_disabled | Disable all alerting rules for dropped connections detector | `bool` | n/a | yes |
-| dropped\_connections\_disabled\_critical | Disable critical alerting rule for dropped connections detector | `bool` | n/a | yes |
-| dropped\_connections\_disabled\_warning | Disable warning alerting rule for dropped connections detector | `bool` | n/a | yes |
-| dropped\_connections\_notifications | Notification recipients list for every alerting rules of dropped connections detector | `list` | `[]` | no |
-| dropped\_connections\_notifications\_critical | Notification recipients list for critical alerting rule of dropped connections detector | `list` | `[]` | no |
-| dropped\_connections\_notifications\_warning | Notification recipients list for warning alerting rule of dropped connections detector | `list` | `[]` | no |
-| dropped\_connections\_threshold\_critical | Critical threshold for dropped connections detector | `number` | `1` | no |
-| dropped\_connections\_threshold\_warning | Warning threshold for dropped connections detector | `number` | `0` | no |
-| dropped\_connections\_transformation\_function | Transformation function for dropped connections detector (i.e. \".mean(over='5m')\")) | `string` | `"min"` | no |
-| environment | Infrastructure environment | `string` | n/a | yes |
-| filter\_custom\_excludes | List of tags to exclude when custom filtering is used | `list` | `[]` | no |
-| filter\_custom\_includes | List of tags to include when custom filtering is used | `list` | `[]` | no |
-| heartbeat\_disabled | Disable all alerting rules for heartbeat detector | `bool` | n/a | yes |
-| heartbeat\_notifications | Notification recipients list for every alerting rules of heartbeat detector | `list` | `[]` | no |
-| heartbeat\_timeframe | Timeframe for system not reporting detector (i.e. "10m") | `string` | `"20m"` | no |
-| notifications | Notification recipients list for every detectors | `list` | n/a | yes |
-| prefixes | Prefixes list to prepend between brackets on every monitors names before environment | `list` | `[]` | no |
+There are other Terraform [variables](https://www.terraform.io/docs/configuration/variables.html) in 
+[variables.tf](variables.tf) so check their description to customize the detectors behavior to fit your needs. Most of them are 
+common [variables](https://github.com/claranet/terraform-signalfx-detectors/wiki/Variables).
+The [guidance](https://github.com/claranet/terraform-signalfx-detectors/wiki/Guidance) documentation will help you to use 
+common mechanims provided by the modules like [multi 
+instances](https://github.com/claranet/terraform-signalfx-detectors/wiki/Guidance#Multiple-instances).
 
-## Outputs
+Feel free to explore the [wiki](https://github.com/claranet/terraform-signalfx-detectors/wiki) for more information about 
+general usage of this repository.
 
-| Name | Description |
-|------|-------------|
-| dropped\_connections\_id | id for detector dropped\_connections |
-| heartbeat\_id | id for detector heartbeat |
+## What are the available detectors in this module?
+
+This module creates the following SignalFx detectors which could contain one or mulitple alerting rules:
+
+* Nginx dropped connections
+* Nginx heartbeat
+
+## How to collect required metrics?
+
+This module uses metrics collected from the [SignalFx Smart 
+Agent](https://github.com/signalfx/signalfx-agent).
+
+
+
+
 
 ## Related documentation
 
-[Official documentation](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.nginx.html)
+* [Terraform SignalFx provider](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs)
+* [Terraform SignalFx detector](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector)
+* [SignalFx agent monitor](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.nginx.html)
+* [Nginx status module](http://nginx.org/en/docs/http/ngx_http_status_module.html)
+
