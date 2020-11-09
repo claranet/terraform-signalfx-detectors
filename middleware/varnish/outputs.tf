@@ -8,6 +8,11 @@ output "cache_hit_rate" {
   value       = signalfx_detector.cache_hit_rate
 }
 
+output "heartbeat" {
+  description = "Detector resource for heartbeat"
+  value       = signalfx_detector.heartbeat
+}
+
 output "memory_usage" {
   description = "Detector resource for memory_usage"
   value       = signalfx_detector.memory_usage
