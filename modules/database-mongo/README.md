@@ -28,10 +28,20 @@ This module uses [collectd/mongodb](https://docs.signalfx.com/en/latest/integrat
 
 ## Notes
 
-* Primary and secondary detectors require to configure on all members 
-of the replicat because they use explicitly aggregation by replicaset 
-(`cluster` by default) to work. Change default value of corresponding 
-`aggregation_function` variable if necessary.
+* This is highly recommended to configure the `collectd/mongodb` 
+monitor for __all__ members of a replicaset to fetch metrics from 
+both the primary and the secondaries which all have their own stats.
 
-* The heartbeat detector is by aggregated replicaset (`cluster`) by 
+* This is mandatory for "primary" and "secondary" detectors because 
+they need the information of every member of a replicaset to determine 
+if there is a problem. Indeed, they group by the replicaset to know if 
+there is, at least, one master and two scondaries.
+
+* The heartbeat detector is also aggregated by replicaset (`cluster`) by 
 default to avoid alert for each single member disapearance.
+
+* Every other detectors do not use any aggegation because this is more 
+flexible and they do not require it to work. But feel free to change 
+the `aggregation_functions` variables for these tree or others to fit 
+your environment.
+
