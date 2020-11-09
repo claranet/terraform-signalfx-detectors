@@ -1,4 +1,8 @@
-{%- set id = name | replace(' ', '_') -%}
+{%- if id is defined and id -%}
+  {%- set id = id | lower -%}
+{%- else -%}
+  {%- set id = name | replace(' ', '_') | lower -%}
+{% endif -%}
 {%- if name | lower == 'heartbeat' -%}
   {%- set type = 'heartbeat' -%}
 {%- else -%}
@@ -47,7 +51,7 @@ variable "{{ id }}_disabled_{{ severity }}" {
   default     = null
 }
 
-  {% endfor -%}
+{% endfor -%}
 {% endif -%}
 
 {% if type == 'heartbeat' -%}
@@ -63,10 +67,10 @@ variable "{{ id }}_timeframe" {
 variable "{{ id }}_threshold_{{ severity }}" {
   description = "{{ severity | capitalize }} threshold for {{ id }} detector"
   type        = number
-    {%- if (rule.threshold is defined and rule.threshold | int) %}
+    {%- if rule.threshold is number %}
   default     = {{ rule.threshold }}
     {%- endif %}
 }
 
-  {% endfor -%}
+{% endfor -%}
 {% endif -%}

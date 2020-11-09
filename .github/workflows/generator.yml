@@ -40,9 +40,14 @@ jobs:
     - name: Setup env
       run: |
         ./scripts/gen_module.sh ${TF_VAR_environment} module
-        echo -e "module \"generated\" {\nsource=\"../modules/${TF_VAR_environment}-module\"\n$(cat common/modules-args.txt)\n}" >> test/generated.tf
-        cat test/generated.tf
+        for config in scripts/templates/threshold/*.yaml; do 
+          j2 <(cat scripts/templates/detector_vars.tf.j2 scripts/templates/detector_res.tf.j2) $config >> modules/${TF_VAR_environment}-module/gen.tf
+        done
+        echo -e "module \"generated\" {\nsource=\"../modules/${TF_VAR_environment}-module\"\n$(cat common/modules-args.txt)\n}" >> test/gen.tf
     
+    - name: Terraform fmt
+      run: terraform fmt -write=false -diff -check modules/${TF_VAR_environment}-module
+
     - name: Terraform init
       run: terraform init test
 
