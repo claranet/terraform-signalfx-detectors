@@ -25,12 +25,12 @@
 ## :loudspeaker: Goal
 
 This project aims to speed up alerting deployment and apply infrastructure as code 
-process to monitoring. It could also be a place to collect, share and improve 
-alerting rules on popular tools and environments through SignalFx and Terraform.
+process to your monitoring. It could also be a place to collect, share and improve 
+alerting rules on popular services and environments through SignalFx and Terraform.
 
 __Note__: These templates implementation is opinionated and enforce best practices 
-which ensure homogeneity but will also restrict the usage and capabilities even if 
-it tries to provide as much flexibility as possible.
+which ensure homogeneity but it will also restrict the usage and capabilities even 
+if it tries to provide as much flexibility as possible.
 
 ## :bell: Modules
 
@@ -41,7 +41,7 @@ Each module is fully independent and it is dedicated to monitor one service
 thanks to the metrics and information it provides. It contains:
 
 - Terraform source code to be use as module
-- Readme file containing instructions and notes specific to work with the module.
+- Readme file containing instructions and specific notes to work with the module.
 - Source, dependencies and sample configuration for metrics collection.
 
 ## :running: Usage
@@ -56,7 +56,7 @@ at deployment thanks to Terraform.
 
 ## :handshake: Contributing
 
-Contributions from community are most welcome!
+Contributions from the community are most welcome!
 
 There are many ways to contribute: writing code, add or improve detectors, 
 documentation, reporting issues, discussing better error tracking...
