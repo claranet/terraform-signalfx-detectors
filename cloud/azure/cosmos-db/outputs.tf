@@ -18,3 +18,8 @@ output "scaling" {
   value       = signalfx_detector.scaling
 }
 
+output "used_rus_capacity" {
+  description = "Detector resource for used_rus_capacity"
+  value       = signalfx_detector.used_rus_capacity
+}
+
