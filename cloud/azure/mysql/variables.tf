@@ -275,3 +275,53 @@ variable "replication_lag_threshold_major" {
   type        = number
   default     = 100
 }
+
+# failed_connections detector
+
+variable "failed_connections_notifications" {
+  description = "Notification recipients list per severity overridden for failed_connections detector"
+  type        = map(list(string))
+  default     = {}
+}
+
+variable "failed_connections_aggregation_function" {
+  description = "Aggregation function and group by for failed_connections detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ""
+}
+
+variable "failed_connections_transformation_function" {
+  description = "Transformation function for failed_connections detector (i.e. \".mean(over='5m')\")"
+  type        = string
+  default     = ""
+}
+
+variable "failed_connections_disabled" {
+  description = "Disable all alerting rules for failed_connections detector"
+  type        = bool
+  default     = null
+}
+
+variable "failed_connections_disabled_major" {
+  description = "Disable major alerting rule for failed_connections detector"
+  type        = bool
+  default     = null
+}
+
+variable "failed_connections_disabled_critical" {
+  description = "Disable critical alerting rule for failed_connections detector"
+  type        = bool
+  default     = null
+}
+
+variable "failed_connections_threshold_major" {
+  description = "Major threshold for failed_connections detector"
+  type        = number
+  default     = 10
+}
+
+variable "failed_connections_threshold_critical" {
+  description = "Critical threshold for failed_connections detector"
+  type        = number
+  default     = 20
+}
