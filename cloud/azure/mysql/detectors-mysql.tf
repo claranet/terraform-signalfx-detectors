@@ -179,8 +179,7 @@ resource "signalfx_detector" "failed_connections" {
 
   program_text = <<-EOF
     base_filtering = filter('primary_aggregation_type', 'true')
-    signal_label = data('connections_failed', filter=base_filtering and ${module.filter-tags.filter_custom})${var.failed_connections_aggregation_function}${var.failed_connections_transformation_function}
-    signal_label = None.publish('signal_label')
+    signal = data('connections_failed', filter=base_filtering and ${module.filter-tags.filter_custom})${var.failed_connections_aggregation_function}${var.failed_connections_transformation_function}.publish('signal')
     detect(when(signal > ${var.failed_connections_threshold_major})).publish('MAJOR')
     detect(when(signal > ${var.failed_connections_threshold_critical})).publish('CRIT')
 EOF
