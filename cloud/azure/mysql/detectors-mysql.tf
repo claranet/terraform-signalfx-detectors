@@ -178,21 +178,11 @@ resource "signalfx_detector" "failed_connections" {
   name = format("%s %s", local.detector_name_prefix, "Mysql failed connections")
 
   program_text = <<-EOF
-    base_filtering = filter('primary_aggregation_type', 'true')
-    signal = data('connections_failed', filter=base_filtering and ${module.filter-tags.filter_custom})${var.failed_connections_aggregation_function}${var.failed_connections_transformation_function}.publish('signal')
-    detect(when(signal > ${var.failed_connections_threshold_major})).publish('MAJOR')
+    base_filter = filter('resource_type', 'Microsoft.DBforMySQL/servers') and filter('primary_aggregation_type', 'true')
+    signal = data('connections_failed', filter=base_filter and ${module.filter-tags.filter_custom})${var.failed_connections_aggregation_function}${var.failed_connections_transformation_function}.publish('signal')
     detect(when(signal > ${var.failed_connections_threshold_critical})).publish('CRIT')
+    detect(when(signal > ${var.failed_connections_threshold_major})).publish('MAJOR')
 EOF
-
-  rule {
-    description           = "is too high > ${var.failed_connections_threshold_major}"
-    severity              = "Major"
-    detect_label          = "MAJOR"
-    disabled              = coalesce(var.failed_connections_disabled_major, var.failed_connections_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.failed_connections_notifications, "major", []), var.notifications.major)
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
-  }
 
   rule {
     description           = "is too high > ${var.failed_connections_threshold_critical}"
@@ -200,6 +190,16 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.failed_connections_disabled_critical, var.failed_connections_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.failed_connections_notifications, "critical", []), var.notifications.critical)
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
+  }
+
+  rule {
+    description           = "is too high > ${var.failed_connections_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.failed_connections_disabled_major, var.failed_connections_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.failed_connections_notifications, "major", []), var.notifications.major)
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
