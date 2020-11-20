@@ -1,0 +1,25 @@
+documentations:
+  - name: Smart Agent monitor
+    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-haproxy.html'
+  - name: HAproxy stats page
+    url: 'https://www.haproxy.com/blog/exploring-the-haproxy-stats-page/'
+  - name: Collectd plugin
+    url: 'https://collectd.org/wiki/index.php/Haproxy'
+  - name: Collection script
+    url: 'https://github.com/signalfx/collectd-haproxy'
+
+source_doc: |
+  Check the [integration 
+  documentation](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.haproxy.html) 
+  in addition to the monitor one which it uses.
+
+  ### Monitors
+
+  You have to enable the following `extraMetrics` in your monitor configuration:
+
+  * `haproxy_session_limit`
+  * `haproxy_session_total`
+  * `haproxy_status`
+  * `haproxy_request_total`
+
+  The first one is available only from agent version `v5.3.2`.

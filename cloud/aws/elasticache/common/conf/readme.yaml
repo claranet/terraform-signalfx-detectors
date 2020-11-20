@@ -1,0 +1,5 @@
+documentations:
+  - name: CloudWatch host-level metrics for Memcached
+    url: 'https://docs.aws.amazon.com/AmazonElastiCache/latest/mem-ug/CacheMetrics.HostLevel.html'
+  - name: Cloudwatch host-level metrics for Redis
+    url: 'https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/CacheMetrics.HostLevel.html'

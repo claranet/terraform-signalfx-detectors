@@ -1,0 +1,25 @@
+documentations:
+  - name: Smart Agent monitor host-metadata
+    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/host-metadata.html'
+  - name: Smart Agent monitor cpu
+    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/cpu.html'
+  - name: Smart Agent monitor load
+    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/load.html'
+  - name: Smart Agent monitor filesystems
+    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/filesystems.html'
+  - name: Smart Agent monitor memory
+    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/memory.html'
+
+source_doc: |
+  There is no one official integration for system generic metrics but instead multiple monitors to fetch 
+  all useful metrics from `cpu`, `load`, `filesystems` and `memory`.
+
+  ### Monitors
+
+  You have to enable the `inodes` group in `extraGroups` parameter of the `filesystems` monitor configuration (only 
+  available for `Linux`) to work with the inodes detector.
+
+  It is highly recommended to define `perCPU: true` in the `load` monitor configuration to get the __ratio__ of load 
+  per CPU/core which makes more sens for the generic load detector.
+  For `Helm` deployment on `Kubernetes`, you can use `loadPerCPU` option available from `1.2.0` version.
+

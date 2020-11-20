@@ -1,0 +1,23 @@
+documentations:
+  - name: Smart Agent monitor
+    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/supervisor.html'
+  - name: Supervisor state definition
+    url: 'http://supervisord.org/subprocess.html#process-states'
+
+source_doc: |
+  There is no SignalFx official integration for `supervisor` but there is still a 
+  [monitor](https://docs.signalfx.com/en/latest/integrations/agent/monitors/supervisor.html) to use.
+
+  ### Monitors
+  
+  This monitor is only available for agent `>= 5.2.0`.
+
+  ### Supervisor
+
+  This monitor fetch metrics from [Supervisor](http://supervisord.org/) HTTP server which have to be enabled 
+  in [its configuration](http://supervisord.org/configuration.html#inet-http-server-section-settings):
+
+  ```ini
+  [inet_http_server]
+  port=localhost:9001
+  ```

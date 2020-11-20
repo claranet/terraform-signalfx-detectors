@@ -1,0 +1,18 @@
+documentations:
+  - name: Smart Agent monitor
+    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-solr.html'
+  - name: Collection script
+    url: 'https://github.com/signalfx/collectd-solr'
+
+source_doc: |
+  Check the [integration 
+  documentation](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.solr.html) 
+  in addition to the monitor one which it uses.
+
+  ### Monitors
+
+  The `collectd/zookeeper` monitor requires to enable the following `extraMetrics`:
+
+  * `counter.solr.zookeeper_errors`
+
+  It can collect metrics from Solr only when a Solr instance is running in SolrCloud mode.

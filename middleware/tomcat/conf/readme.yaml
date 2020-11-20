@@ -1,0 +1,36 @@
+documentations:
+  - name: Smart Agent monitor
+    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-tomcat.html'
+  - name: Collectd plugin
+    url: 'https://collectd.org/wiki/index.php/Plugin:GenericJMX'
+
+source_doc: |
+  There is no SignalFx official integration for `tomcat` but there is still a 
+  [monitor](https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-genericjmx.html) to use.
+
+  ### Agent
+
+  The agent requires to [Java 
+  plugin](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.java.html) 
+  for Collectd which is already installed in the [SignalFx Smart 
+  Agent](https://github.com/signalfx/signalfx-agent/).
+
+  ### Monitors
+  
+  This monitor is only available from agent version `>= 5.5.5` but you can use `genericjmx` monitor for 
+  previous versions with defining the [same 
+  mBeans](https://github.com/signalfx/signalfx-agent/blob/master/pkg/monitors/collectd/tomcat/mbeans.go) in 
+  `mBeanDefinitions` parameter.
+
+  ### JMX
+
+  This module uses the common Java runtime metrics for every JVM based applications.
+
+  You must [enable JMX Remote](https://tomcat.apache.org/tomcat-7.0-doc/monitoring.html#Enabling_JMX_Remote) 
+  on your `tomcat` server(s).
+
+notes: |
+  You can collect more metrics than used in this module defining `mBeanDefinitions` parameter on your monitor 
+  configuration for metrology or troubleshooting purposes.
+
+  You can use `genericjmx` module as complement to this one to monitor generic JMX metrics.

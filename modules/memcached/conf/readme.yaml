@@ -1,0 +1,28 @@
+documentations:
+  - name: Smart Agent monitor
+    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-memcached.html'
+  - name: Collectd plugin
+    url: 'https://collectd.org/wiki/index.php/Plugin:memcached'
+
+source_doc: |
+  Check the [integration 
+  documentation](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.memcached.html) 
+  in addition to the monitor one which it uses.
+
+  ### Monitors
+
+  The `collectd/memcached` monitor requires to enable the following `extraMetrics`:
+
+  * `total_events.listen_disabled`
+
+  ### Examples
+
+  ```yaml
+    - type: collectd/memcached
+      host: 127.0.0.1
+      port: &memcachedPort 11211
+      extraDimensions:
+        memcached_port: *memcachedPort
+      extraMetrics:
+        - total_events.listen_disabled
+  ```

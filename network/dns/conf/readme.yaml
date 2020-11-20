@@ -1,0 +1,11 @@
+documentations:
+  - name: Smart Agent monitor
+    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/telegraf-dns.html'
+
+source_doc: |
+  There is no SignalFx official integration for `dns` but there is still a 
+  [monitor](https://docs.signalfx.com/en/latest/integrations/agent/monitors/telegraf-dns.html) to use.
+
+  ### Monitors
+
+  This monitor is only available from agent version `>= 5.2.1`.

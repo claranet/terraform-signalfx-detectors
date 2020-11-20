@@ -1,0 +1,9 @@
+documentations:
+  - name: Azure Monitor metrics
+    url: 'https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported'
+
+notes: |
+  Not like the VirtualMachines module, we decided to not monitor CPU on ScaleSet because it's a non sense on something which should autoscale automatically.
+
+  For this first version we will only check if the ScaleSet is running with at least one node (Percent CPU heartbeat).
+  Next step will be to use signalFx outlier to, for example, check if all VMs in the ScaleSet use the same percent of CPU.
