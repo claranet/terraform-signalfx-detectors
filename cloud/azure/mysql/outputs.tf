@@ -27,8 +27,3 @@ output "replication_lag" {
   description = "Detector resource for replication_lag"
   value       = signalfx_detector.replication_lag
 }
-
-output "failed_connections" {
-  description = "Detector resource for failed_connections"
-  value       = signalfx_detector.failed_connections
-}
