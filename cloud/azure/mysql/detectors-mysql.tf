@@ -175,7 +175,7 @@ resource "signalfx_detector" "replication_lag" {
 }
 
 resource "signalfx_detector" "failed_connections" {
-  name = format("%s %s", local.detector_name_prefix, "Mysql failed connections")
+  name = format("%s %s", local.detector_name_prefix, "Azure MySQL failed connections")
 
   program_text = <<-EOF
     base_filter = filter('resource_type', 'Microsoft.DBforMySQL/servers') and filter('primary_aggregation_type', 'true')
