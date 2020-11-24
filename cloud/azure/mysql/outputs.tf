@@ -3,6 +3,11 @@ output "cpu_usage" {
   value       = signalfx_detector.cpu_usage
 }
 
+output "failed_connections" {
+  description = "Detector resource for failed_connections"
+  value       = signalfx_detector.failed_connections
+}
+
 output "free_storage" {
   description = "Detector resource for free_storage"
   value       = signalfx_detector.free_storage
