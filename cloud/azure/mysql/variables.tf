@@ -287,7 +287,7 @@ variable "failed_connections_notifications" {
 variable "failed_connections_aggregation_function" {
   description = "Aggregation function and group by for failed_connections detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
 variable "failed_connections_transformation_function" {
