@@ -61,7 +61,7 @@ resource "signalfx_detector" "session_limit" {
   name = format("%s %s", local.detector_name_prefix, "Haproxy session")
 
   program_text = <<-EOF
-    A = data('haproxy_session_current', filter=${module.filter-tags.filter_custom})${var.session_limit_aggregation_function}${var.session_limit_transformation_function}
+    A = data('haproxy_session_current', filter=filter('type', '0', '2') and ${module.filter-tags.filter_custom})${var.session_limit_aggregation_function}${var.session_limit_transformation_function}
     B = data('haproxy_session_limit', filter=${module.filter-tags.filter_custom})${var.session_limit_aggregation_function}${var.session_limit_transformation_function}
     signal = (A/B).scale(100).publish('signal')
     detect(when(signal > ${var.session_limit_threshold_critical})).publish('CRIT')
