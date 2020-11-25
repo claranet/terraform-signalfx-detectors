@@ -3,7 +3,7 @@ locals {
     " and ",
     formatlist(
       "(filter('%s'))",
-      [for tag in var.filter_custom_includes : replace(replace(tag, ":", "', '"), " ", "")]
+      [for tag in var.filter_custom_includes : replace(join("', '", regex("^([^:]+):(.*)", tag)), " ", "")]
     )
   )
 
@@ -11,7 +11,7 @@ locals {
     " and ",
     formatlist(
       "(not filter('%s'))",
-      [for tag in var.filter_custom_excludes : replace(replace(tag, ":", "', '"), " ", "")]
+      [for tag in var.filter_custom_excludes : replace(join("', '", regex("^([^:]+):(.*)", tag)), " ", "")]
     )
   )
 }
