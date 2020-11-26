@@ -1,11 +1,108 @@
-# MIDDLEWARE Varnish SignalFx detectors
+# VARNISH SignalFx detectors
 
-## Prerequisites
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+:link: **Contents**
 
-This monitor uses the **varnishstat** command. The **signalfx-agent** user must be
-able to use this command.
+- [How to use this module?](#how-to-use-this-module)
+- [What are the available detectors in this module?](#what-are-the-available-detectors-in-this-module)
+- [How to collect required metrics?](#how-to-collect-required-metrics)
+  - [Monitors](#monitors)
+  - [Varnish](#varnish)
+- [Related documentation](#related-documentation)
 
-### Varnish 4 specific part
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+## How to use this module?
+
+This directory defines a [Terraform](https://www.terraform.io/) 
+[module](https://www.terraform.io/docs/modules/usage.html) you can use in your
+existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/Getting-started#stack) by adding a 
+`module` configuration and setting its `source` parameter to URL of this folder:
+
+```hcl
+module "signalfx-detectors-middleware-varnish" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//middleware/varnish?ref={revision}"
+
+  environment   = var.environment
+  notifications = local.notifications
+}
+```
+
+Note the following parameters:
+
+* `source`: Use this parameter to specify the URL of the module. The double slash (`//`) is intentional  and required. 
+  Terraform uses it to specify subfolders within a Git repo (see [module
+  sources](https://www.terraform.io/docs/modules/sources.html)). The `ref` parameter specifies a specific Git tag in
+  this repository. It is recommended to use the latest "pinned" version in place of `{revision}`. Avoid using a branch 
+  like `master` except for testing purpose. Note that every modules in this repository are available on the Terraform 
+  [registry](https://registry.terraform.io/modules/claranet/detectors/signalfx) and we recommend using it as source 
+  instead of `git` which is more flexible but less future-proof.
+
+* `environment`: Use this parameter to specify the 
+  [environment](https://github.com/claranet/terraform-signalfx-detectors/wiki/Getting-started#environment) used by this 
+  instance of the module.
+  Its value will be added to the `prefixes` list at the start of the [detector 
+  name](https://github.com/claranet/terraform-signalfx-detectors/wiki/Templating#example).
+  In general, it will also be used in `filter-tags` sub-module to apply a
+  [filtering](https://github.com/claranet/terraform-signalfx-detectors/wiki/Guidance#filtering) based on our default 
+  [tagging convention](https://github.com/claranet/terraform-signalfx-detectors/wiki/Tagging-convention) by default.
+
+* `notifications`: Use this parameter to define where alerts should be sent depending on their severity. It consists 
+  of a Terraform [object](https://www.terraform.io/docs/configuration/types.html#object-) where each key represents an 
+  available [detector rule severity](https://docs.signalfx.com/en/latest/detect-alert/set-up-detectors.html#severity) 
+  and its value is a list of recipients. Every recipients must respect the [detector notification 
+  format](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector#notification-format).
+  Check the [notification binding](https://github.com/claranet/terraform-signalfx-detectors/wiki/Notifications-binding) 
+  documentation to understand the recommended role of each severity.
+
+There are other Terraform [variables](https://www.terraform.io/docs/configuration/variables.html) in 
+[variables.tf](variables.tf) so check their description to customize the detectors behavior to fit your needs. Most of them are 
+common [variables](https://github.com/claranet/terraform-signalfx-detectors/wiki/Variables).
+The [guidance](https://github.com/claranet/terraform-signalfx-detectors/wiki/Guidance) documentation will help you to use 
+common mechanims provided by the modules like [multi 
+instances](https://github.com/claranet/terraform-signalfx-detectors/wiki/Guidance#Multiple-instances).
+
+Feel free to explore the [wiki](https://github.com/claranet/terraform-signalfx-detectors/wiki) for more information about 
+general usage of this repository.
+
+## What are the available detectors in this module?
+
+This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
+
+* Varnish heartbeat
+* Varnish backend Failed
+* Varnish threads number
+* Varnish session dropped
+* Varnish hit rate
+* Varnish memory usage
+
+## How to collect required metrics?
+
+This module uses metrics available from 
+[monitors](https://docs.signalfx.com/en/latest/integrations/agent/monitors/_monitor-config.html)
+available in the [SignalFx Smart 
+Agent](https://github.com/signalfx/signalfx-agent). Check the "Related documentation" section for more 
+information including the official documentation of this monitor.
+
+
+There is no SignalFx official integration for `varnish` but there is still a 
+[monitor](https://docs.signalfx.com/en/latest/integrations/agent/monitors/telegraf-varnish.html) to use.
+
+### Monitors
+
+This monitor is only available from agent version `>= 5.5.0` 
+
+It uses the `varnishstat` command which must be installed on the varnish host next to the `signalfx-agent`
+which must be able to run this command:
+
+```bash
+usermod -a -G varnish signalfx-agent
+```
+
+### Varnish
+
+For varnish 4 only:
 
 In the **/etc/default/varnishncsa** file:
 ```
@@ -19,43 +116,12 @@ systemctl start varnishncsa.service
 systemctl enable varnishncsa.service
 ```
 
-### All varnish versions
 
-Then, you need to add the **signalfx-agent** user to the varnish group :
 
-```bash
-usermod -a -G varnish signalfx-agent
-```
 
-## How to use this module
+## Related documentation
 
-```hcl
-module "signalfx-detectors-middleware-varnish" {
-  source      = "github.com/claranet/terraform-signalfx-detectors.git//middleware/varnish?ref={revision}"
-
-  environment = var.environment
-  notifications = var.notifications
-}
-```
-
-## Purpose
-
-Creates SignalFx detectors with the following checks:
-- varnish_backend_failed
-- varnish_threads_number
-- varnish_session_dropped
-- varnish_cache_hit_rate
-- varnish_memory_usage
-
-## Inputs
-
-| Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:-----:|
-| varnish_backend_failed_threshold_critical" | Varnish Backed Failed Detection threshold critical | number | 0 | yes |
-| varnish_backend_req_threshold_critical" | Varnish Backed Request Detection threshold critical | number | 1500 | yes |
-| varnish_session_dropped_threshold_critical | Varnish Session Dropped Detection threshold critical | number | 0 | yes |
-| varnish_cache_hit_rate_threshold_major | Varnish Cache Hit threshold major | number | 80 | yes |
-| varnish_cache_hit_rate_threshold_warning | Varnish Cache Hit threshold warning | number | 90 | yes |
-| varnish_threads_threshold_critical | Varnish Cache Hit threshold critical | number | 90 | yes |
-| varnish_memory_usage_threshold_warning | Varnish Memory Usage threshold warning | number | 80 | yes |
-| varnish_memory_usage_threshold_critical | Varnish Memory Usage threshold critical | number | 90 | yes |
+* [Terraform SignalFx provider](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs)
+* [Terraform SignalFx detector](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector)
+* [Smart Agent monitor](https://docs.signalfx.com/en/latest/integrations/agent/monitors/telegraf-varnish.html)
+* [Varnishstat command](https://varnish-cache.org/docs/trunk/reference/varnishstat.html)

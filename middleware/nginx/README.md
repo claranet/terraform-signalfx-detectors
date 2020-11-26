@@ -2,10 +2,16 @@
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+:link: **Contents**
+
+- [How to use this module?](#how-to-use-this-module)
+- [What are the available detectors in this module?](#what-are-the-available-detectors-in-this-module)
+- [How to collect required metrics?](#how-to-collect-required-metrics)
+- [Related documentation](#related-documentation)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## How do you use this module?
+## How to use this module?
 
 This directory defines a [Terraform](https://www.terraform.io/) 
 [module](https://www.terraform.io/docs/modules/usage.html) you can use in your
@@ -60,15 +66,19 @@ general usage of this repository.
 
 ## What are the available detectors in this module?
 
-This module creates the following SignalFx detectors which could contain one or mulitple alerting rules:
+This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* Nginx dropped connections
 * Nginx heartbeat
+* Nginx dropped connections
 
 ## How to collect required metrics?
 
-This module uses metrics collected from the [SignalFx Smart 
-Agent](https://github.com/signalfx/signalfx-agent).
+This module uses metrics available from 
+[monitors](https://docs.signalfx.com/en/latest/integrations/agent/monitors/_monitor-config.html)
+available in the [SignalFx Smart 
+Agent](https://github.com/signalfx/signalfx-agent). Check the "Related documentation" section for more 
+information including the official documentation of this monitor.
+
 
 
 
@@ -80,4 +90,3 @@ Agent](https://github.com/signalfx/signalfx-agent).
 * [Terraform SignalFx detector](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector)
 * [SignalFx agent monitor](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.nginx.html)
 * [Nginx status module](http://nginx.org/en/docs/http/ngx_http_status_module.html)
-
