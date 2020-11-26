@@ -1,6 +1,10 @@
 #!/bin/bash
 set -ue -o pipefail
 
+if ! [ -v CI_DOCTOC ]; then
+    CI_DOCTOC=0
+fi
+
 case $# in
     0)
         TARGET="*"
@@ -47,5 +51,8 @@ for i in $(find ${TARGET} -type f -not -path ".terraform/*" -name "detectors-*.t
     export tf="$(./scripts/stack/gen_module.sh {revision} ${dir})"
     export detectors="$(sed -n 's/^.*name.*=.*detector_name_prefix.*"\(.*\)")$/* \1/p' ${dir}/detectors-*.tf)"
     j2 --import-env= ./scripts/templates/readme.md.j2 ${dir}/conf/readme.yaml > ${dir}/README.md
+    if [ $CI_DOCTOC -eq 1 ]; then 
+        doctoc --github --title ':link: **Contents**' --maxlevel 3 ${dir}/README.md
+    fi
 done
 
