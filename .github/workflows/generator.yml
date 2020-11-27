@@ -6,14 +6,15 @@ on:
   push:
     paths:
     - 'scripts/templates/**'
-    - 'scripts/gen_module.sh'
+    - 'scripts/module/bootstrap.sh'
+    - 'scripts/stack/gen_module.sh'
     - '.github/workflows/generator.yml'
 
 jobs:
   test:
     runs-on: ubuntu-latest
     env:
-      TF_VAR_sfx_token: ${{ secrets.SFX_TOKEN }}
+      SFX_AUTH_TOKEN: ${{ secrets.SFX_TOKEN }}
       TF_VAR_pagerduty_integration_id: ${{ secrets.PAGERDUTY_INTEGRATION }}
       TF_VAR_environment: "ci-testing"
 
@@ -39,29 +40,31 @@ jobs:
 
     - name: Setup env
       run: |
-        ./scripts/gen_module.sh ${TF_VAR_environment} module
-        for config in scripts/templates/threshold/*.yaml; do 
-          j2 <(cat scripts/templates/detector_vars.tf.j2 scripts/templates/detector_res.tf.j2) $config >> modules/${TF_VAR_environment}-module/gen.tf
+        ./scripts/module/bootstrap.sh ${TF_VAR_environment} module
+        for config in scripts/templates/examples/*.yaml; do 
+          j2 <(cat scripts/templates/variables.tf.j2 scripts/templates/detector.tf.j2) $config >> modules/${TF_VAR_environment}-module/gen.tf
         done
-        echo -e "module \"generated\" {\nsource=\"../modules/${TF_VAR_environment}-module\"\n$(cat common/modules-args.txt)\n}" >> test/gen.tf
+        ./scripts/stack/bootstrap.sh
+        echo -e "module \"generated\" {\nsource=\"../modules/${TF_VAR_environment}-module\"\n$(cat common/modules-args.txt)\n}" >> stack/modules.tf
+        terraform fmt stack/modules.tf
     
     - name: Terraform fmt
       run: terraform fmt -write=false -diff -check modules/${TF_VAR_environment}-module
 
     - name: Terraform init
-      run: terraform init test
+      run: terraform init stack
 
     - name: Terraform validate
-      run: terraform validate test
+      run: terraform validate stack
 
     - name: Enable destroy
       run: echo ::set-output name=enabled::1
       id: destroy
 
     - name: Terraform Apply
-      run: echo yes | terraform apply -input=false -lock=false test
+      run: echo yes | terraform apply -input=false -lock=false stack
 
     - name: Terraform Destroy
       if: always() && steps.destroy.outputs.enabled == '1'
-      run: terraform destroy -input=false -lock=false -auto-approve test
+      run: terraform destroy -input=false -lock=false -auto-approve stack
 

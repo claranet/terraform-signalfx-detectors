@@ -14,29 +14,31 @@ COMMON_TF="common"
 function goto_root() {
     script_dir=$(dirname $0)
     if [[ "$script_dir" == "." ]]; then
-        cd ..
+        cd ../..
     else
-        cd "$(dirname $script_dir)"
+        cd "$(dirname $(dirname $script_dir))"
     fi
 }
 
 set -ue -o pipefail
 goto_root
+pwd
 
 if [[ -d "${MOD_PATH}" ]]; then
     echo "This module already exists, aborting."
     exit 2
 else
+    echo ${MOD_PATH}
     mkdir -p "${MOD_PATH}"
 fi
 
-for tf in common/*.tf; do 
+for tf in common/module/*.tf; do 
     echo "Create symlink for ${tf}"
     ln -s ../../${tf} ${MOD_PATH}/${tf//\//-}
 done
 
-echo "Generate variables from template"
-j2 ${TEMPLATE_PATH}/detector_vars.tf.j2 ${TEMPLATE_PATH}/heartbeat/simple.yaml > ${MOD_PATH}/variables.tf
-echo "Generate simple detector from template"
-j2 ${TEMPLATE_PATH}/detector_res.tf.j2 ${TEMPLATE_PATH}/heartbeat/simple.yaml > ${MOD_PATH}/detectors-${MOD_NAME##*-}.tf
+#echo "Generate variables from template"
+#j2 ${TEMPLATE_PATH}/detector_vars.tf.j2 ${TEMPLATE_PATH}/examples/heartbeat-simple.yaml > ${MOD_PATH}/variables.tf
+#echo "Generate simple detector from template"
+#j2 ${TEMPLATE_PATH}/detector_res.tf.j2 ${TEMPLATE_PATH}/examples/heartbeat-simple.yaml > ${MOD_PATH}/detectors-${MOD_NAME##*-}.tf
 

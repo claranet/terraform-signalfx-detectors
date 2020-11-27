@@ -16,7 +16,7 @@ esac
 
 ERRORS=0
 
-for i in $(find ${TARGET} -type f -not -path ".terraform/*" -not -path "test/*" -name "variables.tf"); do
+for i in $(find ${TARGET} -type f -not -path ".terraform/*" -not -path "stack/*" -name "variables.tf"); do
     dir=$(dirname $i)
     cd $dir
     # Ignore common locals for "terraform_unused_declarations"
