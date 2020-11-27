@@ -1,0 +1,34 @@
+documentations:
+  - name: Smart Agent monitor
+    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-redis.html'
+  - name: Collection script
+    url: 'https://github.com/signalfx/redis-collectd-plugin'
+
+source_doc: |
+  Check the [integration 
+  documentation](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.redis.html) 
+  in addition to the monitor one which it uses.
+
+  ### Monitors
+
+  The `collectd/redis` monitor requires to enable the following `extraMetrics`:
+
+  * `bytes.total_system_memory`
+  * `bytes.maxmemory`
+  * `gauge.db0_keys`
+
+  Some of them are available since agent version `v5.4.2` like the two first.
+
+  ### PostgreSQL
+
+  You have to configure your PostgreSQL database to provide a user to collect metrics.
+
+  And you also have to [enable statement tracking](https://www.postgresql.org/docs/9.3/pgstatstatements.html#AEN160631).
+  More information available on 
+  [postgresl](https://docs.signalfx.com/en/latest/integrations/agent/monitors/postgresql.html#metrics-about-queries) 
+  monitor documentation.
+
+notes: |
+  * The "keyspace full" detector uses number of keys from database index 0, 
+  it will not work for other databases (1-15 by default).
+  This detector is disabled by default because it makes sens only when redis is used as cache.

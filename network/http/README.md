@@ -1,101 +1,106 @@
-# Network/Http SignalFx detectors
+# HTTP SignalFx detectors
 
-This module creates some detectors to check web urls and optionally their associated tls certificates.
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+:link: **Contents**
 
-## How to use this module
+- [How to use this module?](#how-to-use-this-module)
+- [What are the available detectors in this module?](#what-are-the-available-detectors-in-this-module)
+- [How to collect required metrics?](#how-to-collect-required-metrics)
+  - [Monitors](#monitors)
+- [Notes](#notes)
+- [Related documentation](#related-documentation)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+## How to use this module?
+
+This directory defines a [Terraform](https://www.terraform.io/) 
+[module](https://www.terraform.io/docs/modules/usage.html) you can use in your
+existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/Getting-started#stack) by adding a 
+`module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-http" {
-  source        = "github.com/claranet/terraform-signalfx-detectors.git//network/http?ref={revision}"
+module "signalfx-detectors-network-http" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//network/http?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications
-
-  filter_custom_includes = ["env:${var.environment}"]
-
-  http_code_matched_lasting_duration = "5m"
-
 }
 ```
 
-## Purpose
+Note the following parameters:
 
-* HTTP Heartbeat
-* HTTP code matched
-* HTTP regex matched
+* `source`: Use this parameter to specify the URL of the module. The double slash (`//`) is intentional  and required. 
+  Terraform uses it to specify subfolders within a Git repo (see [module
+  sources](https://www.terraform.io/docs/modules/sources.html)). The `ref` parameter specifies a specific Git tag in
+  this repository. It is recommended to use the latest "pinned" version in place of `{revision}`. Avoid using a branch 
+  like `master` except for testing purpose. Note that every modules in this repository are available on the Terraform 
+  [registry](https://registry.terraform.io/modules/claranet/detectors/signalfx) and we recommend using it as source 
+  instead of `git` which is more flexible but less future-proof.
+
+* `environment`: Use this parameter to specify the 
+  [environment](https://github.com/claranet/terraform-signalfx-detectors/wiki/Getting-started#environment) used by this 
+  instance of the module.
+  Its value will be added to the `prefixes` list at the start of the [detector 
+  name](https://github.com/claranet/terraform-signalfx-detectors/wiki/Templating#example).
+  In general, it will also be used in `filter-tags` sub-module to apply a
+  [filtering](https://github.com/claranet/terraform-signalfx-detectors/wiki/Guidance#filtering) based on our default 
+  [tagging convention](https://github.com/claranet/terraform-signalfx-detectors/wiki/Tagging-convention) by default.
+
+* `notifications`: Use this parameter to define where alerts should be sent depending on their severity. It consists 
+  of a Terraform [object](https://www.terraform.io/docs/configuration/types.html#object-) where each key represents an 
+  available [detector rule severity](https://docs.signalfx.com/en/latest/detect-alert/set-up-detectors.html#severity) 
+  and its value is a list of recipients. Every recipients must respect the [detector notification 
+  format](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector#notification-format).
+  Check the [notification binding](https://github.com/claranet/terraform-signalfx-detectors/wiki/Notifications-binding) 
+  documentation to understand the recommended role of each severity.
+
+There are other Terraform [variables](https://www.terraform.io/docs/configuration/variables.html) in 
+[variables.tf](variables.tf) so check their description to customize the detectors behavior to fit your needs. Most of them are 
+common [variables](https://github.com/claranet/terraform-signalfx-detectors/wiki/Variables).
+The [guidance](https://github.com/claranet/terraform-signalfx-detectors/wiki/Guidance) documentation will help you to use 
+common mechanims provided by the modules like [multi 
+instances](https://github.com/claranet/terraform-signalfx-detectors/wiki/Guidance#Multiple-instances).
+
+Feel free to explore the [wiki](https://github.com/claranet/terraform-signalfx-detectors/wiki) for more information about 
+general usage of this repository.
+
+## What are the available detectors in this module?
+
+This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
+
+* HTTP heartbeat
+* HTTP code
+* HTTP regex expression
 * HTTP response time
 * HTTP content length
-* TLS certificate expiring in xx days
-* TLS certificate is invalid
+* TLS certificate expiry date
+* TLS certificate
 
-## Inputs
+## How to collect required metrics?
 
-| Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
-| certificate\_expiration\_date\_aggregation\_function | Aggregation function and group by for certificate\_expiration\_date detector (i.e. ".mean(by=['host'])") | `string` | `""` | no |
-| certificate\_expiration\_date\_disabled | Disable all alerting rules for certificate\_expiration\_date detector | `bool` | `null` | no |
-| certificate\_expiration\_date\_disabled\_critical | Disable critical alerting rule for certificate\_expiration\_date detector | `bool` | `null` | no |
-| certificate\_expiration\_date\_disabled\_major | Disable major alerting rule for certificate\_expiration\_date detector | `bool` | `null` | no |
-| certificate\_expiration\_date\_notifications | Notification recipients list per severity overridden for certificate\_expiration\_date detector | `map(list(string))` | `{}` | no |
-| certificate\_expiration\_date\_threshold\_critical | Critical threshold for certificate\_expiration\_date detector | `number` | `15` | no |
-| certificate\_expiration\_date\_threshold\_major | Major threshold for certificate\_expiration\_date detector | `number` | `30` | no |
-| certificate\_expiration\_date\_transformation\_function | Transformation function for certificate\_expiration\_date detector (i.e. ".mean(over='5m')") | `string` | `".max(over='5m')"` | no |
-| detectors\_disabled | Disable all detectors in this module | `bool` | `false` | no |
-| environment | Infrastructure environment | `string` | n/a | yes |
-| filter\_custom\_excludes | List of tags to exclude when custom filtering is used | `list` | `[]` | no |
-| filter\_custom\_includes | List of tags to include when custom filtering is used | `list` | `[]` | no |
-| heartbeat\_aggregation\_function | Aggregation function and group by for heartbeat detector (i.e. ".mean(by=['host'])") | `string` | `""` | no |
-| heartbeat\_disabled | Disable all alerting rules for heartbeat detector | `bool` | `null` | no |
-| heartbeat\_notifications | Notification recipients list per severity overridden for heartbeat detector | `map(list(string))` | `{}` | no |
-| heartbeat\_timeframe | Timeframe for heartbeat detector (i.e. "10m") | `string` | `"20m"` | no |
-| http\_code\_matched\_aggregation\_function | Aggregation function and group by for http\_code\_matched detector (i.e. ".mean(by=['host'])") | `string` | `""` | no |
-| http\_code\_matched\_at\_least\_percentage | Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0) | `number` | `0.9` | no |
-| http\_code\_matched\_disabled | Disable all alerting rules for http\_code\_matched detector | `bool` | `null` | no |
-| http\_code\_matched\_disabled\_critical | Disable critical alerting rule for http\_code\_matched detector | `bool` | `null` | no |
-| http\_code\_matched\_lasting\_duration\_seconds | Duration that indicates how long we wait before triggering the http\_code\_matched alert. Specified as s, m, h, d | `string` | `"60"` | no |
-| http\_code\_matched\_notifications | Notification recipients list per severity overridden for http\_code\_matched detector | `map(list(string))` | `{}` | no |
-| http\_code\_matched\_transformation\_function | Transformation function for http\_code\_matched detector (i.e. ".mean(over='5m')") | `string` | `".max(over='1m')"` | no |
-| http\_content\_length\_aggregation\_function | Aggregation function and group by for http\_content\_length detector (i.e. ".mean(by=['host'])") | `string` | `""` | no |
-| http\_content\_length\_disabled | Disable all alerting rules for http\_content\_length detector | `bool` | `null` | no |
-| http\_content\_length\_notifications | Notification recipients list per severity overridden for http\_content\_length detector | `map(list(string))` | `{}` | no |
-| http\_content\_length\_threshold\_major | Critical threshold for http\_content\_length detector | `number` | `10` | no |
-| http\_content\_length\_transformation\_function | Transformation function for http\_content\_length detector (i.e. ".mean(over='5m')") | `string` | `".max(over='15m')"` | no |
-| http\_regex\_matched\_aggregation\_function | Aggregation function and group by for http\_regex\_matched detector (i.e. ".mean(by=['host'])") | `string` | `""` | no |
-| http\_regex\_matched\_at\_least\_percentage | Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0) | `number` | `0.9` | no |
-| http\_regex\_matched\_disabled | Disable all alerting rules for http\_regex\_matched detector | `bool` | `null` | no |
-| http\_regex\_matched\_disabled\_critical | Disable critical alerting rule for http\_regex\_matched detector | `bool` | `null` | no |
-| http\_regex\_matched\_lasting\_duration\_seconds | Duration that indicates how long we wait before triggering the http\_regex\_matched alert. Specified as s, m, h, d | `string` | `"60"` | no |
-| http\_regex\_matched\_notifications | Notification recipients list per severity overridden for http\_regex\_matched detector | `map(list(string))` | `{}` | no |
-| http\_regex\_matched\_transformation\_function | Transformation function for http\_regex\_matched detector (i.e. ".mean(over='5m')") | `string` | `".max(over='5m')"` | no |
-| http\_response\_time\_aggregation\_function | Aggregation function and group by for http\_response\_time detector (i.e. ".mean(by=['host'])") | `string` | `""` | no |
-| http\_response\_time\_disabled | Disable all alerting rules for http\_response\_time detector | `bool` | `null` | no |
-| http\_response\_time\_disabled\_critical | Disable critical alerting rule for http\_response\_time detector | `bool` | `null` | no |
-| http\_response\_time\_disabled\_major | Disable major alerting rule for http\_response\_time detector | `bool` | `null` | no |
-| http\_response\_time\_notifications | Notification recipients list per severity overridden for http\_response\_time detector | `map(list(string))` | `{}` | no |
-| http\_response\_time\_threshold\_critical | Critical threshold for http\_response\_time detector | `number` | `2` | no |
-| http\_response\_time\_threshold\_major | Major threshold for http\_response\_time detector | `number` | `1` | no |
-| http\_response\_time\_transformation\_function | Transformation function for http\_response\_time detector (i.e. ".mean(over='5m')") | `string` | `".min(over='15m')"` | no |
-| invalid\_tls\_certificate\_aggregation\_function | Aggregation function and group by for invalid\_tls\_certificate detector (i.e. ".mean(by=['host'])") | `string` | `""` | no |
-| invalid\_tls\_certificate\_disabled | Disable all alerting rules for invalid\_tls\_certificate detector | `bool` | `null` | no |
-| invalid\_tls\_certificate\_disabled\_critical | Disable critical alerting rule for invalid\_tls\_certificate detector | `bool` | `null` | no |
-| invalid\_tls\_certificate\_notifications | Notification recipients list per severity overridden for invalid\_tls\_certificate detector | `map(list(string))` | `{}` | no |
-| invalid\_tls\_certificate\_transformation\_function | Transformation function for invalid\_tls\_certificate detector (i.e. ".mean(over='5m')") | `string` | `".max(over='5m')"` | no |
-| notifications | Default notification recipients list per severity | <pre>object({<br>    critical = list(string)<br>    major    = list(string)<br>    minor    = list(string)<br>    warning  = list(string)<br>    info     = list(string)<br>  })</pre> | n/a | yes |
-| prefixes | Prefixes list to prepend between brackets on every monitors names before environment | `list` | `[]` | no |
+This module uses metrics available from 
+[monitors](https://docs.signalfx.com/en/latest/integrations/agent/monitors/_monitor-config.html)
+available in the [SignalFx Smart 
+Agent](https://github.com/signalfx/signalfx-agent). Check the "Related documentation" section for more 
+information including the official documentation of this monitor.
 
-## Outputs
 
-| Name | Description |
-|------|-------------|
-| certificate\_expiration\_date | Detector resource for certificate\_expiration\_date |
-| heartbeat | Detector resource for heartbeat |
-| http\_code\_matched | Detector resource for http\_code\_matched |
-| http\_content\_length | Detector resource for http\_content\_length |
-| http\_regex\_matched | Detector resource for http\_regex\_matched |
-| http\_response\_time | Detector resource for http\_response\_time |
-| invalid\_tls\_certificate | Detector resource for invalid\_tls\_certificate |
+There is no SignalFx official integration for `http` but there is still a 
+[monitor](https://docs.signalfx.com/en/latest/integrations/agent/monitors/http.html) to use.
+
+### Monitors
+
+This monitor is only available from agent version `>= 5.2.0` but it has evolved since and we 
+recommend to use at least version `v5.5.6`.
+
+Check the examples in the official monitor documentation and the Notes section below.
+
 
 ## Notes
+
+This module creates some detectors to check web urls and optionally their associated tls certificates.
 
 * By default, `signalfx-agent` collection interval is `10s`. Depending of webservices 
 checked this could dangerous or useless to requet them as often so you can change 
@@ -140,3 +145,9 @@ deprecated `urls`) monitor option AND if the website supports and redirects `htt
 * The `http_content_length` based detector is disabled by default because not considered
 as generic purpose but `disabled` variables allow to change this.
 
+
+## Related documentation
+
+* [Terraform SignalFx provider](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs)
+* [Terraform SignalFx detector](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector)
+* [Smart Agent monitor](https://docs.signalfx.com/en/latest/integrations/agent/monitors/http.html)

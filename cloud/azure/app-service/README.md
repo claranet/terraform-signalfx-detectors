@@ -1,117 +1,93 @@
-# CLOUD AZURE APP-SERVICES SignalFx detectors
+# APP-SERVICE SignalFx detectors
 
-## How to use this module
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+:link: **Contents**
+
+- [How to use this module?](#how-to-use-this-module)
+- [What are the available detectors in this module?](#what-are-the-available-detectors-in-this-module)
+- [How to collect required metrics?](#how-to-collect-required-metrics)
+- [Related documentation](#related-documentation)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+## How to use this module?
+
+This directory defines a [Terraform](https://www.terraform.io/) 
+[module](https://www.terraform.io/docs/modules/usage.html) you can use in your
+existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/Getting-started#stack) by adding a 
+`module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-cloud-azure-app-services" {
-  source      = "github.com/claranet/terraform-signalfx-detectors.git//cloud/azure/app-services?ref={revision}"
+module "signalfx-detectors-cloud-azure-app-service" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//cloud/azure/app-service?ref={revision}"
 
-  environment = var.environment
-  notifications = var.notifications
+  environment   = var.environment
+  notifications = local.notifications
 }
-
 ```
 
-## Purpose
+Note the following parameters:
 
-Creates SignalFx detectors with the following checks:
+* `source`: Use this parameter to specify the URL of the module. The double slash (`//`) is intentional  and required. 
+  Terraform uses it to specify subfolders within a Git repo (see [module
+  sources](https://www.terraform.io/docs/modules/sources.html)). The `ref` parameter specifies a specific Git tag in
+  this repository. It is recommended to use the latest "pinned" version in place of `{revision}`. Avoid using a branch 
+  like `master` except for testing purpose. Note that every modules in this repository are available on the Terraform 
+  [registry](https://registry.terraform.io/modules/claranet/detectors/signalfx) and we recommend using it as source 
+  instead of `git` which is more flexible but less future-proof.
 
-- App Services HTTP 4xx errors too high
-- App Services HTTP 5xx errors too high
-- App Services HTTP successful responses too low
-- App Services is down
-- App Services memory usage
-- App Services response time too high
+* `environment`: Use this parameter to specify the 
+  [environment](https://github.com/claranet/terraform-signalfx-detectors/wiki/Getting-started#environment) used by this 
+  instance of the module.
+  Its value will be added to the `prefixes` list at the start of the [detector 
+  name](https://github.com/claranet/terraform-signalfx-detectors/wiki/Templating#example).
+  In general, it will also be used in `filter-tags` sub-module to apply a
+  [filtering](https://github.com/claranet/terraform-signalfx-detectors/wiki/Guidance#filtering) based on our default 
+  [tagging convention](https://github.com/claranet/terraform-signalfx-detectors/wiki/Tagging-convention) by default.
 
-## Inputs
+* `notifications`: Use this parameter to define where alerts should be sent depending on their severity. It consists 
+  of a Terraform [object](https://www.terraform.io/docs/configuration/types.html#object-) where each key represents an 
+  available [detector rule severity](https://docs.signalfx.com/en/latest/detect-alert/set-up-detectors.html#severity) 
+  and its value is a list of recipients. Every recipients must respect the [detector notification 
+  format](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector#notification-format).
+  Check the [notification binding](https://github.com/claranet/terraform-signalfx-detectors/wiki/Notifications-binding) 
+  documentation to understand the recommended role of each severity.
 
-| Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
-| detectors\_disabled | Disable all detectors in this module | `bool` | `false` | no |
-| environment | Infrastructure environment | `string` | n/a | yes |
-| filter\_custom\_excludes | List of tags to exclude when custom filtering is used | `list` | `[]` | no |
-| filter\_custom\_includes | List of tags to include when custom filtering is used | `list` | `[]` | no |
-| heartbeat\_disabled | Disable all alerting rules for heartbeat detector | `bool` | `null` | no |
-| heartbeat\_notifications | Notification recipients list for every alerting rules of heartbeat detector | `list` | `[]` | no |
-| heartbeat\_timeframe | Timeframe for system not reporting detector (i.e. "10m") | `string` | `"20m"` | no |
-| http\_4xx\_errors\_count\_aggregation\_function | Aggregation function and group by for http\_4xx\_errors\_count detector (i.e. ".mean(by=['host'])") | `string` | `".mean(by=['Instance', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"` | no |
-| http\_4xx\_errors\_count\_aperiodic\_duration | Duration for the http\_4xx\_errors\_count block | `string` | `"10m"` | no |
-| http\_4xx\_errors\_count\_aperiodic\_percentage | Percentage for the http\_4xx\_errors\_count block | `number` | `0.9` | no |
-| http\_4xx\_errors\_count\_disabled | Disable all alerting rules for http\_4xx\_errors\_count detector | `bool` | `null` | no |
-| http\_4xx\_errors\_count\_disabled\_critical | Disable critical alerting rule for http\_4xx\_errors\_count detector | `bool` | `null` | no |
-| http\_4xx\_errors\_count\_disabled\_warning | Disable warning alerting rule for http\_4xx\_errors\_count detector | `bool` | `null` | no |
-| http\_4xx\_errors\_count\_notifications | Notification recipients list for every alerting rules of http\_4xx\_errors\_count detector | `list` | `[]` | no |
-| http\_4xx\_errors\_count\_notifications\_critical | Notification recipients list for critical alerting rule of http\_4xx\_errors\_count detector | `list` | `[]` | no |
-| http\_4xx\_errors\_count\_notifications\_warning | Notification recipients list for warning alerting rule of http\_4xx\_errors\_count detector | `list` | `[]` | no |
-| http\_4xx\_errors\_count\_threshold\_critical | Critical threshold for http\_4xx\_errors\_count detector | `number` | `90` | no |
-| http\_4xx\_errors\_count\_threshold\_warning | Warning threshold for http\_4xx\_errors\_count detector | `number` | `50` | no |
-| http\_4xx\_errors\_count\_transformation\_function | Transformation function for http\_4xx\_errors\_count detector (mean, min, max) | `string` | `"min"` | no |
-| http\_4xx\_errors\_count\_transformation\_window | Transformation window for http\_4xx\_errors\_count detector (i.e. 5m, 20m, 1h, 1d) | `string` | `"5m"` | no |
-| http\_5xx\_errors\_count\_aggregation\_function | Aggregation function and group by for http\_5xx\_errors\_count detector (i.e. ".mean(by=['host'])") | `string` | `".mean(by=['Instance', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"` | no |
-| http\_5xx\_errors\_count\_aperiodic\_duration | Duration for the http\_5xx\_errors\_count block | `string` | `"10m"` | no |
-| http\_5xx\_errors\_count\_aperiodic\_percentage | Percentage for the http\_5xx\_errors\_count block | `number` | `0.9` | no |
-| http\_5xx\_errors\_count\_disabled | Disable all alerting rules for http\_5xx\_errors\_count detector | `bool` | `null` | no |
-| http\_5xx\_errors\_count\_disabled\_critical | Disable critical alerting rule for http\_5xx\_errors\_count detector | `bool` | `null` | no |
-| http\_5xx\_errors\_count\_disabled\_warning | Disable warning alerting rule for http\_5xx\_errors\_count detector | `bool` | `null` | no |
-| http\_5xx\_errors\_count\_notifications | Notification recipients list for every alerting rules of http\_5xx\_errors\_count detector | `list` | `[]` | no |
-| http\_5xx\_errors\_count\_notifications\_critical | Notification recipients list for critical alerting rule of http\_5xx\_errors\_count detector | `list` | `[]` | no |
-| http\_5xx\_errors\_count\_notifications\_warning | Notification recipients list for warning alerting rule of http\_5xx\_errors\_count detector | `list` | `[]` | no |
-| http\_5xx\_errors\_count\_threshold\_critical | Critical threshold for http\_5xx\_errors\_count detector | `number` | `90` | no |
-| http\_5xx\_errors\_count\_threshold\_warning | Warning threshold for http\_5xx\_errors\_count detector | `number` | `50` | no |
-| http\_5xx\_errors\_count\_transformation\_function | Transformation function for http\_5xx\_errors\_count detector (mean, min, max) | `string` | `"min"` | no |
-| http\_5xx\_errors\_count\_transformation\_window | Transformation window for http\_5xx\_errors\_count detector (i.e. 5m, 20m, 1h, 1d) | `string` | `"5m"` | no |
-| http\_success\_status\_rate\_aggregation\_function | Aggregation function and group by for http\_success\_status\_rate detector (i.e. ".mean(by=['host'])") | `string` | `".mean(by=['Instance', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"` | no |
-| http\_success\_status\_rate\_aperiodic\_duration | Duration for the http\_success\_status\_rate block | `string` | `"10m"` | no |
-| http\_success\_status\_rate\_aperiodic\_percentage | Percentage for the http\_success\_status\_rate block | `number` | `0.9` | no |
-| http\_success\_status\_rate\_disabled | Disable all alerting rules for http\_success\_status\_rate detector | `bool` | `null` | no |
-| http\_success\_status\_rate\_disabled\_critical | Disable critical alerting rule for http\_success\_status\_rate detector | `bool` | `null` | no |
-| http\_success\_status\_rate\_disabled\_warning | Disable warning alerting rule for http\_success\_status\_rate detector | `bool` | `null` | no |
-| http\_success\_status\_rate\_notifications | Notification recipients list for every alerting rules of http\_success\_status\_rate detector | `list` | `[]` | no |
-| http\_success\_status\_rate\_notifications\_critical | Notification recipients list for critical alerting rule of http\_success\_status\_rate detector | `list` | `[]` | no |
-| http\_success\_status\_rate\_notifications\_warning | Notification recipients list for warning alerting rule of http\_success\_status\_rate detector | `list` | `[]` | no |
-| http\_success\_status\_rate\_threshold\_critical | Critical threshold for http\_success\_status\_rate detector | `number` | `10` | no |
-| http\_success\_status\_rate\_threshold\_warning | Warning threshold for http\_success\_status\_rate detector | `number` | `30` | no |
-| http\_success\_status\_rate\_transformation\_function | Transformation function for http\_success\_status\_rate detector (mean, min, max) | `string` | `"max"` | no |
-| http\_success\_status\_rate\_transformation\_window | Transformation window for http\_success\_status\_rate detector (i.e. 5m, 20m, 1h, 1d) | `string` | `"5m"` | no |
-| memory\_usage\_count\_aggregation\_function | Aggregation function and group by for memory\_usage\_count detector (i.e. ".mean(by=['host'])") | `string` | `".mean(by=['Instance', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"` | no |
-| memory\_usage\_count\_disabled | Disable all alerting rules for memory\_usage\_count detector | `bool` | `null` | no |
-| memory\_usage\_count\_disabled\_critical | Disable critical alerting rule for memory\_usage\_count detector | `bool` | `null` | no |
-| memory\_usage\_count\_disabled\_warning | Disable warning alerting rule for memory\_usage\_count detector | `bool` | `null` | no |
-| memory\_usage\_count\_notifications | Notification recipients list for every alerting rules of memory\_usage\_count detector | `list` | `[]` | no |
-| memory\_usage\_count\_notifications\_critical | Notification recipients list for critical alerting rule of memory\_usage\_count detector | `list` | `[]` | no |
-| memory\_usage\_count\_notifications\_warning | Notification recipients list for warning alerting rule of memory\_usage\_count detector | `list` | `[]` | no |
-| memory\_usage\_count\_threshold\_critical | Critical threshold for memory\_usage\_count detector | `number` | `1073741824` | no |
-| memory\_usage\_count\_threshold\_warning | Warning threshold for memory\_usage\_count detector | `number` | `536870912` | no |
-| memory\_usage\_count\_transformation\_function | Transformation function for memory\_usage\_count detector (mean, min, max) | `string` | `"min"` | no |
-| memory\_usage\_count\_transformation\_window | Transformation window for memory\_usage\_count detector (i.e. 5m, 20m, 1h, 1d) | `string` | `"5m"` | no |
-| notifications | Notification recipients list for every detectors | `list` | n/a | yes |
-| prefixes | Prefixes list to prepend between brackets on every monitors names before environment | `list` | `[]` | no |
-| response\_time\_aggregation\_function | Aggregation function and group by for response\_time detector (i.e. ".mean(by=['host'])") | `string` | `".mean(by=['Instance', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"` | no |
-| response\_time\_aperiodic\_duration | Duration for the response\_time block | `string` | `"10m"` | no |
-| response\_time\_aperiodic\_percentage | Percentage for the response\_time block | `number` | `0.9` | no |
-| response\_time\_disabled | Disable all alerting rules for response\_time detector | `bool` | `null` | no |
-| response\_time\_disabled\_critical | Disable critical alerting rule for response\_time detector | `bool` | `null` | no |
-| response\_time\_disabled\_warning | Disable warning alerting rule for response\_time detector | `bool` | `null` | no |
-| response\_time\_notifications | Notification recipients list for every alerting rules of response\_time detector | `list` | `[]` | no |
-| response\_time\_notifications\_critical | Notification recipients list for critical alerting rule of response\_time detector | `list` | `[]` | no |
-| response\_time\_notifications\_warning | Notification recipients list for warning alerting rule of response\_time detector | `list` | `[]` | no |
-| response\_time\_threshold\_critical | Critical threshold for response\_time detector | `number` | `10` | no |
-| response\_time\_threshold\_warning | Warning threshold for response\_time detector | `number` | `5` | no |
-| response\_time\_transformation\_function | Transformation function for response\_time detector (mean, min, max) | `string` | `"min"` | no |
-| response\_time\_transformation\_window | Transformation window for response\_time detector (i.e. 5m, 20m, 1h, 1d) | `string` | `"5m"` | no |
+There are other Terraform [variables](https://www.terraform.io/docs/configuration/variables.html) in 
+[variables.tf](variables.tf) so check their description to customize the detectors behavior to fit your needs. Most of them are 
+common [variables](https://github.com/claranet/terraform-signalfx-detectors/wiki/Variables).
+The [guidance](https://github.com/claranet/terraform-signalfx-detectors/wiki/Guidance) documentation will help you to use 
+common mechanims provided by the modules like [multi 
+instances](https://github.com/claranet/terraform-signalfx-detectors/wiki/Guidance#Multiple-instances).
 
-## Outputs
+Feel free to explore the [wiki](https://github.com/claranet/terraform-signalfx-detectors/wiki) for more information about 
+general usage of this repository.
 
-| Name | Description |
-|------|-------------|
-| heartbeat\_id | id for detector heartbeat |
-| http\_4xx\_errors\_count\_id | id for detector http\_4xx\_errors\_count |
-| http\_5xx\_errors\_count\_id | id for detector http\_5xx\_errors\_count |
-| http\_success\_status\_rate\_id | id for detector http\_success\_status\_rate |
-| memory\_usage\_count\_id | id for detector memory\_usage\_count |
-| response\_time\_id | id for detector response\_time |
+## What are the available detectors in this module?
+
+This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
+
+* Azure App Service heartbeat
+* Azure App Service response time
+* Azure App Service memory usage
+* Azure App Service 5xx error rate
+* Azure App Service 4xx error rate
+* Azure App Service successful response rate
+
+## How to collect required metrics?
+
+This module uses metrics available from 
+the [Azure integration](https://docs.signalfx.com/en/latest/integrations/azure-info.html) configurable 
+with this Terraform [module](https://github.com/claranet/terraform-signalfx-integrations/tree/master/cloud/azure).
+
+
+
+
+
 
 ## Related documentation
 
-[Official documentation](https://docs.signalfx.com/en/latest/integrations/azure-info.html)
-[Azure monitor documenation](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported)
+* [Terraform SignalFx provider](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs)
+* [Terraform SignalFx detector](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector)
+* [Azure Monitor metrics](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported)

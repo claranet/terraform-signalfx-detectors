@@ -1,0 +1,43 @@
+documentations:
+  - name: Smart Agent monitor
+    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-genericjmx.html'
+  - name: Collectd plugin
+    url: 'https://collectd.org/wiki/index.php/Plugin:GenericJMX'
+
+source_doc: |
+  There is no SignalFx official integration for `jmx` but there is still a 
+  [monitor](https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-genericjmx.html) to use.
+
+  ### Agent
+
+  The agent requires to [Java 
+  plugin](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.java.html) 
+  for Collectd which is already installed in the [SignalFx Smart 
+  Agent](https://github.com/signalfx/signalfx-agent/).
+
+  ### Monitors
+  
+  This module could be used on every `collectd/genericjmx` based monitors like `cassandra` or `tomcat`.
+  If your software does not have its own monitor so you can simply use `collectd/genericjmx`:
+
+  ```
+  -   type: collectd/genericjmx
+      host: 127.0.0.1
+      port: 5000
+  ```
+
+  ### JMX
+
+  This module uses the common Java runtime metrics for every JVM based applications.
+
+  You must [enable JMX Remote](https://docs.oracle.com/javadb/10.10.1.2/adminguide/radminjmxenabledisable.html) on your JAVA
+  application. Depending on your application you should add following parameters as example:
+
+  ```
+  -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=5000 -Dcom.sun.management.jmxremote.local.only=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=127.0.0.1
+  ```
+
+
+notes: |
+  You can collect more metrics than used in this module defining `mBeanDefinitions` parameter on your monitor 
+  configuration for metrology or troubleshooting purposes.

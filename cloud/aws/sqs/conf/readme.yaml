@@ -1,0 +1,3 @@
+documentations:
+  - name: CloudWatch metrics
+    url: 'https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-available-cloudwatch-metrics.html'

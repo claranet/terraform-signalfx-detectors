@@ -1,0 +1,78 @@
+documentations:
+  - name: Smart Agent monitor
+    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/prometheus-velero.html'
+
+source_doc: |
+  ### Agent
+
+  Here is the official [main 
+  documentation](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.kubernetes.html) for 
+  kubernetes including the `signalfx-agent` installation which must be installed as 
+  [daemonset](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) on your cluster.
+
+  ### Monitors
+
+  The detectors in this module are based on metrics reported by the following monitors:
+
+  * [prometheus/velero](https://docs.signalfx.com/en/latest/integrations/agent/monitors/prometheus-velero.html)
+
+  This monitor is only available for agent `>= 5.5.5` but it is basically a wrapper around [prometheus exporter 
+  monitor](https://docs.signalfx.com/en/latest/integrations/agent/monitors/prometheus-exporter.html) to filter important 
+  metrics while prometheus metrics are considered as custom metrics which could have an impact on SignalFx billing.
+
+  You must configure it for every velero deployments so this is almost sure you will need to use [service 
+  discovery](https://docs.signalfx.com/en/latest/integrations/agent/auto-discovery.html) to do it dynamically.
+
+  Detectors in this module will at least require these metrics:
+
+  * `velero_backup_partial_failure_total`
+  * `velero_backup_deletion_failure_total`
+  * `velero_backup_failure_total`
+  * `velero_volume_snapshot_failure_total`
+  * `velero_backup_success_total`
+
+  There are collected by default by `velero` monitor but you have to enable them if you use `prometheus-exporter`.
+
+  ### Velero
+
+  These detectors use prometheus metrics from [Velero](https://github.com/vmware-tanzu/velero).
+
+  They should be enabled by default but be sure to enable the following flag:
+
+  * `metrics.enabled=true`
+
+  ### Examples
+
+  Here is an example of SignalFx agent configuration with discovery rule:
+
+  ```yaml
+  monitors:
+    - type: prometheus/velero
+      discoveryRule: container_image =~ "velero" && port == 8085
+      port: 8085
+  ```
+
+notes: |
+  You can enable more metrics not used in this module for metrology or troubleshooting purposes:
+  ```yaml
+  monitors:
+    - type: prometheus/velero
+      discoveryRule: container_image =~ "velero" && port == 8085
+      port: 8085
+      sendAllMetrics: true
+      datapointsToExclude:
+        - metricNames:
+          - '*'
+          - '!velero_backup_partial_failure_total'
+          - '!velero_backup_deletion_failure_total'
+          - '!velero_backup_failure_total'
+          - '!velero_volume_snapshot_failure_total'
+          - '!velero_backup_success_total'
+          - '!velero_restore_success_total'
+  ```
+
+  It uses whitelist [filtering](https://docs.signalfx.com/en/latest/integrations/agent/filtering.html) 
+  to keep only interesting metrics. The last one is not required by this module.
+
+  You can replace `prometheus/velero` by `prometheus-exporter` to make this module works 
+  with agent version prior `5.5.5`.
