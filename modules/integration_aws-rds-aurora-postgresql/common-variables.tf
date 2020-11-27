@@ -1,1 +1,1 @@
-../../../../../common/module/variables.tf
+../../common/module/variables.tf

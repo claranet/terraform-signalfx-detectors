@@ -1,1 +1,1 @@
-../../../common/module/locals.tf
+../../common/module/locals.tf
