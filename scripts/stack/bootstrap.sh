@@ -1,7 +1,6 @@
 #!/bin/bash
 set -euo pipefail
 
-DST="stack"
+DST="examples/stack"
 
-rm -f ${DST}/*.tf
 cp -a common/stack/*.tf ${DST}/

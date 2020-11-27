@@ -70,16 +70,16 @@ information including the official documentation of this monitor.
 {% elif source_type == 'otel-collector' -%}
 [receivers](https://github.com/open-telemetry/opentelemetry-collector/blob/master/receiver/README.md) 
 available in the [OpenTelemetry Collector](https://github.com/open-telemetry/opentelemetry-collector-contrib).
-{% elif source_type == 'integration-aws' -%}
+{% elif source_type == 'integration_aws' -%}
 the [AWS integration](https://docs.signalfx.com/en/latest/integrations/amazon-web-services.html) configurable 
 with this Terraform [module](https://github.com/claranet/terraform-signalfx-integrations/tree/master/cloud/aws).
-{% elif source_type == 'integration-azure' -%}
+{% elif source_type == 'integration_azure' -%}
 the [Azure integration](https://docs.signalfx.com/en/latest/integrations/azure-info.html) configurable 
 with this Terraform [module](https://github.com/claranet/terraform-signalfx-integrations/tree/master/cloud/azure).
-{% elif source_type == 'integration-gcp' -%}
+{% elif source_type == 'integration_gcp' -%}
 the [GCP integration](https://docs.signalfx.com/en/latest/integrations/google-cloud-platform.html) configurable 
 with this Terraform [module](https://github.com/claranet/terraform-signalfx-integrations/tree/master/cloud/gcp).
-{% elif source_type == 'integration-newrelic' -%}
+{% elif source_type == 'integration_newrelic' -%}
 the [NewRelic integration](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.new.relic.html)
 {% else -%}
 [SignalFx 
