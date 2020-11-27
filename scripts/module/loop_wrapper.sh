@@ -15,7 +15,7 @@ MODULES=modules
 SCRIPT=$1
 shift
 
-for module in ${MODULES}/*; do
+for module in ${MODULES}/*/; do
     echo "Run script $SCRIPT for module $module"
     $SCRIPT ${module%"/"} $@
 done
