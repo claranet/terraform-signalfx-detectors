@@ -230,10 +230,8 @@ The CI is broken down into 3 workflow:
 
 * the main workflow is dedicated to detectors. It will test the terraform code: fmt, deployment, 
 compliance, generated outputs ..
-
 * the generator workflow will test the jinja generator used to create new detectors deploying 
 sample detectors.
-
 * the documentation workflow will take care of generate and update documentation files and their 
 table of contents.
 
