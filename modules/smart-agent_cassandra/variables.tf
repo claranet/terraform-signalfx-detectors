@@ -434,12 +434,6 @@ variable "storage_exceptions_disabled" {
   default     = null
 }
 
-variable "storage_exceptions_disabled_critical" {
-  description = "Disable critical alerting rule for storage_exceptions detector"
-  type        = bool
-  default     = null
-}
-
 variable "storage_exceptions_disabled_major" {
   description = "Disable major alerting rule for storage_exceptions detector"
   type        = bool

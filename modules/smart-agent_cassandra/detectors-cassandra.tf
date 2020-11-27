@@ -53,7 +53,7 @@ resource "signalfx_detector" "write_p99_latency" {
   name = format("%s %s", local.detector_name_prefix, "Cassandra write latency 99th percentile")
 
   program_text = <<-EOF
-    signal = data('gauge.cassandra.ClientRequest.Read.Latency.99thPercentile', filter=${module.filter-tags.filter_custom}).scale(0.001)${var.write_p99_latency_aggregation_function}${var.write_p99_latency_transformation_function}.publish('signal')
+    signal = data('gauge.cassandra.ClientRequest.Write.Latency.99thPercentile', filter=${module.filter-tags.filter_custom}).scale(0.001)${var.write_p99_latency_aggregation_function}${var.write_p99_latency_transformation_function}.publish('signal')
     detect(when(signal > ${var.write_p99_latency_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.write_p99_latency_threshold_major}) and when(signal <= ${var.write_p99_latency_threshold_critical})).publish('MAJOR')
 EOF
@@ -115,8 +115,8 @@ resource "signalfx_detector" "write_real_time_latency" {
   name = format("%s %s", local.detector_name_prefix, "Cassandra write latency real time")
 
   program_text = <<-EOF
-    A = data('counter.cassandra.ClientRequest.Write.TotalLatency.Count', filter=${module.filter-tags.filter_custom})${var.read_real_time_latency_aggregation_function}${var.read_real_time_latency_transformation_function}
-    B = data('counter.cassandra.ClientRequest.Write.Latency.Count', filter=${module.filter-tags.filter_custom})${var.read_real_time_latency_aggregation_function}${var.read_real_time_latency_transformation_function}
+    A = data('counter.cassandra.ClientRequest.Write.TotalLatency.Count', filter=${module.filter-tags.filter_custom})${var.write_real_time_latency_aggregation_function}${var.write_real_time_latency_transformation_function}
+    B = data('counter.cassandra.ClientRequest.Write.Latency.Count', filter=${module.filter-tags.filter_custom})${var.write_real_time_latency_aggregation_function}${var.write_real_time_latency_transformation_function}
     signal = (A/B).fill(0).scale(0.001).publish('signal')
     detect(when(signal > ${var.write_real_time_latency_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.write_real_time_latency_threshold_major}) and when(signal <= ${var.write_real_time_latency_threshold_critical})).publish('MAJOR')
@@ -177,7 +177,7 @@ resource "signalfx_detector" "caswrite_p99_latency" {
   name = format("%s %s", local.detector_name_prefix, "Cassandra transactional write latency 99th percentile")
 
   program_text = <<-EOF
-    signal = data('gauge.cassandra.ClientRequest.CASRead.Latency.99thPercentile', filter=${module.filter-tags.filter_custom}).scale(0.001)${var.caswrite_p99_latency_aggregation_function}${var.caswrite_p99_latency_transformation_function}.publish('signal')
+    signal = data('gauge.cassandra.ClientRequest.CASWrite.Latency.99thPercentile', filter=${module.filter-tags.filter_custom}).scale(0.001)${var.caswrite_p99_latency_aggregation_function}${var.caswrite_p99_latency_transformation_function}.publish('signal')
     detect(when(signal > ${var.caswrite_p99_latency_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.caswrite_p99_latency_threshold_major}) and when(signal <= ${var.caswrite_p99_latency_threshold_critical})).publish('MAJOR')
 EOF
@@ -239,8 +239,8 @@ resource "signalfx_detector" "caswrite_real_time_latency" {
   name = format("%s %s", local.detector_name_prefix, "Cassandra transactional write latency real time")
 
   program_text = <<-EOF
-    A = data('counter.cassandra.ClientRequest.CASWrite.TotalLatency.Count', filter=${module.filter-tags.filter_custom})${var.casread_real_time_latency_aggregation_function}${var.casread_real_time_latency_transformation_function}
-    B = data('counter.cassandra.ClientRequest.CASWrite.Latency.Count', filter=${module.filter-tags.filter_custom})${var.casread_real_time_latency_aggregation_function}${var.casread_real_time_latency_transformation_function}
+    A = data('counter.cassandra.ClientRequest.CASWrite.TotalLatency.Count', filter=${module.filter-tags.filter_custom})${var.caswrite_real_time_latency_aggregation_function}${var.caswrite_real_time_latency_transformation_function}
+    B = data('counter.cassandra.ClientRequest.CASWrite.Latency.Count', filter=${module.filter-tags.filter_custom})${var.caswrite_real_time_latency_aggregation_function}${var.caswrite_real_time_latency_transformation_function}
     signal = (A/B).fill(0).scale(0.001).publish('signal')
     detect(when(signal > ${var.caswrite_real_time_latency_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.caswrite_real_time_latency_threshold_major}) and when(signal <= ${var.caswrite_real_time_latency_threshold_critical})).publish('MAJOR')
