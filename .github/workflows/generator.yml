@@ -40,31 +40,27 @@ jobs:
 
     - name: Setup env
       run: |
-        ./scripts/module/bootstrap.sh ${TF_VAR_environment} module
+        ./scripts/module/bootstrap.sh internal_generator ${TF_VAR_environment}
         for config in scripts/templates/examples/*.yaml; do 
-          j2 <(cat scripts/templates/variables.tf.j2 scripts/templates/detector.tf.j2) $config >> modules/${TF_VAR_environment}-module/gen.tf
+          j2 <(cat scripts/templates/variables.tf.j2 scripts/templates/detector.tf.j2) $config >> modules/internal_generator-${TF_VAR_environment}/gen.tf
         done
         ./scripts/stack/bootstrap.sh
-        echo -e "module \"generated\" {\nsource=\"../modules/${TF_VAR_environment}-module\"\n$(cat common/modules-args.txt)\n}" >> stack/modules.tf
-        terraform fmt stack/modules.tf
-    
-    - name: Terraform fmt
-      run: terraform fmt -write=false -diff -check modules/${TF_VAR_environment}-module
+        echo -e "module \"generated\" {\nsource=\"../../modules/internal_generator-${TF_VAR_environment}\"\n$(cat common/modules-args.txt)\n}" >> examples/stack/detectors.tf
 
     - name: Terraform init
-      run: terraform init stack
+      run: terraform init examples/stack
 
     - name: Terraform validate
-      run: terraform validate stack
+      run: terraform validate examples/stack
 
     - name: Enable destroy
       run: echo ::set-output name=enabled::1
       id: destroy
 
     - name: Terraform Apply
-      run: echo yes | terraform apply -input=false -lock=false stack
+      run: echo yes | terraform apply -input=false -lock=false examples/stack
 
     - name: Terraform Destroy
       if: always() && steps.destroy.outputs.enabled == '1'
-      run: terraform destroy -input=false -lock=false -auto-approve stack
+      run: terraform destroy -input=false -lock=false -auto-approve examples/stack
 

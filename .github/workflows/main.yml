@@ -43,7 +43,7 @@ jobs:
         TF_REF=$(git rev-parse HEAD)
         #TF_REF=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; NF>1{print $NF}')
         ./scripts/stack/bootstrap.sh
-        ./scripts/stack/gen_module.sh "${TF_REF}" > stack/modules.tf
+        ./scripts/module/loop_wrapper.sh ./scripts/stack/gen_module.sh "${TF_REF}" > examples/stack/detectors.tf
     
     #- name: Terraform version
     #  run: terraform version
@@ -52,13 +52,13 @@ jobs:
       run: terraform fmt -recursive -write=false -diff -check .
 
     - name: Terraform init
-      run: terraform init stack
+      run: terraform init examples/stack
 
     - name: Terraform validate
-      run: terraform validate stack
+      run: terraform validate examples/stack
 
     #- name: Terraform Plan
-    #  run: terraform plan -input=false -lock=false -detailed-exitcode stack || if [ $? -ne 2 ]; then exit $?; fi
+    #  run: terraform plan -input=false -lock=false -detailed-exitcode examples/stack || if [ $? -ne 2 ]; then exit $?; fi
 
     - name: Enable destroy
       run: echo ::set-output name=enabled::1
@@ -66,11 +66,11 @@ jobs:
 
     - name: Terraform Apply
       #if: github.ref == 'refs/heads/master' && github.event_name == 'push' && ${{ always() }}
-      run: terraform apply -input=false -lock=false -auto-approve stack
+      run: terraform apply -input=false -lock=false -auto-approve examples/stack
 
     - name: Terraform Destroy
       if: always() && steps.destroy.outputs.enabled == '1'
-      run: terraform destroy -input=false -lock=false -auto-approve stack
+      run: terraform destroy -input=false -lock=false -auto-approve examples/stack
 
   compliance:
     runs-on: ubuntu-latest
@@ -85,7 +85,7 @@ jobs:
       run: apk add --no-cache expect
 
     - name: Run tflint
-      run: ./scripts/module/lint.sh
+      run: ./scripts/module/loop_wrapper.sh ./scripts/module/lint.sh
 
   outputs:
     runs-on: ubuntu-latest
@@ -97,7 +97,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Generate modules outputs
-      run: ./scripts/module/gen_outputs.sh
+      run: ./scripts/module/loop_wrapper.sh ./scripts/module/gen_outputs.sh
 
     - name: Check for changes
       run: git diff --exit-code
