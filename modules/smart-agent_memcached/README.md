@@ -21,8 +21,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-modules-memcached" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/memcached?ref={revision}"
+module "signalfx-detectors-smart-agent-memcached" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/smart-agent_memcached?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications

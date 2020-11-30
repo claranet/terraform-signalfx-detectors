@@ -23,8 +23,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-database-postgresql" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//database/postgresql?ref={revision}"
+module "signalfx-detectors-smart-agent-postgresql" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/smart-agent_postgresql?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications

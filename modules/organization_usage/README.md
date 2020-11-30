@@ -21,7 +21,7 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 
 ```hcl
 module "signalfx-detectors-organization-usage" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//organization/usage?ref={revision}"
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/organization_usage?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications

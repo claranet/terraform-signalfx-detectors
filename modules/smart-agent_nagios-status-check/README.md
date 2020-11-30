@@ -22,8 +22,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-system-nagios-status-check" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//system/nagios-status-check?ref={revision}"
+module "signalfx-detectors-smart-agent-nagios-status-check" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/smart-agent_nagios-status-check?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications

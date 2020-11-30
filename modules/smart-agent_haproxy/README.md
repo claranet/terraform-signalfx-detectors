@@ -20,8 +20,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-middleware-haproxy" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//middleware/haproxy?ref={revision}"
+module "signalfx-detectors-smart-agent-haproxy" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/smart-agent_haproxy?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications

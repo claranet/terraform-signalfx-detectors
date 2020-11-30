@@ -21,8 +21,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-database-elasticsearch" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//database/elasticsearch?ref={revision}"
+module "signalfx-detectors-smart-agent-elasticsearch" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/smart-agent_elasticsearch?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications

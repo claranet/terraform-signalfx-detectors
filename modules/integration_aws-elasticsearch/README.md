@@ -1,4 +1,4 @@
-# ELASTICSEARCH SignalFx detectors
+# AWS-ELASTICSEARCH SignalFx detectors
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -19,8 +19,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-cloud-aws-elasticsearch" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//cloud/aws/elasticsearch?ref={revision}"
+module "signalfx-detectors-integration-aws-elasticsearch" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/integration_aws-elasticsearch?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications

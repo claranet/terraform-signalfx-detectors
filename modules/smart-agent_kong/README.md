@@ -22,8 +22,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-middleware-kong" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//middleware/kong?ref={revision}"
+module "signalfx-detectors-smart-agent-kong" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/smart-agent_kong?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications

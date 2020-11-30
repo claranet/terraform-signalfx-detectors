@@ -23,8 +23,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-database-cassandra" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//database/cassandra?ref={revision}"
+module "signalfx-detectors-smart-agent-cassandra" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/smart-agent_cassandra?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications

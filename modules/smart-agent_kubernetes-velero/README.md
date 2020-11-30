@@ -1,4 +1,4 @@
-# VELERO SignalFx detectors
+# KUBERNETES-VELERO SignalFx detectors
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -24,8 +24,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-container-kubernetes-velero" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//container/kubernetes/velero?ref={revision}"
+module "signalfx-detectors-smart-agent-kubernetes-velero" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/smart-agent_kubernetes-velero?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications

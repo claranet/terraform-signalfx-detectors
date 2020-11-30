@@ -20,8 +20,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-middleware-php-fpm" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//middleware/php-fpm?ref={revision}"
+module "signalfx-detectors-smart-agent-php-fpm" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/smart-agent_php-fpm?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications

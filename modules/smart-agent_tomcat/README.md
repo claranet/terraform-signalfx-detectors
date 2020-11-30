@@ -23,8 +23,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-middleware-tomcat" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//middleware/tomcat?ref={revision}"
+module "signalfx-detectors-smart-agent-tomcat" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/smart-agent_tomcat?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications

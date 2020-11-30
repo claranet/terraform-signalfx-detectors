@@ -22,8 +22,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-database-redis" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//database/redis?ref={revision}"
+module "signalfx-detectors-smart-agent-redis" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/smart-agent_redis?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications

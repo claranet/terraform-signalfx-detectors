@@ -21,8 +21,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-database-zookeeper" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//database/zookeeper?ref={revision}"
+module "signalfx-detectors-smart-agent-zookeeper" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/smart-agent_zookeeper?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications

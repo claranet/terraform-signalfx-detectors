@@ -1,4 +1,4 @@
-# BIG-QUERY SignalFx detectors
+# GCP-BIGQUERY SignalFx detectors
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -19,8 +19,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-cloud-gcp-big-query" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//cloud/gcp/big-query?ref={revision}"
+module "signalfx-detectors-integration-gcp-bigquery" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/integration_gcp-bigquery?ref={revision}"
 
   environment    = var.environment
   notifications  = local.notifications

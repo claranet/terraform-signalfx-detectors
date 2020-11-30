@@ -20,8 +20,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-database-solr" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//database/solr?ref={revision}"
+module "signalfx-detectors-smart-agent-solr" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/smart-agent_solr?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications

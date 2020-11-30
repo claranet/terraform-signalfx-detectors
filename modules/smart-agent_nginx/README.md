@@ -19,8 +19,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-middleware-nginx" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//middleware/nginx?ref={revision}"
+module "signalfx-detectors-smart-agent-nginx" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/smart-agent_nginx?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications

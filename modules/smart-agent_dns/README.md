@@ -20,8 +20,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-network-dns" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//network/dns?ref={revision}"
+module "signalfx-detectors-smart-agent-dns" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/smart-agent_dns?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications

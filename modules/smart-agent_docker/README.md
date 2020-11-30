@@ -20,8 +20,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-container-docker" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//container/docker?ref={revision}"
+module "signalfx-detectors-smart-agent-docker" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/smart-agent_docker?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications

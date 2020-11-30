@@ -1,4 +1,4 @@
-# GENERIC SignalFx detectors
+# SYSTEM-COMMON SignalFx detectors
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -20,8 +20,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-system-generic" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//system/generic?ref={revision}"
+module "signalfx-detectors-smart-agent-system-common" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/smart-agent_system-common?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications
