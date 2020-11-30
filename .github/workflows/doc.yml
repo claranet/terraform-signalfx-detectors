@@ -4,9 +4,9 @@ name: Documentation
 
 on:
   push:
-    paths:
-    - '**.md'
-    - '.github/workflows/doc.yml'
+#    paths:
+#    - '**.md'
+#    - '.github/workflows/doc.yml'
 
 jobs:
   toc:
@@ -21,7 +21,36 @@ jobs:
     - name: TOC Generator
       uses: technote-space/toc-generator@v2.6.1
       with:
-        TARGET_PATHS: '*.md'
+        TARGET_PATHS: '**.md'
         TOC_TITLE: ':link: **Contents**'
         MAX_HEADER_LEVEL: 3
+
+  modules:
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Setup Python
+      uses: actions/setup-python@v2
+
+    - name: Install Python dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install j2cli[yaml]
+
+    - name: Setup Node
+      uses: actions/setup-node@v1
+
+    - name: Install Node dependencies
+      run: npm install -g doctoc
+
+    - name: Setup env
+      run: CI_DOCTOC=1 ./scripts/module/loop_wrapper.sh ./scripts/stack/gen_doc.sh
+
+    - name: Check for changes
+      run: git diff --exit-code
 
