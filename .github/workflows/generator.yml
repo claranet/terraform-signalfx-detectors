@@ -4,15 +4,17 @@ name: Generator
 
 on:
   push:
-    paths:
-    - 'scripts/templates/**'
-    - 'scripts/module/bootstrap.sh'
-    - 'scripts/stack/gen_module.sh'
-    - '.github/workflows/generator.yml'
+#    paths:
+#    - 'scripts/templates/**'
+#    - 'scripts/module/bootstrap.sh'
+#    - 'scripts/stack/gen_module.sh'
+#    - '.github/workflows/generator.yml'
 
 jobs:
   test:
     runs-on: ubuntu-latest
+    container:
+      image: "claranet/terraform-ci:latest"
     env:
       SFX_AUTH_TOKEN: ${{ secrets.SFX_TOKEN }}
       TF_VAR_pagerduty_integration_id: ${{ secrets.PAGERDUTY_INTEGRATION }}
@@ -27,22 +29,16 @@ jobs:
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1.2.1
       with:
-        terraform_version: 0.13.3
+        terraform_version: 0.13.5
         terraform_wrapper: false
-
-    - name: Setup Python
-      uses: actions/setup-python@v2
-
-    - name: Install Python dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install j2cli[yaml]
 
     - name: Setup env
       run: |
         ./scripts/module/bootstrap.sh internal_generator ${TF_VAR_environment}
         for config in scripts/templates/examples/*.yaml; do 
-          j2 <(cat scripts/templates/variables.tf.j2 scripts/templates/detector.tf.j2) $config >> modules/internal_generator-${TF_VAR_environment}/gen.tf
+          for template in variables detector; do
+            j2 scripts/templates/${template}.tf.j2 ${config} >> modules/internal_generator-${TF_VAR_environment}/gen.tf
+          done
         done
         ./scripts/stack/bootstrap.sh
         echo -e "module \"generated\" {\nsource=\"../../modules/internal_generator-${TF_VAR_environment}\"\n$(cat common/modules-args.txt)\n}" >> examples/stack/detectors.tf

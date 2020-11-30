@@ -8,7 +8,7 @@ on:
   push:
     paths:
     - '**.tf'
-    - 'scripts/*'
+    - 'scripts/**'
     - '.github/workflows/main.yml'
 #    branches: [ master ]
 #  pull_request:
@@ -35,7 +35,7 @@ jobs:
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1.2.1
       with:
-        terraform_version: 0.13.3
+        terraform_version: 0.13.5
         terraform_wrapper: false
 
     - name: Setup env
@@ -75,7 +75,7 @@ jobs:
   compliance:
     runs-on: ubuntu-latest
     container:
-      image: "claranet/terraform-ci:0.13.3"
+      image: "claranet/terraform-ci:latest"
 
     steps:
     - name: Checkout
@@ -90,7 +90,7 @@ jobs:
   outputs:
     runs-on: ubuntu-latest
     container:
-      image: "claranet/terraform-ci:0.13.3"
+      image: "claranet/terraform-ci:latest"
 
     steps:
     - name: Checkout
