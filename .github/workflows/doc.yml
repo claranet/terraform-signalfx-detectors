@@ -35,7 +35,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Setup env
-      run: CI_DOCTOC=1 ./scripts/module/loop_wrapper.sh ./scripts/module/gen_doc.sh
+      run: ./scripts/module/loop_wrapper.sh ./scripts/module/gen_doc.sh
 
     - name: Check for changes
       run: git diff --exit-code

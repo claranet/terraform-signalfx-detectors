@@ -24,9 +24,9 @@ if [[ -d "${TARGET}" ]]; then
     exit 2
 fi
 
+echo "Bootstrap module code in \"${TARGET}\""
 mkdir -p "${TARGET}"
 for tf in common/module/*.tf; do 
-    echo "Create symlink for ${tf}"
     ln -s ../../${tf} ${TARGET}/common-${tf#"common/module/"}
 done
 

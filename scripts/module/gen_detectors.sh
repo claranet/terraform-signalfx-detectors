@@ -3,11 +3,11 @@ set -ue -o pipefail
 
 TARGET="${1:-}"
 MODULE=${TARGET#"modules/"}
-set -x
 
 if ! compgen -G ${TARGET}/conf/[0-9][0-9]-*.yaml > /dev/null; then
     exit
 fi
+echo "Generate module detectors to \"${TARGET}/*-gen.tf\""
 for dst in variables detectors; do
     > ${TARGET}/${dst}-gen.tf
 done

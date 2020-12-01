@@ -22,5 +22,6 @@ for tfvar in $(grep -E '^variable[[:space:]]+"' common-variables.tf | cut -d '"'
 EOF
 done
 
+echo "Lint module ${TARGET}"
 tflint --disable-rule=terraform_module_pinned_source --enable-rule=terraform_unused_declarations --loglevel=info
 rm tmp-outputs.tf
