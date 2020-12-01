@@ -15,7 +15,7 @@ if [[ ${source_type} == "integration" ]]; then
 fi
 module=$(echo ${MODULE} | cut -d'_' -f 2)
 tf="$(./scripts/stack/gen_module.sh ${TARGET})"
-detectors="$(sed -n 's/^.*name.*=.*detector_name_prefix.*"\(.*\)")$/* \1/p' ${TARGET}/detectors-*.tf)"
+detectors="$(sed -n 's/^.*name.*=.*detector_name_prefix.*"\(.*\)")$/* \1/p' ${TARGET}/detectors-*.tf | sort -fdbiu)"
 set +a
 j2 --import-env= ./scripts/templates/readme.md.j2 ${TARGET}/conf/readme.yaml > ${TARGET}/README.md
 if [ $CI_DOCTOC -eq 1 ]; then 
