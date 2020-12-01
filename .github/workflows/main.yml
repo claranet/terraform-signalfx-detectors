@@ -7,7 +7,8 @@ name: Detectors
 on:
   push:
     paths:
-    - '**.tf'
+    - 'modules/**.tf'
+    - 'modules/**/conf/detector-*.yaml'
     - 'scripts/**'
     - '.github/workflows/main.yml'
 #    branches: [ master ]
@@ -101,4 +102,21 @@ jobs:
 
     - name: Check for changes
       run: git diff --exit-code
+
+  gen:
+    runs-on: ubuntu-latest
+    container:
+      image: "claranet/terraform-ci:latest"
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Generate terraform code from detectors preset configs
+      run: ./scripts/module/loop_wrapper.sh ./scripts/module/gen_detectors.sh
+
+    - name: Check for changes
+      run: |
+        git diff --exit-code
+        ! [ -n "$(git status --porcelain)" ]
 
