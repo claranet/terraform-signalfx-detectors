@@ -68,10 +68,10 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
+* Azure Stream Analytics conversion errors rate
+* Azure Stream Analytics failed function requests rate
 * Azure Stream Analytics heartbeat
 * Azure Stream Analytics resource utilization
-* Azure Stream Analytics failed function requests rate
-* Azure Stream Analytics conversion errors rate
 * Azure Stream Analytics runtime errors rate
 
 ## How to collect required metrics?

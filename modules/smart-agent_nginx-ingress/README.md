@@ -73,8 +73,8 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* Kubernetes Ingress Nginx 5xx errors ratio
 * Kubernetes Ingress Nginx 4xx errors ratio
+* Kubernetes Ingress Nginx 5xx errors ratio
 * Kubernetes Ingress Nginx latency
 
 ## How to collect required metrics?

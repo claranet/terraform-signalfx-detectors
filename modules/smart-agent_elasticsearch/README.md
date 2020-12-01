@@ -70,25 +70,25 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* ElasticSearch heartbeat
-* ElasticSearch cluster status
 * ElasticSearch cluster initializing shards
 * ElasticSearch cluster relocating shards
+* ElasticSearch cluster status
 * ElasticSearch Cluster unassigned shards
-* ElasticSearch Pending tasks
 * Elasticsearch CPU usage
-* Elasticsearch file descriptors usage
-* Elasticsearch JVM heap memory usage
-* Elasticsearch JVM memory young usage
-* Elasticsearch JVM memory old usage
-* Elasticsearch old-generation garbage collections latency
-* Elasticsearch young-generation garbage collections latency
-* Elasticsearch indexing latency
-* Elasticsearch index flushing to disk latency
-* Elasticsearch search query latency
-* Elasticsearch search fetch latency
 * Elasticsearch fielddata cache evictions rate of change
+* Elasticsearch file descriptors usage
+* ElasticSearch heartbeat
+* Elasticsearch index flushing to disk latency
+* Elasticsearch indexing latency
+* Elasticsearch JVM heap memory usage
+* Elasticsearch JVM memory old usage
+* Elasticsearch JVM memory young usage
 * Elasticsearch max time spent by task in queue rate of change
+* Elasticsearch old-generation garbage collections latency
+* ElasticSearch Pending tasks
+* Elasticsearch search fetch latency
+* Elasticsearch search query latency
+* Elasticsearch young-generation garbage collections latency
 
 ## How to collect required metrics?
 

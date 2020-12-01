@@ -74,14 +74,14 @@ This module creates the following SignalFx detectors which could contain one or 
 
 * Cassandra heartbeat
 * Cassandra read latency 99th percentile
-* Cassandra write latency 99th percentile
 * Cassandra read latency real time
-* Cassandra write latency real time
-* Cassandra transactional read latency 99th percentile
-* Cassandra transactional write latency 99th percentile
-* Cassandra transactional read latency real time
-* Cassandra transactional write latency real time
 * Cassandra storage exceptions count
+* Cassandra transactional read latency 99th percentile
+* Cassandra transactional read latency real time
+* Cassandra transactional write latency 99th percentile
+* Cassandra transactional write latency real time
+* Cassandra write latency 99th percentile
+* Cassandra write latency real time
 
 ## How to collect required metrics?
 

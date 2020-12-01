@@ -68,9 +68,9 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* AWS ApiGateway latency
-* AWS ApiGateway HTTP 5xx error rate
 * AWS ApiGateway HTTP 4xx error rate
+* AWS ApiGateway HTTP 5xx error rate
+* AWS ApiGateway latency
 
 ## How to collect required metrics?
 

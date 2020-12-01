@@ -68,8 +68,8 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* Apache heartbeat
 * Apache busy workers
+* Apache heartbeat
 
 ## How to collect required metrics?
 

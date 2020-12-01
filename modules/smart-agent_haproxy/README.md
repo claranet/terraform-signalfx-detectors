@@ -69,12 +69,12 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
+* Haproxy 4xx response rate
+* Haproxy 5xx response rate
+* Haproxy backend status
 * Haproxy heartbeat
 * Haproxy server status
-* Haproxy backend status
 * Haproxy session
-* Haproxy 5xx response rate
-* Haproxy 4xx response rate
 
 ## How to collect required metrics?
 

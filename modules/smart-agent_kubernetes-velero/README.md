@@ -73,11 +73,11 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* Kubernetes velero successful backup
 * Kubernetes velero failed backup
-* Kubernetes velero failed partial backup
 * Kubernetes velero failed backup deletion
+* Kubernetes velero failed partial backup
 * Kubernetes velero failed volume snapshot
+* Kubernetes velero successful backup
 
 ## How to collect required metrics?
 

@@ -69,11 +69,11 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
+* GCP BigQuery available slots
 * GCP BigQuery concurrent queries
 * GCP BigQuery execution time
 * GCP BigQuery scanned bytes
 * GCP BigQuery scanned bytes billed
-* GCP BigQuery available slots
 * GCP BigQuery stored bytes
 * GCP BigQuery table count
 * GCP BigQuery uploaded bytes

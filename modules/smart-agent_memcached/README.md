@@ -71,8 +71,8 @@ general usage of this repository.
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
 * Memcached heartbeat
-* Memcached max conn
 * Memcached hit ratio
+* Memcached max conn
 
 ## How to collect required metrics?
 

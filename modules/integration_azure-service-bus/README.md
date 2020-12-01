@@ -70,9 +70,9 @@ This module creates the following SignalFx detectors which could contain one or 
 
 * Azure Service Bus heartbeat
 * Azure Service Bus no active connections
-* Azure Service Bus user error rate
 * Azure Service Bus server error rate
 * Azure Service Bus throttled requests rate
+* Azure Service Bus user error rate
 
 ## How to collect required metrics?
 

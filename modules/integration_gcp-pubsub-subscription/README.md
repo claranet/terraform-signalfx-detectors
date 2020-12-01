@@ -70,8 +70,8 @@ general usage of this repository.
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
 * GCP Pub/Sub Subscription heartbeat
-* GCP Pub/Sub Subscription oldest unacknowledged message
 * GCP Pub/Sub Subscription latency on push endpoint
+* GCP Pub/Sub Subscription oldest unacknowledged message
 
 ## How to collect required metrics?
 

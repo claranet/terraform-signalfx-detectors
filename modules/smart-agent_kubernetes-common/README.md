@@ -74,18 +74,18 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
+* Kubernetes container killed by OOM
+* Kubernetes daemonset in CrashLoopBackOff
+* Kubernetes daemonsets misscheduled
+* Kubernetes daemonsets not ready
+* Kubernetes daemonsets not scheduled
+* Kubernetes deployment in CrashLoopBackOff
+* Kubernetes deployments available
+* Kubernetes job from cronjob failed
 * Kubernetes node heartbeat
 * Kubernetes node status
 * Kubernetes pod status phase
 * Kubernetes pod terminated abnormally
-* Kubernetes container killed by OOM
-* Kubernetes deployment in CrashLoopBackOff
-* Kubernetes daemonset in CrashLoopBackOff
-* Kubernetes job from cronjob failed
-* Kubernetes daemonsets not scheduled
-* Kubernetes daemonsets not ready
-* Kubernetes daemonsets misscheduled
-* Kubernetes deployments available
 * Kubernetes replicasets available
 * Kubernetes replication_controllers available
 * Kubernetes satefulsets ready

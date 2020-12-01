@@ -68,8 +68,8 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* AWS ElastiCache memcached hit ratio
 * AWS ElastiCache memcached CPU
+* AWS ElastiCache memcached hit ratio
 
 ## How to collect required metrics?
 

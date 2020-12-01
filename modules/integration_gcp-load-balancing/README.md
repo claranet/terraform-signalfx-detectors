@@ -71,8 +71,8 @@ This module creates the following SignalFx detectors which could contain one or 
 
 * GCP Load Balancer 4xx error rate
 * GCP Load Balancer 5xx error rate
-* GCP Load Balancer backend latency by service
 * GCP Load Balancer backend latency by bucket
+* GCP Load Balancer backend latency by service
 * GCP Load Balancer request count
 
 ## How to collect required metrics?

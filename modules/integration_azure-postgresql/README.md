@@ -68,12 +68,12 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* Azure PostgreSQL heartbeat
 * Azure PostgreSQL CPU usage
 * Azure PostgreSQL has no connection
-* Azure PostgreSQL storage usage
+* Azure PostgreSQL heartbeat
 * Azure PostgreSQL IO consumption
 * Azure PostgreSQL memory usage 
+* Azure PostgreSQL storage usage
 
 ## How to collect required metrics?
 

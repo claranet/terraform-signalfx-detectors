@@ -69,8 +69,8 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* Apache Solr heartbeat
 * Apache Solr errors count
+* Apache Solr heartbeat
 * Apache Solr searcher warmup time
 
 ## How to collect required metrics?

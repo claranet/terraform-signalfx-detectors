@@ -68,8 +68,8 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* Azure Key Vault API result rate
 * Azure Key Vault API latency
+* Azure Key Vault API result rate
 
 ## How to collect required metrics?
 

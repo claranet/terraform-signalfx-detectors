@@ -68,8 +68,8 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* Azure Virtual Machine heartbeat
 * Azure Virtual Machine CPU usage
+* Azure Virtual Machine heartbeat
 * Azure Virtual Machine remaining CPU credit
 
 ## How to collect required metrics?

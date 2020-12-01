@@ -68,11 +68,11 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* Azure SQL Database heartbeat
 * Azure Sql Database CPU
+* Azure SQL Database deadlocks count
 * Azure SQL Database disk usage
 * Azure SQL Database DTU consumption
-* Azure SQL Database deadlocks count
+* Azure SQL Database heartbeat
 
 ## How to collect required metrics?
 

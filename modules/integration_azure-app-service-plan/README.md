@@ -68,8 +68,8 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* Azure App Service Plan heartbeat
 * Azure App Service Plan CPU percentage
+* Azure App Service Plan heartbeat
 * Azure App Service Plan memory percentage
 
 ## How to collect required metrics?

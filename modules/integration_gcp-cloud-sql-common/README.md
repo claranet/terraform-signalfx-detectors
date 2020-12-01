@@ -72,12 +72,12 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* GCP Cloud SQL heartbeat
 * GCP Cloud SQL CPU utilization
-* GCP Cloud SQL disk utilization
 * GCP Cloud SQL disk space is running out
-* GCP Cloud SQL memory utilization
+* GCP Cloud SQL disk utilization
+* GCP Cloud SQL heartbeat
 * GCP Cloud SQL memory is running out
+* GCP Cloud SQL memory utilization
 
 ## How to collect required metrics?
 

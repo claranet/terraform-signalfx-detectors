@@ -71,10 +71,10 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
+* RabbitMQ Queue consumer use
+* RabbitMQ Queue messages ack rate
 * RabbitMQ Queue messages ready
 * RabbitMQ Queue messages unacknowledged
-* RabbitMQ Queue messages ack rate
-* RabbitMQ Queue consumer use
 
 ## How to collect required metrics?
 

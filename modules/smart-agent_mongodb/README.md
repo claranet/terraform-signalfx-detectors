@@ -71,13 +71,13 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* MongoDB heartbeat
-* MongoDB page faults
-* MongoDB number of connections over max capacity
 * MongoDB asserts (warning and regular) errors
+* MongoDB heartbeat
+* MongoDB number of connections over max capacity
+* MongoDB page faults
 * MongoDB primary in replicaset
-* MongoDB secondary members count in replicaset
 * MongoDB replication lag
+* MongoDB secondary members count in replicaset
 
 ## How to collect required metrics?
 

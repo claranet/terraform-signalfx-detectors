@@ -69,12 +69,12 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* System heartbeat
 * System cpu utilization
-* System load 5m ratio
-* System disk space utilization
 * System disk inodes utilization
 * System disk space running out
+* System disk space utilization
+* System heartbeat
+* System load 5m ratio
 * System memory utilization
 
 ## How to collect required metrics?

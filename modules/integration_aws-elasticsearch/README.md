@@ -68,10 +68,10 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* AWS ElasticSearch heartbeat
-* AWS ElasticSearch cluster status
-* AWS ElasticSearch cluster free storage space
 * AWS ElasticSearch cluster CPU
+* AWS ElasticSearch cluster free storage space
+* AWS ElasticSearch cluster status
+* AWS ElasticSearch heartbeat
 
 ## How to collect required metrics?
 

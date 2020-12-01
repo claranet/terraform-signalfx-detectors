@@ -70,8 +70,8 @@ general usage of this repository.
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
 * DNS heartbeat
-* DNS query time
 * DNS query result
+* DNS query time
 
 ## How to collect required metrics?
 

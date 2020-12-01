@@ -68,11 +68,11 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* Azure App Service heartbeat
-* Azure App Service response time
-* Azure App Service memory usage
-* Azure App Service 5xx error rate
 * Azure App Service 4xx error rate
+* Azure App Service 5xx error rate
+* Azure App Service heartbeat
+* Azure App Service memory usage
+* Azure App Service response time
 * Azure App Service successful response rate
 
 ## How to collect required metrics?

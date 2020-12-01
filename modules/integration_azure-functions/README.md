@@ -68,9 +68,9 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
+* Azure Functions connections count
 * Azure Functions heartbeat
 * Azure Functions HTTP 5xx error rate
-* Azure Functions connections count
 * Azure Functions thread count
 
 ## How to collect required metrics?

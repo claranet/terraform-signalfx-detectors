@@ -69,9 +69,9 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* New Relic heartbeat
-* New Relic error rate
 * New Relic apdex score ratio
+* New Relic error rate
+* New Relic heartbeat
 
 ## How to collect required metrics?
 
