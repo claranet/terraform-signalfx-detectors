@@ -1,0 +1,15 @@
+module: system
+name: "disk inodes utilization"
+id: disk_inodes
+transformation: ".max(over='5m')"
+signals:
+  signal:
+    metric: percent_inodes.used
+rules:
+  critical:
+    threshold: 95
+    comparator: ">"
+  major:
+    threshold: 90
+    comparator: ">"
+    dependency: critical

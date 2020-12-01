@@ -1,0 +1,12 @@
+module: system
+name: heartbeat
+
+transformation: false
+aggregation: true
+exclude_not_running_vm: true
+
+signals:
+  signal:
+    metric: cpu.utilization
+rules:
+  critical:
