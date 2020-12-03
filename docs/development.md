@@ -193,11 +193,20 @@ you will have to update existing documentation in markdown files of this reposit
 this one but also any relevant [wiki](https://github.com/claranet/terraform-signalfx-detectors/wiki) pages.
 
 You will also have to apply the evolution on the full existing code base so if you want to add a feature 
-which should not be specific to one module (else it is a [detectors](#detectors) change type) it should be 
 implemented everywhere.
 
-In general, it will also require to update the [j2 based generator](../scripts/templates/README.md) to 
-support this new rule.
+Every single and tiny change in these templating rules must be spread to the entire repository on 
+all modules and their detectors. This could be difficult to automate, source of mistakes and have 
+undersired side effects.
+
+If you want to implement a special feature for a specific module this is [detectors](#detectors) change 
+type you can go ahead.
+
+But for feature common to all modules you will also probably need to update the [j2 based 
+generator](../scripts/templates/README.md) to 
+support this new "rule".
+
+Also in some cases it is recommended to add a new [checks](#checks) / job to the CI if relevant.
 
 ## Checks
 

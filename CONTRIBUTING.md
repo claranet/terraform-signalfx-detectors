@@ -26,133 +26,6 @@ adapt. The goal is to maximize chance to act relevantly to your feedback.
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## Proposing a change 
-
-The general workflow is the same for any contribution but there are different considerations to 
-know depending on what you want to change or, more specifically, on what could be impacted by 
-your change.
-
-### Documentation
-
-__Label__: 
-[documentation](https://github.com/claranet/terraform-signalfx-detectors/labels/documentation)
-
-__Issue__: Not required, go ahead and open a Pull Request.
-
-Changes of documentation are riskless but here are some considerations:
-
-* The modules readmes are auto generated so you must edit the underlying configuration.
-* Table of contents of every readmes are auto generarated by the CI, there is no need to update 
-them yourself.
-* Pull request is not possible on Github `wiki` so you can create an issue for that. For more 
-complex changes you can create a new empty repository on your Github, clone this wiki: 
-`git clone git@github.com:claranet/terraform-signalfx-detectors.wiki.git`, change its remote to 
-your new repository, push your change then provide the change url of your Github repository in 
-an issue here.
-
-### Detectors
-
-__Label__: 
-[detectors](https://github.com/claranet/terraform-signalfx-detectors/labels/detectors)
-
-__Issue__: Not required but recommended.
-
-Changes on detectors are the most common but you first have to understand the current goal of 
-this repository explained in the [wiki](https://github.com/claranet/terraform-signalfx-detectors/wiki).
-Indeed, this repository aims to provide "generic enough" detectors and this limits the scope of changes we 
-can accept. 
-
-* To update existing detectors, simply edit the `*.tf` code in the related module and update the 
-variables default values, the signalflow programm or any other changes specific to detectors 
-behaviors you want to do. For basic change, a simple description in Pull Request is enough and do 
-not require an issue.
-
-* To add new detectors in existing modules use [the jinja 
-generator](./scripts/templates/README.md) for detector. This should help you to quickly build new 
-detectors for common use cases which respect every of our templating rules. For more complex or 
-unusual use cases, you will have to do it manually either from sratch, from an existing detectors 
-on the repository or applying specific changes on generator output.
-
-* To add a new module use [the gen_module.sh 
-script](./scripts/gen_module.sh) which will bootstrap a new module directory with common structure 
-and a sample "heartbeat" detector generated inside. One heartbeat per module is often used but not 
-mandatory, you can remove it and/or use the previous mentionned generator to add new ones.
-
-* To delete an existing detector, first think if lower the severity and changing thresholds or 
-functions could not improve enough it. If still not relevant or generate too many alerts in some 
-scenarios but remain useful in others may be disabling it by default is a good idea. Finally, when 
-removing do not forget to remove its related variables and outputs.
-
-Globally, we want modules to be as much "plug and play" as possible, that means:
-
-* be easy to configure and deploy
-* works in most of the situations
-* do not generate undersirable and predictable false alerts
-* how to collect the metrics used in detectors should be provided, documented and available.
-* should limit dependencies complexity as using too many or too different sources of metrics.
-
-In short, the implementation could be complex but the usage must remain simple and useful for the 
-community. To make it possible we provide a common module 
-[structure](https://github.com/claranet/terraform-signalfx-detectors/wiki/Structure) which make 
-the experience similar for every modules.
-
-Sadly, full ready and generic detectors which work everywhere by default is almost never possible. 
-This is why we have also have use 
-[templating](https://github.com/claranet/terraform-signalfx-detectors/wiki/Structure) thanks to 
-terraform to make it possible to customize their configuration and adapt their behavior at deployment.
-
-This is why all modules must provide, at least, these Terraform  
-[variables](https://github.com/claranet/terraform-signalfx-detectors/wiki/Variables) to enjoy this 
-templating and provide to the user common cutomization capabilities.
-
-
-### Templating
-
-__Label__: 
-[templating](https://github.com/claranet/terraform-signalfx-detectors/labels/templating)
-
-__Issue__: Mandatory
-
-This project respect some rules to create the modules and their detectors. It is constraining and 
-will eventually limit the usage in some cases but this allows to preserve homogeneity in 
-implementation, parity in features and it brings a common, repeatable and opinionated way to deploy, 
-configure and manage detectors.
-
-We want this template evolves from internal usage and community feedbacks to cover a larger scope of 
-usage and provide more flexibility in implementation. However, monitoring is a critical component for 
-most of the people and it is crucial for us to preserve the reliability of the underlying detectors.
-
-Too many customizations mechanisms fatally involve more complexity and make the code more difficult 
-to understand, review, maintain, test and to contribute to it. Sometimes we will prefer to abandon a 
-feature to keep it simple if it concerns to few users or implies too tricky or dangerous consequences.
-
-Every single and tiny change in these templating rules should be spread to the entire repository on 
-every detectors. This could be difficult to automate, source of mistakes and have undersired side 
-effects.
-
-That said, please open an issue to discuss, this could help us to notice and priorize some popular 
-features. And if you want to try to implement it yourself this could be the place to provide you help 
-and resources.
-
-At this time, we do not have a formal process for reviewing proposals that significantly change this 
-project, its primary usage patterns, and its defined template. Additionally, some seemingly simple 
-proposals can be difficult or time consuming to spread over every modules given that we want to keep 
-homogeinity as much as possible.
-
-### Continous Integration
-
-__Label__: 
-[CI](https://github.com/claranet/terraform-signalfx-detectors/labels/CI)
-
-__Issue__: Highly recommended because it could have deep implications but not required for simple 
-changes.
-
-CI related changes will generally be done by Claranet Team but if you try to implement an important 
-templating change as mentionned just above there is good chance you will need to update existing 
-tests or add new ones for your feature.
-
-Please ask to help and advices about this because the workflow could be not obvious.
-
 ## Workflow
 
 In general, we prefer to discuss in Github issues prior to implementation. That will allow us to 
@@ -223,3 +96,107 @@ PR merged. It can be frustrating to deal with the back-and-forth as we make sure
 the changes fully. Please bear with us, and please know that we appreciate the time and energy you 
 put into the project.
 
+## Changes types
+
+The general workflow is the same for any contribution but there are different considerations to 
+know depending on what you want to change or, more specifically, on what could be impacted by 
+your change.
+
+### Documentation
+
+__Label__: 
+[documentation](https://github.com/claranet/terraform-signalfx-detectors/labels/documentation)
+
+__Issue__: Not required, go ahead and open a Pull Request.
+
+Changes of documentation are riskless but table of contents and modules readmes are generated, 
+please follow the [development's guide](docs/development.md#documentation).
+
+Pull request is not possible on Github `wiki` so you can create an issue and if it is too 
+complex to explain you can:
+
+1. create a new empty repository on your Github
+1. clone this wiki `git clone git@github.com:claranet/terraform-signalfx-detectors.wiki.git`
+1. change its remote to your new repository `git remote set-url origin https://github.com/USERNAME/REPOSITORY.git`
+1. push your change to your repository
+1. provide the change "compare" or "pr" url of your Github repository in this issue.
+
+### Detectors
+
+__Label__: 
+[detectors](https://github.com/claranet/terraform-signalfx-detectors/labels/detectors)
+
+__Issue__: Not required but recommended.
+
+Changes on detectors are the most common but you first have to understand the current goal of 
+this repository explained in the [wiki](https://github.com/claranet/terraform-signalfx-detectors/wiki).
+Indeed, this repository aims to provide "generic enough" detectors and this limits the scope of changes we 
+can accept. 
+
+Now, please follow the [development's guide](docs/development.md#detectors).
+
+Globally, we want modules to be as much "plug and play" as possible, that means:
+
+* be easy to configure and deploy
+* works in most of the situations
+* do not generate undersirable and predictable false alerts
+* how to collect the metrics used in detectors should be provided, documented and available.
+* should limit dependencies complexity as using too many or too different sources of metrics.
+
+In short, the implementation could be complex but the usage must remain simple and useful for the 
+community. To make it possible we provide a common module 
+[structure](https://github.com/claranet/terraform-signalfx-detectors/wiki/Structure) which make 
+the experience similar for every modules.
+
+Sadly, full ready and generic detectors which work everywhere by default is almost never possible. 
+This is why we have also have use 
+[templating](https://github.com/claranet/terraform-signalfx-detectors/wiki/Structure) thanks to 
+terraform to make it possible to customize their configuration and adapt their behavior at deployment.
+
+This is why all modules must provide, at least, these Terraform  
+[variables](https://github.com/claranet/terraform-signalfx-detectors/wiki/Variables) to enjoy this 
+templating and provide to the user common cutomization capabilities.
+
+### Templating
+
+__Label__: 
+[templating](https://github.com/claranet/terraform-signalfx-detectors/labels/templating)
+
+__Issue__: Mandatory
+
+This project respect some rules to create the modules and their detectors. It is constraining and 
+will eventually limit the usage in some cases but this allows to preserve homogeneity in 
+implementation, parity in features and it brings a common, repeatable and opinionated way to deploy, 
+configure and manage detectors.
+
+We want this template evolves from internal usage and community feedbacks to cover a larger scope of 
+usage and provide more flexibility in implementation. However, monitoring is a critical component for 
+most of the people and it is crucial for us to preserve the reliability of the underlying detectors.
+
+Too many customizations mechanisms fatally involve more complexity and make the code more difficult 
+to understand, review, maintain, test and to contribute to it. Sometimes we will prefer to abandon a 
+feature to keep it simple if it concerns to few users or implies too tricky or dangerous consequences.
+
+That said, please open an issue to discuss, this could help us to notice and priorize some popular 
+features. And if you want to try to implement it yourself this could be the place to provide you help 
+and resources. In this case, please follow the [development's guide](docs/development.md#templating).
+
+At this time, we do not have a formal process for reviewing proposals that significantly change this 
+project, its primary usage patterns, and its defined template. Additionally, some seemingly simple 
+proposals can be difficult or time consuming to spread over every modules given that we want to keep 
+homogeinity as much as possible.
+
+### Continous Integration
+
+__Label__: 
+[CI](https://github.com/claranet/terraform-signalfx-detectors/labels/CI)
+
+__Issue__: Highly recommended because it could have deep implications but not required for simple 
+changes.
+
+CI related changes will generally be done by Claranet Team but if you try to implement an important 
+templating change as mentionned just above there is good chance you will need to update existing 
+tests or add new ones for your feature.
+
+Please ask to help and advices about this because the workflow could be not obvious but you can 
+check the [development's guide](docs/development.md#checks).
