@@ -29,18 +29,6 @@ adapt. The goal is to maximize chance to act relevantly to your feedback.
 
 ## Proposing a change 
 
-In general, we prefer to discuss in Github issues prior to implementation. That will allow us to 
-give some clues and recommendations on the design and may be provide existing work or thoughts 
-from our experience.
-
-First, search for existing issue related to your change and start a discussion about what you 
-wish to implement. This could be useful to prevent tenious conflicts, notice eventual 
-implications or mutualize implementation of dependent or similar features.
-
-If you did not find an existing one, please [open a new Github
-issue](https://github.com/claranet/terraform-signalfx-detectors/issues/new/choose) 
-before invest significant development time.
-
 The general workflow is the same for any contribution but there are different considerations to 
 know depending on what you want to change or, more specifically, on what could be impacted by 
 your change.
@@ -168,10 +156,22 @@ Please ask to help and advices about this because the workflow could be not obvi
 
 ## Workflow
 
+In general, we prefer to discuss in Github issues prior to implementation. That will allow us to 
+give some clues and recommendations on the design and may be provide existing work or thoughts 
+from our experience.
+
+But depending of the scope and the size of the change and how you feel confident about it, do 
+know well the code base, and do not need help feel free to go to the next step direclty.
+
 ### Issue
 
-Depending of the scope and the size of your change open an issue. If you feel enough confident, do 
-know well the code base, and do not need help feel free to go to the next step direclty.
+First, search for existing issue related to your change and start a discussion about what you 
+wish to implement. This could be useful to prevent tenious conflicts, notice eventual 
+implications or mutualize implementation of dependent or similar features.
+
+If you did not find an existing one, please [open a new Github
+issue](https://github.com/claranet/terraform-signalfx-detectors/issues/new/choose) 
+before invest significant development time.
 
 ### Pull Request
 
