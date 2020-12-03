@@ -23,7 +23,6 @@ adapt. The goal is to maximize chance to act relevantly to your feedback.
   - [Issue](#issue)
   - [Pull Request](#pull-request)
   - [Speed up review and merge](#speed-up-review-and-merge)
-  - [PR Checks](#pr-checks)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -224,20 +223,3 @@ PR merged. It can be frustrating to deal with the back-and-forth as we make sure
 the changes fully. Please bear with us, and please know that we appreciate the time and energy you 
 put into the project.
 
-### PR Checks
-
-The CI is broken down into 3 workflow:
-
-* the main workflow is dedicated to detectors. It will test the terraform code: fmt, deployment, 
-compliance, generated outputs ..
-* the generator workflow will test the jinja generator used to create new detectors deploying 
-sample detectors.
-* the documentation workflow will take care of generate and update documentation files and their 
-table of contents.
-
-Each workflow will run depending on files you modify but every executed workflow are mandatory 
-and must succeed.
-
-In case of errors, please check the Github actions logs to fix them. There are scripts available 
-to automate redundant tasks like [gen_outputs.sh](./scripts/gen_outputs) to update terraform 
-outputs for detectors.
