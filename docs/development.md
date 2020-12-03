@@ -19,6 +19,7 @@ rules and templates homogenous to all modules.
 :link: **Contents**
 
 - [Environment](#environment)
+- [Scripts](#scripts)
 - [Change types](#change-types)
   - [Documentation](#documentation)
   - [Detectors](#detectors)
@@ -88,6 +89,28 @@ EOF
 }
 ```
 
+<<<<<<< HEAD
+=======
+## Scripts
+
+Now you have a ready dev env you can run `make` commands or directly use the underlying 
+[/scripts](../scripts) or even some tools available in the container like `doctoc` or `j2`.
+
+All scripts are splitted into different directories: 
+
+* [/scripts/module](../scripts/module) related to automation on detectors modules in 
+the repository and so often used for development purpose. One special script is the 
+[loop_wrapper.sh](../scripts/module/loop_wrapper.sh) script used in combination with 
+another "atomic" script to apply it on all modules (often used for `make` commands).
+
+* [/scripts/stack](../scripts/stack) related to automation on stack side and so often used 
+by the end user to bootstrap the [/examples/stack](../examples/stack) but it is also used 
+by the CI to deploy and test detectors like a true user.
+
+The [/Makefile](../Makefile) and the CI both use these scripts to automate automation over 
+changes depending on its type.
+
+>>>>>>> 9662d5fd... add development guide
 ## Change types
 
 There are different automation tasks to perform depending on the change done in this repository.
