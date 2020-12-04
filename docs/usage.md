@@ -16,6 +16,7 @@ following the wiki
 - [Requirements](#requirements)
 - [Scripts](#scripts)
 - [Stack](#stack)
+- [Example](#example)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -27,11 +28,7 @@ dependencies available to run useful commands detailled below.
 ## Scripts
 
 Now you have a ready dev env you can run `make` commands or directly use the underlying 
-<<<<<<< HEAD
-[Scripts](./scripts.md) or even some tools available in the container like `doctoc` or `j2`.
-=======
 [scripts](./scripts.md) or even some tools available in the container like `doctoc` or `j2`.
->>>>>>> aeedef8f... add user guide
 
 ## Stack
 
@@ -44,8 +41,6 @@ In general you have to remove every modules you don't need from
 following its own readme (available in its directory `/modules/mymodule`.
 
 Now you can follow the its [readme](../examples/stack/README.md) to deploy the stack.
-<<<<<<< HEAD
-=======
 
 ## Example
 
@@ -219,4 +214,3 @@ when Terraform specifically suggests to use it as part of an error message.
 Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 ```
 
->>>>>>> aeedef8f... add user guide
