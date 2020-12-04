@@ -32,9 +32,9 @@ jobs:
         terraform_version: 0.13.5
         terraform_wrapper: false
 
-    - name: Setup env
+    - name: Generate tmp module using example configs preset and import it into example stack
       run: |
-        ./scripts/module/bootstrap.sh internal_generator ${TF_VAR_environment}
+        make module internal_generator ${TF_VAR_environment}
         for config in scripts/templates/examples/*.yaml; do 
           for template in variables detector; do
             j2 scripts/templates/${template}.tf.j2 ${config} >> modules/internal_generator-${TF_VAR_environment}/gen.tf

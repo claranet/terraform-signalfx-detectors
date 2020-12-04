@@ -10,6 +10,7 @@ on:
     - 'modules/**.tf'
     - 'modules/**/conf/detector-*.yaml'
     - 'scripts/**'
+    - 'Makefile'
     - '.github/workflows/main.yml'
 #    branches: [ master ]
 #  pull_request:
@@ -39,16 +40,9 @@ jobs:
         terraform_version: 0.13.5
         terraform_wrapper: false
 
-    - name: Setup env
-      run: |
-        TF_REF=$(git rev-parse HEAD)
-        #TF_REF=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; NF>1{print $NF}')
-        ./scripts/stack/bootstrap.sh
-        ./scripts/module/loop_wrapper.sh ./scripts/stack/gen_module.sh "${TF_REF}" > examples/stack/detectors.tf
+    - name: Generate example stack importing all modules
+      run: make stack
     
-    #- name: Terraform version
-    #  run: terraform version
-
     - name: Terraform fmt
       run: terraform fmt -recursive -write=false -diff -check .
 
@@ -82,11 +76,8 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
-    - name: Install dependencies
-      run: apk add --no-cache expect
-
-    - name: Run tflint
-      run: ./scripts/module/loop_wrapper.sh ./scripts/module/lint.sh
+    - name: Check and lint
+      run: make check
 
   outputs:
     runs-on: ubuntu-latest
@@ -98,7 +89,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Generate modules outputs
-      run: ./scripts/module/loop_wrapper.sh ./scripts/module/gen_outputs.sh
+      run: make outputs
 
     - name: Check for changes
       run: git diff --exit-code
@@ -112,8 +103,8 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
-    - name: Generate terraform code from detectors preset configs
-      run: ./scripts/module/loop_wrapper.sh ./scripts/module/gen_detectors.sh
+    - name: Generate modules detectors from preset configs
+      run: make detectors
 
     - name: Check for changes
       run: |

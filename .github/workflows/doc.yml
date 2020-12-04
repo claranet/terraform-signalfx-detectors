@@ -34,8 +34,8 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
-    - name: Setup env
-      run: CI_DOCTOC=1 ./scripts/module/loop_wrapper.sh ./scripts/module/gen_doc.sh
+    - name: Generate modules readmes
+      run: make readmes
 
     - name: Check for changes
       run: git diff --exit-code
