@@ -10,9 +10,9 @@ For example, to update the readme of one detectors module you will have to:
 The CI will always try to regenerate code from current configurations so if one of them 
 is no longer "sync" it will trigger an error.
 
-The environment used by the CI should be used by the developper to take advantage of a common 
+The environment used by the CI should be used by the developer to take advantage of a common 
 automation processes producing the same consistent result and allow us to apply global 
-rules and templates homogenous to all modules.
+rules and templates homogeneous to all modules.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -34,7 +34,7 @@ rules and templates homogenous to all modules.
 ## Requirements
 
 First of all you have to [setup your environment](./environment.md) to have every required 
-dependencies available to run useful commands detailled below.
+dependencies available to run useful commands detailed below.
 
 ## Scripts
 
@@ -53,7 +53,7 @@ __Label__:
 __Check__: 
 [Documentation](#documentation-1)
 
-* Table of contents of all readmes are automatically commited from the CI but you can run 
+* Table of contents of all readmes are automatically committed from the CI but you can run 
 `make toc`. It uses [doctoc](https://github.com/thlorenz/doctoc) under the hood so you can 
 also run `doctoc --github --title ':link: **Contents**' --maxlevel 3` on a specific module.
 
@@ -82,7 +82,7 @@ also use it to update only one module provided as parameter.
 edit the terraform code in its tf file.
 
 * To add a new detector to an existing module you can use the [j2 based 
-generator](../scripts/templates/README.md) adding a new yaml config file in the module directory 
+generator](../scripts/templates/README.md) adding a new yaml configuration file in the module directory 
 `conf/` with the prefix `[0-9][0-9]-` like `conf/00-my_first_detector.yaml` then run `make detectors`.
 
 * In some cases you do not want use the generator or it does not provide all capabilities you need.
@@ -127,7 +127,7 @@ implemented everywhere.
 
 Every single and tiny change in these templating rules must be spread to the entire repository on 
 all modules and their detectors. This could be difficult to automate, source of mistakes and have 
-undersired side effects.
+undesired side effects.
 
 If you want to implement a special feature for a specific module this is [detectors](#detectors) change 
 type you can go ahead.
@@ -145,7 +145,7 @@ failed for any error meet (i.e. change detected). All are required and must pass
 
 ### Detectors
 
-The [Detectors](../.github/workflows/main.yml) workflow is dedicated to test terrafrom code related to 
+The [Detectors](../.github/workflows/main.yml) workflow is dedicated to test terraform code related to 
 detectors in modules. It contains different jobs:
 
 * __deployment__: terraform `fmt`, `validate` and `apply all` detectors from all modules bootstrapping 
@@ -160,7 +160,7 @@ declarations](https://github.com/terraform-linters/tflint/blob/master/docs/rules
 to ensure outputs are up to date. It consists of `make outputs`.
 
 * __gen__: regenerates the detectors terraform resources and variables from their preset yaml 
-configuration using the jinja based generator to ensure the config and code are "sync". It 
+configuration using the jinja based generator to ensure the configuration and code are "sync". It 
 consists of `make detectors`.
 
 ### Documentation
@@ -180,7 +180,7 @@ Both of these jobs consist of the `make doc` command.
 ### Generator
 
 The [Generator](../.github/workflows/generator.yml) workflow is dedicated to test the j2 based 
-detectors generator which help the developper to create new detectors. 
+detectors generator which help the developer to create new detectors. 
 
 This generator is also used in the `gen` job of the `Detectors` workflow to regenerate 
 all pre-configured detectors code.
@@ -189,7 +189,8 @@ There is only one job `test` which:
 
 * create a new "fake" module using `make module` in [/modules](../modules) directory.
 * generate detectors resources and variables thanks to the generator using all available 
-example configs from [/scripts/templates/examples](../scripts/templates/examples) directory.
+example configurations from [/scripts/templates/examples](../scripts/templates/examples) 
+directory.
 * import the "fake" module into the ready example stack 
 [detectors.tf](../examples/stack/detectors.tf) next to the existing static import.
 * deploy the [/examples/stack](../examples/stack) to validate full process of creating a 

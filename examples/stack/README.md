@@ -15,7 +15,7 @@ implementation example to use and deploy detectors modules available in this rep
 
 ## Step by step guide
 
-1. `git clone` this repo to your computer.
+1. `git clone` this repository to your computer.
 1. Install [Terraform](https://www.terraform.io/).
 1. Open `variables.tf`, and set the a default value for `environment` variable like `doc`.
 1. Run `terraform init`.

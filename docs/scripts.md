@@ -1,7 +1,7 @@
 ## Scripts
 
-This repo contains multiple scripts to automate some tasks performed by the CI, 
-the developper or even the user.
+This repository contains multiple scripts to automate some tasks performed by the CI, 
+the developer or even the user.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -12,7 +12,7 @@ the developper or even the user.
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-All scripts are splitted into different directories. The [/Makefile](../Makefile) 
+All scripts are split into different directories. The [/Makefile](../Makefile) 
 and the CI both use these scripts to automate automation over changes depending 
 on its type.
 
