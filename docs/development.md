@@ -168,12 +168,15 @@ consists of `make detectors`.
 The [Documentation](../.github/workflows/doc.yml) workflow is dedicated to update table of contents 
 and check that generated documentation. It contains different jobs:
 
-* __toc__: runs [doctoc](https://github.com/thlorenz/doctoc) to generate table of contents on 
+* __toc__: runs [DocToc](https://github.com/thlorenz/doctoc) to generate table of contents on 
 all readmes in the repository. It consists of `make toc` but this job automatically push commits 
 over your changes to update toc so it is not required to run this command manually.
 
-* __modules__: regenerates all modules readmes from its yaml configuration to ensure they are 
-synced. It consists of `make readmes`.
+* __spellcheck__: runs [PySpelling](https://facelessuser.github.io/pyspelling/) to find any typos 
+in markdown files.
+
+* __dead-links__: uses [markdown-link-check](https://github.com/marketplace/actions/markdown-link-check) 
+to find any broken links in markdown files.
 
 Both of these jobs consist of the `make doc` command.
 

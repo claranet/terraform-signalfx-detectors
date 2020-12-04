@@ -18,6 +18,9 @@ io
 www
 tf
 doctoc
+DocToc
+pyspelling
+PySpelling
 Makefile
 Dockerfile
 severities

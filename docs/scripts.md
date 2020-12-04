@@ -9,6 +9,7 @@ the developer or even the user.
 
 - [Module](#module)
 - [Stack](#stack)
+- [Templates](#templates)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -36,3 +37,7 @@ configured stack. The `make stack` command for example used in the CI to deploy
 all monitors allow to generate a fresh stack with all modules configured in 
 [/examples/stack](../examples/stack).it.
 
+### Templates
+
+Jinj2 based templates are available in [/scripts/templates](../scripts/templates) 
+and are used in combination with a Jinja2 renderer to generate code.
