@@ -2,4 +2,3 @@
 /**/terraform.tfstate.backup
 /**/terraform.tfvars
 /**/.terraform
-/stack/*.tf
