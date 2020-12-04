@@ -32,7 +32,7 @@ resource "signalfx_detector" "{{ id }}" {
 
     {%- for key, signal in signals.items() -%}
       {%- if 'metric' in signal %}
-    {{ key }} = data('{{ signal.metric }}', filter={%- if filtering is defined and filtering -%}{{ filtering_variable }} and {% endif -%}${module.filter-tags.filter_custom})
+    {{ key }} = data('{{ signal.metric }}', filter={%- if exclude_not_running_vm is defined and exclude_not_running_vm -%}${local.not_running_vm_filters} and {% endif -%}{%- if filtering is defined and filtering -%}{{ filtering_variable }} and {% endif -%}${module.filter-tags.filter_custom}{%- if signal.extrapolation is defined and signal.extrapolation -%}, extrapolation='{{ signal.extrapolation }}'{% endif -%})
         {%- if aggregation | default(true) %}${var.{{ id }}_aggregation_function}{%- endif %}
         {%- if transformation | default(true)%}${var.{{ id }}_transformation_function}{%- endif %}
       {%- endif -%}
@@ -88,7 +88,7 @@ EOF
     detect_label          = "{{ severity | replace('critical', 'crit') | replace ('warning', 'warn') | upper }}"
     disabled              = coalesce({% if rules | length > 1 %}var.{{ id }}_disabled_{{ severity }}, {% endif %}var.{{ id }}_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.{{ id }}_notifications, "{{ severity }}", []), var.notifications.{{ severity }})
-    parameterized_subject = local.rule_subject
+    parameterized_subject = local.rule_subject{%- if type == 'heartbeat' -%}_novalue{% endif %}
     parameterized_body    = local.rule_body
   }
   {%- endfor %}
