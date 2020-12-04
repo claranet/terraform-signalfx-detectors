@@ -23,8 +23,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-middleware-tomcat" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//middleware/tomcat?ref={revision}"
+module "signalfx-detectors-smart-agent-tomcat" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/smart-agent_tomcat?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications
@@ -72,9 +72,9 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* Tomcat heartbeat
 * Tomcat average processing time
 * Tomcat busy threads percentage
+* Tomcat heartbeat
 
 ## How to collect required metrics?
 

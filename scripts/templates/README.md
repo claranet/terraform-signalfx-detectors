@@ -4,6 +4,20 @@ A list of [jinja](https://jinja.palletsprojects.com/)
 based templates rendering terraform code from [SignalFx 
 provider](https://github.com/splunk-terraform/terraform-provider-signalfx).
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+:link: **Contents**
+
+- [Generator](#generator)
+  - [Goal](#goal)
+  - [Limit](#limit)
+  - [Requirements](#requirements)
+  - [Structure](#structure)
+  - [Usage](#usage)
+  - [Examples](#examples)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Generator
 
 Templates could be used to generate code from preset configurations or

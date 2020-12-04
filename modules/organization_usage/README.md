@@ -21,7 +21,7 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 
 ```hcl
 module "signalfx-detectors-organization-usage" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//organization/usage?ref={revision}"
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/organization_usage?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications
@@ -69,11 +69,11 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* Organization usage hosts limit
 * Organization usage containers limit
-* Organization usage custom metrics limit
 * Organization usage containers ratio per host included
+* Organization usage custom metrics limit
 * Organization usage custom metrics ratio per host included
+* Organization usage hosts limit
 
 ## How to collect required metrics?
 

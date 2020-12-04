@@ -1,4 +1,4 @@
-# STREAM-ANALYTICS SignalFx detectors
+# AZURE-STREAM-ANALYTICS SignalFx detectors
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -19,8 +19,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-cloud-azure-stream-analytics" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//cloud/azure/stream-analytics?ref={revision}"
+module "signalfx-detectors-integration-azure-stream-analytics" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/integration_azure-stream-analytics?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications
@@ -68,10 +68,10 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
+* Azure Stream Analytics conversion errors rate
+* Azure Stream Analytics failed function requests rate
 * Azure Stream Analytics heartbeat
 * Azure Stream Analytics resource utilization
-* Azure Stream Analytics failed function requests rate
-* Azure Stream Analytics conversion errors rate
 * Azure Stream Analytics runtime errors rate
 
 ## How to collect required metrics?

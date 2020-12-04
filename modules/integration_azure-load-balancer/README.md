@@ -1,4 +1,4 @@
-# LOAD-BALANCER SignalFx detectors
+# AZURE-LOAD-BALANCER SignalFx detectors
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -19,8 +19,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-cloud-azure-load-balancer" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//cloud/azure/load-balancer?ref={revision}"
+module "signalfx-detectors-integration-azure-load-balancer" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/integration_azure-load-balancer?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications

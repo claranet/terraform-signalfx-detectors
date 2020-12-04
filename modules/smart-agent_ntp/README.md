@@ -21,8 +21,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-system-ntp" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//system/ntp?ref={revision}"
+module "signalfx-detectors-smart-agent-ntp" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/smart-agent_ntp?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications

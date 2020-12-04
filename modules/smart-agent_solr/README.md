@@ -20,8 +20,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-database-solr" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//database/solr?ref={revision}"
+module "signalfx-detectors-smart-agent-solr" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/smart-agent_solr?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications
@@ -69,8 +69,8 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* Apache Solr heartbeat
 * Apache Solr errors count
+* Apache Solr heartbeat
 * Apache Solr searcher warmup time
 
 ## How to collect required metrics?

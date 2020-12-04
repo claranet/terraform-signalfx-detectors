@@ -23,8 +23,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-database-postgresql" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//database/postgresql?ref={revision}"
+module "signalfx-detectors-smart-agent-postgresql" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/smart-agent_postgresql?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications
@@ -72,14 +72,14 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* PostgreSQL heartbeat
-* PostgreSQL deadlocks
-* PostgreSQL hit ratio
-* PostgreSQL rollbacks ratio compared to commits
 * PostgreSQL conflicts
+* PostgreSQL deadlocks
+* PostgreSQL heartbeat
+* PostgreSQL hit ratio
 * PostgreSQL number of connections compared to max
 * PostgreSQL replication lag
 * PostgreSQL replication state
+* PostgreSQL rollbacks ratio compared to commits
 
 ## How to collect required metrics?
 

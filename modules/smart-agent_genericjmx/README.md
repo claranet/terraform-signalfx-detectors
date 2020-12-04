@@ -23,8 +23,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-middleware-genericjmx" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//middleware/genericjmx?ref={revision}"
+module "signalfx-detectors-smart-agent-genericjmx" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/smart-agent_genericjmx?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications
@@ -72,8 +72,8 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* JMX memory heap usage
 * JMX GC old generation usage
+* JMX memory heap usage
 
 ## How to collect required metrics?
 

@@ -1,4 +1,4 @@
-# SUBSCRIPTION SignalFx detectors
+# GCP-PUBSUB-SUBSCRIPTION SignalFx detectors
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -19,8 +19,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-cloud-gcp-pubsub-subscription" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//cloud/gcp/pubsub/subscription?ref={revision}"
+module "signalfx-detectors-integration-gcp-pubsub-subscription" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/integration_gcp-pubsub-subscription?ref={revision}"
 
   environment    = var.environment
   notifications  = local.notifications
@@ -70,8 +70,8 @@ general usage of this repository.
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
 * GCP Pub/Sub Subscription heartbeat
-* GCP Pub/Sub Subscription oldest unacknowledged message
 * GCP Pub/Sub Subscription latency on push endpoint
+* GCP Pub/Sub Subscription oldest unacknowledged message
 
 ## How to collect required metrics?
 

@@ -20,8 +20,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-network-dns" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//network/dns?ref={revision}"
+module "signalfx-detectors-smart-agent-dns" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/smart-agent_dns?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications
@@ -70,8 +70,8 @@ general usage of this repository.
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
 * DNS heartbeat
-* DNS query time
 * DNS query result
+* DNS query time
 
 ## How to collect required metrics?
 

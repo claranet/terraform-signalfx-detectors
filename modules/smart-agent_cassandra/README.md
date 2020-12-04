@@ -23,8 +23,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-database-cassandra" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//database/cassandra?ref={revision}"
+module "signalfx-detectors-smart-agent-cassandra" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/smart-agent_cassandra?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications
@@ -74,14 +74,14 @@ This module creates the following SignalFx detectors which could contain one or 
 
 * Cassandra heartbeat
 * Cassandra read latency 99th percentile
-* Cassandra write latency 99th percentile
 * Cassandra read latency real time
-* Cassandra write latency real time
-* Cassandra transactional read latency 99th percentile
-* Cassandra transactional write latency 99th percentile
-* Cassandra transactional read latency real time
-* Cassandra transactional write latency real time
 * Cassandra storage exceptions count
+* Cassandra transactional read latency 99th percentile
+* Cassandra transactional read latency real time
+* Cassandra transactional write latency 99th percentile
+* Cassandra transactional write latency real time
+* Cassandra write latency 99th percentile
+* Cassandra write latency real time
 
 ## How to collect required metrics?
 

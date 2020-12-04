@@ -21,8 +21,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-network-http" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//network/http?ref={revision}"
+module "signalfx-detectors-smart-agent-http" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/smart-agent_http?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications
@@ -70,13 +70,13 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* HTTP heartbeat
 * HTTP code
+* HTTP content length
+* HTTP heartbeat
 * HTTP regex expression
 * HTTP response time
-* HTTP content length
-* TLS certificate expiry date
 * TLS certificate
+* TLS certificate expiry date
 
 ## How to collect required metrics?
 

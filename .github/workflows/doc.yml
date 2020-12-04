@@ -4,9 +4,9 @@ name: Documentation
 
 on:
   push:
-    paths:
-    - '**.md'
-    - '.github/workflows/doc.yml'
+#    paths:
+#    - '**.md'
+#    - '.github/workflows/doc.yml'
 
 jobs:
   toc:
@@ -21,7 +21,22 @@ jobs:
     - name: TOC Generator
       uses: technote-space/toc-generator@v2.6.1
       with:
-        TARGET_PATHS: '*.md'
+        TARGET_PATHS: '.'
         TOC_TITLE: ':link: **Contents**'
         MAX_HEADER_LEVEL: 3
+
+  modules:
+    runs-on: ubuntu-latest
+    container:
+      image: "claranet/terraform-ci:latest"
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Setup env
+      run: CI_DOCTOC=1 ./scripts/module/loop_wrapper.sh ./scripts/module/gen_doc.sh
+
+    - name: Check for changes
+      run: git diff --exit-code
 

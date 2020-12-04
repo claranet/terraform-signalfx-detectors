@@ -1,4 +1,4 @@
-# ELB SignalFx detectors
+# AWS-ELB SignalFx detectors
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -19,8 +19,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-cloud-aws-elb" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//cloud/aws/elb?ref={revision}"
+module "signalfx-detectors-integration-aws-elb" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/integration_aws-elb?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications
@@ -68,13 +68,13 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* AWS ELB heartbeat
-* AWS ELB healthy instances percentage
 * AWS ELB 4xx error rate
 * AWS ELB 5xx error rate
 * AWS ELB backend 4xx error rate
 * AWS ELB backend 5xx error rate
 * AWS ELB backend latency
+* AWS ELB healthy instances percentage
+* AWS ELB heartbeat
 
 ## How to collect required metrics?
 

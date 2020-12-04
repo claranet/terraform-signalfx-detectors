@@ -21,8 +21,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-middleware-varnish" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//middleware/varnish?ref={revision}"
+module "signalfx-detectors-smart-agent-varnish" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/smart-agent_varnish?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications
@@ -70,12 +70,12 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* Varnish heartbeat
 * Varnish backend Failed
-* Varnish threads number
-* Varnish session dropped
+* Varnish heartbeat
 * Varnish hit rate
 * Varnish memory usage
+* Varnish session dropped
+* Varnish threads number
 
 ## How to collect required metrics?
 

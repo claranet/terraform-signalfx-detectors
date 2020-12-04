@@ -1,4 +1,4 @@
-# APPLICATION-GATEWAY SignalFx detectors
+# AZURE-APPLICATION-GATEWAY SignalFx detectors
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -19,8 +19,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-cloud-azure-application-gateway" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//cloud/azure/application-gateway?ref={revision}"
+module "signalfx-detectors-integration-azure-application-gateway" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/integration_azure-application-gateway?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications
@@ -68,15 +68,15 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* Azure Application Gateway heartbeat
-* Azure Application Gateway has no request
-* Azure Application Gateway backend connect time
-* Azure Application Gateway failed request rate
-* Azure Application Gateway backend unhealthy host ratio
 * Azure Application Gateway 4xx error rate
 * Azure Application Gateway 5xx error rate
 * Azure Application Gateway backend 4xx error rate
 * Azure Application Gateway backend 5xx error rate
+* Azure Application Gateway backend connect time
+* Azure Application Gateway backend unhealthy host ratio
+* Azure Application Gateway failed request rate
+* Azure Application Gateway has no request
+* Azure Application Gateway heartbeat
 
 ## How to collect required metrics?
 

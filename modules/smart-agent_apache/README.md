@@ -19,8 +19,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-middleware-apache" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//middleware/apache?ref={revision}"
+module "signalfx-detectors-smart-agent-apache" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/smart-agent_apache?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications
@@ -68,8 +68,8 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* Apache heartbeat
 * Apache busy workers
+* Apache heartbeat
 
 ## How to collect required metrics?
 

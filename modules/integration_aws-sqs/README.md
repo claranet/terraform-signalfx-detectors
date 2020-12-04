@@ -1,4 +1,4 @@
-# SQS SignalFx detectors
+# AWS-SQS SignalFx detectors
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -19,8 +19,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-cloud-aws-sqs" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//cloud/aws/sqs?ref={revision}"
+module "signalfx-detectors-integration-aws-sqs" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/integration_aws-sqs?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications
@@ -68,9 +68,9 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
+* AWS SQS Age of the oldest message
 * AWS SQS heartbeat
 * AWS SQS Visible messages
-* AWS SQS Age of the oldest message
 
 ## How to collect required metrics?
 

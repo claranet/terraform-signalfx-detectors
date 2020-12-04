@@ -1,4 +1,4 @@
-# SQL-DATABASE SignalFx detectors
+# AZURE-SQL-DATABASE SignalFx detectors
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -19,8 +19,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-cloud-azure-sql-database" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//cloud/azure/sql-database?ref={revision}"
+module "signalfx-detectors-integration-azure-sql-database" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/integration_azure-sql-database?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications
@@ -68,11 +68,11 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* Azure SQL Database heartbeat
 * Azure Sql Database CPU
+* Azure SQL Database deadlocks count
 * Azure SQL Database disk usage
 * Azure SQL Database DTU consumption
-* Azure SQL Database deadlocks count
+* Azure SQL Database heartbeat
 
 ## How to collect required metrics?
 

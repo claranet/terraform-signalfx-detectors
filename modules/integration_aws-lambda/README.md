@@ -1,4 +1,4 @@
-# LAMBDA SignalFx detectors
+# AWS-LAMBDA SignalFx detectors
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -19,8 +19,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-cloud-aws-lambda" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//cloud/aws/lambda?ref={revision}"
+module "signalfx-detectors-integration-aws-lambda" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/integration_aws-lambda?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications
@@ -69,8 +69,8 @@ general usage of this repository.
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
 * AWS Lambda errors rate
-* AWS Lambda invocations throttled
 * AWS Lambda invocations
+* AWS Lambda invocations throttled
 
 ## How to collect required metrics?
 

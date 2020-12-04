@@ -1,4 +1,4 @@
-# NLB SignalFx detectors
+# AWS-NLB SignalFx detectors
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -19,8 +19,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-cloud-aws-nlb" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//cloud/aws/nlb?ref={revision}"
+module "signalfx-detectors-integration-aws-nlb" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/integration_aws-nlb?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications
@@ -68,8 +68,8 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* AWS NLB heartbeat
 * AWS NLB healthy instances percentage
+* AWS NLB heartbeat
 
 ## How to collect required metrics?
 

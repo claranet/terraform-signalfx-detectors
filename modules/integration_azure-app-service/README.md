@@ -1,4 +1,4 @@
-# APP-SERVICE SignalFx detectors
+# AZURE-APP-SERVICE SignalFx detectors
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -19,8 +19,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-cloud-azure-app-service" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//cloud/azure/app-service?ref={revision}"
+module "signalfx-detectors-integration-azure-app-service" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/integration_azure-app-service?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications
@@ -68,11 +68,11 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* Azure App Service heartbeat
-* Azure App Service response time
-* Azure App Service memory usage
-* Azure App Service 5xx error rate
 * Azure App Service 4xx error rate
+* Azure App Service 5xx error rate
+* Azure App Service heartbeat
+* Azure App Service memory usage
+* Azure App Service response time
 * Azure App Service successful response rate
 
 ## How to collect required metrics?

@@ -1,4 +1,4 @@
-# DATABASE-MONGO SignalFx detectors
+# MONGODB SignalFx detectors
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -22,8 +22,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-modules-database-mongo" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/database-mongo?ref={revision}"
+module "signalfx-detectors-smart-agent-mongodb" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/smart-agent_mongodb?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications
@@ -71,13 +71,13 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* MongoDB heartbeat
-* MongoDB page faults
-* MongoDB number of connections over max capacity
 * MongoDB asserts (warning and regular) errors
+* MongoDB heartbeat
+* MongoDB number of connections over max capacity
+* MongoDB page faults
 * MongoDB primary in replicaset
-* MongoDB secondary members count in replicaset
 * MongoDB replication lag
+* MongoDB secondary members count in replicaset
 
 ## How to collect required metrics?
 

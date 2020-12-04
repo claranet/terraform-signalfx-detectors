@@ -1,4 +1,4 @@
-# NODE SignalFx detectors
+# RABBITMQ-NODE SignalFx detectors
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -22,8 +22,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-middleware-rabbitmq-node" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//middleware/rabbitmq/node?ref={revision}"
+module "signalfx-detectors-smart-agent-rabbitmq-node" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/smart-agent_rabbitmq-node?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications

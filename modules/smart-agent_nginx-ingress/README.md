@@ -1,4 +1,4 @@
-# NGINX SignalFx detectors
+# NGINX-INGRESS SignalFx detectors
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -24,8 +24,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-container-kubernetes-ingress-nginx" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//container/kubernetes/ingress/nginx?ref={revision}"
+module "signalfx-detectors-smart-agent-nginx-ingress" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/smart-agent_nginx-ingress?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications
@@ -73,8 +73,8 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* Kubernetes Ingress Nginx 5xx errors ratio
 * Kubernetes Ingress Nginx 4xx errors ratio
+* Kubernetes Ingress Nginx 5xx errors ratio
 * Kubernetes Ingress Nginx latency
 
 ## How to collect required metrics?
