@@ -21,6 +21,10 @@ implementation example to use and deploy detectors modules available in this rep
 1. Run `terraform init`.
 1. Run `terraform apply`.
 
+Now you can improve the default configuration of each module following the wiki 
+[Guidance](https://github.com/claranet/terraform-signalfx-detectors/wiki/Guidance) to 
+meet your own needs.
+
 ## Notes
 
 In this example we deploy the `system-common` detectors to monitor metrics which are common to all 

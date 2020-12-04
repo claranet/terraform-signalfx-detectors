@@ -35,7 +35,7 @@ readmes:
 
 .PHONY: toc
 toc: 
-	doctoc --github --title ':link: **Contents**' --maxlevel 3 .	
+	doctoc --github --title ':link: **Contents**' --maxlevel 3 .
 
 .PHONY: check
 check: lint
