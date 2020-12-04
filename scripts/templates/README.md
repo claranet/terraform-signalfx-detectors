@@ -8,15 +8,47 @@ provider](https://github.com/splunk-terraform/terraform-provider-signalfx).
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 :link: **Contents**
 
+- [Requirements](#requirements)
 - [Generator](#generator)
   - [Goal](#goal)
   - [Limit](#limit)
-  - [Requirements](#requirements)
+  - [Requirements](#requirements-1)
   - [Structure](#structure)
   - [Usage](#usage)
   - [Examples](#examples)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+## Requirements
+
+Before being able to use the j2 based generator(s) you have to [setup your 
+environment](/docs/environment.md).
+
+Then, you can either run `make` to enter in the docker container and use all 
+available commands like `j2` or run the container as a "oneshot" command like:
+```bash
+$ docker run --rm -ti -v "${PWD}:/work" claranet/terraform-ci:latest j2 scripts/templates/detector.tf.j2 scripts/templates/examples/heartbeat-simple.yaml
+resource "signalfx_detector" "heartbeat" {
+  name      = format("%s %s", local.detector_name_prefix, "Webcheck heartbeat")
+  max_delay = 900
+
+  program_text = <<-EOF
+    from signalfx.detectors.not_reporting import not_reporting
+    signal = data('webcheck_status_code', filter=${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')
+    not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}').publish('CRIT')
+EOF
+
+  rule {
+    description           = "has not reported in ${var.heartbeat_timeframe}"
+    severity              = "Critical"
+    detect_label          = "CRIT"
+    disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
+    parameterized_subject = local.rule_subject_novalue
+    parameterized_body    = local.rule_body
+  }
+}
+```
 
 ## Generator
 

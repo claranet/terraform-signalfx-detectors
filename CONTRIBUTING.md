@@ -14,15 +14,15 @@ adapt. The goal is to maximize chance to act relevantly to your feedback.
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 :link: **Contents**
 
-- [Proposing a change](#proposing-a-change)
-  - [Documentation](#documentation)
-  - [Detectors](#detectors)
-  - [Templating](#templating)
-  - [Continous Integration](#continous-integration)
 - [Workflow](#workflow)
   - [Issue](#issue)
   - [Pull Request](#pull-request)
   - [Speed up review and merge](#speed-up-review-and-merge)
+- [Changes types](#changes-types)
+  - [Documentation](#documentation)
+  - [Detectors](#detectors)
+  - [Templating](#templating)
+  - [Continous Integration](#continous-integration)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 

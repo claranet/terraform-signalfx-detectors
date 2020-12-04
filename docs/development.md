@@ -18,7 +18,7 @@ rules and templates homogenous to all modules.
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 :link: **Contents**
 
-- [Environment](#environment)
+- [Requirements](#requirements)
 - [Scripts](#scripts)
 - [Change types](#change-types)
   - [Documentation](#documentation)
@@ -31,63 +31,10 @@ rules and templates homogenous to all modules.
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## Environment
+## Requirements
 
-This guide uses [docker](https://www.docker.com/) to ensure the environment is the same 
-as the CI using an image which embeds enverything required to work with this repository.
-
-__Requirements__:
-
-* `docker 17.06+` to run dev environment
-* `make` to use makefile
-
-The dev environment uses the same [docker 
-image](https://hub.docker.com/r/claranet/terraform-ci) as the CI. You still can install 
-all dependencies listed in the 
-[Dockerfile](https://github.com/claranet/dockerfiles/tree/master/terraform) directly on 
-your host but it should be easier and less platform depdendent with `docker`.
-
-To run the environment, be sure the docker daemon is running and run `make`:
-
-```bash
-$ systemctl start docker.service
-$ make
-docker exec -ti terraform-signalfx-detectors bash -i || \
-        docker run --rm -ti -v "/home/qmanfroi/git/signalfx/terraform-signalfx-detectors:/work" \
-                --name terraform-signalfx-detectors \
-                claranet/terraform-ci:latest bash -i
-Error: No such container: terraform-signalfx-detectors
-[root@xxx work]# make
-check      clean      detectors  dev        doc        gen        lint       module     outputs    readmes    stack      toc 
-```
-
-Now you can run every scripts directly or from `make` targets and enjoying automation.
-
-You also can run "oneshot" command directly using the docker image yourself to use a dependency 
-not available on your host like `j2`:
-```bash
-$ docker run --rm -ti -v "${PWD}:/work" claranet/terraform-ci:latest j2 scripts/templates/detector.tf.j2 scripts/templates/examples/heartbeat-simple.yaml
-resource "signalfx_detector" "heartbeat" {
-  name      = format("%s %s", local.detector_name_prefix, "Webcheck heartbeat")
-  max_delay = 900
-
-  program_text = <<-EOF
-    from signalfx.detectors.not_reporting import not_reporting
-    signal = data('webcheck_status_code', filter=${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')
-    not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}').publish('CRIT')
-EOF
-
-  rule {
-    description           = "has not reported in ${var.heartbeat_timeframe}"
-    severity              = "Critical"
-    detect_label          = "CRIT"
-    disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
-    parameterized_subject = local.rule_subject_novalue
-    parameterized_body    = local.rule_body
-  }
-}
-```
+First of all you have to [setup your environment](./environment.md) to have every required 
+dependencies available to run useful commands detailled below.
 
 <<<<<<< HEAD
 =======
