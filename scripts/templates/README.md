@@ -24,7 +24,7 @@ or the modules readmes.
 ## Requirements
 
 Before being able to use the j2 based generator(s) you have to [setup your 
-environment](/docs/environment.md).
+environment](../../docs/environment.md).
 
 Then, you can either run `make` to enter in the docker container and use all 
 available commands like `j2` or run the container as a "one shot" command like:
@@ -63,7 +63,7 @@ At the root of this directory there are:
 
 * all available templates files `*.j2` like [the detector resource](./detector.tf.j2) 
 and [the variables declaration](./variables.tf.j2) templates to use with the [detector 
-generator](#detector) or the [readme template](./readme.yaml) for 
+generator](#detector) or the [readme template](./readme.md.j2) for 
 the [readme generator](#readme) used internally.
 
 * [values.yaml](./values.yaml) with all configuration options available for the 
@@ -107,12 +107,12 @@ which is opinionated and implement its common "rules" only.
 This is an helper, it should not be fully trusted and could be not up to date so:
 
 * it could allow to fully generate a detector followed by its yaml configuration like 
-[those of the system module](/modules/smart-agent_system-common/conf) producing 
-detectors in the [detectors-gen.tf](/modules/smart-agent_system-common/detectors-gen.tf) 
+[those of the system module](../../modules/smart-agent_system-common/conf) producing 
+detectors in the [detectors-gen.tf](../../modules/smart-agent_system-common/detectors-gen.tf) 
 file.
 * it could be used as base to implement most advanced needs, not followed by a yaml 
 configuration file but helping developer to bootstrap a "skeleton" of code like for the 
-detectors in [detectors-system.tf](/modules/smart-agent_system-common/detectors-system.tf) 
+detectors in [detectors-system.tf](../../modules/smart-agent_system-common/detectors-system.tf) 
 file.
 
 The code will be generated (only in first case) and detectors deployed to ensure it 
@@ -124,7 +124,7 @@ The code will be generated (only in first case) and detectors deployed to ensure
 `make module {source}_{module}` replacing `{source}` and `{module}` appropriately.
 1. Create your new yaml configuration file following [values.yaml](./values.yaml)
 You can take examples on existing ones like [those of the system 
-module](/modules/smart-agent_system-common/conf)
+module](../../modules/smart-agent_system-common/conf)
 1. Put in the module `conf` directory prefixed with `[0-9][0-9]-` numbering to 
 set the order code generated in the `detectors-gen.tf` file like 
 `modules/source_module/conf/00-heartbeat.yaml`.

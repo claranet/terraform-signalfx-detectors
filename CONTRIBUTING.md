@@ -2,7 +2,7 @@
 
 __Thanks for wanting to contribute. The Claranet Team will be pleased to guide you and review 
 your proposals as quickly as possible. Keep in mind that all communication are 
-subject to our [CODE_OF_CONDUCT.md](/CODE_OF_CONDUCT.md).__
+subject to our [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md).__
 
 To record a bug report, enhancement proposal, or give any other product feedback, please [open 
 a new Github issue](https://github.com/claranet/terraform-signalfx-detectors/issues/new/choose) 

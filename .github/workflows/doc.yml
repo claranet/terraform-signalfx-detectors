@@ -59,3 +59,9 @@ jobs:
 
     - name: Check dead links in Markdown
       uses: gaurav-nelson/github-action-markdown-link-check@v1
+      with:
+        use-quiet-mode: yes
+        use-verbose-mode: yes
+        check-modified-files-only: yes
+        config-file: .mlc_config.json
+

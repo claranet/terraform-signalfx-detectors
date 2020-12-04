@@ -39,5 +39,5 @@ all monitors allow to generate a fresh stack with all modules configured in
 
 ### Templates
 
-Jinj2 based templates are available in [/scripts/templates](../scripts/templates) 
+Jinja2 based templates are available in [/scripts/templates](../scripts/templates) 
 and are used in combination with a Jinja2 renderer to generate code.
