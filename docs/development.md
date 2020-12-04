@@ -36,28 +36,11 @@ rules and templates homogenous to all modules.
 First of all you have to [setup your environment](./environment.md) to have every required 
 dependencies available to run useful commands detailled below.
 
-<<<<<<< HEAD
-=======
 ## Scripts
 
 Now you have a ready dev env you can run `make` commands or directly use the underlying 
-[/scripts](../scripts) or even some tools available in the container like `doctoc` or `j2`.
+[scripts](./scripts.md) or even some tools available in the container like `doctoc` or `j2`.
 
-All scripts are splitted into different directories: 
-
-* [/scripts/module](../scripts/module) related to automation on detectors modules in 
-the repository and so often used for development purpose. One special script is the 
-[loop_wrapper.sh](../scripts/module/loop_wrapper.sh) script used in combination with 
-another "atomic" script to apply it on all modules (often used for `make` commands).
-
-* [/scripts/stack](../scripts/stack) related to automation on stack side and so often used 
-by the end user to bootstrap the [/examples/stack](../examples/stack) but it is also used 
-by the CI to deploy and test detectors like a true user.
-
-The [/Makefile](../Makefile) and the CI both use these scripts to automate automation over 
-changes depending on its type.
-
->>>>>>> 9662d5fd... add development guide
 ## Change types
 
 There are different automation tasks to perform depending on the change done in this repository.
@@ -71,13 +54,13 @@ __Check__:
 [Documentation](#documentation-1)
 
 * Table of contents of all readmes are automatically commited from the CI but you can run 
-`make toc`. It uses [doctoc](https://github.com/thlorenz/doctoc) undercover so you can 
+`make toc`. It uses [doctoc](https://github.com/thlorenz/doctoc) under the hood so you can 
 also run `doctoc --github --title ':link: **Contents**' --maxlevel 3` on a specific module.
 
 * To update readme(s) of detectors modules you have to edit its underlying configuration 
 available in `conf/readme.yaml` of the module directory. Then you must run `make readmes` 
 to regenerate readmes. It uses the module [gen_doc.sh](../scripts/module/gen_doc.sh) script 
-undercover so you also use it to update only one module provided as parameter.
+under the hood so you also use it to update only one module provided as parameter.
 
 You can use `make doc` command which is equivalent to `make readmes && make toc`.
 
@@ -92,7 +75,7 @@ __Check__:
 * To update an existing detector located in a `detectors-gen.tf` file so you have, as for readme, 
 edit the right configuration file located `conf/[0-9][0-9]-*.yaml` in its module directory.
 Then you will have to run `make detectors` to regenerate the code. It uses the module 
-[gen_detectors.sh](../scripts/module/gen_detectors.sh) undercover so you can 
+[gen_detectors.sh](../scripts/module/gen_detectors.sh) under the hood so you can 
 also use it to update only one module provided as parameter.
 
 * To update an existing detector not located in a `detectors-gen.tf` file so you can directly 
