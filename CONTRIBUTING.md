@@ -2,7 +2,7 @@
 
 __Thanks for wanting to contribute. The Claranet Team will be pleased to guide you and review 
 your proposals as quickly as possible. Keep in mind that all communication are 
-subject to our [CODE_OF_CONDUCT.md](/CODE_OF_CONDUCT.md).__
+subject to our [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md).__
 
 To record a bug report, enhancement proposal, or give any other product feedback, please [open 
 a new Github issue](https://github.com/claranet/terraform-signalfx-detectors/issues/new/choose) 
@@ -22,7 +22,7 @@ adapt. The goal is to maximize chance to act relevantly to your feedback.
   - [Documentation](#documentation)
   - [Detectors](#detectors)
   - [Templating](#templating)
-  - [Continous Integration](#continous-integration)
+  - [Continuous Integration](#continuous-integration)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -33,13 +33,13 @@ give some clues and recommendations on the design and may be provide existing wo
 from our experience.
 
 But depending of the scope and the size of the change and how you feel confident about it, do 
-know well the code base, and do not need help feel free to go to the next step direclty.
+know well the code base, and do not need help feel free to go to the next step directly.
 
 ### Issue
 
 First, search for existing issue related to your change and start a discussion about what you 
-wish to implement. This could be useful to prevent tenious conflicts, notice eventual 
-implications or mutualize implementation of dependent or similar features.
+wish to implement. This could be useful to prevent implicit conflicts, notice eventual 
+implications or mutualise implementation of dependent or similar features.
 
 If you did not find an existing one, please [open a new Github
 issue](https://github.com/claranet/terraform-signalfx-detectors/issues/new/choose) 
@@ -109,7 +109,7 @@ __Label__:
 
 __Issue__: Not required, go ahead and open a Pull Request.
 
-Changes of documentation are riskless but table of contents and modules readmes are generated, 
+Changes of documentation are safe but table of contents and modules readmes are generated, 
 please follow the [development's guide](docs/development.md#documentation).
 
 Pull request is not possible on Github `wiki` so you can create an issue and if it is too 
@@ -139,7 +139,7 @@ Globally, we want modules to be as much "plug and play" as possible, that means:
 
 * be easy to configure and deploy
 * works in most of the situations
-* do not generate undersirable and predictable false alerts
+* do not generate undesirable and predictable false alerts
 * how to collect the metrics used in detectors should be provided, documented and available.
 * should limit dependencies complexity as using too many or too different sources of metrics.
 
@@ -155,7 +155,7 @@ terraform to make it possible to customize their configuration and adapt their b
 
 This is why all modules must provide, at least, these Terraform  
 [variables](https://github.com/claranet/terraform-signalfx-detectors/wiki/Variables) to enjoy this 
-templating and provide to the user common cutomization capabilities.
+templating and provide to the user common customization capabilities.
 
 ### Templating
 
@@ -169,24 +169,23 @@ will eventually limit the usage in some cases but this allows to preserve homoge
 implementation, parity in features and it brings a common, repeatable and opinionated way to deploy, 
 configure and manage detectors.
 
-We want this template evolves from internal usage and community feedbacks to cover a larger scope of 
+We want this template evolves from internal usage and community feedback to cover a larger scope of 
 usage and provide more flexibility in implementation. However, monitoring is a critical component for 
 most of the people and it is crucial for us to preserve the reliability of the underlying detectors.
 
-Too many customizations mechanisms fatally involve more complexity and make the code more difficult 
+Too many customization mechanisms fatally involve more complexity and make the code more difficult 
 to understand, review, maintain, test and to contribute to it. Sometimes we will prefer to abandon a 
 feature to keep it simple if it concerns to few users or implies too tricky or dangerous consequences.
 
-That said, please open an issue to discuss, this could help us to notice and priorize some popular 
+That said, please open an issue to discuss, this could help us to notice and prioritize some popular 
 features. And if you want to try to implement it yourself this could be the place to provide you help 
 and resources. In this case, please follow the [development's guide](docs/development.md#templating).
 
 At this time, we do not have a formal process for reviewing proposals that significantly change this 
 project, its primary usage patterns, and its defined template. Additionally, some seemingly simple 
-proposals can be difficult or time consuming to spread over every modules given that we want to keep 
-homogeinity as much as possible.
+proposals can be difficult or time consuming to spread over every modules.
 
-### Continous Integration
+### Continuous Integration
 
 __Label__: 
 [CI](https://github.com/claranet/terraform-signalfx-detectors/labels/CI)
@@ -195,8 +194,8 @@ __Issue__: Highly recommended because it could have deep implications but not re
 changes.
 
 CI related changes will generally be done by Claranet Team but if you try to implement an important 
-templating change as mentionned just above there is good chance you will need to update existing 
+templating change as mentioned just above there is good chance you will need to update existing 
 tests or add new ones for your feature.
 
-Please ask to help and advices about this because the workflow could be not obvious but you can 
+Please ask to help and advice about this because the workflow could be not obvious but you can 
 check the [development's guide](docs/development.md#checks).

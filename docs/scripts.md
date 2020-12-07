@@ -1,7 +1,7 @@
 ## Scripts
 
-This repo contains multiple scripts to automate some tasks performed by the CI, 
-the developper or even the user.
+This repository contains multiple scripts to automate some tasks performed by the CI, 
+the developer or even the user.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -9,10 +9,11 @@ the developper or even the user.
 
 - [Module](#module)
 - [Stack](#stack)
+- [Templates](#templates)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-All scripts are splitted into different directories. The [/Makefile](../Makefile) 
+All scripts are split into different directories. The [/Makefile](../Makefile) 
 and the CI both use these scripts to automate automation over changes depending 
 on its type.
 
@@ -36,3 +37,7 @@ configured stack. The `make stack` command for example used in the CI to deploy
 all monitors allow to generate a fresh stack with all modules configured in 
 [/examples/stack](../examples/stack).it.
 
+### Templates
+
+Jinja2 based templates are available in [/scripts/templates](../scripts/templates) 
+and are used in combination with a Jinja2 renderer to generate code.

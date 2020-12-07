@@ -95,7 +95,7 @@ It is especially useful to upgrade from `v0.4.1` (the last "tree" based version)
 | //middleware/varnish                   | //modules/smart-agent_varnish                        |
 | //database/zookeeper                   | //modules/smart-agent_zookeeper                      |
 
-Here is a bash script to update existing terraform config files from the old tree path to 
+Here is a bash script to update existing terraform configuration files from the old tree path to 
 the new flat and terraform registry compliant one:
 
 ```bash

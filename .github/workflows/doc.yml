@@ -40,3 +40,28 @@ jobs:
     - name: Check for changes
       run: git diff --exit-code
 
+  spellcheck:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Run PySpelling
+      uses: sbates130272/spellcheck-github-actions@v0.7.0
+
+  dead-links:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Check dead links in Markdown
+      uses: gaurav-nelson/github-action-markdown-link-check@v1
+      with:
+        use-quiet-mode: yes
+        use-verbose-mode: yes
+        check-modified-files-only: yes
+        config-file: .mlc_config.json
+

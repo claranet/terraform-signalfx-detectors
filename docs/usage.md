@@ -23,7 +23,7 @@ following the wiki
 ## Requirements
 
 First of all you have to [setup your environment](./environment.md) to have every required 
-dependencies available to run useful commands detailled below.
+dependencies available to run useful commands detailed below.
 
 ## Scripts
 
@@ -32,13 +32,13 @@ Now you have a ready dev env you can run `make` commands or directly use the und
 
 ## Stack
 
-To bootstrap a new stack usable for your project with all modules pre imported and configured,
+To bootstrap a new stack usable for your project with all modules pre-imported and configured,
 you can use `make stack` command. It will update the [/examples/stack](../examples/stack) 
 directory which is ready terraform stack you can `terraform apply`.
 
 In general you have to remove every modules you don't need from 
 [/examples/stack/detectors.tf](../examples/stack/detectors.tf) and configure those kept 
-following its own readme (available in its directory `/modules/mymodule`.
+following its own readme (available in its directory `/modules/xxx`.
 
 Now you can follow the its [readme](../examples/stack/README.md) to deploy the stack.
 
@@ -64,7 +64,7 @@ Initializing the backend...
 Initializing provider plugins...
 - Finding splunk-terraform/signalfx versions matching ">= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4, >= 4.26.4"...
 - Installing splunk-terraform/signalfx v6.1.0...
-- Installed splunk-terraform/signalfx v6.1.0 (signed by a HashiCorp partner, key ID 8B5755E223754FC9)
+- Installed splunk-terraform/signalfx v6.1.0 (signed by a HashiCorp partner, key ID xxx)
 
 Partner and community providers are signed by their developers.
 If you'd like to know more about provider signing, you can read about it here:
@@ -80,7 +80,7 @@ If you ever set or change modules or backend configuration for Terraform,
 rerun this command to reinitialize your working directory. If you forget, other
 commands will detect it and remind you to do so if necessary.
 
-$ SFX_AUTH_TOKEN=MyToken TF_VAR_environment=doc terraform apply -target=module.signalfx-detectors-smart-agent-system-common.signalfx_detector.cpu examples/stack
+$ SFX_AUTH_TOKEN=xxx TF_VAR_environment=doc terraform apply -target=module.signalfx-detectors-smart-agent-system-common.signalfx_detector.cpu examples/stack
 
 An execution plan has been generated and is shown below.
 Resource actions are indicated with the following symbols:
@@ -196,7 +196,7 @@ Do you want to perform these actions?
   Enter a value: yes
 
 module.signalfx-detectors-smart-agent-system-common.signalfx_detector.cpu: Creating...
-module.signalfx-detectors-smart-agent-system-common.signalfx_detector.cpu: Creation complete after 2s [id=EoZrFNAAEAA]
+module.signalfx-detectors-smart-agent-system-common.signalfx_detector.cpu: Creation complete after 2s [id=xxx]
 
 Warning: Applied changes may be incomplete
 

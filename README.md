@@ -61,7 +61,7 @@ Contributions from the community are most welcome!
 There are many ways to contribute: writing code, add or improve detectors, 
 documentation, reporting issues, discussing better error tracking...
 
-[Instructions in CONTRUBITING.md](CONTRIBUTING.md).
+[Instructions in CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## 🚧 Roadmap
 
