@@ -24,7 +24,7 @@ resource "signalfx_detector" "response_time" {
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'false') and filter('primary_aggregation_type', 'true')
-        signal = data('HttpResponseTime', extrapolation="last_value", filter=base_filter and ${module.filter-tags.filter_custom})${var.response_time_aggregation_function}.publish('signal')
+        signal = data('HttpResponseTime', filter=base_filter and ${module.filter-tags.filter_custom})${var.response_time_aggregation_function}.fill(value=None).publish('signal')
         detect(when(signal > threshold(${var.response_time_threshold_critical}), lasting="${var.response_time_timer}")).publish('CRIT')
         detect(when(signal > threshold(${var.response_time_threshold_major}), lasting="${var.response_time_timer}") and when(signal <= ${var.response_time_threshold_critical})).publish('MAJOR')
     EOF
