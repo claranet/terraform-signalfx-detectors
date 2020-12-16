@@ -5,7 +5,7 @@ resource "signalfx_detector" "used_capacity" {
 
   program_text = <<-EOF
     base_filter = filter('resource_type', 'Microsoft.Storage/storageAccounts') and filter('primary_aggregation_type', 'true')
-    signal = data('UsedCapacity', filter=base_filter and ${module.filter-tags.filter_custom})${var.used_capacity_aggregation_function}${var.used_capacity_transformation_function}.scale(0.0000000001).publish('signal')
+    signal = data('UsedCapacity', filter=base_filter and ${module.filter-tags.filter_custom})${var.used_capacity_aggregation_function}${var.used_capacity_transformation_function}.scale(0.000000001).publish('signal')
     detect(when(signal > ${var.used_capacity_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.used_capacity_threshold_major}) and when(signal <= ${var.used_capacity_threshold_critical})).publish('MAJOR')
 EOF
