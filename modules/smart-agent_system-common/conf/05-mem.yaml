@@ -9,7 +9,9 @@ rules:
   critical:
     threshold: 95
     comparator: ">"
+    unit: "%"
   major:
     threshold: 90
     comparator: ">"
     dependency: critical
+    unit: "%"
