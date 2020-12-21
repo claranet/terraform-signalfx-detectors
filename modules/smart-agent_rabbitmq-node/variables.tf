@@ -2,6 +2,18 @@
 
 # Heartbeat detector
 
+variable "heartbeat_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "heartbeat_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
   type        = bool
@@ -27,6 +39,18 @@ variable "heartbeat_aggregation_function" {
 }
 
 # file_descriptors detector
+
+variable "file_descriptors_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "file_descriptors_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "file_descriptors_disabled" {
   description = "Disable all alerting rules for file descriptors detector"
@@ -78,6 +102,18 @@ variable "file_descriptors_threshold_major" {
 
 # processes detector
 
+variable "processes_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "processes_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "processes_disabled" {
   description = "Disable all alerting rules for processes detector"
   type        = bool
@@ -128,6 +164,18 @@ variable "processes_threshold_major" {
 
 # sockets detector
 
+variable "sockets_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "sockets_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "sockets_disabled" {
   description = "Disable all alerting rules for sockets detector"
   type        = bool
@@ -177,6 +225,18 @@ variable "sockets_threshold_major" {
 }
 
 # vm_memory detector
+
+variable "vm_memory_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "vm_memory_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "vm_memory_disabled" {
   description = "Disable all alerting rules for vm_memory detector"

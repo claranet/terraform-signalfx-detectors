@@ -14,6 +14,8 @@ resource "signalfx_detector" "heartbeat" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = var.heartbeat_runbook_url
+    tip                   = var.heartbeat_tip
     parameterized_subject = local.rule_subject_novalue
     parameterized_body    = local.rule_body
   }
@@ -35,6 +37,8 @@ resource "signalfx_detector" "cpu_percentage" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.cpu_percentage_disabled_critical, var.cpu_percentage_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.cpu_percentage_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = var.cpu_percentage_runbook_url
+    tip                   = var.cpu_percentage_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -45,6 +49,8 @@ resource "signalfx_detector" "cpu_percentage" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.cpu_percentage_disabled_major, var.cpu_percentage_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.cpu_percentage_notifications, "major", []), var.notifications.major)
+    runbook_url           = var.cpu_percentage_runbook_url
+    tip                   = var.cpu_percentage_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -66,6 +72,8 @@ resource "signalfx_detector" "memory_percentage" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.memory_percentage_disabled_critical, var.memory_percentage_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.memory_percentage_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = var.memory_percentage_runbook_url
+    tip                   = var.memory_percentage_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -76,6 +84,8 @@ resource "signalfx_detector" "memory_percentage" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.memory_percentage_disabled_major, var.memory_percentage_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.memory_percentage_notifications, "major", []), var.notifications.major)
+    runbook_url           = var.memory_percentage_runbook_url
+    tip                   = var.memory_percentage_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }

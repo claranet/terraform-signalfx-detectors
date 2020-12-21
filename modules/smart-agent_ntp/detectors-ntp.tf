@@ -14,6 +14,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = var.heartbeat_runbook_url
+    tip                   = var.heartbeat_tip
     parameterized_subject = local.rule_subject_novalue
     parameterized_body    = local.rule_body
   }
@@ -33,6 +35,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.ntp_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.ntp_notifications, "major", []), var.notifications.major)
+    runbook_url           = var.ntp_runbook_url
+    tip                   = var.ntp_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }

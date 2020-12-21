@@ -12,6 +12,18 @@ variable "heartbeat_aggregation_function" {
   default     = ".mean(by=['cluster'])"
 }
 
+variable "heartbeat_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "heartbeat_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
   type        = bool
@@ -44,6 +56,18 @@ variable "page_faults_transformation_function" {
   default     = ".mean(over='5m')"
 }
 
+variable "page_faults_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "page_faults_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "page_faults_disabled" {
   description = "Disable all alerting rules for page_faults detector"
   type        = bool
@@ -74,6 +98,18 @@ variable "max_connections_transformation_function" {
   description = "Transformation function for max_connections detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='5m')"
+}
+
+variable "max_connections_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "max_connections_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
 }
 
 variable "max_connections_disabled" {
@@ -127,6 +163,18 @@ variable "asserts_transformation_function" {
   default     = ".max(over='30m')"
 }
 
+variable "asserts_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "asserts_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "asserts_disabled" {
   description = "Disable all alerting rules for asserts detector"
   type        = bool
@@ -157,6 +205,18 @@ variable "primary_transformation_function" {
   description = "Transformation function for primary detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='1m')"
+}
+
+variable "primary_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "primary_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
 }
 
 variable "primary_disabled" {
@@ -191,6 +251,18 @@ variable "secondary_transformation_function" {
   default     = ".min(over='5m')"
 }
 
+variable "secondary_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "secondary_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "secondary_disabled" {
   description = "Disable all alerting rules for secondary detector"
   type        = bool
@@ -221,6 +293,18 @@ variable "replication_lag_transformation_function" {
   description = "Transformation function for replication_lag detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='15m')"
+}
+
+variable "replication_lag_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "replication_lag_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
 }
 
 variable "replication_lag_disabled" {

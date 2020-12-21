@@ -14,6 +14,8 @@ resource "signalfx_detector" "heartbeat" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = var.heartbeat_runbook_url
+    tip                   = var.heartbeat_tip
     parameterized_subject = local.rule_subject_novalue
     parameterized_body    = local.rule_body
   }
@@ -35,6 +37,8 @@ resource "signalfx_detector" "evictedkeys" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.evictedkeys_disabled_critical, var.evictedkeys_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.evictedkeys_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = var.evictedkeys_runbook_url
+    tip                   = var.evictedkeys_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -45,6 +49,8 @@ resource "signalfx_detector" "evictedkeys" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.evictedkeys_disabled_major, var.evictedkeys_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.evictedkeys_notifications, "major", []), var.notifications.major)
+    runbook_url           = var.evictedkeys_runbook_url
+    tip                   = var.evictedkeys_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -66,6 +72,8 @@ resource "signalfx_detector" "percent_processor_time" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.percent_processor_time_disabled_critical, var.percent_processor_time_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.percent_processor_time_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = var.percent_processor_time_runbook_url
+    tip                   = var.percent_processor_time_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -76,6 +84,8 @@ resource "signalfx_detector" "percent_processor_time" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.percent_processor_time_disabled_major, var.percent_processor_time_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.percent_processor_time_notifications, "major", []), var.notifications.major)
+    runbook_url           = var.percent_processor_time_runbook_url
+    tip                   = var.percent_processor_time_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -97,6 +107,8 @@ resource "signalfx_detector" "load" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.load_disabled_critical, var.load_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.load_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = var.load_runbook_url
+    tip                   = var.load_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -107,6 +119,8 @@ resource "signalfx_detector" "load" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.load_disabled_major, var.load_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.load_notifications, "major", []), var.notifications.major)
+    runbook_url           = var.load_runbook_url
+    tip                   = var.load_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }

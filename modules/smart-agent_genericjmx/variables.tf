@@ -2,6 +2,18 @@
 
 # memory_heap detector
 
+variable "memory_heap_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "memory_heap_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "memory_heap_disabled" {
   description = "Disable all alerting rules for memory_heap detector"
   type        = bool
@@ -51,6 +63,18 @@ variable "memory_heap_threshold_critical" {
 }
 
 # gc_old_gen detector
+
+variable "gc_old_gen_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "gc_old_gen_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "gc_old_gen_disabled" {
   description = "Disable all alerting rules for gc_old_gen detector"

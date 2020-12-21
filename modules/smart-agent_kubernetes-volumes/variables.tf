@@ -2,6 +2,18 @@
 
 # Volume_space detector
 
+variable "volume_space_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "volume_space_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "volume_space_disabled" {
   description = "Disable all alerting rules for volume_space detector"
   type        = bool
@@ -51,6 +63,18 @@ variable "volume_space_threshold_major" {
 }
 
 # Volume_inodes detector
+
+variable "volume_inodes_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "volume_inodes_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "volume_inodes_disabled" {
   description = "Disable all alerting rules for volume_inodes detector"

@@ -14,6 +14,8 @@ resource "signalfx_detector" "heartbeat" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = var.heartbeat_runbook_url
+    tip                   = var.heartbeat_tip
     parameterized_subject = local.rule_subject_novalue
     parameterized_body    = local.rule_body
   }
@@ -35,6 +37,8 @@ resource "signalfx_detector" "cpu_usage" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.cpu_usage_disabled_critical, var.cpu_usage_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.cpu_usage_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = var.cpu_usage_runbook_url
+    tip                   = var.cpu_usage_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -45,6 +49,8 @@ resource "signalfx_detector" "cpu_usage" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.cpu_usage_disabled_major, var.cpu_usage_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.cpu_usage_notifications, "major", []), var.notifications.major)
+    runbook_url           = var.cpu_usage_runbook_url
+    tip                   = var.cpu_usage_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -68,6 +74,8 @@ resource "signalfx_detector" "credit_cpu" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.credit_cpu_disabled_critical, var.credit_cpu_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.credit_cpu_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = var.credit_cpu_runbook_url
+    tip                   = var.credit_cpu_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -78,6 +86,8 @@ resource "signalfx_detector" "credit_cpu" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.credit_cpu_disabled_major, var.credit_cpu_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.credit_cpu_notifications, "major", []), var.notifications.major)
+    runbook_url           = var.credit_cpu_runbook_url
+    tip                   = var.credit_cpu_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }

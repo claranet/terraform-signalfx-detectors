@@ -2,6 +2,18 @@
 
 # Heartbeat detector
 
+variable "heartbeat_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "heartbeat_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
   type        = bool
@@ -27,6 +39,18 @@ variable "heartbeat_aggregation_function" {
 }
 
 # cpu_usage detector
+
+variable "cpu_usage_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "cpu_usage_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "cpu_usage_disabled" {
   description = "Disable all alerting rules for cpu_usage detector"
@@ -78,6 +102,18 @@ variable "cpu_usage_threshold_major" {
 
 # storage_usage detectors
 
+variable "storage_usage_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "storage_usage_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "storage_usage_disabled" {
   description = "Disable all alerting rules for storage_usage detector"
   type        = bool
@@ -127,6 +163,18 @@ variable "storage_usage_threshold_major" {
 }
 
 # io_consumption detector
+
+variable "io_consumption_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "io_consumption_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "io_consumption_disabled" {
   description = "Disable all alerting rules for io_consumption detector"
@@ -178,6 +226,18 @@ variable "io_consumption_threshold_major" {
 
 # memory_usage detector
 
+variable "memory_usage_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "memory_usage_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "memory_usage_disabled" {
   description = "Disable all alerting rules for memory_usage detector"
   type        = bool
@@ -227,6 +287,18 @@ variable "memory_usage_threshold_major" {
 }
 
 # replication_lag detector
+
+variable "replication_lag_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "replication_lag_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "replication_lag_disabled" {
   description = "Disable all alerting rules for replication_lag detector"

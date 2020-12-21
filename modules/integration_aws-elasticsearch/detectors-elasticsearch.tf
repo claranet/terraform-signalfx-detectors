@@ -13,6 +13,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = var.heartbeat_runbook_url
+    tip                   = var.heartbeat_tip
     parameterized_subject = local.rule_subject_novalue
     parameterized_body    = local.rule_body
   }
@@ -34,6 +36,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.cluster_status_disabled_critical, var.cluster_status_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.cluster_status_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = var.cluster_status_runbook_url
+    tip                   = var.cluster_status_tip
     parameterized_subject = local.rule_subject_novalue
     parameterized_body    = local.rule_body
   }
@@ -44,6 +48,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.cluster_status_disabled_major, var.cluster_status_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.cluster_status_notifications, "major", []), var.notifications.major)
+    runbook_url           = var.cluster_status_runbook_url
+    tip                   = var.cluster_status_tip
     parameterized_subject = local.rule_subject_novalue
     parameterized_body    = local.rule_body
   }
@@ -64,6 +70,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.free_space_disabled_critical, var.free_space_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.free_space_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = var.free_space_runbook_url
+    tip                   = var.free_space_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -74,6 +82,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.free_space_disabled_major, var.free_space_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.free_space_notifications, "major", []), var.notifications.major)
+    runbook_url           = var.free_space_runbook_url
+    tip                   = var.free_space_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -94,6 +104,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.cpu_90_15min_disabled_critical, var.cpu_90_15min_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.cpu_90_15min_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = var.cpu_90_15min_runbook_url
+    tip                   = var.cpu_90_15min_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -104,6 +116,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.cpu_90_15min_disabled_major, var.cpu_90_15min_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.cpu_90_15min_notifications, "major", []), var.notifications.major)
+    runbook_url           = var.cpu_90_15min_runbook_url
+    tip                   = var.cpu_90_15min_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }

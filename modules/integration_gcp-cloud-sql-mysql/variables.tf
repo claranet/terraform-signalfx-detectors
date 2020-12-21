@@ -7,6 +7,18 @@ variable "gcp_project_id" {
 
 # Replication_lag detectors
 
+variable "replication_lag_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "replication_lag_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "replication_lag_disabled" {
   description = "Disable all alerting rules for replication_lag detector"
   type        = bool

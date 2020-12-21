@@ -14,6 +14,8 @@ resource "signalfx_detector" "heartbeat" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = var.heartbeat_runbook_url
+    tip                   = var.heartbeat_tip
     parameterized_subject = local.rule_subject_novalue
     parameterized_body    = local.rule_body
   }
@@ -35,6 +37,8 @@ resource "signalfx_detector" "cpu_usage" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.cpu_usage_disabled_critical, var.cpu_usage_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.cpu_usage_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = var.cpu_usage_runbook_url
+    tip                   = var.cpu_usage_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -45,6 +49,8 @@ resource "signalfx_detector" "cpu_usage" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.cpu_usage_disabled_major, var.cpu_usage_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.cpu_usage_notifications, "major", []), var.notifications.major)
+    runbook_url           = var.cpu_usage_runbook_url
+    tip                   = var.cpu_usage_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -66,6 +72,8 @@ resource "signalfx_detector" "free_storage" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.storage_usage_disabled_critical, var.storage_usage_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.storage_usage_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = var.storage_usage_runbook_url
+    tip                   = var.storage_usage_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -76,6 +84,8 @@ resource "signalfx_detector" "free_storage" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.storage_usage_disabled_major, var.storage_usage_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.storage_usage_notifications, "major", []), var.notifications.major)
+    runbook_url           = var.storage_usage_runbook_url
+    tip                   = var.storage_usage_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -97,6 +107,8 @@ resource "signalfx_detector" "io_consumption" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.io_consumption_disabled_critical, var.io_consumption_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.io_consumption_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = var.io_consumption_runbook_url
+    tip                   = var.io_consumption_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -107,6 +119,8 @@ resource "signalfx_detector" "io_consumption" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.io_consumption_disabled_major, var.io_consumption_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.io_consumption_notifications, "major", []), var.notifications.major)
+    runbook_url           = var.io_consumption_runbook_url
+    tip                   = var.io_consumption_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -128,6 +142,8 @@ resource "signalfx_detector" "memory_usage" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.memory_usage_disabled_critical, var.memory_usage_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.memory_usage_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = var.memory_usage_runbook_url
+    tip                   = var.memory_usage_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -138,6 +154,8 @@ resource "signalfx_detector" "memory_usage" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.memory_usage_disabled_major, var.memory_usage_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.memory_usage_notifications, "major", []), var.notifications.major)
+    runbook_url           = var.memory_usage_runbook_url
+    tip                   = var.memory_usage_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -159,6 +177,8 @@ resource "signalfx_detector" "replication_lag" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.replication_lag_disabled_critical, var.replication_lag_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.replication_lag_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = var.replication_lag_runbook_url
+    tip                   = var.replication_lag_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -169,6 +189,8 @@ resource "signalfx_detector" "replication_lag" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.replication_lag_disabled_major, var.replication_lag_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.replication_lag_notifications, "major", []), var.notifications.major)
+    runbook_url           = var.replication_lag_runbook_url
+    tip                   = var.replication_lag_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }

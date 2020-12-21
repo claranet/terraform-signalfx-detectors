@@ -2,6 +2,18 @@
 
 # Heartbeat detector
 
+variable "heartbeat_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "heartbeat_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
   type        = bool
@@ -27,6 +39,18 @@ variable "heartbeat_aggregation_function" {
 }
 
 # Active_connections detector
+
+variable "active_connections_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "active_connections_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "active_connections_disabled" {
   description = "Disable all alerting rules for active_connections detector"
@@ -65,6 +89,18 @@ variable "active_connections_threshold_critical" {
 }
 
 # User_errors detector
+
+variable "user_errors_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "user_errors_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "user_errors_disabled" {
   description = "Disable all alerting rules for user_errors detector"
@@ -115,6 +151,18 @@ variable "user_errors_threshold_major" {
 }
 
 # Server_errors detector
+
+variable "server_errors_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "server_errors_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "server_errors_disabled" {
   description = "Disable all alerting rules for server_errors detector"
@@ -182,6 +230,18 @@ variable "throttled_requests_transformation_function" {
   description = "Transformation function for throttled_requests detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".max(over='5m')"
+}
+
+variable "throttled_requests_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "throttled_requests_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
 }
 
 variable "throttled_requests_disabled" {

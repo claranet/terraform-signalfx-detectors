@@ -2,6 +2,18 @@
 
 # Heartbeat detector
 
+variable "heartbeat_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "heartbeat_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
   type        = bool
@@ -27,6 +39,18 @@ variable "heartbeat_aggregation_function" {
 }
 
 # zookeeper_health detector
+
+variable "zookeeper_health_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "zookeeper_health_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "zookeeper_health_disabled" {
   description = "Disable all alerting rules for zookeeper_health detector"
@@ -59,6 +83,18 @@ variable "zookeeper_health_transformation_function" {
 }
 
 # zookeeper_latency detector
+
+variable "zookeeper_latency_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "zookeeper_latency_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "zookeeper_latency_disabled" {
   description = "Disable all alerting rules for zookeeper_latency detector"
@@ -109,6 +145,18 @@ variable "zookeeper_latency_threshold_major" {
 }
 
 # file_descriptors detector
+
+variable "file_descriptors_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "file_descriptors_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "file_descriptors_disabled" {
   description = "Disable all alerting rules for file_descriptors detector"

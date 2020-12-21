@@ -2,6 +2,18 @@
 
 # Pct_errors detector
 
+variable "pct_errors_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "pct_errors_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "pct_errors_disabled" {
   description = "Disable all alerting rules for pct_errors detector"
   type        = bool
@@ -58,6 +70,18 @@ variable "pct_errors_threshold_major" {
 
 # Throttles detector
 
+variable "throttles_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "throttles_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "throttles_disabled" {
   description = "Disable all alerting rules for throttles detector"
   type        = bool
@@ -107,6 +131,18 @@ variable "throttles_threshold_major" {
 }
 
 # invocations detector
+
+variable "invocations_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "invocations_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "invocations_disabled" {
   description = "Disable all alerting rules for invocations detector"

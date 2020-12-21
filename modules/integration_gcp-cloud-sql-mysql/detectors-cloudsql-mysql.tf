@@ -13,6 +13,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.replication_lag_disabled_critical, var.replication_lag_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.replication_lag_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = var.replication_lag_runbook_url
+    tip                   = var.replication_lag_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -23,6 +25,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.replication_lag_disabled_major, var.replication_lag_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.replication_lag_notifications, "major", []), var.notifications.major)
+    runbook_url           = var.replication_lag_runbook_url
+    tip                   = var.replication_lag_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }

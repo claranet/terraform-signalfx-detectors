@@ -2,6 +2,18 @@
 
 # Heartbeat detector
 
+variable "heartbeat_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "heartbeat_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
   type        = bool
@@ -27,6 +39,18 @@ variable "heartbeat_aggregation_function" {
 }
 
 # Evictions detector
+
+variable "evictions_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "evictions_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "evictions_disabled" {
   description = "Disable all alerting rules for evictions detector"
@@ -78,6 +102,18 @@ variable "evictions_threshold_major" {
 
 # Max_connection detector
 
+variable "max_connection_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "max_connection_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "max_connection_disabled" {
   description = "Disable all alerting rules for max_connection detector"
   type        = bool
@@ -116,6 +152,18 @@ variable "max_connection_threshold_critical" {
 
 # No_connection detector
 
+variable "no_connection_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "no_connection_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "no_connection_disabled" {
   description = "Disable all alerting rules for no_connection detector"
   type        = bool
@@ -153,6 +201,18 @@ variable "no_connection_threshold_critical" {
 }
 
 # Swap detector
+
+variable "swap_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "swap_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "swap_disabled" {
   description = "Disable all alerting rules for swap detector"
@@ -204,6 +264,18 @@ variable "swap_threshold_major" {
 
 # Free_memory detector
 
+variable "free_memory_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "free_memory_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "free_memory_disabled" {
   description = "Disable all alerting rules for free_memory detector"
   type        = bool
@@ -253,6 +325,18 @@ variable "free_memory_threshold_major" {
 }
 
 # Evictions_growing detector
+
+variable "evictions_growing_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "evictions_growing_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "evictions_growing_disabled" {
   description = "Disable all alerting rules for evictions_growing detector"

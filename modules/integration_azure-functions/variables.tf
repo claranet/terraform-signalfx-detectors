@@ -2,6 +2,18 @@
 
 # Heartbeat detector
 
+variable "heartbeat_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "heartbeat_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
   type        = bool
@@ -27,6 +39,18 @@ variable "heartbeat_aggregation_function" {
 }
 
 # http_5xx_errors_rate detector
+
+variable "http_5xx_errors_rate_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "http_5xx_errors_rate_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "http_5xx_errors_rate_disabled" {
   description = "Disable all alerting rules for http_5xx_errors_rate detector"
@@ -78,6 +102,18 @@ variable "http_5xx_errors_rate_threshold_major" {
 
 # High_connections_count detector
 
+variable "high_connections_count_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "high_connections_count_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "high_connections_count_disabled" {
   description = "Disable all alerting rules for high_connections_count detector"
   type        = bool
@@ -127,6 +163,18 @@ variable "high_connections_count_threshold_major" {
 }
 
 # High_threads_count detector
+
+variable "high_threads_count_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "high_threads_count_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "high_threads_count_disabled" {
   description = "Disable all alerting rules for high_threads_count detector"

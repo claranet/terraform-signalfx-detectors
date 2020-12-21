@@ -15,6 +15,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.pct_errors_disabled_critical, var.pct_errors_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.pct_errors_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = var.pct_errors_runbook_url
+    tip                   = var.pct_errors_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -25,6 +27,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.pct_errors_disabled_major, var.pct_errors_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.pct_errors_notifications, "major", []), var.notifications.major)
+    runbook_url           = var.pct_errors_runbook_url
+    tip                   = var.pct_errors_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -45,6 +49,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.throttles_disabled_critical, var.throttles_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.throttles_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = var.throttles_runbook_url
+    tip                   = var.throttles_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -55,6 +61,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.throttles_disabled_major, var.throttles_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.throttles_notifications, "major", []), var.notifications.major)
+    runbook_url           = var.throttles_runbook_url
+    tip                   = var.throttles_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -74,6 +82,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.invocations_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.invocations_notifications, "major", []), var.notifications.major)
+    runbook_url           = var.invocations_runbook_url
+    tip                   = var.invocations_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }

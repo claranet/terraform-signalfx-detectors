@@ -14,6 +14,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.used_capacity_disabled_critical, var.used_capacity_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.used_capacity_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = var.used_capacity_runbook_url
+    tip                   = var.used_capacity_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -24,6 +26,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.used_capacity_disabled_major, var.used_capacity_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.used_capacity_notifications, "major", []), var.notifications.major)
+    runbook_url           = var.used_capacity_runbook_url
+    tip                   = var.used_capacity_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }

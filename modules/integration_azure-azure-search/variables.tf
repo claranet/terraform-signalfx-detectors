@@ -2,6 +2,18 @@
 
 # Search_latency detector
 
+variable "search_latency_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "search_latency_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "search_latency_disabled" {
   description = "Disable all alerting rules for search_latency detector"
   type        = bool
@@ -51,6 +63,18 @@ variable "search_latency_threshold_major" {
 }
 
 # search_throttled_queries_rate detector
+
+variable "search_throttled_queries_rate_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "search_throttled_queries_rate_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "search_throttled_queries_rate_disabled" {
   description = "Disable all alerting rules for search_throttled_queries_rate detector"

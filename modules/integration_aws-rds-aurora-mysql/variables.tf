@@ -2,6 +2,18 @@
 
 # Aurora_mysql_replica_lag detector
 
+variable "aurora_mysql_replica_lag_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "aurora_mysql_replica_lag_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "aurora_mysql_replica_lag_disabled" {
   description = "Disable all alerting rules for aurora_mysql_replica_lag detector"
   type        = bool

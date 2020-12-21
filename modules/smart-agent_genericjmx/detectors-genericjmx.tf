@@ -15,6 +15,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.memory_heap_disabled_major, var.memory_heap_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.memory_heap_notifications, "major", []), var.notifications.major)
+    runbook_url           = var.memory_heap_runbook_url
+    tip                   = var.memory_heap_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -24,6 +26,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.memory_heap_disabled_critical, var.memory_heap_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.memory_heap_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = var.memory_heap_runbook_url
+    tip                   = var.memory_heap_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -46,6 +50,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.gc_old_gen_disabled_major, var.gc_old_gen_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.gc_old_gen_notifications, "major", []), var.notifications.major)
+    runbook_url           = var.gc_old_gen_runbook_url
+    tip                   = var.gc_old_gen_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -55,6 +61,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.gc_old_gen_disabled_critical, var.gc_old_gen_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.gc_old_gen_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = var.gc_old_gen_runbook_url
+    tip                   = var.gc_old_gen_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }

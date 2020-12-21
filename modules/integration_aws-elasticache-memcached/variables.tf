@@ -2,6 +2,18 @@
 
 # hit_ratio detector
 
+variable "hit_ratio_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "hit_ratio_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "hit_ratio_disabled" {
   description = "Disable all alerting rules for hit_ratio detector"
   type        = bool
@@ -63,6 +75,18 @@ variable "hit_ratio_threshold_major" {
 }
 
 # cpu detector
+
+variable "cpu_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "cpu_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "cpu_disabled" {
   description = "Disable all alerting rules for cpu detector"

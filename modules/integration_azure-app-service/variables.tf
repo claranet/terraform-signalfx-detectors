@@ -2,6 +2,18 @@
 
 # Heartbeat detector
 
+variable "heartbeat_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "heartbeat_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
   type        = bool
@@ -27,6 +39,18 @@ variable "heartbeat_aggregation_function" {
 }
 
 # Response_time detector
+
+variable "response_time_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "response_time_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "response_time_disabled" {
   description = "Disable all alerting rules for response_time detector"
@@ -78,6 +102,18 @@ variable "response_time_threshold_major" {
 
 # Memory_usage_count detector
 
+variable "memory_usage_count_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "memory_usage_count_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "memory_usage_count_disabled" {
   description = "Disable all alerting rules for memory_usage_count detector"
   type        = bool
@@ -127,6 +163,18 @@ variable "memory_usage_count_threshold_major" {
 }
 
 # Http_5xx_errors_count detector
+
+variable "http_5xx_errors_count_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "http_5xx_errors_count_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "http_5xx_errors_count_disabled" {
   description = "Disable all alerting rules for http_5xx_errors_count detector"
@@ -178,6 +226,18 @@ variable "http_5xx_errors_count_threshold_major" {
 
 # http_4xx_errors_count detector
 
+variable "http_4xx_errors_count_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "http_4xx_errors_count_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "http_4xx_errors_count_disabled" {
   description = "Disable all alerting rules for http_4xx_errors_count detector"
   type        = bool
@@ -227,6 +287,18 @@ variable "http_4xx_errors_count_threshold_major" {
 }
 
 # Http_success_status_rate detector
+
+variable "http_success_status_rate_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "http_success_status_rate_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "http_success_status_rate_disabled" {
   description = "Disable all alerting rules for http_success_status_rate detector"

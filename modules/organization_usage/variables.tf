@@ -20,6 +20,18 @@ variable "multiplier" {
 
 # hosts_limit detector
 
+variable "hosts_limit_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "hosts_limit_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "hosts_limit_disabled" {
   description = "Disable all alerting rules for hosts_limit detector"
   type        = bool
@@ -39,6 +51,18 @@ variable "hosts_limit_transformation_function" {
 }
 
 # containers_limit detector
+
+variable "containers_limit_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "containers_limit_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "containers_limit_disabled" {
   description = "Disable all alerting rules for containers_limit detector"
@@ -60,6 +84,18 @@ variable "containers_limit_transformation_function" {
 
 # custom_metrics_limit detector
 
+variable "custom_metrics_limit_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "custom_metrics_limit_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "custom_metrics_limit_disabled" {
   description = "Disable all alerting rules for custom_metrics_limit detector"
   type        = bool
@@ -79,6 +115,18 @@ variable "custom_metrics_limit_transformation_function" {
 }
 
 # containers_ratio detector
+
+variable "containers_ratio_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "containers_ratio_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "containers_ratio_disabled" {
   description = "Disable all alerting rules for containers_ratio detector"
@@ -105,6 +153,18 @@ variable "containers_ratio_threshold_major" {
 }
 
 # custom_metrics_ratio detector
+
+variable "custom_metrics_ratio_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "custom_metrics_ratio_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "custom_metrics_ratio_disabled" {
   description = "Disable all alerting rules for custom_metrics_ratio detector"

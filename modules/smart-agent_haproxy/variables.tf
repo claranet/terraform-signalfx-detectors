@@ -2,6 +2,18 @@
 
 # Heartbeat detector
 
+variable "heartbeat_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "heartbeat_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
   type        = bool
@@ -27,6 +39,18 @@ variable "heartbeat_aggregation_function" {
 }
 
 # Server_status detector
+
+variable "server_status_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "server_status_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "server_status_disabled" {
   description = "Disable all alerting rules for server status detector"
@@ -60,6 +84,18 @@ variable "server_status_transformation_function" {
 
 # Backend_status detector
 
+variable "backend_status_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "backend_status_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "backend_status_disabled" {
   description = "Disable all alerting rules for backend status detector"
   type        = bool
@@ -91,6 +127,18 @@ variable "backend_status_transformation_function" {
 }
 
 # Session_limit detector
+
+variable "session_limit_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "session_limit_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "session_limit_disabled" {
   description = "Disable all alerting rules for session limit detector"
@@ -142,6 +190,18 @@ variable "session_limit_threshold_critical" {
 
 # Http_5xx_response detector
 
+variable "http_5xx_response_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "http_5xx_response_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "http_5xx_response_disabled" {
   description = "Disable all alerting rules for http_5xx_response detector"
   type        = bool
@@ -191,6 +251,18 @@ variable "http_5xx_response_threshold_critical" {
 }
 
 # Http_4xx_response detector
+
+variable "http_4xx_response_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "http_4xx_response_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "http_4xx_response_disabled" {
   description = "Disable all alerting rules for http_4xx_response detector"

@@ -2,6 +2,18 @@
 
 # Heartbeat detector
 
+variable "heartbeat_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "heartbeat_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
   type        = bool
@@ -27,6 +39,18 @@ variable "heartbeat_aggregation_function" {
 }
 
 # Health detector
+
+variable "health_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "health_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "health_disabled" {
   description = "Disable all alerting rules for health detector"
@@ -78,6 +102,18 @@ variable "health_threshold_major" {
 
 # Latency_p90 detector
 
+variable "latency_p90_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "latency_p90_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "latency_p90_disabled" {
   description = "Disable all alerting rules for latency_p90 detector"
   type        = bool
@@ -128,6 +164,18 @@ variable "latency_p90_threshold_major" {
 
 # app_5xx_error_rate detector
 
+variable "app_5xx_error_rate_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "app_5xx_error_rate_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "app_5xx_error_rate_disabled" {
   description = "Disable all alerting rules for 5xx_error_rate detector"
   type        = bool
@@ -177,6 +225,18 @@ variable "app_5xx_error_rate_threshold_major" {
 }
 
 # Root_filesystem_usage detector
+
+variable "root_filesystem_usage_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "root_filesystem_usage_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "root_filesystem_usage_disabled" {
   description = "Disable all alerting rules for root_filesystem_usage detector"

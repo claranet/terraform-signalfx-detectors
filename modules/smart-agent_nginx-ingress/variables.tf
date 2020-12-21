@@ -8,6 +8,18 @@ variable "minimum_traffic" {
 
 # ingress_5xx detector
 
+variable "ingress_5xx_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "ingress_5xx_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "ingress_5xx_disabled" {
   description = "Disable all alerting rules for ingress_5xx detector"
   type        = bool
@@ -72,6 +84,18 @@ variable "ingress_5xx_threshold_major" {
 
 # ingress_4xx detector
 
+variable "ingress_4xx_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "ingress_4xx_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "ingress_4xx_disabled" {
   description = "Disable all alerting rules for ingress_4xx detector"
   type        = bool
@@ -135,6 +159,18 @@ variable "ingress_4xx_threshold_major" {
 }
 
 # ingress_latency detector
+
+variable "ingress_latency_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "ingress_latency_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "ingress_latency_disabled" {
   description = "Disable all alerting rules for ingress_latency detector"

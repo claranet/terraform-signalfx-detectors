@@ -13,6 +13,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = var.heartbeat_runbook_url
+    tip                   = var.heartbeat_tip
     parameterized_subject = local.rule_subject_novalue
     parameterized_body    = local.rule_body
   }
@@ -33,6 +35,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.oldest_unacked_message_disabled_critical, var.oldest_unacked_message_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.oldest_unacked_message_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = var.oldest_unacked_message_runbook_url
+    tip                   = var.oldest_unacked_message_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -43,6 +47,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.oldest_unacked_message_disabled_major, var.oldest_unacked_message_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.oldest_unacked_message_notifications, "major", []), var.notifications.major)
+    runbook_url           = var.oldest_unacked_message_runbook_url
+    tip                   = var.oldest_unacked_message_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -63,6 +69,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.push_latency_disabled_critical, var.push_latency_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.push_latency_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = var.push_latency_runbook_url
+    tip                   = var.push_latency_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -73,6 +81,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.push_latency_disabled_major, var.push_latency_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.push_latency_notifications, "major", []), var.notifications.major)
+    runbook_url           = var.push_latency_runbook_url
+    tip                   = var.push_latency_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }

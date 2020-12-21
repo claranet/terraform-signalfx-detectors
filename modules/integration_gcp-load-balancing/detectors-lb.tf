@@ -15,6 +15,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.error_rate_4xx_disabled_critical, var.error_rate_4xx_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.error_rate_4xx_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = var.error_rate_4xx_runbook_url
+    tip                   = var.error_rate_4xx_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -25,6 +27,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.error_rate_4xx_disabled_major, var.error_rate_4xx_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.error_rate_4xx_notifications, "major", []), var.notifications.major)
+    runbook_url           = var.error_rate_4xx_runbook_url
+    tip                   = var.error_rate_4xx_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -47,6 +51,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.error_rate_5xx_disabled_critical, var.error_rate_5xx_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.error_rate_5xx_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = var.error_rate_5xx_runbook_url
+    tip                   = var.error_rate_5xx_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -57,6 +63,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.error_rate_5xx_disabled_major, var.error_rate_5xx_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.error_rate_5xx_notifications, "major", []), var.notifications.major)
+    runbook_url           = var.error_rate_5xx_runbook_url
+    tip                   = var.error_rate_5xx_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -77,6 +85,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.backend_latency_service_disabled_critical, var.backend_latency_service_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.backend_latency_service_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = var.backend_latency_service_runbook_url
+    tip                   = var.backend_latency_service_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -87,6 +97,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.backend_latency_service_disabled_major, var.backend_latency_service_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.backend_latency_service_notifications, "major", []), var.notifications.major)
+    runbook_url           = var.backend_latency_service_runbook_url
+    tip                   = var.backend_latency_service_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -107,6 +119,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.backend_latency_bucket_disabled_critical, var.backend_latency_bucket_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.backend_latency_bucket_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = var.backend_latency_bucket_runbook_url
+    tip                   = var.backend_latency_bucket_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -117,6 +131,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.backend_latency_bucket_disabled_major, var.backend_latency_bucket_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.backend_latency_bucket_notifications, "major", []), var.notifications.major)
+    runbook_url           = var.backend_latency_bucket_runbook_url
+    tip                   = var.backend_latency_bucket_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -136,6 +152,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.request_count_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.request_count_notifications, "major", []), var.notifications.major)
+    runbook_url           = var.request_count_runbook_url
+    tip                   = var.request_count_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }

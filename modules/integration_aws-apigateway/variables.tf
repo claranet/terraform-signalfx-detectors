@@ -14,6 +14,18 @@ variable "is_v2" {
 
 # Latency detector
 
+variable "latency_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "latency_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "latency_disabled" {
   description = "Disable all alerting rules for latency detector"
   type        = bool
@@ -76,6 +88,18 @@ variable "latency_threshold_major" {
 
 # Http_5xx detector
 
+variable "http_5xx_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "http_5xx_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "http_5xx_disabled" {
   description = "Disable all alerting rules for http_5xx detector"
   type        = bool
@@ -137,6 +161,18 @@ variable "http_5xx_threshold_major" {
 }
 
 # Http_4xx detector
+
+variable "http_4xx_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "http_4xx_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "http_4xx_disabled" {
   description = "Disable all alerting rules for http_4xx detector"

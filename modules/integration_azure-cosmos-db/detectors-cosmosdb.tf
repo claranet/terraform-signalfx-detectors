@@ -14,6 +14,8 @@ resource "signalfx_detector" "heartbeat" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = var.heartbeat_runbook_url
+    tip                   = var.heartbeat_tip
     parameterized_subject = local.rule_subject_novalue
     parameterized_body    = local.rule_body
   }
@@ -37,6 +39,8 @@ resource "signalfx_detector" "db_4xx_requests" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.db_4xx_requests_disabled_critical, var.db_4xx_requests_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.db_4xx_requests_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = var.db_4xx_requests_runbook_url
+    tip                   = var.db_4xx_requests_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -47,6 +51,8 @@ resource "signalfx_detector" "db_4xx_requests" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.db_4xx_requests_disabled_major, var.db_4xx_requests_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.db_4xx_requests_notifications, "major", []), var.notifications.major)
+    runbook_url           = var.db_4xx_requests_runbook_url
+    tip                   = var.db_4xx_requests_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -70,6 +76,8 @@ resource "signalfx_detector" "db_5xx_requests" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.db_5xx_requests_disabled_critical, var.db_5xx_requests_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.db_5xx_requests_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = var.db_5xx_requests_runbook_url
+    tip                   = var.db_5xx_requests_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -80,6 +88,8 @@ resource "signalfx_detector" "db_5xx_requests" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.db_5xx_requests_disabled_major, var.db_5xx_requests_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.db_5xx_requests_notifications, "major", []), var.notifications.major)
+    runbook_url           = var.db_5xx_requests_runbook_url
+    tip                   = var.db_5xx_requests_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -103,6 +113,8 @@ resource "signalfx_detector" "scaling" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.scaling_disabled_critical, var.scaling_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.scaling_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = var.scaling_runbook_url
+    tip                   = var.scaling_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -113,6 +125,8 @@ resource "signalfx_detector" "scaling" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.scaling_disabled_major, var.scaling_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.scaling_notifications, "major", []), var.notifications.major)
+    runbook_url           = var.scaling_runbook_url
+    tip                   = var.scaling_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -134,6 +148,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.used_rus_capacity_disabled_critical, var.used_rus_capacity_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.used_rus_capacity_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = var.used_rus_capacity_runbook_url
+    tip                   = var.used_rus_capacity_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -144,6 +160,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.used_rus_capacity_disabled_major, var.used_rus_capacity_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.used_rus_capacity_notifications, "major", []), var.notifications.major)
+    runbook_url           = var.used_rus_capacity_runbook_url
+    tip                   = var.used_rus_capacity_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }

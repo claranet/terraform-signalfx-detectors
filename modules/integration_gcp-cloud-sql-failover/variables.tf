@@ -7,6 +7,18 @@ variable "gcp_project_id" {
 
 # Failover_unavailable detectors
 
+variable "failover_unavailable_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "failover_unavailable_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "failover_unavailable_disabled" {
   description = "Disable all alerting rules for failover_unavailable detector"
   type        = bool

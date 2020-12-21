@@ -14,6 +14,18 @@ variable "heartbeat_aggregation_function" {
   default     = ""
 }
 
+variable "heartbeat_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "heartbeat_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
   type        = bool
@@ -27,6 +39,18 @@ variable "heartbeat_timeframe" {
 }
 
 # backend_failed detector
+
+variable "backend_failed_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "backend_failed_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "backend_failed_disabled" {
   description = "Disable all alerting rules for backend_failed detector"
@@ -60,6 +84,18 @@ variable "backend_failed_threshold_critical" {
 
 # threads_number detector
 
+variable "threads_number_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "threads_number_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "threads_number_disabled" {
   description = "Disable all alerting rules for threads_number detector"
   type        = bool
@@ -92,6 +128,18 @@ variable "threads_threshold_critical" {
 
 # session_dropped detector
 
+variable "session_dropped_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "session_dropped_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "session_dropped_disabled" {
   description = "Disable all alerting rules for session_dropped detector"
   type        = bool
@@ -123,6 +171,18 @@ variable "session_dropped_threshold_critical" {
 }
 
 # cache_hit_rate detector
+
+variable "cache_hit_rate_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "cache_hit_rate_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "cache_hit_rate_disabled" {
   description = "Disable all alerting rules for cache_hit_rate detector"
@@ -173,6 +233,18 @@ variable "cache_hit_rate_threshold_major" {
 }
 
 # memory_usage detector
+
+variable "memory_usage_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "memory_usage_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "memory_usage_disabled" {
   description = "Disable all alerting rules for memory_usage detector"

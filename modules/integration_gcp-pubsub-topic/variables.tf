@@ -7,6 +7,18 @@ variable "gcp_project_id" {
 
 # sending_operations detector
 
+variable "sending_operations_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "sending_operations_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "sending_operations_disabled" {
   description = "Disable all alerting rules for sending_operations detector"
   type        = bool
@@ -38,6 +50,18 @@ variable "sending_operations_threshold_major" {
 }
 
 # Unavailable_sending_operations detector
+
+variable "unavailable_sending_operations_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "unavailable_sending_operations_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "unavailable_sending_operations_disabled" {
   description = "Disable all alerting rules for unavailable_sending_operations detector"
@@ -88,6 +112,18 @@ variable "unavailable_sending_operations_threshold_major" {
 }
 
 # Unavailable_sending_operations_ratio detector
+
+variable "unavailable_sending_operations_ratio_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "unavailable_sending_operations_ratio_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "unavailable_sending_operations_ratio_disabled" {
   description = "Disable all alerting rules for unavailable_sending_operations_ratio detector"

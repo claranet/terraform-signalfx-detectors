@@ -2,6 +2,18 @@
 
 # Heartbeat detector
 
+variable "heartbeat_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "heartbeat_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
   type        = bool
@@ -27,6 +39,18 @@ variable "heartbeat_aggregation_function" {
 }
 
 # Total_requests detector
+
+variable "total_requests_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "total_requests_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "total_requests_disabled" {
   description = "Disable all alerting rules for total_requests detector"
@@ -59,6 +83,18 @@ variable "total_requests_timer" {
 }
 
 # backend_connect_time detector
+
+variable "backend_connect_time_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "backend_connect_time_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "backend_connect_time_disabled" {
   description = "Disable all alerting rules for backend_connect_time detector"
@@ -110,6 +146,18 @@ variable "backend_connect_time_threshold_major" {
 
 # Failed_requests detector
 
+variable "failed_requests_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "failed_requests_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "failed_requests_disabled" {
   description = "Disable all alerting rules for failed_requests detector"
   type        = bool
@@ -159,6 +207,18 @@ variable "failed_requests_threshold_major" {
 }
 
 # Unhealthy_host_ratio detector
+
+variable "unhealthy_host_ratio_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "unhealthy_host_ratio_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "unhealthy_host_ratio_disabled" {
   description = "Disable all alerting rules for unhealthy_host_ratio detector"
@@ -210,6 +270,18 @@ variable "unhealthy_host_ratio_threshold_major" {
 
 # Http_4xx_errors detector
 
+variable "http_4xx_errors_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "http_4xx_errors_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "http_4xx_errors_disabled" {
   description = "Disable all alerting rules for http_4xx_errors detector"
   type        = bool
@@ -259,6 +331,18 @@ variable "http_4xx_errors_threshold_major" {
 }
 
 # Http_5xx_errors detector
+
+variable "http_5xx_errors_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "http_5xx_errors_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "http_5xx_errors_disabled" {
   description = "Disable all alerting rules for http_5xx_errors detector"
@@ -310,6 +394,18 @@ variable "http_5xx_errors_threshold_major" {
 
 # Backend_http_4xx_errors detector
 
+variable "backend_http_4xx_errors_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "backend_http_4xx_errors_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "backend_http_4xx_errors_disabled" {
   description = "Disable all alerting rules for backend_http_4xx_errors detector"
   type        = bool
@@ -359,6 +455,18 @@ variable "backend_http_4xx_errors_threshold_major" {
 }
 
 # Backend_http_5xx_errors detector
+
+variable "backend_http_5xx_errors_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "backend_http_5xx_errors_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "backend_http_5xx_errors_disabled" {
   description = "Disable all alerting rules for backend_http_5xx_errors detector"
