@@ -17,10 +17,6 @@ EOF
     tip                   = var.hosts_limit_tip
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}} > {{inputs.limit.value}}) on {{{dimensions}}}"
     parameterized_body    = local.rule_body
-    runbook_url           = var.runbook_url
-    tip                   = <<-EOF
-      To avoid overbilling, limits are set per organization and per resources type.
-EOF
   }
 }
 
@@ -43,10 +39,6 @@ EOF
     tip                   = var.containers_limit_tip
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}} > {{inputs.limit.value}}) on {{{dimensions}}}"
     parameterized_body    = local.rule_body
-    runbook_url           = var.runbook_url
-    tip                   = <<-EOF
-      To avoid overbilling, limits are set per organization and per resources type.
-EOF
   }
 }
 
@@ -69,10 +61,6 @@ EOF
     tip                   = var.custom_metrics_limit_tip
     parameterized_subject = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}} > {{inputs.limit.value}}) on {{{dimensions}}}"
     parameterized_body    = local.rule_body
-    runbook_url           = var.runbook_url
-    tip                   = <<-EOF
-      To avoid overbilling, limits are set per organization and per resources type.
-EOF
   }
 }
 
@@ -96,12 +84,6 @@ EOF
     tip                   = var.containers_ratio_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
-    runbook_url           = var.runbook_url
-    tip                   = <<-EOF
-      Enterprise plan includes ${var.multiplier}0 containers per host.
-      Exceeding this will be paid as extra.
-      Current billing will be increased by this ratio.
-EOF
   }
 }
 
@@ -125,12 +107,6 @@ EOF
     tip                   = var.custom_metrics_ratio_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
-    runbook_url           = var.runbook_url
-    tip                   = <<-EOF
-      Enterprise plan includes ${var.multiplier}00 custom metrics per host.
-      Exceeding this will be paid as extra.
-      Current billing will be increased by this ratio.
-EOF
   }
 }
 

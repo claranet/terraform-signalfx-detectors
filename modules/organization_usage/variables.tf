@@ -1,11 +1,5 @@
 # Module specific
 
-variable "runbook_url" {
-  description = "Runbook url to add in detectors messages"
-  type        = string
-  default     = ""
-}
-
 variable "is_parent" {
   description = "Use \"child version\" of org metrics if true. Disable for child org."
   type        = bool
@@ -23,7 +17,9 @@ variable "multiplier" {
 variable "hosts_limit_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
-  default     = ""
+  default     = <<-EOF
+    To avoid overbilling, limits are set per organization and per resources type.
+EOF
 }
 
 variable "hosts_limit_runbook_url" {
@@ -55,7 +51,9 @@ variable "hosts_limit_transformation_function" {
 variable "containers_limit_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
-  default     = ""
+  default     = <<-EOF
+    To avoid overbilling, limits are set per organization and per resources type.
+EOF
 }
 
 variable "containers_limit_runbook_url" {
@@ -87,7 +85,9 @@ variable "containers_limit_transformation_function" {
 variable "custom_metrics_limit_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
-  default     = ""
+  default     = <<-EOF
+    To avoid overbilling, limits are set per organization and per resources type.
+EOF
 }
 
 variable "custom_metrics_limit_runbook_url" {
@@ -119,7 +119,12 @@ variable "custom_metrics_limit_transformation_function" {
 variable "containers_ratio_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
-  default     = ""
+  default     = <<-EOF
+    Enterprise plan includes 20 containers per host.
+    Standard plan includes 10 containers per host.
+    Exceeding this will be paid as extra.
+    Current billing will be increased by this ratio.
+EOF
 }
 
 variable "containers_ratio_runbook_url" {
@@ -157,7 +162,12 @@ variable "containers_ratio_threshold_major" {
 variable "custom_metrics_ratio_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
-  default     = ""
+  default     = <<-EOF
+    Enterprise plan includes 200 custom metrics per host.
+    Standard plan includes 100 custom metrics per host.
+    Exceeding this will be paid as extra.
+    Current billing will be increased by this ratio.
+EOF
 }
 
 variable "custom_metrics_ratio_runbook_url" {
