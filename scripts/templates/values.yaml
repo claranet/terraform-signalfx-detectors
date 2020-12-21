@@ -81,6 +81,20 @@ filtering:
 ## metrics coming from the agent (to avoid false positive at downscale).
 exclude_not_running_vm: 
 
+## @param runbook_url - string - optional
+## Define a default runbook_url for all rules of the detector, see:
+## https://docs.signalfx.com/en/latest/detect-alert/set-up-detectors.html#runbook
+## If not defined, an empty string will be used as variable to allow the 
+## use to set its custom one.
+runbook_url: 
+
+## @param tip - string - optional
+## Define a default tip for all rules of the detector, see:
+## https://docs.signalfx.com/en/latest/detect-alert/set-up-detectors.html#tip
+## If not defined, an empty string will be used as variable to allow the 
+## use to set its custom one.
+tip: 
+
 ## @param signals - object - mandatory
 ## List of signals of the detector. Attribute key is the {{signal_label}} 
 ## used in signalflow programm.

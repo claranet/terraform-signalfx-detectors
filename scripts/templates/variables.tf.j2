@@ -36,6 +36,20 @@ variable "{{ id }}_transformation_function" {
 
 {% endif -%}
 
+variable "{{ id }}_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = {% if tip is string %}<<-EOF
+    {{ tip }}
+EOF{% else %}""{% endif %}
+}
+
+variable "{{ id }}_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = "{% if runbook_url is string %}{{ runbook_url }}{% endif %}"
+}
+
 variable "{{ id }}_disabled" {
   description = "Disable all alerting rules for {{ id }} detector"
   type        = bool
