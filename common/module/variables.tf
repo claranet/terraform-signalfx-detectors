@@ -40,3 +40,9 @@ variable "detectors_disabled" {
   default     = false
 }
 
+variable "runbook_url" {
+  description = "Default runbook URL to apply to all detectors (if not overridden at detector level)"
+  type        = string
+  default     = ""
+}
+

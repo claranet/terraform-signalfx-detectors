@@ -88,7 +88,7 @@ EOF
     detect_label          = "{{ severity | replace('critical', 'crit') | replace ('warning', 'warn') | upper }}"
     disabled              = coalesce({% if rules | length > 1 %}var.{{ id }}_disabled_{{ severity }}, {% endif %}var.{{ id }}_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.{{ id }}_notifications, "{{ severity }}", []), var.notifications.{{ severity }})
-    runbook_url           = var.{{ id }}_runbook_url
+    runbook_url           = coalesce(var.{{ id }}_runbook_url, var.runbook_url)
     tip                   = var.{{ id }}_tip
     parameterized_subject = local.rule_subject{%- if type == 'heartbeat' -%}_novalue{% endif %}
     parameterized_body    = local.rule_body
