@@ -79,7 +79,12 @@ filtering:
 ## cloud providers. 
 ## This is often useful for heartbeat detectors, especially based on 
 ## metrics coming from the agent (to avoid false positive at downscale).
-exclude_not_running_vm: 
+exclude_not_running_vm:
+
+## @param value_unit - string - optional
+## Signal unit for the current detector.
+## This will update the detector messages and associated variables description.
+value_unit:
 
 ## @param runbook_url - string - optional
 ## Define a default runbook_url for all rules of the detector, see:
@@ -168,8 +173,3 @@ rules:
     ## This will add another condition to negate the dependecy like:
     ## when(signal > {{severity}}) and when(signal <= {{severity.dependency}})
     #dependency:
-
-    ## @param unit - string - optional
-    ## Threshold unit for the current detector.
-    ## This will update the detector message and associated variables description
-    unit:

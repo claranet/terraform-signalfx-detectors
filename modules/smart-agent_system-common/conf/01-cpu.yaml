@@ -2,6 +2,7 @@ module: system
 name: "cpu utilization"
 id: cpu
 transformation: ".min(over='1h')"
+value_unit: "%"
 signals:
   signal:
     metric: cpu.utilization
@@ -10,9 +11,7 @@ rules:
   critical:
     threshold: 90
     comparator: ">"
-    unit: "%"
   major:
     threshold: 85
     comparator: ">"
     dependency: critical
-    unit: "%"

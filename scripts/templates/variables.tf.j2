@@ -79,7 +79,7 @@ variable "{{ id }}_timeframe" {
   {% for key, rule in rules.items() -%}
     {%- set severity = key | lower -%}
 variable "{{ id }}_threshold_{{ severity }}" {
-  description = "{{ severity | capitalize }} threshold for {{ id }} detector{% if rule.unit | default(false) %} (unit: {{ rule.unit }}){% endif %}"
+  description = "{{ severity | capitalize }} threshold for {{ id }} detector{% if value_unit is defined %} in {{ value_unit }}{% endif %}"
   type        = number
     {%- if rule.threshold is number %}
   default     = {{ rule.threshold }}

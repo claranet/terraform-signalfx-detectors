@@ -133,7 +133,7 @@ resource "signalfx_detector" "disk_inodes" {
 EOF
 
   rule {
-    description           = "is too high > ${var.disk_inodes_threshold_critical}"
+    description           = "is too high > ${var.disk_inodes_threshold_critical}%"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.disk_inodes_disabled_critical, var.disk_inodes_disabled, var.detectors_disabled)
@@ -145,7 +145,7 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.disk_inodes_threshold_major}"
+    description           = "is too high > ${var.disk_inodes_threshold_major}%"
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.disk_inodes_disabled_major, var.disk_inodes_disabled, var.detectors_disabled)
