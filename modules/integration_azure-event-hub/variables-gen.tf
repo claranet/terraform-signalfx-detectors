@@ -18,6 +18,18 @@ variable "throttled_requests_transformation_function" {
   default     = ".max(over='15m')"
 }
 
+variable "throttled_requests_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "throttled_requests_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "throttled_requests_disabled" {
   description = "Disable all alerting rules for throttled_requests detector"
   type        = bool

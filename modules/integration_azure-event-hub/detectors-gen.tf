@@ -16,6 +16,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.throttled_requests_disabled_critical, var.throttled_requests_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.throttled_requests_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = var.throttled_requests_runbook_url
+    tip                   = var.throttled_requests_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -26,6 +28,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.throttled_requests_disabled_major, var.throttled_requests_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.throttled_requests_notifications, "major", []), var.notifications.major)
+    runbook_url           = var.throttled_requests_runbook_url
+    tip                   = var.throttled_requests_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
