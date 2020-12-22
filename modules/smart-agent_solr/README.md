@@ -87,7 +87,7 @@ information including the official documentation of this monitor.
 
 
 Check the [integration 
-documentation](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.solr.html) 
+documentation](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.apache.solr.html) 
 in addition to the monitor one which it uses.
 
 ### Monitors
