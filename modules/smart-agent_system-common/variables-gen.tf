@@ -87,13 +87,13 @@ variable "cpu_disabled_major" {
 }
 
 variable "cpu_threshold_critical" {
-  description = "Critical threshold for cpu detector"
+  description = "Critical threshold for cpu detector (unit: %)"
   type        = number
   default     = 90
 }
 
 variable "cpu_threshold_major" {
-  description = "Major threshold for cpu detector"
+  description = "Major threshold for cpu detector (unit: %)"
   type        = number
   default     = 85
 }
@@ -211,13 +211,13 @@ variable "disk_space_disabled_major" {
 }
 
 variable "disk_space_threshold_critical" {
-  description = "Critical threshold for disk_space detector"
+  description = "Critical threshold for disk_space detector (unit: %)"
   type        = number
   default     = 90
 }
 
 variable "disk_space_threshold_major" {
-  description = "Major threshold for disk_space detector"
+  description = "Major threshold for disk_space detector (unit: %)"
   type        = number
   default     = 80
 }
@@ -335,13 +335,13 @@ variable "memory_disabled_major" {
 }
 
 variable "memory_threshold_critical" {
-  description = "Critical threshold for memory detector"
+  description = "Critical threshold for memory detector (unit: %)"
   type        = number
   default     = 95
 }
 
 variable "memory_threshold_major" {
-  description = "Major threshold for memory detector"
+  description = "Major threshold for memory detector (unit: %)"
   type        = number
   default     = 90
 }
