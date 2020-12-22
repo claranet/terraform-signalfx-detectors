@@ -168,3 +168,8 @@ rules:
     ## This will add another condition to negate the dependecy like:
     ## when(signal > {{severity}}) and when(signal <= {{severity.dependency}})
     #dependency:
+
+    ## @param unit - string - optional
+    ## Threshold unit for the current detector.
+    ## This will update the detector message and associated variables description
+    unit:
