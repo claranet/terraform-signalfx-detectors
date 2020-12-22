@@ -15,7 +15,7 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.hit_ratio_disabled_critical, var.hit_ratio_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.hit_ratio_notifications, "critical", []), var.notifications.critical)
-    runbook_url           = coalesce(var.hit_ratio_runbook_url, var.runbook_url)
+    runbook_url           = try(coalesce(var.hit_ratio_runbook_url, var.runbook_url), "")
     tip                   = var.hit_ratio_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
@@ -27,7 +27,7 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.hit_ratio_disabled_major, var.hit_ratio_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.hit_ratio_notifications, "major", []), var.notifications.major)
-    runbook_url           = coalesce(var.hit_ratio_runbook_url, var.runbook_url)
+    runbook_url           = try(coalesce(var.hit_ratio_runbook_url, var.runbook_url), "")
     tip                   = var.hit_ratio_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
@@ -49,7 +49,7 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.cpu_disabled_critical, var.cpu_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.cpu_notifications, "critical", []), var.notifications.critical)
-    runbook_url           = coalesce(var.cpu_runbook_url, var.runbook_url)
+    runbook_url           = try(coalesce(var.cpu_runbook_url, var.runbook_url), "")
     tip                   = var.cpu_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
@@ -61,7 +61,7 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.cpu_disabled_major, var.cpu_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.cpu_notifications, "major", []), var.notifications.major)
-    runbook_url           = coalesce(var.cpu_runbook_url, var.runbook_url)
+    runbook_url           = try(coalesce(var.cpu_runbook_url, var.runbook_url), "")
     tip                   = var.cpu_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body

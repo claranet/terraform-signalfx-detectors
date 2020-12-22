@@ -13,7 +13,7 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
-    runbook_url           = coalesce(var.heartbeat_runbook_url, var.runbook_url)
+    runbook_url           = try(coalesce(var.heartbeat_runbook_url, var.runbook_url), "")
     tip                   = var.heartbeat_tip
     parameterized_subject = local.rule_subject_novalue
     parameterized_body    = local.rule_body
@@ -35,7 +35,7 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.cpu_utilization_disabled_critical, var.cpu_utilization_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.cpu_utilization_notifications, "critical", []), var.notifications.critical)
-    runbook_url           = coalesce(var.cpu_utilization_runbook_url, var.runbook_url)
+    runbook_url           = try(coalesce(var.cpu_utilization_runbook_url, var.runbook_url), "")
     tip                   = var.cpu_utilization_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
@@ -47,7 +47,7 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.cpu_utilization_disabled_major, var.cpu_utilization_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.cpu_utilization_notifications, "major", []), var.notifications.major)
-    runbook_url           = coalesce(var.cpu_utilization_runbook_url, var.runbook_url)
+    runbook_url           = try(coalesce(var.cpu_utilization_runbook_url, var.runbook_url), "")
     tip                   = var.cpu_utilization_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
@@ -73,7 +73,7 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.disk_throttled_bps_disabled_critical, var.disk_throttled_bps_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.disk_throttled_bps_notifications, "critical", []), var.notifications.critical)
-    runbook_url           = coalesce(var.disk_throttled_bps_runbook_url, var.runbook_url)
+    runbook_url           = try(coalesce(var.disk_throttled_bps_runbook_url, var.runbook_url), "")
     tip                   = var.disk_throttled_bps_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
@@ -85,7 +85,7 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.disk_throttled_bps_disabled_major, var.disk_throttled_bps_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.disk_throttled_bps_notifications, "major", []), var.notifications.major)
-    runbook_url           = coalesce(var.disk_throttled_bps_runbook_url, var.runbook_url)
+    runbook_url           = try(coalesce(var.disk_throttled_bps_runbook_url, var.runbook_url), "")
     tip                   = var.disk_throttled_bps_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
@@ -111,7 +111,7 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.disk_throttled_ops_disabled_critical, var.disk_throttled_ops_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.disk_throttled_ops_notifications, "critical", []), var.notifications.critical)
-    runbook_url           = coalesce(var.disk_throttled_ops_runbook_url, var.runbook_url)
+    runbook_url           = try(coalesce(var.disk_throttled_ops_runbook_url, var.runbook_url), "")
     tip                   = var.disk_throttled_ops_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
@@ -123,7 +123,7 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.disk_throttled_ops_disabled_major, var.disk_throttled_ops_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.disk_throttled_ops_notifications, "major", []), var.notifications.major)
-    runbook_url           = coalesce(var.disk_throttled_ops_runbook_url, var.runbook_url)
+    runbook_url           = try(coalesce(var.disk_throttled_ops_runbook_url, var.runbook_url), "")
     tip                   = var.disk_throttled_ops_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body

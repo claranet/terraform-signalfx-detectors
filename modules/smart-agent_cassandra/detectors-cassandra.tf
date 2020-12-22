@@ -14,7 +14,7 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
-    runbook_url           = coalesce(var.heartbeat_runbook_url, var.runbook_url)
+    runbook_url           = try(coalesce(var.heartbeat_runbook_url, var.runbook_url), "")
     tip                   = var.heartbeat_tip
     parameterized_subject = local.rule_subject_novalue
     parameterized_body    = local.rule_body
@@ -36,7 +36,7 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.read_p99_latency_disabled_critical, var.read_p99_latency_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.read_p99_latency_notifications, "critical", []), var.notifications.critical)
-    runbook_url           = coalesce(var.read_p99_latency_runbook_url, var.runbook_url)
+    runbook_url           = try(coalesce(var.read_p99_latency_runbook_url, var.runbook_url), "")
     tip                   = var.read_p99_latency_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
@@ -48,7 +48,7 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.read_p99_latency_disabled_major, var.read_p99_latency_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.read_p99_latency_notifications, "major", []), var.notifications.major)
-    runbook_url           = coalesce(var.read_p99_latency_runbook_url, var.runbook_url)
+    runbook_url           = try(coalesce(var.read_p99_latency_runbook_url, var.runbook_url), "")
     tip                   = var.read_p99_latency_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
@@ -70,7 +70,7 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.write_p99_latency_disabled_critical, var.write_p99_latency_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.write_p99_latency_notifications, "critical", []), var.notifications.critical)
-    runbook_url           = coalesce(var.write_p99_latency_runbook_url, var.runbook_url)
+    runbook_url           = try(coalesce(var.write_p99_latency_runbook_url, var.runbook_url), "")
     tip                   = var.write_p99_latency_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
@@ -82,7 +82,7 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.write_p99_latency_disabled_major, var.write_p99_latency_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.write_p99_latency_notifications, "major", []), var.notifications.major)
-    runbook_url           = coalesce(var.write_p99_latency_runbook_url, var.runbook_url)
+    runbook_url           = try(coalesce(var.write_p99_latency_runbook_url, var.runbook_url), "")
     tip                   = var.write_p99_latency_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
@@ -106,7 +106,7 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.read_real_time_latency_disabled_critical, var.read_real_time_latency_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.read_real_time_latency_notifications, "critical", []), var.notifications.critical)
-    runbook_url           = coalesce(var.read_real_time_latency_runbook_url, var.runbook_url)
+    runbook_url           = try(coalesce(var.read_real_time_latency_runbook_url, var.runbook_url), "")
     tip                   = var.read_real_time_latency_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
@@ -118,7 +118,7 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.read_real_time_latency_disabled_major, var.read_real_time_latency_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.read_real_time_latency_notifications, "major", []), var.notifications.major)
-    runbook_url           = coalesce(var.read_real_time_latency_runbook_url, var.runbook_url)
+    runbook_url           = try(coalesce(var.read_real_time_latency_runbook_url, var.runbook_url), "")
     tip                   = var.read_real_time_latency_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
@@ -142,7 +142,7 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.write_real_time_latency_disabled_critical, var.write_real_time_latency_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.write_real_time_latency_notifications, "critical", []), var.notifications.critical)
-    runbook_url           = coalesce(var.write_real_time_latency_runbook_url, var.runbook_url)
+    runbook_url           = try(coalesce(var.write_real_time_latency_runbook_url, var.runbook_url), "")
     tip                   = var.write_real_time_latency_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
@@ -154,7 +154,7 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.write_real_time_latency_disabled_major, var.write_real_time_latency_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.write_real_time_latency_notifications, "major", []), var.notifications.major)
-    runbook_url           = coalesce(var.write_real_time_latency_runbook_url, var.runbook_url)
+    runbook_url           = try(coalesce(var.write_real_time_latency_runbook_url, var.runbook_url), "")
     tip                   = var.write_real_time_latency_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
@@ -176,7 +176,7 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.casread_p99_latency_disabled_critical, var.casread_p99_latency_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.casread_p99_latency_notifications, "critical", []), var.notifications.critical)
-    runbook_url           = coalesce(var.casread_p99_latency_runbook_url, var.runbook_url)
+    runbook_url           = try(coalesce(var.casread_p99_latency_runbook_url, var.runbook_url), "")
     tip                   = var.casread_p99_latency_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
@@ -188,7 +188,7 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.casread_p99_latency_disabled_major, var.casread_p99_latency_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.casread_p99_latency_notifications, "major", []), var.notifications.major)
-    runbook_url           = coalesce(var.casread_p99_latency_runbook_url, var.runbook_url)
+    runbook_url           = try(coalesce(var.casread_p99_latency_runbook_url, var.runbook_url), "")
     tip                   = var.casread_p99_latency_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
@@ -210,7 +210,7 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.caswrite_p99_latency_disabled_critical, var.caswrite_p99_latency_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.caswrite_p99_latency_notifications, "critical", []), var.notifications.critical)
-    runbook_url           = coalesce(var.caswrite_p99_latency_runbook_url, var.runbook_url)
+    runbook_url           = try(coalesce(var.caswrite_p99_latency_runbook_url, var.runbook_url), "")
     tip                   = var.caswrite_p99_latency_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
@@ -222,7 +222,7 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.caswrite_p99_latency_disabled_major, var.caswrite_p99_latency_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.caswrite_p99_latency_notifications, "major", []), var.notifications.major)
-    runbook_url           = coalesce(var.caswrite_p99_latency_runbook_url, var.runbook_url)
+    runbook_url           = try(coalesce(var.caswrite_p99_latency_runbook_url, var.runbook_url), "")
     tip                   = var.caswrite_p99_latency_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
@@ -246,7 +246,7 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.casread_real_time_latency_disabled_critical, var.casread_real_time_latency_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.casread_real_time_latency_notifications, "critical", []), var.notifications.critical)
-    runbook_url           = coalesce(var.casread_real_time_latency_runbook_url, var.runbook_url)
+    runbook_url           = try(coalesce(var.casread_real_time_latency_runbook_url, var.runbook_url), "")
     tip                   = var.casread_real_time_latency_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
@@ -258,7 +258,7 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.casread_real_time_latency_disabled_major, var.casread_real_time_latency_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.casread_real_time_latency_notifications, "major", []), var.notifications.major)
-    runbook_url           = coalesce(var.casread_real_time_latency_runbook_url, var.runbook_url)
+    runbook_url           = try(coalesce(var.casread_real_time_latency_runbook_url, var.runbook_url), "")
     tip                   = var.casread_real_time_latency_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
@@ -282,7 +282,7 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.caswrite_real_time_latency_disabled_critical, var.caswrite_real_time_latency_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.caswrite_real_time_latency_notifications, "critical", []), var.notifications.critical)
-    runbook_url           = coalesce(var.caswrite_real_time_latency_runbook_url, var.runbook_url)
+    runbook_url           = try(coalesce(var.caswrite_real_time_latency_runbook_url, var.runbook_url), "")
     tip                   = var.caswrite_real_time_latency_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
@@ -294,7 +294,7 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.caswrite_real_time_latency_disabled_major, var.caswrite_real_time_latency_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.caswrite_real_time_latency_notifications, "major", []), var.notifications.major)
-    runbook_url           = coalesce(var.caswrite_real_time_latency_runbook_url, var.runbook_url)
+    runbook_url           = try(coalesce(var.caswrite_real_time_latency_runbook_url, var.runbook_url), "")
     tip                   = var.caswrite_real_time_latency_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
@@ -315,7 +315,7 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.storage_exceptions_disabled_major, var.storage_exceptions_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.storage_exceptions_notifications, "major", []), var.notifications.major)
-    runbook_url           = coalesce(var.storage_exceptions_runbook_url, var.runbook_url)
+    runbook_url           = try(coalesce(var.storage_exceptions_runbook_url, var.runbook_url), "")
     tip                   = var.storage_exceptions_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body

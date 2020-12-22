@@ -14,7 +14,7 @@ resource "signalfx_detector" "status_check" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.status_check_disabled_major, var.status_check_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.status_check_notifications, "major", []), var.notifications.major)
-    runbook_url           = coalesce(var.status_check_runbook_url, var.runbook_url)
+    runbook_url           = try(coalesce(var.status_check_runbook_url, var.runbook_url), "")
     tip                   = var.status_check_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
@@ -26,7 +26,7 @@ resource "signalfx_detector" "status_check" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.status_check_disabled_critical, var.status_check_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.status_check_notifications, "critical", []), var.notifications.critical)
-    runbook_url           = coalesce(var.status_check_runbook_url, var.runbook_url)
+    runbook_url           = try(coalesce(var.status_check_runbook_url, var.runbook_url), "")
     tip                   = var.status_check_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
@@ -38,7 +38,7 @@ resource "signalfx_detector" "status_check" {
     detect_label          = "WARN"
     disabled              = coalesce(var.status_check_disabled_warning, var.status_check_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.status_check_notifications, "warning", []), var.notifications.warning)
-    runbook_url           = coalesce(var.status_check_runbook_url, var.runbook_url)
+    runbook_url           = try(coalesce(var.status_check_runbook_url, var.runbook_url), "")
     tip                   = var.status_check_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
