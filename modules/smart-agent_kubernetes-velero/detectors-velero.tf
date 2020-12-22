@@ -12,7 +12,7 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.velero_scheduled_backup_missing_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.velero_scheduled_backup_missing_notifications, "major", []), var.notifications.major)
-    runbook_url           = var.velero_scheduled_backup_missing_runbook_url
+    runbook_url           = coalesce(var.velero_scheduled_backup_missing_runbook_url, var.runbook_url)
     tip                   = var.velero_scheduled_backup_missing_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
@@ -33,7 +33,7 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.velero_backup_failure_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.velero_backup_failure_notifications, "major", []), var.notifications.major)
-    runbook_url           = var.velero_backup_failure_runbook_url
+    runbook_url           = coalesce(var.velero_backup_failure_runbook_url, var.runbook_url)
     tip                   = var.velero_backup_failure_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
@@ -54,7 +54,7 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.velero_backup_partial_failure_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.velero_backup_partial_failure_notifications, "major", []), var.notifications.major)
-    runbook_url           = var.velero_backup_partial_failure_runbook_url
+    runbook_url           = coalesce(var.velero_backup_partial_failure_runbook_url, var.runbook_url)
     tip                   = var.velero_backup_partial_failure_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
@@ -75,7 +75,7 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.velero_backup_deletion_failure_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.velero_backup_deletion_failure_notifications, "major", []), var.notifications.major)
-    runbook_url           = var.velero_backup_deletion_failure_runbook_url
+    runbook_url           = coalesce(var.velero_backup_deletion_failure_runbook_url, var.runbook_url)
     tip                   = var.velero_backup_deletion_failure_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
@@ -96,7 +96,7 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.velero_volume_snapshot_failure_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.velero_volume_snapshot_failure_notifications, "major", []), var.notifications.major)
-    runbook_url           = var.velero_volume_snapshot_failure_runbook_url
+    runbook_url           = coalesce(var.velero_volume_snapshot_failure_runbook_url, var.runbook_url)
     tip                   = var.velero_volume_snapshot_failure_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body

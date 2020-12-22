@@ -12,7 +12,7 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.failover_unavailable_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.failover_unavailable_notifications, "major", []), var.notifications.major)
-    runbook_url           = var.failover_unavailable_runbook_url
+    runbook_url           = coalesce(var.failover_unavailable_runbook_url, var.runbook_url)
     tip                   = var.failover_unavailable_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body

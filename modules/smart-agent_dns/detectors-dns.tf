@@ -14,7 +14,7 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
-    runbook_url           = var.heartbeat_runbook_url
+    runbook_url           = coalesce(var.heartbeat_runbook_url, var.runbook_url)
     tip                   = var.heartbeat_tip
     parameterized_subject = local.rule_subject_novalue
     parameterized_body    = local.rule_body
@@ -36,7 +36,7 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.dns_query_time_disabled_critical, var.dns_query_time_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.dns_query_time_notifications, "critical", []), var.notifications.critical)
-    runbook_url           = var.dns_query_time_runbook_url
+    runbook_url           = coalesce(var.dns_query_time_runbook_url, var.runbook_url)
     tip                   = var.dns_query_time_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
@@ -48,7 +48,7 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.dns_query_time_disabled_major, var.dns_query_time_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.dns_query_time_notifications, "major", []), var.notifications.major)
-    runbook_url           = var.dns_query_time_runbook_url
+    runbook_url           = coalesce(var.dns_query_time_runbook_url, var.runbook_url)
     tip                   = var.dns_query_time_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
@@ -69,7 +69,7 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.dns_result_code_disabled_critical, var.dns_result_code_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.dns_result_code_notifications, "critical", []), var.notifications.critical)
-    runbook_url           = var.dns_result_code_runbook_url
+    runbook_url           = coalesce(var.dns_result_code_runbook_url, var.runbook_url)
     tip                   = var.dns_result_code_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body

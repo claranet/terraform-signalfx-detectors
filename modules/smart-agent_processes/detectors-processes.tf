@@ -13,7 +13,7 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.processes_disabled_critical, var.processes_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.processes_notifications, "critical", []), var.notifications.critical)
-    runbook_url           = var.processes_runbook_url
+    runbook_url           = coalesce(var.processes_runbook_url, var.runbook_url)
     tip                   = var.processes_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
@@ -25,7 +25,7 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.processes_disabled_major, var.processes_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.processes_notifications, "major", []), var.notifications.major)
-    runbook_url           = var.processes_runbook_url
+    runbook_url           = coalesce(var.processes_runbook_url, var.runbook_url)
     tip                   = var.processes_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body

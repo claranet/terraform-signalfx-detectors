@@ -14,7 +14,7 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
-    runbook_url           = var.heartbeat_runbook_url
+    runbook_url           = coalesce(var.heartbeat_runbook_url, var.runbook_url)
     tip                   = var.heartbeat_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
@@ -38,7 +38,7 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.average_processing_time_disabled_critical, var.average_processing_time_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.average_processing_time_notifications, "critical", []), var.notifications.critical)
-    runbook_url           = var.average_processing_time_runbook_url
+    runbook_url           = coalesce(var.average_processing_time_runbook_url, var.runbook_url)
     tip                   = var.average_processing_time_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
@@ -50,7 +50,7 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.average_processing_time_disabled_major, var.average_processing_time_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.average_processing_time_notifications, "major", []), var.notifications.major)
-    runbook_url           = var.average_processing_time_runbook_url
+    runbook_url           = coalesce(var.average_processing_time_runbook_url, var.runbook_url)
     tip                   = var.average_processing_time_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
@@ -75,7 +75,7 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.busy_threads_percentage_disabled_critical, var.busy_threads_percentage_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.busy_threads_percentage_notifications, "critical", []), var.notifications.critical)
-    runbook_url           = var.busy_threads_percentage_runbook_url
+    runbook_url           = coalesce(var.busy_threads_percentage_runbook_url, var.runbook_url)
     tip                   = var.busy_threads_percentage_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
@@ -87,7 +87,7 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.busy_threads_percentage_disabled_major, var.busy_threads_percentage_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.busy_threads_percentage_notifications, "major", []), var.notifications.major)
-    runbook_url           = var.busy_threads_percentage_runbook_url
+    runbook_url           = coalesce(var.busy_threads_percentage_runbook_url, var.runbook_url)
     tip                   = var.busy_threads_percentage_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body

@@ -13,7 +13,7 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.disk_running_out_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.disk_running_out_notifications, "major", []), var.notifications.major)
-    runbook_url           = var.disk_running_out_runbook_url
+    runbook_url           = coalesce(var.disk_running_out_runbook_url, var.runbook_url)
     tip                   = var.disk_running_out_tip
     parameterized_subject = local.rule_subject_novalue
     parameterized_body    = local.rule_body
