@@ -1,6 +1,9 @@
 resource "signalfx_detector" "error_rate_4xx" {
   name = format("%s %s", local.detector_name_prefix, "GCP Load Balancer 4xx error rate")
 
+  authorized_writer_teams = var.authorized_writer_teams
+
+
   program_text = <<-EOF
     A = data('https/request_count', filter=filter('service', 'loadbalancing') and filter('response_code_class', '400')  and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.error_rate_4xx_aggregation_function}${var.error_rate_4xx_transformation_function}
     B = data('https/request_count', filter=filter('service', 'loadbalancing') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.error_rate_4xx_aggregation_function}${var.error_rate_4xx_transformation_function}
@@ -36,6 +39,9 @@ EOF
 
 resource "signalfx_detector" "error_rate_5xx" {
   name = format("%s %s", local.detector_name_prefix, "GCP Load Balancer 5xx error rate")
+
+  authorized_writer_teams = var.authorized_writer_teams
+
 
   program_text = <<-EOF
     A = data('https/request_count', filter=filter('service', 'loadbalancing') and filter('response_code_class', '400')  and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.error_rate_5xx_aggregation_function}${var.error_rate_5xx_transformation_function}
@@ -73,6 +79,9 @@ EOF
 resource "signalfx_detector" "backend_latency_service" {
   name = format("%s %s", local.detector_name_prefix, "GCP Load Balancer backend latency by service")
 
+  authorized_writer_teams = var.authorized_writer_teams
+
+
   program_text = <<-EOF
     signal = data('https/backend_latencies', filter=filter('service', 'loadbalancing') and filter('backend_target_type', 'BACKEND_SERVICE') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='average')${var.backend_latency_service_aggregation_function}${var.backend_latency_service_transformation_function}.publish('signal')
     detect(when(signal > threshold(${var.backend_latency_service_threshold_critical}), lasting='${var.backend_latency_service_lasting_duration_seconds}s', at_least=${var.backend_latency_service_at_least_percentage})).publish('CRIT')
@@ -107,6 +116,9 @@ EOF
 resource "signalfx_detector" "backend_latency_bucket" {
   name = format("%s %s", local.detector_name_prefix, "GCP Load Balancer backend latency by bucket")
 
+  authorized_writer_teams = var.authorized_writer_teams
+
+
   program_text = <<-EOF
     signal = data('https/backend_latencies', filter=filter('service', 'loadbalancing') and filter('backend_target_type', 'BACKEND_BUCKET') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='average')${var.backend_latency_bucket_aggregation_function}${var.backend_latency_bucket_transformation_function}.publish('signal')
     detect(when(signal > threshold(${var.backend_latency_bucket_threshold_critical}), lasting='${var.backend_latency_bucket_lasting_duration_seconds}s', at_least=${var.backend_latency_bucket_at_least_percentage})).publish('CRIT')
@@ -140,6 +152,9 @@ EOF
 
 resource "signalfx_detector" "request_count" {
   name = format("%s %s", local.detector_name_prefix, "GCP Load Balancer request count")
+
+  authorized_writer_teams = var.authorized_writer_teams
+
 
   program_text = <<-EOF
     signal = data('https/request_count', filter=filter('service', 'loadbalancing') and ${module.filter-tags.filter_custom}, extrapolation='last_value', rollup='sum')${var.request_count_aggregation_function}${var.request_count_transformation_function}.rateofchange().publish('signal')

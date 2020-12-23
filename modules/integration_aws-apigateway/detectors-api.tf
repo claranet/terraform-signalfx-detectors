@@ -2,6 +2,9 @@
 resource "signalfx_detector" "latency" {
   name = format("%s %s", local.detector_name_prefix, "AWS ApiGateway latency")
 
+  authorized_writer_teams = var.authorized_writer_teams
+
+
   program_text = <<-EOF
     signal = data('Latency', filter=filter('namespace', 'AWS/ApiGateway') and filter('stat', 'sum') and (not filter('Stage', '*')) and (not filter('Method', '*')) and (not filter('Resource', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='average')${var.latency_aggregation_function}${var.latency_transformation_function}.publish('signal')
     detect(when(signal > threshold(${var.latency_threshold_critical}), lasting='${var.latency_lasting_duration_seconds}s', at_least=${var.latency_at_least_percentage})).publish('CRIT')
@@ -36,6 +39,9 @@ EOF
 # Monitoring API Gateway 5xx errors percent
 resource "signalfx_detector" "http_5xx" {
   name = format("%s %s", local.detector_name_prefix, "AWS ApiGateway HTTP 5xx error rate")
+
+  authorized_writer_teams = var.authorized_writer_teams
+
 
   program_text = <<-EOF
     A = data('${var.is_v2 ? "5xx" : "5XXError"}', filter=filter('namespace', 'AWS/ApiGateway') and filter('stat', 'sum') and (not filter('Stage', '*')) and (not filter('Method', '*')) and (not filter('Resource', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.http_5xx_aggregation_function}${var.http_5xx_transformation_function}
@@ -73,6 +79,9 @@ EOF
 # Monitoring API Gateway 4xx errors percent
 resource "signalfx_detector" "http_4xx" {
   name = format("%s %s", local.detector_name_prefix, "AWS ApiGateway HTTP 4xx error rate")
+
+  authorized_writer_teams = var.authorized_writer_teams
+
 
   program_text = <<-EOF
     A = data('${var.is_v2 ? "4xx" : "4XXError"}', filter=filter('namespace', 'AWS/ApiGateway') and filter('stat', 'sum') and (not filter('Stage', '*')) and (not filter('Method', '*')) and (not filter('Resource', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.http_4xx_aggregation_function}${var.http_4xx_transformation_function}

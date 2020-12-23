@@ -1,5 +1,8 @@
 resource "signalfx_detector" "heartbeat" {
   name      = format("%s %s", local.detector_name_prefix, "PostgreSQL heartbeat")
+
+  authorized_writer_teams = var.authorized_writer_teams
+
   max_delay = 900
 
   program_text = <<-EOF
@@ -23,6 +26,9 @@ EOF
 
 resource "signalfx_detector" "deadlocks" {
   name = format("%s %s", local.detector_name_prefix, "PostgreSQL deadlocks")
+
+  authorized_writer_teams = var.authorized_writer_teams
+
 
   program_text = <<-EOF
     signal = data('postgres_deadlocks', filter=${module.filter-tags.filter_custom}, rollup='delta')${var.deadlocks_aggregation_function}${var.deadlocks_transformation_function}.publish('signal')
@@ -58,6 +64,9 @@ EOF
 resource "signalfx_detector" "hit_ratio" {
   name = format("%s %s", local.detector_name_prefix, "PostgreSQL hit ratio")
 
+  authorized_writer_teams = var.authorized_writer_teams
+
+
   program_text = <<-EOF
     signal = data('postgres_block_hit_ratio', filter=(not filter('index', '*')) and (not filter('schemaname', '*')) and (not filter('type', '*')) and (not filter('table', '*')) and ${module.filter-tags.filter_custom}, rollup='average').scale(100)${var.hit_ratio_aggregation_function}${var.hit_ratio_transformation_function}.publish('signal')
     detect(when(signal < ${var.hit_ratio_threshold_minor})).publish('MINOR')
@@ -91,6 +100,9 @@ EOF
 
 resource "signalfx_detector" "rollbacks" {
   name = format("%s %s", local.detector_name_prefix, "PostgreSQL rollbacks ratio compared to commits")
+
+  authorized_writer_teams = var.authorized_writer_teams
+
 
   program_text = <<-EOF
     A = data('postgres_xact_rollbacks', filter=${module.filter-tags.filter_custom}, rollup='delta')${var.rollbacks_aggregation_function}${var.rollbacks_transformation_function}
@@ -128,6 +140,9 @@ EOF
 resource "signalfx_detector" "conflicts" {
   name = format("%s %s", local.detector_name_prefix, "PostgreSQL conflicts")
 
+  authorized_writer_teams = var.authorized_writer_teams
+
+
   program_text = <<-EOF
     signal = data('postgres_conflicts', filter=${module.filter-tags.filter_custom}, rollup='average')${var.conflicts_aggregation_function}${var.conflicts_transformation_function}.publish('signal')
     detect(when(signal > ${var.conflicts_threshold_major})).publish('MAJOR')
@@ -161,6 +176,9 @@ EOF
 
 resource "signalfx_detector" "max_connections" {
   name = format("%s %s", local.detector_name_prefix, "PostgreSQL number of connections compared to max")
+
+  authorized_writer_teams = var.authorized_writer_teams
+
 
   program_text = <<-EOF
     signal = data('postgres_pct_connections', filter=${module.filter-tags.filter_custom}, rollup='average').scale(100)${var.max_connections_aggregation_function}${var.max_connections_transformation_function}.publish('signal')
@@ -196,6 +214,9 @@ EOF
 resource "signalfx_detector" "replication_lag" {
   name = format("%s %s", local.detector_name_prefix, "PostgreSQL replication lag")
 
+  authorized_writer_teams = var.authorized_writer_teams
+
+
   program_text = <<-EOF
     signal = data('postgres_replication_lag', filter=${module.filter-tags.filter_custom}, rollup='average')${var.replication_lag_aggregation_function}${var.replication_lag_transformation_function}.publish('signal')
     detect(when(signal > ${var.replication_lag_threshold_critical})).publish('CRIT')
@@ -229,6 +250,9 @@ EOF
 
 resource "signalfx_detector" "replication_state" {
   name = format("%s %s", local.detector_name_prefix, "PostgreSQL replication state")
+
+  authorized_writer_teams = var.authorized_writer_teams
+
 
   program_text = <<-EOF
     signal = data('postgres_replication_state', filter=${module.filter-tags.filter_custom}, rollup='average')${var.replication_state_aggregation_function}${var.replication_state_transformation_function}.publish('signal')

@@ -1,5 +1,8 @@
 resource "signalfx_detector" "heartbeat" {
   name      = format("%s %s", local.detector_name_prefix, "DNS heartbeat")
+
+  authorized_writer_teams = var.authorized_writer_teams
+
   max_delay = 900
 
   program_text = <<-EOF
@@ -23,6 +26,9 @@ EOF
 
 resource "signalfx_detector" "dns_query_time" {
   name = format("%s %s", local.detector_name_prefix, "DNS query time")
+
+  authorized_writer_teams = var.authorized_writer_teams
+
 
   program_text = <<-EOF
     signal = data('dns.query_time_ms', filter=filter('plugin', 'telegraf/dns') and ${module.filter-tags.filter_custom})${var.dns_query_time_aggregation_function}${var.dns_query_time_transformation_function}.publish('signal')
@@ -57,6 +63,9 @@ EOF
 
 resource "signalfx_detector" "dns_result_code" {
   name = format("%s %s", local.detector_name_prefix, "DNS query result")
+
+  authorized_writer_teams = var.authorized_writer_teams
+
 
   program_text = <<-EOF
     signal = data('dns.result_code', filter=filter('plugin', 'telegraf/dns') and ${module.filter-tags.filter_custom})${var.dns_result_code_aggregation_function}${var.dns_result_code_transformation_function}.publish('signal')

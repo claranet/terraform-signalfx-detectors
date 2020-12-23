@@ -1,5 +1,8 @@
 resource "signalfx_detector" "heartbeat" {
   name      = format("%s %s", local.detector_name_prefix, "MongoDB heartbeat")
+
+  authorized_writer_teams = var.authorized_writer_teams
+
   max_delay = 900
 
   program_text = <<-EOF
@@ -24,6 +27,9 @@ EOF
 resource "signalfx_detector" "page_faults" {
   name = format("%s %s", local.detector_name_prefix, "MongoDB page faults")
 
+  authorized_writer_teams = var.authorized_writer_teams
+
+
   program_text = <<-EOF
     signal = data('counter.extra_info.page_faults', filter=${module.filter-tags.filter_custom})${var.page_faults_aggregation_function}${var.page_faults_transformation_function}.publish('signal')
     detect(when(signal > ${var.page_faults_threshold_warning})).publish('WARN')
@@ -44,6 +50,9 @@ EOF
 
 resource "signalfx_detector" "max_connections" {
   name = format("%s %s", local.detector_name_prefix, "MongoDB number of connections over max capacity")
+
+  authorized_writer_teams = var.authorized_writer_teams
+
 
   program_text = <<-EOF
     A = data('gauge.connections.current', filter=${module.filter-tags.filter_custom})${var.max_connections_aggregation_function}${var.max_connections_transformation_function}
@@ -81,6 +90,9 @@ EOF
 resource "signalfx_detector" "asserts" {
   name = format("%s %s", local.detector_name_prefix, "MongoDB asserts (warning and regular) errors")
 
+  authorized_writer_teams = var.authorized_writer_teams
+
+
   program_text = <<-EOF
     A = data('counter.asserts.regular', filter=${module.filter-tags.filter_custom})${var.asserts_aggregation_function}${var.asserts_transformation_function}
     B = data('counter.asserts.warning', filter=${module.filter-tags.filter_custom})${var.asserts_aggregation_function}${var.asserts_transformation_function}
@@ -104,6 +116,9 @@ EOF
 resource "signalfx_detector" "primary" {
   name = format("%s %s", local.detector_name_prefix, "MongoDB primary in replicaset")
 
+  authorized_writer_teams = var.authorized_writer_teams
+
+
   program_text = <<-EOF
     signal = data('gauge.repl.is_primary_node', filter=${module.filter-tags.filter_custom})${var.primary_aggregation_function}${var.primary_transformation_function}.publish('signal')
     detect(when(signal > ${var.primary_threshold_critical})).publish('CRIT')
@@ -124,6 +139,9 @@ EOF
 
 resource "signalfx_detector" "secondary" {
   name = format("%s %s", local.detector_name_prefix, "MongoDB secondary members count in replicaset")
+
+  authorized_writer_teams = var.authorized_writer_teams
+
 
   program_text = <<-EOF
     A = data('gauge.repl.active_nodes', filter=${module.filter-tags.filter_custom})${var.secondary_aggregation_function}${var.secondary_transformation_function}
@@ -147,6 +165,9 @@ EOF
 
 resource "signalfx_detector" "replication_lag" {
   name = format("%s %s", local.detector_name_prefix, "MongoDB replication lag")
+
+  authorized_writer_teams = var.authorized_writer_teams
+
 
   program_text = <<-EOF
     signal = data('gauge.repl.max_lag', filter=${module.filter-tags.filter_custom})${var.replication_lag_aggregation_function}${var.replication_lag_transformation_function}.publish('signal')

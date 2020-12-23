@@ -1,6 +1,9 @@
 resource "signalfx_detector" "heartbeat" {
   name = format("%s %s", local.detector_name_prefix, "Kubernetes API server heartbeat")
 
+  authorized_writer_teams = var.authorized_writer_teams
+
+
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
     signal = data('apiserver_request_total', filter=${local.not_running_vm_filters} and ${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')

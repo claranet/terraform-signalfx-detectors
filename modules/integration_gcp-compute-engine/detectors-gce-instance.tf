@@ -1,6 +1,9 @@
 resource "signalfx_detector" "heartbeat" {
   name = format("%s %s", local.detector_name_prefix, "GCP GCE Instance heartbeat")
 
+  authorized_writer_teams = var.authorized_writer_teams
+
+
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
     signal = data('instance/cpu/usage_time', filter=${local.not_running_vm_filters_gcp} and ${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')
@@ -22,6 +25,9 @@ EOF
 
 resource "signalfx_detector" "cpu_utilization" {
   name = format("%s %s", local.detector_name_prefix, "GCP GCE Instance CPU utilization")
+
+  authorized_writer_teams = var.authorized_writer_teams
+
 
   program_text = <<-EOF
     signal = data('instance/cpu/utilization', ${module.filter-tags.filter_custom})${var.cpu_utilization_aggregation_function}${var.cpu_utilization_transformation_function}.scale(100).publish('signal')
@@ -56,6 +62,9 @@ EOF
 
 resource "signalfx_detector" "disk_throttled_bps" {
   name = format("%s %s", local.detector_name_prefix, "GCP GCE Instance disk throttled bps")
+
+  authorized_writer_teams = var.authorized_writer_teams
+
 
   program_text = <<-EOF
     A = data('instance/disk/throttled_read_bytes_count', ${module.filter-tags.filter_custom})${var.disk_throttled_bps_aggregation_function}${var.disk_throttled_bps_transformation_function}
@@ -94,6 +103,9 @@ EOF
 
 resource "signalfx_detector" "disk_throttled_ops" {
   name = format("%s %s", local.detector_name_prefix, "GCP GCE Instance disk throttled ops")
+
+  authorized_writer_teams = var.authorized_writer_teams
+
 
   program_text = <<-EOF
     A = data('instance/disk/throttled_read_ops_count', ${module.filter-tags.filter_custom})${var.disk_throttled_ops_aggregation_function}${var.disk_throttled_ops_transformation_function}

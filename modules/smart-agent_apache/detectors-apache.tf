@@ -1,5 +1,8 @@
 resource "signalfx_detector" "heartbeat" {
   name      = format("%s %s", local.detector_name_prefix, "Apache heartbeat")
+
+  authorized_writer_teams = var.authorized_writer_teams
+
   max_delay = 900
 
   program_text = <<-EOF
@@ -23,6 +26,9 @@ EOF
 
 resource "signalfx_detector" "apache_workers" {
   name = format("%s %s", local.detector_name_prefix, "Apache busy workers")
+
+  authorized_writer_teams = var.authorized_writer_teams
+
 
   program_text = <<-EOF
     A = data('apache_connections', filter=${module.filter-tags.filter_custom})${var.apache_workers_aggregation_function}${var.apache_workers_transformation_function}

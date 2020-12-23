@@ -1,6 +1,9 @@
 resource "signalfx_detector" "search_latency" {
   name = format("%s %s", local.detector_name_prefix, "Azure Search latency")
 
+  authorized_writer_teams = var.authorized_writer_teams
+
+
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Search/searchServices') and filter('primary_aggregation_type', 'true')
         signal = data('SearchLatency', filter=base_filter and ${module.filter-tags.filter_custom})${var.search_latency_aggregation_function}.publish('signal')
@@ -35,6 +38,9 @@ resource "signalfx_detector" "search_latency" {
 
 resource "signalfx_detector" "search_throttled_queries_rate" {
   name = format("%s %s", local.detector_name_prefix, "Azure Search throttled queries rate")
+
+  authorized_writer_teams = var.authorized_writer_teams
+
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Search/searchServices') and filter('primary_aggregation_type', 'true')
