@@ -46,3 +46,9 @@ variable "runbook_url" {
   default     = ""
 }
 
+variable "authorized_writer_teams" {
+  description = "List of teams IDs authorized (with admins) to edit the detector. If defined, it requires an user token to work"
+  type        = list(string)
+  default     = null
+}
+

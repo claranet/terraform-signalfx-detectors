@@ -5,7 +5,6 @@
 {% endif -%}
 {%- if name | lower == 'heartbeat' -%}
   {%- set type = 'heartbeat' -%}
-  {%- set arg_format = '     ' -%}
 {%- else -%}
   {%- set type = 'threshold' -%}
 {%- endif -%}
@@ -17,8 +16,11 @@
   {%- endif %}
 {%- endfor -%}
 resource "signalfx_detector" "{{ id }}" {
-  name{{ arg_format | default('') }} = format("%s %s", local.detector_name_prefix, "{{ module[0]|upper}}{{module[1:] }} {{ name | lower }}")
+  name = format("%s %s", local.detector_name_prefix, "{{ module[0]|upper}}{{module[1:] }} {{ name | lower }}")
+
+  authorized_writer_teams = var.authorized_writer_teams
   {%- if type == 'heartbeat' %}
+
   max_delay = 900
   {%- endif %}
 
