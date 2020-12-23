@@ -14,6 +14,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = try(coalesce(var.heartbeat_runbook_url, var.runbook_url), "")
+    tip                   = var.heartbeat_tip
     parameterized_subject = local.rule_subject_novalue
     parameterized_body    = local.rule_body
   }
@@ -36,6 +38,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.php_fpm_connect_idle_disabled_critical, var.php_fpm_connect_idle_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.php_fpm_connect_idle_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = try(coalesce(var.php_fpm_connect_idle_runbook_url, var.runbook_url), "")
+    tip                   = var.php_fpm_connect_idle_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -46,6 +50,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.php_fpm_connect_idle_disabled_major, var.php_fpm_connect_idle_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.php_fpm_connect_idle_notifications, "major", []), var.notifications.major)
+    runbook_url           = try(coalesce(var.php_fpm_connect_idle_runbook_url, var.runbook_url), "")
+    tip                   = var.php_fpm_connect_idle_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }

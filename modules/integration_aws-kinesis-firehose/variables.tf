@@ -2,6 +2,18 @@
 
 # Heartbeat detector
 
+variable "heartbeat_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "heartbeat_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
   type        = bool
@@ -27,6 +39,18 @@ variable "heartbeat_aggregation_function" {
 }
 
 # incoming_records detector
+
+variable "incoming_records_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "incoming_records_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "incoming_records_disabled" {
   description = "Disable all alerting rules for incoming_records detector"

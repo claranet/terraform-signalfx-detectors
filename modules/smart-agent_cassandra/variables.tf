@@ -2,6 +2,18 @@
 
 # Heartbeat detector
 
+variable "heartbeat_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "heartbeat_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
   type        = bool
@@ -27,6 +39,18 @@ variable "heartbeat_aggregation_function" {
 }
 
 # read_p99_latency detector
+
+variable "read_p99_latency_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "read_p99_latency_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "read_p99_latency_disabled" {
   description = "Disable all alerting rules for read_p99_latency detector"
@@ -78,6 +102,18 @@ variable "read_p99_latency_threshold_major" {
 
 # write_p99_latency detector
 
+variable "write_p99_latency_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "write_p99_latency_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "write_p99_latency_disabled" {
   description = "Disable all alerting rules for write_p99_latency detector"
   type        = bool
@@ -127,6 +163,18 @@ variable "write_p99_latency_threshold_major" {
 }
 
 # read_real_time_latency detector
+
+variable "read_real_time_latency_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "read_real_time_latency_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "read_real_time_latency_disabled" {
   description = "Disable all alerting rules for read_real_time_latency detector"
@@ -178,6 +226,18 @@ variable "read_real_time_latency_threshold_major" {
 
 # write_real_time_latency detector
 
+variable "write_real_time_latency_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "write_real_time_latency_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "write_real_time_latency_disabled" {
   description = "Disable all alerting rules for write_real_time_latency detector"
   type        = bool
@@ -227,6 +287,18 @@ variable "write_real_time_latency_threshold_major" {
 }
 
 # casread_p99_latency detector
+
+variable "casread_p99_latency_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "casread_p99_latency_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "casread_p99_latency_disabled" {
   description = "Disable all alerting rules for casread_p99_latency detector"
@@ -278,6 +350,18 @@ variable "casread_p99_latency_threshold_major" {
 
 # caswrite_p99_latency detector
 
+variable "caswrite_p99_latency_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "caswrite_p99_latency_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "caswrite_p99_latency_disabled" {
   description = "Disable all alerting rules for caswrite_p99_latency detector"
   type        = bool
@@ -327,6 +411,18 @@ variable "caswrite_p99_latency_threshold_major" {
 }
 
 # casread_real_time_latency detector
+
+variable "casread_real_time_latency_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "casread_real_time_latency_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "casread_real_time_latency_disabled" {
   description = "Disable all alerting rules for casread_real_time_latency detector"
@@ -378,6 +474,18 @@ variable "casread_real_time_latency_threshold_major" {
 
 # caswrite_real_time_latency detector
 
+variable "caswrite_real_time_latency_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "caswrite_real_time_latency_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "caswrite_real_time_latency_disabled" {
   description = "Disable all alerting rules for caswrite_real_time_latency detector"
   type        = bool
@@ -427,6 +535,18 @@ variable "caswrite_real_time_latency_threshold_major" {
 }
 
 # storage_exceptions detector
+
+variable "storage_exceptions_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "storage_exceptions_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "storage_exceptions_disabled" {
   description = "Disable all alerting rules for storage_exceptions detector"

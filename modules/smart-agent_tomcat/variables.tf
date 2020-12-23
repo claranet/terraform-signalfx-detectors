@@ -12,6 +12,18 @@ variable "heartbeat_aggregation_function" {
   default     = ""
 }
 
+variable "heartbeat_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "heartbeat_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
   type        = bool
@@ -42,6 +54,18 @@ variable "average_processing_time_transformation_function" {
   description = "Transformation function for average_processing_time detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='10m')"
+}
+
+variable "average_processing_time_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "average_processing_time_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
 }
 
 variable "average_processing_time_disabled" {
@@ -92,6 +116,18 @@ variable "busy_threads_percentage_transformation_function" {
   description = "Transformation function for busy_threads_percentage detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='5m')"
+}
+
+variable "busy_threads_percentage_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "busy_threads_percentage_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
 }
 
 variable "busy_threads_percentage_disabled" {

@@ -2,6 +2,18 @@
 
 # Heartbeat detector
 
+variable "heartbeat_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "heartbeat_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
   type        = bool
@@ -27,6 +39,18 @@ variable "heartbeat_aggregation_function" {
 }
 
 # node_ready detector
+
+variable "node_ready_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "node_ready_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "node_ready_disabled" {
   description = "Disable all alerting rules for node_ready detector"
@@ -72,6 +96,18 @@ variable "node_ready_transformation_function" {
 
 # Pod_phase_status detector
 
+variable "pod_phase_status_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "pod_phase_status_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "pod_phase_status_disabled" {
   description = "Disable all alerting rules for pod_phase_status detector"
   type        = bool
@@ -103,6 +139,18 @@ variable "pod_phase_status_lasting_duration_seconds" {
 }
 
 # Terminated detector
+
+variable "terminated_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "terminated_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "terminated_disabled" {
   description = "Disable all alerting rules for terminated detector"
@@ -142,6 +190,18 @@ variable "terminated_lasting_duration_seconds" {
 
 # oom_killed detector
 
+variable "oom_killed_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "oom_killed_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "oom_killed_disabled" {
   description = "Disable all alerting rules for oom_killed detector"
   type        = bool
@@ -173,6 +233,18 @@ variable "oom_killed_threshold_major" {
 }
 
 # deployment_crashloopbackoff detector
+
+variable "deployment_crashloopbackoff_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "deployment_crashloopbackoff_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "deployment_crashloopbackoff_disabled" {
   description = "Disable all alerting rules for deployment_crashloopbackoff detector"
@@ -206,6 +278,18 @@ variable "deployment_crashloopbackoff_threshold_major" {
 
 # daemonset_crashloopbackoff detector
 
+variable "daemonset_crashloopbackoff_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "daemonset_crashloopbackoff_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "daemonset_crashloopbackoff_disabled" {
   description = "Disable all alerting rules for daemonset_crashloopbackoff detector"
   type        = bool
@@ -237,6 +321,18 @@ variable "daemonset_crashloopbackoff_threshold_major" {
 }
 
 # job_failed detector
+
+variable "job_failed_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "job_failed_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "job_failed_disabled" {
   description = "Disable all alerting rules for job_failed detector"
@@ -276,6 +372,18 @@ variable "job_failed_lasting_duration_seconds" {
 
 # daemonset_scheduled detector
 
+variable "daemonset_scheduled_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "daemonset_scheduled_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "daemonset_scheduled_disabled" {
   description = "Disable all alerting rules for daemonset_scheduled detector"
   type        = bool
@@ -307,6 +415,18 @@ variable "daemonset_scheduled_lasting_duration_seconds" {
 }
 
 # daemonset_ready detector
+
+variable "daemonset_ready_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "daemonset_ready_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "daemonset_ready_disabled" {
   description = "Disable all alerting rules for daemonset_ready detector"
@@ -346,6 +466,18 @@ variable "daemonset_ready_threshold_critical" {
 
 # daemonset_misscheduled detector
 
+variable "daemonset_misscheduled_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "daemonset_misscheduled_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "daemonset_misscheduled_disabled" {
   description = "Disable all alerting rules for daemonset_misscheduled detector"
   type        = bool
@@ -384,6 +516,18 @@ variable "daemonset_misscheduled_threshold_critical" {
 
 # deployment_available detector
 
+variable "deployment_available_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "deployment_available_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "deployment_available_disabled" {
   description = "Disable all alerting rules for deployment_available detector"
   type        = bool
@@ -415,6 +559,18 @@ variable "deployment_available_lasting_duration_seconds" {
 }
 
 # replicaset_available detector
+
+variable "replicaset_available_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "replicaset_available_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "replicaset_available_disabled" {
   description = "Disable all alerting rules for replicaset_available detector"
@@ -448,6 +604,18 @@ variable "replicaset_available_lasting_duration_seconds" {
 
 # replication_controller_available detector
 
+variable "replication_controller_available_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "replication_controller_available_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "replication_controller_available_disabled" {
   description = "Disable all alerting rules for replication_controller_available detector"
   type        = bool
@@ -479,6 +647,18 @@ variable "replication_controller_available_lasting_duration_seconds" {
 }
 
 # satefulset_ready detector
+
+variable "satefulset_ready_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "satefulset_ready_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "satefulset_ready_disabled" {
   description = "Disable all alerting rules for satefulset_ready detector"

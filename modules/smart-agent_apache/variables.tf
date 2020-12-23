@@ -2,6 +2,18 @@
 
 # Heartbeat detector
 
+variable "heartbeat_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "heartbeat_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
   type        = bool
@@ -27,6 +39,18 @@ variable "heartbeat_aggregation_function" {
 }
 
 # Apache_workers detector
+
+variable "apache_workers_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "apache_workers_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "apache_workers_disabled" {
   description = "Disable all alerting rules for apache_workers detector"

@@ -2,6 +2,18 @@
 
 # Heartbeat detector
 
+variable "heartbeat_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "heartbeat_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
   type        = bool
@@ -27,6 +39,18 @@ variable "heartbeat_aggregation_function" {
 }
 
 # Evicted_keys detector
+
+variable "evicted_keys_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "evicted_keys_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "evicted_keys_disabled" {
   description = "Disable all alerting rules for evicted_keys detector"
@@ -78,6 +102,18 @@ variable "evicted_keys_threshold_major" {
 
 # Expirations detector
 
+variable "expirations_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "expirations_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "expirations_disabled" {
   description = "Disable all alerting rules for expirations detector"
   type        = bool
@@ -127,6 +163,18 @@ variable "expirations_threshold_major" {
 }
 
 # Blocked_clients detector
+
+variable "blocked_clients_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "blocked_clients_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "blocked_clients_disabled" {
   description = "Disable all alerting rules for blocked_clients detector"
@@ -178,6 +226,18 @@ variable "blocked_clients_threshold_warning" {
 
 # Keyspace_full detector
 
+variable "keyspace_full_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "keyspace_full_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "keyspace_full_disabled" {
   description = "Disable all alerting rules for keyspace_full detector"
   type        = bool
@@ -203,6 +263,18 @@ variable "keyspace_full_transformation_function" {
 }
 
 # Memory_used_max detector
+
+variable "memory_used_max_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "memory_used_max_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "memory_used_max_disabled" {
   description = "Disable all alerting rules for memory_used_max detector"
@@ -254,6 +326,18 @@ variable "memory_used_max_threshold_major" {
 
 # Memory_used_total detector
 
+variable "memory_used_total_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "memory_used_total_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "memory_used_total_disabled" {
   description = "Disable all alerting rules for memory_used_total detector"
   type        = bool
@@ -303,6 +387,18 @@ variable "memory_used_total_threshold_major" {
 }
 
 # Memory_frag_high detector
+
+variable "memory_frag_high_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "memory_frag_high_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "memory_frag_high_disabled" {
   description = "Disable all alerting rules for memory_frag_high detector"
@@ -354,6 +450,18 @@ variable "memory_frag_high_threshold_major" {
 
 # Memory_frag_low detector
 
+variable "memory_frag_low_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "memory_frag_low_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "memory_frag_low_disabled" {
   description = "Disable all alerting rules for memory_frag_low detector"
   type        = bool
@@ -404,6 +512,18 @@ variable "memory_frag_low_threshold_major" {
 
 # rejected_connections detector
 
+variable "rejected_connections_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "rejected_connections_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "rejected_connections_disabled" {
   description = "Disable all alerting rules for rejected_connections detector"
   type        = bool
@@ -453,6 +573,18 @@ variable "rejected_connections_threshold_major" {
 }
 
 # Hitrate detector
+
+variable "hitrate_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "hitrate_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "hitrate_disabled" {
   description = "Disable all alerting rules for hitrate detector"

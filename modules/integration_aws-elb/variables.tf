@@ -8,6 +8,18 @@ variable "minimum_traffic" {
 
 # Heartbeat detector
 
+variable "heartbeat_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "heartbeat_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
   type        = bool
@@ -33,6 +45,18 @@ variable "heartbeat_aggregation_function" {
 }
 
 # no_healthy_instances detector
+
+variable "no_healthy_instances_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "no_healthy_instances_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "no_healthy_instances_disabled" {
   description = "Disable all alerting rules for no_healthy_instances detector"
@@ -83,6 +107,18 @@ variable "no_healthy_instances_threshold_major" {
 }
 
 # 4xx detector
+
+variable "elb_4xx_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "elb_4xx_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "elb_4xx_disabled" {
   description = "Disable all alerting rules for 4xx detector"
@@ -146,6 +182,18 @@ variable "elb_4xx_threshold_major" {
 
 # 5xx detector
 
+variable "elb_5xx_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "elb_5xx_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "elb_5xx_disabled" {
   description = "Disable all alerting rules for 5xx detector"
   type        = bool
@@ -207,6 +255,18 @@ variable "elb_5xx_threshold_major" {
 }
 
 # backend_4xx detector
+
+variable "backend_4xx_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "backend_4xx_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "backend_4xx_disabled" {
   description = "Disable all alerting rules for backend_4xx detector"
@@ -270,6 +330,18 @@ variable "backend_4xx_threshold_major" {
 
 # backend_5xx detector
 
+variable "backend_5xx_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "backend_5xx_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "backend_5xx_disabled" {
   description = "Disable all alerting rules for backend_5xx detector"
   type        = bool
@@ -331,6 +403,18 @@ variable "backend_5xx_threshold_major" {
 }
 
 # Backend_latency detector
+
+variable "backend_latency_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "backend_latency_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "backend_latency_disabled" {
   description = "Disable all alerting rules for backend_latency detector"

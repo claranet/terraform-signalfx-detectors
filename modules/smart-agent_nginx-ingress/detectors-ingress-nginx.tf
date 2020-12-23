@@ -15,6 +15,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.ingress_5xx_disabled_critical, var.ingress_5xx_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.ingress_5xx_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = try(coalesce(var.ingress_5xx_runbook_url, var.runbook_url), "")
+    tip                   = var.ingress_5xx_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -25,6 +27,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.ingress_5xx_disabled_major, var.ingress_5xx_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.ingress_5xx_notifications, "major", []), var.notifications.major)
+    runbook_url           = try(coalesce(var.ingress_5xx_runbook_url, var.runbook_url), "")
+    tip                   = var.ingress_5xx_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -47,6 +51,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.ingress_4xx_disabled_critical, var.ingress_4xx_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.ingress_4xx_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = try(coalesce(var.ingress_4xx_runbook_url, var.runbook_url), "")
+    tip                   = var.ingress_4xx_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -57,6 +63,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.ingress_4xx_disabled_major, var.ingress_4xx_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.ingress_4xx_notifications, "major", []), var.notifications.major)
+    runbook_url           = try(coalesce(var.ingress_4xx_runbook_url, var.runbook_url), "")
+    tip                   = var.ingress_4xx_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -77,6 +85,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.ingress_latency_disabled_critical, var.ingress_latency_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.ingress_latency_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = try(coalesce(var.ingress_latency_runbook_url, var.runbook_url), "")
+    tip                   = var.ingress_latency_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -87,6 +97,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.ingress_latency_disabled_major, var.ingress_latency_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.ingress_latency_notifications, "major", []), var.notifications.major)
+    runbook_url           = try(coalesce(var.ingress_latency_runbook_url, var.runbook_url), "")
+    tip                   = var.ingress_latency_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }

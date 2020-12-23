@@ -2,6 +2,18 @@
 
 # Heartbeat detector
 
+variable "heartbeat_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "heartbeat_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
   type        = bool
@@ -27,6 +39,18 @@ variable "heartbeat_aggregation_function" {
 }
 
 # connection detector
+
+variable "connections_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "connections_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "connections_disabled" {
   description = "Disable all alerting rules for connection detector"
@@ -78,6 +102,18 @@ variable "connections_threshold_major" {
 
 # pool_efficiency detector
 
+variable "pool_efficiency_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "pool_efficiency_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "pool_efficiency_disabled" {
   description = "Disable all alerting rules for pool_efficiency detector"
   type        = bool
@@ -127,6 +163,18 @@ variable "pool_efficiency_threshold_warning" {
 }
 
 # pool_utilization detector
+
+variable "pool_utilization_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "pool_utilization_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "pool_utilization_disabled" {
   description = "Disable all alerting rules for pool_utilization detector"
@@ -178,6 +226,18 @@ variable "pool_utilization_threshold_warning" {
 
 # slow detector
 
+variable "slow_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "slow_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "slow_disabled" {
   description = "Disable all alerting rules for slow detector"
   type        = bool
@@ -227,6 +287,18 @@ variable "slow_threshold_major" {
 }
 
 # threads_anomaly detector
+
+variable "threads_anomaly_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "threads_anomaly_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "threads_anomaly_disabled" {
   description = "Disable all alerting rules for threads_anomaly detector"
@@ -290,6 +362,18 @@ variable "threads_anomaly_orientation" {
 
 # questions_anomaly detector
 
+variable "questions_anomaly_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "questions_anomaly_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "questions_anomaly_disabled" {
   description = "Disable all alerting rules for questions_anomaly detector"
   type        = bool
@@ -352,6 +436,18 @@ variable "questions_anomaly_orientation" {
 
 # replication_lag detector
 
+variable "replication_lag_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "replication_lag_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "replication_lag_disabled" {
   description = "Disable all alerting rules for replication_lag detector"
   type        = bool
@@ -402,6 +498,18 @@ variable "replication_lag_threshold_major" {
 
 # slave_sql_status detector
 
+variable "slave_sql_status_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "slave_sql_status_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "slave_sql_status_disabled" {
   description = "Disable all alerting rules for slave_sql_status detector"
   type        = bool
@@ -427,6 +535,18 @@ variable "slave_sql_status_transformation_function" {
 }
 
 # slave_io_status detector
+
+variable "slave_io_status_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "slave_io_status_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "slave_io_status_disabled" {
   description = "Disable all alerting rules for slave_io_status detector"

@@ -14,6 +14,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = try(coalesce(var.heartbeat_runbook_url, var.runbook_url), "")
+    tip                   = var.heartbeat_tip
     parameterized_subject = local.rule_subject_novalue
     parameterized_body    = local.rule_body
   }
@@ -33,6 +35,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.http_code_matched_disabled_critical, var.http_code_matched_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.http_code_matched_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = try(coalesce(var.http_code_matched_runbook_url, var.runbook_url), "")
+    tip                   = var.http_code_matched_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -53,6 +57,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.http_regex_matched_disabled_critical, var.http_regex_matched_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.http_regex_matched_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = try(coalesce(var.http_regex_matched_runbook_url, var.runbook_url), "")
+    tip                   = var.http_regex_matched_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -74,6 +80,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.http_response_time_disabled_critical, var.http_response_time_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.http_response_time_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = try(coalesce(var.http_response_time_runbook_url, var.runbook_url), "")
+    tip                   = var.http_response_time_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -84,6 +92,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.http_response_time_disabled_major, var.http_response_time_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.http_response_time_notifications, "major", []), var.notifications.major)
+    runbook_url           = try(coalesce(var.http_response_time_runbook_url, var.runbook_url), "")
+    tip                   = var.http_response_time_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -103,6 +113,8 @@ EOF
     detect_label          = "WARN"
     disabled              = coalesce(var.http_content_length_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.http_content_length_notifications, "warning", []), var.notifications.warning)
+    runbook_url           = try(coalesce(var.http_content_length_runbook_url, var.runbook_url), "")
+    tip                   = var.http_content_length_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -124,6 +136,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.certificate_expiration_date_disabled_major, var.certificate_expiration_date_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.certificate_expiration_date_notifications, "major", []), var.notifications.major)
+    runbook_url           = try(coalesce(var.certificate_expiration_date_runbook_url, var.runbook_url), "")
+    tip                   = var.certificate_expiration_date_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -134,6 +148,8 @@ EOF
     detect_label          = "MINOR"
     disabled              = coalesce(var.certificate_expiration_date_disabled_minor, var.certificate_expiration_date_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.certificate_expiration_date_notifications, "minor", []), var.notifications.minor)
+    runbook_url           = try(coalesce(var.certificate_expiration_date_runbook_url, var.runbook_url), "")
+    tip                   = var.certificate_expiration_date_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -153,6 +169,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.invalid_tls_certificate_disabled_critical, var.invalid_tls_certificate_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.invalid_tls_certificate_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = try(coalesce(var.invalid_tls_certificate_runbook_url, var.runbook_url), "")
+    tip                   = var.invalid_tls_certificate_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }

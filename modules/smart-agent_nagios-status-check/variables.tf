@@ -2,6 +2,18 @@
 
 # status_check detector
 
+variable "status_check_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "status_check_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "status_check_disabled" {
   description = "Disable all alerting rules for status_check detector"
   type        = bool

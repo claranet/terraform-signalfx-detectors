@@ -1,5 +1,17 @@
 # disk_running_out detector
 
+variable "disk_running_out_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "disk_running_out_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "disk_running_out_disabled" {
   description = "Disable all alerting rules for disk running out detector"
   type        = bool

@@ -13,6 +13,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.aurora_mysql_replica_lag_disabled_critical, var.aurora_mysql_replica_lag_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.aurora_mysql_replica_lag_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = try(coalesce(var.aurora_mysql_replica_lag_runbook_url, var.runbook_url), "")
+    tip                   = var.aurora_mysql_replica_lag_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -23,6 +25,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.aurora_mysql_replica_lag_disabled_major, var.aurora_mysql_replica_lag_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.aurora_mysql_replica_lag_notifications, "major", []), var.notifications.major)
+    runbook_url           = try(coalesce(var.aurora_mysql_replica_lag_runbook_url, var.runbook_url), "")
+    tip                   = var.aurora_mysql_replica_lag_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }

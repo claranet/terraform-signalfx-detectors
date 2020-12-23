@@ -14,6 +14,8 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = try(coalesce(var.heartbeat_runbook_url, var.runbook_url), "")
+    tip                   = var.heartbeat_tip
     parameterized_subject = local.rule_subject_novalue
     parameterized_body    = local.rule_body
   }
@@ -34,6 +36,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.cpu_disabled_major, var.cpu_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.cpu_notifications, "major", []), var.notifications.major)
+    runbook_url           = try(coalesce(var.cpu_runbook_url, var.runbook_url), "")
+    tip                   = var.cpu_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -44,6 +48,8 @@ EOF
     detect_label          = "MINOR"
     disabled              = coalesce(var.cpu_disabled_minor, var.cpu_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.cpu_notifications, "minor", []), var.notifications.minor)
+    runbook_url           = try(coalesce(var.cpu_runbook_url, var.runbook_url), "")
+    tip                   = var.cpu_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -66,6 +72,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.throttling_disabled_major, var.throttling_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.throttling_notifications, "major", []), var.notifications.major)
+    runbook_url           = try(coalesce(var.throttling_runbook_url, var.runbook_url), "")
+    tip                   = var.throttling_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -76,6 +84,8 @@ EOF
     detect_label          = "MINOR"
     disabled              = coalesce(var.throttling_disabled_minor, var.throttling_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.throttling_notifications, "minor", []), var.notifications.minor)
+    runbook_url           = try(coalesce(var.throttling_runbook_url, var.runbook_url), "")
+    tip                   = var.throttling_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -98,6 +108,8 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.memory_disabled_major, var.memory_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.memory_notifications, "major", []), var.notifications.major)
+    runbook_url           = try(coalesce(var.memory_runbook_url, var.runbook_url), "")
+    tip                   = var.memory_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -108,6 +120,8 @@ EOF
     detect_label          = "MINOR"
     disabled              = coalesce(var.memory_disabled_minor, var.memory_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.memory_notifications, "minor", []), var.notifications.minor)
+    runbook_url           = try(coalesce(var.memory_runbook_url, var.runbook_url), "")
+    tip                   = var.memory_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }

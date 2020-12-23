@@ -2,6 +2,18 @@
 
 # Cache_hits detectors
 
+variable "cache_hits_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "cache_hits_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "cache_hits_disabled" {
   description = "Disable all alerting rules for cache_hits detector"
   type        = bool
@@ -64,6 +76,18 @@ variable "cache_hits_threshold_major" {
 
 # cpu_high detectors
 
+variable "cpu_high_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "cpu_high_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "cpu_high_disabled" {
   description = "Disable all alerting rules for cpu_high detector"
   type        = bool
@@ -114,6 +138,18 @@ variable "cpu_high_threshold_major" {
 
 # Replication_lag detectors
 
+variable "replication_lag_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "replication_lag_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "replication_lag_disabled" {
   description = "Disable all alerting rules for replication_lag detector"
   type        = bool
@@ -163,6 +199,18 @@ variable "replication_lag_threshold_major" {
 }
 
 # Commands detectors
+
+variable "commands_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "commands_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "commands_disabled" {
   description = "Disable all alerting rules for commands detector"

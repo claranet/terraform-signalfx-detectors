@@ -2,6 +2,18 @@
 
 # messages_ready detector
 
+variable "messages_ready_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "messages_ready_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "messages_ready_disabled" {
   description = "Disable all alerting rules for messages_ready detector"
   type        = bool
@@ -52,6 +64,18 @@ variable "messages_ready_threshold_critical" {
 
 # messages_unacknowledged detector
 
+variable "messages_unacknowledged_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "messages_unacknowledged_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "messages_unacknowledged_disabled" {
   description = "Disable all alerting rules for messages_unacknowledged detector"
   type        = bool
@@ -101,6 +125,18 @@ variable "messages_unacknowledged_threshold_critical" {
 }
 
 # messages_ack_rate detector
+
+variable "messages_ack_rate_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "messages_ack_rate_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "messages_ack_rate_disabled" {
   description = "Disable all alerting rules for messages_ack_rate detector"
@@ -157,6 +193,18 @@ variable "messages_ack_rate_threshold_critical" {
 }
 
 # consumer_use detector
+
+variable "consumer_use_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "consumer_use_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "consumer_use_disabled" {
   description = "Disable all alerting rules for consumer_use detector"

@@ -13,6 +13,18 @@ variable "minimum_traffic" {
 
 # Error_rate_4xx detector
 
+variable "error_rate_4xx_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "error_rate_4xx_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "error_rate_4xx_disabled" {
   description = "Disable all alerting rules for error_rate_4xx detector"
   type        = bool
@@ -74,6 +86,18 @@ variable "error_rate_4xx_threshold_major" {
 }
 
 # Error_rate_5xx detector
+
+variable "error_rate_5xx_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "error_rate_5xx_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "error_rate_5xx_disabled" {
   description = "Disable all alerting rules for error_rate_5xx detector"
@@ -137,6 +161,18 @@ variable "error_rate_5xx_threshold_major" {
 
 # backend_latency_service detector
 
+variable "backend_latency_service_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "backend_latency_service_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "backend_latency_service_disabled" {
   description = "Disable all alerting rules for backend_latency_service detector"
   type        = bool
@@ -199,6 +235,18 @@ variable "backend_latency_service_threshold_major" {
 
 # Backend_latency_bucket detector
 
+variable "backend_latency_bucket_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "backend_latency_bucket_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "backend_latency_bucket_disabled" {
   description = "Disable all alerting rules for backend_latency_bucket detector"
   type        = bool
@@ -260,6 +308,18 @@ variable "backend_latency_bucket_threshold_major" {
 }
 
 # Request_count detector
+
+variable "request_count_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "request_count_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "request_count_disabled" {
   description = "Disable all alerting rules for request_count detector"

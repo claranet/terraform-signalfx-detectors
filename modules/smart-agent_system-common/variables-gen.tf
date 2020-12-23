@@ -12,6 +12,18 @@ variable "heartbeat_aggregation_function" {
   default     = ""
 }
 
+variable "heartbeat_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "heartbeat_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
   type        = bool
@@ -42,6 +54,18 @@ variable "cpu_transformation_function" {
   description = "Transformation function for cpu detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='1h')"
+}
+
+variable "cpu_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "cpu_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
 }
 
 variable "cpu_disabled" {
@@ -94,6 +118,18 @@ variable "load_transformation_function" {
   default     = ".min(over='30m')"
 }
 
+variable "load_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "load_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "load_disabled" {
   description = "Disable all alerting rules for load detector"
   type        = bool
@@ -142,6 +178,18 @@ variable "disk_space_transformation_function" {
   description = "Transformation function for disk_space detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".max(over='5m')"
+}
+
+variable "disk_space_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "disk_space_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
 }
 
 variable "disk_space_disabled" {
@@ -194,6 +242,18 @@ variable "disk_inodes_transformation_function" {
   default     = ".max(over='5m')"
 }
 
+variable "disk_inodes_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "disk_inodes_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "disk_inodes_disabled" {
   description = "Disable all alerting rules for disk_inodes detector"
   type        = bool
@@ -242,6 +302,18 @@ variable "memory_transformation_function" {
   description = "Transformation function for memory detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='5m')"
+}
+
+variable "memory_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "memory_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
 }
 
 variable "memory_disabled" {

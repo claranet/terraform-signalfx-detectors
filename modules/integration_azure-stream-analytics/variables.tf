@@ -2,6 +2,18 @@
 
 # Heartbeat detector
 
+variable "heartbeat_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "heartbeat_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
   type        = bool
@@ -27,6 +39,18 @@ variable "heartbeat_aggregation_function" {
 }
 
 # SU_utilization detector
+
+variable "su_utilization_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "su_utilization_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "su_utilization_disabled" {
   description = "Disable all alerting rules for su_utilization detector"
@@ -78,6 +102,18 @@ variable "su_utilization_threshold_major" {
 
 # failed_function_requests detector
 
+variable "failed_function_requests_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "failed_function_requests_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "failed_function_requests_disabled" {
   description = "Disable all alerting rules for failed_function_requests detector"
   type        = bool
@@ -128,6 +164,18 @@ variable "failed_function_requests_threshold_major" {
 
 # Conversion_errors detector
 
+variable "conversion_errors_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "conversion_errors_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "conversion_errors_disabled" {
   description = "Disable all alerting rules for conversion_errors detector"
   type        = bool
@@ -177,6 +225,18 @@ variable "conversion_errors_threshold_major" {
 }
 
 # Runtime_errors detector
+
+variable "runtime_errors_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "runtime_errors_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "runtime_errors_disabled" {
   description = "Disable all alerting rules for runtime_errors detector"

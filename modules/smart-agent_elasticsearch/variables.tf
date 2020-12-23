@@ -2,6 +2,18 @@
 
 # Heartbeat detector
 
+variable "heartbeat_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "heartbeat_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
   type        = bool
@@ -27,6 +39,18 @@ variable "heartbeat_aggregation_function" {
 }
 
 # Cluster_status detector
+
+variable "cluster_status_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "cluster_status_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "cluster_status_disabled" {
   description = "Disable all alerting rules for cluster_status_not_green detector"
@@ -65,6 +89,18 @@ variable "cluster_status_transformation_function" {
 }
 
 # Cluster_initializing_shards detector
+
+variable "cluster_initializing_shards_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "cluster_initializing_shards_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "cluster_initializing_shards_disabled" {
   description = "Disable all alerting rules for cluster_initializing_shards detector"
@@ -116,6 +152,18 @@ variable "cluster_initializing_shards_threshold_major" {
 
 # Cluster_relocating_shards detector
 
+variable "cluster_relocating_shards_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "cluster_relocating_shards_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "cluster_relocating_shards_disabled" {
   description = "Disable all alerting rules for cluster_relocating_shards detector"
   type        = bool
@@ -165,6 +213,18 @@ variable "cluster_relocating_shards_threshold_major" {
 }
 
 # Cluster_unassigned_shards detector
+
+variable "cluster_unassigned_shards_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "cluster_unassigned_shards_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "cluster_unassigned_shards_disabled" {
   description = "Disable all alerting rules for cluster_unassigned_shards detector"
@@ -216,6 +276,18 @@ variable "cluster_unassigned_shards_threshold_major" {
 
 # pending_tasks detector
 
+variable "pending_tasks_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "pending_tasks_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "pending_tasks_disabled" {
   description = "Disable all alerting rules for pending_tasks detector"
   type        = bool
@@ -265,6 +337,18 @@ variable "pending_tasks_threshold_major" {
 }
 
 # Jvm_heap_memory_usage detector
+
+variable "jvm_heap_memory_usage_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "jvm_heap_memory_usage_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "jvm_heap_memory_usage_disabled" {
   description = "Disable all alerting rules for jvm_heap_memory_usage detector"
@@ -316,6 +400,18 @@ variable "jvm_heap_memory_usage_threshold_major" {
 
 # cpu_usage detector
 
+variable "cpu_usage_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "cpu_usage_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "cpu_usage_disabled" {
   description = "Disable all alerting rules for cpu_usage detector"
   type        = bool
@@ -365,6 +461,18 @@ variable "cpu_usage_threshold_major" {
 }
 
 # file_descriptors detector
+
+variable "file_descriptors_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "file_descriptors_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "file_descriptors_disabled" {
   description = "Disable all alerting rules for file_descriptors detector"
@@ -416,6 +524,18 @@ variable "file_descriptors_threshold_major" {
 
 # Jvm_memory_young_usage detector
 
+variable "jvm_memory_young_usage_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "jvm_memory_young_usage_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "jvm_memory_young_usage_disabled" {
   description = "Disable all alerting rules for jvm_memory_young_usage detector"
   type        = bool
@@ -465,6 +585,18 @@ variable "jvm_memory_young_usage_threshold_minor" {
 }
 
 # Jvm_memory_old_usage detector
+
+variable "jvm_memory_old_usage_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "jvm_memory_old_usage_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "jvm_memory_old_usage_disabled" {
   description = "Disable all alerting rules for jvm_memory_old_usage detector"
@@ -516,6 +648,18 @@ variable "jvm_memory_old_usage_threshold_minor" {
 
 # Jvm_gc_old_collection_latency detector
 
+variable "jvm_gc_old_collection_latency_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "jvm_gc_old_collection_latency_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "jvm_gc_old_collection_latency_disabled" {
   description = "Disable all alerting rules for jvm_gc_old_collection_latency detector"
   type        = bool
@@ -565,6 +709,18 @@ variable "jvm_gc_old_collection_latency_threshold_minor" {
 }
 
 # Jvm_gc_young_collection_latency detector
+
+variable "jvm_gc_young_collection_latency_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "jvm_gc_young_collection_latency_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "jvm_gc_young_collection_latency_disabled" {
   description = "Disable all alerting rules for jvm_gc_young_collection_latency detector"
@@ -616,6 +772,18 @@ variable "jvm_gc_young_collection_latency_threshold_minor" {
 
 # Indexing_latency detector
 
+variable "indexing_latency_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "indexing_latency_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "indexing_latency_disabled" {
   description = "Disable all alerting rules for indexing_latency detector"
   type        = bool
@@ -665,6 +833,18 @@ variable "indexing_latency_threshold_minor" {
 }
 
 # Flush_latency detector
+
+variable "flush_latency_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "flush_latency_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "flush_latency_disabled" {
   description = "Disable all alerting rules for flush_latency detector"
@@ -716,6 +896,18 @@ variable "flush_latency_threshold_minor" {
 
 # Search_latency detector
 
+variable "search_latency_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "search_latency_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "search_latency_disabled" {
   description = "Disable all alerting rules for search_latency detector"
   type        = bool
@@ -765,6 +957,18 @@ variable "search_latency_threshold_minor" {
 }
 
 # Fetch_latency detector
+
+variable "fetch_latency_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "fetch_latency_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "fetch_latency_disabled" {
   description = "Disable all alerting rules for fetch_latency detector"
@@ -816,6 +1020,18 @@ variable "fetch_latency_threshold_minor" {
 
 # Field_data_evictions_change detector
 
+variable "field_data_evictions_change_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "field_data_evictions_change_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "field_data_evictions_change_disabled" {
   description = "Disable all alerting rules for field_data_evictions_change detector"
   type        = bool
@@ -865,6 +1081,18 @@ variable "field_data_evictions_change_threshold_minor" {
 }
 
 # Task_time_in_queue_change detector
+
+variable "task_time_in_queue_change_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "task_time_in_queue_change_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "task_time_in_queue_change_disabled" {
   description = "Disable all alerting rules for task_time_in_queue_change detector"

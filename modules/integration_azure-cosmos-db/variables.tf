@@ -2,6 +2,18 @@
 
 # Heartbeat detector
 
+variable "heartbeat_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "heartbeat_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
   type        = bool
@@ -27,6 +39,18 @@ variable "heartbeat_aggregation_function" {
 }
 
 # db_4xx_requests detector
+
+variable "db_4xx_requests_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "db_4xx_requests_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "db_4xx_requests_disabled" {
   description = "Disable all alerting rules for db_4xx_requests detector"
@@ -78,6 +102,18 @@ variable "db_4xx_requests_threshold_major" {
 
 # db_5xx_requests detector
 
+variable "db_5xx_requests_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "db_5xx_requests_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "db_5xx_requests_disabled" {
   description = "Disable all alerting rules for db_5xx_requests detector"
   type        = bool
@@ -127,6 +163,18 @@ variable "db_5xx_requests_threshold_major" {
 }
 
 # Scaling detector
+
+variable "scaling_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "scaling_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "scaling_disabled" {
   description = "Disable all alerting rules for scaling detector"
@@ -194,6 +242,18 @@ variable "used_rus_capacity_transformation_function" {
   description = "Transformation function for used_rus_capacity detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".max(over='15m')"
+}
+
+variable "used_rus_capacity_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "used_rus_capacity_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
 }
 
 variable "used_rus_capacity_disabled" {

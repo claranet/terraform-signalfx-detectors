@@ -2,6 +2,18 @@
 
 # Heartbeat detector
 
+variable "heartbeat_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "heartbeat_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
   type        = bool
@@ -27,6 +39,18 @@ variable "heartbeat_aggregation_function" {
 }
 
 # CPU_utilization detector
+
+variable "cpu_utilization_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "cpu_utilization_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "cpu_utilization_disabled" {
   description = "Disable all alerting rules for cpu_utilization detector"
@@ -78,6 +102,18 @@ variable "cpu_utilization_threshold_major" {
 
 # Disk_throttled_bps detector
 
+variable "disk_throttled_bps_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "disk_throttled_bps_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "disk_throttled_bps_disabled" {
   description = "Disable all alerting rules for disk_throttled_bps detector"
   type        = bool
@@ -127,6 +163,18 @@ variable "disk_throttled_bps_threshold_major" {
 }
 
 # Disk_throttled_ops detector
+
+variable "disk_throttled_ops_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "disk_throttled_ops_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "disk_throttled_ops_disabled" {
   description = "Disable all alerting rules for disk_throttled_ops detector"

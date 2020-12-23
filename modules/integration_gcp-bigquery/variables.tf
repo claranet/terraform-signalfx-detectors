@@ -7,6 +7,18 @@ variable "gcp_project_id" {
 
 # Concurrent_queries detector
 
+variable "concurrent_queries_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "concurrent_queries_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "concurrent_queries_disabled" {
   description = "Disable all alerting rules for concurrent_queries detector"
   type        = bool
@@ -74,6 +86,18 @@ variable "concurrent_queries_clear_duration" {
 }
 
 # Execution_time detector
+
+variable "execution_time_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "execution_time_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "execution_time_disabled" {
   description = "Disable all alerting rules for execution_time detector"
@@ -143,6 +167,18 @@ variable "execution_time_clear_duration" {
 
 # Scanned_bytes detector
 
+variable "scanned_bytes_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "scanned_bytes_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "scanned_bytes_disabled" {
   description = "Disable all alerting rules for scanned_bytes detector"
   type        = bool
@@ -210,6 +246,18 @@ variable "scanned_bytes_clear_duration" {
 }
 
 # Scanned_bytes_billed detector
+
+variable "scanned_bytes_billed_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "scanned_bytes_billed_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "scanned_bytes_billed_disabled" {
   description = "Disable all alerting rules for scanned_bytes_billed detector"
@@ -279,6 +327,18 @@ variable "scanned_bytes_billed_clear_duration" {
 
 # Available_slots detector
 
+variable "available_slots_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "available_slots_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "available_slots_disabled" {
   description = "Disable all alerting rules for available_slots detector"
   type        = bool
@@ -346,6 +406,18 @@ variable "available_slots_clear_duration" {
 }
 
 # Stored_bytes detector
+
+variable "stored_bytes_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "stored_bytes_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "stored_bytes_disabled" {
   description = "Disable all alerting rules for stored_bytes detector"
@@ -415,6 +487,18 @@ variable "stored_bytes_clear_duration" {
 
 # table_count detector
 
+variable "table_count_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "table_count_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "table_count_disabled" {
   description = "Disable all alerting rules for table_count detector"
   type        = bool
@@ -483,6 +567,18 @@ variable "table_count_clear_duration" {
 
 # uploaded_bytes detector
 
+variable "uploaded_bytes_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "uploaded_bytes_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "uploaded_bytes_disabled" {
   description = "Disable all alerting rules for uploaded_bytes detector"
   type        = bool
@@ -550,6 +646,18 @@ variable "uploaded_bytes_clear_duration" {
 }
 
 # uploaded_bytes_billed detector
+
+variable "uploaded_bytes_billed_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "uploaded_bytes_billed_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "uploaded_bytes_billed_disabled" {
   description = "Disable all alerting rules for uploaded_bytes_billed detector"

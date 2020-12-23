@@ -7,6 +7,18 @@ variable "gcp_project_id" {
 
 # Heartbeat detector
 
+variable "heartbeat_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "heartbeat_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
   type        = bool
@@ -32,6 +44,18 @@ variable "heartbeat_aggregation_function" {
 }
 
 # Oldest_unacked_message detector
+
+variable "oldest_unacked_message_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "oldest_unacked_message_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "oldest_unacked_message_disabled" {
   description = "Disable all alerting rules for oldest_unacked_message detector"
@@ -82,6 +106,18 @@ variable "oldest_unacked_message_threshold_major" {
 }
 
 # Push_latency detector
+
+variable "push_latency_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "push_latency_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "push_latency_disabled" {
   description = "Disable all alerting rules for push_latency detector"

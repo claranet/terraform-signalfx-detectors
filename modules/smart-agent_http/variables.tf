@@ -2,6 +2,18 @@
 
 # Heartbeat detector
 
+variable "heartbeat_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "heartbeat_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
   type        = bool
@@ -27,6 +39,18 @@ variable "heartbeat_aggregation_function" {
 }
 
 # Http_code_matched detector
+
+variable "http_code_matched_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "http_code_matched_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "http_code_matched_disabled" {
   description = "Disable all alerting rules for http_code_matched detector"
@@ -72,6 +96,18 @@ variable "http_code_matched_at_least_percentage" {
 
 # Http_regex_matched detector
 
+variable "http_regex_matched_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "http_regex_matched_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "http_regex_matched_disabled" {
   description = "Disable all alerting rules for http_regex_matched detector"
   type        = bool
@@ -115,6 +151,18 @@ variable "http_regex_matched_at_least_percentage" {
 }
 
 # Http_response_time detector
+
+variable "http_response_time_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "http_response_time_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "http_response_time_disabled" {
   description = "Disable all alerting rules for http_response_time detector"
@@ -166,6 +214,18 @@ variable "http_response_time_threshold_major" {
 
 # http_content_length detector
 
+variable "http_content_length_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "http_content_length_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "http_content_length_disabled" {
   description = "Disable all alerting rules for http_content_length detector"
   type        = bool
@@ -197,6 +257,18 @@ variable "http_content_length_threshold_warning" {
 }
 
 # Certificate_expiration_date detector
+
+variable "certificate_expiration_date_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "certificate_expiration_date_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "certificate_expiration_date_disabled" {
   description = "Disable all alerting rules for certificate_expiration_date detector"
@@ -247,6 +319,18 @@ variable "certificate_expiration_date_threshold_minor" {
 }
 
 # Invalid_tls_certificate detector
+
+variable "invalid_tls_certificate_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "invalid_tls_certificate_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "invalid_tls_certificate_disabled" {
   description = "Disable all alerting rules for invalid_tls_certificate detector"

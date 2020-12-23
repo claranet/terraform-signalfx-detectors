@@ -2,6 +2,18 @@
 
 # processes detector
 
+variable "processes_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "processes_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "processes_disabled" {
   description = "Disable all alerting rules for processes detector"
   type        = bool

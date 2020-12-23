@@ -2,6 +2,18 @@
 
 # api_result detector
 
+variable "api_result_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "api_result_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "api_result_disabled" {
   description = "Disable all alerting rules for api_result detector"
   type        = bool
@@ -51,6 +63,18 @@ variable "api_result_threshold_major" {
 }
 
 # api_latency detector
+
+variable "api_latency_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "api_latency_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "api_latency_disabled" {
   description = "Disable all alerting rules for api_latency detector"

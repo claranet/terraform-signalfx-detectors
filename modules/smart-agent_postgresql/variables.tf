@@ -2,6 +2,18 @@
 
 # Heartbeat detector
 
+variable "heartbeat_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "heartbeat_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "heartbeat_disabled" {
   description = "Disable all alerting rules for heartbeat detector"
   type        = bool
@@ -27,6 +39,18 @@ variable "heartbeat_aggregation_function" {
 }
 
 # deadlocks detector
+
+variable "deadlocks_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "deadlocks_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "deadlocks_disabled" {
   description = "Disable all alerting rules for deadlocks detector"
@@ -78,6 +102,18 @@ variable "deadlocks_threshold_major" {
 
 # hit_ratio detector
 
+variable "hit_ratio_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "hit_ratio_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "hit_ratio_disabled" {
   description = "Disable all alerting rules for hit_ratio detector"
   type        = bool
@@ -127,6 +163,18 @@ variable "hit_ratio_threshold_minor" {
 }
 
 # rollbacks detector
+
+variable "rollbacks_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "rollbacks_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "rollbacks_disabled" {
   description = "Disable all alerting rules for rollbacks detector"
@@ -178,6 +226,18 @@ variable "rollbacks_threshold_minor" {
 
 # conflicts detector
 
+variable "conflicts_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "conflicts_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "conflicts_disabled" {
   description = "Disable all alerting rules for conflicts detector"
   type        = bool
@@ -227,6 +287,18 @@ variable "conflicts_threshold_major" {
 }
 
 # max_connections detector
+
+variable "max_connections_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "max_connections_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "max_connections_disabled" {
   description = "Disable all alerting rules for max_connections detector"
@@ -278,6 +350,18 @@ variable "max_connections_threshold_major" {
 
 # replication_lag detector
 
+variable "replication_lag_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "replication_lag_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "replication_lag_disabled" {
   description = "Disable all alerting rules for replication_lag detector"
   type        = bool
@@ -327,6 +411,18 @@ variable "replication_lag_threshold_major" {
 }
 
 # replication_state detector
+
+variable "replication_state_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "replication_state_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
 
 variable "replication_state_disabled" {
   description = "Disable all alerting rules for replication_state detector"
