@@ -282,14 +282,14 @@ variable "free_memory_disabled" {
   default     = null
 }
 
-variable "free_memory_disabled_critical" {
-  description = "Disable critical alerting rule for free_memory detector"
+variable "free_memory_disabled_major" {
+  description = "Disable major alerting rule for free_memory detector"
   type        = bool
   default     = null
 }
 
-variable "free_memory_disabled_major" {
-  description = "Disable major alerting rule for free_memory detector"
+variable "free_memory_disabled_minor" {
+  description = "Disable minor alerting rule for free_memory detector"
   type        = bool
   default     = null
 }
@@ -312,14 +312,14 @@ variable "free_memory_transformation_function" {
   default     = ".mean(over='15m')"
 }
 
-variable "free_memory_threshold_critical" {
-  description = "Critical threshold for free_memory detector"
+variable "free_memory_threshold_major" {
+  description = "Major threshold for free_memory detector"
   type        = number
   default     = -70
 }
 
-variable "free_memory_threshold_major" {
-  description = "Major threshold for free_memory detector"
+variable "free_memory_threshold_minor" {
+  description = "Minor threshold for free_memory detector"
   type        = number
   default     = -50
 }
