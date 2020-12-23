@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name      = format("%s %s", local.detector_name_prefix, "Apache Solr heartbeat")
+  name = format("%s %s", local.detector_name_prefix, "Apache Solr heartbeat")
 
   authorized_writer_teams = var.authorized_writer_teams
 
