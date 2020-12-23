@@ -16,6 +16,14 @@ fi
 module=$(echo ${MODULE} | cut -d'_' -f 2)
 tf="$(./scripts/stack/gen_module.sh ${TARGET})"
 detectors="$(sed -n 's/^.*name.*=.*detector_name_prefix.*"\(.*\)")$/* \1/p' ${TARGET}/detectors-*.tf | sort -fdbiu)"
+vars=
+if [ -f ${TARGET}/variables.tf ]; then
+    vars="${vars},variables.tf"
+fi
+if [ -f ${TARGET}/variables-gen.tf ]; then
+    vars="${vars},variables-gen.tf"
+fi
+vars="${vars:1}"
 set +a
 echo "Generate module readme \"${TARGET}/README.md\" from \"${TARGET}/conf/readme.yaml\""
 j2 --import-env= ./scripts/templates/readme.md.j2 ${TARGET}/conf/readme.yaml > ${TARGET}/README.md

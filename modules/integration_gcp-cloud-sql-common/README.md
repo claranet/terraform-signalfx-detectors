@@ -58,12 +58,16 @@ Note the following parameters:
   Check the [notification binding](https://github.com/claranet/terraform-signalfx-detectors/wiki/Notifications-binding) 
   documentation to understand the recommended role of each severity.
 
-There are other Terraform [variables](https://www.terraform.io/docs/configuration/variables.html) in 
-[variables.tf](variables.tf) so check their description to customize the detectors behavior to fit your needs. Most of them are 
-common [variables](https://github.com/claranet/terraform-signalfx-detectors/wiki/Variables).
-The [guidance](https://github.com/claranet/terraform-signalfx-detectors/wiki/Guidance) documentation will help you to use 
-common mechanims provided by the modules like [multi 
-instances](https://github.com/claranet/terraform-signalfx-detectors/wiki/Guidance#Multiple-instances).
+These 3 parameters alongs with all variables defined in [common-variables.tf](common-variables.tf) are common to all 
+[modules](../) in this repository. Other variables, specific to this module, are available in 
+[variables.tf](variables.tf).
+In general, the default configuration "works" but all of these Terraform 
+[variables](https://www.terraform.io/docs/configuration/variables.html) make it possible to 
+customize the detectors behavior to better fit your needs.
+
+Most of them represent usual tips and rules detailled in the 
+[guidance](https://github.com/claranet/terraform-signalfx-detectors/wiki/Guidance) documentation and listed in the 
+common [variables](https://github.com/claranet/terraform-signalfx-detectors/wiki/Variables) dedicated documentation.
 
 Feel free to explore the [wiki](https://github.com/claranet/terraform-signalfx-detectors/wiki) for more information about 
 general usage of this repository.
