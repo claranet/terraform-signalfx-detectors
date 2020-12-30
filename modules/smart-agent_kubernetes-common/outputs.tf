@@ -63,9 +63,9 @@ output "replication_controller_available" {
   value       = signalfx_detector.replication_controller_available
 }
 
-output "satefulset_ready" {
-  description = "Detector resource for satefulset_ready"
-  value       = signalfx_detector.satefulset_ready
+output "statefulset_ready" {
+  description = "Detector resource for statefulset_ready"
+  value       = signalfx_detector.statefulset_ready
 }
 
 output "terminated" {

@@ -319,24 +319,24 @@ EOF
   }
 }
 
-resource "signalfx_detector" "satefulset_ready" {
-  name = format("%s %s", local.detector_name_prefix, "Kubernetes satefulsets ready")
+resource "signalfx_detector" "statefulset_ready" {
+  name = format("%s %s", local.detector_name_prefix, "Kubernetes statefulsets ready")
 
   program_text = <<-EOF
-    A = data('kubernetes.stateful_set.desired', filter=${module.filter-tags.filter_custom})${var.satefulset_ready_aggregation_function}${var.satefulset_ready_transformation_function}
-    B = data('kubernetes.stateful_set.ready', filter=${module.filter-tags.filter_custom})${var.satefulset_ready_aggregation_function}${var.satefulset_ready_transformation_function}
+    A = data('kubernetes.stateful_set.desired', filter=${module.filter-tags.filter_custom})${var.statefulset_ready_aggregation_function}${var.statefulset_ready_transformation_function}
+    B = data('kubernetes.stateful_set.ready', filter=${module.filter-tags.filter_custom})${var.statefulset_ready_aggregation_function}${var.statefulset_ready_transformation_function}
     signal = (A-B).publish('signal')
-    detect(when(signal != 0, lasting='${var.satefulset_ready_lasting_duration_seconds}s')).publish('CRIT')
+    detect(when(signal != 0, lasting='${var.statefulset_ready_lasting_duration_seconds}s')).publish('CRIT')
 EOF
 
   rule {
-    description           = "do not match satefulsets desired"
+    description           = "do not match statefulsets desired"
     severity              = "Critical"
     detect_label          = "CRIT"
-    disabled              = coalesce(var.satefulset_ready_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.satefulset_ready_notifications, "critical", []), var.notifications.critical)
-    runbook_url           = try(coalesce(var.satefulset_ready_runbook_url, var.runbook_url), "")
-    tip                   = var.satefulset_ready_tip
+    disabled              = coalesce(var.statefulset_ready_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.statefulset_ready_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = try(coalesce(var.statefulset_ready_runbook_url, var.runbook_url), "")
+    tip                   = var.statefulset_ready_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }

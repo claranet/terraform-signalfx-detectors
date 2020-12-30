@@ -646,45 +646,45 @@ variable "replication_controller_available_lasting_duration_seconds" {
   default     = 300
 }
 
-# satefulset_ready detector
+# statefulset_ready detector
 
-variable "satefulset_ready_tip" {
+variable "statefulset_ready_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
   default     = ""
 }
 
-variable "satefulset_ready_runbook_url" {
+variable "statefulset_ready_runbook_url" {
   description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
   type        = string
   default     = ""
 }
 
-variable "satefulset_ready_disabled" {
-  description = "Disable all alerting rules for satefulset_ready detector"
+variable "statefulset_ready_disabled" {
+  description = "Disable all alerting rules for statefulset_ready detector"
   type        = bool
   default     = null
 }
 
-variable "satefulset_ready_notifications" {
-  description = "Notification recipients list per severity overridden for satefulset_ready detector"
+variable "statefulset_ready_notifications" {
+  description = "Notification recipients list per severity overridden for statefulset_ready detector"
   type        = map(list(string))
   default     = {}
 }
 
-variable "satefulset_ready_aggregation_function" {
-  description = "Aggregation function and group by for satefulset_ready detector (i.e. \".mean(by=['host'])\")"
+variable "statefulset_ready_aggregation_function" {
+  description = "Aggregation function and group by for statefulset_ready detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
 }
 
-variable "satefulset_ready_transformation_function" {
-  description = "Transformation function for satefulset_ready detector (i.e. \".mean(over='5m')\")"
+variable "statefulset_ready_transformation_function" {
+  description = "Transformation function for statefulset_ready detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
 }
 
-variable "satefulset_ready_lasting_duration_seconds" {
+variable "statefulset_ready_lasting_duration_seconds" {
   description = "Minimum duration that conditions must be true before raising alert (in seconds)"
   type        = number
   default     = 300
