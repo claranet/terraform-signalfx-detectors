@@ -92,7 +92,7 @@ This module creates the following SignalFx detectors which could contain one or 
 * Kubernetes pod terminated abnormally
 * Kubernetes replicasets available
 * Kubernetes replication_controllers available
-* Kubernetes satefulsets ready
+* Kubernetes statefulsets ready
 
 ## How to collect required metrics?
 
