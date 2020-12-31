@@ -15,7 +15,7 @@ variable "throttled_requests_aggregation_function" {
 variable "throttled_requests_transformation_function" {
   description = "Transformation function for throttled_requests detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".max(over='15m')"
+  default     = ".min(over='15m')"
 }
 
 variable "throttled_requests_tip" {
@@ -48,15 +48,39 @@ variable "throttled_requests_disabled_major" {
   default     = null
 }
 
+variable "throttled_requests_disabled_minor" {
+  description = "Disable minor alerting rule for throttled_requests detector"
+  type        = bool
+  default     = null
+}
+
+variable "throttled_requests_disabled_warning" {
+  description = "Disable warning alerting rule for throttled_requests detector"
+  type        = bool
+  default     = null
+}
+
 variable "throttled_requests_threshold_critical" {
-  description = "Critical threshold for throttled_requests detector"
+  description = "Critical threshold for throttled_requests detector in %"
   type        = number
-  default     = 90
+  default     = 50
 }
 
 variable "throttled_requests_threshold_major" {
-  description = "Major threshold for throttled_requests detector"
+  description = "Major threshold for throttled_requests detector in %"
   type        = number
-  default     = 80
+  default     = 30
+}
+
+variable "throttled_requests_threshold_minor" {
+  description = "Minor threshold for throttled_requests detector in %"
+  type        = number
+  default     = 10
+}
+
+variable "throttled_requests_threshold_warning" {
+  description = "Warning threshold for throttled_requests detector in %"
+  type        = number
+  default     = 1
 }
 
