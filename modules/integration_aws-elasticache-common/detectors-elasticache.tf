@@ -147,21 +147,9 @@ resource "signalfx_detector" "free_memory" {
 
   program_text = <<-EOF
     signal = data('FreeableMemory', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'lower') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom}).rateofchange()${var.free_memory_aggregation_function}${var.free_memory_transformation_function}.publish('signal')
-    detect(when(signal < ${var.free_memory_threshold_critical})).publish('CRIT')
-    detect(when(signal < ${var.free_memory_threshold_major}) and when(signal >= ${var.free_memory_threshold_critical})).publish('MAJOR')
+    detect(when(signal < ${var.free_memory_threshold_major})).publish('MAJOR')
+    detect(when(signal < ${var.free_memory_threshold_minor}) and when(signal >= ${var.free_memory_threshold_major})).publish('MINOR')
 EOF
-
-  rule {
-    description           = "is too low < ${var.free_memory_threshold_critical}"
-    severity              = "Critical"
-    detect_label          = "CRIT"
-    disabled              = coalesce(var.free_memory_disabled_critical, var.free_memory_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.free_memory_notifications, "critical", []), var.notifications.critical)
-    runbook_url           = try(coalesce(var.free_memory_runbook_url, var.runbook_url), "")
-    tip                   = var.free_memory_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
-  }
 
   rule {
     description           = "is too low < ${var.free_memory_threshold_major}"
@@ -169,6 +157,18 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.free_memory_disabled_major, var.free_memory_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.free_memory_notifications, "major", []), var.notifications.major)
+    runbook_url           = try(coalesce(var.free_memory_runbook_url, var.runbook_url), "")
+    tip                   = var.free_memory_tip
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
+  }
+
+  rule {
+    description           = "is too low < ${var.free_memory_threshold_minor}"
+    severity              = "Minor"
+    detect_label          = "MINOR"
+    disabled              = coalesce(var.free_memory_disabled_minor, var.free_memory_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.free_memory_notifications, "minor", []), var.notifications.minor)
     runbook_url           = try(coalesce(var.free_memory_runbook_url, var.runbook_url), "")
     tip                   = var.free_memory_tip
     parameterized_subject = local.rule_subject
