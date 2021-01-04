@@ -1,4 +1,4 @@
-SUPPORTED_COMMANDS := module
+SUPPORTED_COMMANDS := module modules doc gen detectors outputs
 SUPPORTS_MAKE_ARGS := $(findstring $(firstword $(MAKECMDGOALS)), $(SUPPORTED_COMMANDS))
 ifneq "$(SUPPORTS_MAKE_ARGS)" ""
   COMMAND_ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
@@ -14,6 +14,12 @@ else
 	REV := $(TAG)
 endif
 
+ifeq ($(COMMAND_ARGS),)
+	export FILTER := *
+else
+	export FILTER := $(COMMAND_ARGS)
+endif
+
 .PHONY: dev
 dev:
 	docker exec -ti terraform-signalfx-detectors bash -i || \
@@ -26,12 +32,12 @@ clean:
 	git checkout -- examples/stack/detectors.tf
 	git clean -df modules/
 
-.PHONY: doc
-doc: readmes toc
+.PHONY: modules
+modules: gen doc
 
-.PHONY: readmes
-readmes: 
-	./scripts/module/loop_wrapper.sh ./scripts/module/gen_doc.sh
+.PHONY: doc
+doc: 
+	CI=true	./scripts/module/loop_wrapper.sh ./scripts/module/gen_doc.sh
 
 .PHONY: toc
 toc: 
@@ -45,7 +51,7 @@ lint:
 	./scripts/module/loop_wrapper.sh ./scripts/module/lint.sh
 
 .PHONY: gen
-gen: outputs detectors
+gen: detectors outputs
 
 .PHONY: outputs
 outputs: 

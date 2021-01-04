@@ -1,5 +1,8 @@
 #!/bin/bash
 set -ue -o pipefail
+if ! [ -v FILTER ]; then
+    FILTER="*"
+fi
 
 if [ $# -eq 0 ]; then
     echo "Needs to provide a script to run for each module as parameter"
@@ -15,6 +18,10 @@ MODULES=modules
 SCRIPT=$1
 shift
 
-for module in ${MODULES}/*/; do
+shopt -s nullglob
+for module in ${MODULES}/${FILTER}/; do
+    if ! [ -d "${module}" ]; then
+        continue
+    fi
     $SCRIPT ${module%"/"} $@
 done

@@ -153,6 +153,5 @@ The modules readmes are generated from their yaml configuration located inside
 the module in `conf` directory.
 
 This template is used internally and it does not aims to be run manually.
-If you want to update modules readmes please use `make readmes` or 
-`make doc` if you want to also generate table of contents.
+If you want to update modules readmes please use `make doc`.
 

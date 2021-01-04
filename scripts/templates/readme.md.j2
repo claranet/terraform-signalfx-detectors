@@ -92,7 +92,7 @@ organization](https://docs.signalfx.com/en/latest/integrations/integrations-refe
 There are always available and do not need any configuration to work.
 {%- endif %}
 
-{% if source_doc is defined -%}
+{% if source_doc is defined and source_doc is not none -%}
 {{ source_doc }}
 {%- endif %}
 
@@ -106,7 +106,7 @@ There are always available and do not need any configuration to work.
 
 * [Terraform SignalFx provider](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs)
 * [Terraform SignalFx detector](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector)
-{% if documentations is defined -%}
+{% if documentations is defined and documentations is not none -%}
 {% for documentation in documentations -%}
 * [{{ documentation.name}}]({{ documentation.url }})
 {% endfor %}
