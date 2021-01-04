@@ -13,6 +13,11 @@ output "backend_http_5xx_errors" {
   value       = signalfx_detector.backend_http_5xx_errors
 }
 
+output "capacity_units" {
+  description = "Detector resource for capacity_units"
+  value       = signalfx_detector.capacity_units
+}
+
 output "failed_requests" {
   description = "Detector resource for failed_requests"
   value       = signalfx_detector.failed_requests

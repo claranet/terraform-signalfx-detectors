@@ -7,6 +7,8 @@
 - [How to use this module?](#how-to-use-this-module)
 - [What are the available detectors in this module?](#what-are-the-available-detectors-in-this-module)
 - [How to collect required metrics?](#how-to-collect-required-metrics)
+- [Notes](#notes)
+  - [Capacity Units](#capacity-units)
 - [Related documentation](#related-documentation)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -22,8 +24,9 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 module "signalfx-detectors-integration-azure-application-gateway" {
   source = "github.com/claranet/terraform-signalfx-detectors.git//modules/integration_azure-application-gateway?ref={revision}"
 
-  environment   = var.environment
-  notifications = local.notifications
+  environment                    = var.environment
+  notifications                  = local.notifications
+  capacity_units_threshold_major = 42
 }
 ```
 
@@ -56,7 +59,7 @@ Note the following parameters:
 
 These 3 parameters alongs with all variables defined in [common-variables.tf](common-variables.tf) are common to all 
 [modules](../) in this repository. Other variables, specific to this module, are available in 
-[variables.tf](variables.tf).
+[variables.tf](variables.tf) and [variables-gen.tf](variables-gen.tf).
 In general, the default configuration "works" but all of these Terraform 
 [variables](https://www.terraform.io/docs/configuration/variables.html) make it possible to 
 customize the detectors behavior to better fit your needs.
@@ -78,6 +81,7 @@ This module creates the following SignalFx detectors which could contain one or 
 * Azure Application Gateway backend 5xx error rate
 * Azure Application Gateway backend connect time
 * Azure Application Gateway backend unhealthy host ratio
+* Azure Application Gateway capacity units
 * Azure Application Gateway failed request rate
 * Azure Application Gateway has no request
 * Azure Application Gateway heartbeat
@@ -89,8 +93,19 @@ the [Azure integration](https://docs.signalfx.com/en/latest/integrations/azure-i
 with this Terraform [module](https://github.com/claranet/terraform-signalfx-integrations/tree/master/cloud/azure).
 
 
+We are using metrics from the [Microsoft.Network/applicationGateways](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported#microsoftnetworkapplicationgateways) namespace.
 
+## Notes
 
+### Capacity Units
+
+To properly calculate the `capacity_units_threshold_major` please refer to the Microsoft documentation about [CapacityUnits](https://docs.microsoft.com/en-us/azure/application-gateway/application-gateway-autoscaling-zone-redundant)
+
+```
+Each instance is roughly equivalent to 10 additional reserved Capacity Units.
+```
+
+If you're enabling autoscaling on your application gateway, default instance count is 20, which means 200 Capacity Units.
 
 
 ## Related documentation
