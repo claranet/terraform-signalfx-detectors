@@ -8,8 +8,8 @@ source_doc: |
 
   ### Monitors
 
-  You have to configure your existing Nagios script into the `nagios` monitor.
-  This will require agent >= [5.7.1](https://github.com/signalfx/signalfx-agent/releases/tag/v5.7.1)
+  This monitor is only available for agent `>= 5.7.1`. For prior versions, it is possible to use the 
+  `telegraf/exec` monitor with `nagios` parser but you will not get the script result in event.
   
   You can configure as many monitors as you have nagios checks to reuse but you have to define for each 
   it could be useful to adapt the `intervalSeconds` for each script.
@@ -17,21 +17,24 @@ source_doc: |
   ### Examples
 
   ```yaml
+  globalDimensions:
+    sfx_monitored: true
+
   - type: nagios
   intervalSeconds: 180
   command: /usr/lib/nagios/plugins/check_ntp_time -H pool.ntp.typhon.net -w 0.5 -c 1
   service: NTP_TIME
   extraDimensions:
-    sfx_monitored: true
+    sfx_monitored: false
 
   - type: nagios
   intervalSeconds: 180
   command: /usr/lib/nagios/plugins/check_http -I google.fr -f sticky -H google.fr -s http -u / -p 80
-  service: HTT_google
-  extraDimensions:
-    sfx_monitored: true
-
+  service: HTTP_google
   ```
+  
+  In this example, the first NTP check will not trigger any alert using default filtering convention but 
+  the metric and its value will be available.
 
 notes: |
   This module has been designed to alert with the same behavior as 

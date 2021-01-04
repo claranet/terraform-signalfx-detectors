@@ -86,40 +86,36 @@ Agent](https://github.com/signalfx/signalfx-agent). Check the "Related documenta
 information including the official documentation of this monitor.
 
 
-There is no SignalFx official integration for `Nagios` but there is still a 
-[monitor](https://docs.signalfx.com/en/latest/integrations/agent/monitors/telegraf-exec.html) to use.
 
 ### Monitors
 
-You have to configure your existing Nagios script into the `telegraf/exec` monitor.
+This monitor is only available for agent `>= 5.7.1`. For prior versions, it is possible to use the 
+`telegraf/exec` monitor with `nagios` parser but you will not get the script result in event.
 
 You can configure as many monitors as you have nagios checks to reuse but you have to define for each 
-one at least:
-
-* the `dataFormat: nagios` in `telegrafParser` parameter to parse status from script exit code.
-* at least one dimension like `script` in `extraDimensions` to identify your check. If you do not 
-define `aggregation_function` and let empty as by default it will work for all dimensions you choose.
-
-Also it could be useful to adapt the `intervalSeconds` for each script.
+it could be useful to adapt the `intervalSeconds` for each script.
 
 ### Examples
 
 ```yaml
-- type: telegraf/exec
-  intervalSeconds: 180
-  command: /usr/local/bin/scripts/check-ipmitool.pl
-  extraDimensions:
-    script: check_ipmitool
-  telegrafParser:
-    dataFormat: nagios
-- type: telegraf/exec
-  intervalSeconds: 900  
-  command: /usr/local/bin/scripts/check-megaraidsas
-  extraDimensions:
-    script: check_megaraidsas
-  telegrafParser:
-    dataFormat: nagios
+globalDimensions:
+  sfx_monitored: true
+
+- type: nagios
+intervalSeconds: 180
+command: /usr/lib/nagios/plugins/check_ntp_time -H pool.ntp.typhon.net -w 0.5 -c 1
+service: NTP_TIME
+extraDimensions:
+  sfx_monitored: false
+
+- type: nagios
+intervalSeconds: 180
+command: /usr/lib/nagios/plugins/check_http -I google.fr -f sticky -H google.fr -s http -u / -p 80
+service: HTTP_google
 ```
+
+In this example, the first NTP check will not trigger any alert using default filtering convention but 
+the metric and its value will be available.
 
 
 ## Notes
@@ -130,15 +126,12 @@ respectively triggering `WARNING`, `CRITICAL` and `UNKNOWN` alert.
 
 While SignalFx does not provide `Unknown` severity this module uses the `Major` severity for unknown alerts.
 
-The metric is named `nagios_state.state`, you need to add an `extraDimensions` to your monitor in order to be 
-able to differantiate multiple script states.
+The metric is named `nagios.state`.
 
 
 ## Related documentation
 
 * [Terraform SignalFx provider](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs)
 * [Terraform SignalFx detector](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector)
-* [Smart Agent monitor](https://docs.signalfx.com/en/latest/integrations/agent/monitors/telegraf-exec.html)
+* [Smart Agent monitor](https://docs.signalfx.com/en/latest/integrations/agent/monitors/nagios.html)
 * [Nagios checks guidelines](https://nagios-plugins.org/doc/guidelines.html#AEN78)
-* [Telegraf plugin exec](https://github.com/influxdata/telegraf/tree/master/plugins/inputs/exec)
-* [Telegraf parser nagios](https://github.com/influxdata/telegraf/tree/master/plugins/parsers/nagios)
