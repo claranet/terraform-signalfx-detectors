@@ -61,4 +61,3 @@ variable "status_check_lasting_duration_seconds" {
   type        = string
   default     = "900"
 }
-
