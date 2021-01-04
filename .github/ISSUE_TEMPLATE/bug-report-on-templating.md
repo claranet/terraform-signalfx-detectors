@@ -1,10 +1,3 @@
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
-
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
 ---
 name: Bug report on templating
 about: Modules templating, config or deployment bugs
@@ -59,3 +52,11 @@ A clear and concise description of what you expected to happen and difference co
 
 **Additional context**
 Add any other context about the problem here or any clue, idea or suggestion you could have in mind.
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+

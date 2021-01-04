@@ -1,10 +1,3 @@
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
-
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
 ---
 name: New detector for existing module
 about: Suggest new detectors to implement for existing module
@@ -28,3 +21,11 @@ A clear and concise description of any alternative solutions or features you've 
 
 **Additional context**
 Add any other context or screenshots about the feature request here.
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
