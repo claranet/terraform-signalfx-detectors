@@ -95,7 +95,6 @@ with this Terraform [module](https://github.com/claranet/terraform-signalfx-inte
 
 We are using metrics from the [Microsoft.Network/applicationGateways](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported#microsoftnetworkapplicationgateways) namespace.
 
-
 ## Notes
 
 ### Capacity Units

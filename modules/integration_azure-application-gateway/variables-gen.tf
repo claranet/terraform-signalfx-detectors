@@ -18,6 +18,18 @@ variable "capacity_units_transformation_function" {
   default     = ".max(over='15m')"
 }
 
+variable "capacity_units_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "capacity_units_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 variable "capacity_units_disabled" {
   description = "Disable all alerting rules for capacity_units detector"
   type        = bool
