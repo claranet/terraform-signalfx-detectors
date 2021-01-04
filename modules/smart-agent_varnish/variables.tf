@@ -294,4 +294,3 @@ variable "memory_usage_threshold_critical" {
   default     = 90
 }
 
-

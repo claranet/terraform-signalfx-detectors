@@ -3,7 +3,6 @@ resource "signalfx_detector" "processes" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
         signal = data('ps_count.processes', filter=${module.filter-tags.filter_custom})${var.processes_aggregation_function}${var.processes_transformation_function}.publish('signal')
         detect(when(signal < 1)).publish('CRIT')

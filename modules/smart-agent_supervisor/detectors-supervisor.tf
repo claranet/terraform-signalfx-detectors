@@ -29,7 +29,6 @@ resource "signalfx_detector" "process_state" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
     signal = data('supervisor.state', filter=${module.filter-tags.filter_custom})${var.process_state_aggregation_function}${var.process_state_transformation_function}.publish('signal')
     detect(when(signal > ${var.process_state_threshold_critical})).publish('CRIT')

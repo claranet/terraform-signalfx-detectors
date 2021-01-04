@@ -29,7 +29,6 @@ resource "signalfx_detector" "dropped_connections" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
     signal = data('connections.failed', filter=${module.filter-tags.filter_custom})${var.dropped_connections_aggregation_function}${var.dropped_connections_transformation_function}.publish('signal')
     detect(when(signal > ${var.dropped_connections_threshold_critical})).publish('CRIT')

@@ -29,7 +29,6 @@ resource "signalfx_detector" "apache_workers" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
     A = data('apache_connections', filter=${module.filter-tags.filter_custom})${var.apache_workers_aggregation_function}${var.apache_workers_transformation_function}
     B = data('apache_idle_workers', filter=${module.filter-tags.filter_custom})${var.apache_workers_aggregation_function}${var.apache_workers_transformation_function}

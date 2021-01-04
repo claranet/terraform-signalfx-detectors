@@ -3,7 +3,6 @@ resource "signalfx_detector" "disk_running_out" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
     from signalfx.detectors.countdown import countdown
     signal = data('disk.utilization', filter=${module.filter-tags.filter_custom}).publish('signal')

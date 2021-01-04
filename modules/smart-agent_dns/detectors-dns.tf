@@ -29,7 +29,6 @@ resource "signalfx_detector" "dns_query_time" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
     signal = data('dns.query_time_ms', filter=filter('plugin', 'telegraf/dns') and ${module.filter-tags.filter_custom})${var.dns_query_time_aggregation_function}${var.dns_query_time_transformation_function}.publish('signal')
     detect(when(signal > ${var.dns_query_time_threshold_critical})).publish('CRIT')
@@ -65,7 +64,6 @@ resource "signalfx_detector" "dns_result_code" {
   name = format("%s %s", local.detector_name_prefix, "DNS query result")
 
   authorized_writer_teams = var.authorized_writer_teams
-
 
   program_text = <<-EOF
     signal = data('dns.result_code', filter=filter('plugin', 'telegraf/dns') and ${module.filter-tags.filter_custom})${var.dns_result_code_aggregation_function}${var.dns_result_code_transformation_function}.publish('signal')

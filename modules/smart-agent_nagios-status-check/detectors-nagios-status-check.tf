@@ -3,7 +3,6 @@ resource "signalfx_detector" "status_check" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
         signal = data('nagios_state.state', filter=${module.filter-tags.filter_custom})${var.status_check_aggregation_function}${var.status_check_transformation_function}.publish('signal')
         detect(when(signal == 1, lasting='${var.status_check_lasting_duration_seconds}s')).publish('WARN')

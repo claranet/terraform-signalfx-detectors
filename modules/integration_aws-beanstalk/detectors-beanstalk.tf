@@ -3,7 +3,6 @@ resource "signalfx_detector" "heartbeat" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
     signal = data('EnvironmentHealth', filter=filter('stat', 'mean') and filter('namespace', 'AWS/ElasticBeanstalk') and ${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')
@@ -27,7 +26,6 @@ resource "signalfx_detector" "health" {
   name = format("%s %s", local.detector_name_prefix, "AWS Beanstalk environment health")
 
   authorized_writer_teams = var.authorized_writer_teams
-
 
   program_text = <<-EOF
     signal = data('EnvironmentHealth', filter=filter('namespace', 'AWS/ElasticBeanstalk') and filter('stat', 'upper') and ${module.filter-tags.filter_custom})${var.health_aggregation_function}${var.health_transformation_function}.publish('signal')
@@ -65,7 +63,6 @@ resource "signalfx_detector" "latency_p90" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
     signal = data('ApplicationLatencyP90', filter=filter('namespace', 'AWS/ElasticBeanstalk') and filter('stat', 'lower') and (not filter('InstanceId', '*')) and ${module.filter-tags.filter_custom})${var.latency_p90_aggregation_function}${var.latency_p90_transformation_function}.publish('signal')
     detect(when(signal >= ${var.latency_p90_threshold_critical})).publish('CRIT')
@@ -101,7 +98,6 @@ resource "signalfx_detector" "app_5xx_error_rate" {
   name = format("%s %s", local.detector_name_prefix, "AWS Beanstalk application 5xx error rate")
 
   authorized_writer_teams = var.authorized_writer_teams
-
 
   program_text = <<-EOF
     A = data('ApplicationRequests5xx', filter=filter('namespace', 'AWS/ElasticBeanstalk') and filter('stat', 'sum') and (not filter('InstanceId', '*')) and ${module.filter-tags.filter_custom})${var.app_5xx_error_rate_aggregation_function}${var.app_5xx_error_rate_transformation_function}
@@ -141,7 +137,6 @@ resource "signalfx_detector" "root_filesystem_usage" {
   name = format("%s %s", local.detector_name_prefix, "AWS Beanstalk instance root filesystem usage")
 
   authorized_writer_teams = var.authorized_writer_teams
-
 
   program_text = <<-EOF
     signal = data('RootFilesystemUtil', filter=filter('namespace', 'AWS/ElasticBeanstalk') and filter('stat', 'lower') and (not filter('InstanceId', '*')) and ${module.filter-tags.filter_custom})${var.root_filesystem_usage_aggregation_function}${var.root_filesystem_usage_transformation_function}.publish('signal')

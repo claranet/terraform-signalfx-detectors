@@ -29,7 +29,6 @@ resource "signalfx_detector" "server_status" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
     signal = data('haproxy_status', filter=filter('type', '2') and ${module.filter-tags.filter_custom})${var.server_status_aggregation_function}${var.server_status_transformation_function}.publish('signal')
     detect(when(signal < 1)).publish('CRIT')
@@ -53,7 +52,6 @@ resource "signalfx_detector" "backend_status" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
     signal = data('haproxy_status', filter=filter('type', '1') and ${module.filter-tags.filter_custom})${var.backend_status_aggregation_function}${var.backend_status_transformation_function}.publish('signal')
     detect(when(signal < 1)).publish('CRIT')
@@ -76,7 +74,6 @@ resource "signalfx_detector" "session_limit" {
   name = format("%s %s", local.detector_name_prefix, "Haproxy session")
 
   authorized_writer_teams = var.authorized_writer_teams
-
 
   program_text = <<-EOF
     A = data('haproxy_session_current', filter=filter('type', '0', '2') and ${module.filter-tags.filter_custom})${var.session_limit_aggregation_function}${var.session_limit_transformation_function}
@@ -116,7 +113,6 @@ resource "signalfx_detector" "http_5xx_response" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
     A = data('haproxy_response_5xx', filter=${module.filter-tags.filter_custom}, rollup='delta')${var.http_5xx_response_aggregation_function}${var.http_5xx_response_transformation_function}
     B = data('haproxy_request_total', filter=${module.filter-tags.filter_custom}, rollup='delta')${var.http_5xx_response_aggregation_function}${var.http_5xx_response_transformation_function}
@@ -154,7 +150,6 @@ resource "signalfx_detector" "http_4xx_response" {
   name = format("%s %s", local.detector_name_prefix, "Haproxy 4xx response rate")
 
   authorized_writer_teams = var.authorized_writer_teams
-
 
   program_text = <<-EOF
     A = data('haproxy_response_4xx', filter=${module.filter-tags.filter_custom}, rollup='delta')${var.http_4xx_response_aggregation_function}${var.http_4xx_response_transformation_function}

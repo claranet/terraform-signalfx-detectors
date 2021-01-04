@@ -29,7 +29,6 @@ resource "signalfx_detector" "read_p99_latency" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
     signal = data('gauge.cassandra.ClientRequest.Read.Latency.99thPercentile', filter=${module.filter-tags.filter_custom}).scale(0.001)${var.read_p99_latency_aggregation_function}${var.read_p99_latency_transformation_function}.publish('signal')
     detect(when(signal > ${var.read_p99_latency_threshold_critical})).publish('CRIT')
@@ -66,7 +65,6 @@ resource "signalfx_detector" "write_p99_latency" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
     signal = data('gauge.cassandra.ClientRequest.Write.Latency.99thPercentile', filter=${module.filter-tags.filter_custom}).scale(0.001)${var.write_p99_latency_aggregation_function}${var.write_p99_latency_transformation_function}.publish('signal')
     detect(when(signal > ${var.write_p99_latency_threshold_critical})).publish('CRIT')
@@ -102,7 +100,6 @@ resource "signalfx_detector" "read_real_time_latency" {
   name = format("%s %s", local.detector_name_prefix, "Cassandra read latency real time")
 
   authorized_writer_teams = var.authorized_writer_teams
-
 
   program_text = <<-EOF
     A = data('counter.cassandra.ClientRequest.Read.TotalLatency.Count', filter=${module.filter-tags.filter_custom})${var.read_real_time_latency_aggregation_function}${var.read_real_time_latency_transformation_function}
@@ -142,7 +139,6 @@ resource "signalfx_detector" "write_real_time_latency" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
     A = data('counter.cassandra.ClientRequest.Write.TotalLatency.Count', filter=${module.filter-tags.filter_custom})${var.write_real_time_latency_aggregation_function}${var.write_real_time_latency_transformation_function}
     B = data('counter.cassandra.ClientRequest.Write.Latency.Count', filter=${module.filter-tags.filter_custom})${var.write_real_time_latency_aggregation_function}${var.write_real_time_latency_transformation_function}
@@ -181,7 +177,6 @@ resource "signalfx_detector" "casread_p99_latency" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
     signal = data('gauge.cassandra.ClientRequest.CASRead.Latency.99thPercentile', filter=${module.filter-tags.filter_custom}).scale(0.001)${var.casread_p99_latency_aggregation_function}${var.casread_p99_latency_transformation_function}.publish('signal')
     detect(when(signal > ${var.casread_p99_latency_threshold_critical})).publish('CRIT')
@@ -218,7 +213,6 @@ resource "signalfx_detector" "caswrite_p99_latency" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
     signal = data('gauge.cassandra.ClientRequest.CASWrite.Latency.99thPercentile', filter=${module.filter-tags.filter_custom}).scale(0.001)${var.caswrite_p99_latency_aggregation_function}${var.caswrite_p99_latency_transformation_function}.publish('signal')
     detect(when(signal > ${var.caswrite_p99_latency_threshold_critical})).publish('CRIT')
@@ -254,7 +248,6 @@ resource "signalfx_detector" "casread_real_time_latency" {
   name = format("%s %s", local.detector_name_prefix, "Cassandra transactional read latency real time")
 
   authorized_writer_teams = var.authorized_writer_teams
-
 
   program_text = <<-EOF
     A = data('counter.cassandra.ClientRequest.CASRead.TotalLatency.Count', filter=${module.filter-tags.filter_custom})${var.casread_real_time_latency_aggregation_function}${var.casread_real_time_latency_transformation_function}
@@ -294,7 +287,6 @@ resource "signalfx_detector" "caswrite_real_time_latency" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
     A = data('counter.cassandra.ClientRequest.CASWrite.TotalLatency.Count', filter=${module.filter-tags.filter_custom})${var.caswrite_real_time_latency_aggregation_function}${var.caswrite_real_time_latency_transformation_function}
     B = data('counter.cassandra.ClientRequest.CASWrite.Latency.Count', filter=${module.filter-tags.filter_custom})${var.caswrite_real_time_latency_aggregation_function}${var.caswrite_real_time_latency_transformation_function}
@@ -332,7 +324,6 @@ resource "signalfx_detector" "storage_exceptions" {
   name = format("%s %s", local.detector_name_prefix, "Cassandra storage exceptions count")
 
   authorized_writer_teams = var.authorized_writer_teams
-
 
   program_text = <<-EOF
     signal = data('counter.cassandra.Storage.Exceptions.Count', filter=${module.filter-tags.filter_custom})${var.storage_exceptions_aggregation_function}${var.storage_exceptions_transformation_function}.publish('signal')

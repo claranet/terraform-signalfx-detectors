@@ -29,7 +29,6 @@ resource "signalfx_detector" "treatment_limit" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
     A = data('kong_nginx_http_current_connections', filter=filter('state', 'handled') and ${module.filter-tags.filter_custom})${var.treatment_limit_aggregation_function}${var.treatment_limit_transformation_function}
     B = data('kong_nginx_http_current_connections', filter=filter('state', 'accepted') and ${module.filter-tags.filter_custom})${var.treatment_limit_aggregation_function}${var.treatment_limit_transformation_function}

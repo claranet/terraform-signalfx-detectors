@@ -3,7 +3,6 @@ resource "signalfx_detector" "heartbeat" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting
         base_filter = filter('resource_type', 'Microsoft.Cache/Redis') and filter('primary_aggregation_type', 'true')
@@ -28,7 +27,6 @@ resource "signalfx_detector" "evictedkeys" {
   name = format("%s %s", local.detector_name_prefix, "Azure Redis evicted keys")
 
   authorized_writer_teams = var.authorized_writer_teams
-
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Cache/Redis') and filter('primary_aggregation_type', 'true')
@@ -67,7 +65,6 @@ resource "signalfx_detector" "percent_processor_time" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Cache/Redis') and filter('primary_aggregation_type', 'true')
         signal = data('percentProcessorTime', filter=base_filter and ${module.filter-tags.filter_custom})${var.percent_processor_time_aggregation_function}.publish('signal')
@@ -104,7 +101,6 @@ resource "signalfx_detector" "load" {
   name = format("%s %s", local.detector_name_prefix, "Azure Redis load")
 
   authorized_writer_teams = var.authorized_writer_teams
-
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Cache/Redis') and filter('primary_aggregation_type', 'true')

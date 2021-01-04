@@ -3,7 +3,6 @@ resource "signalfx_detector" "heartbeat" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
     signal = data('ResourceCount', filter=filter('stat', 'mean') and filter('namespace', 'AWS/Kinesis') and ${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')
@@ -27,7 +26,6 @@ resource "signalfx_detector" "incoming_records" {
   name = format("%s %s", local.detector_name_prefix, "AWS Kinesis incoming records")
 
   authorized_writer_teams = var.authorized_writer_teams
-
 
   program_text = <<-EOF
     signal = data('IncomingRecords', filter=filter('namespace', 'AWS/Kinesis') and filter('stat', 'lower') and (not filter('ShardId', '*')) and ${module.filter-tags.filter_custom})${var.incoming_records_aggregation_function}${var.incoming_records_transformation_function}.publish('signal')

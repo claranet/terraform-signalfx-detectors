@@ -3,7 +3,6 @@ resource "signalfx_detector" "nginx_ingress_5xx" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
     A = data('nginx_ingress_controller_requests', filter=filter('status', '5*') and ${module.filter-tags.filter_custom}, rollup='delta', extrapolation='zero')${var.ingress_5xx_aggregation_function}${var.ingress_5xx_transformation_function}
     B = data('nginx_ingress_controller_requests', filter=${module.filter-tags.filter_custom}, rollup='delta', extrapolation='zero')${var.ingress_5xx_aggregation_function}${var.ingress_5xx_transformation_function}
@@ -42,7 +41,6 @@ resource "signalfx_detector" "nginx_ingress_4xx" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
     A = data('nginx_ingress_controller_requests', filter=filter('status', '4*') and ${module.filter-tags.filter_custom}, rollup='delta', extrapolation='zero')${var.ingress_4xx_aggregation_function}${var.ingress_4xx_transformation_function}
     B = data('nginx_ingress_controller_requests', filter=${module.filter-tags.filter_custom}, rollup='delta', extrapolation='zero')${var.ingress_4xx_aggregation_function}${var.ingress_4xx_transformation_function}
@@ -80,7 +78,6 @@ resource "signalfx_detector" "nginx_ingress_latency" {
   name = format("%s %s", local.detector_name_prefix, "Kubernetes Ingress Nginx latency")
 
   authorized_writer_teams = var.authorized_writer_teams
-
 
   program_text = <<-EOF
     signal = data('nginx_ingress_controller_ingress_upstream_latency_seconds', filter=${module.filter-tags.filter_custom}, rollup='delta', extrapolation='zero')${var.ingress_latency_aggregation_function}${var.ingress_latency_transformation_function}.publish('signal')

@@ -3,7 +3,6 @@ resource "signalfx_detector" "heartbeat" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting
         base_filter = filter('resource_type', 'Microsoft.Web/serverFarms') and filter('primary_aggregation_type', 'true')
@@ -28,7 +27,6 @@ resource "signalfx_detector" "cpu_percentage" {
   name = format("%s %s", local.detector_name_prefix, "Azure App Service Plan CPU percentage")
 
   authorized_writer_teams = var.authorized_writer_teams
-
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Web/serverFarms') and filter('primary_aggregation_type', 'true')
@@ -66,7 +64,6 @@ resource "signalfx_detector" "memory_percentage" {
   name = format("%s %s", local.detector_name_prefix, "Azure App Service Plan memory percentage")
 
   authorized_writer_teams = var.authorized_writer_teams
-
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Web/serverFarms') and filter('primary_aggregation_type', 'true')

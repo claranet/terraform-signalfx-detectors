@@ -3,7 +3,6 @@ resource "signalfx_detector" "heartbeat" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
     signal = data('RequestCount', filter=filter('stat', 'sum') and filter('namespace', 'AWS/ApplicationELB') and ${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')
@@ -27,7 +26,6 @@ resource "signalfx_detector" "no_healthy_instances" {
   name = format("%s %s", local.detector_name_prefix, "AWS ALB healthy instances percentage")
 
   authorized_writer_teams = var.authorized_writer_teams
-
 
   program_text = <<-EOF
     A = data('HealthyHostCount', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'lower') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom})${var.no_healthy_instances_aggregation_function}${var.no_healthy_instances_transformation_function}
@@ -67,7 +65,6 @@ resource "signalfx_detector" "latency" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
     signal = data('TargetResponseTime', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'mean') and filter('TargetGroup', '*') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='average')${var.latency_aggregation_function}${var.latency_transformation_function}.publish('signal')
     detect(when(signal > threshold(${var.latency_threshold_critical}), lasting='${var.latency_lasting_duration_seconds}s', at_least=${var.latency_at_least_percentage})).publish('CRIT')
@@ -103,7 +100,6 @@ resource "signalfx_detector" "alb_5xx" {
   name = format("%s %s", local.detector_name_prefix, "AWS ALB 5xx error rate")
 
   authorized_writer_teams = var.authorized_writer_teams
-
 
   program_text = <<-EOF
     A = data('HTTPCode_ELB_5XX_Count', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.alb_5xx_aggregation_function}${var.alb_5xx_transformation_function}
@@ -143,7 +139,6 @@ resource "signalfx_detector" "alb_4xx" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
     A = data('HTTPCode_ELB_4XX_Count', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.alb_4xx_aggregation_function}${var.alb_4xx_transformation_function}
     B = data('RequestCount', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.alb_4xx_aggregation_function}${var.alb_4xx_transformation_function}
@@ -182,7 +177,6 @@ resource "signalfx_detector" "target_5xx" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
     A = data('HTTPCode_Target_5XX_Count', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and filter('TargetGroup', '*') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.target_5xx_aggregation_function}${var.target_5xx_transformation_function}
     B = data('RequestCount', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and filter('TargetGroup', '*') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.target_5xx_aggregation_function}${var.target_5xx_transformation_function}
@@ -220,7 +214,6 @@ resource "signalfx_detector" "target_4xx" {
   name = format("%s %s", local.detector_name_prefix, "AWS ALB target 4xx error rate")
 
   authorized_writer_teams = var.authorized_writer_teams
-
 
   program_text = <<-EOF
     A = data('HTTPCode_Target_4XX_Count', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and filter('TargetGroup', '*') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.target_4xx_aggregation_function}${var.target_4xx_transformation_function}

@@ -3,7 +3,6 @@ resource "signalfx_detector" "concurrent_queries" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
     from signalfx.detectors.aperiodic import conditions
     signal = data('query/count', ${module.filter-tags.filter_custom})${var.concurrent_queries_aggregation_function}${var.concurrent_queries_transformation_function}.publish('signal')
@@ -43,7 +42,6 @@ resource "signalfx_detector" "execution_time" {
   name = format("%s %s", local.detector_name_prefix, "GCP BigQuery execution time")
 
   authorized_writer_teams = var.authorized_writer_teams
-
 
   program_text = <<-EOF
     from signalfx.detectors.aperiodic import conditions
@@ -85,7 +83,6 @@ resource "signalfx_detector" "scanned_bytes" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
     from signalfx.detectors.aperiodic import conditions
     signal = data('query/scanned_bytes', ${module.filter-tags.filter_custom})${var.scanned_bytes_aggregation_function}${var.scanned_bytes_transformation_function}.publish('signal')
@@ -125,7 +122,6 @@ resource "signalfx_detector" "scanned_bytes_billed" {
   name = format("%s %s", local.detector_name_prefix, "GCP BigQuery scanned bytes billed")
 
   authorized_writer_teams = var.authorized_writer_teams
-
 
   program_text = <<-EOF
     from signalfx.detectors.aperiodic import conditions
@@ -167,7 +163,6 @@ resource "signalfx_detector" "available_slots" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
     from signalfx.detectors.aperiodic import conditions
     signal = data('slots/total_available', ${module.filter-tags.filter_custom})${var.available_slots_aggregation_function}${var.available_slots_transformation_function}.publish('signal')
@@ -207,7 +202,6 @@ resource "signalfx_detector" "stored_bytes" {
   name = format("%s %s", local.detector_name_prefix, "GCP BigQuery stored bytes")
 
   authorized_writer_teams = var.authorized_writer_teams
-
 
   program_text = <<-EOF
     from signalfx.detectors.aperiodic import conditions
@@ -249,7 +243,6 @@ resource "signalfx_detector" "table_count" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
     from signalfx.detectors.aperiodic import conditions
     signal = data('storage/table_count', ${module.filter-tags.filter_custom})${var.table_count_aggregation_function}${var.table_count_transformation_function}.publish('signal')
@@ -290,7 +283,6 @@ resource "signalfx_detector" "uploaded_bytes" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
     from signalfx.detectors.aperiodic import conditions
     signal = data('storage/uploaded_bytes', ${module.filter-tags.filter_custom})${var.uploaded_bytes_aggregation_function}${var.uploaded_bytes_transformation_function}.publish('signal')
@@ -330,7 +322,6 @@ resource "signalfx_detector" "uploaded_bytes_billed" {
   name = format("%s %s", local.detector_name_prefix, "GCP BigQuery uploaded bytes billed")
 
   authorized_writer_teams = var.authorized_writer_teams
-
 
   program_text = <<-EOF
     from signalfx.detectors.aperiodic import conditions

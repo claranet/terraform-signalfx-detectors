@@ -3,7 +3,6 @@ resource "signalfx_detector" "messages_ready" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
     signal = data('gauge.queue.messages_ready', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom})${var.messages_ready_aggregation_function}${var.messages_ready_transformation_function}.publish('signal')
     detect(when(signal > ${var.messages_ready_threshold_critical})).publish('CRIT')
@@ -39,7 +38,6 @@ resource "signalfx_detector" "messages_unacknowledged" {
   name = format("%s %s", local.detector_name_prefix, "RabbitMQ Queue messages unacknowledged")
 
   authorized_writer_teams = var.authorized_writer_teams
-
 
   program_text = <<-EOF
     signal = data('gauge.queue.messages_unacknowledged', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom})${var.messages_unacknowledged_aggregation_function}${var.messages_unacknowledged_transformation_function}.publish('signal')
@@ -77,7 +75,6 @@ resource "signalfx_detector" "messages_ack_rate" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
     signal = data('counter.queue.message_stats.ack', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom})${var.messages_ack_rate_aggregation_function}.publish('signal')
     msg = data('gauge.queue.messages', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom})${var.messages_ack_rate_aggregation_function}
@@ -114,7 +111,6 @@ resource "signalfx_detector" "consumer_use" {
   name = format("%s %s", local.detector_name_prefix, "RabbitMQ Queue consumer use")
 
   authorized_writer_teams = var.authorized_writer_teams
-
 
   program_text = <<-EOF
     signal = data('gauge.queue.consumer_use', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom})${var.consumer_use_aggregation_function}.publish('util')

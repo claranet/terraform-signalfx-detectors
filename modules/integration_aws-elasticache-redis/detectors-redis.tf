@@ -3,7 +3,6 @@ resource "signalfx_detector" "cache_hits" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
     A = data('CacheHits', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.cache_hits_aggregation_function}${var.cache_hits_transformation_function}
     B = data('CacheMisses', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.cache_hits_aggregation_function}${var.cache_hits_transformation_function}
@@ -42,7 +41,6 @@ resource "signalfx_detector" "cpu_high" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
     signal = data('EngineCPUUtilization', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'upper') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.cpu_high_aggregation_function}${var.cpu_high_transformation_function}.publish('signal')
     detect(when(signal > ${var.cpu_high_threshold_critical})).publish('CRIT')
@@ -79,7 +77,6 @@ resource "signalfx_detector" "replication_lag" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
     signal = data('ReplicationLag', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'upper') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.replication_lag_aggregation_function}${var.replication_lag_transformation_function}.publish('signal')
     detect(when(signal > ${var.replication_lag_threshold_critical})).publish('CRIT')
@@ -115,7 +112,6 @@ resource "signalfx_detector" "commands" {
   name = format("%s %s", local.detector_name_prefix, "AWS ElastiCache redis commands")
 
   authorized_writer_teams = var.authorized_writer_teams
-
 
   program_text = <<-EOF
     A = data('GetTypeCmds', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'lower') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.commands_aggregation_function}${var.commands_transformation_function}
