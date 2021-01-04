@@ -15,7 +15,10 @@ if [[ ${source_type} == "integration" ]]; then
 fi
 module=$(echo ${MODULE} | cut -d'_' -f 2)
 tf="$(./scripts/stack/gen_module.sh ${TARGET})"
-detectors="$(sed -n 's/^.*name.*=.*detector_name_prefix.*"\(.*\)")$/* \1/p' ${TARGET}/detectors-*.tf | sort -fdbiu)"
+detectors=""
+if compgen -G "${TARGET}/detectors-*.tf" > /dev/null; then 
+    detectors="$(sed -n 's/^.*name.*=.*detector_name_prefix.*"\(.*\)")$/* \1/p' ${TARGET}/detectors-*.tf | sort -fdbiu)"
+fi
 vars=
 if [ -f ${TARGET}/variables.tf ]; then
     vars="${vars},variables.tf"

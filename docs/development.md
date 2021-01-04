@@ -21,6 +21,7 @@ rules and templates homogeneous to all modules.
 - [Requirements](#requirements)
 - [Scripts](#scripts)
 - [Change types](#change-types)
+  - [TLDR](#tldr)
   - [Documentation](#documentation)
   - [Detectors](#detectors)
   - [Templating](#templating)
@@ -41,9 +42,39 @@ dependencies available to run useful commands detailed below.
 Now you have a ready dev env you can run `make` commands or directly use the underlying 
 [scripts](./scripts.md) or even some tools available in the container like `doctoc` or `j2`.
 
+Here are useful `make` commands for development purpose:
+
+- `dev`: the default and optional target run the container ready to run other commands
+- `clean` to clean directory and git diff related to `/modules`
+- `doc`: generate modules readmes
+- `detectors`: generate variables and resources terraform code for detectors
+- `outputs`: generate outputs terraform code for detectors
+- `module`: bootstrap a new, fresh, empty module directory where add detectors
+- `lint`: run `tflint` command
+
+Some alias exist to run multiple commands in once:
+
+- `gen`: `detectors` && `output`
+- `modules`: `gen` && `doc`
+- `check`: `lint` (for now)
+
+Most of the them can accept an argument:
+
+- `module`: the name of the new, fresh, empty module directory to bootstrap.
+- `modules`, `doc`, `gen`, `detectors`, `outputs`: the filter to target changes on a subset of module(s).
+
+For example you can run `make modules *system*` to update doc, detectors and outputs for all modules 
+matching `*system*` wildcard filter like `smart-agent_system-common`.
+
 ## Change types
 
 There are different automation tasks to perform depending on the change done in this repository.
+
+### TLDR
+
+Documentation below will guide you to understand what command to run depending on your change to 
+pass the related CI checks. If you prefer, you can run the `make modules` command which should 
+cover any common contribution types.
 
 ### Documentation
 
@@ -58,11 +89,9 @@ __Check__:
 also run `doctoc --github --title ':link: **Contents**' --maxlevel 3` on a specific module.
 
 * To update readme(s) of detectors modules you have to edit its underlying configuration 
-available in `conf/readme.yaml` of the module directory. Then you must run `make readmes` 
+available in `conf/readme.yaml` of the module directory. Then you must run `make doc` 
 to regenerate readmes. It uses the module [gen_doc.sh](../scripts/module/gen_doc.sh) script 
 under the hood so you also use it to update only one module provided as parameter.
-
-You can use `make doc` command which is equivalent to `make readmes && make toc`.
 
 ### Detectors
 
@@ -177,8 +206,6 @@ in markdown files.
 
 * __dead-links__: uses [markdown-link-check](https://github.com/marketplace/actions/markdown-link-check) 
 to find any broken links in markdown files.
-
-Both of these jobs consist of the `make doc` command.
 
 ### Generator
 

@@ -30,6 +30,11 @@ dependencies available to run useful commands detailed below.
 Now you have a ready dev env you can run `make` commands or directly use the underlying 
 [scripts](./scripts.md) or even some tools available in the container like `doctoc` or `j2`.
 
+Here are useful `make` commands for development purpose:
+
+- `stack` to generate a usable stack with all detectors imported in `examples/stack`.
+- `clean` to clean directory and git diff related to `make stack`.
+
 ## Stack
 
 To bootstrap a new stack usable for your project with all modules pre-imported and configured,

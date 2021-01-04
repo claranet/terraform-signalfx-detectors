@@ -34,8 +34,8 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
-    - name: Generate modules readmes
-      run: make readmes
+    - name: Generate modules doc
+      run: make doc
 
     - name: Check for changes
       run: git diff --exit-code

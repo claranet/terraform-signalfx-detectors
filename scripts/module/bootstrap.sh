@@ -25,10 +25,15 @@ if [[ -d "${TARGET}" ]]; then
 fi
 
 echo "Bootstrap module code in \"${TARGET}\""
-mkdir -p "${TARGET}"
+mkdir -p "${TARGET}/conf"
 for tf in common/module/*.tf; do 
     ln -s ../../${tf} ${TARGET}/common-${tf#"common/module/"}
 done
+cat <<EOF > "${TARGET}/conf/readme.yaml"
+documentations:
+
+source_doc:
+EOF
 
 #echo "Generate variables from template"
 #j2 ${TEMPLATES}/detector_vars.tf.j2 ${TEMPLATES}/examples/heartbeat-simple.yaml > ${TARGET}/variables.tf
