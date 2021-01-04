@@ -1,5 +1,8 @@
 resource "signalfx_detector" "heartbeat" {
-  name      = format("%s %s", local.detector_name_prefix, "ElasticSearch heartbeat")
+  name = format("%s %s", local.detector_name_prefix, "ElasticSearch heartbeat")
+
+  authorized_writer_teams = var.authorized_writer_teams
+
   max_delay = 900
 
   program_text = <<-EOF
@@ -23,6 +26,9 @@ EOF
 
 resource "signalfx_detector" "cluster_status" {
   name = format("%s %s", local.detector_name_prefix, "ElasticSearch cluster status")
+
+  authorized_writer_teams = var.authorized_writer_teams
+
 
   program_text = <<-EOF
     signal = data('elasticsearch.cluster.status', filter=filter('plugin', 'elasticsearch') and ${module.filter-tags.filter_custom})${var.cluster_status_aggregation_function}${var.cluster_status_transformation_function}.publish('signal')
@@ -58,6 +64,9 @@ EOF
 resource "signalfx_detector" "cluster_initializing_shards" {
   name = format("%s %s", local.detector_name_prefix, "ElasticSearch cluster initializing shards")
 
+  authorized_writer_teams = var.authorized_writer_teams
+
+
   program_text = <<-EOF
     signal = data('elasticsearch.cluster.initializing-shards', filter=filter('plugin', 'elasticsearch') and ${module.filter-tags.filter_custom}, rollup='average')${var.cluster_initializing_shards_aggregation_function}${var.cluster_initializing_shards_transformation_function}.publish('signal')
     detect(when(signal > ${var.cluster_initializing_shards_threshold_critical})).publish('CRIT')
@@ -91,6 +100,9 @@ EOF
 
 resource "signalfx_detector" "cluster_relocating_shards" {
   name = format("%s %s", local.detector_name_prefix, "ElasticSearch cluster relocating shards")
+
+  authorized_writer_teams = var.authorized_writer_teams
+
 
   program_text = <<-EOF
     signal = data('elasticsearch.cluster.relocating-shards', filter=filter('plugin', 'elasticsearch') and ${module.filter-tags.filter_custom}, rollup='average')${var.cluster_relocating_shards_aggregation_function}${var.cluster_relocating_shards_transformation_function}.publish('signal')
@@ -126,6 +138,9 @@ EOF
 resource "signalfx_detector" "cluster_unassigned_shards" {
   name = format("%s %s", local.detector_name_prefix, "ElasticSearch Cluster unassigned shards")
 
+  authorized_writer_teams = var.authorized_writer_teams
+
+
   program_text = <<-EOF
     signal = data('elasticsearch.cluster.unassigned-shards', filter=filter('plugin', 'elasticsearch') and ${module.filter-tags.filter_custom}, rollup='average')${var.cluster_unassigned_shards_aggregation_function}${var.cluster_unassigned_shards_transformation_function}.publish('signal')
     detect(when(signal > ${var.cluster_unassigned_shards_threshold_critical})).publish('CRIT')
@@ -159,6 +174,9 @@ EOF
 
 resource "signalfx_detector" "pending_tasks" {
   name = format("%s %s", local.detector_name_prefix, "ElasticSearch Pending tasks")
+
+  authorized_writer_teams = var.authorized_writer_teams
+
 
   program_text = <<-EOF
     signal = data('elasticsearch.cluster.pending-tasks', filter=filter('plugin', 'elasticsearch') and ${module.filter-tags.filter_custom}, rollup='average')${var.pending_tasks_aggregation_function}${var.pending_tasks_transformation_function}.publish('signal')
@@ -194,6 +212,9 @@ EOF
 resource "signalfx_detector" "cpu_usage" {
   name = format("%s %s", local.detector_name_prefix, "Elasticsearch CPU usage")
 
+  authorized_writer_teams = var.authorized_writer_teams
+
+
   program_text = <<-EOF
     signal = data('elasticsearch.process.cpu.percent', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, rollup='average')${var.cpu_usage_aggregation_function}${var.cpu_usage_transformation_function}.publish('signal')
     detect(when(signal > ${var.cpu_usage_threshold_critical})).publish('CRIT')
@@ -227,6 +248,9 @@ EOF
 
 resource "signalfx_detector" "file_descriptors" {
   name = format("%s %s", local.detector_name_prefix, "Elasticsearch file descriptors usage")
+
+  authorized_writer_teams = var.authorized_writer_teams
+
 
   program_text = <<-EOF
     A = data('elasticsearch.process.open_file_descriptors', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, rollup='average')${var.file_descriptors_aggregation_function}${var.file_descriptors_transformation_function}
@@ -264,6 +288,9 @@ EOF
 resource "signalfx_detector" "jvm_heap_memory_usage" {
   name = format("%s %s", local.detector_name_prefix, "Elasticsearch JVM heap memory usage")
 
+  authorized_writer_teams = var.authorized_writer_teams
+
+
   program_text = <<-EOF
     signal = data('elasticsearch.jvm.mem.heap-used-percent', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, rollup='average')${var.jvm_heap_memory_usage_aggregation_function}${var.jvm_heap_memory_usage_transformation_function}.publish('signal')
     detect(when(signal > ${var.jvm_heap_memory_usage_threshold_critical})).publish('CRIT')
@@ -297,6 +324,9 @@ EOF
 
 resource "signalfx_detector" "jvm_memory_young_usage" {
   name = format("%s %s", local.detector_name_prefix, "Elasticsearch JVM memory young usage")
+
+  authorized_writer_teams = var.authorized_writer_teams
+
 
   program_text = <<-EOF
     A = data('elasticsearch.jvm.mem.pools.young.used_in_bytes', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, rollup='average')${var.jvm_memory_young_usage_aggregation_function}${var.jvm_memory_young_usage_transformation_function}
@@ -334,6 +364,9 @@ EOF
 resource "signalfx_detector" "jvm_memory_old_usage" {
   name = format("%s %s", local.detector_name_prefix, "Elasticsearch JVM memory old usage")
 
+  authorized_writer_teams = var.authorized_writer_teams
+
+
   program_text = <<-EOF
     A = data('elasticsearch.jvm.mem.pools.old.used_in_bytes', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, rollup='average')${var.jvm_memory_old_usage_aggregation_function}${var.jvm_memory_old_usage_transformation_function}
     B = data('elasticsearch.jvm.mem.pools.old.max_in_bytes', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, rollup='average')${var.jvm_memory_old_usage_aggregation_function}${var.jvm_memory_old_usage_transformation_function}
@@ -369,6 +402,9 @@ EOF
 
 resource "signalfx_detector" "jvm_gc_old_collection_latency" {
   name = format("%s %s", local.detector_name_prefix, "Elasticsearch old-generation garbage collections latency")
+
+  authorized_writer_teams = var.authorized_writer_teams
+
 
   program_text = <<-EOF
     A = data('elasticsearch.jvm.gc.old-time', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.jvm_gc_old_collection_latency_aggregation_function}${var.jvm_gc_old_collection_latency_transformation_function}
@@ -406,6 +442,9 @@ EOF
 resource "signalfx_detector" "jvm_gc_young_collection_latency" {
   name = format("%s %s", local.detector_name_prefix, "Elasticsearch young-generation garbage collections latency")
 
+  authorized_writer_teams = var.authorized_writer_teams
+
+
   program_text = <<-EOF
     A = data('elasticsearch.jvm.gc.time', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.jvm_gc_young_collection_latency_aggregation_function}${var.jvm_gc_young_collection_latency_transformation_function}
     B = data('elasticsearch.jvm.gc.count', filter=filter('plugin', 'elasticsearch') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.jvm_gc_young_collection_latency_aggregation_function}${var.jvm_gc_young_collection_latency_transformation_function}
@@ -441,6 +480,9 @@ EOF
 
 resource "signalfx_detector" "indexing_latency" {
   name = format("%s %s", local.detector_name_prefix, "Elasticsearch indexing latency")
+
+  authorized_writer_teams = var.authorized_writer_teams
+
 
   program_text = <<-EOF
     A = data('elasticsearch.indices.indexing.index-time', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.indexing_latency_aggregation_function}${var.indexing_latency_transformation_function}
@@ -478,6 +520,9 @@ EOF
 resource "signalfx_detector" "flush_latency" {
   name = format("%s %s", local.detector_name_prefix, "Elasticsearch index flushing to disk latency")
 
+  authorized_writer_teams = var.authorized_writer_teams
+
+
   program_text = <<-EOF
     A = data('elasticsearch.indices.flush.total-time', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.flush_latency_aggregation_function}${var.flush_latency_transformation_function}
     B = data('elasticsearch.indices.flush.total', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.flush_latency_aggregation_function}${var.flush_latency_transformation_function}
@@ -513,6 +558,9 @@ EOF
 
 resource "signalfx_detector" "search_latency" {
   name = format("%s %s", local.detector_name_prefix, "Elasticsearch search query latency")
+
+  authorized_writer_teams = var.authorized_writer_teams
+
 
   program_text = <<-EOF
     A = data('elasticsearch.indices.search.query-time', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.search_latency_aggregation_function}${var.search_latency_transformation_function}
@@ -550,6 +598,9 @@ EOF
 resource "signalfx_detector" "fetch_latency" {
   name = format("%s %s", local.detector_name_prefix, "Elasticsearch search fetch latency")
 
+  authorized_writer_teams = var.authorized_writer_teams
+
+
   program_text = <<-EOF
     A = data('elasticsearch.indices.search.fetch-time', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.fetch_latency_aggregation_function}${var.fetch_latency_transformation_function}
     B = data('elasticsearch.indices.search.fetch-total', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.fetch_latency_aggregation_function}${var.fetch_latency_transformation_function}
@@ -586,6 +637,9 @@ EOF
 resource "signalfx_detector" "field_data_evictions_change" {
   name = format("%s %s", local.detector_name_prefix, "Elasticsearch fielddata cache evictions rate of change")
 
+  authorized_writer_teams = var.authorized_writer_teams
+
+
   program_text = <<-EOF
     signal = data('elasticsearch.indices.fielddata.evictions', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta').rateofchange()${var.field_data_evictions_change_aggregation_function}${var.field_data_evictions_change_transformation_function}.publish('signal')
     detect(when(signal > ${var.field_data_evictions_change_threshold_major})).publish('MAJOR')
@@ -619,6 +673,9 @@ EOF
 
 resource "signalfx_detector" "task_time_in_queue_change" {
   name = format("%s %s", local.detector_name_prefix, "Elasticsearch max time spent by task in queue rate of change")
+
+  authorized_writer_teams = var.authorized_writer_teams
+
 
   program_text = <<-EOF
     signal = data('elasticsearch.cluster.task-max-wait-time', filter=filter('plugin', 'elasticsearch') and ${module.filter-tags.filter_custom}, rollup='average').rateofchange()${var.task_time_in_queue_change_aggregation_function}${var.task_time_in_queue_change_transformation_function}.publish('signal')

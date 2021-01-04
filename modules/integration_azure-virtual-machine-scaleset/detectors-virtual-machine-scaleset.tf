@@ -1,6 +1,9 @@
 resource "signalfx_detector" "heartbeat" {
   name = format("%s %s", local.detector_name_prefix, "Azure Virtual Machine ScaleSet heartbeat")
 
+  authorized_writer_teams = var.authorized_writer_teams
+
+
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting
         base_filter = filter('resource_type', 'Microsoft.Compute/virtualMachineScaleSets') and filter('primary_aggregation_type', 'true')

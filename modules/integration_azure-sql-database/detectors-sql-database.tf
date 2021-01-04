@@ -1,6 +1,9 @@
 resource "signalfx_detector" "heartbeat" {
   name = format("%s %s", local.detector_name_prefix, "Azure SQL Database heartbeat")
 
+  authorized_writer_teams = var.authorized_writer_teams
+
+
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting
         base_filter = filter('resource_type', 'Microsoft.Sql/servers/databases') and filter('primary_aggregation_type', 'true')
@@ -23,6 +26,9 @@ resource "signalfx_detector" "heartbeat" {
 
 resource "signalfx_detector" "cpu" {
   name = format("%s %s", local.detector_name_prefix, "Azure Sql Database CPU")
+
+  authorized_writer_teams = var.authorized_writer_teams
+
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Sql/servers/databases') and filter('primary_aggregation_type', 'true')
@@ -59,6 +65,9 @@ resource "signalfx_detector" "cpu" {
 resource "signalfx_detector" "free_space" {
   name = format("%s %s", local.detector_name_prefix, "Azure SQL Database disk usage")
 
+  authorized_writer_teams = var.authorized_writer_teams
+
+
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Sql/servers/databases') and filter('primary_aggregation_type', 'true')
         signal = data('storage_percent', filter=base_filter and ${module.filter-tags.filter_custom})${var.free_space_aggregation_function}.publish('signal')
@@ -94,6 +103,9 @@ resource "signalfx_detector" "free_space" {
 resource "signalfx_detector" "dtu_consumption" {
   name = format("%s %s", local.detector_name_prefix, "Azure SQL Database DTU consumption")
 
+  authorized_writer_teams = var.authorized_writer_teams
+
+
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Sql/servers/databases') and filter('primary_aggregation_type', 'true')
         signal = data('dtu_consumption_percent', filter=base_filter and ${module.filter-tags.filter_custom})${var.dtu_consumption_aggregation_function}.publish('signal')
@@ -128,6 +140,9 @@ resource "signalfx_detector" "dtu_consumption" {
 
 resource "signalfx_detector" "deadlocks_count" {
   name = format("%s %s", local.detector_name_prefix, "Azure SQL Database deadlocks count")
+
+  authorized_writer_teams = var.authorized_writer_teams
+
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Sql/servers/databases') and filter('primary_aggregation_type', 'true')

@@ -1,5 +1,8 @@
 resource "signalfx_detector" "heartbeat" {
-  name      = format("%s %s", local.detector_name_prefix, "Tomcat heartbeat")
+  name = format("%s %s", local.detector_name_prefix, "Tomcat heartbeat")
+
+  authorized_writer_teams = var.authorized_writer_teams
+
   max_delay = 900
 
   program_text = <<-EOF
@@ -23,6 +26,9 @@ EOF
 
 resource "signalfx_detector" "average_processing_time" {
   name = format("%s %s", local.detector_name_prefix, "Tomcat average processing time")
+
+  authorized_writer_teams = var.authorized_writer_teams
+
 
   program_text = <<-EOF
     A = data('counter.tomcat.GlobalRequestProcessor.processingTime', filter=${module.filter-tags.filter_custom}, rollup='delta')${var.average_processing_time_aggregation_function}${var.average_processing_time_transformation_function}
@@ -60,6 +66,9 @@ EOF
 
 resource "signalfx_detector" "busy_threads_percentage" {
   name = format("%s %s", local.detector_name_prefix, "Tomcat busy threads percentage")
+
+  authorized_writer_teams = var.authorized_writer_teams
+
 
   program_text = <<-EOF
     A = data('gauge.tomcat.ThreadPool.currentThreadsBusy', filter=${module.filter-tags.filter_custom})${var.busy_threads_percentage_aggregation_function}${var.busy_threads_percentage_transformation_function}

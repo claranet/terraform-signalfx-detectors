@@ -1,5 +1,8 @@
 resource "signalfx_detector" "heartbeat" {
-  name      = format("%s %s", local.detector_name_prefix, "HTTP heartbeat")
+  name = format("%s %s", local.detector_name_prefix, "HTTP heartbeat")
+
+  authorized_writer_teams = var.authorized_writer_teams
+
   max_delay = 900
 
   program_text = <<-EOF
@@ -24,6 +27,9 @@ EOF
 resource "signalfx_detector" "http_code_matched" {
   name = format("%s %s", local.detector_name_prefix, "HTTP code")
 
+  authorized_writer_teams = var.authorized_writer_teams
+
+
   program_text = <<-EOF
     signal = data('http.code_matched', filter=${module.filter-tags.filter_custom}, rollup='max')${var.http_code_matched_aggregation_function}${var.http_code_matched_transformation_function}.publish('signal')
     detect(when(signal < 1, lasting='${var.http_code_matched_lasting_duration_seconds}s', at_least=${var.http_code_matched_at_least_percentage})).publish('CRIT')
@@ -46,6 +52,9 @@ EOF
 resource "signalfx_detector" "http_regex_matched" {
   name = format("%s %s", local.detector_name_prefix, "HTTP regex expression")
 
+  authorized_writer_teams = var.authorized_writer_teams
+
+
   program_text = <<-EOF
     signal = data('http.regex_matched', filter=${module.filter-tags.filter_custom}, rollup='min')${var.http_regex_matched_aggregation_function}${var.http_regex_matched_transformation_function}.publish('signal')
     detect(when(signal < 1, lasting='${var.http_regex_matched_lasting_duration_seconds}s', at_least=${var.http_regex_matched_at_least_percentage})).publish('CRIT')
@@ -67,6 +76,9 @@ EOF
 
 resource "signalfx_detector" "http_response_time" {
   name = format("%s %s", local.detector_name_prefix, "HTTP response time")
+
+  authorized_writer_teams = var.authorized_writer_teams
+
 
   program_text = <<-EOF
     signal = data('http.response_time', filter=${module.filter-tags.filter_custom}, rollup='max')${var.http_response_time_aggregation_function}${var.http_response_time_transformation_function}.publish('signal')
@@ -102,6 +114,9 @@ EOF
 resource "signalfx_detector" "http_content_length" {
   name = format("%s %s", local.detector_name_prefix, "HTTP content length")
 
+  authorized_writer_teams = var.authorized_writer_teams
+
+
   program_text = <<-EOF
     signal = data('http.content_length', filter=${module.filter-tags.filter_custom}, rollup='min')${var.http_content_length_aggregation_function}${var.http_content_length_transformation_function}.publish('signal')
     detect(when(signal < ${var.http_content_length_threshold_warning})).publish('WARN')
@@ -122,6 +137,9 @@ EOF
 
 resource "signalfx_detector" "certificate_expiration_date" {
   name = format("%s %s", local.detector_name_prefix, "TLS certificate expiry date")
+
+  authorized_writer_teams = var.authorized_writer_teams
+
 
   program_text = <<-EOF
     A = data('http.cert_expiry', filter=${module.filter-tags.filter_custom}, rollup='min')${var.certificate_expiration_date_aggregation_function}${var.certificate_expiration_date_transformation_function}
@@ -157,6 +175,9 @@ EOF
 
 resource "signalfx_detector" "invalid_tls_certificate" {
   name = format("%s %s", local.detector_name_prefix, "TLS certificate")
+
+  authorized_writer_teams = var.authorized_writer_teams
+
 
   program_text = <<-EOF
     signal = data('http.cert_valid', filter=${module.filter-tags.filter_custom}, rollup='min')${var.invalid_tls_certificate_aggregation_function}${var.invalid_tls_certificate_transformation_function}.publish('signal')

@@ -1,5 +1,8 @@
 resource "signalfx_detector" "heartbeat" {
-  name      = format("%s %s", local.detector_name_prefix, "MySQL heartbeat")
+  name = format("%s %s", local.detector_name_prefix, "MySQL heartbeat")
+
+  authorized_writer_teams = var.authorized_writer_teams
+
   max_delay = 900
 
   program_text = <<-EOF
@@ -23,6 +26,9 @@ EOF
 
 resource "signalfx_detector" "mysql_connections" {
   name = format("%s %s", local.detector_name_prefix, "MySQL number of connections over max capacity")
+
+  authorized_writer_teams = var.authorized_writer_teams
+
 
   program_text = <<-EOF
     A = data('mysql_threads_connected', filter=${module.filter-tags.filter_custom}, rollup='average')${var.connections_aggregation_function}${var.connections_transformation_function}
@@ -60,6 +66,9 @@ resource "signalfx_detector" "mysql_connections" {
 resource "signalfx_detector" "mysql_slow" {
   name = format("%s %s", local.detector_name_prefix, "MySQL slow queries percentage")
 
+  authorized_writer_teams = var.authorized_writer_teams
+
+
   program_text = <<-EOF
     A = data('mysql_slow_queries', filter=(not filter('plugin', 'mysql')) and ${module.filter-tags.filter_custom}, rollup='delta')${var.slow_aggregation_function}${var.slow_transformation_function}
     B = data('mysql_queries', filter=(not filter('plugin', 'mysql')) and ${module.filter-tags.filter_custom}, rollup='delta')${var.slow_aggregation_function}${var.slow_transformation_function}
@@ -95,6 +104,9 @@ EOF
 
 resource "signalfx_detector" "mysql_pool_efficiency" {
   name = format("%s %s", local.detector_name_prefix, "MySQL Innodb buffer pool efficiency")
+
+  authorized_writer_teams = var.authorized_writer_teams
+
 
   program_text = <<-EOF
     A = data('mysql_bpool_counters.reads', filter=filter('plugin', 'mysql') and ${module.filter-tags.filter_custom}, rollup='delta')${var.pool_efficiency_aggregation_function}${var.pool_efficiency_transformation_function}
@@ -132,6 +144,9 @@ EOF
 resource "signalfx_detector" "mysql_pool_utilization" {
   name = format("%s %s", local.detector_name_prefix, "MySQL Innodb buffer pool utilization")
 
+  authorized_writer_teams = var.authorized_writer_teams
+
+
   program_text = <<-EOF
     A = data('mysql_bpool_pages.free', filter=filter('plugin', 'mysql') and ${module.filter-tags.filter_custom}, rollup='average')${var.pool_utilization_aggregation_function}${var.pool_utilization_transformation_function}
     B = data('mysql_bpool_pages.total', filter=filter('plugin', 'mysql') and ${module.filter-tags.filter_custom}, rollup='average')${var.pool_utilization_aggregation_function}${var.pool_utilization_transformation_function}
@@ -168,6 +183,9 @@ EOF
 resource "signalfx_detector" "mysql_threads_anomaly" {
   name = format("%s %s", local.detector_name_prefix, "MySQL running threads changed abruptly")
 
+  authorized_writer_teams = var.authorized_writer_teams
+
+
   program_text = <<-EOF
     from signalfx.detectors.against_periods import against_periods
     signal = data('threads.running', filter=filter('plugin', 'mysql') and ${module.filter-tags.filter_custom}, rollup='average')${var.threads_anomaly_aggregation_function}${var.threads_anomaly_transformation_function}.publish('signal')
@@ -190,6 +208,9 @@ EOF
 resource "signalfx_detector" "mysql_questions_anomaly" {
   name = format("%s %s", local.detector_name_prefix, "MySQL running queries changed abruptly")
 
+  authorized_writer_teams = var.authorized_writer_teams
+
+
   program_text = <<-EOF
     from signalfx.detectors.against_periods import against_periods
     signal = data('mysql_commands.*', filter=filter('plugin', 'mysql') and ${module.filter-tags.filter_custom}, rollup='delta')${var.questions_anomaly_aggregation_function}${var.questions_anomaly_transformation_function}.publish('signal')
@@ -211,6 +232,9 @@ EOF
 
 resource "signalfx_detector" "mysql_replication_lag" {
   name = format("%s %s", local.detector_name_prefix, "MySQL replication lag")
+
+  authorized_writer_teams = var.authorized_writer_teams
+
 
   program_text = <<-EOF
     signal = data('mysql_seconds_behind_master', filter=${module.filter-tags.filter_custom}, rollup='average')${var.replication_lag_aggregation_function}${var.replication_lag_transformation_function}.publish('signal')
@@ -246,6 +270,9 @@ resource "signalfx_detector" "mysql_replication_lag" {
 resource "signalfx_detector" "mysql_slave_sql_status" {
   name = format("%s %s", local.detector_name_prefix, "MySQL slave sql status")
 
+  authorized_writer_teams = var.authorized_writer_teams
+
+
   program_text = <<-EOF
     signal = data('mysql_slave_sql_running', filter=${module.filter-tags.filter_custom}, rollup='average')${var.slave_sql_status_aggregation_function}${var.slave_sql_status_transformation_function}.publish('signal')
     detect(when(signal < 1)).publish('CRIT')
@@ -266,6 +293,9 @@ EOF
 
 resource "signalfx_detector" "mysql_slave_io_status" {
   name = format("%s %s", local.detector_name_prefix, "MySQL slave sql status")
+
+  authorized_writer_teams = var.authorized_writer_teams
+
 
   program_text = <<-EOF
     signal = data('mysql_slave_io_running', filter=${module.filter-tags.filter_custom}, rollup='average')${var.slave_io_status_aggregation_function}${var.slave_io_status_transformation_function}.publish('signal')

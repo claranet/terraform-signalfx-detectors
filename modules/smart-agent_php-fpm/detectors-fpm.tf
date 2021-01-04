@@ -1,5 +1,8 @@
 resource "signalfx_detector" "heartbeat" {
-  name      = format("%s %s", local.detector_name_prefix, "PHP-FPM heartbeat")
+  name = format("%s %s", local.detector_name_prefix, "PHP-FPM heartbeat")
+
+  authorized_writer_teams = var.authorized_writer_teams
+
   max_delay = 900
 
   program_text = <<-EOF
@@ -23,6 +26,9 @@ EOF
 
 resource "signalfx_detector" "php_fpm_connect_idle" {
   name = format("%s %s", local.detector_name_prefix, "PHP-FPM busy workers")
+
+  authorized_writer_teams = var.authorized_writer_teams
+
 
   program_text = <<-EOF
     A = data('phpfpm_processes.active', filter=${module.filter-tags.filter_custom})${var.php_fpm_connect_idle_aggregation_function}${var.php_fpm_connect_idle_transformation_function}

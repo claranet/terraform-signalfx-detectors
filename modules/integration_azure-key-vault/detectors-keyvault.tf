@@ -1,6 +1,9 @@
 resource "signalfx_detector" "api_result" {
   name = format("%s %s", local.detector_name_prefix, "Azure Key Vault API result rate")
 
+  authorized_writer_teams = var.authorized_writer_teams
+
+
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.KeyVault/vaults') and filter('primary_aggregation_type', 'true')
         A = data('ServiceApiResult', extrapolation="zero", filter=base_filter and filter('statuscode', '200') and ${module.filter-tags.filter_custom})${var.api_result_aggregation_function}
@@ -37,6 +40,9 @@ resource "signalfx_detector" "api_result" {
 
 resource "signalfx_detector" "api_latency" {
   name = format("%s %s", local.detector_name_prefix, "Azure Key Vault API latency")
+
+  authorized_writer_teams = var.authorized_writer_teams
+
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.KeyVault/vaults') and filter('primary_aggregation_type', 'true')

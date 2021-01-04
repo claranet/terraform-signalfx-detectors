@@ -18,19 +18,19 @@ variable "notifications" {
 
 variable "prefixes" {
   description = "Prefixes list to prepend between brackets on every monitors names before environment"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
 variable "filter_custom_includes" {
   description = "List of tags to include when custom filtering is used"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
 variable "filter_custom_excludes" {
   description = "List of tags to exclude when custom filtering is used"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
@@ -44,5 +44,11 @@ variable "runbook_url" {
   description = "Default runbook URL to apply to all detectors (if not overridden at detector level)"
   type        = string
   default     = ""
+}
+
+variable "authorized_writer_teams" {
+  description = "List of teams IDs authorized (with admins) to edit the detector. If defined, it requires an user token to work"
+  type        = list(string)
+  default     = null
 }
 

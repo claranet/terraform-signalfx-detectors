@@ -6,13 +6,13 @@ variable "filter_defaults" {
 
 variable "filter_custom_includes" {
   description = "List of tags to include when custom filtering is used"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
 variable "filter_custom_excludes" {
   description = "List of tags to exclude when custom filtering is used"
-  type        = list
+  type        = list(string)
   default     = []
 }
 
