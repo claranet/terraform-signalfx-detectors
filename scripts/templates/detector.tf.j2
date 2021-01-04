@@ -10,11 +10,6 @@
 {%- endif -%}
 {%- set filtering_variable = 'base_filtering' -%}
 
-{%- for key, signal in signals.items() -%}
-  {%- if loop.last -%}
-    {%- set last_signal = key -%}
-  {%- endif %}
-{%- endfor -%}
 resource "signalfx_detector" "{{ id }}" {
   name = format("%s %s", local.detector_name_prefix, "{{ module[0]|upper}}{{module[1:] }} {{ name | lower }}")
 
@@ -23,6 +18,23 @@ resource "signalfx_detector" "{{ id }}" {
 
   max_delay = 900
   {%- endif %}
+
+{%- for key, signal in signals.items() -%}
+  {%- if loop.last -%}
+    {%- if value_unit is defined %}
+
+  viz_options {
+    {%- if value_unit in ['Bit', 'Kilobit', 'Megabit', 'Gigabit', 'Terabit', 'Petabit', 'Exabit', 'Zettabit', 'Yottabit', 'Byte', 'Kibibyte','Mebibyte', 'Gigibyte', 'Tebibyte', 'Pebibyte', 'Exbibyte', 'Zebibyte', 'Yobibyte', 'Nanosecond', 'Microsecond', 'Millisecond', 'Second','Minute', 'Hour', 'Day', 'Week'] %}
+    label      = "{{ key }}"
+    value_unit = "{{ value_unit }}"
+    {%- else %}
+    label        = "{{ key }}"
+    value_suffix = "{{ value_unit }}"
+    {%- endif %}
+  }
+    {%- endif %}
+  {%- endif %}
+{%- endfor %}
 
   program_text = <<-EOF
     {%- if type == 'heartbeat' %}

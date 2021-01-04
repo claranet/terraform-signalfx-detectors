@@ -3,7 +3,6 @@ resource "signalfx_detector" "heartbeat" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting
         base_filter = filter('resource_type', 'Microsoft.ServiceBus/namespaces') and filter('primary_aggregation_type', 'true')
@@ -29,7 +28,6 @@ resource "signalfx_detector" "active_connections" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.ServiceBus/namespaces') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}
         signal = data('ActiveConnections', filter=base_filter)${var.active_connections_aggregation_function}.publish('signal')
@@ -54,7 +52,6 @@ resource "signalfx_detector" "user_errors" {
   name = format("%s %s", local.detector_name_prefix, "Azure Service Bus user error rate")
 
   authorized_writer_teams = var.authorized_writer_teams
-
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.ServiceBus/namespaces') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}
@@ -95,7 +92,6 @@ resource "signalfx_detector" "server_errors" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.ServiceBus/namespaces') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}
         A = data('ServerErrors', extrapolation='zero', filter=base_filter)${var.server_errors_aggregation_function}
@@ -134,7 +130,6 @@ resource "signalfx_detector" "throttled_requests" {
   name = format("%s %s", local.detector_name_prefix, "Azure Service Bus throttled requests rate")
 
   authorized_writer_teams = var.authorized_writer_teams
-
 
   program_text = <<-EOF
     base_filter = filter('resource_type', 'Microsoft.ServiceBus/namespaces') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}

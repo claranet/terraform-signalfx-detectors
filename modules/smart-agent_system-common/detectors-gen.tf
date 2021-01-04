@@ -29,6 +29,11 @@ resource "signalfx_detector" "cpu" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
+  viz_options {
+    label        = "signal"
+    value_suffix = "%"
+  }
+
   program_text = <<-EOF
     signal = data('cpu.utilization', filter=${module.filter-tags.filter_custom}, extrapolation='zero')${var.cpu_aggregation_function}${var.cpu_transformation_function}.publish('signal')
     detect(when(signal > ${var.cpu_threshold_critical})).publish('CRIT')
@@ -101,6 +106,11 @@ resource "signalfx_detector" "disk_space" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
+  viz_options {
+    label        = "signal"
+    value_suffix = "%"
+  }
+
   program_text = <<-EOF
     signal = data('disk.utilization', filter=${module.filter-tags.filter_custom})${var.disk_space_aggregation_function}${var.disk_space_transformation_function}.publish('signal')
     detect(when(signal > ${var.disk_space_threshold_critical})).publish('CRIT')
@@ -137,6 +147,11 @@ resource "signalfx_detector" "disk_inodes" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
+  viz_options {
+    label        = "signal"
+    value_suffix = "%"
+  }
+
   program_text = <<-EOF
     signal = data('percent_inodes.used', filter=${module.filter-tags.filter_custom})${var.disk_inodes_aggregation_function}${var.disk_inodes_transformation_function}.publish('signal')
     detect(when(signal > ${var.disk_inodes_threshold_critical})).publish('CRIT')
@@ -172,6 +187,11 @@ resource "signalfx_detector" "memory" {
   name = format("%s %s", local.detector_name_prefix, "System memory utilization")
 
   authorized_writer_teams = var.authorized_writer_teams
+
+  viz_options {
+    label        = "signal"
+    value_suffix = "%"
+  }
 
   program_text = <<-EOF
     signal = data('memory.utilization', filter=${module.filter-tags.filter_custom})${var.memory_aggregation_function}${var.memory_transformation_function}.publish('signal')

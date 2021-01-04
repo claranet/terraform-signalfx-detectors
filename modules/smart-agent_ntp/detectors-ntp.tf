@@ -29,7 +29,6 @@ resource "signalfx_detector" "ntp" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
         signal = data('ntp.offset_seconds', filter=${module.filter-tags.filter_custom})${var.ntp_aggregation_function}${var.ntp_transformation_function}.publish('signal')
         detect(when(signal > ${var.ntp_threshold_major})).publish('MAJOR')

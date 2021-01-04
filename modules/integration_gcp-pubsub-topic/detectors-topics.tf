@@ -3,7 +3,6 @@ resource "signalfx_detector" "sending_operations" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
     reserved_topics = (not filter('topic_id', 'container-analysis-occurrences*', 'container-analysis-notes*', 'cloud-builds', 'gcr'))
     signal = data('topic/send_message_operation_count', filter=filter('monitored_resource', 'pubsub_topic') and reserved_topics and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.sending_operations_aggregation_function}${var.sending_operations_transformation_function}.publish('signal')
@@ -27,7 +26,6 @@ resource "signalfx_detector" "unavailable_sending_operations" {
   name = format("%s %s", local.detector_name_prefix, "GCP Pub/Sub Topic sending unavailable messages")
 
   authorized_writer_teams = var.authorized_writer_teams
-
 
   program_text = <<-EOF
     reserved_topics = (not filter('topic_id', 'container-analysis-occurrences*', 'container-analysis-notes*', 'cloud-builds', 'gcr'))
@@ -65,7 +63,6 @@ resource "signalfx_detector" "unavailable_sending_operations_ratio" {
   name = format("%s %s", local.detector_name_prefix, "GCP Pub/Sub Topic sending unavailable messages ratio")
 
   authorized_writer_teams = var.authorized_writer_teams
-
 
   program_text = <<-EOF
     reserved_topics = (not filter('topic_id', 'container-analysis-occurrences*', 'container-analysis-notes*', 'cloud-builds', 'gcr'))

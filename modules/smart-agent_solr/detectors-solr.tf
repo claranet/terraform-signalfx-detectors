@@ -29,7 +29,6 @@ resource "signalfx_detector" "errors" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
     signal = data('counter.solr.zookeeper_errors', filter=${module.filter-tags.filter_custom})${var.errors_aggregation_function}${var.errors_transformation_function}.publish('signal')
     detect(when(signal >= ${var.errors_threshold_critical})).publish('CRIT')
@@ -65,7 +64,6 @@ resource "signalfx_detector" "searcher_warmup_time" {
   name = format("%s %s", local.detector_name_prefix, "Apache Solr searcher warmup time")
 
   authorized_writer_teams = var.authorized_writer_teams
-
 
   program_text = <<-EOF
     signal = data('gauge.solr.searcher_warmup', filter=${module.filter-tags.filter_custom})${var.searcher_warmup_time_aggregation_function}${var.searcher_warmup_time_transformation_function}.publish('signal')

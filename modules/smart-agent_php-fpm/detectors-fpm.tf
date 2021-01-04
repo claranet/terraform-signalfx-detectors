@@ -29,7 +29,6 @@ resource "signalfx_detector" "php_fpm_connect_idle" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
     A = data('phpfpm_processes.active', filter=${module.filter-tags.filter_custom})${var.php_fpm_connect_idle_aggregation_function}${var.php_fpm_connect_idle_transformation_function}
     B = data('phpfpm_processes.idle', filter=${module.filter-tags.filter_custom})${var.php_fpm_connect_idle_aggregation_function}${var.php_fpm_connect_idle_transformation_function}

@@ -3,7 +3,6 @@ resource "signalfx_detector" "heartbeat" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting
         base_filter = filter('resource_type', 'Microsoft.StreamAnalytics/streamingjobs') and filter('primary_aggregation_type', 'true')
@@ -28,7 +27,6 @@ resource "signalfx_detector" "su_utilization" {
   name = format("%s %s", local.detector_name_prefix, "Azure Stream Analytics resource utilization")
 
   authorized_writer_teams = var.authorized_writer_teams
-
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.StreamAnalytics/streamingjobs') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}
@@ -66,7 +64,6 @@ resource "signalfx_detector" "failed_function_requests" {
   name = format("%s %s", local.detector_name_prefix, "Azure Stream Analytics failed function requests rate")
 
   authorized_writer_teams = var.authorized_writer_teams
-
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.StreamAnalytics/streamingjobs') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}
@@ -107,7 +104,6 @@ resource "signalfx_detector" "conversion_errors" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.StreamAnalytics/streamingjobs') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}
         signal = data('ConversionErrors', filter=base_filter)${var.conversion_errors_aggregation_function}. publish('signal')
@@ -144,7 +140,6 @@ resource "signalfx_detector" "runtime_errors" {
   name = format("%s %s", local.detector_name_prefix, "Azure Stream Analytics runtime errors rate")
 
   authorized_writer_teams = var.authorized_writer_teams
-
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.StreamAnalytics/streamingjobs') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}

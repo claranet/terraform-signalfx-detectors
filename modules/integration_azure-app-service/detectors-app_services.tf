@@ -3,7 +3,6 @@ resource "signalfx_detector" "heartbeat" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting
         base_filter = filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'false') and filter('primary_aggregation_type', 'true')
@@ -28,7 +27,6 @@ resource "signalfx_detector" "response_time" {
   name = format("%s %s", local.detector_name_prefix, "Azure App Service response time")
 
   authorized_writer_teams = var.authorized_writer_teams
-
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'false') and filter('primary_aggregation_type', 'true')
@@ -68,7 +66,6 @@ resource "signalfx_detector" "memory_usage_count" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'false') and filter('primary_aggregation_type', 'true')
         signal = data('MemoryWorkingSet', filter=base_filter and ${module.filter-tags.filter_custom})${var.memory_usage_count_aggregation_function}.publish('signal')
@@ -106,7 +103,6 @@ resource "signalfx_detector" "http_5xx_errors_count" {
   name = format("%s %s", local.detector_name_prefix, "Azure App Service 5xx error rate")
 
   authorized_writer_teams = var.authorized_writer_teams
-
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'false') and filter('primary_aggregation_type', 'true')
@@ -148,7 +144,6 @@ resource "signalfx_detector" "http_4xx_errors_count" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'false') and filter('primary_aggregation_type', 'true')
         A = data('Http4xx', extrapolation="zero", filter=base_filter and ${module.filter-tags.filter_custom})${var.http_4xx_errors_count_aggregation_function}
@@ -187,7 +182,6 @@ resource "signalfx_detector" "http_success_status_rate" {
   name = format("%s %s", local.detector_name_prefix, "Azure App Service successful response rate")
 
   authorized_writer_teams = var.authorized_writer_teams
-
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'false') and filter('primary_aggregation_type', 'true')

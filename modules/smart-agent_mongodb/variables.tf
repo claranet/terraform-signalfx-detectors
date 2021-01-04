@@ -142,7 +142,6 @@ variable "max_connections_threshold_major" {
   default     = 75
 }
 
-
 # asserts detector
 
 variable "asserts_notifications" {
@@ -336,5 +335,4 @@ variable "replication_lag_threshold_major" {
   type        = number
   default     = 3
 }
-
 

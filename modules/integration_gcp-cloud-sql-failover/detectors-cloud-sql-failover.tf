@@ -3,7 +3,6 @@ resource "signalfx_detector" "failover_unavailable" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
     signal = data('database/available_for_failover', ${module.filter-tags.filter_custom})${var.failover_unavailable_aggregation_function}${var.failover_unavailable_transformation_function}.publish('signal')
     detect(when(signal < 1)).publish('MAJOR')

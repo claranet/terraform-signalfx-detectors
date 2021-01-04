@@ -3,7 +3,6 @@ resource "signalfx_detector" "used_capacity" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
     base_filter = filter('resource_type', 'Microsoft.Storage/storageAccounts') and filter('primary_aggregation_type', 'true')
     signal = data('UsedCapacity', filter=base_filter and ${module.filter-tags.filter_custom})${var.used_capacity_aggregation_function}${var.used_capacity_transformation_function}.scale(1024*1024*1024).publish('signal')

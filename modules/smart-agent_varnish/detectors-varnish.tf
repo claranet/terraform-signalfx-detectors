@@ -29,7 +29,6 @@ resource "signalfx_detector" "backend_failed" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
     signal = data('varnish.backend_fail', filter=filter('plugin', 'telegraf/varnish') and ${module.filter-tags.filter_custom})${var.backend_failed_aggregation_function}${var.backend_failed_transformation_function}.publish('signal')
     detect(when(signal > ${var.backend_failed_threshold_critical})).publish('CRIT')
@@ -52,7 +51,6 @@ resource "signalfx_detector" "threads_number" {
   name = format("%s %s", local.detector_name_prefix, "Varnish threads number")
 
   authorized_writer_teams = var.authorized_writer_teams
-
 
   program_text = <<-EOF
     signal = data('varnish.threads', filter=filter('plugin', 'telegraf/varnish') and ${module.filter-tags.filter_custom})${var.threads_number_aggregation_function}${var.threads_number_transformation_function}.publish('signal')
@@ -77,7 +75,6 @@ resource "signalfx_detector" "session_dropped" {
 
   authorized_writer_teams = var.authorized_writer_teams
 
-
   program_text = <<-EOF
     signal = data('varnish.sess_dropped', filter=filter('plugin', 'telegraf/varnish') and ${module.filter-tags.filter_custom})${var.session_dropped_aggregation_function}${var.session_dropped_transformation_function}.publish('signal')
     detect(when(signal > ${var.session_dropped_threshold_critical})).publish('CRIT')
@@ -100,7 +97,6 @@ resource "signalfx_detector" "cache_hit_rate" {
   name = format("%s %s", local.detector_name_prefix, "Varnish hit rate")
 
   authorized_writer_teams = var.authorized_writer_teams
-
 
   program_text = <<-EOF
     A = data('varnish.cache_hit', filter=filter('plugin', 'telegraf/varnish') and ${module.filter-tags.filter_custom})${var.cache_hit_rate_aggregation_function}${var.cache_hit_rate_transformation_function}.publish('A')
@@ -139,7 +135,6 @@ resource "signalfx_detector" "memory_usage" {
   name = format("%s %s", local.detector_name_prefix, "Varnish memory usage")
 
   authorized_writer_teams = var.authorized_writer_teams
-
 
   program_text = <<-EOF
     A = data('varnish.s0.g_bytes', filter=filter('plugin', 'telegraf/varnish') and ${module.filter-tags.filter_custom})${var.memory_usage_aggregation_function}${var.memory_usage_transformation_function}
