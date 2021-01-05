@@ -1,4 +1,4 @@
-SUPPORTED_COMMANDS := module modules doc gen detectors outputs module-update
+SUPPORTED_COMMANDS := module modules doc gen detectors outputs
 SUPPORTS_MAKE_ARGS := $(findstring $(firstword $(MAKECMDGOALS)), $(SUPPORTED_COMMANDS))
 ifneq "$(SUPPORTS_MAKE_ARGS)" ""
   COMMAND_ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
@@ -33,7 +33,7 @@ clean:
 	git clean -df modules/
 
 .PHONY: modules
-modules: gen doc
+modules: gen lint doc
 
 .PHONY: doc
 doc: 
@@ -70,10 +70,3 @@ stack:
 .PHONY: module
 module: 
 	./scripts/module/bootstrap.sh $(COMMAND_ARGS)
-
-.PHONY: module-update
-module-update:
-	./scripts/module/gen_detectors.sh $(COMMAND_ARGS)
-	./scripts/module/gen_outputs.sh $(COMMAND_ARGS)
-	./scripts/module/lint.sh $(COMMAND_ARGS)
-	CI=true ./scripts/module/gen_doc.sh $(COMMAND_ARGS)
