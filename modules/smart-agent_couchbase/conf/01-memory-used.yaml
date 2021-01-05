@@ -1,0 +1,20 @@
+module: smart-agent_couchbase
+name: "Check Memory"
+aggregation: true
+transformation: ".min(over='15m')"
+value_unit: "%"
+signals:
+  A:
+    metric: "gauge.bucket.op.mem_used"
+  B:
+    metric: "gauge.bucket.op.ep_mem_high_wat"
+  signal:
+    formula: "(A/B).scale(100).fill(0)"
+rules:
+  critical:
+    threshold: 90
+    comparator: ">"
+  major:
+    threshold: 70
+    comparator: ">"
+    dependency: critical
