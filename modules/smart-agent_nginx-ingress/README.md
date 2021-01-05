@@ -11,6 +11,7 @@
   - [Monitors](#monitors)
   - [Nginx Ingress Controller](#nginx-ingress-controller)
   - [Examples](#examples)
+  - [Metrics](#metrics)
 - [Notes](#notes)
 - [Related documentation](#related-documentation)
 
@@ -140,6 +141,22 @@ monitors:
     port: 10254
 ```
 
+
+### Metrics
+
+
+To filter only required metrics for the detectors of this module, add the 
+[datapointsToExclude](https://docs.signalfx.com/en/latest/integrations/agent/filtering.html) parameter to 
+the corresponding monitor configuration:
+
+```yaml
+    datapointsToExclude:
+      - metricNames:
+        - '*'
+        - '!nginx_ingress_controller_ingress_upstream_latency_seconds'
+        - '!nginx_ingress_controller_requests'
+
+```
 
 ## Notes
 

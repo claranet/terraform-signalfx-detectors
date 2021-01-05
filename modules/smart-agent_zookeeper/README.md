@@ -9,6 +9,7 @@
 - [How to collect required metrics?](#how-to-collect-required-metrics)
   - [Monitors](#monitors)
   - [Examples](#examples)
+  - [Metrics](#metrics)
 - [Related documentation](#related-documentation)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -114,6 +115,24 @@ The `collectd/zookeeper` monitor requires to enable the following `extraMetrics`
 Only the first one is used in this module for now but others seem highly valuable for metrology 
 or trousbleshooting purpose.
 
+
+### Metrics
+
+
+To filter only required metrics for the detectors of this module, add the 
+[datapointsToExclude](https://docs.signalfx.com/en/latest/integrations/agent/filtering.html) parameter to 
+the corresponding monitor configuration:
+
+```yaml
+    datapointsToExclude:
+      - metricNames:
+        - '*'
+        - '!gauge.zk_avg_latency'
+        - '!gauge.zk_max_file_descriptor_count'
+        - '!gauge.zk_open_file_descriptor_count'
+        - '!gauge.zk_service_health'
+
+```
 
 
 

@@ -8,6 +8,7 @@
 - [What are the available detectors in this module?](#what-are-the-available-detectors-in-this-module)
 - [How to collect required metrics?](#how-to-collect-required-metrics)
   - [Monitors](#monitors)
+  - [Metrics](#metrics)
 - [Notes](#notes)
 - [Related documentation](#related-documentation)
 
@@ -101,6 +102,27 @@ recommend to use at least version `v5.5.6`.
 
 Check the examples in the official monitor documentation and the Notes section below.
 
+
+### Metrics
+
+
+To filter only required metrics for the detectors of this module, add the 
+[datapointsToExclude](https://docs.signalfx.com/en/latest/integrations/agent/filtering.html) parameter to 
+the corresponding monitor configuration:
+
+```yaml
+    datapointsToExclude:
+      - metricNames:
+        - '*'
+        - '!http.cert_expiry'
+        - '!http.cert_valid'
+        - '!http.code_matched'
+        - '!http.content_length'
+        - '!http.regex_matched'
+        - '!http.response_time'
+        - '!http.status_code'
+
+```
 
 ## Notes
 

@@ -7,6 +7,7 @@
 - [How to use this module?](#how-to-use-this-module)
 - [What are the available detectors in this module?](#what-are-the-available-detectors-in-this-module)
 - [How to collect required metrics?](#how-to-collect-required-metrics)
+  - [Metrics](#metrics)
 - [Related documentation](#related-documentation)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -90,6 +91,22 @@ the [GCP integration](https://docs.signalfx.com/en/latest/integrations/google-cl
 with this Terraform [module](https://github.com/claranet/terraform-signalfx-integrations/tree/master/cloud/gcp).
 
 
+
+
+### Metrics
+
+
+Here is the list of required metrics for detectors in this module.
+
+* `query/count`
+* `query/execution_times`
+* `query/scanned_bytes`
+* `query/scanned_bytes_billed`
+* `slots/total_available`
+* `storage/stored_bytes`
+* `storage/table_count`
+* `storage/uploaded_bytes`
+* `storage/uploaded_bytes_billed`
 
 
 

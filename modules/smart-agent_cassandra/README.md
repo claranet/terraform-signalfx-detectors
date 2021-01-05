@@ -10,6 +10,7 @@
   - [Agent](#agent)
   - [Monitors](#monitors)
   - [JMX](#jmx)
+  - [Metrics](#metrics)
 - [Notes](#notes)
 - [Related documentation](#related-documentation)
 
@@ -131,6 +132,34 @@ You must [enable JMX
 Remote](https://docs.datastax.com/en/cassandra-oss/2.1/cassandra/security/secureJmxAuthentication.html) 
 on your `cassandra` servers.
 
+
+### Metrics
+
+
+To filter only required metrics for the detectors of this module, add the 
+[datapointsToExclude](https://docs.signalfx.com/en/latest/integrations/agent/filtering.html) parameter to 
+the corresponding monitor configuration:
+
+```yaml
+    datapointsToExclude:
+      - metricNames:
+        - '*'
+        - '!counter.cassandra.ClientRequest.CASRead.Latency.Count'
+        - '!counter.cassandra.ClientRequest.CASRead.TotalLatency.Count'
+        - '!counter.cassandra.ClientRequest.CASWrite.Latency.Count'
+        - '!counter.cassandra.ClientRequest.CASWrite.TotalLatency.Count'
+        - '!counter.cassandra.ClientRequest.Read.Latency.Count'
+        - '!counter.cassandra.ClientRequest.Read.TotalLatency.Count'
+        - '!counter.cassandra.ClientRequest.Write.Latency.Count'
+        - '!counter.cassandra.ClientRequest.Write.TotalLatency.Count'
+        - '!counter.cassandra.Storage.Exceptions.Count'
+        - '!gauge.cassandra.ClientRequest.CASRead.Latency.99thPercentile'
+        - '!gauge.cassandra.ClientRequest.CASWrite.Latency.99thPercentile'
+        - '!gauge.cassandra.ClientRequest.Read.Latency.99thPercentile'
+        - '!gauge.cassandra.ClientRequest.Write.Latency.99thPercentile'
+        - '!gauge.cassandra.Storage.Load.Count'
+
+```
 
 ## Notes
 

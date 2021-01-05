@@ -9,6 +9,7 @@
 - [How to collect required metrics?](#how-to-collect-required-metrics)
   - [Monitors](#monitors)
   - [PostgreSQL](#postgresql)
+  - [Metrics](#metrics)
 - [Notes](#notes)
 - [Related documentation](#related-documentation)
 
@@ -119,6 +120,32 @@ More information available on
 [postgresl](https://docs.signalfx.com/en/latest/integrations/agent/monitors/postgresql.html#metrics-about-queries) 
 monitor documentation.
 
+
+### Metrics
+
+
+To filter only required metrics for the detectors of this module, add the 
+[datapointsToExclude](https://docs.signalfx.com/en/latest/integrations/agent/filtering.html) parameter to 
+the corresponding monitor configuration:
+
+```yaml
+    datapointsToExclude:
+      - metricNames:
+        - '*'
+        - '!bytes.maxmemory'
+        - '!bytes.total_system_memory'
+        - '!bytes.used_memory'
+        - '!bytes.used_memory_rss'
+        - '!counter.evicted_keys'
+        - '!counter.expired_keys'
+        - '!counter.rejected_connections'
+        - '!derive.keyspace_hits'
+        - '!derive.keyspace_misses'
+        - '!gauge.blocked_clients'
+        - '!gauge.connected_clients'
+        - '!gauge.db0_keys'
+
+```
 
 ## Notes
 

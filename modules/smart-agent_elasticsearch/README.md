@@ -9,6 +9,7 @@
 - [How to collect required metrics?](#how-to-collect-required-metrics)
   - [Monitors](#monitors)
   - [Examples](#examples)
+  - [Metrics](#metrics)
 - [Related documentation](#related-documentation)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -188,6 +189,48 @@ node or if the master and data are the same node.
       - elasticsearch.indices.search.fetch-total
 ```
 
+
+### Metrics
+
+
+To filter only required metrics for the detectors of this module, add the 
+[datapointsToExclude](https://docs.signalfx.com/en/latest/integrations/agent/filtering.html) parameter to 
+the corresponding monitor configuration:
+
+```yaml
+    datapointsToExclude:
+      - metricNames:
+        - '*'
+        - '!elasticsearch.cluster.initializing-shards'
+        - '!elasticsearch.cluster.number-of-nodes'
+        - '!elasticsearch.cluster.pending-tasks'
+        - '!elasticsearch.cluster.relocating-shards'
+        - '!elasticsearch.cluster.status'
+        - '!elasticsearch.cluster.task-max-wait-time'
+        - '!elasticsearch.cluster.unassigned-shards'
+        - '!elasticsearch.indices.fielddata.evictions'
+        - '!elasticsearch.indices.flush.total'
+        - '!elasticsearch.indices.flush.total-time'
+        - '!elasticsearch.indices.indexing.index-time'
+        - '!elasticsearch.indices.indexing.index-total'
+        - '!elasticsearch.indices.search.fetch-time'
+        - '!elasticsearch.indices.search.fetch-total'
+        - '!elasticsearch.indices.search.query-time'
+        - '!elasticsearch.indices.search.query-total'
+        - '!elasticsearch.jvm.gc.count'
+        - '!elasticsearch.jvm.gc.old-count'
+        - '!elasticsearch.jvm.gc.old-time'
+        - '!elasticsearch.jvm.gc.time'
+        - '!elasticsearch.jvm.mem.heap-used-percent'
+        - '!elasticsearch.jvm.mem.pools.old.max_in_bytes'
+        - '!elasticsearch.jvm.mem.pools.old.used_in_bytes'
+        - '!elasticsearch.jvm.mem.pools.young.max_in_bytes'
+        - '!elasticsearch.jvm.mem.pools.young.used_in_bytes'
+        - '!elasticsearch.process.cpu.percent'
+        - '!elasticsearch.process.max_file_descriptors'
+        - '!elasticsearch.process.open_file_descriptors'
+
+```
 
 
 

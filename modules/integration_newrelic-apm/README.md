@@ -7,6 +7,7 @@
 - [How to use this module?](#how-to-use-this-module)
 - [What are the available detectors in this module?](#what-are-the-available-detectors-in-this-module)
 - [How to collect required metrics?](#how-to-collect-required-metrics)
+  - [Metrics](#metrics)
 - [Notes](#notes)
 - [Related documentation](#related-documentation)
 
@@ -83,6 +84,15 @@ This module uses metrics available from
 the [NewRelic integration](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.new.relic.html)
 
 
+
+
+### Metrics
+
+
+Here is the list of required metrics for detectors in this module.
+
+* `Apdex/score/*`
+* `Errors/all/errors_per_minute/*`
 
 
 ## Notes

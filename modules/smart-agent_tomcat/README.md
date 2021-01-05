@@ -10,6 +10,7 @@
   - [Agent](#agent)
   - [Monitors](#monitors)
   - [JMX](#jmx)
+  - [Metrics](#metrics)
 - [Notes](#notes)
 - [Related documentation](#related-documentation)
 
@@ -113,6 +114,25 @@ This module uses the common Java runtime metrics for every JVM based application
 You must [enable JMX Remote](https://tomcat.apache.org/tomcat-7.0-doc/monitoring.html#Enabling_JMX_Remote) 
 on your `tomcat` server(s).
 
+
+### Metrics
+
+
+To filter only required metrics for the detectors of this module, add the 
+[datapointsToExclude](https://docs.signalfx.com/en/latest/integrations/agent/filtering.html) parameter to 
+the corresponding monitor configuration:
+
+```yaml
+    datapointsToExclude:
+      - metricNames:
+        - '*'
+        - '!counter.tomcat.GlobalRequestProcessor.processingTime'
+        - '!counter.tomcat.GlobalRequestProcessor.requestCount'
+        - '!gauge.tomcat.ThreadPool.currentThreadsBusy'
+        - '!gauge.tomcat.ThreadPool.maxThreads'
+        - '! gauge.tomcat.ThreadPool.maxThreads '
+
+```
 
 ## Notes
 
