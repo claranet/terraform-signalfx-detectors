@@ -130,9 +130,17 @@ signals:
     #
     formula:
 
-    ## @param extrapolation - string - optional
-    ## The extrapolation policy to use in "data()" function (so it works for 
+    ## @param filter - string - optional
+    ## The additional filter in "data()" function (so it works for
     ## signals of type "metric" only, see: 
+    ## https://dev.splunk.com/observability/docs/signalflow/functions/data_function/)
+    ## Note defining `filter: null` is the same that do not define it at all.
+    #
+    filter:
+
+    ## @param extrapolation - string - optional
+    ## The extrapolation policy to use in "data()" function (so it works for
+    ## signals of type "metric" only, see:
     ## https://dev.splunk.com/observability/docs/signalflow/functions/data_function/)
     ## Note defining `extrapolation: null` is the same that do not define it at all.
     #
