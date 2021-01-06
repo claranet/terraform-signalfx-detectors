@@ -1,0 +1,11 @@
+module: Azure Container Instance
+name: heartbeat
+filtering: "filter('resource_type', 'Microsoft.ContainerInstance/containerGroups') and filter('primary_aggregation_type', 'true')"
+transformation: false
+aggregation: ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+
+signals:
+  signal:
+    metric: CpuUsage
+rules:
+  critical:
