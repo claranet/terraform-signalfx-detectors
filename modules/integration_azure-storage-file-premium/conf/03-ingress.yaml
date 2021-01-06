@@ -1,0 +1,27 @@
+# FIXME not working with azure_tag_sfx_monitored ¯\_(ツ)_/¯
+module: "Azure Storage Account File share"
+name: "ingress"
+# TODO add a specific filter for premium file shares
+filtering: "filter('resource_type', 'Microsoft.Storage/storageAccounts/fileServices') and filter('primary_aggregation_type', 'true')"
+aggregation: ".sum(by=['FileShare', 'azure_resource_id'])"
+transformation: ".min(over='15m')"
+value_unit: "%"
+signals:
+  ingress:
+    metric: "Ingress"
+    rollup: rate
+  size_quota:
+    metric: "FileShareCapacityQuota"
+    extrapolation: last_value
+  signal:
+    formula:
+      # Scale ingress to MiB & size to GiB
+      (ingress.scale(0.00000095367431640625) / (40 + 0.04 * size_quota.scale(0.0000000009313225746154785)) )
+rules:
+  critical:
+    threshold: 95
+    comparator: ">"
+  major:
+    threshold: 90
+    comparator: ">"
+    dependency: critical

@@ -1,0 +1,24 @@
+# FIXME not working with azure_tag_sfx_monitored ¯\_(ツ)_/¯
+module: "Azure Storage Account File share"
+name: "capacity"
+# TODO add a specific filter for premium file shares
+filtering: "filter('resource_type', 'Microsoft.Storage/storageAccounts/fileServices') and filter('primary_aggregation_type', 'true')"
+aggregation: ".fill(None, duration='1d').mean(by=['fileshare', 'azure_resource_id'])"
+transformation: ".min(over='1d')"
+value_unit: "%"
+signals:
+  capacity:
+    metric: "FileCapacity"
+  limit:
+    metric: "FileShareCapacityQuota"
+  signal:
+    formula:
+      (capacity / limit).scale(100)
+rules:
+  critical:
+    threshold: 95
+    comparator: ">"
+  major:
+    threshold: 90
+    comparator: ">"
+    dependency: critical
