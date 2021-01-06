@@ -96,6 +96,7 @@ homogeneity
 PR
 PRs
 mergeable
+cp
 Changelog
 Roadmap
 mutualise

@@ -41,7 +41,7 @@ jobs:
         terraform_wrapper: false
 
     - name: Generate example stack importing all modules
-      run: make stack
+      run: make init-stack
     
     - name: Terraform fmt
       run: terraform fmt -recursive -write=false -diff -check .
@@ -77,7 +77,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Check and lint
-      run: make check
+      run: make check-module
 
   outputs:
     runs-on: ubuntu-latest
@@ -89,7 +89,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Generate modules outputs
-      run: make outputs
+      run: make update-module-outputs
 
     - name: Check for changes
       run: git diff --exit-code
@@ -104,7 +104,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Generate modules detectors from preset configs
-      run: make detectors
+      run: make update-module-detectors
 
     - name: Check for changes
       run: |
