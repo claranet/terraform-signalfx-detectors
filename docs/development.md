@@ -62,7 +62,7 @@ The essential things to know are:
 respect this.
 * to never edit a `*-gen*` file or the `README.md` in modules, update its underlying yaml 
 configuration files in `conf/` directory of the module.
-* as soon as you make a change on a module, run `make update-module` command.
+* as soon as you make any change on a module, run `make update-module` command to update every generated files.
 
 ### Example
 
@@ -73,7 +73,7 @@ is the creation of a new module of detectors:
 $ echo "Set required input information as environment variables"
 $
 $ SOURCE_TYPE="smart-agent" # or "internal", "integration", "organization", "otel-collector"
-$ MODULE_NAME="my-new-module" # use comma separated string to name your module
+$ MODULE_NAME="my-new-module" # use dash separated word to name your module
 $ MODULE_DIR="${SOURCE_TYPE}_${MODULE_NAME}" # the directory is source+name underscore separated
 $ METRIC_NAME="my_metric_used_for_heartbeat_detector"
 $
@@ -85,19 +85,19 @@ $ cp scripts/templates/examples/heartbeat-simple.yaml modules/${MODULE_DIR}/conf
 $ sed -i "s/^\(module:\).*$/\1 ${MODULE_NAME}/" modules/${MODULE_DIR}/conf/00-heartbeat.yaml
 $ sed -i "s/^\([[:space:]]*metric:\).*$/\1 \"${METRIC_NAME}\"/" modules/${MODULE_DIR}/conf/00-heartbeat.yaml
 $ 
-$ echo "Full update the module (doc, code, add/remove/change detectors ..)"
+$ echo "Full update the module (doc, terraform code, add/remove/change detectors...)"
 $ make update-module ${MODULE_DIR}
 ```
 
 That is all! and from now you will have to run `make update-module` before to push any change, it 
-will take care to regenerate code, documentation and even check the module to be sure to pass the CI.
+will take care of regenerating code, documentation and even check and validate the module to pass the CI.
 
 If this is not enough for your change or if you want to fully understand all capabilities and dependencies 
 you will have to read the rest of this documentation.
 
 ## Make targets
 
-You seen above the `update-module` and `init-module` `make` targets which are very common 
+You have seen above the `update-module` and `init-module` `make` targets which are very common 
 for a developer no matter what type of change he would do but there are other possibilities.
 
 Here are atomic `make` targets useful for for development purpose:
@@ -283,4 +283,3 @@ directory.
 [detectors.tf](../examples/stack/detectors.tf) next to the existing static import.
 * deploy the [/examples/stack](../examples/stack) to validate full process of creating a 
 new module and generating detectors.
-
