@@ -1,0 +1,26 @@
+documentations:
+  - name: Smart Agent monitor
+    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/ntp.html'
+
+source_doc: |
+  There is no SignalFx official integration for `ntp` but there is still a 
+  [monitor](https://docs.signalfx.com/en/latest/integrations/agent/monitors/ntp.html) to use.
+
+  ### Monitors
+
+  This monitor is only available from agent version `>= 5.1.5`.
+
+  Also, in contrast with all other monitors it enforce an `intervalSeconds` to `30m` minimum
+
+notes: |
+  NTP monitor has hardcoded minimal interval of 30m (https://www.pool.ntp.org/tos.html).
+  As a result, the heartbeat timeframe should be higher than the other modules (`>= 3h` recommended).
+  This assumes the monitor will often use public NTP servers which:
+
+  - should not be overloaded
+  - could be not enough reliable (and will cause at least 30m of null MTS)
+
+  In the future we could improve this monitor to:
+
+  - use 30m by default but allow configure lower interval when "internal" NTP server is used
+  - add a retry mechanism to prevent missing data

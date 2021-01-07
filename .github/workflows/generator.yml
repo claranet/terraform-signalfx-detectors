@@ -4,16 +4,19 @@ name: Generator
 
 on:
   push:
-    paths:
-    - 'scripts/templates/**'
-    - 'scripts/gen_module.sh'
-    - '.github/workflows/generator.yml'
+#    paths:
+#    - 'scripts/templates/**'
+#    - 'scripts/module/bootstrap.sh'
+#    - 'scripts/stack/gen_module.sh'
+#    - '.github/workflows/generator.yml'
 
 jobs:
   test:
     runs-on: ubuntu-latest
+    container:
+      image: "claranet/terraform-ci:latest"
     env:
-      TF_VAR_sfx_token: ${{ secrets.SFX_TOKEN }}
+      SFX_AUTH_TOKEN: ${{ secrets.SFX_TOKEN }}
       TF_VAR_pagerduty_integration_id: ${{ secrets.PAGERDUTY_INTEGRATION }}
       TF_VAR_environment: "ci-testing"
 
@@ -26,42 +29,34 @@ jobs:
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1.2.1
       with:
-        terraform_version: 0.13.3
+        terraform_version: 0.13.5
         terraform_wrapper: false
 
-    - name: Setup Python
-      uses: actions/setup-python@v2
-
-    - name: Install dependencies
+    - name: Generate tmp module using example configs preset and import it into example stack
       run: |
-        python -m pip install --upgrade pip
-        pip install j2cli[yaml]
-
-    - name: Setup env
-      run: |
-        ./scripts/gen_module.sh ${TF_VAR_environment} module
-        for config in scripts/templates/threshold/*.yaml; do 
-          j2 <(cat scripts/templates/detector_vars.tf.j2 scripts/templates/detector_res.tf.j2) $config >> modules/${TF_VAR_environment}-module/gen.tf
+        make module internal_generator ${TF_VAR_environment}
+        for config in scripts/templates/examples/*.yaml; do 
+          for template in variables detector; do
+            j2 scripts/templates/${template}.tf.j2 ${config} >> modules/internal_generator-${TF_VAR_environment}/gen.tf
+          done
         done
-        echo -e "module \"generated\" {\nsource=\"../modules/${TF_VAR_environment}-module\"\n$(cat common/modules-args.txt)\n}" >> test/gen.tf
-    
-    - name: Terraform fmt
-      run: terraform fmt -write=false -diff -check modules/${TF_VAR_environment}-module
+        ./scripts/stack/bootstrap.sh
+        echo -e "module \"generated\" {\nsource=\"../../modules/internal_generator-${TF_VAR_environment}\"\n$(cat common/modules-args.txt)\n}" >> examples/stack/detectors.tf
 
     - name: Terraform init
-      run: terraform init test
+      run: terraform init examples/stack
 
     - name: Terraform validate
-      run: terraform validate test
+      run: terraform validate examples/stack
 
     - name: Enable destroy
       run: echo ::set-output name=enabled::1
       id: destroy
 
     - name: Terraform Apply
-      run: echo yes | terraform apply -input=false -lock=false test
+      run: echo yes | terraform apply -input=false -lock=false examples/stack
 
     - name: Terraform Destroy
       if: always() && steps.destroy.outputs.enabled == '1'
-      run: terraform destroy -input=false -lock=false -auto-approve test
+      run: terraform destroy -input=false -lock=false -auto-approve examples/stack
 

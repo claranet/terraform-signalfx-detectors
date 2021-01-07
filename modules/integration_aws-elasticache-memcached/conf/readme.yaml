@@ -1,0 +1,3 @@
+documentations:
+  - name: CloudWatch metrics
+    url: 'https://docs.aws.amazon.com/AmazonElastiCache/latest/mem-ug/CacheMetrics.Memcached.html'

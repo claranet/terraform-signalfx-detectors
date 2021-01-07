@@ -1,0 +1,3 @@
+documentations:
+  - name: CloudWatch metrics
+    url: 'https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-managedomains-cloudwatchmetrics.html'

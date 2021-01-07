@@ -7,8 +7,10 @@ name: Detectors
 on:
   push:
     paths:
-    - '**.tf'
-    - 'scripts/*'
+    - 'modules/**.tf'
+    - 'modules/**/conf/detector-*.yaml'
+    - 'scripts/**'
+    - 'Makefile'
     - '.github/workflows/main.yml'
 #    branches: [ master ]
 #  pull_request:
@@ -23,8 +25,7 @@ jobs:
     container:
       image: "claranet/terraform-ci:latest"
     env:
-      TF_VAR_sfx_token: ${{ secrets.SFX_TOKEN }}
-      TF_VAR_pagerduty_integration_id: ${{ secrets.PAGERDUTY_INTEGRATION }}
+      SFX_AUTH_TOKEN: ${{ secrets.SFX_TOKEN }}
       TF_VAR_environment: "ci-testing"
 
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -36,30 +37,23 @@ jobs:
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1.2.1
       with:
-        terraform_version: 0.13.3
+        terraform_version: 0.13.5
         terraform_wrapper: false
 
-    - name: Setup env
-      run: |
-        TF_REF=$(git rev-parse HEAD)
-        #TF_REF=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; NF>1{print $NF}')
-        ./scripts/gen_tf.sh "${TF_REF}" > test/${TF_REF}.tf
-        cat test/${TF_REF}.tf
+    - name: Generate example stack importing all modules
+      run: make stack
     
-    #- name: Terraform version
-    #  run: terraform version
-
     - name: Terraform fmt
       run: terraform fmt -recursive -write=false -diff -check .
 
     - name: Terraform init
-      run: terraform init test
+      run: terraform init examples/stack
 
     - name: Terraform validate
-      run: terraform validate test
+      run: terraform validate examples/stack
 
     #- name: Terraform Plan
-    #  run: terraform plan -input=false -lock=false -detailed-exitcode test || if [ $? -ne 2 ]; then exit $?; fi
+    #  run: terraform plan -input=false -lock=false -detailed-exitcode examples/stack || if [ $? -ne 2 ]; then exit $?; fi
 
     - name: Enable destroy
       run: echo ::set-output name=enabled::1
@@ -67,39 +61,53 @@ jobs:
 
     - name: Terraform Apply
       #if: github.ref == 'refs/heads/master' && github.event_name == 'push' && ${{ always() }}
-      run: terraform apply -input=false -lock=false -auto-approve test
+      run: terraform apply -input=false -lock=false -auto-approve examples/stack
 
     - name: Terraform Destroy
       if: always() && steps.destroy.outputs.enabled == '1'
-      run: terraform destroy -input=false -lock=false -auto-approve test
+      run: terraform destroy -input=false -lock=false -auto-approve examples/stack
 
   compliance:
     runs-on: ubuntu-latest
     container:
-      image: "claranet/terraform-ci:0.13.3"
+      image: "claranet/terraform-ci:latest"
 
     steps:
     - name: Checkout
       uses: actions/checkout@v2
 
-    - name: Install dependencies
-      run: apk add --no-cache expect
-
-    - name: Run tflint
-      run: ./scripts/lint_tf.sh
+    - name: Check and lint
+      run: make check
 
   outputs:
     runs-on: ubuntu-latest
     container:
-      image: "claranet/terraform-ci:0.13.3"
+      image: "claranet/terraform-ci:latest"
 
     steps:
     - name: Checkout
       uses: actions/checkout@v2
 
     - name: Generate modules outputs
-      run: ./scripts/gen_outputs.sh
+      run: make outputs
 
     - name: Check for changes
       run: git diff --exit-code
+
+  gen:
+    runs-on: ubuntu-latest
+    container:
+      image: "claranet/terraform-ci:latest"
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Generate modules detectors from preset configs
+      run: make detectors
+
+    - name: Check for changes
+      run: |
+        git diff --exit-code
+        ! [ -n "$(git status --porcelain)" ]
 

@@ -1,0 +1,46 @@
+documentations:
+  - name: Smart Agent monitor
+    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/nagios.html'
+  - name: Nagios checks guidelines
+    url: 'https://nagios-plugins.org/doc/guidelines.html#AEN78'
+
+source_doc: |
+
+  ### Monitors
+
+  This monitor is only available for agent `>= 5.7.1`. For prior versions, it is possible to use the 
+  `telegraf/exec` monitor with `nagios` parser but you will not get the script result in event.
+  
+  You can configure as many monitors as you have nagios checks to reuse but you have to define for each 
+  it could be useful to adapt the `intervalSeconds` for each script.
+
+  ### Examples
+
+  ```yaml
+  globalDimensions:
+    sfx_monitored: true
+
+  - type: nagios
+  intervalSeconds: 180
+  command: /usr/lib/nagios/plugins/check_ntp_time -H pool.ntp.typhon.net -w 0.5 -c 1
+  service: NTP_TIME
+  extraDimensions:
+    sfx_monitored: false
+
+  - type: nagios
+  intervalSeconds: 180
+  command: /usr/lib/nagios/plugins/check_http -I google.fr -f sticky -H google.fr -s http -u / -p 80
+  service: HTTP_google
+  ```
+  
+  In this example, the first NTP check will not trigger any alert using default filtering convention but 
+  the metric and its value will be available.
+
+notes: |
+  This module has been designed to alert with the same behavior as 
+  [Nagios](https://nagios-plugins.org/doc/guidelines.html#AEN78), basically a gauge equal to 1, 2 and 3 
+  respectively triggering `WARNING`, `CRITICAL` and `UNKNOWN` alert.
+
+  While SignalFx does not provide `Unknown` severity this module uses the `Major` severity for unknown alerts.
+
+  The metric is named `nagios.state`.

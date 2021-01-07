@@ -62,16 +62,43 @@ aggregation: true
 transformation: true
 
 ## @param filtering - string - optional
-## Determine base filtering added only to {{rules.severity}} with 
-## {{metric}} defined (not used for {{formula}}).
+## Determine base filtering added only to signals of type "metric" (not 
+## used for "formula" type).
 ## It will define a `base_filtering` variable at start of signalflow 
-## programm then use it in `filter` parameter of `data()` function.
+## program then use it in `filter` parameter of `data()` function.
 #
 ## Should be a valid `filter` object, see:
 ## https://dev.splunk.com/observability/docs/signalflow/functions/filter_function/
 #
 #filtering: "filter('primary_aggregation_type', 'true')"
 filtering:
+
+## @param exclude_not_running_vm - bool - optional
+## In addition to base filtering from signalflow variable we have preset 
+## filters from a terraform local which exclude all not running vms from 
+## cloud providers. 
+## This is often useful for heartbeat detectors, especially based on 
+## metrics coming from the agent (to avoid false positive at downscale).
+exclude_not_running_vm:
+
+## @param value_unit - string - optional
+## Signal unit for the current detector.
+## This will update the detector messages and associated variables description.
+value_unit:
+
+## @param runbook_url - string - optional
+## Define a default runbook_url for all rules of the detector, see:
+## https://docs.signalfx.com/en/latest/detect-alert/set-up-detectors.html#runbook
+## If not defined, an empty string will be used as variable to allow the 
+## use to set its custom one.
+runbook_url: 
+
+## @param tip - string - optional
+## Define a default tip for all rules of the detector, see:
+## https://docs.signalfx.com/en/latest/detect-alert/set-up-detectors.html#tip
+## If not defined, an empty string will be used as variable to allow the 
+## use to set its custom one.
+tip: 
 
 ## @param signals - object - mandatory
 ## List of signals of the detector. Attribute key is the {{signal_label}} 
@@ -102,6 +129,30 @@ signals:
     ## https://dev.splunk.com/observability/docs/signalflow/function_method_list
     #
     formula:
+
+    ## @param filter - string - optional
+    ## The additional filter in "data()" function (so it works for
+    ## signals of type "metric" only, see: 
+    ## https://dev.splunk.com/observability/docs/signalflow/functions/data_function/)
+    ## Note defining `filter: null` is the same that do not define it at all.
+    #
+    filter:
+
+    ## @param extrapolation - string - optional
+    ## The extrapolation policy to use in "data()" function (so it works for
+    ## signals of type "metric" only, see:
+    ## https://dev.splunk.com/observability/docs/signalflow/functions/data_function/)
+    ## Note defining `extrapolation: null` is the same that do not define it at all.
+    #
+    extrapolation:
+
+    ## @param rollup - string - optional
+    ## The rollup policy to use in "data()" function (so it works for
+    ## signals of type "metric" only, see:
+    ## https://dev.splunk.com/observability/docs/signalflow/functions/data_function/)
+    ## Note defining `rollup: null` is the same that do not define it at all.
+    #
+    rollup:
 
 ## @param rules - object - mandatory
 ## List of rules assigned to this detector. Attribute key is the {{severity}}.

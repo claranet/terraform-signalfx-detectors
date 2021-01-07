@@ -1,0 +1,16 @@
+module: system
+name: "memory utilization"
+id: memory
+transformation: ".min(over='5m')"
+value_unit: "%"
+signals:
+  signal:
+    metric: memory.utilization
+rules:
+  critical:
+    threshold: 95
+    comparator: ">"
+  major:
+    threshold: 90
+    comparator: ">"
+    dependency: critical

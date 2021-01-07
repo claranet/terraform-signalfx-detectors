@@ -1,0 +1,19 @@
+documentations:
+  - name: Azure Monitor metrics
+    url: 'https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported'
+
+source_doc: >-
+  We are using metrics from the
+  [Microsoft.Network/applicationGateways](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported#microsoftnetworkapplicationgateways)
+  namespace.
+
+notes: |
+  ### Capacity Units
+
+  To properly calculate the `capacity_units_threshold_major` please refer to the Microsoft documentation about [CapacityUnits](https://docs.microsoft.com/en-us/azure/application-gateway/application-gateway-autoscaling-zone-redundant)
+
+  ```
+  Each instance is roughly equivalent to 10 additional reserved Capacity Units.
+  ```
+
+  If you're enabling autoscaling on your application gateway, default instance count is 20, which means 200 Capacity Units.

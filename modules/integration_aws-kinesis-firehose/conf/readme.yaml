@@ -1,0 +1,3 @@
+documentations:
+  - name: CloudWatch metrics
+    url: 'https://docs.aws.amazon.com/firehose/latest/dev/monitoring-with-cloudwatch-metrics.html'
