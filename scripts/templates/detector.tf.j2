@@ -91,10 +91,14 @@ EOF
     {%- if type == 'heartbeat' %}
     description           = "has not reported in ${var.heartbeat_timeframe}"
     {%- else %}
-      {%- if '>' in rule.comparator %}
+      {%- if rule.description is defined and rule.description is string %}
+        {%- set compare_string = rule.description %}
+      {%- elif '>' in rule.comparator %}
         {%- set compare_string = 'is too high' %}
-      {%- else %}
+      {%- elif '<' in rule.comparator %}
         {%- set compare_string = 'is too low' %}
+      {%- else %}
+        {%- set compare_string = 'is' %}
       {%- endif %}
     description           = "{{ compare_string }} {{ rule.comparator }} ${var.{{ id }}_threshold_{{ severity }}}{{ value_unit | default("") }}"
     {%- endif %}
