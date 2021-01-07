@@ -9,6 +9,7 @@
 - [How to collect required metrics?](#how-to-collect-required-metrics)
   - [Monitors](#monitors)
   - [Examples](#examples)
+  - [Metrics](#metrics)
 - [Notes](#notes)
 - [Related documentation](#related-documentation)
 
@@ -119,6 +120,25 @@ monitors:
       - gauge.queue.consumer_utilisation
 ```
 
+
+### Metrics
+
+
+To filter only required metrics for the detectors of this module, add the 
+[datapointsToExclude](https://docs.signalfx.com/en/latest/integrations/agent/filtering.html) parameter to 
+the corresponding monitor configuration:
+
+```yaml
+    datapointsToExclude:
+      - metricNames:
+        - '*'
+        - '!counter.queue.message_stats.ack'
+        - '!gauge.queue.consumer_use'
+        - '!gauge.queue.messages'
+        - '!gauge.queue.messages_ready'
+        - '!gauge.queue.messages_unacknowledged'
+
+```
 
 ## Notes
 

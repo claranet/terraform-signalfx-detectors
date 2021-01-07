@@ -9,6 +9,7 @@
 - [How to collect required metrics?](#how-to-collect-required-metrics)
   - [Monitors](#monitors)
   - [Varnish](#varnish)
+  - [Metrics](#metrics)
 - [Related documentation](#related-documentation)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -120,6 +121,27 @@ systemctl start varnishncsa.service
 systemctl enable varnishncsa.service
 ```
 
+
+### Metrics
+
+
+To filter only required metrics for the detectors of this module, add the 
+[datapointsToExclude](https://docs.signalfx.com/en/latest/integrations/agent/filtering.html) parameter to 
+the corresponding monitor configuration:
+
+```yaml
+    datapointsToExclude:
+      - metricNames:
+        - '*'
+        - '!varnish.backend_fail'
+        - '!varnish.cache_hit'
+        - '!varnish.cache_miss'
+        - '!varnish.s0.g_bytes'
+        - '!varnish.s0.g_space'
+        - '!varnish.sess_dropped'
+        - '!varnish.threads'
+
+```
 
 
 

@@ -8,6 +8,7 @@
 - [What are the available detectors in this module?](#what-are-the-available-detectors-in-this-module)
 - [How to collect required metrics?](#how-to-collect-required-metrics)
   - [Monitors](#monitors)
+  - [Metrics](#metrics)
 - [Related documentation](#related-documentation)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -98,6 +99,23 @@ The `collectd/zookeeper` monitor requires to enable the following `extraMetrics`
 
 It can collect metrics from Solr only when a Solr instance is running in SolrCloud mode.
 
+
+### Metrics
+
+
+To filter only required metrics for the detectors of this module, add the 
+[datapointsToExclude](https://docs.signalfx.com/en/latest/integrations/agent/filtering.html) parameter to 
+the corresponding monitor configuration:
+
+```yaml
+    datapointsToExclude:
+      - metricNames:
+        - '*'
+        - '!counter.solr.http_requests'
+        - '!counter.solr.zookeeper_errors'
+        - '!gauge.solr.searcher_warmup'
+
+```
 
 
 

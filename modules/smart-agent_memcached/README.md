@@ -9,6 +9,7 @@
 - [How to collect required metrics?](#how-to-collect-required-metrics)
   - [Monitors](#monitors)
   - [Examples](#examples)
+  - [Metrics](#metrics)
 - [Related documentation](#related-documentation)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -109,6 +110,24 @@ The `collectd/memcached` monitor requires to enable the following `extraMetrics`
       - total_events.listen_disabled
 ```
 
+
+### Metrics
+
+
+To filter only required metrics for the detectors of this module, add the 
+[datapointsToExclude](https://docs.signalfx.com/en/latest/integrations/agent/filtering.html) parameter to 
+the corresponding monitor configuration:
+
+```yaml
+    datapointsToExclude:
+      - metricNames:
+        - '*'
+        - '!memcached_items.current'
+        - '!memcached_ops.hits'
+        - '!memcached_ops.misses'
+        - '!total_events.listen_disabled'
+
+```
 
 
 

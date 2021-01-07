@@ -7,6 +7,7 @@
 - [How to use this module?](#how-to-use-this-module)
 - [What are the available detectors in this module?](#what-are-the-available-detectors-in-this-module)
 - [How to collect required metrics?](#how-to-collect-required-metrics)
+  - [Metrics](#metrics)
 - [Notes](#notes)
 - [Related documentation](#related-documentation)
 
@@ -96,6 +97,25 @@ It requires to enable the following `extraMetrics`:
 * `cpu.percent`
 * `cpu.throttling_data.throttled_time`
 
+
+### Metrics
+
+
+To filter only required metrics for the detectors of this module, add the 
+[datapointsToExclude](https://docs.signalfx.com/en/latest/integrations/agent/filtering.html) parameter to 
+the corresponding monitor configuration:
+
+```yaml
+    datapointsToExclude:
+      - metricNames:
+        - '*'
+        - '!cpu.percent'
+        - '!cpu.throttling_data.throttled_time'
+        - '!cpu.usage.system'
+        - '!memory.usage.limit'
+        - '!memory.usage.total'
+
+```
 
 ## Notes
 

@@ -10,6 +10,7 @@
   - [Monitors](#monitors)
   - [MySQL](#mysql)
   - [Examples](#examples)
+  - [Metrics](#metrics)
 - [Notes](#notes)
 - [Related documentation](#related-documentation)
 
@@ -206,6 +207,34 @@ __Note__: By default this configuration is for [standard
 deployment](https://github.com/claranet/terraform-signalfx-detectors/wiki/Guidance#deployment-mode). 
 You have to `disableHostDimensions: true` and add your MySQL server as `host` dimension in `extraDimensions`.
 
+
+### Metrics
+
+
+To filter only required metrics for the detectors of this module, add the 
+[datapointsToExclude](https://docs.signalfx.com/en/latest/integrations/agent/filtering.html) parameter to 
+the corresponding monitor configuration:
+
+```yaml
+    datapointsToExclude:
+      - metricNames:
+        - '*'
+        - '!mysql_bpool_counters.read_requests'
+        - '!mysql_bpool_counters.reads'
+        - '!mysql_bpool_pages.free'
+        - '!mysql_bpool_pages.total'
+        - '!mysql_commands.*'
+        - '!mysql_max_connections'
+        - '!mysql_octets.rx'
+        - '!mysql_queries'
+        - '!mysql_seconds_behind_master'
+        - '!mysql_slave_io_running'
+        - '!mysql_slave_sql_running'
+        - '!mysql_slow_queries'
+        - '!mysql_threads_connected'
+        - '!threads.running'
+
+```
 
 ## Notes
 

@@ -9,6 +9,7 @@
 - [How to collect required metrics?](#how-to-collect-required-metrics)
   - [Monitors](#monitors)
   - [Examples](#examples)
+  - [Metrics](#metrics)
 - [Notes](#notes)
 - [Related documentation](#related-documentation)
 
@@ -139,6 +140,28 @@ This is the only way to make the replicaset related detectors to work.
       - gauge.repl.is_primary_node
 ```
 
+
+### Metrics
+
+
+To filter only required metrics for the detectors of this module, add the 
+[datapointsToExclude](https://docs.signalfx.com/en/latest/integrations/agent/filtering.html) parameter to 
+the corresponding monitor configuration:
+
+```yaml
+    datapointsToExclude:
+      - metricNames:
+        - '*'
+        - '!counter.asserts.regular'
+        - '!counter.asserts.warning'
+        - '!counter.extra_info.page_faults'
+        - '!gauge.connections.available'
+        - '!gauge.connections.current'
+        - '!gauge.repl.active_nodes'
+        - '!gauge.repl.is_primary_node'
+        - '!gauge.repl.max_lag'
+
+```
 
 ## Notes
 

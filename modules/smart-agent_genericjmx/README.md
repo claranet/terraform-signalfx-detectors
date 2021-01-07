@@ -10,6 +10,7 @@
   - [Agent](#agent)
   - [Monitors](#monitors)
   - [JMX](#jmx)
+  - [Metrics](#metrics)
 - [Notes](#notes)
 - [Related documentation](#related-documentation)
 
@@ -120,6 +121,22 @@ application. Depending on your application you should add following parameters a
 -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=5000 -Dcom.sun.management.jmxremote.local.only=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=127.0.0.1
 ```
 
+
+### Metrics
+
+
+To filter only required metrics for the detectors of this module, add the 
+[datapointsToExclude](https://docs.signalfx.com/en/latest/integrations/agent/filtering.html) parameter to 
+the corresponding monitor configuration:
+
+```yaml
+    datapointsToExclude:
+      - metricNames:
+        - '*'
+        - '!jmx_memory.max'
+        - '!jmx_memory.used'
+
+```
 
 ## Notes
 
