@@ -1,1 +1,1 @@
-../../common/module/versions.tf
+../../common/module/locals.tf

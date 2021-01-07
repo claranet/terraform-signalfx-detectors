@@ -1,8 +1,8 @@
 resource "signalfx_detector" "heartbeat" {
-  name      = format("%s %s", local.detector_name_prefix, "Postfix heartbeat")
-  
+  name = format("%s %s", local.detector_name_prefix, "Postfix heartbeat")
+
   authorized_writer_teams = var.authorized_writer_teams
-  
+
   max_delay = 900
 
   program_text = <<-EOF
@@ -24,7 +24,7 @@ EOF
 
 resource "signalfx_detector" "postfix_queue_size" {
   name = format("%s %s", local.detector_name_prefix, "Postfix queue size")
-  
+
   authorized_writer_teams = var.authorized_writer_teams
 
   program_text = <<-EOF
