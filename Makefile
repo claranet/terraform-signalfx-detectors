@@ -1,4 +1,4 @@
-SUPPORTED_COMMANDS := module modules doc gen detectors outputs
+SUPPORTED_COMMANDS := init-module update-module update-module-doc update-module-tf update-module-detectors update-module-outputs check-module
 SUPPORTS_MAKE_ARGS := $(findstring $(firstword $(MAKECMDGOALS)), $(SUPPORTED_COMMANDS))
 ifneq "$(SUPPORTS_MAKE_ARGS)" ""
   COMMAND_ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
@@ -30,43 +30,48 @@ dev:
 .PHONY: clean
 clean:
 	git checkout -- examples/stack/detectors.tf
-	git clean -df modules/
+	git clean -df init-modules/
 
-.PHONY: modules
-modules: gen doc
+.PHONY: update-module
+update-module: update-module-tf check-module update-module-doc
 
-.PHONY: doc
-doc: 
+.PHONY: update-module-doc
+update-module-doc: 
 	CI=true	./scripts/module/loop_wrapper.sh ./scripts/module/gen_doc.sh
 
-.PHONY: toc
-toc: 
+.PHONY: update-toc
+update-toc: 
 	doctoc --github --title ':link: **Contents**' --maxlevel 3 .
 
-.PHONY: check
-check: lint
-
-.PHONY: lint
-lint: 
+.PHONY: check-module
+check-module:
 	./scripts/module/loop_wrapper.sh ./scripts/module/lint.sh
 
-.PHONY: gen
-gen: detectors outputs
+.PHONY: check-spell
+check-spell:
+	pyspelling -c .spellcheck.yaml
 
-.PHONY: outputs
-outputs: 
+.PHONY: check-spell
+check-deadlinks:
+	find . -name \*.md -exec markdown-link-check -c .mlc_config.json -p -q -v {} \;
+
+.PHONY: update-module-tf
+update-module-tf: update-module-detectors update-module-outputs
+
+.PHONY: update-module-outputs
+update-module-outputs: 
 	./scripts/module/loop_wrapper.sh ./scripts/module/gen_outputs.sh
 
-.PHONY: detectors
-detectors: 
+.PHONY: update-module-detectors
+update-module-detectors: 
 	./scripts/module/loop_wrapper.sh ./scripts/module/gen_detectors.sh
 	
-.PHONY: stack
-stack: 
+.PHONY: init-stack
+init-stack: 
 	@echo 'Bootstrap stack in "examples/stack"'
 	./scripts/stack/bootstrap.sh
 	./scripts/module/loop_wrapper.sh ./scripts/stack/gen_module.sh "$(REV)" > examples/stack/detectors.tf
 
-.PHONY: module
-module: 
+.PHONY: init-module
+init-module: 
 	./scripts/module/bootstrap.sh $(COMMAND_ARGS)

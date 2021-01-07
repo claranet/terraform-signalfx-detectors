@@ -35,7 +35,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Generate modules doc
-      run: make doc
+      run: make update-module-doc
 
     - name: Check for changes
       run: git diff --exit-code

@@ -33,7 +33,7 @@ terraform stacks to use this repository for its project. They allow generate cod
 in [/examples/](../examples) directory. 
 
 They are often used by the end user to work with this repository and generate a pre 
-configured stack. The `make stack` command for example used in the CI to deploy 
+configured stack. The `make init-stack` command for example used in the CI to deploy 
 all monitors allow to generate a fresh stack with all modules configured in 
 [/examples/stack](../examples/stack).it.
 

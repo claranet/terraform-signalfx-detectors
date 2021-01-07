@@ -34,7 +34,7 @@ jobs:
 
     - name: Generate tmp module using example configs preset and import it into example stack
       run: |
-        make module internal_generator ${TF_VAR_environment}
+        make init-module internal_generator ${TF_VAR_environment}
         for config in scripts/templates/examples/*.yaml; do 
           for template in variables detector; do
             j2 scripts/templates/${template}.tf.j2 ${config} >> modules/internal_generator-${TF_VAR_environment}/gen.tf
