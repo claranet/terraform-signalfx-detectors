@@ -179,10 +179,16 @@ rules:
 
     ## @param comparator - string - optional
     ## The comparator to use against last signal value used in "when()"
-    ### function to create the condition.
-    ## Should be one of ">", ">=", "<", "<=".
+    ## function to create the condition.
+    ## Should be one of ">", ">=", "<", "<=", "!=", "==".
     ## Required for "threshold" detector type" only.
     comparator:
+
+    ## @param description - string - optional
+    ## The custom description to set for this rule. If not defined, it will 
+    ## fill the default generic description based on threshold comparison
+    ## like: "is too low < " / "is too high >" / "is !=" / "is ==".
+    #description:
 
     ## @param dependency - string - optional
     ## Add dependency to a previously defined rule {{severity}}.
