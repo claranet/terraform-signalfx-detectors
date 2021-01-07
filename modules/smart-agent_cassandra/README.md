@@ -126,7 +126,8 @@ Some of them are only available since agent version `v5.5.5` like `CASWrite` and
 
 ### JMX
 
-This module uses the common Java runtime metrics for every JVM based applications.
+This module uses the [Cassandra](https://cassandra.apache.org/doc/latest/operating/metrics.html) 
+specific metrics.
 
 You must [enable JMX 
 Remote](https://docs.datastax.com/en/cassandra-oss/2.1/cassandra/security/secureJmxAuthentication.html) 

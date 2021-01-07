@@ -7,7 +7,8 @@
 - [How to use this module?](#how-to-use-this-module)
 - [What are the available detectors in this module?](#what-are-the-available-detectors-in-this-module)
 - [How to collect required metrics?](#how-to-collect-required-metrics)
-  - [Monitor configuration example:](#monitor-configuration-example)
+  - [Monitors](#monitors)
+  - [JMX](#jmx)
   - [Metrics](#metrics)
 - [Notes](#notes)
 - [Related documentation](#related-documentation)
@@ -88,10 +89,15 @@ information including the official documentation of this monitor.
 
 
 
-This detectors requires a groovy script to get the metrics `cassandra.status` and `cassandra.state`. The script can be found in the `scripts` folder of this module.
-`cassandra.status` and `cassandra.state` are metrics that track the state of the node in the cluster. The nodetool status command returns the equivalent information.
+This module leverages the powerful `JMX` monitor to retrieve equivalent information 
+from the output of [Cassandra 
+Nodetool](https://cassandra.apache.org/doc/latest/tools/nodetool/nodetool.html) like 
+the `status` and the `state` of a node and push them as metrics.
 
-For example:
+The advantage of this method is we do not need to make the agent able to run `nodetool` 
+command on Cassandra nodes (i.e. by configuring `sudo`) and rely on an unsafe output 
+parsing:
+
 ```
 nodetool status mykeyspace
 
@@ -105,13 +111,27 @@ UN  127.0.0.2  47.67 KB   1       33.3%   1848c369-4306-4874-afdf-5c1e95b8732e  
 UN  127.0.0.3  47.67 KB   1       33.3%   49578bf1-728f-438d-b1c1-d8dd644b6f7f  rack1
 ```
 
-### Monitor configuration example:
-```
+### Monitors
+
+You will need to put the [groovy script](./scripts/cassandra.groovy) in all your 
+cassandra nodes into `/etc/signalfx` directory then configure the `jmx` 
+monitor like the following:
+
+```yaml
 - type: jmx
   host: localhost
   port: 7199
   groovyScript: {"#from": "/etc/signalfx/cassandra.groovy", raw: true}
 ```
+
+### JMX
+
+This module uses the [Cassandra](https://cassandra.apache.org/doc/latest/operating/metrics.html) 
+specific metrics.
+
+You must [enable JMX 
+Remote](https://docs.datastax.com/en/cassandra-oss/2.1/cassandra/security/secureJmxAuthentication.html) 
+on your `cassandra` servers.
 
 
 ### Metrics
@@ -132,8 +152,10 @@ the corresponding monitor configuration:
 
 ## Notes
 
-- cassandra.status: 1 == Live, 0 == Dead, -1 == Unknown
-- cassandra.state: 1 == Normal, 2 == Leave, 3 == Join
+- this module could be a good addition to the main [cassandra](../smart-agent_cassandra/) 
+module.
+- `cassandra.status` possible values are `1 == Live`, `0 == Dead`, `-1 == Unknown`
+- `cassandra.state` possible values are `1 == Normal`, `2 == Leave`, `3 == Join`
 
 
 ## Related documentation

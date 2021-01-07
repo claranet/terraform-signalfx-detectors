@@ -109,7 +109,8 @@ mBeans](https://github.com/signalfx/signalfx-agent/blob/master/pkg/monitors/coll
 
 ### JMX
 
-This module uses the common Java runtime metrics for every JVM based applications.
+This module uses the [Tomcat](https://cwiki.apache.org/confluence/display/TOMCAT/Monitoring) 
+specific metrics.
 
 You must [enable JMX Remote](https://tomcat.apache.org/tomcat-7.0-doc/monitoring.html#Enabling_JMX_Remote) 
 on your `tomcat` server(s).
