@@ -18,7 +18,6 @@ your host but it should be easier and less platform dependent with `docker`.
 - [Requirements](#requirements)
   - [Windows](#windows)
   - [MacOS](#macos)
-  - [Linux](#linux)
 - [Usage](#usage)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -47,14 +46,12 @@ For macOS and users, you must install:
 * Run `xcode-select --install` if `make` is not available
 * [Docker Desktop for Mac](https://docs.docker.com/docker-for-mac/install/)
 
-### Linux
-
 ## Usage
 
-To run the environment, be sure the docker daemon is running and run `make`:
+Just have to run `make` (equals `make dev`). Before to run the environment,
+be sure `Docker` is running (i.e. `systemctl start docker.service` on linux).
 
 ```bash
-$ systemctl start docker.service
 $ make
 docker exec -ti terraform-signalfx-detectors bash -i || \
         docker run --rm -ti -v "${PWD}:/work" \
