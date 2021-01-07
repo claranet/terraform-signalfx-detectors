@@ -1,0 +1,9 @@
+notes: |
+  * Ingress default threshold value is set for US and Europe regions
+  * Egress default threshold value is set for general-purpose v2 and Blob storage accounts
+
+documentations:
+  - name: Azure Monitor metrics for Storage Accounts
+    url: 'https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported#microsoftstoragestorageaccounts'
+  - name: Azure Storage Account limits
+    url: 'https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/azure-subscription-service-limits#storage-limits'

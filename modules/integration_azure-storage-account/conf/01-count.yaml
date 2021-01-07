@@ -1,0 +1,19 @@
+module: "Azure Storage Account"
+name: "count"
+filtering: "filter('resource_type', 'Microsoft.Storage/storageAccounts') and filter('primary_aggregation_type', 'true')"
+aggregation: ".count(by=['subscription_id'])"
+transformation: ".min(over='1d')"
+signals:
+  capacity:
+    metric: "UsedCapacity"
+  signal:
+    formula:
+      capacity.fill(None, duration='1d')
+rules:
+  critical:
+    threshold: 245
+    comparator: ">"
+  major:
+    threshold: 240
+    comparator: ">"
+    dependency: critical
