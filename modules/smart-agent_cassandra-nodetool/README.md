@@ -1,4 +1,4 @@
-# CASSANDRA SignalFx detectors
+# CASSANDRA-NODETOOL SignalFx detectors
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -7,7 +7,6 @@
 - [How to use this module?](#how-to-use-this-module)
 - [What are the available detectors in this module?](#what-are-the-available-detectors-in-this-module)
 - [How to collect required metrics?](#how-to-collect-required-metrics)
-  - [Agent](#agent)
   - [Monitors](#monitors)
   - [JMX](#jmx)
   - [Metrics](#metrics)
@@ -24,8 +23,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-smart-agent-cassandra" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/smart-agent_cassandra?ref={revision}"
+module "signalfx-detectors-smart-agent-cassandra-nodetool" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/smart-agent_cassandra-nodetool?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications
@@ -61,7 +60,7 @@ Note the following parameters:
 
 These 3 parameters alongs with all variables defined in [common-variables.tf](common-variables.tf) are common to all 
 [modules](../) in this repository. Other variables, specific to this module, are available in 
-[variables.tf](variables.tf).
+[variables-gen.tf](variables-gen.tf).
 In general, the default configuration "works" but all of these Terraform 
 [variables](https://www.terraform.io/docs/configuration/variables.html) make it possible to 
 customize the detectors behavior to better fit your needs.
@@ -77,16 +76,8 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* Cassandra heartbeat
-* Cassandra read latency 99th percentile
-* Cassandra read latency real time
-* Cassandra storage exceptions count
-* Cassandra transactional read latency 99th percentile
-* Cassandra transactional read latency real time
-* Cassandra transactional write latency 99th percentile
-* Cassandra transactional write latency real time
-* Cassandra write latency 99th percentile
-* Cassandra write latency real time
+* Cassandra nodetool node state
+* Cassandra nodetool node status
 
 ## How to collect required metrics?
 
@@ -97,32 +88,41 @@ Agent](https://github.com/signalfx/signalfx-agent). Check the "Related documenta
 information including the official documentation of this monitor.
 
 
-Check the [integration 
-documentation](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.cassandra.html) 
-in addition to the monitor one which it uses.
 
-### Agent
+This module leverages the powerful `JMX` monitor to retrieve equivalent information 
+from the output of [Cassandra 
+Nodetool](https://cassandra.apache.org/doc/latest/tools/nodetool/nodetool.html) like 
+the `status` and the `state` of a node and push them as metrics.
 
-The agent requires to [Java 
-plugin](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.java.html) 
-for Collectd which is already installed in the [SignalFx Smart 
-Agent](https://github.com/signalfx/signalfx-agent/).
+The advantage of this method is we do not need to make the agent able to run `nodetool` 
+command on Cassandra nodes (i.e. by configuring `sudo`) and rely on an unsafe output 
+parsing:
+
+```
+nodetool status mykeyspace
+
+Datacenter: datacenter1
+=======================
+Status=Up/Down
+|/ State=Normal/Leaving/Joining/Moving
+--  Address    Load       Tokens  Owns    Host ID                               Rack
+UN  127.0.0.1  47.66 KB   1       33.3%   aaa1b7c1-6049-4a08-ad3e-3697a0e30e10  rack1
+UN  127.0.0.2  47.67 KB   1       33.3%   1848c369-4306-4874-afdf-5c1e95b8732e  rack1
+UN  127.0.0.3  47.67 KB   1       33.3%   49578bf1-728f-438d-b1c1-d8dd644b6f7f  rack1
+```
 
 ### Monitors
 
-You have to enable the following `extraMetrics` in your monitor configuration:
+You will need to put the [groovy script](./scripts/cassandra.groovy) in all your 
+cassandra nodes into `/etc/signalfx` directory then configure the `jmx` 
+monitor like the following:
 
-* `counter.cassandra.Storage.Exceptions.Count`
-* `counter.cassandra.ClientRequest.Read.TotalLatency.Count`
-* `counter.cassandra.ClientRequest.Write.TotalLatency.Count`
-* `counter.cassandra.ClientRequest.CASRead.Latency.Count`
-* `counter.cassandra.ClientRequest.CASRead.TotalLatency.Count`
-* `counter.cassandra.ClientRequest.CASWrite.Latency.Count`
-* `counter.cassandra.ClientRequest.CASWrite.TotalLatency.Count`
-* `gauge.cassandra.ClientRequest.CASRead.Latency.99thPercentile`
-* `gauge.cassandra.ClientRequest.CASWrite.Latency.99thPercentile`
-
-Some of them are only available since agent version `v5.5.5` like `CASWrite` and `CAWRead`.
+```yaml
+- type: jmx
+  host: localhost
+  port: 7199
+  groovyScript: {"#from": "/etc/signalfx/cassandra.groovy", raw: true}
+```
 
 ### JMX
 
@@ -145,34 +145,21 @@ the corresponding monitor configuration:
     datapointsToExclude:
       - metricNames:
         - '*'
-        - '!counter.cassandra.ClientRequest.CASRead.Latency.Count'
-        - '!counter.cassandra.ClientRequest.CASRead.TotalLatency.Count'
-        - '!counter.cassandra.ClientRequest.CASWrite.Latency.Count'
-        - '!counter.cassandra.ClientRequest.CASWrite.TotalLatency.Count'
-        - '!counter.cassandra.ClientRequest.Read.Latency.Count'
-        - '!counter.cassandra.ClientRequest.Read.TotalLatency.Count'
-        - '!counter.cassandra.ClientRequest.Write.Latency.Count'
-        - '!counter.cassandra.ClientRequest.Write.TotalLatency.Count'
-        - '!counter.cassandra.Storage.Exceptions.Count'
-        - '!counter.cassandra.Storage.Load.Count'
-        - '!gauge.cassandra.ClientRequest.CASRead.Latency.99thPercentile'
-        - '!gauge.cassandra.ClientRequest.CASWrite.Latency.99thPercentile'
-        - '!gauge.cassandra.ClientRequest.Read.Latency.99thPercentile'
-        - '!gauge.cassandra.ClientRequest.Write.Latency.99thPercentile'
+        - '!cassandra.state'
+        - '!cassandra.status'
 
 ```
 
 ## Notes
 
-You can collect more metrics than used in this module defining `mBeanDefinitions` parameter on your monitor 
-configuration for metrology or troubleshooting purposes.
-
-You can use `genericjmx` module as complement to this one to monitor generic JMX metrics.
+- this module could be a good addition to the main [cassandra](../smart-agent_cassandra/) 
+module.
+- `cassandra.status` possible values are `1 == Live`, `0 == Dead`, `-1 == Unknown`
+- `cassandra.state` possible values are `1 == Normal`, `2 == Leave`, `3 == Join`
 
 
 ## Related documentation
 
 * [Terraform SignalFx provider](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs)
 * [Terraform SignalFx detector](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector)
-* [Smart Agent monitor](https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-cassandra.html)
-* [Collectd plugin](https://collectd.org/wiki/index.php/Plugin:GenericJMX)
+* [Smart Agent monitor](https://docs.signalfx.com/en/latest/integrations/agent/monitors/jmx.html)
