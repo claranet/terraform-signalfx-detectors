@@ -1,4 +1,4 @@
-SUPPORTED_COMMANDS := init-module update-module update-module-doc update-module-tf update-module-detectors update-module-outputs check-module
+SUPPORTED_COMMANDS := init-module update-module update-module-doc update-module-tf update-module-detectors update-module-outputs update-severity-doc check-module
 SUPPORTS_MAKE_ARGS := $(findstring $(firstword $(MAKECMDGOALS)), $(SUPPORTED_COMMANDS))
 ifneq "$(SUPPORTS_MAKE_ARGS)" ""
   COMMAND_ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
@@ -33,11 +33,16 @@ clean:
 	git clean -df init-modules/
 
 .PHONY: update-module
-update-module: update-module-tf check-module update-module-doc
+update-module: update-module-tf check-module update-module-doc update-severity-doc
 
 .PHONY: update-module-doc
 update-module-doc: 
 	CI=true	./scripts/module/loop_wrapper.sh ./scripts/module/gen_doc.sh
+
+.PHONY: update-severity-doc
+update-severity-doc:
+	@echo "# Severity per detector" > docs/severity.md
+	./scripts/module/loop_wrapper.sh ./scripts/module/gen_severity.sh >> docs/severity.md
 
 .PHONY: update-toc
 update-toc: 
