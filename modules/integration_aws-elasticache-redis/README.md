@@ -73,10 +73,12 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* AWS ElastiCache redis cache hit ratio
-* AWS ElastiCache redis commands
-* AWS ElastiCache redis CPU
-* AWS ElastiCache redis replication lag
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|AWS ElastiCache redis cache hit ratio|X|X|-|-|-|
+|AWS ElastiCache redis CPU|X|X|-|-|-|
+|AWS ElastiCache redis replication lag|X|X|-|-|-|
+|AWS ElastiCache redis commands|X|X|-|-|-|
 
 ## How to collect required metrics?
 

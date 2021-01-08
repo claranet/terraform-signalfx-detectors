@@ -74,9 +74,11 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* GCP Pub/Sub Topic sending messages operations
-* GCP Pub/Sub Topic sending unavailable messages
-* GCP Pub/Sub Topic sending unavailable messages ratio
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|GCP Pub/Sub Topic sending messages operations|-|X|-|-|-|
+|GCP Pub/Sub Topic sending unavailable messages|X|X|-|-|-|
+|GCP Pub/Sub Topic sending unavailable messages ratio|X|X|-|-|-|
 
 ## How to collect required metrics?
 

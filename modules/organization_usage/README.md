@@ -74,11 +74,13 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* Organization usage containers limit
-* Organization usage containers ratio per host included
-* Organization usage custom metrics limit
-* Organization usage custom metrics ratio per host included
-* Organization usage hosts limit
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Organization usage hosts limit|-|X|-|-|-|
+|Organization usage containers limit|-|X|-|-|-|
+|Organization usage custom metrics limit|-|X|-|-|-|
+|Organization usage containers ratio per host included|-|X|-|-|-|
+|Organization usage custom metrics ratio per host included|-|X|-|-|-|
 
 ## How to collect required metrics?
 

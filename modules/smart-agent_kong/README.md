@@ -76,8 +76,10 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* Kong heartbeat
-* Kong treatment limit
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Kong heartbeat|X|-|-|-|-|
+|Kong treatment limit|X|X|-|-|-|
 
 ## How to collect required metrics?
 

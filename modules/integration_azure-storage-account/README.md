@@ -74,11 +74,13 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* Azure Storage Account capacity
-* Azure Storage Account count
-* Azure Storage Account egress
-* Azure Storage Account ingress
-* Azure Storage Account requests rate
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Azure Storage Account count|X|X|-|-|-|
+|Azure Storage Account capacity|X|X|-|-|-|
+|Azure Storage Account ingress|X|X|-|-|-|
+|Azure Storage Account egress|X|X|-|-|-|
+|Azure Storage Account requests rate|X|X|-|-|-|
 
 ## How to collect required metrics?
 

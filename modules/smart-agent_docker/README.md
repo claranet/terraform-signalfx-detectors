@@ -74,10 +74,12 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* Docker container cpu throttling time
-* Docker container usage of cpu host
-* Docker host heartbeat
-* Docker memory usage
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Docker host heartbeat|X|-|-|-|-|
+|Docker container usage of cpu host|-|X|X|-|-|
+|Docker container cpu throttling time|-|X|X|-|-|
+|Docker memory usage|-|X|X|-|-|
 
 ## How to collect required metrics?
 

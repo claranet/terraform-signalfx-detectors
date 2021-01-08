@@ -12,7 +12,7 @@ matrix:
   - pyspelling.filters.html:
   sources:
   - '*.md'
-  - 'docs/**/*.md'
+  - 'docs/**/*.md|!docs/severity.md'
   - 'scripts/**/*.md'
   - 'examples/**/*.md'
   default_encoding: utf-8

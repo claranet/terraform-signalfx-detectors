@@ -73,11 +73,13 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* Azure Service Bus heartbeat
-* Azure Service Bus no active connections
-* Azure Service Bus server error rate
-* Azure Service Bus throttled requests rate
-* Azure Service Bus user error rate
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Azure Service Bus heartbeat|X|-|-|-|-|
+|Azure Service Bus no active connections|X|-|-|-|-|
+|Azure Service Bus user error rate|X|X|-|-|-|
+|Azure Service Bus server error rate|X|X|-|-|-|
+|Azure Service Bus throttled requests rate|X|X|-|-|-|
 
 ## How to collect required metrics?
 

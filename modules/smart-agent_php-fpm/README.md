@@ -74,8 +74,10 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* PHP-FPM busy workers
-* PHP-FPM heartbeat
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|PHP-FPM heartbeat|X|-|-|-|-|
+|PHP-FPM busy workers|X|X|-|-|-|
 
 ## How to collect required metrics?
 

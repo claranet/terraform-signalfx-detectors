@@ -77,14 +77,16 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* PostgreSQL conflicts
-* PostgreSQL deadlocks
-* PostgreSQL heartbeat
-* PostgreSQL hit ratio
-* PostgreSQL number of connections compared to max
-* PostgreSQL replication lag
-* PostgreSQL replication state
-* PostgreSQL rollbacks ratio compared to commits
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|PostgreSQL heartbeat|X|-|-|-|-|
+|PostgreSQL deadlocks|-|X|X|-|-|
+|PostgreSQL hit ratio|-|-|X|X|-|
+|PostgreSQL rollbacks ratio compared to commits|-|X|X|-|-|
+|PostgreSQL conflicts|-|X|X|-|-|
+|PostgreSQL number of connections compared to max|X|X|-|-|-|
+|PostgreSQL replication lag|X|X|-|-|-|
+|PostgreSQL replication state|X|-|-|-|-|
 
 ## How to collect required metrics?
 

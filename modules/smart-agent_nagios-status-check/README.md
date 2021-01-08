@@ -76,7 +76,9 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* Nagios check status
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Nagios check status|X|X|-|X|-|
 
 ## How to collect required metrics?
 

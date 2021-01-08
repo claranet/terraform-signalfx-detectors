@@ -77,16 +77,18 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* Cassandra heartbeat
-* Cassandra read latency 99th percentile
-* Cassandra read latency real time
-* Cassandra storage exceptions count
-* Cassandra transactional read latency 99th percentile
-* Cassandra transactional read latency real time
-* Cassandra transactional write latency 99th percentile
-* Cassandra transactional write latency real time
-* Cassandra write latency 99th percentile
-* Cassandra write latency real time
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Cassandra heartbeat|X|-|-|-|-|
+|Cassandra read latency 99th percentile|X|X|-|-|-|
+|Cassandra write latency 99th percentile|X|X|-|-|-|
+|Cassandra read latency real time|X|X|-|-|-|
+|Cassandra write latency real time|X|X|-|-|-|
+|Cassandra transactional read latency 99th percentile|X|X|-|-|-|
+|Cassandra transactional write latency 99th percentile|X|X|-|-|-|
+|Cassandra transactional read latency real time|X|X|-|-|-|
+|Cassandra transactional write latency real time|X|X|-|-|-|
+|Cassandra storage exceptions count|-|X|-|-|-|
 
 ## How to collect required metrics?
 

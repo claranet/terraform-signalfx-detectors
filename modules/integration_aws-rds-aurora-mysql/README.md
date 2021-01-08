@@ -73,7 +73,9 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* AWS RDS Aurora Mysql replica lag
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|AWS RDS Aurora Mysql replica lag|X|X|-|-|-|
 
 ## How to collect required metrics?
 

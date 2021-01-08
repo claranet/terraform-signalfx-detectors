@@ -74,7 +74,9 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* GCP Cloud SQL MySQL replication lag
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|GCP Cloud SQL MySQL replication lag|X|X|-|-|-|
 
 ## How to collect required metrics?
 

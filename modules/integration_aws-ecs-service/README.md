@@ -73,9 +73,11 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* AWS ECS heartbeat
-* AWS ECS service CPU utilization
-* AWS ECS service memory utilization
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|AWS ECS heartbeat|X|-|-|-|-|
+|AWS ECS service CPU utilization|X|X|-|-|-|
+|AWS ECS service memory utilization|X|X|-|-|-|
 
 ## How to collect required metrics?
 

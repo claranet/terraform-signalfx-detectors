@@ -76,17 +76,19 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* Redis blocked client rate
-* Redis evicted keys rate of change
-* Redis expired keys rate of change
-* Redis heartbeat
-* Redis hitrate
-* Redis keyspace seems full
-* Redis memory fragmentation ratio (excessive fragmentation)
-* Redis memory fragmentation ratio (missing memory)
-* Redis memory used over max memory (if configured)
-* Redis memory used over total system memory
-* Redis rejected connections (maxclient reached)
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Redis heartbeat|X|-|-|-|-|
+|Redis evicted keys rate of change|X|X|-|-|-|
+|Redis expired keys rate of change|X|X|-|-|-|
+|Redis blocked client rate|-|-|X|X|-|
+|Redis keyspace seems full|-|X|-|-|-|
+|Redis memory used over max memory (if configured)|X|X|-|-|-|
+|Redis memory used over total system memory|X|X|-|-|-|
+|Redis memory fragmentation ratio (excessive fragmentation)|X|X|-|-|-|
+|Redis memory fragmentation ratio (missing memory)|X|X|-|-|-|
+|Redis rejected connections (maxclient reached)|X|X|-|-|-|
+|Redis hitrate|X|X|-|-|-|
 
 ## How to collect required metrics?
 

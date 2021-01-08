@@ -77,15 +77,18 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* MySQL heartbeat
-* MySQL Innodb buffer pool efficiency
-* MySQL Innodb buffer pool utilization
-* MySQL number of connections over max capacity
-* MySQL replication lag
-* MySQL running queries changed abruptly
-* MySQL running threads changed abruptly
-* MySQL slave sql status
-* MySQL slow queries percentage
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|MySQL heartbeat|X|-|-|-|-|
+|MySQL number of connections over max capacity|X|X|-|-|-|
+|MySQL slow queries percentage|X|X|-|-|-|
+|MySQL Innodb buffer pool efficiency|-|-|X|X|-|
+|MySQL Innodb buffer pool utilization|-|-|X|X|-|
+|MySQL running threads changed abruptly|X|-|-|-|-|
+|MySQL running queries changed abruptly|X|-|-|-|-|
+|MySQL replication lag|X|X|-|-|-|
+|MySQL slave sql status|X|-|-|-|-|
+|MySQL slave sql status|X|-|-|-|-|
 
 ## How to collect required metrics?
 
