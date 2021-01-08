@@ -15,8 +15,7 @@ resource "signalfx_detector" "throttled_requests" {
     signal = (A/B).scale(100).fill(0).publish('signal')
     detect(when(signal > ${var.throttled_requests_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.throttled_requests_threshold_major}) and when(signal <= ${var.throttled_requests_threshold_critical})).publish('MAJOR')
-    detect(when(signal > ${var.throttled_requests_threshold_minor}) and when(signal <= ${var.throttled_requests_threshold_major})).publish('MINOR')
-    detect(when(signal > ${var.throttled_requests_threshold_warning}) and when(signal <= ${var.throttled_requests_threshold_minor})).publish('WARN')
+    detect(when(signal > ${var.throttled_requests_threshold_warning}) and when(signal <= ${var.throttled_requests_threshold_major})).publish('WARN')
 EOF
 
   rule {
@@ -37,18 +36,6 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.throttled_requests_disabled_major, var.throttled_requests_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.throttled_requests_notifications, "major", []), var.notifications.major)
-    runbook_url           = try(coalesce(var.throttled_requests_runbook_url, var.runbook_url), "")
-    tip                   = var.throttled_requests_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
-  }
-
-  rule {
-    description           = "is too high > ${var.throttled_requests_threshold_minor}%"
-    severity              = "Minor"
-    detect_label          = "MINOR"
-    disabled              = coalesce(var.throttled_requests_disabled_minor, var.throttled_requests_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.throttled_requests_notifications, "minor", []), var.notifications.minor)
     runbook_url           = try(coalesce(var.throttled_requests_runbook_url, var.runbook_url), "")
     tip                   = var.throttled_requests_tip
     parameterized_subject = local.rule_subject

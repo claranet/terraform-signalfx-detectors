@@ -48,12 +48,6 @@ variable "throttled_requests_disabled_major" {
   default     = null
 }
 
-variable "throttled_requests_disabled_minor" {
-  description = "Disable minor alerting rule for throttled_requests detector"
-  type        = bool
-  default     = null
-}
-
 variable "throttled_requests_disabled_warning" {
   description = "Disable warning alerting rule for throttled_requests detector"
   type        = bool
@@ -63,24 +57,18 @@ variable "throttled_requests_disabled_warning" {
 variable "throttled_requests_threshold_critical" {
   description = "Critical threshold for throttled_requests detector in %"
   type        = number
-  default     = 50
+  default     = 30
 }
 
 variable "throttled_requests_threshold_major" {
   description = "Major threshold for throttled_requests detector in %"
   type        = number
-  default     = 30
-}
-
-variable "throttled_requests_threshold_minor" {
-  description = "Minor threshold for throttled_requests detector in %"
-  type        = number
-  default     = 10
+  default     = 15
 }
 
 variable "throttled_requests_threshold_warning" {
   description = "Warning threshold for throttled_requests detector in %"
   type        = number
-  default     = 1
+  default     = 0
 }
 

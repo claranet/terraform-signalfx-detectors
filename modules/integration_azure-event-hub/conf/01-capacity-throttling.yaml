@@ -15,18 +15,14 @@ signals:
     formula: "(A/B).scale(100).fill(0)"
 rules:
   critical:
-    threshold: 50
-    comparator: ">"
-  major:
     threshold: 30
     comparator: ">"
+  major:
+    threshold: 15
+    comparator: ">"
     dependency: critical
-  minor:
-    threshold: 10
+  warning:
+    threshold: 0
     comparator: ">"
     dependency: major
-  warning:
-    threshold: 1
-    comparator: ">"
-    dependency: minor
 ...
