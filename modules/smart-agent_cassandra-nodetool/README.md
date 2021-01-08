@@ -76,8 +76,10 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* Cassandra nodetool node state
-* Cassandra nodetool node status
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Cassandra nodetool node status|X|-|X|-|-|
+|Cassandra nodetool node state|X|-|-|-|-|
 
 ## How to collect required metrics?
 

@@ -77,9 +77,11 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* Tomcat average processing time
-* Tomcat busy threads percentage
-* Tomcat heartbeat
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Tomcat heartbeat|X|-|-|-|-|
+|Tomcat average processing time|X|X|-|-|-|
+|Tomcat busy threads percentage|X|X|-|-|-|
 
 ## How to collect required metrics?
 

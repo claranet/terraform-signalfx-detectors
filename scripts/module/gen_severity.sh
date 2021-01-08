@@ -1,12 +1,16 @@
 #!/bin/bash
 set -ue -o pipefail
 
+# Ensure same sort behavior if run outside the container
+export LC_COLLATE=C
+
 TARGET="${1:-}"
 MODULE=${TARGET#"modules/"}
+SEV_GLOBAL="${SEV_GLOBAL:-false}"
 
-module_name=$(echo ${MODULE} | cut -d'_' -f 2)
-
-echo -e "## ${module_name}\n"
+if [[ ${SEV_GLOBAL} == "true" ]]; then
+    echo -e "## $(echo ${MODULE} | cut -d'_' -f 2)\n"
+fi
 echo -e "|Detector|Critical|Major|Minor|Warning|Info|\n|---|---|---|---|---|---|"
 
 for tf in $(find ${TARGET} -name "detectors-*.tf")

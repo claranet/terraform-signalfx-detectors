@@ -1,93 +1,93 @@
+# Severity per detector
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 :link: **Contents**
 
-- [Severity per detector](#severity-per-detector)
-  - [aws-alb](#aws-alb)
-  - [aws-apigateway](#aws-apigateway)
-  - [aws-beanstalk](#aws-beanstalk)
-  - [aws-ecs-cluster](#aws-ecs-cluster)
-  - [aws-ecs-service](#aws-ecs-service)
-  - [aws-elasticache-common](#aws-elasticache-common)
-  - [aws-elasticache-memcached](#aws-elasticache-memcached)
-  - [aws-elasticache-redis](#aws-elasticache-redis)
-  - [aws-elasticsearch](#aws-elasticsearch)
-  - [aws-elb](#aws-elb)
-  - [aws-kinesis-firehose](#aws-kinesis-firehose)
-  - [aws-lambda](#aws-lambda)
-  - [aws-nlb](#aws-nlb)
-  - [aws-rds-aurora-mysql](#aws-rds-aurora-mysql)
-  - [aws-rds-aurora-postgresql](#aws-rds-aurora-postgresql)
-  - [aws-rds-common](#aws-rds-common)
-  - [aws-sqs](#aws-sqs)
-  - [aws-vpn](#aws-vpn)
-  - [azure-application-gateway](#azure-application-gateway)
-  - [azure-app-service](#azure-app-service)
-  - [azure-app-service-plan](#azure-app-service-plan)
-  - [azure-azure-search](#azure-azure-search)
-  - [azure-container-instance](#azure-container-instance)
-  - [azure-cosmos-db](#azure-cosmos-db)
-  - [azure-functions](#azure-functions)
-  - [azure-key-vault](#azure-key-vault)
-  - [azure-load-balancer](#azure-load-balancer)
-  - [azure-mysql](#azure-mysql)
-  - [azure-postgresql](#azure-postgresql)
-  - [azure-redis](#azure-redis)
-  - [azure-service-bus](#azure-service-bus)
-  - [azure-sql-database](#azure-sql-database)
-  - [azure-sql-elastic-pool](#azure-sql-elastic-pool)
-  - [azure-storage-account](#azure-storage-account)
-  - [azure-storage-account-capacity](#azure-storage-account-capacity)
-  - [azure-stream-analytics](#azure-stream-analytics)
-  - [azure-virtual-machine](#azure-virtual-machine)
-  - [azure-virtual-machine-scaleset](#azure-virtual-machine-scaleset)
-  - [gcp-bigquery](#gcp-bigquery)
-  - [gcp-cloud-sql-common](#gcp-cloud-sql-common)
-  - [gcp-cloud-sql-failover](#gcp-cloud-sql-failover)
-  - [gcp-cloud-sql-mysql](#gcp-cloud-sql-mysql)
-  - [gcp-compute-engine](#gcp-compute-engine)
-  - [gcp-load-balancing](#gcp-load-balancing)
-  - [gcp-pubsub-subscription](#gcp-pubsub-subscription)
-  - [gcp-pubsub-topic](#gcp-pubsub-topic)
-  - [newrelic-apm](#newrelic-apm)
-  - [usage](#usage)
-  - [apache](#apache)
-  - [cassandra](#cassandra)
-  - [cassandra-nodetool](#cassandra-nodetool)
-  - [dns](#dns)
-  - [docker](#docker)
-  - [elasticsearch](#elasticsearch)
-  - [genericjmx](#genericjmx)
-  - [haproxy](#haproxy)
-  - [http](#http)
-  - [kong](#kong)
-  - [kubernetes-apiserver](#kubernetes-apiserver)
-  - [kubernetes-common](#kubernetes-common)
-  - [kubernetes-velero](#kubernetes-velero)
-  - [kubernetes-volumes](#kubernetes-volumes)
-  - [memcached](#memcached)
-  - [mongodb](#mongodb)
-  - [mysql](#mysql)
-  - [nagios-status-check](#nagios-status-check)
-  - [nginx](#nginx)
-  - [nginx-ingress](#nginx-ingress)
-  - [ntp](#ntp)
-  - [php-fpm](#php-fpm)
-  - [postgresql](#postgresql)
-  - [processes](#processes)
-  - [rabbitmq-node](#rabbitmq-node)
-  - [rabbitmq-queue](#rabbitmq-queue)
-  - [redis](#redis)
-  - [solr](#solr)
-  - [supervisor](#supervisor)
-  - [system-common](#system-common)
-  - [tomcat](#tomcat)
-  - [varnish](#varnish)
-  - [zookeeper](#zookeeper)
+- [aws-alb](#aws-alb)
+- [aws-apigateway](#aws-apigateway)
+- [aws-beanstalk](#aws-beanstalk)
+- [aws-ecs-cluster](#aws-ecs-cluster)
+- [aws-ecs-service](#aws-ecs-service)
+- [aws-elasticache-common](#aws-elasticache-common)
+- [aws-elasticache-memcached](#aws-elasticache-memcached)
+- [aws-elasticache-redis](#aws-elasticache-redis)
+- [aws-elasticsearch](#aws-elasticsearch)
+- [aws-elb](#aws-elb)
+- [aws-kinesis-firehose](#aws-kinesis-firehose)
+- [aws-lambda](#aws-lambda)
+- [aws-nlb](#aws-nlb)
+- [aws-rds-aurora-mysql](#aws-rds-aurora-mysql)
+- [aws-rds-aurora-postgresql](#aws-rds-aurora-postgresql)
+- [aws-rds-common](#aws-rds-common)
+- [aws-sqs](#aws-sqs)
+- [aws-vpn](#aws-vpn)
+- [azure-app-service-plan](#azure-app-service-plan)
+- [azure-app-service](#azure-app-service)
+- [azure-application-gateway](#azure-application-gateway)
+- [azure-azure-search](#azure-azure-search)
+- [azure-container-instance](#azure-container-instance)
+- [azure-cosmos-db](#azure-cosmos-db)
+- [azure-functions](#azure-functions)
+- [azure-key-vault](#azure-key-vault)
+- [azure-load-balancer](#azure-load-balancer)
+- [azure-mysql](#azure-mysql)
+- [azure-postgresql](#azure-postgresql)
+- [azure-redis](#azure-redis)
+- [azure-service-bus](#azure-service-bus)
+- [azure-sql-database](#azure-sql-database)
+- [azure-sql-elastic-pool](#azure-sql-elastic-pool)
+- [azure-storage-account-capacity](#azure-storage-account-capacity)
+- [azure-storage-account](#azure-storage-account)
+- [azure-stream-analytics](#azure-stream-analytics)
+- [azure-virtual-machine-scaleset](#azure-virtual-machine-scaleset)
+- [azure-virtual-machine](#azure-virtual-machine)
+- [gcp-bigquery](#gcp-bigquery)
+- [gcp-cloud-sql-common](#gcp-cloud-sql-common)
+- [gcp-cloud-sql-failover](#gcp-cloud-sql-failover)
+- [gcp-cloud-sql-mysql](#gcp-cloud-sql-mysql)
+- [gcp-compute-engine](#gcp-compute-engine)
+- [gcp-load-balancing](#gcp-load-balancing)
+- [gcp-pubsub-subscription](#gcp-pubsub-subscription)
+- [gcp-pubsub-topic](#gcp-pubsub-topic)
+- [newrelic-apm](#newrelic-apm)
+- [usage](#usage)
+- [apache](#apache)
+- [cassandra-nodetool](#cassandra-nodetool)
+- [cassandra](#cassandra)
+- [dns](#dns)
+- [docker](#docker)
+- [elasticsearch](#elasticsearch)
+- [genericjmx](#genericjmx)
+- [haproxy](#haproxy)
+- [http](#http)
+- [kong](#kong)
+- [kubernetes-apiserver](#kubernetes-apiserver)
+- [kubernetes-common](#kubernetes-common)
+- [kubernetes-velero](#kubernetes-velero)
+- [kubernetes-volumes](#kubernetes-volumes)
+- [memcached](#memcached)
+- [mongodb](#mongodb)
+- [mysql](#mysql)
+- [nagios-status-check](#nagios-status-check)
+- [nginx-ingress](#nginx-ingress)
+- [nginx](#nginx)
+- [ntp](#ntp)
+- [php-fpm](#php-fpm)
+- [postgresql](#postgresql)
+- [processes](#processes)
+- [rabbitmq-node](#rabbitmq-node)
+- [rabbitmq-queue](#rabbitmq-queue)
+- [redis](#redis)
+- [solr](#solr)
+- [supervisor](#supervisor)
+- [system-common](#system-common)
+- [tomcat](#tomcat)
+- [varnish](#varnish)
+- [zookeeper](#zookeeper)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-# Severity per detector
 ## aws-alb
 
 |Detector|Critical|Major|Minor|Warning|Info|
@@ -259,20 +259,13 @@
 |AWS VPN tunnel state|X|-|-|-|-|
 
 
-## azure-application-gateway
+## azure-app-service-plan
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|Azure Application Gateway heartbeat|X|-|-|-|-|
-|Azure Application Gateway has no request|X|-|-|-|-|
-|Azure Application Gateway backend connect time|X|X|-|-|-|
-|Azure Application Gateway failed request rate|X|X|-|-|-|
-|Azure Application Gateway backend unhealthy host ratio|X|X|-|-|-|
-|Azure Application Gateway 4xx error rate|X|X|-|-|-|
-|Azure Application Gateway 5xx error rate|X|X|-|-|-|
-|Azure Application Gateway backend 4xx error rate|X|X|-|-|-|
-|Azure Application Gateway backend 5xx error rate|X|X|-|-|-|
-|Azure Application Gateway capacity units|-|X|-|-|-|
+|Azure App Service Plan heartbeat|X|-|-|-|-|
+|Azure App Service Plan CPU percentage|X|X|-|-|-|
+|Azure App Service Plan memory percentage|X|X|-|-|-|
 
 
 ## azure-app-service
@@ -287,13 +280,20 @@
 |Azure App Service successful response rate|X|X|-|-|-|
 
 
-## azure-app-service-plan
+## azure-application-gateway
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|Azure App Service Plan heartbeat|X|-|-|-|-|
-|Azure App Service Plan CPU percentage|X|X|-|-|-|
-|Azure App Service Plan memory percentage|X|X|-|-|-|
+|Azure Application Gateway capacity units|-|X|-|-|-|
+|Azure Application Gateway heartbeat|X|-|-|-|-|
+|Azure Application Gateway has no request|X|-|-|-|-|
+|Azure Application Gateway backend connect time|X|X|-|-|-|
+|Azure Application Gateway failed request rate|X|X|-|-|-|
+|Azure Application Gateway backend unhealthy host ratio|X|X|-|-|-|
+|Azure Application Gateway 4xx error rate|X|X|-|-|-|
+|Azure Application Gateway 5xx error rate|X|X|-|-|-|
+|Azure Application Gateway backend 4xx error rate|X|X|-|-|-|
+|Azure Application Gateway backend 5xx error rate|X|X|-|-|-|
 
 
 ## azure-azure-search
@@ -414,6 +414,13 @@
 |Azure SQL Elastic Pool DTU consumption|X|X|-|-|-|
 
 
+## azure-storage-account-capacity
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Azure storage account Used capacity|X|X|-|-|-|
+
+
 ## azure-storage-account
 
 |Detector|Critical|Major|Minor|Warning|Info|
@@ -423,13 +430,6 @@
 |Azure Storage Account ingress|X|X|-|-|-|
 |Azure Storage Account egress|X|X|-|-|-|
 |Azure Storage Account requests rate|X|X|-|-|-|
-
-
-## azure-storage-account-capacity
-
-|Detector|Critical|Major|Minor|Warning|Info|
-|---|---|---|---|---|---|
-|Azure storage account Used capacity|X|X|-|-|-|
 
 
 ## azure-stream-analytics
@@ -443,6 +443,13 @@
 |Azure Stream Analytics runtime errors rate|X|X|-|-|-|
 
 
+## azure-virtual-machine-scaleset
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Azure Virtual Machine ScaleSet heartbeat|X|-|-|-|-|
+
+
 ## azure-virtual-machine
 
 |Detector|Critical|Major|Minor|Warning|Info|
@@ -450,13 +457,6 @@
 |Azure Virtual Machine heartbeat|X|-|-|-|-|
 |Azure Virtual Machine CPU usage|X|X|-|-|-|
 |Azure Virtual Machine remaining CPU credit|X|X|-|-|-|
-
-
-## azure-virtual-machine-scaleset
-
-|Detector|Critical|Major|Minor|Warning|Info|
-|---|---|---|---|---|---|
-|Azure Virtual Machine ScaleSet heartbeat|X|-|-|-|-|
 
 
 ## gcp-bigquery
@@ -567,6 +567,14 @@
 |Apache busy workers|X|X|-|-|-|
 
 
+## cassandra-nodetool
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Cassandra nodetool node status|X|-|X|-|-|
+|Cassandra nodetool node state|X|-|-|-|-|
+
+
 ## cassandra
 
 |Detector|Critical|Major|Minor|Warning|Info|
@@ -581,14 +589,6 @@
 |Cassandra transactional read latency real time|X|X|-|-|-|
 |Cassandra transactional write latency real time|X|X|-|-|-|
 |Cassandra storage exceptions count|-|X|-|-|-|
-
-
-## cassandra-nodetool
-
-|Detector|Critical|Major|Minor|Warning|Info|
-|---|---|---|---|---|---|
-|Cassandra nodetool node status|X|-|X|-|-|
-|Cassandra nodetool node state|X|-|-|-|-|
 
 
 ## dns
@@ -768,14 +768,6 @@
 |Nagios check status|X|X|-|X|-|
 
 
-## nginx
-
-|Detector|Critical|Major|Minor|Warning|Info|
-|---|---|---|---|---|---|
-|Nginx heartbeat|X|-|-|-|-|
-|Nginx dropped connections|X|X|-|-|-|
-
-
 ## nginx-ingress
 
 |Detector|Critical|Major|Minor|Warning|Info|
@@ -783,6 +775,14 @@
 |Kubernetes Ingress Nginx 5xx errors ratio|X|X|-|-|-|
 |Kubernetes Ingress Nginx 4xx errors ratio|X|X|-|-|-|
 |Kubernetes Ingress Nginx latency|X|X|-|-|-|
+
+
+## nginx
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Nginx heartbeat|X|-|-|-|-|
+|Nginx dropped connections|X|X|-|-|-|
 
 
 ## ntp

@@ -77,8 +77,10 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* Kubernetes node volume inodes usage
-* Kubernetes node volume space usage
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Kubernetes node volume space usage|X|X|-|-|-|
+|Kubernetes node volume inodes usage|X|X|-|-|-|
 
 ## How to collect required metrics?
 

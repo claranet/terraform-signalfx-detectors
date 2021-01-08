@@ -76,11 +76,13 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* RabbitMQ  heartbeat
-* RabbitMQ Node file descriptors usage
-* RabbitMQ Node process usage
-* RabbitMQ Node sockets usage
-* RabbitMQ Node vm_memory usage
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|RabbitMQ heartbeat|X|-|-|-|-|
+|RabbitMQ Node file descriptors usage|X|X|-|-|-|
+|RabbitMQ Node process usage|X|X|-|-|-|
+|RabbitMQ Node sockets usage|X|X|-|-|-|
+|RabbitMQ Node vm_memory usage|X|X|-|-|-|
 
 ## How to collect required metrics?
 

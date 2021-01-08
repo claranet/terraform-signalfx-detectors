@@ -74,11 +74,13 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* GCP Load Balancer 4xx error rate
-* GCP Load Balancer 5xx error rate
-* GCP Load Balancer backend latency by bucket
-* GCP Load Balancer backend latency by service
-* GCP Load Balancer request count
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|GCP Load Balancer 4xx error rate|X|X|-|-|-|
+|GCP Load Balancer 5xx error rate|X|X|-|-|-|
+|GCP Load Balancer backend latency by service|X|X|-|-|-|
+|GCP Load Balancer backend latency by bucket|X|X|-|-|-|
+|GCP Load Balancer request count|-|X|-|-|-|
 
 ## How to collect required metrics?
 

@@ -76,16 +76,18 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* Azure Application Gateway 4xx error rate
-* Azure Application Gateway 5xx error rate
-* Azure Application Gateway backend 4xx error rate
-* Azure Application Gateway backend 5xx error rate
-* Azure Application Gateway backend connect time
-* Azure Application Gateway backend unhealthy host ratio
-* Azure Application Gateway capacity units
-* Azure Application Gateway failed request rate
-* Azure Application Gateway has no request
-* Azure Application Gateway heartbeat
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Azure Application Gateway capacity units|-|X|-|-|-|
+|Azure Application Gateway heartbeat|X|-|-|-|-|
+|Azure Application Gateway has no request|X|-|-|-|-|
+|Azure Application Gateway backend connect time|X|X|-|-|-|
+|Azure Application Gateway failed request rate|X|X|-|-|-|
+|Azure Application Gateway backend unhealthy host ratio|X|X|-|-|-|
+|Azure Application Gateway 4xx error rate|X|X|-|-|-|
+|Azure Application Gateway 5xx error rate|X|X|-|-|-|
+|Azure Application Gateway backend 4xx error rate|X|X|-|-|-|
+|Azure Application Gateway backend 5xx error rate|X|X|-|-|-|
 
 ## How to collect required metrics?
 

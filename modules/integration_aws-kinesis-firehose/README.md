@@ -73,8 +73,10 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* AWS Kinesis heartbeat
-* AWS Kinesis incoming records
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|AWS Kinesis heartbeat|X|-|-|-|-|
+|AWS Kinesis incoming records|X|X|-|-|-|
 
 ## How to collect required metrics?
 

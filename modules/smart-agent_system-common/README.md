@@ -74,13 +74,15 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* System cpu utilization
-* System disk inodes utilization
-* System disk space running out
-* System disk space utilization
-* System heartbeat
-* System load 5m ratio
-* System memory utilization
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|System disk space running out|-|X|-|-|-|
+|System heartbeat|X|-|-|-|-|
+|System cpu utilization|X|X|-|-|-|
+|System load 5m ratio|X|X|-|-|-|
+|System disk space utilization|X|X|-|-|-|
+|System disk inodes utilization|X|X|-|-|-|
+|System memory utilization|X|X|-|-|-|
 
 ## How to collect required metrics?
 

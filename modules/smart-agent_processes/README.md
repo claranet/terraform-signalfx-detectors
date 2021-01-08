@@ -74,7 +74,9 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* Processes aliveness
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Processes aliveness|X|X|-|-|-|
 
 ## How to collect required metrics?
 

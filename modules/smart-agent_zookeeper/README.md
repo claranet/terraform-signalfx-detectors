@@ -75,10 +75,12 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* Zookeeper file descriptors usage
-* Zookeeper heartbeat
-* Zookeeper latency
-* Zookeeper service health
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Zookeeper heartbeat|X|-|-|-|-|
+|Zookeeper service health|X|-|-|-|-|
+|Zookeeper latency|X|X|-|-|-|
+|Zookeeper file descriptors usage|X|X|-|-|-|
 
 ## How to collect required metrics?
 

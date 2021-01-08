@@ -73,8 +73,10 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* AWS VPN heartbeat
-* AWS VPN tunnel state
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|AWS VPN heartbeat|X|-|-|-|-|
+|AWS VPN tunnel state|X|-|-|-|-|
 
 ## How to collect required metrics?
 

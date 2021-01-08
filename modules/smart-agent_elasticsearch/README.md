@@ -75,25 +75,27 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* ElasticSearch cluster initializing shards
-* ElasticSearch cluster relocating shards
-* ElasticSearch cluster status
-* ElasticSearch Cluster unassigned shards
-* Elasticsearch CPU usage
-* Elasticsearch fielddata cache evictions rate of change
-* Elasticsearch file descriptors usage
-* ElasticSearch heartbeat
-* Elasticsearch index flushing to disk latency
-* Elasticsearch indexing latency
-* Elasticsearch JVM heap memory usage
-* Elasticsearch JVM memory old usage
-* Elasticsearch JVM memory young usage
-* Elasticsearch max time spent by task in queue rate of change
-* Elasticsearch old-generation garbage collections latency
-* ElasticSearch Pending tasks
-* Elasticsearch search fetch latency
-* Elasticsearch search query latency
-* Elasticsearch young-generation garbage collections latency
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|ElasticSearch heartbeat|X|-|-|-|-|
+|ElasticSearch cluster status|X|X|-|-|-|
+|ElasticSearch cluster initializing shards|X|X|-|-|-|
+|ElasticSearch cluster relocating shards|X|X|-|-|-|
+|ElasticSearch Cluster unassigned shards|X|X|-|-|-|
+|ElasticSearch Pending tasks|X|X|-|-|-|
+|Elasticsearch CPU usage|X|X|-|-|-|
+|Elasticsearch file descriptors usage|X|X|-|-|-|
+|Elasticsearch JVM heap memory usage|X|X|-|-|-|
+|Elasticsearch JVM memory young usage|-|X|X|-|-|
+|Elasticsearch JVM memory old usage|-|X|X|-|-|
+|Elasticsearch old-generation garbage collections latency|-|X|X|-|-|
+|Elasticsearch young-generation garbage collections latency|-|X|X|-|-|
+|Elasticsearch indexing latency|-|X|X|-|-|
+|Elasticsearch index flushing to disk latency|-|X|X|-|-|
+|Elasticsearch search query latency|-|X|X|-|-|
+|Elasticsearch search fetch latency|-|X|X|-|-|
+|Elasticsearch fielddata cache evictions rate of change|-|X|X|-|-|
+|Elasticsearch max time spent by task in queue rate of change|-|X|X|-|-|
 
 ## How to collect required metrics?
 

@@ -73,11 +73,13 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* AWS Beanstalk application 5xx error rate
-* AWS Beanstalk application latency p90
-* AWS Beanstalk environment health
-* AWS Beanstalk heartbeat
-* AWS Beanstalk instance root filesystem usage
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|AWS Beanstalk heartbeat|X|-|-|-|-|
+|AWS Beanstalk environment health|X|X|-|-|-|
+|AWS Beanstalk application latency p90|X|X|-|-|-|
+|AWS Beanstalk application 5xx error rate|X|X|-|-|-|
+|AWS Beanstalk instance root filesystem usage|X|X|-|-|-|
 
 ## How to collect required metrics?
 

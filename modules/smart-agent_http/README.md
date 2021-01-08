@@ -75,13 +75,15 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* HTTP code
-* HTTP content length
-* HTTP heartbeat
-* HTTP regex expression
-* HTTP response time
-* TLS certificate
-* TLS certificate expiry date
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|HTTP heartbeat|X|-|-|-|-|
+|HTTP code|X|-|-|-|-|
+|HTTP regex expression|X|-|-|-|-|
+|HTTP response time|X|X|-|-|-|
+|HTTP content length|-|-|-|X|-|
+|TLS certificate expiry date|-|X|X|-|-|
+|TLS certificate|X|-|-|-|-|
 
 ## How to collect required metrics?
 

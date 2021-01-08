@@ -79,21 +79,23 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* Kubernetes container killed by OOM
-* Kubernetes daemonset in CrashLoopBackOff
-* Kubernetes daemonsets misscheduled
-* Kubernetes daemonsets not ready
-* Kubernetes daemonsets not scheduled
-* Kubernetes deployment in CrashLoopBackOff
-* Kubernetes deployments available
-* Kubernetes job from cronjob failed
-* Kubernetes node heartbeat
-* Kubernetes node status
-* Kubernetes pod status phase
-* Kubernetes pod terminated abnormally
-* Kubernetes replicasets available
-* Kubernetes replication_controllers available
-* Kubernetes statefulsets ready
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Kubernetes node heartbeat|X|-|-|-|-|
+|Kubernetes node status|-|X|X|-|-|
+|Kubernetes pod status phase|-|X|-|-|-|
+|Kubernetes pod terminated abnormally|-|X|-|-|-|
+|Kubernetes container killed by OOM|-|X|-|-|-|
+|Kubernetes deployment in CrashLoopBackOff|-|X|-|-|-|
+|Kubernetes daemonset in CrashLoopBackOff|-|X|-|-|-|
+|Kubernetes job from cronjob failed|-|X|-|-|-|
+|Kubernetes daemonsets not scheduled|X|-|-|-|-|
+|Kubernetes daemonsets not ready|X|-|-|-|-|
+|Kubernetes daemonsets misscheduled|X|-|-|-|-|
+|Kubernetes deployments available|X|-|-|-|-|
+|Kubernetes replicasets available|X|-|-|-|-|
+|Kubernetes replication_controllers available|X|-|-|-|-|
+|Kubernetes statefulsets ready|X|-|-|-|-|
 
 ## How to collect required metrics?
 
