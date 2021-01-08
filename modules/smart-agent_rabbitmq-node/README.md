@@ -9,6 +9,7 @@
 - [How to collect required metrics?](#how-to-collect-required-metrics)
   - [Monitors](#monitors)
   - [Examples](#examples)
+  - [Metrics](#metrics)
 - [Notes](#notes)
 - [Related documentation](#related-documentation)
 
@@ -122,6 +123,29 @@ monitors:
       - gauge.node.sockets_total
 ```
 
+
+### Metrics
+
+
+To filter only required metrics for the detectors of this module, add the 
+[datapointsToExclude](https://docs.signalfx.com/en/latest/integrations/agent/filtering.html) parameter to 
+the corresponding monitor configuration:
+
+```yaml
+    datapointsToExclude:
+      - metricNames:
+        - '*'
+        - '!gauge.node.fd_total'
+        - '!gauge.node.fd_used'
+        - '!gauge.node.mem_limit'
+        - '!gauge.node.mem_used'
+        - '!gauge.node.proc_total'
+        - '!gauge.node.proc_used'
+        - '!gauge.node.sockets_total'
+        - '!gauge.node.sockets_used'
+        - '!gauge.node.uptime'
+
+```
 
 ## Notes
 

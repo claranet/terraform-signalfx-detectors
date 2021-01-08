@@ -8,6 +8,7 @@
 - [What are the available detectors in this module?](#what-are-the-available-detectors-in-this-module)
 - [How to collect required metrics?](#how-to-collect-required-metrics)
   - [Monitors](#monitors)
+  - [Metrics](#metrics)
 - [Related documentation](#related-documentation)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -102,6 +103,25 @@ It is highly recommended to define `perCPU: true` in the `load` monitor configur
 per CPU/core which makes more sens for the generic load detector.
 For `Helm` deployment on `Kubernetes`, you can use `loadPerCPU` option available from `1.2.0` version.
 
+
+### Metrics
+
+
+To filter only required metrics for the detectors of this module, add the 
+[datapointsToExclude](https://docs.signalfx.com/en/latest/integrations/agent/filtering.html) parameter to 
+the corresponding monitor configuration:
+
+```yaml
+    datapointsToExclude:
+      - metricNames:
+        - '*'
+        - '!cpu.utilization'
+        - '!disk.utilization'
+        - '!load.midterm'
+        - '!memory.utilization'
+        - '!percent_inodes.used'
+
+```
 
 
 

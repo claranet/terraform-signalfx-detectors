@@ -1,0 +1,13 @@
+module: cassandra nodetool
+name: "Node state"
+transformation: ".min(over='1h')"
+aggregation: true
+signals:
+  signal:
+    metric: "cassandra.state"
+rules:
+  critical:
+    threshold: 1
+    comparator: ">"
+    description: "is not normal"
+tip: "The node state may be in leaving/joining for too long. Check the nodetool status result"

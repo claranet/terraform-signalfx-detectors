@@ -8,6 +8,7 @@
 - [What are the available detectors in this module?](#what-are-the-available-detectors-in-this-module)
 - [How to collect required metrics?](#how-to-collect-required-metrics)
   - [Monitors](#monitors)
+  - [Metrics](#metrics)
 - [Related documentation](#related-documentation)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -104,6 +105,26 @@ You have to enable the following `extraMetrics` in your monitor configuration:
 
 The first one is available only from agent version `v5.3.2`.
 
+
+### Metrics
+
+
+To filter only required metrics for the detectors of this module, add the 
+[datapointsToExclude](https://docs.signalfx.com/en/latest/integrations/agent/filtering.html) parameter to 
+the corresponding monitor configuration:
+
+```yaml
+    datapointsToExclude:
+      - metricNames:
+        - '*'
+        - '!haproxy_request_total'
+        - '!haproxy_response_4xx'
+        - '!haproxy_response_5xx'
+        - '!haproxy_session_current'
+        - '!haproxy_session_limit'
+        - '!haproxy_status'
+
+```
 
 
 

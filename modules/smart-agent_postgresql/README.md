@@ -10,6 +10,7 @@
   - [Monitors](#monitors)
   - [PostgreSQL](#postgresql)
   - [Examples](#examples)
+  - [Metrics](#metrics)
 - [Notes](#notes)
 - [Related documentation](#related-documentation)
 
@@ -176,6 +177,29 @@ __Note__: By default this configuration is for [standard
 deployment](https://github.com/claranet/terraform-signalfx-detectors/wiki/Guidance#deployment-mode). 
 You have to `disableHostDimensions: true` and add your PostgreSQL server as `host` dimension in `extraDimensions`.
 
+
+### Metrics
+
+
+To filter only required metrics for the detectors of this module, add the 
+[datapointsToExclude](https://docs.signalfx.com/en/latest/integrations/agent/filtering.html) parameter to 
+the corresponding monitor configuration:
+
+```yaml
+    datapointsToExclude:
+      - metricNames:
+        - '*'
+        - '!postgres_block_hit_ratio'
+        - '!postgres_conflicts'
+        - '!postgres_database_size'
+        - '!postgres_deadlocks'
+        - '!postgres_pct_connections'
+        - '!postgres_replication_lag'
+        - '!postgres_replication_state'
+        - '!postgres_xact_commits'
+        - '!postgres_xact_rollbacks'
+
+```
 
 ## Notes
 

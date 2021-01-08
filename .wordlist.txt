@@ -96,6 +96,15 @@ homogeneity
 PR
 PRs
 mergeable
+cp
+MacOS
+macOS
+xcode
+Linux
+linux
+Unix
+unix
+WSL
 Changelog
 Roadmap
 mutualise

@@ -1,0 +1,16 @@
+module: cassandra nodetool
+name: "Node status"
+transformation: ".min(over='10m')"
+aggregation: true
+signals:
+  signal:
+    metric: "cassandra.status"
+rules:
+  critical:
+    threshold: 0
+    comparator: "=="
+    description: "is dead"
+  minor:
+    threshold: 0
+    comparator: "<"
+    description: "is unknown"

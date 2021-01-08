@@ -10,6 +10,7 @@
   - [Agent](#agent)
   - [Monitors](#monitors)
   - [Examples](#examples)
+  - [Metrics](#metrics)
 - [Notes](#notes)
 - [Related documentation](#related-documentation)
 
@@ -142,6 +143,24 @@ rules:
 Using the SignalFx [Helm](https://helm.sh/) [chart](https://github.com/signalfx/signalfx-agent/tree/master/deployments/k8s/helm/signalfx-agent)
 could ease the agent installation and configuration. Only need to enable `gatherVolumesMetrics` option available from version `1.6.0`.
 
+
+### Metrics
+
+
+To filter only required metrics for the detectors of this module, add the 
+[datapointsToExclude](https://docs.signalfx.com/en/latest/integrations/agent/filtering.html) parameter to 
+the corresponding monitor configuration:
+
+```yaml
+    datapointsToExclude:
+      - metricNames:
+        - '*'
+        - '!kubernetes.volume_available_bytes'
+        - '!kubernetes.volume_capacity_bytes'
+        - '!kubernetes.volume_inodes'
+        - '!kubernetes.volume_inodes_free'
+
+```
 
 ## Notes
 

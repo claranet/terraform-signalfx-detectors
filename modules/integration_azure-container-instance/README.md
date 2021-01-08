@@ -7,6 +7,7 @@
 - [How to use this module?](#how-to-use-this-module)
 - [What are the available detectors in this module?](#what-are-the-available-detectors-in-this-module)
 - [How to collect required metrics?](#how-to-collect-required-metrics)
+  - [Metrics](#metrics)
 - [Notes](#notes)
 - [Related documentation](#related-documentation)
 
@@ -83,6 +84,14 @@ with this Terraform [module](https://github.com/claranet/terraform-signalfx-inte
 
 
 We are using metrics from the [Microsoft.ContainerInstance/containerGroups](https://docs.microsoft.com/fr-fr/azure/azure-monitor/platform/metrics-supported#microsoftcontainerinstancecontainergroups) namespace.
+
+### Metrics
+
+
+Here is the list of required metrics for detectors in this module.
+
+* `CpuUsage`
+
 
 ## Notes
 

@@ -5,32 +5,53 @@ an environment based on [docker](https://www.docker.com/) to make available all
 dependencies and tools to perform usual automation to generate or update files in 
 the repository.
 
+The environment uses the same [docker 
+image](https://hub.docker.com/r/claranet/terraform-ci) as the CI. You still can install 
+all dependencies listed in the 
+[Dockerfile](https://github.com/claranet/dockerfiles/tree/master/terraform) directly on 
+your host but it should be easier and less platform dependent with `docker`.
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 :link: **Contents**
 
 - [Requirements](#requirements)
+  - [Windows](#windows)
+  - [MacOS](#macos)
 - [Usage](#usage)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Requirements
 
-* `docker 17.06+` to run dev environment
-* `make` to use Makefile
+* [Docker](https://docs.docker.com/engine/install/) `17.06+` to run dev environment
+* `make` gnu command to use Makefile
 
-The dev environment uses the same [docker 
-image](https://hub.docker.com/r/claranet/terraform-ci) as the CI. You still can install 
-all dependencies listed in the 
-[Dockerfile](https://github.com/claranet/dockerfiles/tree/master/terraform) directly on 
-your host but it should be easier and less platform dependent with `docker`.
+### Windows
+
+For Windows users, you must install:
+
+* [WSL2](https://docs.microsoft.com/en-us/windows/wsl/install-win10)
+* [Docker Desktop for Windows](https://docs.docker.com/docker-for-windows/install/)
+* [Docker Desktop WSL 2 backend](https://docs.docker.com/docker-for-windows/wsl/)
+
+WSL2 will bring an unix environment including `make` but its backend requires 
+[Docker Desktop Community 
+v2.5.0+](https://docs.docker.com/docker-for-windows/release-notes/#docker-desktop-community-2500).
+
+### MacOS
+
+For macOS and users, you must install:
+
+* Run `xcode-select --install` if `make` is not available
+* [Docker Desktop for Mac](https://docs.docker.com/docker-for-mac/install/)
 
 ## Usage
 
-To run the environment, be sure the docker daemon is running and run `make`:
+Just have to run `make` (equals `make dev`). Before to run the environment,
+be sure `Docker` is running (i.e. `systemctl start docker.service` on linux).
 
 ```bash
-$ systemctl start docker.service
 $ make
 docker exec -ti terraform-signalfx-detectors bash -i || \
         docker run --rm -ti -v "${PWD}:/work" \

@@ -1,0 +1,20 @@
+module: "Azure Storage Account"
+name: "capacity"
+filtering: "filter('resource_type', 'Microsoft.Storage/storageAccounts') and filter('primary_aggregation_type', 'true')"
+aggregation: ".fill(None, duration='1d').sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+transformation: ".min(over='1d')"
+value_unit: PiB
+signals:
+  capacity:
+    metric: "UsedCapacity"
+  signal:
+    formula:
+      capacity.scale(0.0000000000000008881784197001252) # Scale to PiB unit
+rules:
+  critical:
+    threshold: 4.8
+    comparator: ">"
+  major:
+    threshold: 4.5
+    comparator: ">"
+    dependency: critical

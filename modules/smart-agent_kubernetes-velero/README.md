@@ -11,6 +11,7 @@
   - [Monitors](#monitors)
   - [Velero](#velero)
   - [Examples](#examples)
+  - [Metrics](#metrics)
 - [Notes](#notes)
 - [Related documentation](#related-documentation)
 
@@ -141,6 +142,25 @@ monitors:
     port: 8085
 ```
 
+
+### Metrics
+
+
+To filter only required metrics for the detectors of this module, add the 
+[datapointsToExclude](https://docs.signalfx.com/en/latest/integrations/agent/filtering.html) parameter to 
+the corresponding monitor configuration:
+
+```yaml
+    datapointsToExclude:
+      - metricNames:
+        - '*'
+        - '!velero_backup_deletion_failure_total'
+        - '!velero_backup_failure_total'
+        - '!velero_backup_partial_failure_total'
+        - '!velero_backup_success_total'
+        - '!velero_volume_snapshot_failure_total'
+
+```
 
 ## Notes
 

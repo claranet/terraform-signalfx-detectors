@@ -10,6 +10,7 @@
   - [Agent](#agent)
   - [Monitors](#monitors)
   - [Examples](#examples)
+  - [Metrics](#metrics)
 - [Notes](#notes)
   - [About `node_ready` detector](#about-node_ready-detector)
   - [About `job_failed` detector](#about-job_failed-detector)
@@ -207,6 +208,39 @@ monitors:
 
 __Note__: `clusterExtraMetrics` option is only available from the `1.7.1` version of the helm chart.
 
+
+### Metrics
+
+
+To filter only required metrics for the detectors of this module, add the 
+[datapointsToExclude](https://docs.signalfx.com/en/latest/integrations/agent/filtering.html) parameter to 
+the corresponding monitor configuration:
+
+```yaml
+    datapointsToExclude:
+      - metricNames:
+        - '*'
+        - '!kubernetes.container_ready'
+        - '!kubernetes.container_restart_count'
+        - '!kubernetes.daemon_set.current_scheduled'
+        - '!kubernetes.daemon_set.desired_scheduled'
+        - '!kubernetes.daemon_set.misscheduled'
+        - '!kubernetes.daemon_set.ready'
+        - '!kubernetes.deployment.available'
+        - '!kubernetes.deployment.desired'
+        - '!kubernetes.job.active'
+        - '!kubernetes.job.completions'
+        - '!kubernetes.job.succeeded'
+        - '!kubernetes.node_ready'
+        - '!kubernetes.pod_phase'
+        - '!kubernetes.replica_set.available'
+        - '!kubernetes.replica_set.desired'
+        - '!kubernetes.replication_controller.available'
+        - '!kubernetes.replication_controller.desired'
+        - '!kubernetes.stateful_set.desired'
+        - '!kubernetes.stateful_set.ready'
+
+```
 
 ## Notes
 

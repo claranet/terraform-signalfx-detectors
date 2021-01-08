@@ -1,0 +1,21 @@
+module: "Azure Storage Account"
+name: "ingress"
+filtering: "filter('resource_type', 'Microsoft.Storage/storageAccounts') and filter('primary_aggregation_type', 'true')"
+aggregation: ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+transformation: ".min(over='15m')"
+value_unit: "Gbps"
+signals:
+  ingress:
+    metric: "Ingress"
+    rollup: rate
+  signal:
+    formula:
+      ingress.scale(0.000000008) # Scale to Gb unit
+rules:
+  critical:
+    threshold: 9
+    comparator: ">"
+  major:
+    threshold: 8
+    comparator: ">"
+    dependency: critical

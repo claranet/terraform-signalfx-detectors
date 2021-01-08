@@ -8,6 +8,7 @@
 - [What are the available detectors in this module?](#what-are-the-available-detectors-in-this-module)
 - [How to collect required metrics?](#how-to-collect-required-metrics)
   - [Monitors](#monitors)
+  - [Metrics](#metrics)
 - [Related documentation](#related-documentation)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -95,6 +96,23 @@ This monitor is only available for agent `>= 5.2.0` but for previous versions yo
 monitor with [this 
 configuration](https://github.com/signalfx/signalfx-agent/blob/master/pkg/monitors/collectd/php/php.tmpl).
 
+
+### Metrics
+
+
+To filter only required metrics for the detectors of this module, add the 
+[datapointsToExclude](https://docs.signalfx.com/en/latest/integrations/agent/filtering.html) parameter to 
+the corresponding monitor configuration:
+
+```yaml
+    datapointsToExclude:
+      - metricNames:
+        - '*'
+        - '!phpfpm_processes.active'
+        - '!phpfpm_processes.idle'
+        - '!phpfpm_requests.accepted'
+
+```
 
 
 

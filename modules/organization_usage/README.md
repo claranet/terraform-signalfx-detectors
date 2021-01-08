@@ -7,6 +7,7 @@
 - [How to use this module?](#how-to-use-this-module)
 - [What are the available detectors in this module?](#what-are-the-available-detectors-in-this-module)
 - [How to collect required metrics?](#how-to-collect-required-metrics)
+  - [Metrics](#metrics)
 - [Notes](#notes)
 - [Related documentation](#related-documentation)
 
@@ -86,6 +87,18 @@ This module uses metrics available from
 organization](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.signalfx.organization.metrics.html).
 There are always available and do not need any configuration to work.
 
+
+
+### Metrics
+
+
+Here is the list of required metrics for detectors in this module.
+
+* `${"sf.org.${var.is_parent ? "child." : ""}numCustomMetrics"}`
+* `${"sf.org.${var.is_parent ? "child." : ""}numResourcesMonitored"}`
+* `${"sf.org.${var.is_parent ? "child." : ""}subscription.containers"}`
+* `${"sf.org.${var.is_parent ? "child." : ""}subscription.customMetrics"}`
+* `${"sf.org.${var.is_parent ? "child." : ""}subscription.hosts"}`
 
 
 ## Notes

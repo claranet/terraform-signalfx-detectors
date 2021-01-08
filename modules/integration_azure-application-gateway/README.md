@@ -7,6 +7,7 @@
 - [How to use this module?](#how-to-use-this-module)
 - [What are the available detectors in this module?](#what-are-the-available-detectors-in-this-module)
 - [How to collect required metrics?](#how-to-collect-required-metrics)
+  - [Metrics](#metrics)
 - [Notes](#notes)
   - [Capacity Units](#capacity-units)
 - [Related documentation](#related-documentation)
@@ -94,6 +95,22 @@ with this Terraform [module](https://github.com/claranet/terraform-signalfx-inte
 
 
 We are using metrics from the [Microsoft.Network/applicationGateways](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported#microsoftnetworkapplicationgateways) namespace.
+
+### Metrics
+
+
+Here is the list of required metrics for detectors in this module.
+
+* `BackendConnectTime`
+* `BackendResponseStatus`
+* `CapacityUnits`
+* `FailedRequests`
+* `HealthyHostCount`
+* `ResponseStatus`
+* `Throughput`
+* `TotalRequests`
+* `UnhealthyHostCount`
+
 
 ## Notes
 

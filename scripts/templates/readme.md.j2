@@ -96,6 +96,37 @@ There are always available and do not need any configuration to work.
 {{ source_doc }}
 {%- endif %}
 
+### Metrics
+
+{% if source_type == 'smart-agent' %}
+To filter only required metrics for the detectors of this module, add the 
+[datapointsToExclude](https://docs.signalfx.com/en/latest/integrations/agent/filtering.html) parameter to 
+the corresponding monitor configuration:
+
+```yaml
+    datapointsToExclude:
+      - metricNames:
+        - '*'
+{%- else %}
+Here is the list of required metrics for detectors in this module.
+{% endif %}
+{%- for metric in metrics.split(',') %}
+{%- if source_type == 'smart-agent' %}
+        - '!
+{%- else %}
+* `
+{%- endif -%}
+{{ metric }}
+{%- if source_type == 'smart-agent' -%}
+'
+{%- else -%}
+`
+{%- endif -%}
+{%- endfor %}
+{% if source_type == 'smart-agent' %}
+```
+{%- endif %}
+
 {% if notes is defined -%}
 ## Notes
 
