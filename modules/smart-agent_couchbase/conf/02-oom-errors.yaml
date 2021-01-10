@@ -1,0 +1,12 @@
+module: smart-agent_couchbase
+name: "Out of memory errors"
+aggregation: true
+transformation: ".min(over='15m')"
+value_unit: "%"
+signals:
+    metric: "gauge.bucket.op.ep_oom_errors"
+rules:
+  critical:
+    threshold: 0
+    comparator: ">"
+    description: "Hard out of memory errors"

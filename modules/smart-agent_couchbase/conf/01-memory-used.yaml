@@ -1,5 +1,5 @@
 module: smart-agent_couchbase
-name: "Check Memory"
+name: "Memory Used"
 aggregation: true
 transformation: ".min(over='15m')"
 value_unit: "%"

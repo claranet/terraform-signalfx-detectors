@@ -1,0 +1,16 @@
+module: smart-agent_couchbase
+name: "Disk Write Queue"
+aggregation: true
+transformation: ".min(over='15m')"
+signals:
+    metric: "gauge.bucket.op.disk_write_queue"
+rules:
+  critical:
+    threshold: 300
+    comparator: ">"
+    description: "Disk write queue is very big"
+  major:
+    threshold: 200
+    comparator: ">"
+    dependency: critical
+    escription: "Disk write queue is big"
