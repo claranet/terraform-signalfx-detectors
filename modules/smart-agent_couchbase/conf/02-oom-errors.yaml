@@ -1,0 +1,12 @@
+module: Couchbase
+name: "Out of memory errors"
+aggregation: true
+transformation: ".min(over='15m')"
+signals:
+  signal:
+    metric: "gauge.bucket.op.ep_oom_errors"
+rules:
+  critical:
+    threshold: 0
+    comparator: ">"
+    description: "Hard out of memory errors"
