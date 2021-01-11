@@ -297,6 +297,7 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
+|Azure Application Gateway capacity units|-|X|-|-|-|
 |Azure Application Gateway heartbeat|X|-|-|-|-|
 |Azure Application Gateway has no request|X|-|-|-|-|
 |Azure Application Gateway backend connect time|X|X|-|-|-|
@@ -306,7 +307,6 @@
 |Azure Application Gateway 5xx error rate|X|X|-|-|-|
 |Azure Application Gateway backend 4xx error rate|X|X|-|-|-|
 |Azure Application Gateway backend 5xx error rate|X|X|-|-|-|
-|Azure Application Gateway capacity units|-|X|-|-|-|
 
 
 ## azure-azure-search
