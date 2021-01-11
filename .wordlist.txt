@@ -23,6 +23,7 @@ IAAS
 MyISAM
 InnoDB
 symlink
+deadlinks
 specificities
 customizable
 customizations

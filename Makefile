@@ -66,7 +66,7 @@ check-module:
 check-spell:
 	pyspelling -c .spellcheck.yaml
 
-.PHONY: check-spell
+.PHONY: check-deadlinks
 check-deadlinks:
 	find . -name \*.md -exec markdown-link-check -c .mlc_config.json -p -q -v {} \;
 
