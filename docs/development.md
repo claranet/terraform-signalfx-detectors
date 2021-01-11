@@ -20,8 +20,8 @@ rules and templates homogeneous to all modules.
 
 - [Requirements](#requirements)
 - [TLDR](#tldr)
-  - [Example](#example)
-- [Make targets](#make-targets)
+  - [Bootstrap a new module](#bootstrap-a-new-module)
+- [Commands](#commands)
   - [Examples](#examples)
 - [Change types](#change-types)
   - [Documentation](#documentation)
@@ -39,7 +39,7 @@ rules and templates homogeneous to all modules.
 First of all you have to [setup your environment](./environment.md) to have every required 
 dependencies available to run useful commands detailed below.
 
-You should get a ready env where you can run `make` commands or directly use the underlying 
+You should get a ready environment where you can run `make` commands or directly use the underlying 
 [scripts](./scripts.md) or even some tools available in the container like `doctoc` or `j2`.
 
 ## TLDR
@@ -54,20 +54,20 @@ It allows to understand and link what type of change requires what `make` target
 the corresponding CI check.
 
 Most of contributions are related to [detectors change type](#detectors) and do no require 
-fully understand and know all possible targets, scripts and check.
+to fully understand and know all possible targets, scripts and check.
 
 The essential things to know are:
 
-* to understand lot of the files are auto generated and checked by the CI so you have to 
-respect this.
+* that lot of the files are auto generated and checked by the CI so you have to respect this
 * to never edit a `*-gen*` file or the `README.md` in modules, update its underlying yaml 
 configuration files in `conf/` directory of the module.
-* as soon as you make any change on a module, run `make update-module` command to update every generated files.
+* as soon as you make any change on a module, run `make update-module` command to update every 
+generated files
 
-### Example
+### Bootstrap a new module
 
-A common contribution which cover all required targets for most of detectors related changes 
-is the creation of a new module of detectors:
+A common contribution which cover most of detectors related changes is the creation of a 
+new module of detectors.
 
 ```bash
 $ echo "Set required input information as environment variables"
@@ -95,32 +95,14 @@ will take care of regenerating code, documentation and even check and validate t
 If this is not enough for your change or if you want to fully understand all capabilities and dependencies 
 you will have to read the rest of this documentation.
 
-## Make targets
+## Commands
 
-You have seen above the `update-module` and `init-module` `make` targets which are very common 
-for a developer no matter what type of change he would do but there are other possibilities.
+You have seen above the `update-module` and `init-module` `make` targets which should be enough 
+in most of the cases.
 
-Here are atomic `make` targets useful for for development purpose:
-
-- `dev`: the default and optional target, it requires docker to run container ready for other commands
-- `clean` to clean directory and git diff related to `/modules`
-- `update-module-detectors`: to update detectors (resources + variables) tf files only
-- `update-module-outputs`: to update outputs tf files only
-- `update-module-doc`: to update documentation files only (README.md)
-- `check-module`: to check and lint a module
-- `init-module`: bootstrap a new, fresh, empty module directory where add detectors
-
-Some alias exist to run multiple commands in once:
-
-- `update-module-tf`: to update all tf files of module(s), equals to 
-`make update-module-detectors && make update-module-outputs`
-- `update-module`: to update all files of module(s) and check it, equals to 
-`make update-module-tf && make check-module && make update-module-doc`
-
-Most of the them can accept an argument:
-
-- `init-module`: the required directory name of the new, fresh, empty module to bootstrap.
-- `update-module-*` and `check-module`: the optional filter to target changes on a subset of module(s).
+For a full list of available `make` targets please see [environment](./environment.md#Commands) 
+documentation. The most used commands for developer are `dev`, `init-module`, `update-module` and 
+`clean`.
 
 ### Examples
 

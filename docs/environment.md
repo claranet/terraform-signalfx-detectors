@@ -19,6 +19,7 @@ your host but it should be easier and less platform dependent with `docker`.
   - [Windows](#windows)
   - [MacOS](#macos)
 - [Usage](#usage)
+- [Commands](#commands)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -86,4 +87,34 @@ to use it in the `Makefile` but you can still use for "one shot" usage:
 ```bash
 $ docker run --pull=always --rm -ti -v "${PWD}:/work" claranet/terraform-ci:latest make clean
 ```
+
+## Commands
+
+The [Makefile](../Makefile) provides multiple targets. They are used by the CI for validation 
+checks, by the user to help to deploy detectors and by the developer to contribute automating 
+common tasks.
+
+|Command|Description|
+|---|---|
+|__`clean`__|to clean directory and git diff related to `/modules` and `examples/stack`|
+|__`dev`__|the default and optional target, it requires docker to run container ready for other commands|
+|__`init-module`__|bootstrap a new, fresh and empty module where to create detectors|
+|__`init-stack`__|bootstrap stack ready to use with all modules imported|
+|__`update-module`__|to fully update modules and their dependencies|
+|`check-deadlinks`|to run dead links check in all markdown files|
+|`check-module`|to check and lint module(s)|
+|`check-spell`|to run spell check on global markdown files|
+|`update-module-detectors`|to update detectors (resources + variables) terraform files only|
+|`update-module-doc`|to fully update documentation files only (README.md)|
+|`update-module-outputs`|to update outputs terraform files only|
+|`update-module-readme`|to update documentation files only (`README.md`) excluding global changes like TOC|
+|`update-module-tf`|to update all terraform files (resources, variables and outputs|
+|`update-severity-doc`|to fully update the global [severity documentation](./severity.md)|
+|`update-severity`|to update the global [severity documentation](./severity.md) without global changes like TOC|
+|`update-toc`|to update Table Of Contents for all markdown files|
+
+Most of the them can accept an argument:
+
+- `init-module`: the required directory name of the new, fresh, empty module to bootstrap
+- `update-module-*` and `check-module`: the optional filter to target changes on a subset of module(s)
 
