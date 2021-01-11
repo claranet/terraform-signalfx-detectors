@@ -22,6 +22,7 @@
 - [aws-rds-common](#aws-rds-common)
 - [aws-sqs](#aws-sqs)
 - [aws-vpn](#aws-vpn)
+- [azure-api-management-service](#azure-api-management-service)
 - [azure-app-service-plan](#azure-app-service-plan)
 - [azure-app-service](#azure-app-service)
 - [azure-application-gateway](#azure-application-gateway)
@@ -258,6 +259,16 @@
 |---|---|---|---|---|---|
 |AWS VPN heartbeat|X|-|-|-|-|
 |AWS VPN tunnel state|X|-|-|-|-|
+
+
+## azure-api-management-service
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Azure API Management Service Heartbeat|X|-|-|-|-|
+|Azure API Management Service Capacity|X|X|-|-|-|
+|Azure API Management Service Duration of gateway request|X|X|-|-|-|
+|Azure API Management Service Duration of backend request|X|X|-|-|-|
 
 
 ## azure-app-service-plan
