@@ -74,7 +74,7 @@ This module creates the following SignalFx detectors which could contain one or 
 
 * Couchbase disk write queue
 * Couchbase out of memory errors
-* Smart-agent_couchbase memory used
+* Couchbase memory used
 
 ## How to collect required metrics?
 
