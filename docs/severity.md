@@ -29,6 +29,7 @@
 - [azure-azure-search](#azure-azure-search)
 - [azure-container-instance](#azure-container-instance)
 - [azure-cosmos-db](#azure-cosmos-db)
+- [azure-event-hub](#azure-event-hub)
 - [azure-functions](#azure-functions)
 - [azure-key-vault](#azure-key-vault)
 - [azure-load-balancer](#azure-load-balancer)
@@ -332,6 +333,13 @@
 |Azure Cosmos DB 5xx error rate|X|X|-|-|-|
 |Azure Cosmos DB scaling errors rate|X|X|-|-|-|
 |Azure Cosmos DB used RUs capacity|X|X|-|-|-|
+
+
+## azure-event-hub
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Azure Event Hub throttled requests|X|X|-|X|-|
 
 
 ## azure-functions

@@ -1,0 +1,28 @@
+
+---
+module: "Azure Event Hub"
+name: "throttled requests"
+filtering: "filter('resource_type', 'Microsoft.EventHub/clusters') and filter('primary_aggregation_type', 'true')"
+aggregation: ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+transformation: ".min(over='15m')"
+value_unit: "%"
+signals:
+  A:
+    metric: ThrottledRequests
+  B:
+    metric: IncomingRequests
+  signal:
+    formula: "(A/B).scale(100).fill(0)"
+rules:
+  critical:
+    threshold: 30
+    comparator: ">"
+  major:
+    threshold: 15
+    comparator: ">"
+    dependency: critical
+  warning:
+    threshold: 0
+    comparator: ">"
+    dependency: major
+...
