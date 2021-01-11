@@ -72,7 +72,9 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* Smart-agent_couchbase check memory
+* Couchbase disk write queue
+* Couchbase out of memory errors
+* Smart-agent_couchbase memory used
 
 ## How to collect required metrics?
 

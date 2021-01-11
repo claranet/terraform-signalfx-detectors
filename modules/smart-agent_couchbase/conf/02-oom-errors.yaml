@@ -1,9 +1,9 @@
-module: smart-agent_couchbase
+module: Couchbase
 name: "Out of memory errors"
 aggregation: true
 transformation: ".min(over='15m')"
-value_unit: "%"
 signals:
+  signal:
     metric: "gauge.bucket.op.ep_oom_errors"
 rules:
   critical:

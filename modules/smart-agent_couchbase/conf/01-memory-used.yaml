@@ -1,4 +1,4 @@
-module: smart-agent_couchbase
+module: Couchbase
 name: "Memory Used"
 aggregation: true
 transformation: ".min(over='15m')"
