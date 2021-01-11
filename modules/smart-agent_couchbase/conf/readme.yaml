@@ -1,3 +1,8 @@
 documentations:
+  - name: Smart Agent monitor
+    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-couchbase.html'
 
 source_doc:
+
+  This module uses the collectd/couchbase monitor for Couchbase usind Python plugin to collect metrics from Couchbase server instances.
+  
