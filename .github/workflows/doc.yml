@@ -40,6 +40,21 @@ jobs:
     - name: Check for changes
       run: git diff --exit-code
 
+  severity:
+    runs-on: ubuntu-latest
+    container:
+      image: "claranet/terraform-ci:latest"
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Generate severity doc
+      run: make update-severity-doc
+
+    - name: Check for changes
+      run: git diff --exit-code
+
   spellcheck:
     runs-on: ubuntu-latest
 

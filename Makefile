@@ -33,11 +33,23 @@ clean:
 	git clean -df init-modules/
 
 .PHONY: update-module
-update-module: update-module-tf check-module update-module-doc
+update-module: update-module-tf check-module update-module-doc update-severity-doc
 
 .PHONY: update-module-doc
 update-module-doc: 
 	CI=true	./scripts/module/loop_wrapper.sh ./scripts/module/gen_doc.sh
+
+sev_dst = docs/severity.md
+.PHONY: update-severity
+update-severity:
+	@echo -e "# Severity per detector\n" > $(sev_dst)
+	@echo "<!-- START doctoc generated TOC please keep comment here to allow auto update -->" >> ${sev_dst}
+	@echo "<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->" >> ${sev_dst}
+	@echo -e "<!-- END doctoc generated TOC please keep comment here to allow auto update -->\n" >> ${sev_dst}
+	SEV_GLOBAL=true ./scripts/module/loop_wrapper.sh ./scripts/module/gen_severity.sh >> ${sev_dst}
+
+.PHONY: update-severity-doc
+update-severity-doc: update-severity update-toc
 
 .PHONY: update-toc
 update-toc: 

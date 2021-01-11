@@ -75,12 +75,14 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* Varnish backend Failed
-* Varnish heartbeat
-* Varnish hit rate
-* Varnish memory usage
-* Varnish session dropped
-* Varnish threads number
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Varnish heartbeat|X|-|-|-|-|
+|Varnish backend Failed|X|-|-|-|-|
+|Varnish threads number|X|-|-|-|-|
+|Varnish session dropped|X|-|-|-|-|
+|Varnish hit rate|-|X|X|-|-|
+|Varnish memory usage|X|X|-|-|-|
 
 ## How to collect required metrics?
 

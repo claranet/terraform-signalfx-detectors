@@ -74,10 +74,12 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* GCP GCE Instance CPU utilization
-* GCP GCE Instance disk throttled bps
-* GCP GCE Instance disk throttled ops
-* GCP GCE Instance heartbeat
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|GCP GCE Instance heartbeat|X|-|-|-|-|
+|GCP GCE Instance CPU utilization|X|X|-|-|-|
+|GCP GCE Instance disk throttled bps|X|X|-|-|-|
+|GCP GCE Instance disk throttled ops|X|X|-|-|-|
 
 ## How to collect required metrics?
 

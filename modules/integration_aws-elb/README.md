@@ -73,13 +73,15 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* AWS ELB 4xx error rate
-* AWS ELB 5xx error rate
-* AWS ELB backend 4xx error rate
-* AWS ELB backend 5xx error rate
-* AWS ELB backend latency
-* AWS ELB healthy instances percentage
-* AWS ELB heartbeat
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|AWS ELB heartbeat|X|-|-|-|-|
+|AWS ELB healthy instances percentage|X|X|-|-|-|
+|AWS ELB 4xx error rate|X|X|-|-|-|
+|AWS ELB 5xx error rate|X|X|-|-|-|
+|AWS ELB backend 4xx error rate|X|X|-|-|-|
+|AWS ELB backend 5xx error rate|X|X|-|-|-|
+|AWS ELB backend latency|X|X|-|-|-|
 
 ## How to collect required metrics?
 

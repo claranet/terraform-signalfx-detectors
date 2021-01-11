@@ -73,8 +73,10 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* Nginx dropped connections
-* Nginx heartbeat
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Nginx heartbeat|X|-|-|-|-|
+|Nginx dropped connections|X|X|-|-|-|
 
 ## How to collect required metrics?
 

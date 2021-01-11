@@ -75,8 +75,10 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* Supervisor heartbeat
-* Supervisor process
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Supervisor heartbeat|X|-|-|-|-|
+|Supervisor process|X|X|-|-|-|
 
 ## How to collect required metrics?
 

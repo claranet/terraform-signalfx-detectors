@@ -73,8 +73,10 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* AWS NLB healthy instances percentage
-* AWS NLB heartbeat
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|AWS NLB heartbeat|X|-|-|-|-|
+|AWS NLB healthy instances percentage|X|X|-|-|-|
 
 ## How to collect required metrics?
 

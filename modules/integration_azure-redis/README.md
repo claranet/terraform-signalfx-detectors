@@ -73,10 +73,12 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* Azure Redis evicted keys
-* Azure Redis heartbeat
-* Azure Redis load
-* Azure Redis processor time
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Azure Redis heartbeat|X|-|-|-|-|
+|Azure Redis evicted keys|X|X|-|-|-|
+|Azure Redis processor time|X|X|-|-|-|
+|Azure Redis load|X|X|-|-|-|
 
 ## How to collect required metrics?
 

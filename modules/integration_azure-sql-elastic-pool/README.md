@@ -73,10 +73,12 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* Azure SQL Elastic Pool CPU
-* Azure SQL Elastic Pool disk usage
-* Azure SQL Elastic Pool DTU consumption
-* Azure SQL Elastic Pool heartbeat
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Azure SQL Elastic Pool heartbeat|X|-|-|-|-|
+|Azure SQL Elastic Pool CPU|X|X|-|-|-|
+|Azure SQL Elastic Pool disk usage|X|X|-|-|-|
+|Azure SQL Elastic Pool DTU consumption|X|X|-|-|-|
 
 ## How to collect required metrics?
 

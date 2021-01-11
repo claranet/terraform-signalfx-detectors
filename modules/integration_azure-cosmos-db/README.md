@@ -73,11 +73,13 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* Azure Cosmos DB 4xx request rate
-* Azure Cosmos DB 5xx error rate
-* Azure Cosmos DB heartbeat
-* Azure Cosmos DB scaling errors rate
-* Azure Cosmos DB used RUs capacity
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Azure Cosmos DB heartbeat|X|-|-|-|-|
+|Azure Cosmos DB 4xx request rate|X|X|-|-|-|
+|Azure Cosmos DB 5xx error rate|X|X|-|-|-|
+|Azure Cosmos DB scaling errors rate|X|X|-|-|-|
+|Azure Cosmos DB used RUs capacity|X|X|-|-|-|
 
 ## How to collect required metrics?
 

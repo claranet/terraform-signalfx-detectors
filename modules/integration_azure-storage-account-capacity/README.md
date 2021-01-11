@@ -75,7 +75,9 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* Azure storage account Used capacity
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Azure storage account Used capacity|X|X|-|-|-|
 
 ## How to collect required metrics?
 

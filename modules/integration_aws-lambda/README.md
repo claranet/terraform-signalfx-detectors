@@ -73,9 +73,11 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* AWS Lambda errors rate
-* AWS Lambda invocations
-* AWS Lambda invocations throttled
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|AWS Lambda errors rate|X|X|-|-|-|
+|AWS Lambda invocations throttled|X|X|-|-|-|
+|AWS Lambda invocations|-|X|-|-|-|
 
 ## How to collect required metrics?
 

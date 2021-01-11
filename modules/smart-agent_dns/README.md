@@ -74,9 +74,11 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* DNS heartbeat
-* DNS query result
-* DNS query time
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|DNS heartbeat|X|-|-|-|-|
+|DNS query time|X|X|-|-|-|
+|DNS query result|X|-|-|-|-|
 
 ## How to collect required metrics?
 

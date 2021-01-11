@@ -73,13 +73,15 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* AWS ElastiCache connections over max allowed
-* AWS ElastiCache current connections
-* AWS ElastiCache evictions
-* AWS ElastiCache evictions changing rate grows
-* AWS ElastiCache freeable memory
-* AWS ElastiCache heartbeat
-* AWS ElastiCache swap
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|AWS ElastiCache heartbeat|X|-|-|-|-|
+|AWS ElastiCache evictions|X|X|-|-|-|
+|AWS ElastiCache connections over max allowed|X|-|-|-|-|
+|AWS ElastiCache current connections|X|-|-|-|-|
+|AWS ElastiCache swap|X|X|-|-|-|
+|AWS ElastiCache freeable memory|-|X|X|-|-|
+|AWS ElastiCache evictions changing rate grows|X|X|-|-|-|
 
 ## How to collect required metrics?
 

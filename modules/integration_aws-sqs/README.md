@@ -73,9 +73,11 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* AWS SQS Age of the oldest message
-* AWS SQS heartbeat
-* AWS SQS Visible messages
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|AWS SQS heartbeat|X|-|-|-|-|
+|AWS SQS Visible messages|X|X|-|-|-|
+|AWS SQS Age of the oldest message|X|X|-|-|-|
 
 ## How to collect required metrics?
 

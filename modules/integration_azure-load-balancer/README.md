@@ -73,7 +73,9 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* Azure Load balancer heartbeat
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Azure Load balancer heartbeat|X|-|-|-|-|
 
 ## How to collect required metrics?
 

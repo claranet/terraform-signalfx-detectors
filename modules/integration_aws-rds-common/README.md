@@ -73,10 +73,12 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* AWS RDS heartbeat
-* AWS RDS instance CPU
-* AWS RDS instance free space
-* AWS RDS replica lag
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|AWS RDS heartbeat|X|-|-|-|-|
+|AWS RDS instance CPU|X|X|-|-|-|
+|AWS RDS instance free space|X|X|-|-|-|
+|AWS RDS replica lag|X|X|-|-|-|
 
 ## How to collect required metrics?
 

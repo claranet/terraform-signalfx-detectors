@@ -73,12 +73,14 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* Azure MySQL CPU usage
-* Azure MySQL heartbeat
-* Azure MySQL IO consumption
-* Azure MySQL memory usage
-* Azure MySQL replication lag
-* Azure MySQL storage usage
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Azure MySQL heartbeat|X|-|-|-|-|
+|Azure MySQL CPU usage|X|X|-|-|-|
+|Azure MySQL storage usage|X|X|-|-|-|
+|Azure MySQL IO consumption|X|X|-|-|-|
+|Azure MySQL memory usage|X|X|-|-|-|
+|Azure MySQL replication lag|X|X|-|-|-|
 
 ## How to collect required metrics?
 

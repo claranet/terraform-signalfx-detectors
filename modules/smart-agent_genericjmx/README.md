@@ -77,8 +77,10 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* JMX GC old generation usage
-* JMX memory heap usage
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|JMX memory heap usage|X|X|-|-|-|
+|JMX GC old generation usage|X|X|-|-|-|
 
 ## How to collect required metrics?
 
