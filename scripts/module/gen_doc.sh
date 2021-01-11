@@ -4,7 +4,6 @@ set -ue -o pipefail
 TARGET="${1:-}"
 MODULE=${TARGET#"modules/"}
 # this variable could be set either by Makefile or Github Actions
-CI="${CI:-false}"
 
 # Cancel if not readme configuration found for this module
 if ! [ -f ${TARGET}/conf/readme.yaml ]; then
@@ -45,8 +44,4 @@ set +a
 echo "Generate module readme \"${TARGET}/README.md\" from \"${TARGET}/conf/readme.yaml\""
 # Run j2 using yaml config but overrides with env var
 j2 --import-env= ./scripts/templates/readme.md.j2 ${TARGET}/conf/readme.yaml > ${TARGET}/README.md
-if [ $CI == "true" ]; then 
-    # when used by CI or from "upper" target we want to regen toc also to avoid diff error
-    doctoc --github --title ':link: **Contents**' --maxlevel 3 ${TARGET}/README.md
-fi
 

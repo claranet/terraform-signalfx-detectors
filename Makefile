@@ -1,4 +1,4 @@
-SUPPORTED_COMMANDS := init-module update-module update-module-doc update-module-tf update-module-detectors update-module-outputs check-module
+SUPPORTED_COMMANDS := init-module update-module update-module-doc update-module-readme update-module-tf update-module-detectors update-module-outputs check-module
 SUPPORTS_MAKE_ARGS := $(findstring $(firstword $(MAKECMDGOALS)), $(SUPPORTED_COMMANDS))
 ifneq "$(SUPPORTS_MAKE_ARGS)" ""
   COMMAND_ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
@@ -33,11 +33,14 @@ clean:
 	git clean -df init-modules/
 
 .PHONY: update-module
-update-module: update-module-tf check-module update-module-doc update-severity-doc
+update-module: update-module-tf check-module update-module-readme update-severity-doc
 
 .PHONY: update-module-doc
-update-module-doc: 
-	CI=true	./scripts/module/loop_wrapper.sh ./scripts/module/gen_doc.sh
+update-module-doc: update-module-readme update-toc
+
+.PHONY: update-module-readme
+update-module-readme: 
+	./scripts/module/loop_wrapper.sh ./scripts/module/gen_doc.sh
 
 sev_dst = docs/severity.md
 .PHONY: update-severity
@@ -46,7 +49,7 @@ update-severity:
 	@echo "<!-- START doctoc generated TOC please keep comment here to allow auto update -->" >> ${sev_dst}
 	@echo "<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->" >> ${sev_dst}
 	@echo -e "<!-- END doctoc generated TOC please keep comment here to allow auto update -->\n" >> ${sev_dst}
-	SEV_GLOBAL=true ./scripts/module/loop_wrapper.sh ./scripts/module/gen_severity.sh >> ${sev_dst}
+	FILTER=* SEV_GLOBAL=true ./scripts/module/loop_wrapper.sh ./scripts/module/gen_severity.sh >> ${sev_dst}
 
 .PHONY: update-severity-doc
 update-severity-doc: update-severity update-toc
