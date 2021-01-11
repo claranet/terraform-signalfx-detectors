@@ -73,8 +73,8 @@ general usage of this repository.
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
 * Couchbase disk write queue
-* Couchbase out of memory errors
 * Couchbase memory used
+* Couchbase out of memory errors
 
 ## How to collect required metrics?
 
@@ -85,7 +85,7 @@ Agent](https://github.com/signalfx/signalfx-agent). Check the "Related documenta
 information including the official documentation of this monitor.
 
 
-
+This module uses the collectd/couchbase monitor for Couchbase usind Python plugin to collect metrics from Couchbase server instances.
 
 
 
@@ -93,3 +93,4 @@ information including the official documentation of this monitor.
 
 * [Terraform SignalFx provider](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs)
 * [Terraform SignalFx detector](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector)
+* [Smart Agent monitor](https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-couchbase.html)
