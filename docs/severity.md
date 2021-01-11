@@ -74,6 +74,7 @@
 - [nginx](#nginx)
 - [ntp](#ntp)
 - [php-fpm](#php-fpm)
+- [postfix](#postfix)
 - [postgresql](#postgresql)
 - [processes](#processes)
 - [rabbitmq-node](#rabbitmq-node)
@@ -284,7 +285,6 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|Azure Application Gateway capacity units|-|X|-|-|-|
 |Azure Application Gateway heartbeat|X|-|-|-|-|
 |Azure Application Gateway has no request|X|-|-|-|-|
 |Azure Application Gateway backend connect time|X|X|-|-|-|
@@ -294,6 +294,7 @@
 |Azure Application Gateway 5xx error rate|X|X|-|-|-|
 |Azure Application Gateway backend 4xx error rate|X|X|-|-|-|
 |Azure Application Gateway backend 5xx error rate|X|X|-|-|-|
+|Azure Application Gateway capacity units|-|X|-|-|-|
 
 
 ## azure-azure-search
@@ -799,6 +800,14 @@
 |---|---|---|---|---|---|
 |PHP-FPM heartbeat|X|-|-|-|-|
 |PHP-FPM busy workers|X|X|-|-|-|
+
+
+## postfix
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Postfix heartbeat|X|-|-|-|-|
+|Postfix queue size|X|X|-|-|-|
 
 
 ## postgresql

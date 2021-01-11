@@ -1,0 +1,57 @@
+documentations:
+  - name: Smart Agent monitor
+    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-custom.html'
+
+source_doc: |
+
+  ### Monitors
+
+  There is no official monitor for Postfix in the Smart Agent. A custom collectd plugin is available below to collect the queue length with the `postqueue` tool.
+
+  ```python
+  #!/usr/bin/env python
+  import collectd
+  from subprocess import run
+  
+  NAME = "postfix"
+  
+  def read_mailqueue():
+      metrics = {"active": 0, "hold": 0, "deferred": 0}
+      res = run(["postqueue", "-p"], check=True, capture_output=True, text=True)
+      for line in res.stdout.splitlines():
+          if "*" in line:
+              metrics["active"] += 1
+              continue
+          if "!" in line:
+              metrics["hold"] += 1
+              continue
+          if line[0:1].isdigit():
+              metrics["deferred"] += 1
+  
+      for status, value in metrics.items():
+          collectd.Values(
+              plugin=NAME,
+              type_instance="queue.size",
+              plugin_instance="[status=%s]" % status,
+              type="gauge",
+              values=[value],
+          ).dispatch()
+  
+  
+  collectd.register_read(read_mailqueue)
+
+  ```
+
+  If you need more Postfix metrics, you should maybe take a look at the [collectd tail plugin](https://collectd.org/wiki/index.php/Plugin:Tail/Config).
+
+  ### Examples
+
+  ```yaml
+  - type: collectd/custom
+    template: |
+      LoadPlugin "python"
+      <Plugin python>
+          ModulePath "/usr/local/lib/signalfx-agent/collectd-python/postfix/"
+          Import "postfix"
+      </Plugin>
+  ```

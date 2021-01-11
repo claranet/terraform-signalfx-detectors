@@ -1,4 +1,4 @@
-# AZURE-APPLICATION-GATEWAY SignalFx detectors
+# POSTFIX SignalFx detectors
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -7,9 +7,9 @@
 - [How to use this module?](#how-to-use-this-module)
 - [What are the available detectors in this module?](#what-are-the-available-detectors-in-this-module)
 - [How to collect required metrics?](#how-to-collect-required-metrics)
+  - [Monitors](#monitors)
+  - [Examples](#examples)
   - [Metrics](#metrics)
-- [Notes](#notes)
-  - [Capacity Units](#capacity-units)
 - [Related documentation](#related-documentation)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -22,12 +22,11 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-integration-azure-application-gateway" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/integration_azure-application-gateway?ref={revision}"
+module "signalfx-detectors-smart-agent-postfix" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/smart-agent_postfix?ref={revision}"
 
-  environment                    = var.environment
-  notifications                  = local.notifications
-  capacity_units_threshold_major = 42
+  environment   = var.environment
+  notifications = local.notifications
 }
 ```
 
@@ -60,7 +59,7 @@ Note the following parameters:
 
 These 3 parameters alongs with all variables defined in [common-variables.tf](common-variables.tf) are common to all 
 [modules](../) in this repository. Other variables, specific to this module, are available in 
-[variables.tf](variables.tf) and [variables-gen.tf](variables-gen.tf).
+[variables.tf](variables.tf).
 In general, the default configuration "works" but all of these Terraform 
 [variables](https://www.terraform.io/docs/configuration/variables.html) make it possible to 
 customize the detectors behavior to better fit your needs.
@@ -78,57 +77,91 @@ This module creates the following SignalFx detectors which could contain one or 
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|Azure Application Gateway heartbeat|X|-|-|-|-|
-|Azure Application Gateway has no request|X|-|-|-|-|
-|Azure Application Gateway backend connect time|X|X|-|-|-|
-|Azure Application Gateway failed request rate|X|X|-|-|-|
-|Azure Application Gateway backend unhealthy host ratio|X|X|-|-|-|
-|Azure Application Gateway 4xx error rate|X|X|-|-|-|
-|Azure Application Gateway 5xx error rate|X|X|-|-|-|
-|Azure Application Gateway backend 4xx error rate|X|X|-|-|-|
-|Azure Application Gateway backend 5xx error rate|X|X|-|-|-|
-|Azure Application Gateway capacity units|-|X|-|-|-|
+|Postfix heartbeat|X|-|-|-|-|
+|Postfix queue size|X|X|-|-|-|
 
 ## How to collect required metrics?
 
 This module uses metrics available from 
-the [Azure integration](https://docs.signalfx.com/en/latest/integrations/azure-info.html) configurable 
-with this Terraform [module](https://github.com/claranet/terraform-signalfx-integrations/tree/master/cloud/azure).
+[monitors](https://docs.signalfx.com/en/latest/integrations/agent/monitors/_monitor-config.html)
+available in the [SignalFx Smart 
+Agent](https://github.com/signalfx/signalfx-agent). Check the "Related documentation" section for more 
+information including the official documentation of this monitor.
 
 
-We are using metrics from the [Microsoft.Network/applicationGateways](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported#microsoftnetworkapplicationgateways) namespace.
+
+### Monitors
+
+There is no official monitor for Postfix in the Smart Agent. A custom collectd plugin is available below to collect the queue length with the `postqueue` tool.
+
+```python
+#!/usr/bin/env python
+import collectd
+from subprocess import run
+
+NAME = "postfix"
+
+def read_mailqueue():
+    metrics = {"active": 0, "hold": 0, "deferred": 0}
+    res = run(["postqueue", "-p"], check=True, capture_output=True, text=True)
+    for line in res.stdout.splitlines():
+        if "*" in line:
+            metrics["active"] += 1
+            continue
+        if "!" in line:
+            metrics["hold"] += 1
+            continue
+        if line[0:1].isdigit():
+            metrics["deferred"] += 1
+
+    for status, value in metrics.items():
+        collectd.Values(
+            plugin=NAME,
+            type_instance="queue.size",
+            plugin_instance="[status=%s]" % status,
+            type="gauge",
+            values=[value],
+        ).dispatch()
+
+
+collectd.register_read(read_mailqueue)
+
+```
+
+If you need more Postfix metrics, you should maybe take a look at the [collectd tail plugin](https://collectd.org/wiki/index.php/Plugin:Tail/Config).
+
+### Examples
+
+```yaml
+- type: collectd/custom
+  template: |
+    LoadPlugin "python"
+    <Plugin python>
+        ModulePath "/usr/local/lib/signalfx-agent/collectd-python/postfix/"
+        Import "postfix"
+    </Plugin>
+```
+
 
 ### Metrics
 
 
-Here is the list of required metrics for detectors in this module.
+To filter only required metrics for the detectors of this module, add the 
+[datapointsToExclude](https://docs.signalfx.com/en/latest/integrations/agent/filtering.html) parameter to 
+the corresponding monitor configuration:
 
-* `BackendConnectTime`
-* `BackendResponseStatus`
-* `CapacityUnits`
-* `FailedRequests`
-* `HealthyHostCount`
-* `ResponseStatus`
-* `Throughput`
-* `TotalRequests`
-* `UnhealthyHostCount`
-
-
-## Notes
-
-### Capacity Units
-
-To properly calculate the `capacity_units_threshold_major` please refer to the Microsoft documentation about [CapacityUnits](https://docs.microsoft.com/en-us/azure/application-gateway/application-gateway-autoscaling-zone-redundant)
+```yaml
+    datapointsToExclude:
+      - metricNames:
+        - '*'
+        - '!gauge.queue.size'
 
 ```
-Each instance is roughly equivalent to 10 additional reserved Capacity Units.
-```
 
-If you're enabling autoscaling on your application gateway, default instance count is 20, which means 200 Capacity Units.
 
 
 ## Related documentation
 
 * [Terraform SignalFx provider](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs)
 * [Terraform SignalFx detector](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector)
-* [Azure Monitor metrics](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported)
+* [Smart Agent monitor](https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-custom.html)
