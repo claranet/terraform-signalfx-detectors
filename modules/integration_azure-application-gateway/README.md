@@ -78,7 +78,6 @@ This module creates the following SignalFx detectors which could contain one or 
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|Azure Application Gateway capacity units|-|X|-|-|-|
 |Azure Application Gateway heartbeat|X|-|-|-|-|
 |Azure Application Gateway has no request|X|-|-|-|-|
 |Azure Application Gateway backend connect time|X|X|-|-|-|
@@ -88,6 +87,7 @@ This module creates the following SignalFx detectors which could contain one or 
 |Azure Application Gateway 5xx error rate|X|X|-|-|-|
 |Azure Application Gateway backend 4xx error rate|X|X|-|-|-|
 |Azure Application Gateway backend 5xx error rate|X|X|-|-|-|
+|Azure Application Gateway capacity units|-|X|-|-|-|
 
 ## How to collect required metrics?
 

@@ -76,13 +76,13 @@ This module creates the following SignalFx detectors which could contain one or 
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|System disk space running out|-|X|-|-|-|
 |System heartbeat|X|-|-|-|-|
 |System cpu utilization|X|X|-|-|-|
 |System load 5m ratio|X|X|-|-|-|
 |System disk space utilization|X|X|-|-|-|
 |System disk inodes utilization|X|X|-|-|-|
 |System memory utilization|X|X|-|-|-|
+|System disk space running out|-|X|-|-|-|
 
 ## How to collect required metrics?
 

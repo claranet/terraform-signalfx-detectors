@@ -13,8 +13,7 @@ if [[ ${SEV_GLOBAL} == "true" ]]; then
 fi
 echo -e "|Detector|Critical|Major|Minor|Warning|Info|\n|---|---|---|---|---|---|"
 
-for tf in $(find ${TARGET} -name "detectors-*.tf")
-do
+for tf in ${TARGET}/detectors-*.tf; do
     line_table=""
     while read line  
     do
