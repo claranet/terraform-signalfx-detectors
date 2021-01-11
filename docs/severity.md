@@ -55,6 +55,7 @@
 - [apache](#apache)
 - [cassandra-nodetool](#cassandra-nodetool)
 - [cassandra](#cassandra)
+- [couchbase](#couchbase)
 - [dns](#dns)
 - [docker](#docker)
 - [elasticsearch](#elasticsearch)
@@ -589,6 +590,15 @@
 |Cassandra transactional read latency real time|X|X|-|-|-|
 |Cassandra transactional write latency real time|X|X|-|-|-|
 |Cassandra storage exceptions count|-|X|-|-|-|
+
+
+## couchbase
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Couchbase memory used|X|X|-|-|-|
+|Couchbase out of memory errors|X|-|-|-|-|
+|Couchbase disk write queue|X|X|-|-|-|
 
 
 ## dns

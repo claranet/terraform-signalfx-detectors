@@ -52,7 +52,7 @@ resource "signalfx_detector" "out_of_memory_errors" {
 EOF
 
   rule {
-    description           = "is too high > ${var.out_of_memory_errors_threshold_critical}"
+    description           = "Hard out of memory errors > ${var.out_of_memory_errors_threshold_critical}"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.out_of_memory_errors_disabled, var.detectors_disabled)
@@ -76,7 +76,7 @@ resource "signalfx_detector" "disk_write_queue" {
 EOF
 
   rule {
-    description           = "is too high > ${var.disk_write_queue_threshold_critical}"
+    description           = "Disk write queue is very big > ${var.disk_write_queue_threshold_critical}"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.disk_write_queue_disabled_critical, var.disk_write_queue_disabled, var.detectors_disabled)
@@ -88,7 +88,7 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.disk_write_queue_threshold_major}"
+    description           = "Disk write queue is big > ${var.disk_write_queue_threshold_major}"
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.disk_write_queue_disabled_major, var.disk_write_queue_disabled, var.detectors_disabled)

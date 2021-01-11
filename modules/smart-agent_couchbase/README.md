@@ -7,6 +7,7 @@
 - [How to use this module?](#how-to-use-this-module)
 - [What are the available detectors in this module?](#what-are-the-available-detectors-in-this-module)
 - [How to collect required metrics?](#how-to-collect-required-metrics)
+  - [Metrics](#metrics)
 - [Related documentation](#related-documentation)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -72,9 +73,11 @@ general usage of this repository.
 
 This module creates the following SignalFx detectors which could contain one or multiple alerting rules:
 
-* Couchbase disk write queue
-* Couchbase memory used
-* Couchbase out of memory errors
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Couchbase memory used|X|X|-|-|-|
+|Couchbase out of memory errors|X|-|-|-|-|
+|Couchbase disk write queue|X|X|-|-|-|
 
 ## How to collect required metrics?
 
@@ -85,7 +88,25 @@ Agent](https://github.com/signalfx/signalfx-agent). Check the "Related documenta
 information including the official documentation of this monitor.
 
 
-This module uses the collectd/couchbase monitor for Couchbase usind Python plugin to collect metrics from Couchbase server instances.
+
+
+### Metrics
+
+
+To filter only required metrics for the detectors of this module, add the 
+[datapointsToExclude](https://docs.signalfx.com/en/latest/integrations/agent/filtering.html) parameter to 
+the corresponding monitor configuration:
+
+```yaml
+    datapointsToExclude:
+      - metricNames:
+        - '*'
+        - '!gauge.bucket.op.disk_write_queue'
+        - '!gauge.bucket.op.ep_mem_high_wat'
+        - '!gauge.bucket.op.ep_oom_errors'
+        - '!gauge.bucket.op.mem_used'
+
+```
 
 
 
