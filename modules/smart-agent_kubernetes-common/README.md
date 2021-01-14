@@ -14,6 +14,7 @@
 - [Notes](#notes)
   - [About `node_ready` detector](#about-node_ready-detector)
   - [About `job_failed` detector](#about-job_failed-detector)
+  - [About `oom_killed` detector](#about-oom_killed-detector)
 - [Related documentation](#related-documentation)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -260,6 +261,11 @@ modules covering more data sources like `kubernetes-volumes` or use cases like `
 * it works only on job running from cronjob
 * this will obviously raise an alert when a job is considered as failed from kubernetes point of view. Indeed, some pods could eventually fail or retry without to mark the job as failed
 * but the alert will remain until you clean/purge jobs history. Indeed, even if a new, more recent, successful job has been running in the meantime the alert will continue until you delete the failed job
+
+### About `oom_killed` detector
+
+* default transformation function is used to avoid the detector to flap repeatedly
+* if unset, expect the detector to send several alerts per minute
 
 
 ## Related documentation
