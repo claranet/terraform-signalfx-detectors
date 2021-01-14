@@ -14,6 +14,7 @@ resource "signalfx_detector" "{{ id }}" {
   name = format("%s %s", local.detector_name_prefix, "{{ module[0]|upper}}{{module[1:] }} {{ name | lower }}")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
   {%- if type == 'heartbeat' %}
 
   max_delay = 900
