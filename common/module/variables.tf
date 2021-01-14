@@ -52,3 +52,15 @@ variable "authorized_writer_teams" {
   default     = null
 }
 
+
+variable "authorized_writer_teams" {
+  description = "List of teams IDs authorized (with admins) to edit the detector. If defined, it requires an user token to work"
+  type        = list(string)
+  default     = null
+}
+
+variable "teams" {
+  description = "List of teams IDs to associate the detector to"
+  type        = list(string)
+  default     = null
+}
