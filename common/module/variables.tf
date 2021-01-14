@@ -55,5 +55,5 @@ variable "authorized_writer_teams" {
 variable "teams" {
   description = "List of teams IDs to associate the detector to"
   type        = list(string)
-  default     = null
+  default     = []
 }
