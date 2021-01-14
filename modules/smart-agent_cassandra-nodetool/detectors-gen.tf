@@ -2,6 +2,7 @@ resource "signalfx_detector" "node_status" {
   name = format("%s %s", local.detector_name_prefix, "Cassandra nodetool node status")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     signal = data('cassandra.status', filter=${module.filter-tags.filter_custom})${var.node_status_aggregation_function}${var.node_status_transformation_function}.publish('signal')
@@ -38,6 +39,7 @@ resource "signalfx_detector" "node_state" {
   name = format("%s %s", local.detector_name_prefix, "Cassandra nodetool node state")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     signal = data('cassandra.state', filter=${module.filter-tags.filter_custom})${var.node_state_aggregation_function}${var.node_state_transformation_function}.publish('signal')

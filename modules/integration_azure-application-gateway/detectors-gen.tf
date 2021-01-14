@@ -2,6 +2,7 @@ resource "signalfx_detector" "capacity_units" {
   name = format("%s %s", local.detector_name_prefix, "Azure Application Gateway capacity units")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true')

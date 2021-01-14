@@ -2,6 +2,7 @@ resource "signalfx_detector" "heartbeat" {
   name = format("%s %s", local.detector_name_prefix, "System heartbeat")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   max_delay = 900
 
@@ -28,6 +29,7 @@ resource "signalfx_detector" "cpu" {
   name = format("%s %s", local.detector_name_prefix, "System cpu utilization")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   viz_options {
     label        = "signal"
@@ -69,6 +71,7 @@ resource "signalfx_detector" "load" {
   name = format("%s %s", local.detector_name_prefix, "System load 5m ratio")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     signal = data('load.midterm', filter=${module.filter-tags.filter_custom})${var.load_aggregation_function}${var.load_transformation_function}.publish('signal')
@@ -105,6 +108,7 @@ resource "signalfx_detector" "disk_space" {
   name = format("%s %s", local.detector_name_prefix, "System disk space utilization")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   viz_options {
     label        = "signal"
@@ -146,6 +150,7 @@ resource "signalfx_detector" "disk_inodes" {
   name = format("%s %s", local.detector_name_prefix, "System disk inodes utilization")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   viz_options {
     label        = "signal"
@@ -187,6 +192,7 @@ resource "signalfx_detector" "memory" {
   name = format("%s %s", local.detector_name_prefix, "System memory utilization")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   viz_options {
     label        = "signal"

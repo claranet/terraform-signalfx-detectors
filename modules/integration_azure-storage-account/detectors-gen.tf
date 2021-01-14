@@ -2,6 +2,7 @@ resource "signalfx_detector" "count" {
   name = format("%s %s", local.detector_name_prefix, "Azure Storage Account count")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.Storage/storageAccounts') and filter('primary_aggregation_type', 'true')
@@ -40,6 +41,7 @@ resource "signalfx_detector" "capacity" {
   name = format("%s %s", local.detector_name_prefix, "Azure Storage Account capacity")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   viz_options {
     label        = "signal"
@@ -83,6 +85,7 @@ resource "signalfx_detector" "ingress" {
   name = format("%s %s", local.detector_name_prefix, "Azure Storage Account ingress")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   viz_options {
     label        = "signal"
@@ -126,6 +129,7 @@ resource "signalfx_detector" "egress" {
   name = format("%s %s", local.detector_name_prefix, "Azure Storage Account egress")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   viz_options {
     label        = "signal"
@@ -169,6 +173,7 @@ resource "signalfx_detector" "requests_rate" {
   name = format("%s %s", local.detector_name_prefix, "Azure Storage Account requests rate")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.Storage/storageAccounts') and filter('primary_aggregation_type', 'true')

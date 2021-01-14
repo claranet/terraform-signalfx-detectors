@@ -2,6 +2,7 @@ resource "signalfx_detector" "throttled_requests" {
   name = format("%s %s", local.detector_name_prefix, "Azure Event Hub throttled requests")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   viz_options {
     label        = "signal"
