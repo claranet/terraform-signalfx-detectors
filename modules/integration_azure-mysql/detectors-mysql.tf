@@ -2,6 +2,7 @@ resource "signalfx_detector" "heartbeat" {
   name = format("%s %s", local.detector_name_prefix, "Azure MySQL heartbeat")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting
@@ -27,6 +28,7 @@ resource "signalfx_detector" "cpu_usage" {
   name = format("%s %s", local.detector_name_prefix, "Azure MySQL CPU usage")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.DBforMySQL/servers') and filter('primary_aggregation_type', 'true')
@@ -64,6 +66,7 @@ resource "signalfx_detector" "free_storage" {
   name = format("%s %s", local.detector_name_prefix, "Azure MySQL storage usage")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.DBforMySQL/servers') and filter('primary_aggregation_type', 'true')
@@ -101,6 +104,7 @@ resource "signalfx_detector" "io_consumption" {
   name = format("%s %s", local.detector_name_prefix, "Azure MySQL IO consumption")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.DBforMySQL/servers') and filter('primary_aggregation_type', 'true')
@@ -138,6 +142,7 @@ resource "signalfx_detector" "memory_usage" {
   name = format("%s %s", local.detector_name_prefix, "Azure MySQL memory usage")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.DBforMySQL/servers') and filter('primary_aggregation_type', 'true')
@@ -175,6 +180,7 @@ resource "signalfx_detector" "replication_lag" {
   name = format("%s %s", local.detector_name_prefix, "Azure MySQL replication lag")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.DBforMySQL/servers') and filter('primary_aggregation_type', 'true')

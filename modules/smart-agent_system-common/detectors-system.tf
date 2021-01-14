@@ -2,6 +2,7 @@ resource "signalfx_detector" "disk_running_out" {
   name = format("%s %s", local.detector_name_prefix, "System disk space running out")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     from signalfx.detectors.countdown import countdown

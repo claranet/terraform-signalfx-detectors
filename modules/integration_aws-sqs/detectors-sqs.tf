@@ -2,6 +2,7 @@ resource "signalfx_detector" "heartbeat" {
   name = format("%s %s", local.detector_name_prefix, "AWS SQS heartbeat")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
@@ -26,6 +27,7 @@ resource "signalfx_detector" "visible_messages" {
   name = format("%s %s", local.detector_name_prefix, "AWS SQS Visible messages")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     signal = data('ApproximateNumberOfMessagesVisible', filter=filter('namespace', 'AWS/SQS') and filter('stat', 'upper') and ${module.filter-tags.filter_custom})${var.visible_messages_aggregation_function}${var.visible_messages_transformation_function}.publish('signal')
@@ -62,6 +64,7 @@ resource "signalfx_detector" "age_of_oldest_message" {
   name = format("%s %s", local.detector_name_prefix, "AWS SQS Age of the oldest message")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     signal = data('ApproximateAgeOfOldestMessage', filter=filter('namespace', 'AWS/SQS') and filter('stat', 'upper') and ${module.filter-tags.filter_custom})${var.age_of_oldest_message_aggregation_function}${var.age_of_oldest_message_transformation_function}.publish('signal')

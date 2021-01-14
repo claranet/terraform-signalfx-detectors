@@ -2,6 +2,7 @@ resource "signalfx_detector" "concurrent_queries" {
   name = format("%s %s", local.detector_name_prefix, "GCP BigQuery concurrent queries")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     from signalfx.detectors.aperiodic import conditions
@@ -42,6 +43,7 @@ resource "signalfx_detector" "execution_time" {
   name = format("%s %s", local.detector_name_prefix, "GCP BigQuery execution time")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     from signalfx.detectors.aperiodic import conditions
@@ -82,6 +84,7 @@ resource "signalfx_detector" "scanned_bytes" {
   name = format("%s %s", local.detector_name_prefix, "GCP BigQuery scanned bytes")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     from signalfx.detectors.aperiodic import conditions
@@ -122,6 +125,7 @@ resource "signalfx_detector" "scanned_bytes_billed" {
   name = format("%s %s", local.detector_name_prefix, "GCP BigQuery scanned bytes billed")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     from signalfx.detectors.aperiodic import conditions
@@ -162,6 +166,7 @@ resource "signalfx_detector" "available_slots" {
   name = format("%s %s", local.detector_name_prefix, "GCP BigQuery available slots")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     from signalfx.detectors.aperiodic import conditions
@@ -202,6 +207,7 @@ resource "signalfx_detector" "stored_bytes" {
   name = format("%s %s", local.detector_name_prefix, "GCP BigQuery stored bytes")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     from signalfx.detectors.aperiodic import conditions
@@ -242,6 +248,7 @@ resource "signalfx_detector" "table_count" {
   name = format("%s %s", local.detector_name_prefix, "GCP BigQuery table count")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     from signalfx.detectors.aperiodic import conditions
@@ -282,6 +289,7 @@ resource "signalfx_detector" "uploaded_bytes" {
   name = format("%s %s", local.detector_name_prefix, "GCP BigQuery uploaded bytes")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     from signalfx.detectors.aperiodic import conditions
@@ -322,6 +330,7 @@ resource "signalfx_detector" "uploaded_bytes_billed" {
   name = format("%s %s", local.detector_name_prefix, "GCP BigQuery uploaded bytes billed")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     from signalfx.detectors.aperiodic import conditions

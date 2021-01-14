@@ -2,6 +2,7 @@ resource "signalfx_detector" "processes" {
   name = format("%s %s", local.detector_name_prefix, "Processes aliveness")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
         signal = data('ps_count.processes', filter=${module.filter-tags.filter_custom})${var.processes_aggregation_function}${var.processes_transformation_function}.publish('signal')

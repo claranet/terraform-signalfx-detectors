@@ -2,6 +2,7 @@ resource "signalfx_detector" "heartbeat" {
   name = format("%s %s", local.detector_name_prefix, "Nginx heartbeat")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   max_delay = 900
 
@@ -28,6 +29,7 @@ resource "signalfx_detector" "dropped_connections" {
   name = format("%s %s", local.detector_name_prefix, "Nginx dropped connections")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     signal = data('connections.failed', filter=${module.filter-tags.filter_custom})${var.dropped_connections_aggregation_function}${var.dropped_connections_transformation_function}.publish('signal')

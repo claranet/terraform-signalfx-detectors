@@ -2,6 +2,7 @@ resource "signalfx_detector" "velero_scheduled_backup_missing" {
   name = format("%s %s", local.detector_name_prefix, "Kubernetes velero successful backup")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     signal = data('velero_backup_success_total', filter=filter('schedule', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.velero_scheduled_backup_missing_aggregation_function}${var.velero_scheduled_backup_missing_transformation_function}.publish('signal')
@@ -25,6 +26,7 @@ resource "signalfx_detector" "velero_backup_failure" {
   name = format("%s %s", local.detector_name_prefix, "Kubernetes velero failed backup")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     signal = data('velero_backup_failure_total', filter=filter('schedule', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.velero_backup_failure_aggregation_function}${var.velero_backup_failure_transformation_function}.publish('signal')
@@ -48,6 +50,7 @@ resource "signalfx_detector" "velero_backup_partial_failure" {
   name = format("%s %s", local.detector_name_prefix, "Kubernetes velero failed partial backup")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     signal = data('velero_backup_partial_failure_total', filter=filter('schedule', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.velero_backup_partial_failure_aggregation_function}${var.velero_backup_partial_failure_transformation_function}.publish('signal')
@@ -71,6 +74,7 @@ resource "signalfx_detector" "velero_backup_deletion_failure" {
   name = format("%s %s", local.detector_name_prefix, "Kubernetes velero failed backup deletion")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     signal = data('velero_backup_deletion_failure_total', filter=filter('schedule', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.velero_backup_deletion_failure_aggregation_function}${var.velero_backup_deletion_failure_transformation_function}.publish('signal')
@@ -94,6 +98,7 @@ resource "signalfx_detector" "velero_volume_snapshot_failure" {
   name = format("%s %s", local.detector_name_prefix, "Kubernetes velero failed volume snapshot")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     signal = data('velero_volume_snapshot_failure_total', filter=filter('schedule', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='delta')${var.velero_volume_snapshot_failure_aggregation_function}${var.velero_volume_snapshot_failure_transformation_function}.publish('signal')

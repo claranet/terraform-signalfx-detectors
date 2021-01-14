@@ -2,6 +2,7 @@ resource "signalfx_detector" "heartbeat" {
   name = format("%s %s", local.detector_name_prefix, "GCP Pub/Sub Subscription heartbeat")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
@@ -26,6 +27,7 @@ resource "signalfx_detector" "oldest_unacked_message" {
   name = format("%s %s", local.detector_name_prefix, "GCP Pub/Sub Subscription oldest unacknowledged message")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     signal = data('subscription/oldest_unacked_message_age', filter=filter('monitored_resource', 'pubsub_subscription') and ${module.filter-tags.filter_custom})${var.oldest_unacked_message_aggregation_function}${var.oldest_unacked_message_transformation_function}.publish('signal')
@@ -62,6 +64,7 @@ resource "signalfx_detector" "push_latency" {
   name = format("%s %s", local.detector_name_prefix, "GCP Pub/Sub Subscription latency on push endpoint")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     signal = data('subscription/push_request_latencies', filter=filter('monitored_resource', 'pubsub_subscription') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='average')${var.push_latency_aggregation_function}${var.push_latency_transformation_function}.publish('signal')

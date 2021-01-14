@@ -2,6 +2,7 @@ resource "signalfx_detector" "heartbeat" {
   name = format("%s %s", local.detector_name_prefix, "AWS NLB heartbeat")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
@@ -26,6 +27,7 @@ resource "signalfx_detector" "no_healthy_instances" {
   name = format("%s %s", local.detector_name_prefix, "AWS NLB healthy instances percentage")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     A = data('HealthyHostCount', filter=filter('namespace', 'AWS/NetworkELB') and filter('stat', 'lower') and (not filter('AvailabilityZone', '*')) and ${module.filter-tags.filter_custom})${var.no_healthy_instances_aggregation_function}${var.no_healthy_instances_transformation_function}

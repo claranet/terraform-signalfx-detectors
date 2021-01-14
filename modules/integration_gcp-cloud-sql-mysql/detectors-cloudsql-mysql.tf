@@ -2,6 +2,7 @@ resource "signalfx_detector" "replication_lag" {
   name = format("%s %s", local.detector_name_prefix, "GCP Cloud SQL MySQL replication lag")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     signal = data('database/mysql/replication/seconds_behind_master', ${module.filter-tags.filter_custom})${var.replication_lag_aggregation_function}${var.replication_lag_transformation_function}.publish('signal')
