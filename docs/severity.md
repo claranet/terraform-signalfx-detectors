@@ -450,6 +450,8 @@
 |Azure Storage Account ingress|X|X|-|-|-|
 |Azure Storage Account egress|X|X|-|-|-|
 |Azure Storage Account requests rate|X|X|-|-|-|
+|Azure Storage Account requests rate|X|X|-|-|-|
+|Azure Storage Account Latency E2E|X|X|-|-|-|
 
 
 ## azure-stream-analytics

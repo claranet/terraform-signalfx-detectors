@@ -18,8 +18,18 @@ output "ingress" {
   value       = signalfx_detector.ingress
 }
 
+output "latency_e2e" {
+  description = "Detector resource for latency_e2e"
+  value       = signalfx_detector.latency_e2e
+}
+
 output "requests_rate" {
   description = "Detector resource for requests_rate"
   value       = signalfx_detector.requests_rate
+}
+
+output "requests_rate_status" {
+  description = "Detector resource for requests_rate_status"
+  value       = signalfx_detector.requests_rate_status
 }
 

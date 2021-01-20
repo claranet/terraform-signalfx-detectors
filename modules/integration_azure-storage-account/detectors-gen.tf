@@ -202,3 +202,78 @@ EOF
   }
 }
 
+resource "signalfx_detector" "requests_rate_status" {
+  name = format("%s %s", local.detector_name_prefix, "Azure Storage Account requests rate")
+
+  authorized_writer_teams = var.authorized_writer_teams
+
+  program_text = <<-EOF
+    base_filtering = filter('resource_type', 'Microsoft.Storage/storageAccounts') and filter('primary_aggregation_type', 'true')
+    A = data('Transactions', extrapolation="zero", filter=base_filter and filter('responsetype', 'Success') and ${module.filter-tags.filter_custom})${var.requests_rate_status_aggregation_function}
+    B = data('Transactions', extrapolation="zero", filter=base_filter and not filter('responsetype', 'Success') and ${module.filter-tags.filter_custom})${var.requests_rate_status_aggregation_function}
+    signal = (B/(A+B)).scale(100).fill(0).publish('signal')
+    detect(when(signal > ${var.requests_rate_threshold_critical})).publish('CRIT')
+    detect(when(signal > ${var.requests_rate_threshold_major}) and when(signal <= ${var.requests_rate_threshold_critical})).publish('MAJOR')
+EOF
+
+  rule {
+    description           = "is too high > ${var.requests_rate_threshold_critical}"
+    severity              = "Critical"
+    detect_label          = "CRIT"
+    disabled              = coalesce(var.requests_rate_disabled_critical, var.requests_rate_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.requests_rate_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = try(coalesce(var.requests_rate_runbook_url, var.runbook_url), "")
+    tip                   = var.requests_rate_tip
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
+  }
+
+  rule {
+    description           = "is too high > ${var.requests_rate_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.requests_rate_disabled_major, var.requests_rate_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.requests_rate_notifications, "major", []), var.notifications.major)
+    runbook_url           = try(coalesce(var.requests_rate_runbook_url, var.runbook_url), "")
+    tip                   = var.requests_rate_tip
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
+  }
+}
+
+resource "signalfx_detector" "latency_e2e" {
+  name = format("%s %s", local.detector_name_prefix, "Azure Storage Account Latency E2E")
+
+  authorized_writer_teams = var.authorized_writer_teams
+
+  program_text = <<-EOF
+    base_filtering = filter('resource_type', 'Microsoft.Storage/storageAccounts') and filter('primary_aggregation_type', 'true')
+    signal = data('SuccessE2ELatency', filter=base_filtering and ${module.filter-tags.filter_custom}, rollup='rate')${var.latency_e2e_aggregation_function}${var.latency_e2e_transformation_function}.publish('signal')
+    detect(when(signal > ${var.latency_e2e_threshold_critical})).publish('CRIT')
+    detect(when(signal > ${var.latency_e2e_threshold_major}) and when(signal <= ${var.latency_e2e_threshold_critical})).publish('MAJOR')
+EOF
+
+  rule {
+    description           = "is too high > ${var.latency_e2e_threshold_critical}"
+    severity              = "Critical"
+    detect_label          = "CRIT"
+    disabled              = coalesce(var.latency_e2e_disabled_critical, var.latency_e2e_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.latency_e2e_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = try(coalesce(var.latency_e2e_runbook_url, var.runbook_url), "")
+    tip                   = var.latency_e2e_tip
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
+  }
+
+  rule {
+    description           = "is too high > ${var.latency_e2e_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.latency_e2e_disabled_major, var.latency_e2e_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.latency_e2e_notifications, "major", []), var.notifications.major)
+    runbook_url           = try(coalesce(var.latency_e2e_runbook_url, var.runbook_url), "")
+    tip                   = var.latency_e2e_tip
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
+  }
+}
