@@ -81,8 +81,8 @@ This module creates the following SignalFx detectors which could contain one or 
 |Azure Storage Account ingress|X|X|-|-|-|
 |Azure Storage Account egress|X|X|-|-|-|
 |Azure Storage Account requests rate|X|X|-|-|-|
-|Azure Storage Account requests rate|X|X|-|-|-|
-|Azure Storage Account Latency E2E|X|X|-|-|-|
+|Azure Storage Account requests rate status|X|X|-|-|-|
+|Azure Storage Account latency e2e|X|X|-|-|-|
 
 ## How to collect required metrics?
 
