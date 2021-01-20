@@ -13,7 +13,7 @@ signals:
     filtering: "filter('resource_type', 'Microsoft.Storage/storageAccounts') and not filter('responsetype', 'Success') and filter('primary_aggregation_type', 'true')"
   signal:
     formula:
-      (B/(A+B)).scale(100).fill(0)
+      (rate_failed/(rate_success+rate_failed)).scale(100).fill(0)
 rules:
   critical:
     threshold: 90
