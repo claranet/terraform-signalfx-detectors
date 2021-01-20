@@ -325,7 +325,7 @@ variable "requests_rate_status_aggregation_function" {
 variable "requests_rate_status_transformation_function" {
   description = "Transformation function for requests_rate_status detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".min(over='5m')"
+  default     = ".min(over='1m')"
 }
 
 variable "requests_rate_status_tip" {
@@ -423,12 +423,12 @@ variable "latency_e2e_disabled_major" {
 variable "latency_e2e_threshold_critical" {
   description = "Critical threshold for latency_e2e detector"
   type        = number
-  default     = 0.1
+  default     = 1000
 }
 
 variable "latency_e2e_threshold_major" {
   description = "Major threshold for latency_e2e detector"
   type        = number
-  default     = 0.05
+  default     = 800
 }
 

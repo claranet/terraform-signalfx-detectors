@@ -2,7 +2,7 @@ module: "Azure Storage Account"
 name: "requests rate status"
 filtering: "filter('resource_type', 'Microsoft.Storage/storageAccounts') and filter('primary_aggregation_type', 'true')"
 aggregation: ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
-transformation: ".min(over='5m')"
+transformation: ".min(over='1m')"
 signals:
   rate_success:
     metric: "Transactions"

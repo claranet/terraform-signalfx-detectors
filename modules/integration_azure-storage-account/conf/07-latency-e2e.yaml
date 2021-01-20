@@ -6,12 +6,12 @@ transformation: ".min(over='5m')"
 signals:
   signal:
     metric: "SuccessE2ELatency"
-    rollup: rate
+    rollup: average
 rules:
   critical:
-    threshold: 0.1
+    threshold: 1000 #1s
     comparator: ">"
   major:
-    threshold: 0.05
+    threshold: 800 #800ms
     comparator: ">"
     dependency: critical
