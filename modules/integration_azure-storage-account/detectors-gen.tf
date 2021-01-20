@@ -208,8 +208,9 @@ resource "signalfx_detector" "requests_rate_status" {
   authorized_writer_teams = var.authorized_writer_teams
 
   program_text = <<-EOF
-    rate_success = data('Transactions', filter=${module.filter-tags.filter_custom}, rollup='sum')${var.requests_rate_status_aggregation_function}${var.requests_rate_status_transformation_function}
-    rate_failed = data('Transactions', filter=${module.filter-tags.filter_custom}, rollup='sum')${var.requests_rate_status_aggregation_function}${var.requests_rate_status_transformation_function}
+    base_filtering = filter('resource_type', 'Microsoft.Storage/storageAccounts') and filter('primary_aggregation_type', 'true')
+    rate_success = data('Transactions', filter=base_filtering and filter('responsetype', 'Success') and ${module.filter-tags.filter_custom}, rollup='sum')${var.requests_rate_status_aggregation_function}${var.requests_rate_status_transformation_function}
+    rate_failed = data('Transactions', filter=base_filtering and not filter('responsetype', 'Success') and ${module.filter-tags.filter_custom}, rollup='sum')${var.requests_rate_status_aggregation_function}${var.requests_rate_status_transformation_function}
     signal = (rate_failed/(rate_success+rate_failed)).scale(100).fill(0).publish('signal')
     detect(when(signal > ${var.requests_rate_status_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.requests_rate_status_threshold_major}) and when(signal <= ${var.requests_rate_status_threshold_critical})).publish('MAJOR')
