@@ -246,69 +246,6 @@ variable "egress_threshold_major" {
   default     = 45
 }
 
-# requests_rate_status detector
-
-variable "requests_rate_status_notifications" {
-  description = "Notification recipients list per severity overridden for requests_rate_status detector"
-  type        = map(list(string))
-  default     = {}
-}
-
-variable "requests_rate_status_aggregation_function" {
-  description = "Aggregation function and group by for requests_rate_status detector (i.e. \".mean(by=['host'])\")"
-  type        = string
-  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
-}
-
-variable "requests_rate_status_transformation_function" {
-  description = "Transformation function for requests_rate_status detector (i.e. \".mean(over='5m')\")"
-  type        = string
-  default     = ".min(over='5m')"
-}
-
-variable "requests_rate_status_tip" {
-  description = "Suggested first course of action or any note useful for incident handling"
-  type        = string
-  default     = ""
-}
-
-variable "requests_rate_status_runbook_url" {
-  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
-  type        = string
-  default     = ""
-}
-
-variable "requests_rate_status_disabled" {
-  description = "Disable all alerting rules for requests_rate_status detector"
-  type        = bool
-  default     = null
-}
-
-variable "requests_rate_status_disabled_critical" {
-  description = "Disable critical alerting rule for requests_rate_status detector"
-  type        = bool
-  default     = null
-}
-
-variable "requests_rate_status_disabled_major" {
-  description = "Disable major alerting rule for requests_rate_status detector"
-  type        = bool
-  default     = null
-}
-
-variable "requests_rate_status_threshold_critical" {
-  description = "Critical threshold for requests_rate_status detector"
-  type        = number
-  default     = 90
-}
-
-variable "requests_rate_status_threshold_major" {
-  description = "Major threshold for requests_rate_status detector"
-  type        = number
-  default     = 80
-}
-
-
 # requests_rate detector
 
 variable "requests_rate_notifications" {
@@ -371,6 +308,67 @@ variable "requests_rate_threshold_major" {
   default     = 18000
 }
 
+# requests_rate_status detector
+
+variable "requests_rate_status_notifications" {
+  description = "Notification recipients list per severity overridden for requests_rate_status detector"
+  type        = map(list(string))
+  default     = {}
+}
+
+variable "requests_rate_status_aggregation_function" {
+  description = "Aggregation function and group by for requests_rate_status detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+}
+
+variable "requests_rate_status_transformation_function" {
+  description = "Transformation function for requests_rate_status detector (i.e. \".mean(over='5m')\")"
+  type        = string
+  default     = ".min(over='5m')"
+}
+
+variable "requests_rate_status_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "requests_rate_status_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
+variable "requests_rate_status_disabled" {
+  description = "Disable all alerting rules for requests_rate_status detector"
+  type        = bool
+  default     = null
+}
+
+variable "requests_rate_status_disabled_critical" {
+  description = "Disable critical alerting rule for requests_rate_status detector"
+  type        = bool
+  default     = null
+}
+
+variable "requests_rate_status_disabled_major" {
+  description = "Disable major alerting rule for requests_rate_status detector"
+  type        = bool
+  default     = null
+}
+
+variable "requests_rate_status_threshold_critical" {
+  description = "Critical threshold for requests_rate_status detector"
+  type        = number
+  default     = 90
+}
+
+variable "requests_rate_status_threshold_major" {
+  description = "Major threshold for requests_rate_status detector"
+  type        = number
+  default     = 80
+}
 
 # latency_e2e detector
 
@@ -429,7 +427,8 @@ variable "latency_e2e_threshold_critical" {
 }
 
 variable "latency_e2e_threshold_major" {
-description = "Major threshold for latency_e2e detector"
-type        = number
-default     = 0.05
+  description = "Major threshold for latency_e2e detector"
+  type        = number
+  default     = 0.05
 }
+
