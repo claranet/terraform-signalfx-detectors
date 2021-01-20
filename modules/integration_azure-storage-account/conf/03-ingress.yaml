@@ -7,7 +7,7 @@ value_unit: "Gbps"
 signals:
   ingress:
     metric: "Ingress"
-    rollup: rate
+    rollup: sum
   signal:
     formula:
       ingress.scale(0.000000008) # Scale to Gb unit

@@ -7,7 +7,7 @@ value_unit: "Gbps"
 signals:
   egress:
     metric: "Egress"
-    rollup: rate
+    rollup: sum
   signal:
     formula:
       egress.scale(0.000000008) # Scale to Gb unit
