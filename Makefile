@@ -30,7 +30,7 @@ dev:
 .PHONY: clean
 clean:
 	git checkout -- examples/stack/detectors.tf
-	git clean -df init-modules/
+	git clean -df modules/
 
 .PHONY: update-module
 update-module: update-module-tf check-module update-module-readme update-severity-doc
