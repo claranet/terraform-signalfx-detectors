@@ -223,7 +223,7 @@ variable "oom_killed_aggregation_function" {
 variable "oom_killed_transformation_function" {
   description = "Transformation function for oom_killed detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ""
+  default     = ".max(over='1m')"
 }
 
 variable "oom_killed_threshold_major" {
