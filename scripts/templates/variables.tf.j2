@@ -53,7 +53,7 @@ variable "{{ id }}_runbook_url" {
 variable "{{ id }}_disabled" {
   description = "Disable all alerting rules for {{ id }} detector"
   type        = bool
-  default     = null
+  default     = {% if disabled is sameas true %}true{% else %}null{% endif %}
 }
 
 {% if rules | length > 1 -%}
