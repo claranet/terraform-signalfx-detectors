@@ -39,6 +39,7 @@
 - [azure-service-bus](#azure-service-bus)
 - [azure-sql-database](#azure-sql-database)
 - [azure-sql-elastic-pool](#azure-sql-elastic-pool)
+- [azure-storage-account-blob](#azure-storage-account-blob)
 - [azure-storage-account-capacity](#azure-storage-account-capacity)
 - [azure-storage-account](#azure-storage-account)
 - [azure-stream-analytics](#azure-stream-analytics)
@@ -433,6 +434,14 @@
 |Azure SQL Elastic Pool CPU|X|X|-|-|-|
 |Azure SQL Elastic Pool disk usage|X|X|-|-|-|
 |Azure SQL Elastic Pool DTU consumption|X|X|-|-|-|
+
+
+## azure-storage-account-blob
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Azure Storage Account on Blob requests error rate|X|X|-|-|-|
+|Azure Storage Account on Blob latency e2e|X|X|-|-|-|
 
 
 ## azure-storage-account-capacity

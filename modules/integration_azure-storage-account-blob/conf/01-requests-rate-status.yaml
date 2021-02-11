@@ -1,0 +1,27 @@
+module: "Azure Storage Account on Blob"
+name: "requests error rate"
+filtering: "filter('resource_type', 'Microsoft.Storage/storageAccounts') and filter('primary_aggregation_type', 'true') and filter('apiname', '*Blob')"
+aggregation: ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+transformation: ".min(over='15m')"
+value_unit: "%"
+disabled: true
+signals:
+  rate_success:
+    metric: "Transactions"
+    filter: "filter('responsetype', 'Success')"
+    rollup: rate
+  rate_failed:
+    metric: "Transactions"
+    rollup: rate
+    filter: "filter('responsetype', 'ClientOtherError')"
+  signal:
+    formula:
+      (rate_failed/(rate_success+rate_failed)).scale(100).fill(0)
+rules:
+  critical:
+    threshold: 90
+    comparator: ">"
+  major:
+    threshold: 80
+    comparator: ">"
+    dependency: critical

@@ -1,0 +1,18 @@
+documentations:
+  - name: Azure Monitor metrics
+    url: 'https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported'
+source_doc: >-
+  We are using metrics from the
+  [Microsoft.Storage/storageAccounts](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported#microsoftclassicstoragestorageaccountsblobservices) namespace.
+notes: |
+  ### Detectors disabled by default
+  The following detectors are disabled by default:
+    * requests error rate
+    * latency e2e
+
+  This is due to :
+    * The fact that these detectors are historically flapping.
+    * This module can evolve by adding "stable" detectors and
+      we need to be able to only activate (by default) the stable ones.
+
+  Some customers may have the need to use these anymay.
