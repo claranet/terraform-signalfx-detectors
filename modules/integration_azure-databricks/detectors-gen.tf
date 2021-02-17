@@ -9,7 +9,7 @@ resource "signalfx_detector" "spark_jvm_heap_usage" {
   }
 
   program_text = <<-EOF
-    base_filtering = filter('primary_aggregation_type', 'true')
+    base_filtering = filter('area', 'heap')
     jvm_memory_bytes_max = data('jvm_memory_bytes_max', filter=base_filtering and ${module.filter-tags.filter_custom})${var.spark_jvm_heap_usage_aggregation_function}${var.spark_jvm_heap_usage_transformation_function}
     jvm_memory_bytes_used = data('jvm_memory_bytes_used', filter=base_filtering and ${module.filter-tags.filter_custom})${var.spark_jvm_heap_usage_aggregation_function}${var.spark_jvm_heap_usage_transformation_function}
     signal = (jvm_memory_bytes_used/jvm_memory_bytes_max).scale(100).fill(0).publish('signal')

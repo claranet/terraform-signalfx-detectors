@@ -9,7 +9,7 @@ variable "spark_jvm_heap_usage_notifications" {
 variable "spark_jvm_heap_usage_aggregation_function" {
   description = "Aggregation function and group by for spark_jvm_heap_usage detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".sum(by=['azure_resource_id', 'host'])"
 }
 
 variable "spark_jvm_heap_usage_transformation_function" {
