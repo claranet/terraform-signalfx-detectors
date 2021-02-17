@@ -350,6 +350,7 @@
 |Azure Functions HTTP 5xx error rate|X|X|-|-|-|
 |Azure Functions connections count|X|X|-|-|-|
 |Azure Functions thread count|X|X|-|-|-|
+|Azure Functions wrapper errors|X|X|-|-|-|
 
 
 ## azure-key-vault

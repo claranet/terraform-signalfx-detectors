@@ -1,3 +1,8 @@
+output "errors" {
+  description = "Detector resource for errors"
+  value       = signalfx_detector.errors
+}
+
 output "heartbeat" {
   description = "Detector resource for heartbeat"
   value       = signalfx_detector.heartbeat
