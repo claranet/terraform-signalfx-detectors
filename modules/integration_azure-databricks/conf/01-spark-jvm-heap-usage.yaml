@@ -1,7 +1,7 @@
 module: "Azure Databricks"
 name: "spark jvm heap usage"
-filtering: "filter('primary_aggregation_type', 'true')"
-aggregation: ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+filtering: "filter('area', 'heap')"
+aggregation: ".sum(by=['azure_resource_id', 'host'])"
 transformation: ".min(over='5m')"
 value_unit: "%"
 signals:
