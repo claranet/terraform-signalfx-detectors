@@ -29,6 +29,7 @@
 - [azure-azure-search](#azure-azure-search)
 - [azure-container-instance](#azure-container-instance)
 - [azure-cosmos-db](#azure-cosmos-db)
+- [azure-databricks](#azure-databricks)
 - [azure-event-hub](#azure-event-hub)
 - [azure-functions](#azure-functions)
 - [azure-key-vault](#azure-key-vault)
@@ -333,6 +334,13 @@
 |Azure Cosmos DB 5xx error rate|X|X|-|-|-|
 |Azure Cosmos DB scaling errors rate|X|X|-|-|-|
 |Azure Cosmos DB used RUs capacity|X|X|-|-|-|
+
+
+## azure-databricks
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Azure Databricks spark jvm heap usage|X|X|-|-|-|
 
 
 ## azure-event-hub

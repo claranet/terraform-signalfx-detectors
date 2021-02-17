@@ -1,22 +1,22 @@
 module: "Azure Databricks"
 name: "spark jvm heap usage"
-filtering: "filter('resource_type', 'Microsoft.DataFactory/factories') and filter('primary_aggregation_type', 'true')"
-aggregation: ".sum(by=['name'])"
+filtering: "filter('primary_aggregation_type', 'true')"
+aggregation: ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 transformation: ".min(over='5m')"
 value_unit: "%"
 signals:
-  adf_activity_succeeded_run:
-    metric: "ActivitySucceededRuns"
-  adf_activity_failed_run:
-    metric: "ActivityFailedRuns"
+  jvm_memory_bytes_max:
+    metric: "jvm_memory_bytes_max"
+  jvm_memory_bytes_used:
+    metric: "jvm_memory_bytes_used"
   signal:
     formula:
-      (adf_activity_failed_run/(adf_activity_succeeded_run+adf_activity_failed_run)).scale(100).fill(0)
+      (jvm_memory_bytes_used/jvm_memory_bytes_max).scale(100).fill(0)
 rules:
   critical:
-    threshold: 20
+    threshold: 90
     comparator: ">"
   major:
-    threshold: 10
+    threshold: 80
     comparator: ">"
     dependency: critical
