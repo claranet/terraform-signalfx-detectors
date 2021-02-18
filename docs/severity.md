@@ -341,7 +341,7 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Azure Databricks spark jvm heap usage|X|X|-|-|-|
-|Azure Databricks spark jvm heap old usage|X|X|-|-|-|
+|Azure Databricks spark jvm old gen usage|X|X|-|-|-|
 
 
 ## azure-event-hub

@@ -1,5 +1,5 @@
 module: "Azure Databricks"
-name: "spark jvm heap old usage"
+name: "spark jvm old gen usage"
 filtering: "filter('pool', 'PS Old Gen')"
 aggregation: ".sum(by=['azure_resource_id', 'host'])"
 transformation: ".min(over='5m')"

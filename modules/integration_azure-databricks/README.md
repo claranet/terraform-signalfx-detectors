@@ -76,7 +76,7 @@ This module creates the following SignalFx detectors which could contain one or 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Azure Databricks spark jvm heap usage|X|X|-|-|-|
-|Azure Databricks spark jvm heap old usage|X|X|-|-|-|
+|Azure Databricks spark jvm old gen usage|X|X|-|-|-|
 
 ## How to collect required metrics?
 
