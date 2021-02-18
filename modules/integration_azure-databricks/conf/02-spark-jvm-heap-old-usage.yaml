@@ -1,0 +1,22 @@
+module: "Azure Databricks"
+name: "spark jvm heap old usage"
+filtering: "filter('pool', 'PS Old Gen')"
+aggregation: ".sum(by=['azure_resource_id', 'host'])"
+transformation: ".min(over='5m')"
+value_unit: "%"
+signals:
+  jvm_memory_pool_bytes_max:
+    metric: "jvm_memory_pool_bytes_max"
+  jvm_memory_pool_bytes_used:
+    metric: "jvm_memory_pool_bytes_used"
+  signal:
+    formula:
+      (jvm_memory_pool_bytes_used/jvm_memory_pool_bytes_max).scale(100).fill(0)
+rules:
+  critical:
+    threshold: 90
+    comparator: ">"
+  major:
+    threshold: 80
+    comparator: ">"
+    dependency: critical
