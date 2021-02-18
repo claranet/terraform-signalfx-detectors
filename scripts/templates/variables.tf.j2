@@ -57,14 +57,20 @@ variable "{{ id }}_disabled" {
 }
 
 {% if rules | length > 1 -%}
-  {% for key, rule in rules.items() -%}
-    {%- set severity = key | lower -%}
+  {%- for key, rule in rules.items() -%}
+    {%- set severity = key | lower %}
 variable "{{ id }}_disabled_{{ severity }}" {
   description = "Disable {{ severity }} alerting rule for {{ id }} detector"
   type        = bool
   default     = null
 }
-
+  {% if rule.lasting is string %}
+variable "{{ id }}_lasting_{{ severity }}" {
+  description = "Use lasting in {{ severity }} alerting rule for {{ id }} detector"
+  type        = string
+  default     = "{{ rule.lasting }}"
+}
+  {% endif -%}
 {% endfor -%}
 {% endif -%}
 
