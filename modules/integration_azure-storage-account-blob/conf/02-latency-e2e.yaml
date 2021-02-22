@@ -1,0 +1,22 @@
+module: "Azure Storage Account on Blob"
+name: "latency e2e"
+filtering: "filter('resource_type', 'Microsoft.Storage/storageAccounts') and filter('primary_aggregation_type', 'true') and filter('apiname', '*Blob')"
+aggregation: ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+transformation: ".min(over='15m')"
+disabled: true
+value_unit: "s"
+signals:
+  latency:
+    metric: "SuccessE2ELatency"
+    rollup: average
+  signal:
+    formula:
+      latency.scale(0.001) # Scale to s unit
+rules:
+  critical:
+    threshold: 20
+    comparator: ">"
+  major:
+    threshold: 10
+    comparator: ">"
+    dependency: critical
