@@ -200,3 +200,15 @@ rules:
     ## This will add another condition to negate the dependecy like:
     ## when(signal > {{severity}}) and when(signal <= {{severity.dependency}})
     #dependency:
+
+    ## @param lasting - string - optional
+    ## Minimum duration that conditions must be true 
+    ## before raising alert (in seconds)
+    lasting:
+
+    ## @param at_least - number - option
+    ## Percentage of lasting that conditions must be true 
+    ## before raising alert (>= 0.0 and <= 1.0)
+    ## lasting value is mandatory to use this parameter
+    at_least:
+

@@ -65,10 +65,17 @@ variable "{{ id }}_disabled_{{ severity }}" {
   default     = null
 }
 {% if rule.lasting is string %}
-variable "{{ id }}_lasting_{{ severity }}" {
-  description = "Use lasting in {{ severity }} alerting rule for {{ id }} detector"
+variable "{{ id }}_lasting_duration_{{ severity }}" {
+  description = "Minimum duration that conditions must be true before raising alert (in seconds)"
   type        = string
   default     = "{{ rule.lasting }}"
+}
+{% endif -%}
+{% if rule.at_least is number %}
+variable "{{ id }}_at_least_percentage_{{ severity }}" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = "{{ rule.at_least }}"
 }
 {% endif %}
 {% endfor -%}
