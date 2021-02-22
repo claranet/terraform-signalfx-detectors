@@ -77,7 +77,7 @@ resource "signalfx_detector" "{{ id }}" {
         {%- else %}
           {%- set negative_comparator = reverse_comparator ~ '=' %}
         {%- endif %}
-    detect(when(signal {{ rule.comparator }} ${var.{{ id }}_threshold_{{ severity }}}{%- if rule.lasting is string %}, lasting='${var.{{ id }}_lasting_duration_{{severity}}}'{%- endif %}{%- if rule.at_least is number %}, at_least=${var.{{ id }}_at_least_percentage_{{ severity }}}{%- endif %})
+    detect(when(signal {{ rule.comparator }} ${var.{{ id }}_threshold_{{ severity }}}{%- if rule.lasting_duration is string %}, lasting='${var.{{ id }}_lasting_duration_{{severity}}}'{%- endif %}{%- if rule.lasting_at_least is number %}, at_least=${var.{{ id }}_at_least_percentage_{{ severity }}}{%- endif %})
         {%- if 'dependency' in rule %} and when(signal {{ negative_comparator }} ${var.{{ id }}_threshold_{{ rule.dependency }}}){%- endif -%})
       {%- endif -%}
     .publish('{{ severity_label }}')
