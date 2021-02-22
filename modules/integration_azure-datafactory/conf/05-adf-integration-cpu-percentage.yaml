@@ -1,0 +1,17 @@
+module: "Azure DataFactory"
+name: "CPU percentage"
+filtering: "filter('resource_type', 'Microsoft.DataFactory/factories') and filter('primary_aggregation_type', 'true')"
+aggregation: ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+value_unit: "%"
+transformation: ".min(over='15m')"
+signals:
+  signal:
+    metric: "IntegrationRuntimeCpuPercentage"
+rules:
+  critical:
+    threshold: 90
+    comparator: ">"
+  major:
+    threshold: 80
+    comparator: ">"
+    dependency: critical

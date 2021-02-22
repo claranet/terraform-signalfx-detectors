@@ -29,6 +29,7 @@
 - [azure-azure-search](#azure-azure-search)
 - [azure-container-instance](#azure-container-instance)
 - [azure-cosmos-db](#azure-cosmos-db)
+- [azure-datafactory](#azure-datafactory)
 - [azure-event-hub](#azure-event-hub)
 - [azure-functions](#azure-functions)
 - [azure-key-vault](#azure-key-vault)
@@ -334,6 +335,17 @@
 |Azure Cosmos DB 5xx error rate|X|X|-|-|-|
 |Azure Cosmos DB scaling errors rate|X|X|-|-|-|
 |Azure Cosmos DB used RUs capacity|X|X|-|-|-|
+
+
+## azure-datafactory
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Azure DataFactory activity error rate|X|X|-|-|-|
+|Azure DataFactory pipeline error rate|X|X|-|-|-|
+|Azure DataFactory trigger error rate|X|X|-|-|-|
+|Azure DataFactory available memory|X|X|-|-|-|
+|Azure DataFactory cpu percentage|X|X|-|-|-|
 
 
 ## azure-event-hub

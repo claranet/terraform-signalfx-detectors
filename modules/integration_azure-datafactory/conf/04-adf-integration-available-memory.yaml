@@ -1,0 +1,20 @@
+module: "Azure DataFactory"
+name: "Available Memory"
+filtering: "filter('resource_type', 'Microsoft.DataFactory/factories') and filter('primary_aggregation_type', 'true')"
+aggregation: ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+value_unit: "MB"
+transformation: ".min(over='15m')"
+signals:
+  memory:
+    metric: "IntegrationRuntimeAvailableMemory"
+  signal:
+    formula:
+      memory.scale(0.000000953674316) # Scale to MB unit
+rules:
+  critical:
+    threshold: 256
+    comparator: "<"
+  major:
+    threshold: 512
+    comparator: "<"
+    dependency: critical
