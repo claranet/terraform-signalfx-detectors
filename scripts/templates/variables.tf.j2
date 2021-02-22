@@ -64,7 +64,20 @@ variable "{{ id }}_disabled_{{ severity }}" {
   type        = bool
   default     = null
 }
-
+{% if rule.lasting_duration is string %}
+variable "{{ id }}_lasting_duration_{{ severity }}" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "{{ rule.lasting_duration }}"
+}
+{% endif -%}
+{% if rule.lasting_at_least is number %}
+variable "{{ id }}_at_least_percentage_{{ severity }}" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = "{{ rule.lasting_at_least }}"
+}
+{% endif %}
 {% endfor -%}
 {% endif -%}
 
