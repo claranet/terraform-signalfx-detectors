@@ -2,6 +2,7 @@ resource "signalfx_detector" "errors" {
   name = format("%s %s", local.detector_name_prefix, "Azure Functions wrapper errors")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     base_filtering = filter('is_Azure_Function', 'true')

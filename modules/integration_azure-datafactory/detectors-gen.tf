@@ -2,6 +2,7 @@ resource "signalfx_detector" "activity_error_rate" {
   name = format("%s %s", local.detector_name_prefix, "Azure DataFactory activity error rate")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   viz_options {
     label        = "signal"
@@ -46,6 +47,7 @@ resource "signalfx_detector" "pipeline_error_rate" {
   name = format("%s %s", local.detector_name_prefix, "Azure DataFactory pipeline error rate")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   viz_options {
     label        = "signal"
@@ -90,6 +92,7 @@ resource "signalfx_detector" "trigger_error_rate" {
   name = format("%s %s", local.detector_name_prefix, "Azure DataFactory trigger error rate")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.DataFactory/factories') and filter('primary_aggregation_type', 'true')
@@ -129,6 +132,7 @@ resource "signalfx_detector" "available_memory" {
   name = format("%s %s", local.detector_name_prefix, "Azure DataFactory available memory")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   viz_options {
     label        = "signal"
@@ -172,6 +176,7 @@ resource "signalfx_detector" "cpu_percentage" {
   name = format("%s %s", local.detector_name_prefix, "Azure DataFactory cpu percentage")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   viz_options {
     label        = "signal"
