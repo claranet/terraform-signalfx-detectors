@@ -2,6 +2,7 @@ resource "signalfx_detector" "heartbeat" {
   name = format("%s %s", local.detector_name_prefix, "Azure Cosmos DB heartbeat")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting
@@ -27,6 +28,7 @@ resource "signalfx_detector" "db_4xx_requests" {
   name = format("%s %s", local.detector_name_prefix, "Azure Cosmos DB 4xx request rate")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.DocumentDB/databaseAccounts') and filter('primary_aggregation_type', 'true')
@@ -66,6 +68,7 @@ resource "signalfx_detector" "db_5xx_requests" {
   name = format("%s %s", local.detector_name_prefix, "Azure Cosmos DB 5xx error rate")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.DocumentDB/databaseAccounts') and filter('primary_aggregation_type', 'true')
@@ -105,6 +108,7 @@ resource "signalfx_detector" "scaling" {
   name = format("%s %s", local.detector_name_prefix, "Azure Cosmos DB scaling errors rate")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.DocumentDB/databaseAccounts') and filter('primary_aggregation_type', 'true')
@@ -144,6 +148,7 @@ resource "signalfx_detector" "used_rus_capacity" {
   name = format("%s %s", local.detector_name_prefix, "Azure Cosmos DB used RUs capacity")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     base_filter = filter('resource_type', 'Microsoft.DocumentDB/databaseAccounts') and filter('primary_aggregation_type', 'true')

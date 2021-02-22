@@ -2,6 +2,7 @@ resource "signalfx_detector" "aurora_postgresql_replica_lag" {
   name = format("%s %s", local.detector_name_prefix, "AWS RDS Aurora PostgreSQL replica lag")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     signal = data('RDSToAuroraPostgreSQLReplicaLag', filter=filter('namespace', 'AWS/RDS') and filter('stat', 'mean') and filter('DBInstanceIdentifier', '*') and ${module.filter-tags.filter_custom})${var.aurora_postgresql_replica_lag_aggregation_function}${var.aurora_postgresql_replica_lag_transformation_function}.publish('signal')

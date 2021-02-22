@@ -2,6 +2,7 @@ resource "signalfx_detector" "heartbeat" {
   name = format("%s %s", local.detector_name_prefix, "AWS ElastiCache heartbeat")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
@@ -26,6 +27,7 @@ resource "signalfx_detector" "evictions" {
   name = format("%s %s", local.detector_name_prefix, "AWS ElastiCache evictions")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     signal = data('Evictions', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.evictions_aggregation_function}${var.evictions_transformation_function}.publish('signal')
@@ -62,6 +64,7 @@ resource "signalfx_detector" "max_connection" {
   name = format("%s %s", local.detector_name_prefix, "AWS ElastiCache connections over max allowed")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     signal = data('CurrConnections', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'upper') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.max_connection_aggregation_function}${var.max_connection_transformation_function}.publish('signal')
@@ -85,6 +88,7 @@ resource "signalfx_detector" "no_connection" {
   name = format("%s %s", local.detector_name_prefix, "AWS ElastiCache current connections")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     signal = data('CurrConnections', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'lower') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.no_connection_aggregation_function}${var.no_connection_transformation_function}.publish('signal')
@@ -108,6 +112,7 @@ resource "signalfx_detector" "swap" {
   name = format("%s %s", local.detector_name_prefix, "AWS ElastiCache swap")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     signal = data('SwapUsage', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'upper') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.swap_aggregation_function}${var.swap_transformation_function}.publish('signal')
@@ -144,6 +149,7 @@ resource "signalfx_detector" "free_memory" {
   name = format("%s %s", local.detector_name_prefix, "AWS ElastiCache freeable memory")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     signal = data('FreeableMemory', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'lower') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom}).rateofchange()${var.free_memory_aggregation_function}${var.free_memory_transformation_function}.publish('signal')
@@ -180,6 +186,7 @@ resource "signalfx_detector" "evictions_growing" {
   name = format("%s %s", local.detector_name_prefix, "AWS ElastiCache evictions changing rate grows")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     signal = data('Evictions', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.evictions_growing_aggregation_function}${var.evictions_growing_transformation_function}.rateofchange().scale(100).publish('signal')

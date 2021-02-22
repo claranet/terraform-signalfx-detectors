@@ -2,6 +2,7 @@ resource "signalfx_detector" "api_result" {
   name = format("%s %s", local.detector_name_prefix, "Azure Key Vault API result rate")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.KeyVault/vaults') and filter('primary_aggregation_type', 'true')
@@ -41,6 +42,7 @@ resource "signalfx_detector" "api_latency" {
   name = format("%s %s", local.detector_name_prefix, "Azure Key Vault API latency")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.KeyVault/vaults') and filter('primary_aggregation_type', 'true')

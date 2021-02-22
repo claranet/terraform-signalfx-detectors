@@ -2,6 +2,7 @@ resource "signalfx_detector" "status_check" {
   name = format("%s %s", local.detector_name_prefix, "Nagios check status")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
         signal = data('nagios.state', filter=${module.filter-tags.filter_custom})${var.status_check_aggregation_function}${var.status_check_transformation_function}.publish('signal')

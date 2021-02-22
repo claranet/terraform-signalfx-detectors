@@ -2,6 +2,7 @@ resource "signalfx_detector" "heartbeat" {
   name = format("%s %s", local.detector_name_prefix, "RabbitMQ  heartbeat")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   max_delay = 900
 
@@ -28,6 +29,7 @@ resource "signalfx_detector" "file_descriptors" {
   name = format("%s %s", local.detector_name_prefix, "RabbitMQ Node file descriptors usage")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     A = data('gauge.node.fd_used', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom})${var.file_descriptors_aggregation_function}${var.file_descriptors_transformation_function}
@@ -66,6 +68,7 @@ resource "signalfx_detector" "processes" {
   name = format("%s %s", local.detector_name_prefix, "RabbitMQ Node process usage")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     A = data('gauge.node.proc_used', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom})${var.processes_aggregation_function}${var.processes_transformation_function}
@@ -104,6 +107,7 @@ resource "signalfx_detector" "sockets" {
   name = format("%s %s", local.detector_name_prefix, "RabbitMQ Node sockets usage")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     A = data('gauge.node.sockets_used', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom})${var.sockets_aggregation_function}${var.sockets_transformation_function}
@@ -142,6 +146,7 @@ resource "signalfx_detector" "vm_memory" {
   name = format("%s %s", local.detector_name_prefix, "RabbitMQ Node vm_memory usage")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     A = data('gauge.node.mem_used', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom})${var.vm_memory_aggregation_function}${var.vm_memory_transformation_function}

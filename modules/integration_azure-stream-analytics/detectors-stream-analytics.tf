@@ -2,6 +2,7 @@ resource "signalfx_detector" "heartbeat" {
   name = format("%s %s", local.detector_name_prefix, "Azure Stream Analytics heartbeat")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting
@@ -27,6 +28,7 @@ resource "signalfx_detector" "su_utilization" {
   name = format("%s %s", local.detector_name_prefix, "Azure Stream Analytics resource utilization")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.StreamAnalytics/streamingjobs') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}
@@ -64,6 +66,7 @@ resource "signalfx_detector" "failed_function_requests" {
   name = format("%s %s", local.detector_name_prefix, "Azure Stream Analytics failed function requests rate")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.StreamAnalytics/streamingjobs') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}
@@ -103,6 +106,7 @@ resource "signalfx_detector" "conversion_errors" {
   name = format("%s %s", local.detector_name_prefix, "Azure Stream Analytics conversion errors rate")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.StreamAnalytics/streamingjobs') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}
@@ -140,6 +144,7 @@ resource "signalfx_detector" "runtime_errors" {
   name = format("%s %s", local.detector_name_prefix, "Azure Stream Analytics runtime errors rate")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.StreamAnalytics/streamingjobs') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}

@@ -2,6 +2,7 @@ resource "signalfx_detector" "volume_space" {
   name = format("%s %s", local.detector_name_prefix, "Kubernetes node volume space usage")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     A = data('kubernetes.volume_available_bytes', filter=${module.filter-tags.filter_custom} and not filter('volume_type', 'configMap', 'secret'))${var.volume_space_aggregation_function}${var.volume_space_transformation_function}
@@ -40,6 +41,7 @@ resource "signalfx_detector" "volume_inodes" {
   name = format("%s %s", local.detector_name_prefix, "Kubernetes node volume inodes usage")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     A = data('kubernetes.volume_inodes_free', filter=${module.filter-tags.filter_custom} and not filter('volume_type', 'configMap', 'secret'))${var.volume_inodes_aggregation_function}${var.volume_inodes_transformation_function}

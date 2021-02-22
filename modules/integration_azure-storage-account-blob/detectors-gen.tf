@@ -2,6 +2,7 @@ resource "signalfx_detector" "requests_error_rate" {
   name = format("%s %s", local.detector_name_prefix, "Azure Storage Account on Blob requests error rate")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   viz_options {
     label        = "signal"
@@ -46,6 +47,7 @@ resource "signalfx_detector" "latency_e2e" {
   name = format("%s %s", local.detector_name_prefix, "Azure Storage Account on Blob latency e2e")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   viz_options {
     label        = "signal"

@@ -2,6 +2,7 @@ resource "signalfx_detector" "memory_used" {
   name = format("%s %s", local.detector_name_prefix, "Couchbase memory used")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   viz_options {
     label        = "signal"
@@ -45,6 +46,7 @@ resource "signalfx_detector" "out_of_memory_errors" {
   name = format("%s %s", local.detector_name_prefix, "Couchbase out of memory errors")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     signal = data('gauge.bucket.op.ep_oom_errors', filter=${module.filter-tags.filter_custom})${var.out_of_memory_errors_aggregation_function}${var.out_of_memory_errors_transformation_function}.publish('signal')
@@ -68,6 +70,7 @@ resource "signalfx_detector" "disk_write_queue" {
   name = format("%s %s", local.detector_name_prefix, "Couchbase disk write queue")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     signal = data('gauge.bucket.op.disk_write_queue', filter=${module.filter-tags.filter_custom})${var.disk_write_queue_aggregation_function}${var.disk_write_queue_transformation_function}.publish('signal')

@@ -2,6 +2,7 @@ resource "signalfx_detector" "heartbeat" {
   name = format("%s %s", local.detector_name_prefix, "Kubernetes node heartbeat")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
@@ -26,6 +27,7 @@ resource "signalfx_detector" "node_ready" {
   name = format("%s %s", local.detector_name_prefix, "Kubernetes node status")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     signal = data('kubernetes.node_ready', filter=${module.filter-tags.filter_custom})${var.node_ready_aggregation_function}${var.node_ready_transformation_function}.fill(1).publish('signal')
@@ -62,6 +64,7 @@ resource "signalfx_detector" "pod_phase_status" {
   name = format("%s %s", local.detector_name_prefix, "Kubernetes pod status phase")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     signal = data('kubernetes.pod_phase', filter=(not filter('job', '*')) and (not filter('cronjob', '*')) and ${module.filter-tags.filter_custom})${var.pod_phase_status_aggregation_function}${var.pod_phase_status_transformation_function}.fill(2).publish('signal')
@@ -85,6 +88,7 @@ resource "signalfx_detector" "terminated" {
   name = format("%s %s", local.detector_name_prefix, "Kubernetes pod terminated abnormally")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     signal = data('kubernetes.container_ready', filter=filter('container_status', 'terminated') and (not filter('container_status_reason', 'Completed')) and ${module.filter-tags.filter_custom})${var.terminated_aggregation_function}${var.terminated_transformation_function}.publish('signal')
@@ -108,6 +112,7 @@ resource "signalfx_detector" "oom_killed" {
   name = format("%s %s", local.detector_name_prefix, "Kubernetes container killed by OOM")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     signal = data('kubernetes.container_ready', filter=filter('container_status', 'terminated') and filter('container_status_reason', 'OOMKilled') and ${module.filter-tags.filter_custom})${var.oom_killed_aggregation_function}${var.oom_killed_transformation_function}.count().publish('signal')
@@ -131,6 +136,7 @@ resource "signalfx_detector" "deployment_crashloopbackoff" {
   name = format("%s %s", local.detector_name_prefix, "Kubernetes deployment in CrashLoopBackOff")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     signal = data('kubernetes.container_restart_count', filter=filter('container_status', 'waiting') and filter('deployment', '*') and filter('container_status_reason', 'CrashLoopBackOff') and ${module.filter-tags.filter_custom}, extrapolation='zero')${var.deployment_crashloopbackoff_aggregation_function}${var.deployment_crashloopbackoff_transformation_function}.publish('signal')
@@ -154,6 +160,7 @@ resource "signalfx_detector" "daemonset_crashloopbackoff" {
   name = format("%s %s", local.detector_name_prefix, "Kubernetes daemonset in CrashLoopBackOff")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     signal = data('kubernetes.container_restart_count', filter=filter('container_status', 'waiting') and filter('daemonSet', '*') and filter('container_status_reason', 'CrashLoopBackOff') and ${module.filter-tags.filter_custom}, extrapolation='zero')${var.daemonset_crashloopbackoff_aggregation_function}${var.daemonset_crashloopbackoff_transformation_function}.publish('signal')
@@ -177,6 +184,7 @@ resource "signalfx_detector" "job_failed" {
   name = format("%s %s", local.detector_name_prefix, "Kubernetes job from cronjob failed")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     A = data('kubernetes.job.completions', extrapolation='zero', filter=${module.filter-tags.filter_custom})${var.job_failed_aggregation_function}${var.job_failed_transformation_function}
@@ -203,6 +211,7 @@ resource "signalfx_detector" "daemonset_scheduled" {
   name = format("%s %s", local.detector_name_prefix, "Kubernetes daemonsets not scheduled")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     A = data('kubernetes.daemon_set.desired_scheduled', filter=${module.filter-tags.filter_custom})${var.daemonset_scheduled_aggregation_function}${var.daemonset_scheduled_transformation_function}
@@ -228,6 +237,7 @@ resource "signalfx_detector" "daemonset_ready" {
   name = format("%s %s", local.detector_name_prefix, "Kubernetes daemonsets not ready")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     A = data('kubernetes.daemon_set.ready', filter=${module.filter-tags.filter_custom})${var.daemonset_ready_aggregation_function}${var.daemonset_ready_transformation_function}
@@ -253,6 +263,7 @@ resource "signalfx_detector" "daemonset_misscheduled" {
   name = format("%s %s", local.detector_name_prefix, "Kubernetes daemonsets misscheduled")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     signal = data('kubernetes.daemon_set.misscheduled', filter=${module.filter-tags.filter_custom})${var.daemonset_misscheduled_aggregation_function}${var.daemonset_misscheduled_transformation_function}.publish('signal')
@@ -276,6 +287,7 @@ resource "signalfx_detector" "deployment_available" {
   name = format("%s %s", local.detector_name_prefix, "Kubernetes deployments available")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     A = data('kubernetes.deployment.desired', filter=${module.filter-tags.filter_custom})${var.deployment_available_aggregation_function}${var.deployment_available_transformation_function}
@@ -301,6 +313,7 @@ resource "signalfx_detector" "replicaset_available" {
   name = format("%s %s", local.detector_name_prefix, "Kubernetes replicasets available")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     A = data('kubernetes.replica_set.desired', filter=${module.filter-tags.filter_custom})${var.replicaset_available_aggregation_function}${var.replicaset_available_transformation_function}
@@ -326,6 +339,7 @@ resource "signalfx_detector" "replication_controller_available" {
   name = format("%s %s", local.detector_name_prefix, "Kubernetes replication_controllers available")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     A = data('kubernetes.replication_controller.desired', filter=${module.filter-tags.filter_custom})${var.replication_controller_available_aggregation_function}${var.replication_controller_available_transformation_function}
@@ -351,6 +365,7 @@ resource "signalfx_detector" "statefulset_ready" {
   name = format("%s %s", local.detector_name_prefix, "Kubernetes statefulsets ready")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     A = data('kubernetes.stateful_set.desired', filter=${module.filter-tags.filter_custom})${var.statefulset_ready_aggregation_function}${var.statefulset_ready_transformation_function}

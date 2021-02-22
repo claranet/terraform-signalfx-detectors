@@ -2,6 +2,7 @@ resource "signalfx_detector" "jmx_memory_heap" {
   name = format("%s %s", local.detector_name_prefix, "JMX memory heap usage")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     A = data('jmx_memory.used', filter=filter('plugin_instance', 'memory-heap') and ${module.filter-tags.filter_custom})${var.memory_heap_aggregation_function}${var.memory_heap_transformation_function}
@@ -39,6 +40,7 @@ resource "signalfx_detector" "jmx_old_gen" {
   name = format("%s %s", local.detector_name_prefix, "JMX GC old generation usage")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     A = data('jmx_memory.used', filter=filter('plugin_instance', 'memory_pool-G1 Old Gen') and ${module.filter-tags.filter_custom})${var.gc_old_gen_aggregation_function}${var.gc_old_gen_transformation_function}

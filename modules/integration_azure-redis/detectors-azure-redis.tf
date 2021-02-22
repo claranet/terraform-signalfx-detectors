@@ -2,6 +2,7 @@ resource "signalfx_detector" "heartbeat" {
   name = format("%s %s", local.detector_name_prefix, "Azure Redis heartbeat")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting
@@ -27,6 +28,7 @@ resource "signalfx_detector" "evictedkeys" {
   name = format("%s %s", local.detector_name_prefix, "Azure Redis evicted keys")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Cache/Redis') and filter('primary_aggregation_type', 'true')
@@ -64,6 +66,7 @@ resource "signalfx_detector" "percent_processor_time" {
   name = format("%s %s", local.detector_name_prefix, "Azure Redis processor time")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Cache/Redis') and filter('primary_aggregation_type', 'true')
@@ -101,6 +104,7 @@ resource "signalfx_detector" "load" {
   name = format("%s %s", local.detector_name_prefix, "Azure Redis load")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Cache/Redis') and filter('primary_aggregation_type', 'true')
