@@ -1,3 +1,20 @@
 documentations:
   - name: Azure Monitor metrics
     url: 'https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported'
+  - name: SignalFx Azure Functions
+    url: 'https://docs.signalfx.com/en/latest/integrations/azure-functions.html'
+
+source_doc: |
+  ### Serverless wrapper
+
+  The detector "wrapper errors" is based on signalfx's wrapper lib which instrument your Azure function to send metrics to SignalFX.
+  Metrics available with theses wrappers are :
+  * azure.function.errors
+  * azure.function.duration
+  * azure.function.invocations
+
+  The wrapper is available for following languages:
+  * [C#](https://github.com/signalfx/azure-function-csharp)
+  * [Java](https://github.com/signalfx/azure-function-java)
+  * [NodeJs](https://github.com/signalfx/azure-function-nodejs) 
+  * [Python](https://github.com/claranet/signalfx-azure-function-python)

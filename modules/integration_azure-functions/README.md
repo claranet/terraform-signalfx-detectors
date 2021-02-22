@@ -7,6 +7,7 @@
 - [How to use this module?](#how-to-use-this-module)
 - [What are the available detectors in this module?](#what-are-the-available-detectors-in-this-module)
 - [How to collect required metrics?](#how-to-collect-required-metrics)
+  - [Serverless wrapper](#serverless-wrapper)
   - [Metrics](#metrics)
 - [Related documentation](#related-documentation)
 
@@ -57,7 +58,7 @@ Note the following parameters:
 
 These 3 parameters alongs with all variables defined in [common-variables.tf](common-variables.tf) are common to all 
 [modules](../) in this repository. Other variables, specific to this module, are available in 
-[variables.tf](variables.tf).
+[variables.tf](variables.tf) and [variables-gen.tf](variables-gen.tf).
 In general, the default configuration "works" but all of these Terraform 
 [variables](https://www.terraform.io/docs/configuration/variables.html) make it possible to 
 customize the detectors behavior to better fit your needs.
@@ -79,6 +80,7 @@ This module creates the following SignalFx detectors which could contain one or 
 |Azure Functions HTTP 5xx error rate|X|X|-|-|-|
 |Azure Functions connections count|X|X|-|-|-|
 |Azure Functions thread count|X|X|-|-|-|
+|Azure Functions wrapper errors|X|X|-|-|-|
 
 ## How to collect required metrics?
 
@@ -87,7 +89,19 @@ the [Azure integration](https://docs.signalfx.com/en/latest/integrations/azure-i
 with this Terraform [module](https://github.com/claranet/terraform-signalfx-integrations/tree/master/cloud/azure).
 
 
+### Serverless wrapper
 
+The detector "wrapper errors" is based on signalfx's wrapper lib which instrument your Azure function to send metrics to SignalFX.
+Metrics available with theses wrappers are :
+* azure.function.errors
+* azure.function.duration
+* azure.function.invocations
+
+The wrapper is available for following languages:
+* [C#](https://github.com/signalfx/azure-function-csharp)
+* [Java](https://github.com/signalfx/azure-function-java)
+* [NodeJs](https://github.com/signalfx/azure-function-nodejs) 
+* [Python](https://github.com/claranet/signalfx-azure-function-python)
 
 ### Metrics
 
@@ -95,6 +109,8 @@ with this Terraform [module](https://github.com/claranet/terraform-signalfx-inte
 Here is the list of required metrics for detectors in this module.
 
 * `AppConnections`
+* `azure.function.errors`
+* `azure.function.invocations`
 * `FunctionExecutionCount`
 * `Http5xx`
 * `Threads`
@@ -107,3 +123,4 @@ Here is the list of required metrics for detectors in this module.
 * [Terraform SignalFx provider](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs)
 * [Terraform SignalFx detector](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector)
 * [Azure Monitor metrics](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported)
+* [SignalFx Azure Functions](https://docs.signalfx.com/en/latest/integrations/azure-functions.html)

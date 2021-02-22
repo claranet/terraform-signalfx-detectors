@@ -1,0 +1,28 @@
+
+module: Azure Functions
+name: "wrapper errors"
+id: errors
+signals:
+  errors:
+    metric: azure.function.errors
+    extrapolation: "last_value"
+    rollup: "sum"
+  invocations:
+    metric: azure.function.invocations
+    extrapolation: "last_value"
+    rollup: "sum"
+  signal:
+    formula: "(errors / invocations).fill(value=0).scale(100)"
+rules:
+  critical:
+    threshold: 30
+    comparator: ">"
+    lasting_duration: "900s"
+  major:
+    threshold: 0
+    comparator: ">"
+    lasting_duration: "900s"
+    dependency: critical
+
+filtering: "filter('is_Azure_Function', 'true')"
+
