@@ -26,6 +26,18 @@ variable "heartbeat_aggregation_function" {
   default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
+variable "heartbeat_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "heartbeat_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 # capacity detector
 
 variable "capacity_notifications" {
@@ -74,6 +86,18 @@ variable "capacity_threshold_major" {
   description = "Major threshold for capacity detector (in %)"
   type        = number
   default     = 90
+}
+
+variable "capacity_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "capacity_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
 }
 
 # gateway requests Duration
@@ -126,6 +150,18 @@ variable "gateway_requests_duration_threshold_major" {
   default     = 1
 }
 
+variable "gateway_requests_duration_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "gateway_requests_duration_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
 # Backend requests Duration
 
 variable "backend_requests_duration_notifications" {
@@ -174,4 +210,16 @@ variable "backend_requests_duration_threshold_major" {
   description = "Major threshold for backend requests duration detector (in s)"
   type        = number
   default     = 1
+}
+
+variable "backend_requests_duration_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "backend_requests_duration_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
 }

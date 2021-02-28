@@ -14,6 +14,8 @@ resource "signalfx_detector" "heartbeat" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = try(coalesce(var.heartbeat_runbook_url, var.runbook_url), "")
+    tip                   = var.heartbeat_tip
     parameterized_subject = local.rule_subject_novalue
     parameterized_body    = local.rule_body
   }
@@ -35,6 +37,8 @@ resource "signalfx_detector" "capacity" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.capacity_disabled_critical, var.capacity_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.capacity_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = try(coalesce(var.capacity_runbook_url, var.runbook_url), "")
+    tip                   = var.capacity_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -45,6 +49,8 @@ resource "signalfx_detector" "capacity" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.capacity_disabled_major, var.capacity_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.capacity_notifications, "major", []), var.notifications.major)
+    runbook_url           = try(coalesce(var.capacity_runbook_url, var.runbook_url), "")
+    tip                   = var.capacity_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -66,6 +72,8 @@ resource "signalfx_detector" "gateway_requests_duration" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.gateway_requests_duration_disabled_critical, var.gateway_requests_duration_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.gateway_requests_duration_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = try(coalesce(var.gateway_requests_duration_runbook_url, var.runbook_url), "")
+    tip                   = var.gateway_requests_duration_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -76,6 +84,8 @@ resource "signalfx_detector" "gateway_requests_duration" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.gateway_requests_duration_disabled_major, var.gateway_requests_duration_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.gateway_requests_duration_notifications, "major", []), var.notifications.major)
+    runbook_url           = try(coalesce(var.gateway_requests_duration_runbook_url, var.runbook_url), "")
+    tip                   = var.gateway_requests_duration_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -97,6 +107,8 @@ resource "signalfx_detector" "backend_requests_duration" {
     detect_label          = "CRIT"
     disabled              = coalesce(var.backend_requests_duration_disabled_critical, var.backend_requests_duration_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.backend_requests_duration_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = try(coalesce(var.backend_requests_duration_runbook_url, var.runbook_url), "")
+    tip                   = var.backend_requests_duration_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
@@ -107,6 +119,8 @@ resource "signalfx_detector" "backend_requests_duration" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.backend_requests_duration_disabled_major, var.backend_requests_duration_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.backend_requests_duration_notifications, "major", []), var.notifications.major)
+    runbook_url           = try(coalesce(var.backend_requests_duration_runbook_url, var.runbook_url), "")
+    tip                   = var.backend_requests_duration_tip
     parameterized_subject = local.rule_subject
     parameterized_body    = local.rule_body
   }
