@@ -67,7 +67,7 @@ resource "signalfx_detector" "pod_phase_status" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('kubernetes.pod_phase', filter=(not filter('job', '*')) and (not filter('cronjob', '*')) and ${module.filter-tags.filter_custom})${var.pod_phase_status_aggregation_function}${var.pod_phase_status_transformation_function}.fill(2).publish('signal')
+    signal = data('kubernetes.pod_phase', filter=(not filter('job', '*')) and (not filter('cronjob', '*')) and ${module.filter-tags.filter_custom})${var.pod_phase_status_aggregation_function}${var.pod_phase_status_transformation_function}.publish('signal')
     detect(when(signal < threshold(2), lasting='${var.pod_phase_status_lasting_duration_seconds}s') or when(signal > threshold(3), lasting='${var.pod_phase_status_lasting_duration_seconds}s')).publish('MAJOR')
 EOF
 
