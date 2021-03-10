@@ -1,0 +1,26 @@
+module: "Kubernetes"
+name: "Workloads Count"
+filtering: "not filter('kubernetes_namespace','ara') and not filter('kubernetes_namespace','bastions') and not filter('kubernetes_namespace','gitlab-runner') and not filter('kubernetes_namespace','logging') and not filter('kubernetes_namespace','monitoring') and not filter('kubernetes_namespace','ingress-nginx') and not filter('kubernetes_namespace','kube-system') and not filter('kubernetes_namespace','kubernetes-replicator')"
+aggregation: ".sum(by=['kubernetes_name','kubernetes_namespace']).count()"
+transformation: ".min(over='30m')"
+value_unit: "records"
+signals:
+  kubernetes_deployment_desired:
+    metric: "kubernetes.deployment.desired"
+  kubernetes_daemon_set_desired:
+    metric: "kubernetes.daemon_set.desired_scheduled"
+  kubernetes_replication_controller_desired:
+    metric: "kubernetes.replication_controller.desired"
+  kubernetes_replica_set_desired:
+    metric: "kubernetes.replica_set.desired"
+  kubernetes_statefulset_desired:
+    metric: "kubernetes.stateful_set.desired"
+  signal:
+    formula:
+      (kubernetes_deployment_desired+kubernetes_daemon_set_desired+kubernetes_replication_controller_desired+kubernetes_replica_set_desired+kubernetes_statefulset_desired)
+rules:
+  warning:
+    comparator: ">"
+  minor:
+    comparator: ">"
+    dependency: warning
