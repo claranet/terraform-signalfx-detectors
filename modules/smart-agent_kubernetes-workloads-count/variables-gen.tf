@@ -36,25 +36,25 @@ variable "workloads_count_disabled" {
   default     = null
 }
 
-variable "workloads_count_disabled_warning" {
-  description = "Disable warning alerting rule for workloads_count detector"
-  type        = bool
-  default     = null
-}
-
 variable "workloads_count_disabled_minor" {
   description = "Disable minor alerting rule for workloads_count detector"
   type        = bool
   default     = null
 }
 
-variable "workloads_count_threshold_warning" {
-  description = "Warning threshold for workloads_count detector in records"
-  type        = number
+variable "workloads_count_disabled_warning" {
+  description = "Disable warning alerting rule for workloads_count detector"
+  type        = bool
+  default     = null
 }
 
 variable "workloads_count_threshold_minor" {
   description = "Minor threshold for workloads_count detector in records"
+  type        = number
+}
+
+variable "workloads_count_threshold_warning" {
+  description = "Warning threshold for workloads_count detector in records"
   type        = number
 }
 

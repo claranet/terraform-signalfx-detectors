@@ -17,21 +17,9 @@ resource "signalfx_detector" "workloads_count" {
     kubernetes_replica_set_desired = data('kubernetes.replica_set.desired', filter=base_filtering and ${module.filter-tags.filter_custom})${var.workloads_count_aggregation_function}${var.workloads_count_transformation_function}
     kubernetes_statefulset_desired = data('kubernetes.stateful_set.desired', filter=base_filtering and ${module.filter-tags.filter_custom})${var.workloads_count_aggregation_function}${var.workloads_count_transformation_function}
     signal = (kubernetes_deployment_desired+kubernetes_daemon_set_desired+kubernetes_replication_controller_desired+kubernetes_replica_set_desired+kubernetes_statefulset_desired).publish('signal')
-    detect(when(signal > ${var.workloads_count_threshold_warning})).publish('WARN')
-    detect(when(signal > ${var.workloads_count_threshold_minor}) and when(signal <= ${var.workloads_count_threshold_warning})).publish('MINOR')
+    detect(when(signal > ${var.workloads_count_threshold_minor})).publish('MINOR')
+    detect(when(signal > ${var.workloads_count_threshold_warning}) and when(signal <= ${var.workloads_count_threshold_minor})).publish('WARN')
 EOF
-
-  rule {
-    description           = "is too high > ${var.workloads_count_threshold_warning}records"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.workloads_count_disabled_warning, var.workloads_count_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.workloads_count_notifications, "warning", []), var.notifications.warning)
-    runbook_url           = try(coalesce(var.workloads_count_runbook_url, var.runbook_url), "")
-    tip                   = var.workloads_count_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
-  }
 
   rule {
     description           = "is too high > ${var.workloads_count_threshold_minor}records"
@@ -39,6 +27,18 @@ EOF
     detect_label          = "MINOR"
     disabled              = coalesce(var.workloads_count_disabled_minor, var.workloads_count_disabled, var.detectors_disabled)
     notifications         = coalescelist(lookup(var.workloads_count_notifications, "minor", []), var.notifications.minor)
+    runbook_url           = try(coalesce(var.workloads_count_runbook_url, var.runbook_url), "")
+    tip                   = var.workloads_count_tip
+    parameterized_subject = local.rule_subject
+    parameterized_body    = local.rule_body
+  }
+
+  rule {
+    description           = "is too high > ${var.workloads_count_threshold_warning}records"
+    severity              = "Warning"
+    detect_label          = "WARN"
+    disabled              = coalesce(var.workloads_count_disabled_warning, var.workloads_count_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.workloads_count_notifications, "warning", []), var.notifications.warning)
     runbook_url           = try(coalesce(var.workloads_count_runbook_url, var.runbook_url), "")
     tip                   = var.workloads_count_tip
     parameterized_subject = local.rule_subject

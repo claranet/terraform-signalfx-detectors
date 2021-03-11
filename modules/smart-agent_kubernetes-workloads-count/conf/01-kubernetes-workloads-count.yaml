@@ -19,8 +19,8 @@ signals:
     formula:
       (kubernetes_deployment_desired+kubernetes_daemon_set_desired+kubernetes_replication_controller_desired+kubernetes_replica_set_desired+kubernetes_statefulset_desired)
 rules:
-  warning:
-    comparator: ">"
   minor:
     comparator: ">"
-    dependency: warning
+  warning:
+    comparator: ">"
+    dependency: minor
