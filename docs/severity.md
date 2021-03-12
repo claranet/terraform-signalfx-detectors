@@ -71,6 +71,7 @@
 - [kubernetes-common](#kubernetes-common)
 - [kubernetes-velero](#kubernetes-velero)
 - [kubernetes-volumes](#kubernetes-volumes)
+- [kubernetes-workloads-count](#kubernetes-workloads-count)
 - [memcached](#memcached)
 - [mongodb](#mongodb)
 - [mysql](#mysql)
@@ -772,6 +773,13 @@
 |---|---|---|---|---|---|
 |Kubernetes node volume space usage|X|X|-|-|-|
 |Kubernetes node volume inodes usage|X|X|-|-|-|
+
+
+## kubernetes-workloads-count
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Kubernetes workloads count|-|-|X|X|-|
 
 
 ## memcached
