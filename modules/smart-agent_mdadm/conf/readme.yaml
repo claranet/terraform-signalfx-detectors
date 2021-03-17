@@ -1,0 +1,42 @@
+documentations:
+  - name: Smart Agent monitor
+    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-php-fpm.html'
+  - name: Collectd plugin
+    url: 'https://collectd.org/wiki/index.php/Plugin:MD'
+
+source_doc: |
+  There is no SignalFx official integration nor a monitor for `mdadm` but we use the 
+  [collectd/custom monitor](https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-custom.html)
+  with bundled `md` collectd plugin.
+
+  ### Monitors
+
+  The Collectd plugin requires access on MD devices owned by user `root` and group `disk`.  
+  So you have to allow the user running signalfx-agent to run `mdadm` on these devices by adding it to `disk` group:
+
+  ```bash
+  usermod -a -G disk signalfx-agent
+  ```
+
+  ### Examples
+  
+  Here is a sample configuration fragment for the SignalFx agent monitors:
+
+  ```yaml
+  monitors:
+  - type: collectd/custom
+    template: |
+      LoadPLugin md
+  ```
+
+notes: |
+  ### About `Disk failed` detector
+
+  The detector triggers:
+    - a `major` alert rule when metric `md_disks.failed > 0`
+    - a `critical` alert rule when metric `md_disks.failed > 1`
+
+  ### About `Disk missing` detector
+    - a `major` alert rule when metric `md_disks.missing > 0`
+    - a `critical` alert rule when metric `md_disks.missing > 1`
+
