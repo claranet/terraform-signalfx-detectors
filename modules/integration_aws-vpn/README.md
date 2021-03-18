@@ -8,6 +8,8 @@
 - [What are the available detectors in this module?](#what-are-the-available-detectors-in-this-module)
 - [How to collect required metrics?](#how-to-collect-required-metrics)
   - [Metrics](#metrics)
+- [Notes](#notes)
+  - [About filtering](#about-filtering)
 - [Related documentation](#related-documentation)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -95,6 +97,19 @@ Here is the list of required metrics for detectors in this module.
 * `TunnelState`
 
 
+## Notes
+
+### About filtering
+
+Unlike other AWS services, the tags defined by user on VPN are not fetched by SignalFx AWS
+integration as dimensions. This is why we cannot filter on [the aws tagging
+convention](https://github.com/claranet/terraform-signalfx-detectors/wiki/Tagging-convention#aws).
+
+Instead, we use the dimension `VpnId` as default filtering policy which allow you to
+specify an VPN to monitor from `vpn_id` variable. In this case, you could have to leverage [multiple
+instances](https://github.com/claranet/terraform-signalfx-detectors/wiki/Guidance#Multiple-instances)
+of this module to monitor different VPN providing different value for this `vpn_id`. Else, its
+default value `*` will monitor all VPN.
 
 
 ## Related documentation

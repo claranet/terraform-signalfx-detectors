@@ -1,5 +1,11 @@
 # Module specific
 
+variable "vpn_id" {
+  description = "The VPN id to filter on `FileSystemId` dimension"
+  type        = string
+  default     = "*"
+}
+
 # Heartbeat detector
 
 variable "heartbeat_tip" {
