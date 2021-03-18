@@ -6,12 +6,17 @@ ifneq "$(SUPPORTS_MAKE_ARGS)" ""
 endif
 
 COMMIT := $(shell git rev-parse HEAD)
-TAG := $(shell git describe --tags --abbrev=0)
+BRANCH := $(shell git branch --show-current)
+LAST_TAG := $(shell git describe --tags --abbrev=0)
+LAST_TAG_COMMIT := $(shell git rev-list -n 1 $(LAST_TAG))
 
-ifdef CI
-	REV := $(COMMIT)
-else
-	REV := $(TAG)
+REV := $(COMMIT)
+ifndef CI
+	ifeq ($(COMMIT), $(LAST_TAG_COMMIT))
+		REV := $(LAST_TAG)
+	else ifneq ($(BRANCH),)
+		REV := $(BRANCH)
+	endif
 endif
 
 ifeq ($(COMMAND_ARGS),)
