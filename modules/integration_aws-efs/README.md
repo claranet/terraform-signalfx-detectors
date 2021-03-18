@@ -9,9 +9,10 @@
 - [How to collect required metrics?](#how-to-collect-required-metrics)
   - [Metrics](#metrics)
 - [Notes](#notes)
-  - [Filtering based on aws_tag_env and aws_tag_sfx_monitored](#filtering-based-on-aws_tag_env-and-aws_tag_sfx_monitored)
-  - [Used space](#used-space)
-  - [Read / Write IOPs](#read--write-iops)
+  - [About filtering](#about-filtering)
+  - [About `Percent of IO Limit` detector](#about-percent-of-io-limit-detector)
+  - [About `Used Space` detector](#about-used-space-detector)
+  - [About `Percent write throughput` and `Percent read throughput` detectors](#about-percent-write-throughput-and-percent-read-throughput-detectors)
 - [Related documentation](#related-documentation)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -27,14 +28,14 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 module "signalfx-detectors-integration-aws-efs" {
   source = "github.com/claranet/terraform-signalfx-detectors.git//modules/integration_aws-efs?ref={revision}"
 
-  environment                         = var.environment
-  notifications                       = local.notifications
-  used_space_threshold_critical       = 42
-  iops_write_stats_threshold_critical = 42
-  iops_read_stats_threshold_critical  = 42
-  used_space_threshold_major          = 42
-  iops_write_stats_threshold_major    = 42
-  iops_read_stats_threshold_major     = 42
+  environment                        = var.environment
+  notifications                      = local.notifications
+  used_space_threshold_critical      = 42
+  used_space_threshold_major         = 42
+  write_throughput_threshold_minor   = 42
+  write_throughput_threshold_warning = 42
+  read_throughput_threshold_minor    = 42
+  read_throughput_threshold_warning  = 42
 }
 ```
 
@@ -67,7 +68,7 @@ Note the following parameters:
 
 These 3 parameters alongs with all variables defined in [common-variables.tf](common-variables.tf) are common to all 
 [modules](../) in this repository. Other variables, specific to this module, are available in 
-[variables-gen.tf](variables-gen.tf).
+[variables.tf](variables.tf) and [variables-gen.tf](variables-gen.tf).
 In general, the default configuration "works" but all of these Terraform 
 [variables](https://www.terraform.io/docs/configuration/variables.html) make it possible to 
 customize the detectors behavior to better fit your needs.
@@ -86,9 +87,11 @@ This module creates the following SignalFx detectors which could contain one or 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |AWS EFS used space|X|X|-|-|-|
-|AWS EFS percent io limit|X|X|-|-|-|
-|AWS EFS iops read stats|X|X|-|-|-|
-|AWS EFS iops write stats|X|X|-|-|-|
+|AWS EFS percent of io limit|-|X|X|-|-|
+|AWS EFS percent of read throughput|-|-|X|X|-|
+|AWS EFS percent of write throughput|-|-|X|X|-|
+|AWS EFS percent of permitted throughput|-|X|X|-|-|
+|AWS EFS burst credit balance|-|X|-|-|-|
 
 ## How to collect required metrics?
 
@@ -104,27 +107,51 @@ We are using metrics from the [AWS/EFS](https://docs.aws.amazon.com/efs/latest/u
 
 Here is the list of required metrics for detectors in this module.
 
+* `BurstCreditBalance`
 * `DataReadIOBytes`
 * `DataWriteIOBytes`
-* `MetadataIOBytes`
+* `MeteredIOBytes`
 * `PercentIOLimit`
+* `PermittedThroughput`
 * `StorageBytes`
+* `TotalIOBytes`
 
 
 ## Notes
 
-### Filtering based on aws_tag_env and aws_tag_sfx_monitored
-These values are not recovered from the AWS/EFS signalfx's modules at the moment.
-We have created a **FileSystemId** var to allow manual filtering. Default value: "*", you must change it to the wanted
-EFS Instance ID.
-### Used space
-The **default EFS limit** (for space) is **8.0E**. Threshold for these detectors must be set based on customer's context.
+### About filtering
+
+Unlike other AWS services, the tags defined by user on EFS are not fetched by SignalFx AWS 
+integration as dimensions. This is why we cannot filter on [the aws tagging 
+convention](https://github.com/claranet/terraform-signalfx-detectors/wiki/Tagging-convention#aws).
+
+Instead, we use the dimension `FileSystemId` as default filtering policy which allow you to
+specify an EFS to monitor from `efs_id` variable. In this case, you could have to leverage [multiple 
+instances](https://github.com/claranet/terraform-signalfx-detectors/wiki/Guidance#Multiple-instances)
+of this module to monitor different EFS providing different value for this `efs_id`. Else, its 
+default value `*` will monitor all EFS.
+
+### About `Percent of IO Limit` detector
+
+The used `PercentIOLimit` metric is only submitted for General Purpose mode so this
+detectors does basically nothing for Max I/O performance mode EFS.
+
+### About `Used Space` detector
+
+The **default EFS limit** (for space) is **8.0E**.
+Threshold for these detectors must be set based on customer's context.
 See CloudWatch to determine values.
-### Read / Write IOPs
-Threshold for these detectors must be set based on customer's context. See CloudWatch to determine values.
+
+### About `Percent write throughput` and `Percent read throughput` detectors
+
+These detectors are disabled by default but they can be useful to monitor 
+the part of each type (read/write) usage over the total usage in specific context.
+Threshold for these detectors must be set based on customer's context.
+See CloudWatch to determine values.
+
 
 ## Related documentation
 
 * [Terraform SignalFx provider](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs)
 * [Terraform SignalFx detector](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector)
-* [AWS EFS metrics](https://docs.aws.amazon.com/efs/latest/ug/monitoring-cloudwatch.html)
+* [CloudWatch metrics](https://docs.aws.amazon.com/efs/latest/ug/monitoring-cloudwatch.html)

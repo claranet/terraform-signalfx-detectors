@@ -9,7 +9,7 @@ signals:
     filter: "filter('StorageClass', 'Total') and filter('stat', 'mean')"
   signal:
     formula:
-      used_space.scale(0.000000000931323)
+      used_space.scale(0.000000000931323) # 1/1024^3
 rules:
   critical:
     comparator: ">"

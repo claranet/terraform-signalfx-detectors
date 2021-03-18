@@ -1,0 +1,23 @@
+module: "AWS EFS"
+name: "Percent of read throughput"
+id: "read_throughput"
+filtering: "filter('namespace', 'AWS/EFS')"
+value_unit: "%"
+transformation: ".max(over='15m')"
+disabled: true
+signals:
+  read:
+    metric: "DataReadIOBytes"
+    filter: "filter('stat', 'sum')"
+  total:
+    metric: "TotalIOBytes"
+    filter: "filter('stat', 'sum')"
+  signal:
+    formula:
+      (read/total).scale(100)
+rules:
+  minor:
+    comparator: ">"
+  warning:
+    comparator: ">"
+    dependency: minor
