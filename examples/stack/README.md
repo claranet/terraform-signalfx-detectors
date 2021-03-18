@@ -27,7 +27,7 @@ implementation example to use and deploy detectors modules available in this rep
    to the `auth_token` provider argument.
 1. Run `terraform init`.
 1. Run `terraform apply`.
-1. You can optionnaly customize the configuration of the example module
+1. You can optionally customize the configuration of the example module
    imported in [detectors.tf](detectors.tf) following the wiki
    [Guidance](https://github.com/claranet/terraform-signalfx-detectors/wiki/Guidance)
    to meet your own needs and adjust the default behavior which could
@@ -40,7 +40,7 @@ the goal is to show you a common simple structure and configuration example
 for your terraform stack.
 
 But from now you can add as many modules you want depending on the resources
-you would like to monitor. Go to [/modules](/modules/README.md) to see the full
+you would like to monitor. Go to [/modules](../../modules/README.md) to see the full
 list of available modules.
 
 This configuration is very basic and only defines one email address `doc@signalfx.null` as notifications 
@@ -54,7 +54,7 @@ you call depending on the importance for you.
 
 - If something you want monitor is not available in the modules list, 
   so you can ask it with issue or add it yourself with a Pull Request.
-  See [/CONTRIBUTING.md](CONTRIBUTING.md) for more information.
+  See [/CONTRIBUTING.md](../../CONTRIBUTING.md) for more information.
 - You can easily import ALL existing modules (depending on your current
   git revision) by running `cd ../../ && make init-stack`.
   It will update the [detectors.tf](detectors.tf) here with all modules
