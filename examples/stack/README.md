@@ -8,8 +8,9 @@ implementation example to use and deploy detectors modules available in this rep
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 :link: **Contents**
 
-- [Step by step guide](#step-by-step-guide)
-- [Notes](#notes)
+  - [Step by step guide](#step-by-step-guide)
+  - [Notes](#notes)
+- [Tips](#tips)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
