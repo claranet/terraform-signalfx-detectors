@@ -118,7 +118,8 @@ kubernetes including the `signalfx-agent` installation which must be installed a
 
 The detectors in this module are based on metrics reported by the following monitors:
 
-* [kubelet-stats](https://docs.signalfx.com/en/latest/integrations/agent/monitors/kubelet-stats.html)
+* [kubelet-metrics](https://docs.signalfx.com/en/latest/integrations/agent/monitors/kubelet-metrics.html) for Kubernetes `>= 1.18`
+* [kubelet-stats](https://docs.signalfx.com/en/latest/integrations/agent/monitors/kubelet-stats.html) for Kubernetes `< 1.18
 * [kubernetes-cluster](https://docs.signalfx.com/en/latest/integrations/agent/monitors/kubernetes-cluster.html)
 
 [Others](https://docs.signalfx.com/en/latest/integrations/kubernetes/k8s-monitors-observers.html#monitors-observers) 
@@ -134,10 +135,36 @@ The `kubernetes-cluster` requires to enable the following `extraMetrics`:
 
 ### Examples
 
-Here is a sample configuration fragment for the SignalFx agent for GKE:
+Here is a sample configuration fragment for SignalFx Agent with `kubernetes-cluster` monitor:
 
 ```yaml
 monitors:
+- type: kubernetes-cluster
+  extraMetrics:
+    - kubernetes.job.completions
+    - kubernetes.job.active
+    - kubernetes.job.succeeded
+    - kubernetes.stateful_set.ready
+    - kubernetes.stateful_set.desired
+```
+
+You can replace `kubernetes-cluster` with `openshift-cluster` you monitor Openshift Kubernetes.
+
+Then add the monitor `kubelet-metrics` for Kubernetes version `>= 1.18`. Example for GKE:
+
+```yaml
+- type: kubelet-metrics
+  kubeletAPI:
+    authType: serviceAccount
+  usePodsEndpoint: true
+```
+
+__Note__: `usePodsEndpoint: true` allows to enhance containers metrics with `container_id` dimension.
+
+If you use a Kubernetes version `< 1.18` you have to replace `kubelet-metrics` monitor by `kubelet-stats`.
+Example for GKE:
+
+```yaml
 - type: kubelet-stats
   kubeletAPI:
     authType: serviceAccount
@@ -149,21 +176,12 @@ monitors:
     metricNames:
       - '*'
       - '!*network*'
-
-- type: kubernetes-cluster
-  extraMetrics:
-    - kubernetes.job.completions
-    - kubernetes.job.active
-    - kubernetes.job.succeeded
-    - kubernetes.stateful_set.ready
-    - kubernetes.stateful_set.desired
 ```
 
 Using the SignalFx [Helm](https://helm.sh/) [chart](https://github.com/signalfx/signalfx-agent/tree/master/deployments/k8s/helm/signalfx-agent)
 could ease the agent installation and configuration:
 
 ```yaml
-
 # Increase depending on your use case
 resources:
   limits:
@@ -197,7 +215,7 @@ loadPerCPU: true
 # Required to use "kubernetes-volumes" module
 gatherVolumesMetrics: true
 
-# Required to use "kubernetes-ingress-nginx" module
+# Example of optional monitors to add for more cool metrics
 monitors:
   - type: prometheus-exporter
     discoveryRule: container_image =~ "nginx-ingress-controller" && port == 10254
@@ -274,3 +292,4 @@ modules covering more data sources like `kubernetes-volumes` or use cases like `
 * [Terraform SignalFx detector](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector)
 * [Smart Agent monitor kubernetes-cluster](https://docs.signalfx.com/en/latest/integrations/agent/monitors/kubernetes-cluster.html)
 * [Smart Agent monitor kubelet-stats](https://docs.signalfx.com/en/latest/integrations/agent/monitors/kubelet-stats.html)
+* [Smart Agent monitor kubelet-metrics](https://docs.signalfx.com/en/latest/integrations/agent/monitors/kubelet-metrics.html)

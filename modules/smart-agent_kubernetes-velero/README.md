@@ -172,7 +172,6 @@ monitors:
   - type: prometheus/velero
     discoveryRule: container_image =~ "velero" && port == 8085
     port: 8085
-    sendAllMetrics: true
     datapointsToExclude:
       - metricNames:
         - '*'
