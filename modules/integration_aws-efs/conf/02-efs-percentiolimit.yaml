@@ -1,0 +1,20 @@
+module: "AWS EFS"
+name: "Percent IO Limit"
+filtering: "filter('namespace', 'AWS/EFS')"
+value_unit: "%"
+transformation: ".max(over='15m')"
+signals:
+  percent_io_limit:
+    metric: "PercentIOLimit"
+    filter: "filter('stat', 'mean')"
+  signal:
+    formula:
+      percent_io_limit
+rules:
+  critical:
+    comparator: ">"
+    threshold: 90
+  major:
+    comparator: ">"
+    dependency: critical
+    threshold: 80

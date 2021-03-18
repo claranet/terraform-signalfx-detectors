@@ -1,0 +1,3 @@
+variable "FileSystemId" {
+  default = "*"
+}

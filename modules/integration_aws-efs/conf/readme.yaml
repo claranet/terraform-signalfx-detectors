@@ -1,0 +1,16 @@
+documentations:
+  - name: AWS EFS metrics
+    url: 'https://docs.aws.amazon.com/efs/latest/ug/monitoring-cloudwatch.html'
+source_doc: >-
+  We are using metrics from the
+  [AWS/EFS](https://docs.aws.amazon.com/efs/latest/ug/efs-metrics.html) namespace
+notes: |
+  ### Filtering based on aws_tag_env and aws_tag_sfx_monitored
+  These values are not recovered from the AWS/EFS signalfx's modules at the moment.
+  We have created a **FileSystemId** var to allow manual filtering. Default value: "*", you must change it to the wanted
+  EFS Instance ID.
+  ### Used space
+  The **default EFS limit** (for space) is **8.0E**. Threshold for these detectors must be set based on customer's context.
+  See CloudWatch to determine values.
+  ### Read / Write IOPs
+  Threshold for these detectors must be set based on customer's context. See CloudWatch to determine values.

@@ -1,0 +1,21 @@
+module: "AWS EFS"
+name: "IOPs Read Stats"
+filtering: "filter('namespace', 'AWS/EFS')"
+value_unit: "IOPs"
+transformation: ".max(over='15m')"
+signals:
+  data_read_io_bytes:
+    metric: "DataReadIOBytes"
+    filter: "filter('stat', 'mean')"
+  meta_data_io_bytes:
+    metric: "MetadataIOBytes"
+    filter: "filter('stat', 'mean')"
+  signal:
+    formula:
+      (meta_data_io_bytes/data_read_io_bytes).scale(100)
+rules:
+  critical:
+    comparator: ">"
+  major:
+    comparator: ">"
+    dependency: critical
