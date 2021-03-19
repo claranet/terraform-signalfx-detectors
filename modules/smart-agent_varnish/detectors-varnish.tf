@@ -32,7 +32,7 @@ resource "signalfx_detector" "backend_failed" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('varnish.backend_fail', filter=filter('plugin', 'telegraf/varnish') and ${module.filter-tags.filter_custom})${var.backend_failed_aggregation_function}${var.backend_failed_transformation_function}.publish('signal')
+    signal = data('varnish.backend_fail', filter=filter('plugin', 'telegraf/varnish') and ${module.filter-tags.filter_custom}, rollup='delta')${var.backend_failed_aggregation_function}${var.backend_failed_transformation_function}.publish('signal')
     detect(when(signal > ${var.backend_failed_threshold_critical})).publish('CRIT')
 EOF
 
@@ -104,9 +104,9 @@ resource "signalfx_detector" "cache_hit_rate" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    A = data('varnish.cache_hit', filter=filter('plugin', 'telegraf/varnish') and ${module.filter-tags.filter_custom})${var.cache_hit_rate_aggregation_function}${var.cache_hit_rate_transformation_function}.publish('A')
-    B = data('varnish.cache_miss', filter=filter('plugin', 'telegraf/varnish') and ${module.filter-tags.filter_custom})${var.cache_hit_rate_aggregation_function}${var.cache_hit_rate_transformation_function}.publish('B')
-    signal = ((A/(A+B)).fill(0).scale(100)).publish('signal')
+    A = data('varnish.cache_hit', filter=filter('plugin', 'telegraf/varnish') and ${module.filter-tags.filter_custom}, rollup='delta')${var.cache_hit_rate_aggregation_function}${var.cache_hit_rate_transformation_function}.publish('A')
+    B = data('varnish.cache_miss', filter=filter('plugin', 'telegraf/varnish') and ${module.filter-tags.filter_custom}, rollup='delta')${var.cache_hit_rate_aggregation_function}${var.cache_hit_rate_transformation_function}.publish('B')
+    signal = (A/(A+B)).fill(0).scale(100).publish('signal')
     detect(when(signal < ${var.cache_hit_rate_threshold_minor})).publish('MINOR')
     detect(when(signal < ${var.cache_hit_rate_threshold_major}) and (signal > ${var.cache_hit_rate_threshold_minor})).publish('MAJOR')
 EOF
