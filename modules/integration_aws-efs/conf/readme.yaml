@@ -1,0 +1,36 @@
+documentations:
+  - name: CloudWatch metrics
+    url: 'https://docs.aws.amazon.com/efs/latest/ug/monitoring-cloudwatch.html'
+source_doc: >-
+  We are using metrics from the
+  [AWS/EFS](https://docs.aws.amazon.com/efs/latest/ug/efs-metrics.html) namespace
+notes: |
+  ### About filtering
+
+  Unlike other AWS services, the tags defined by user on EFS are not fetched by SignalFx AWS 
+  integration as dimensions. This is why we cannot filter on [the aws tagging 
+  convention](https://github.com/claranet/terraform-signalfx-detectors/wiki/Tagging-convention#aws).
+
+  Instead, we use the dimension `FileSystemId` as default filtering policy which allow you to
+  specify an EFS to monitor from `efs_id` variable. In this case, you could have to leverage [multiple 
+  instances](https://github.com/claranet/terraform-signalfx-detectors/wiki/Guidance#Multiple-instances)
+  of this module to monitor different EFS providing different value for this `efs_id`. Else, its 
+  default value `*` will monitor all EFS.
+
+  ### About `Percent of IO Limit` detector
+
+  The used `PercentIOLimit` metric is only submitted for General Purpose mode so this
+  detectors does basically nothing for Max I/O performance mode EFS.
+
+  ### About `Used Space` detector
+
+  The **default EFS limit** (for space) is **8.0E**.
+  Threshold for these detectors must be set based on customer's context.
+  See CloudWatch to determine values.
+
+  ### About `Percent write throughput` and `Percent read throughput` detectors
+
+  These detectors are disabled by default but they can be useful to monitor 
+  the part of each type (read/write) usage over the total usage in specific context.
+  Threshold for these detectors must be set based on customer's context.
+  See CloudWatch to determine values.

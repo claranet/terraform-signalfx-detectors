@@ -9,6 +9,7 @@
 - [aws-beanstalk](#aws-beanstalk)
 - [aws-ecs-cluster](#aws-ecs-cluster)
 - [aws-ecs-service](#aws-ecs-service)
+- [aws-efs](#aws-efs)
 - [aws-elasticache-common](#aws-elasticache-common)
 - [aws-elasticache-memcached](#aws-elasticache-memcached)
 - [aws-elasticache-redis](#aws-elasticache-redis)
@@ -143,6 +144,18 @@
 |AWS ECS heartbeat|X|-|-|-|-|
 |AWS ECS service CPU utilization|X|X|-|-|-|
 |AWS ECS service memory utilization|X|X|-|-|-|
+
+
+## aws-efs
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|AWS EFS used space|X|X|-|-|-|
+|AWS EFS percent of io limit|-|X|X|-|-|
+|AWS EFS percent of read throughput|-|-|X|X|-|
+|AWS EFS percent of write throughput|-|-|X|X|-|
+|AWS EFS percent of permitted throughput|-|X|X|-|-|
+|AWS EFS burst credit balance|-|X|-|-|-|
 
 
 ## aws-elasticache-common
