@@ -32,7 +32,7 @@ resource "signalfx_detector" "backend_failed" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('varnish.backend_fail', filter=filter('plugin', 'telegraf/varnish') and ${module.filter-tags.filter_custom})${var.backend_failed_aggregation_function}${var.backend_failed_transformation_function}.publish('signal')
+    signal = data('varnish.backend_fail', filter=filter('plugin', 'telegraf/varnish') and ${module.filter-tags.filter_custom}, rollup='delta')${var.backend_failed_aggregation_function}${var.backend_failed_transformation_function}.publish('signal')
     detect(when(signal > ${var.backend_failed_threshold_critical})).publish('CRIT')
 EOF
 
