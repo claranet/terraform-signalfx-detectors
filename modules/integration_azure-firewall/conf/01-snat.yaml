@@ -1,0 +1,21 @@
+## Example
+module: Azure firewall
+name: "SNAT Port Utilization"
+
+transformation: true
+aggregation: ".mean(by=['protocol'])"
+
+filtering: "filter('resource_type', 'Microsoft.Network/azureFirewalls') and filter('primary_aggregation_type', 'true')"
+
+signals:
+  signal:
+    metric: "SNATPortUtilization"
+    rollup: "max"
+rules:
+  critical:
+    threshold: 85
+    comparator: ">"
+  major:
+    threshold: 95
+    comparator: ">"
+    dependency: critical

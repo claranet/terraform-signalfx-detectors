@@ -1,0 +1,36 @@
+## Example
+module: Azure firewall
+name: throughput
+
+transformation: true
+aggregation: true
+
+filtering: "filter('resource_type', 'Microsoft.Network/azureFirewalls') and filter('primary_aggregation_type', 'true')"
+
+tip: "Firewall will autoscale at 2.5Gbps but the maximum throughput is 30Gbps"
+
+signals:
+  throughput:
+    metric: "Throughput"
+  signal:
+    formula: "throughput.scale(0.000000953674316)"
+rules:
+  critical:
+    threshold: 29696
+    comparator: ">="
+    lasting_duration: "300s"
+  major:
+    threshold: 27648
+    comparator: ">="
+    lasting_duration: "300s"
+    dependency: critical
+  minor:
+    threshold: 25600
+    comparator: ">="
+    lasting_duration: "300s"
+    dependency: major
+  warning:
+    threshold: 3072
+    comparator: ">="
+    lasting_duration: "300s"
+    dependency: warning
