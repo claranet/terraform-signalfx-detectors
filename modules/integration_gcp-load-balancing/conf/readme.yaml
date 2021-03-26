@@ -5,7 +5,8 @@ documentations:
 notes: |
   ### Latency
 
-  When there is websocket going through your load balancer you may filter them:
+  When there is websocket going through your load balancer you will experiment very high and irrelevant latency.
+  To avoid false alerts, you may filter out them by using `101` http response code:
 
   ```
   filter_custom_excludes = ["response_code:101"]
