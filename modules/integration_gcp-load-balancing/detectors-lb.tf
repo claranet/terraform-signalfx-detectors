@@ -82,6 +82,11 @@ resource "signalfx_detector" "backend_latency_service" {
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
+  viz_options {
+    label      = "signal"
+    value_unit = "Millisecond"
+  }
+
   program_text = <<-EOF
     signal = data('https/backend_latencies', filter=filter('service', 'loadbalancing') and filter('backend_target_type', 'BACKEND_SERVICE') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='average')${var.backend_latency_service_aggregation_function}${var.backend_latency_service_transformation_function}.publish('signal')
     detect(when(signal > threshold(${var.backend_latency_service_threshold_critical}), lasting='${var.backend_latency_service_lasting_duration_seconds}s', at_least=${var.backend_latency_service_at_least_percentage})).publish('CRIT')
@@ -118,6 +123,11 @@ resource "signalfx_detector" "backend_latency_bucket" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+
+  viz_options {
+    label      = "signal"
+    value_unit = "Millisecond"
+  }
 
   program_text = <<-EOF
     signal = data('https/backend_latencies', filter=filter('service', 'loadbalancing') and filter('backend_target_type', 'BACKEND_BUCKET') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='average')${var.backend_latency_bucket_aggregation_function}${var.backend_latency_bucket_transformation_function}.publish('signal')
