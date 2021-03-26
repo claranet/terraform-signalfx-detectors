@@ -32,6 +32,7 @@
 - [azure-cosmos-db](#azure-cosmos-db)
 - [azure-datafactory](#azure-datafactory)
 - [azure-event-hub](#azure-event-hub)
+- [azure-firewall](#azure-firewall)
 - [azure-functions](#azure-functions)
 - [azure-key-vault](#azure-key-vault)
 - [azure-load-balancer](#azure-load-balancer)
@@ -367,6 +368,16 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Azure Event Hub throttled requests|X|X|-|X|-|
+
+
+## azure-firewall
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Azure firewall heartbeat|X|-|-|-|-|
+|Azure firewall snat port utilization|X|X|-|-|-|
+|Azure firewall throughput|X|X|X|X|-|
+|Azure firewall health state|X|X|-|-|-|
 
 
 ## azure-functions

@@ -1,0 +1,14 @@
+documentations:
+  - name: Azure Monitor Metrics
+    url: 'https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported'
+  - name: Azure Firewall logs and metrics
+    url: 'https://docs.microsoft.com/en-us/azure/firewall/logs-and-metrics#metrics'
+
+source_doc:
+
+notes: |
+  Throughput unit is Mbps. Default thresolds are set to:
+    * Critical: 29Gbps
+    * Major: 27Gbps
+    * Minor: 25Gbps
+    * Warning: 3Gbps

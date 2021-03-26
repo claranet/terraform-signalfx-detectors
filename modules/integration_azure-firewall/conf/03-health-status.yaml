@@ -1,0 +1,25 @@
+module: Azure firewall
+name: "Health state"
+
+transformation: true
+aggregation: true
+
+filtering: "filter('resource_type', 'Microsoft.Network/azureFirewalls') and filter('primary_aggregation_type', 'true')"
+tip: "Firewall Health state is explained here: https://docs.microsoft.com/en-us/azure/firewall/logs-and-metrics#metrics"
+
+
+signals:
+  signal:
+    metric: "FirewallHealth"
+
+rules:
+  critical:
+    threshold: 50
+    comparator: "<"
+    lasting_duration: "5m"
+
+  major:
+    threshold: 100
+    comparator: "<"
+    lasting_duration: "5m"
+    dependency: critical
