@@ -8,6 +8,8 @@
 - [What are the available detectors in this module?](#what-are-the-available-detectors-in-this-module)
 - [How to collect required metrics?](#how-to-collect-required-metrics)
   - [Metrics](#metrics)
+- [Notes](#notes)
+  - [Latency](#latency)
 - [Related documentation](#related-documentation)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -100,6 +102,16 @@ Here is the list of required metrics for detectors in this module.
 * `https/request_count`
 
 
+## Notes
+
+### Latency
+
+When there is websocket going through your load balancer you will experiment very high and irrelevant latency.
+To avoid false alerts, you may filter out them by using `101` http response code:
+
+```
+filter_custom_excludes = ["response_code:101"]
+```
 
 
 ## Related documentation
