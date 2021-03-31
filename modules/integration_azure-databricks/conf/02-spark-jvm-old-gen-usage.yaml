@@ -14,9 +14,9 @@ signals:
       (jvm_memory_pool_bytes_used/jvm_memory_pool_bytes_max).scale(100).fill(0)
 rules:
   critical:
-    threshold: 90
+    threshold: 95
     comparator: ">"
   major:
-    threshold: 80
+    threshold: 90
     comparator: ">"
     dependency: critical

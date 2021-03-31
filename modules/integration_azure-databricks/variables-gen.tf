@@ -51,13 +51,13 @@ variable "spark_jvm_heap_usage_disabled_major" {
 variable "spark_jvm_heap_usage_threshold_critical" {
   description = "Critical threshold for spark_jvm_heap_usage detector in %"
   type        = number
-  default     = 90
+  default     = 95
 }
 
 variable "spark_jvm_heap_usage_threshold_major" {
   description = "Major threshold for spark_jvm_heap_usage detector in %"
   type        = number
-  default     = 80
+  default     = 90
 }
 
 # spark_jvm_old_gen_usage detector
@@ -113,12 +113,12 @@ variable "spark_jvm_old_gen_usage_disabled_major" {
 variable "spark_jvm_old_gen_usage_threshold_critical" {
   description = "Critical threshold for spark_jvm_old_gen_usage detector in %"
   type        = number
-  default     = 90
+  default     = 95
 }
 
 variable "spark_jvm_old_gen_usage_threshold_major" {
   description = "Major threshold for spark_jvm_old_gen_usage detector in %"
   type        = number
-  default     = 80
+  default     = 90
 }
 
