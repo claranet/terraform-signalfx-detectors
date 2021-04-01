@@ -4,8 +4,8 @@ resource "signalfx_detector" "k8s_capacity_memory_requests" {
 
   # detect(when(C > threshold(70), lasting='1h')).publish('Memory Warning')
   program_text = <<-EOF
-      A = data('kubernetes.node_allocatable_memory').sum(by=['kubernetes_cluster']).publish(label='A', enable=False)
-      B = data('kubernetes.container_memory_request').sum(by=['kubernetes_cluster']).publish(label='B', enable=False)
+      A = data('kubernetes.node_allocatable_memory', filter=${module.filter-tags.filter_custom}).sum(by=['kubernetes_cluster']).publish(label='A', enable=False)
+      B = data('kubernetes.container_memory_request', filter=${module.filter-tags.filter_custom}).sum(by=['kubernetes_cluster']).publish(label='B', enable=False)
       C = ((B/A)*100).publish(label='C')
       detect(when(C > threshold(70))).publish('Memory Warning')
     EOF
@@ -63,17 +63,17 @@ resource "signalfx_detector" "k8s_capacity_memory_usage" {
   name        = format("%s %s", local.detector_name_prefix, "Kubernetes Cluster Memory Usage")
   description = "Kubernetes Cluster Memory Usage"
 
-  # detect(when(C > threshold(70), lasting='1h')).publish('Memory Warning')
+  # detect(when(C > threshold(85), lasting='1h')).publish('Memory Warning')
   program_text = <<-EOF
-      A = data('kubernetes.node_allocatable_memory').sum(by=['kubernetes_cluster']).publish(label='A', enable=False)
-      B = data('container_memory_usage_bytes').sum(by=['kubernetes_cluster']).publish(label='B', enable=False)
+      A = data('kubernetes.node_allocatable_memory', filter=${module.filter-tags.filter_custom}).sum(by=['kubernetes_cluster']).publish(label='A', enable=False)
+      B = data('container_memory_usage_bytes', filter=${module.filter-tags.filter_custom}).sum(by=['kubernetes_cluster']).publish(label='B', enable=False)
       C = ((B/A)*100).publish(label='C')
-      detect(when(C > threshold(70))).publish('Memory Major')
+      detect(when(C > threshold(85))).publish('Memory Major')
       detect(when(C > threshold(90))).publish('Memory Critical')
     EOF
 
   rule {
-    description        = "The value of % Ratio Memory allocatable/usage is above 70."
+    description        = "The value of % Ratio Memory allocatable/usage is above 85."
     detect_label       = "Memory Major"
     disabled           = false
     notifications      = var.notifications.warning

@@ -3,14 +3,14 @@ resource "signalfx_detector" "k8s_capacity_cpu_requests" {
   description = "Kubernetes Cluster CPU requests/allocatable"
 
   program_text = <<-EOF
-      A = data('kubernetes.node_allocatable_cpu').sum(by=['kubernetes_cluster']).publish(label='A', enable=False)
-      B = data('kubernetes.container_cpu_request').sum(by=['kubernetes_cluster']).publish(label='B', enable=False)
+      A = data('kubernetes.node_allocatable_cpu', filter=${module.filter-tags.filter_custom}).sum(by=['kubernetes_cluster']).publish(label='A', enable=False)
+      B = data('kubernetes.container_cpu_request', filter=${module.filter-tags.filter_custom}).sum(by=['kubernetes_cluster']).publish(label='B', enable=False)
       C = ((B/A)*100).publish(label='C')
-      detect(when(C > threshold(70), lasting='1h')).publish('Compute Warning')
+      detect(when(C > threshold(85), lasting='1h')).publish('Compute Warning')
     EOF
 
   rule {
-    description        = "The value of (B/A)*100 is above 70."
+    description        = "The value of (B/A)*100 is above 85."
     detect_label       = "Compute Warning"
     disabled           = false
     notifications       = var.notifications.warning
@@ -63,18 +63,18 @@ resource "signalfx_detector" "k8s_capacity_cpu_usage" {
   description = "Kubernetes Cluster CPU Usage"
 
   program_text = <<-EOF
-      A = data('cpu.utilization').sum(by=['kubernetes_cluster']).publish(label='A', enable=False)
-      B = data('kubernetes.node_allocatable_cpu').sum(by=['kubernetes_cluster']).publish(label='B', enable=False)
-      C = data('cpu.num_processors').sum(by=['kubernetes_cluster']).publish(label='C', enable=False)
+      A = data('cpu.utilization', filter=${module.filter-tags.filter_custom}).sum(by=['kubernetes_cluster']).publish(label='A', enable=False)
+      B = data('kubernetes.node_allocatable_cpu', filter=${module.filter-tags.filter_custom}).sum(by=['kubernetes_cluster']).publish(label='B', enable=False)
+      C = data('cpu.num_processors', filter=${module.filter-tags.filter_custom}).sum(by=['kubernetes_cluster']).publish(label='C', enable=False)
       D = ((A/100)/(1/C)).sum(by=['kubernetes_cluster']).publish(label='D', enable=False)
       E = ((D/B)*100).publish(label='E')
-      detect(when(E > threshold(70), lasting='15m')).publish('CPU Usage is over 70%')
+      detect(when(E > threshold(85), lasting='15m')).publish('CPU Usage is over 85%')
       detect(when(E > threshold(90), lasting='15m')).publish('CPU Usage is over 90%')
     EOF
 
   rule {
-    description        = "The value of % CPU Usage/Allocatable is above 70."
-    detect_label       = "CPU Usage is over 70%"
+    description        = "The value of % CPU Usage/Allocatable is above 85."
+    detect_label       = "CPU Usage is over 85%"
     disabled           = false
     notifications      = var.notifications.major
     parameterized_body = <<-EOT
