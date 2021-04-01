@@ -71,6 +71,7 @@
 - [kong](#kong)
 - [kubernetes-apiserver](#kubernetes-apiserver)
 - [kubernetes-common](#kubernetes-common)
+- [kubernetes-isfweb-capacity](#kubernetes-isfweb-capacity)
 - [kubernetes-velero](#kubernetes-velero)
 - [kubernetes-volumes](#kubernetes-volumes)
 - [kubernetes-workloads-count](#kubernetes-workloads-count)
@@ -778,6 +779,16 @@
 |Kubernetes replicasets available|X|-|-|-|-|
 |Kubernetes replication_controllers available|X|-|-|-|-|
 |Kubernetes statefulsets ready|X|-|-|-|-|
+
+
+## kubernetes-isfweb-capacity
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Kubernetes Cluster CPU Requests|-|-|-|X|-|
+|Kubernetes Cluster CPU Usage|X|X|-|-|-|
+|Kubernetes Cluster Memory Requests|-|-|-|X|-|
+|Kubernetes Cluster Memory Usage|X|-|-|X|-|
 
 
 ## kubernetes-velero
