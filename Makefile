@@ -5,7 +5,7 @@ ifneq "$(SUPPORTS_MAKE_ARGS)" ""
   $(eval $(COMMAND_ARGS):;@:)
 endif
 
-COMMIT := $(shell git rev-parse HEAD)
+COMMIT := $(shell git rev-list --no-merges -n 1 HEAD)
 BRANCH := $(shell git branch --show-current)
 LAST_TAG := $(shell git describe --tags --abbrev=0)
 LAST_TAG_COMMIT := $(shell git rev-list -n 1 $(LAST_TAG))

@@ -4,22 +4,29 @@ name: Detectors
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
-on:
-  push:
-    paths:
-    - 'modules/**.tf'
-    - 'modules/**/conf/detector-*.yaml'
-    - 'scripts/**'
-    - 'Makefile'
-    - '.github/workflows/main.yml'
-#    branches: [ master ]
-#  pull_request:
-#    branches: [ master ]
+on: [push, pull_request]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+  pre_job:
+    # continue-on-error: true # Uncomment once integration is finished
+    runs-on: ubuntu-latest
+    # Map a step output to a job output
+    outputs:
+      should_skip: ${{ steps.skip_check.outputs.should_skip }}
+    steps:
+    - id: skip_check
+      name: Skip Duplicate Actions
+      uses: fkirc/skip-duplicate-actions@v3.4.0
+      with:
+        concurrent_skipping: 'same_content'
+        do_not_skip: '["pull_request", "workflow_dispatch", "schedule"]'
+        paths: '["modules/**.tf", "modules/**/conf/detector-*.yaml", "scripts/**", "Makefile", ".github/workflows/main.yml"]'
+
   deployment:
     # The type of runner that the job will run on
+    needs: pre_job
+    if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
     #runs-on: hashicorp/terraform:full
     runs-on: ubuntu-latest
     container:
@@ -33,6 +40,8 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - name: Checkout
       uses: actions/checkout@v2
+      with:
+        fetch-depth: 2
 
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1.2.1
@@ -47,27 +56,33 @@ jobs:
       run: terraform fmt -recursive -write=false -diff -check .
 
     - name: Terraform init
+      if: env.SFX_AUTH_TOKEN != null
       run: terraform init examples/stack
 
     - name: Terraform validate
+      if: env.SFX_AUTH_TOKEN != null
       run: terraform validate examples/stack
 
     #- name: Terraform Plan
     #  run: terraform plan -input=false -lock=false -detailed-exitcode examples/stack || if [ $? -ne 2 ]; then exit $?; fi
 
     - name: Enable destroy
+      if: env.SFX_AUTH_TOKEN != null
       run: echo ::set-output name=enabled::1
       id: destroy
 
     - name: Terraform Apply
       #if: github.ref == 'refs/heads/master' && github.event_name == 'push' && ${{ always() }}
+      if: env.SFX_AUTH_TOKEN != null
       run: terraform apply -input=false -lock=false -auto-approve examples/stack
 
     - name: Terraform Destroy
-      if: always() && steps.destroy.outputs.enabled == '1'
+      if: always() && steps.destroy.outputs.enabled == '1' && env.SFX_AUTH_TOKEN != null
       run: terraform destroy -input=false -lock=false -auto-approve examples/stack
 
   compliance:
+    needs: pre_job
+    if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
     runs-on: ubuntu-latest
     container:
       image: "claranet/terraform-ci:latest"
@@ -80,6 +95,8 @@ jobs:
       run: make check-module
 
   outputs:
+    needs: pre_job
+    if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
     runs-on: ubuntu-latest
     container:
       image: "claranet/terraform-ci:latest"
@@ -95,6 +112,8 @@ jobs:
       run: git diff --exit-code
 
   gen:
+    needs: pre_job
+    if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
     runs-on: ubuntu-latest
     container:
       image: "claranet/terraform-ci:latest"

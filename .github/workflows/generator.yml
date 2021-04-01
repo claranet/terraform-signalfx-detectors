@@ -2,16 +2,27 @@
 
 name: Generator
 
-on:
-  push:
-#    paths:
-#    - 'scripts/templates/**'
-#    - 'scripts/module/bootstrap.sh'
-#    - 'scripts/stack/gen_module.sh'
-#    - '.github/workflows/generator.yml'
+on: [push, pull_request]
 
 jobs:
+  pre_job:
+    # continue-on-error: true # Uncomment once integration is finished
+    runs-on: ubuntu-latest
+    # Map a step output to a job output
+    outputs:
+      should_skip: ${{ steps.skip_check.outputs.should_skip }}
+    steps:
+    - id: skip_check
+      name: Skip Duplicate Actions
+      uses: fkirc/skip-duplicate-actions@v3.4.0
+      with:
+        concurrent_skipping: 'same_content'
+        do_not_skip: '["pull_request", "workflow_dispatch", "schedule"]'
+        paths: '["modules/**.tf", "modules/**/conf/detector-*.yaml", "scripts/**", "Makefile", ".github/workflows/main.yml"]'
+
   test:
+    needs: pre_job
+    if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
     runs-on: ubuntu-latest
     container:
       image: "claranet/terraform-ci:latest"
@@ -44,19 +55,23 @@ jobs:
         echo -e "module \"generated\" {\nsource=\"../../modules/internal_generator-${TF_VAR_environment}\"\n$(cat common/modules-args.txt)\n}" >> examples/stack/detectors.tf
 
     - name: Terraform init
+      if: env.SFX_AUTH_TOKEN != null
       run: terraform init examples/stack
 
     - name: Terraform validate
+      if: env.SFX_AUTH_TOKEN != null
       run: terraform validate examples/stack
 
     - name: Enable destroy
+      if: env.SFX_AUTH_TOKEN != null
       run: echo ::set-output name=enabled::1
       id: destroy
 
     - name: Terraform Apply
+      if: env.SFX_AUTH_TOKEN != null
       run: echo yes | terraform apply -input=false -lock=false examples/stack
 
     - name: Terraform Destroy
-      if: always() && steps.destroy.outputs.enabled == '1'
+      if: always() && steps.destroy.outputs.enabled == '1' && env.SFX_AUTH_TOKEN != null
       run: terraform destroy -input=false -lock=false -auto-approve examples/stack
 
