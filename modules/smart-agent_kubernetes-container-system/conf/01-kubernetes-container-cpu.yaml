@@ -1,0 +1,22 @@
+module: "Kubernetes"
+name: "Container CPU Usage"
+filtering: "not filter('kubernetes_namespace','ara') and not filter('kubernetes_namespace','bastions') and not filter('kubernetes_namespace','gitlab-runner') and not filter('kubernetes_namespace','logging') and not filter('kubernetes_namespace','monitoring') and not filter('kubernetes_namespace','ingress-nginx') and not filter('kubernetes_namespace','kube-system') and not filter('kubernetes_namespace','kubernetes-replicator')"
+aggregation: ".sum(by=['kubernetes_pod_name','kubernetes_namespace'])"
+transformation: ".mean(over='30m')"
+value_unit: "%"
+signals:
+  kubernetes_container_cpu_limit:
+    metric: "kubernetes.container_cpu_limit" # * 1000 to obtain value
+  kubernetes_container_cpu_utilization:
+    metric: "container_cpu_utilization" # * 10 to obtain cpu value
+  signal:
+    formula:
+      (kubernetes_container_cpu_utilization/(kubernetes_container_cpu_limit)).scale(0.01)
+rules:
+  minor:
+    threshold: 95
+    comparator: ">"
+  warning:
+    threshold: 90
+    comparator: ">"
+    dependency: minor

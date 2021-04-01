@@ -1,0 +1,7 @@
+documentations:
+  - name: Kubernetes Container System Resource Management
+    url: 'https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/'
+  - name: Smart Agent monitor
+    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/kubernetes-cluster.html'
+source_doc: >-
+  [Kubernetes Common](https://github.com/claranet/terraform-signalfx-detectors/tree/master/modules/smart-agent_kubernetes-common)

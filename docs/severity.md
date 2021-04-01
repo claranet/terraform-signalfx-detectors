@@ -71,6 +71,7 @@
 - [kong](#kong)
 - [kubernetes-apiserver](#kubernetes-apiserver)
 - [kubernetes-common](#kubernetes-common)
+- [kubernetes-container-system](#kubernetes-container-system)
 - [kubernetes-velero](#kubernetes-velero)
 - [kubernetes-volumes](#kubernetes-volumes)
 - [kubernetes-workloads-count](#kubernetes-workloads-count)
@@ -778,6 +779,14 @@
 |Kubernetes replicasets available|X|-|-|-|-|
 |Kubernetes replication_controllers available|X|-|-|-|-|
 |Kubernetes statefulsets ready|X|-|-|-|-|
+
+
+## kubernetes-container-system
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Kubernetes container cpu usage|-|-|X|X|-|
+|Kubernetes container mem usage|-|-|X|X|-|
 
 
 ## kubernetes-velero
