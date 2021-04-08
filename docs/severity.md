@@ -74,6 +74,7 @@
 - [kubernetes-velero](#kubernetes-velero)
 - [kubernetes-volumes](#kubernetes-volumes)
 - [kubernetes-workloads-count](#kubernetes-workloads-count)
+- [mdadm](#mdadm)
 - [memcached](#memcached)
 - [mongodb](#mongodb)
 - [mysql](#mysql)
@@ -804,6 +805,14 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Kubernetes workloads count|-|-|X|X|-|
+
+
+## mdadm
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Mdadm disk failed|X|X|-|-|-|
+|Mdadm disk missing|X|X|-|-|-|
 
 
 ## memcached
