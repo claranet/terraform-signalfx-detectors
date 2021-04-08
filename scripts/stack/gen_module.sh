@@ -5,6 +5,7 @@ TMP="/tmp/out.tf"
 TARGET="${1:-}"
 REF=${2:-\{revision\}}
 MODULE="${TARGET##*modules/}"
+[[ $(git remote get-url --push origin) =~ github.com(/|:)([^ /]*) ]] && GITHUB_USER=${BASH_REMATCH[2]} || GITHUB_USER=claranet
 
 module_vars=$(cat common/modules-args.txt)
 exclude_vars="[$(echo "$module_vars" | sed 's/^[[:space:]]*\([a-zA-z0-9_]*\)[[:space:]]*=.*$/"\1"/' | sed ':a;N;$!ba;s/\n/, /g')]"
@@ -33,7 +34,7 @@ for var in ${!vars[@]}; do
 done
 cat <<-EOF > ${TMP}
 module "signalfx-detectors-${MODULE/_/-}" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//${TARGET}?ref=${REF}"
+  source = "github.com/${GITHUB_USER}/terraform-signalfx-detectors.git//${TARGET}?ref=${REF}"
 
   ${module_vars}$(echo -e ${vars_rendering})
 }

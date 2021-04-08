@@ -2,14 +2,27 @@
 
 name: Documentation
 
-on:
-  push:
-#    paths:
-#    - '**.md'
-#    - '.github/workflows/doc.yml'
+on: [push, pull_request]
 
 jobs:
+  pre_job:
+    # continue-on-error: true # Uncomment once integration is finished
+    runs-on: ubuntu-latest
+    # Map a step output to a job output
+    outputs:
+      should_skip: ${{ steps.skip_check.outputs.should_skip }}
+    steps:
+    - id: skip_check
+      name: Skip Duplicate Actions
+      uses: fkirc/skip-duplicate-actions@v3.4.0
+      with:
+        concurrent_skipping: 'same_content'
+        do_not_skip: '["pull_request", "workflow_dispatch", "schedule"]'
+        paths: '["modules/**.tf", "modules/**/conf/detector-*.yaml", "scripts/**", "Makefile", ".github/workflows/main.yml"]'
+
   toc:
+    needs: pre_job
+    if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
     runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -26,6 +39,8 @@ jobs:
         MAX_HEADER_LEVEL: 3
 
   modules:
+    needs: pre_job
+    if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
     runs-on: ubuntu-latest
     container:
       image: "claranet/terraform-ci:latest"
@@ -41,6 +56,8 @@ jobs:
       run: git diff --exit-code
 
   severity:
+    needs: pre_job
+    if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
     runs-on: ubuntu-latest
     container:
       image: "claranet/terraform-ci:latest"
@@ -56,6 +73,8 @@ jobs:
       run: git diff --exit-code
 
   spellcheck:
+    needs: pre_job
+    if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
     runs-on: ubuntu-latest
 
     steps:
@@ -66,6 +85,8 @@ jobs:
       uses: sbates130272/spellcheck-github-actions@v0.7.0
 
   dead-links:
+    needs: pre_job
+    if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
     runs-on: ubuntu-latest
 
     steps:
