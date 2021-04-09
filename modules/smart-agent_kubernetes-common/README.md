@@ -64,7 +64,7 @@ Note the following parameters:
 
 These 3 parameters alongs with all variables defined in [common-variables.tf](common-variables.tf) are common to all 
 [modules](../) in this repository. Other variables, specific to this module, are available in 
-[variables.tf](variables.tf).
+[variables.tf](variables.tf) and [variables-gen.tf](variables-gen.tf).
 In general, the default configuration "works" but all of these Terraform 
 [variables](https://www.terraform.io/docs/configuration/variables.html) make it possible to 
 customize the detectors behavior to better fit your needs.
@@ -82,6 +82,7 @@ This module creates the following SignalFx detectors which could contain one or 
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
+|Kubernetes hpa scale exceeded capacity|-|X|-|-|-|
 |Kubernetes node heartbeat|X|-|-|-|-|
 |Kubernetes node status|-|X|X|-|-|
 |Kubernetes pod status phase|-|X|-|-|-|
@@ -249,6 +250,8 @@ the corresponding monitor configuration:
         - '!kubernetes.daemon_set.ready'
         - '!kubernetes.deployment.available'
         - '!kubernetes.deployment.desired'
+        - '!kubernetes.hpa.spec.max_replicas'
+        - '!kubernetes.hpa.status.desired_replicas'
         - '!kubernetes.job.active'
         - '!kubernetes.job.completions'
         - '!kubernetes.job.succeeded'
