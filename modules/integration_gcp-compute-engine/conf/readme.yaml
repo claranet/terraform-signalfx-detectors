@@ -3,12 +3,30 @@ documentations:
     url: 'https://cloud.google.com/monitoring/api/metrics_gcp#gcp-compute'
 
 notes: |
-  While SignalFx does not support `label` sync from GCE the default filtering policy relies on `metadata` instead:
+  ### metadata to add and allow
 
-  * add metadata at the instance (or project) level, e.g.:
+  While SignalFx does not support `label` sync from GCE the default filtering policy relies on `metadata` instead.
+  Therefore, if you keep the default filter (if you don't define `filter_custom_includes` or `filter_custom_excludes`) you **need** to add those metadata to your GCP computes instances :
 
-      - `gcloud compute instances add-metadata myinstance --zone=europe-west1-c --metadata sfx_env=true`
-      - `gcloud compute instances add-metadata myinstance --zone=europe-west1-c --metadata sfx_monitored=true`
+  * sfx_env=true
+  * sfx_monitored=true
 
-  * whitelist metadata fields at the SignalFx's GCP integration level (requires SignalFx terraform provider v4.22.0+, see https://docs.signalfx.com/en/latest/integrations/google-cloud-platform.html#compute-engine-instance).
+  For example:
 
+  * via gcloud, at the instance level:
+    ```
+    gcloud compute instances add-metadata myinstance --zone=europe-west1-c --metadata sfx_env=true
+    gcloud compute instances add-metadata myinstance --zone=europe-west1-c --metadata sfx_monitored=true
+    ```
+  * via terraform, [at the instance level](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_instance#metadata)
+  * via terraform, [at the project level](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_project_metadata)
+
+  You also **need** to check if those metadata are in the metadata whitelist in your signalfx GCP integration, see https://docs.signalfx.com/en/latest/integrations/google-cloud-platform.html#compute-engine-instance.
+
+  ### detectors GCP GCE Instance disk …
+
+  Detectors "GCP GCE Instance disk …", compared to other detectors, are bound (aggregated) to instance and device.
+  In other words, those detectors track de behavior of each instance's device.
+  It's possible to have two alertes on the same instance if this instance have two disks.
+
+  If you want to overwrite `disk_throttled_bps_aggregation_function` or `disk_throttled_ops_notifications` take care to keep the aggregation by 'instance_name' and 'device_name', else you might break the detector.
