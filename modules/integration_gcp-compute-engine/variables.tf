@@ -141,7 +141,7 @@ variable "disk_throttled_bps_notifications" {
 variable "disk_throttled_bps_aggregation_function" {
   description = "Aggregation function and group by for disk_throttled_bps detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".sum(by=['instance_name', 'device_name'])"
 }
 
 variable "disk_throttled_bps_transformation_function" {
@@ -203,7 +203,7 @@ variable "disk_throttled_ops_notifications" {
 variable "disk_throttled_ops_aggregation_function" {
   description = "Aggregation function and group by for disk_throttled_ops detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".sum(by=['instance_name', 'device_name'])"
 }
 
 variable "disk_throttled_ops_transformation_function" {
