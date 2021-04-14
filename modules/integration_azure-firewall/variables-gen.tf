@@ -150,22 +150,10 @@ variable "throughput_disabled_critical" {
   default     = null
 }
 
-variable "throughput_lasting_duration_critical" {
-  description = "Minimum duration that conditions must be true before raising alert"
-  type        = string
-  default     = "300s"
-}
-
 variable "throughput_disabled_major" {
   description = "Disable major alerting rule for throughput detector"
   type        = bool
   default     = null
-}
-
-variable "throughput_lasting_duration_major" {
-  description = "Minimum duration that conditions must be true before raising alert"
-  type        = string
-  default     = "300s"
 }
 
 variable "throughput_disabled_minor" {
@@ -174,22 +162,10 @@ variable "throughput_disabled_minor" {
   default     = null
 }
 
-variable "throughput_lasting_duration_minor" {
-  description = "Minimum duration that conditions must be true before raising alert"
-  type        = string
-  default     = "300s"
-}
-
 variable "throughput_disabled_warning" {
   description = "Disable warning alerting rule for throughput detector"
   type        = bool
   default     = null
-}
-
-variable "throughput_lasting_duration_warning" {
-  description = "Minimum duration that conditions must be true before raising alert"
-  type        = string
-  default     = "300s"
 }
 
 variable "throughput_threshold_critical" {
@@ -198,10 +174,22 @@ variable "throughput_threshold_critical" {
   default     = 29696
 }
 
+variable "throughput_lasting_duration_critical" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "300s"
+}
+
 variable "throughput_threshold_major" {
   description = "Major threshold for throughput detector"
   type        = number
   default     = 27648
+}
+
+variable "throughput_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "300s"
 }
 
 variable "throughput_threshold_minor" {
@@ -210,10 +198,22 @@ variable "throughput_threshold_minor" {
   default     = 25600
 }
 
+variable "throughput_lasting_duration_minor" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "300s"
+}
+
 variable "throughput_threshold_warning" {
   description = "Warning threshold for throughput detector"
   type        = number
   default     = 3072
+}
+
+variable "throughput_lasting_duration_warning" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "300s"
 }
 
 # health_state detector
@@ -262,22 +262,10 @@ variable "health_state_disabled_critical" {
   default     = null
 }
 
-variable "health_state_lasting_duration_critical" {
-  description = "Minimum duration that conditions must be true before raising alert"
-  type        = string
-  default     = "5m"
-}
-
 variable "health_state_disabled_major" {
   description = "Disable major alerting rule for health_state detector"
   type        = bool
   default     = null
-}
-
-variable "health_state_lasting_duration_major" {
-  description = "Minimum duration that conditions must be true before raising alert"
-  type        = string
-  default     = "5m"
 }
 
 variable "health_state_threshold_critical" {
@@ -286,9 +274,21 @@ variable "health_state_threshold_critical" {
   default     = 50
 }
 
+variable "health_state_lasting_duration_critical" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "5m"
+}
+
 variable "health_state_threshold_major" {
   description = "Major threshold for health_state detector"
   type        = number
   default     = 100
+}
+
+variable "health_state_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "5m"
 }
 

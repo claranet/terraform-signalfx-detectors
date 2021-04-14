@@ -42,22 +42,10 @@ variable "errors_disabled_critical" {
   default     = null
 }
 
-variable "errors_lasting_duration_critical" {
-  description = "Minimum duration that conditions must be true before raising alert"
-  type        = string
-  default     = "900s"
-}
-
 variable "errors_disabled_major" {
   description = "Disable major alerting rule for errors detector"
   type        = bool
   default     = null
-}
-
-variable "errors_lasting_duration_major" {
-  description = "Minimum duration that conditions must be true before raising alert"
-  type        = string
-  default     = "900s"
 }
 
 variable "errors_threshold_critical" {
@@ -66,9 +54,21 @@ variable "errors_threshold_critical" {
   default     = 30
 }
 
+variable "errors_lasting_duration_critical" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "900s"
+}
+
 variable "errors_threshold_major" {
   description = "Major threshold for errors detector"
   type        = number
   default     = 0
+}
+
+variable "errors_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "900s"
 }
 
