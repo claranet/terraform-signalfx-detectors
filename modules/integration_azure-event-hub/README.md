@@ -60,7 +60,7 @@ Note the following parameters:
 
 These 3 parameters alongs with all variables defined in [common-variables.tf](common-variables.tf) are common to all 
 [modules](../) in this repository. Other variables, specific to this module, are available in 
-[variables.tf](variables.tf) and [variables-gen.tf](variables-gen.tf).
+[variables-gen.tf](variables-gen.tf).
 In general, the default configuration "works" but all of these Terraform 
 [variables](https://www.terraform.io/docs/configuration/variables.html) make it possible to 
 customize the detectors behavior to better fit your needs.
@@ -105,12 +105,11 @@ Here is the list of required metrics for detectors in this module.
 Unlike other Azure services, the tags defined by user on Event Hubs are not fetched by SignalFx Azure
 integration as dimensions. This is why we cannot filter on [the azure tagging
 convention](https://github.com/claranet/terraform-signalfx-detectors/wiki/Tagging-convention#azure).
-In this case, you could have to leverage multiple instances of this module to monitor different Event Hubs providing
-different value for this entity_name. Else, its default value * will monitor all Event Hubs.
 
 ### About warning default values
 
 Basic customer's case seems to report values beetween 0 and 5% in a nominal situation.
+
 
 ## Related documentation
 
