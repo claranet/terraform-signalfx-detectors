@@ -764,6 +764,7 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
+|Kubernetes hpa scale exceeded capacity|-|X|-|-|-|
 |Kubernetes node heartbeat|X|-|-|-|-|
 |Kubernetes node status|-|X|X|-|-|
 |Kubernetes pod status phase|-|X|-|-|-|
