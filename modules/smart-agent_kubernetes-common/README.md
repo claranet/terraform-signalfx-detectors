@@ -133,6 +133,8 @@ The `kubernetes-cluster` requires to enable the following `extraMetrics`:
 * `kubernetes.job.succeeded`
 * `kubernetes.stateful_set.ready`
 * `kubernetes.stateful_set.desired`
+* `kubernetes.hpa.spec.max_replicas`
+* `kubernetes.hpa.status.desired_replicas`
 
 ### Examples
 
@@ -147,6 +149,8 @@ monitors:
     - kubernetes.job.succeeded
     - kubernetes.stateful_set.ready
     - kubernetes.stateful_set.desired
+    - kubernetes.hpa.spec.max_replicas
+    - kubernetes.hpa.status.desired_replicas
 ```
 
 You can replace `kubernetes-cluster` with `openshift-cluster` you monitor Openshift Kubernetes.
@@ -206,9 +210,13 @@ globalDimensions:
 
 # Required to use this module
 clusterExtraMetrics:
-  - kubernetes.job.failed
+  - kubernetes.job.completions
+  - kubernetes.job.active
+  - kubernetes.job.succeeded
   - kubernetes.stateful_set.ready
   - kubernetes.stateful_set.desired
+  - kubernetes.hpa.spec.max_replicas
+  - kubernetes.hpa.status.desired_replicas
 
 # Required to use "system-generic" module
 loadPerCPU: true
