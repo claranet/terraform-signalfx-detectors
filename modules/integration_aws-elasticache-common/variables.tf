@@ -279,7 +279,7 @@ variable "free_memory_runbook_url" {
 variable "free_memory_disabled" {
   description = "Disable all alerting rules for free_memory detector"
   type        = bool
-  default     = null
+  default     = true
 }
 
 variable "free_memory_disabled_major" {
