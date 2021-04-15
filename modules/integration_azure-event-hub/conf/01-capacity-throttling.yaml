@@ -2,7 +2,7 @@
 ---
 module: "Azure Event Hub"
 name: "throttled requests"
-filtering: "filter('resource_type', 'Microsoft.EventHub/clusters') and filter('primary_aggregation_type', 'true')"
+filtering: "filter('resource_type', 'Microsoft.EventHub/namespaces') and filter('primary_aggregation_type', 'true')"
 aggregation: ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 transformation: ".min(over='15m')"
 value_unit: "%"
@@ -22,7 +22,7 @@ rules:
     comparator: ">"
     dependency: critical
   warning:
-    threshold: 0
+    threshold: 5
     comparator: ">"
     dependency: major
 ...

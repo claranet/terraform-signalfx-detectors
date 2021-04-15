@@ -8,6 +8,8 @@
 - [What are the available detectors in this module?](#what-are-the-available-detectors-in-this-module)
 - [How to collect required metrics?](#how-to-collect-required-metrics)
   - [Metrics](#metrics)
+- [Notes](#notes)
+  - [About `throttled_requests` detector](#about-throttled_requests-detector)
 - [Related documentation](#related-documentation)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -95,6 +97,11 @@ Here is the list of required metrics for detectors in this module.
 * `ThrottledRequests`
 
 
+## Notes
+
+### About `throttled_requests` detector
+
+Basic customer's case seems to report values between 0 and 5% in a nominal situation so the default warning threshold has been set to `5`.
 
 
 ## Related documentation

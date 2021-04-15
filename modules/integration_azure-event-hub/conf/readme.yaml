@@ -1,3 +1,7 @@
 documentations:
   - name: Azure Monitor metrics
     url: 'https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported'
+notes: |
+  ### About `throttled_requests` detector
+
+  Basic customer's case seems to report values between 0 and 5% in a nominal situation so the default warning threshold has been set to `5`.

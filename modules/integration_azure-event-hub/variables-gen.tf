@@ -69,6 +69,6 @@ variable "throttled_requests_threshold_major" {
 variable "throttled_requests_threshold_warning" {
   description = "Warning threshold for throttled_requests detector in %"
   type        = number
-  default     = 0
+  default     = 5
 }
 
