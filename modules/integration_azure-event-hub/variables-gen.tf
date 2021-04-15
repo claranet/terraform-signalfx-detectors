@@ -9,7 +9,7 @@ variable "throttled_requests_notifications" {
 variable "throttled_requests_aggregation_function" {
   description = "Aggregation function and group by for throttled_requests detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region', 'entityname'])"
 }
 
 variable "throttled_requests_transformation_function" {
@@ -69,6 +69,6 @@ variable "throttled_requests_threshold_major" {
 variable "throttled_requests_threshold_warning" {
   description = "Warning threshold for throttled_requests detector in %"
   type        = number
-  default     = 0
+  default     = 5
 }
 

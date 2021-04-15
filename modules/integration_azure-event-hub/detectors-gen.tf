@@ -10,7 +10,7 @@ resource "signalfx_detector" "throttled_requests" {
   }
 
   program_text = <<-EOF
-    base_filtering = filter('resource_type', 'Microsoft.EventHub/clusters') and filter('primary_aggregation_type', 'true')
+    base_filtering = filter('resource_type', 'Microsoft.EventHub/namespaces') and filter('primary_aggregation_type', 'true')
     A = data('ThrottledRequests', filter=base_filtering and ${module.filter-tags.filter_custom})${var.throttled_requests_aggregation_function}${var.throttled_requests_transformation_function}
     B = data('IncomingRequests', filter=base_filtering and ${module.filter-tags.filter_custom})${var.throttled_requests_aggregation_function}${var.throttled_requests_transformation_function}
     signal = (A/B).scale(100).fill(0).publish('signal')
