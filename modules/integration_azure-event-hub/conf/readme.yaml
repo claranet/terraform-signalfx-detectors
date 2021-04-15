@@ -8,6 +8,6 @@ notes: |
   integration as dimensions. This is why we cannot filter on [the azure tagging
   convention](https://github.com/claranet/terraform-signalfx-detectors/wiki/Tagging-convention#azure).
 
-  ### About warning default values
+  ### About `throttled_requests` detector
 
-  Basic customer's case seems to report values beetween 0 and 5% in a nominal situation.
+  Basic customer's case seems to report values between 0 and 5% in a nominal situation so the default warning threshold has been set to `5`.
