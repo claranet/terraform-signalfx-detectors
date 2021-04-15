@@ -9,8 +9,7 @@
 - [How to collect required metrics?](#how-to-collect-required-metrics)
   - [Metrics](#metrics)
 - [Notes](#notes)
-  - [About filtering](#about-filtering)
-  - [About warning default values](#about-warning-default-values)
+  - [About `throttled_requests` detector](#about-throttled_requests-detector)
 - [Related documentation](#related-documentation)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -100,15 +99,9 @@ Here is the list of required metrics for detectors in this module.
 
 ## Notes
 
-### About filtering
+### About `throttled_requests` detector
 
-Unlike other Azure services, the tags defined by user on Event Hubs are not fetched by SignalFx Azure
-integration as dimensions. This is why we cannot filter on [the azure tagging
-convention](https://github.com/claranet/terraform-signalfx-detectors/wiki/Tagging-convention#azure).
-
-### About warning default values
-
-Basic customer's case seems to report values beetween 0 and 5% in a nominal situation.
+Basic customer's case seems to report values between 0 and 5% in a nominal situation so the default warning threshold has been set to `5`.
 
 
 ## Related documentation
