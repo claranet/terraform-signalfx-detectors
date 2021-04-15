@@ -8,7 +8,6 @@
 - [What are the available detectors in this module?](#what-are-the-available-detectors-in-this-module)
 - [How to collect required metrics?](#how-to-collect-required-metrics)
   - [Monitors](#monitors)
-  - [PostgreSQL](#postgresql)
   - [Metrics](#metrics)
 - [Notes](#notes)
 - [Related documentation](#related-documentation)
@@ -112,15 +111,6 @@ The `collectd/redis` monitor requires to enable the following `extraMetrics`:
 * `gauge.db0_keys`
 
 Some of them are available since agent version `v5.4.2` like the two first.
-
-### PostgreSQL
-
-You have to configure your PostgreSQL database to provide a user to collect metrics.
-
-And you also have to [enable statement tracking](https://www.postgresql.org/docs/9.3/pgstatstatements.html#AEN160631).
-More information available on 
-[postgresl](https://docs.signalfx.com/en/latest/integrations/agent/monitors/postgresql.html#metrics-about-queries) 
-monitor documentation.
 
 
 ### Metrics
