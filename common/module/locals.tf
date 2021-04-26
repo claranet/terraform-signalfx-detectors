@@ -1,6 +1,6 @@
 locals {
   not_running_vm_filters_gcp   = "(not filter('gcp_status', '{Code=3, Name=STOPPING}', '{Code=4, Name=TERMINATED}'))"
-  not_running_vm_filters_aws   = "(not filter('aws_state', '{Code: 32,Name: shutting-down', '{Code: 48,Name: terminated}', '{Code: 62,Name: stopping}', '{Code: 80,Name: stopped}'))"
+  not_running_vm_filters_aws   = "(not filter('aws_state', '{Code: 32,Name: shutting-down}', '{Code: 48,Name: terminated}', '{Code: 62,Name: stopping}', '{Code: 80,Name: stopped}'))"
   not_running_vm_filters_azure = "(not filter('azure_power_state', 'PowerState/stopping', 'PowerState/stopped', 'PowerState/deallocating', 'PowerState/deallocated'))"
   not_running_vm_filters = format(
     "%s and %s and %s",
