@@ -45,6 +45,7 @@
 - [azure-storage-account-blob](#azure-storage-account-blob)
 - [azure-storage-account-capacity](#azure-storage-account-capacity)
 - [azure-storage-account](#azure-storage-account)
+- [azure-storage-file-standard](#azure-storage-file-standard)
 - [azure-stream-analytics](#azure-stream-analytics)
 - [azure-virtual-machine-scaleset](#azure-virtual-machine-scaleset)
 - [azure-virtual-machine](#azure-virtual-machine)
@@ -498,6 +499,18 @@
 |Azure Storage Account ingress|X|X|-|-|-|
 |Azure Storage Account egress|X|X|-|-|-|
 |Azure Storage Account requests rate|X|X|-|-|-|
+
+
+## azure-storage-file-standard
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Azure Storage Account File share capacity|X|X|-|-|-|
+|Azure Storage Account File share iops|X|X|-|-|-|
+|Azure Storage Account File share throughput|X|X|-|-|-|
+|Azure Storage Account File share throttling|X|X|-|-|-|
+|Azure Storage Account File share no snapshots|-|X|-|-|-|
+|Azure Storage Account File share snapshots limit|-|X|-|-|-|
 
 
 ## azure-stream-analytics

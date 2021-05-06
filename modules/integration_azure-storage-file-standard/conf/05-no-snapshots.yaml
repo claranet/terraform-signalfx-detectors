@@ -2,7 +2,8 @@
 module: "Azure Storage Account File share"
 name: "no snapshots"
 # TODO add a specific filter for standard file shares
-filtering: "filter('resource_type', 'Microsoft.Storage/storageAccounts/fileServices') and filter('primary_aggregation_type', 'true')"
+# Removed "and filter('primary_aggregation_type', 'true')" because metric dimension seems malformatted on SignalFX
+filtering: "filter('resource_type', 'Microsoft.Storage/storageAccounts/fileServices')"
 aggregation: ".fill(None, duration='1d').sum(by=['fileshare', 'azure_resource_id'])"  # TODO some lacking dimensions here
 transformation: ".max(over='1d')"
 signals:
