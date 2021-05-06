@@ -2,6 +2,7 @@ resource "signalfx_detector" "capacity" {
   name = format("%s %s", local.detector_name_prefix, "Azure Storage Account File share capacity")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   viz_options {
     label        = "signal"
@@ -45,6 +46,7 @@ resource "signalfx_detector" "iops" {
   name = format("%s %s", local.detector_name_prefix, "Azure Storage Account File share iops")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.Storage/storageAccounts/fileServices') and filter('primary_aggregation_type', 'true')
@@ -82,6 +84,7 @@ resource "signalfx_detector" "throughput" {
   name = format("%s %s", local.detector_name_prefix, "Azure Storage Account File share throughput")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   viz_options {
     label        = "signal"
@@ -126,6 +129,7 @@ resource "signalfx_detector" "throttling" {
   name = format("%s %s", local.detector_name_prefix, "Azure Storage Account File share throttling")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   viz_options {
     label        = "signal"
@@ -170,9 +174,10 @@ resource "signalfx_detector" "no_snapshots" {
   name = format("%s %s", local.detector_name_prefix, "Azure Storage Account File share no snapshots")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    base_filtering = filter('resource_type', 'Microsoft.Storage/storageAccounts/fileServices') and filter('primary_aggregation_type', 'true')
+    base_filtering = filter('resource_type', 'Microsoft.Storage/storageAccounts/fileServices')
     signal = data('FileShareSnapshotCount', filter=base_filtering and ${module.filter-tags.filter_custom})${var.no_snapshots_aggregation_function}${var.no_snapshots_transformation_function}.publish('signal')
     detect(when(signal < ${var.no_snapshots_threshold_major})).publish('MAJOR')
 EOF
@@ -194,6 +199,7 @@ resource "signalfx_detector" "snapshots_limit" {
   name = format("%s %s", local.detector_name_prefix, "Azure Storage Account File share snapshots limit")
 
   authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.Storage/storageAccounts/fileServices') and filter('primary_aggregation_type', 'true')
