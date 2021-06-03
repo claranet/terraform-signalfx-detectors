@@ -1,0 +1,37 @@
+documentations:
+  - name: Smart Agent monitor collectd/systemd
+    url: https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-systemd.html
+
+source_doc: |
+  This module checks Systemd services launched by Systemd timers. The difference with [smart-agent_systemd-services](https://github.com/claranet/terraform-signalfx-detectors/tree/master/modules/smart-agent_systemd-services) is that services launched by timers are not supposed to be always running, and instead can be stopped most of the time.
+
+  Detectors are designed to check that the job did not failed (enabled by default), the service have not been removed (disabled by default), and the job have been launched during the past day (disabled by default, you can override the default delay with the `execution_delay_lasting_duration_major` variable).
+
+  For instance, to enable all the optional detectors and be alerted if the service haven't been launched during the past week, you can use the following options:
+  ```hcl
+  execution_delay_disabled = false
+  heartbeat_disabled       = false
+
+  execution_delay_lasting_duration_major = "1w"
+  ```
+
+  ### Examples
+
+  You can configure the systemd collector in the agent the following way to report only the state of the `my_daily_job` and `my_weekly_job` services and the metrics needed by the detector:
+  ```yaml
+      - type: collectd/systemd
+        services:
+        - my_daily_job
+        - my_weekly_job
+        sendActiveState: true
+        datapointsToExclude:
+        - metricNames:
+          - '*'
+          - '!gauge.active_state.activating'
+          - '!gauge.active_state.active'
+          - '!gauge.substate.failed'
+        extraMetrics:
+        - gauge.substate.failed
+        - gauge.active_state.active
+        - gauge.active_state.activating
+  ```

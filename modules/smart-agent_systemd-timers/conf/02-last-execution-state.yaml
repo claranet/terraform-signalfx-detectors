@@ -1,0 +1,13 @@
+module: systemd-timers
+name: "last execution state"
+
+transformation: true
+aggregation: true
+
+signals:
+  signal:
+    metric: "gauge.substate.failed"
+rules:
+  major:
+    threshold: 0
+    comparator: ">"

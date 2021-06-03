@@ -1,0 +1,12 @@
+module: systemd-timers
+name: heartbeat
+
+transformation: false
+aggregation: true
+disabled: true
+
+signals:
+  signal:
+    metric: "gauge.substate.failed"
+rules:
+  minor:

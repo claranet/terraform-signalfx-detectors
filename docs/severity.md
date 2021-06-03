@@ -96,6 +96,7 @@
 - [supervisor](#supervisor)
 - [system-common](#system-common)
 - [systemd-services](#systemd-services)
+- [systemd-timers](#systemd-timers)
 - [tomcat](#tomcat)
 - [varnish](#varnish)
 - [zookeeper](#zookeeper)
@@ -1030,6 +1031,15 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Systemd-services aliveness|X|-|-|-|-|
+
+
+## systemd-timers
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Systemd-timers heartbeat|-|-|X|-|-|
+|Systemd-timers execution delay|-|X|-|-|-|
+|Systemd-timers last execution state|-|X|-|-|-|
 
 
 ## tomcat
