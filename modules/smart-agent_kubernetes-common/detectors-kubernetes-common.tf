@@ -292,7 +292,7 @@ resource "signalfx_detector" "deployment_available" {
   program_text = <<-EOF
     A = data('kubernetes.deployment.desired', filter=${module.filter-tags.filter_custom})${var.deployment_available_aggregation_function}${var.deployment_available_transformation_function}
     B = data('kubernetes.deployment.available', filter=${module.filter-tags.filter_custom})${var.deployment_available_aggregation_function}${var.deployment_available_transformation_function}
-    signal = (A-B).publish('signal')
+    signal = (A-B).fill(0).publish('signal')
     detect(when(signal != 0, lasting='${var.deployment_available_lasting_duration_seconds}s')).publish('CRIT')
 EOF
 
@@ -318,7 +318,7 @@ resource "signalfx_detector" "replicaset_available" {
   program_text = <<-EOF
     A = data('kubernetes.replica_set.desired', filter=${module.filter-tags.filter_custom})${var.replicaset_available_aggregation_function}${var.replicaset_available_transformation_function}
     B = data('kubernetes.replica_set.available', filter=${module.filter-tags.filter_custom})${var.replicaset_available_aggregation_function}${var.replicaset_available_transformation_function}
-    signal = (A-B).publish('signal')
+    signal = (A-B).fill(0).publish('signal')
     detect(when(signal != 0, lasting='${var.replicaset_available_lasting_duration_seconds}s')).publish('CRIT')
 EOF
 
@@ -344,7 +344,7 @@ resource "signalfx_detector" "replication_controller_available" {
   program_text = <<-EOF
     A = data('kubernetes.replication_controller.desired', filter=${module.filter-tags.filter_custom})${var.replication_controller_available_aggregation_function}${var.replication_controller_available_transformation_function}
     B = data('kubernetes.replication_controller.available', filter=${module.filter-tags.filter_custom})${var.replication_controller_available_aggregation_function}${var.replication_controller_available_transformation_function}
-    signal = (A-B).publish('signal')
+    signal = (A-B).fill(0).publish('signal')
     detect(when(signal != 0, lasting='${var.replication_controller_available_lasting_duration_seconds}s')).publish('CRIT')
 EOF
 
@@ -370,7 +370,7 @@ resource "signalfx_detector" "statefulset_ready" {
   program_text = <<-EOF
     A = data('kubernetes.stateful_set.desired', filter=${module.filter-tags.filter_custom})${var.statefulset_ready_aggregation_function}${var.statefulset_ready_transformation_function}
     B = data('kubernetes.stateful_set.ready', filter=${module.filter-tags.filter_custom})${var.statefulset_ready_aggregation_function}${var.statefulset_ready_transformation_function}
-    signal = (A-B).publish('signal')
+    signal = (A-B).fill(0).publish('signal')
     detect(when(signal != 0, lasting='${var.statefulset_ready_lasting_duration_seconds}s')).publish('CRIT')
 EOF
 
