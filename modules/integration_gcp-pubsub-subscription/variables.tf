@@ -40,7 +40,7 @@ variable "heartbeat_timeframe" {
 variable "heartbeat_aggregation_function" {
   description = "Aggregation function and group by for heartbeat detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".mean(by=['subscription_id'])"
 }
 
 # Oldest_unacked_message detector
