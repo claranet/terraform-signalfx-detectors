@@ -6,7 +6,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    signal = data('subscription/pull_request_count', filter=${module.filter-tags.filter_custom}).sum(by=['subscription_id'])${var.heartbeat_aggregation_function}.publish('signal')
+    signal = data('subscription/pull_request_count', filter=${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}').publish('CRIT')
 EOF
 
