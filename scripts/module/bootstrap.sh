@@ -26,9 +26,29 @@ fi
 
 echo "Bootstrap module code in \"${TARGET}\""
 mkdir -p "${TARGET}/conf"
-for tf in common/module/*.tf; do 
-    ln -s ../../${tf} ${TARGET}/common-${tf#"common/module/"}
+for tf in common/module/*.tf; do
+    src_filename=$(basename $tf)
+    dst_filename="common-${src_filename}"
+    if [[ $src_filename == filters-* ]]; then
+        source_name=$(basename ${src_filename#"filters-"} .tf)
+        if [[ $MODULE != $source_name* ]]; then
+            continue
+        else
+            dst_filename="common-filters.tf"
+        fi
+    fi
+    ln -s ../../${tf} ${TARGET}/${dst_filename}
 done
+if ! [ -L ${TARGET}/common-filters.tf ]; then
+    cat <<EOF > "${TARGET}/filters.tf"
+locals {
+  # See https://dev.splunk.com/observability/docs/signalflow/functions/filter_function/ to create filters string
+  filters = "filter('put a generic and source relevant', 'filter policy here') and filter('do not hesitate to use variable like', '\${var.environment}')"
+}
+
+EOF
+fi
+
 cat <<EOF > "${TARGET}/conf/readme.yaml"
 documentations:
 
