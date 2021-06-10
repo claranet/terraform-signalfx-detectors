@@ -7,7 +7,7 @@ resource "signalfx_detector" "heartbeat" {
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting
         base_filter = filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true')
-        signal = data('Throughput', filter=base_filter and ${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')
+        signal = data('Throughput', filter=base_filter and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
         not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}').publish('CRIT')
     EOF
 
@@ -32,7 +32,7 @@ resource "signalfx_detector" "total_requests" {
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true')
-        signal = data('TotalRequests', filter=base_filter and ${module.filter-tags.filter_custom})${var.total_requests_aggregation_function}.publish('signal')
+        signal = data('TotalRequests', filter=base_filter and ${module.filtering.signalflow})${var.total_requests_aggregation_function}.publish('signal')
         detect(when(signal < threshold(1), lasting="${var.total_requests_timer}")).publish('CRIT')
     EOF
 
@@ -58,7 +58,7 @@ resource "signalfx_detector" "backend_connect_time" {
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true')
-        signal = data('BackendConnectTime', filter=base_filter and ${module.filter-tags.filter_custom})${var.backend_connect_time_aggregation_function}.publish('signal')
+        signal = data('BackendConnectTime', filter=base_filter and ${module.filtering.signalflow})${var.backend_connect_time_aggregation_function}.publish('signal')
         detect(when(signal > threshold(${var.backend_connect_time_threshold_critical}), lasting="${var.backend_connect_time_timer}")).publish('CRIT')
         detect(when(signal > threshold(${var.backend_connect_time_threshold_major}), lasting="${var.backend_connect_time_timer}") and when(signal <= ${var.backend_connect_time_threshold_critical})).publish('MAJOR')
     EOF
@@ -97,8 +97,8 @@ resource "signalfx_detector" "failed_requests" {
   program_text = <<-EOF
         from signalfx.detectors.aperiodic import conditions
         base_filter = filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true')
-        A = data('FailedRequests', extrapolation='zero', filter=base_filter and ${module.filter-tags.filter_custom})${var.failed_requests_aggregation_function}
-        B = data('TotalRequests', extrapolation='zero', filter=base_filter and ${module.filter-tags.filter_custom})${var.failed_requests_aggregation_function}
+        A = data('FailedRequests', extrapolation='zero', filter=base_filter and ${module.filtering.signalflow})${var.failed_requests_aggregation_function}
+        B = data('TotalRequests', extrapolation='zero', filter=base_filter and ${module.filtering.signalflow})${var.failed_requests_aggregation_function}
         signal = (A/B).scale(100).fill(0).publish('signal')
         detect(when(signal > threshold(${var.failed_requests_threshold_critical}), lasting="${var.failed_requests_timer}")).publish('CRIT')
         detect(when(signal > threshold(${var.failed_requests_threshold_major}), lasting="${var.failed_requests_timer}") and when(signal <= ${var.failed_requests_threshold_critical})).publish('MAJOR')
@@ -137,8 +137,8 @@ resource "signalfx_detector" "unhealthy_host_ratio" {
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true')
-        A = data('UnhealthyHostCount', filter=base_filter and ${module.filter-tags.filter_custom})${var.unhealthy_host_ratio_aggregation_function}
-        B = data('HealthyHostCount', filter=base_filter and ${module.filter-tags.filter_custom})${var.unhealthy_host_ratio_aggregation_function}
+        A = data('UnhealthyHostCount', filter=base_filter and ${module.filtering.signalflow})${var.unhealthy_host_ratio_aggregation_function}
+        B = data('HealthyHostCount', filter=base_filter and ${module.filtering.signalflow})${var.unhealthy_host_ratio_aggregation_function}
         signal = (A/(A+B)).scale(100).publish('signal')
         detect(when(signal >= threshold(${var.unhealthy_host_ratio_threshold_critical}), lasting="${var.unhealthy_host_ratio_timer}")).publish('CRIT')
         detect(when(signal >= threshold(${var.unhealthy_host_ratio_threshold_major}), lasting="${var.unhealthy_host_ratio_timer}") and when(signal < ${var.unhealthy_host_ratio_threshold_critical})).publish('MAJOR')
@@ -177,8 +177,8 @@ resource "signalfx_detector" "http_4xx_errors" {
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true')
-        A = data('ResponseStatus', extrapolation='zero', filter=base_filter and filter('httpstatusgroup', '4xx') and ${module.filter-tags.filter_custom})${var.http_4xx_errors_aggregation_function}
-        B = data('ResponseStatus', extrapolation='zero', filter=base_filter and ${module.filter-tags.filter_custom})${var.http_4xx_errors_aggregation_function}
+        A = data('ResponseStatus', extrapolation='zero', filter=base_filter and filter('httpstatusgroup', '4xx') and ${module.filtering.signalflow})${var.http_4xx_errors_aggregation_function}
+        B = data('ResponseStatus', extrapolation='zero', filter=base_filter and ${module.filtering.signalflow})${var.http_4xx_errors_aggregation_function}
         signal = (A/B).scale(100).fill(0).publish('signal')
         detect(when(signal > threshold(${var.http_4xx_errors_threshold_critical}), lasting="${var.http_4xx_errors_timer}")).publish('CRIT')
         detect(when(signal > threshold(${var.http_4xx_errors_threshold_major}), lasting="${var.http_4xx_errors_timer}") and when(signal <= ${var.http_4xx_errors_threshold_critical})).publish('MAJOR')
@@ -217,8 +217,8 @@ resource "signalfx_detector" "http_5xx_errors" {
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true')
-        A = data('ResponseStatus', extrapolation='zero', filter=base_filter and filter('httpstatusgroup', '5xx') and ${module.filter-tags.filter_custom})${var.http_5xx_errors_aggregation_function}
-        B = data('ResponseStatus', extrapolation='zero', filter=base_filter and ${module.filter-tags.filter_custom})${var.http_5xx_errors_aggregation_function}
+        A = data('ResponseStatus', extrapolation='zero', filter=base_filter and filter('httpstatusgroup', '5xx') and ${module.filtering.signalflow})${var.http_5xx_errors_aggregation_function}
+        B = data('ResponseStatus', extrapolation='zero', filter=base_filter and ${module.filtering.signalflow})${var.http_5xx_errors_aggregation_function}
         signal = (A/B).scale(100).fill(0).publish('signal')
         detect(when(signal > threshold(${var.http_5xx_errors_threshold_critical}), lasting="${var.http_5xx_errors_timer}")).publish('CRIT')
         detect(when(signal > threshold(${var.http_5xx_errors_threshold_major}), lasting="${var.http_5xx_errors_timer}") and when(signal <= ${var.http_5xx_errors_threshold_critical})).publish('MAJOR')
@@ -257,8 +257,8 @@ resource "signalfx_detector" "backend_http_4xx_errors" {
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true')
-        A = data('BackendResponseStatus', extrapolation='zero', filter=base_filter and filter('httpstatusgroup', '4xx') and ${module.filter-tags.filter_custom})${var.backend_http_4xx_errors_aggregation_function}
-        B = data('BackendResponseStatus', extrapolation='zero', filter=base_filter and ${module.filter-tags.filter_custom})${var.backend_http_4xx_errors_aggregation_function}
+        A = data('BackendResponseStatus', extrapolation='zero', filter=base_filter and filter('httpstatusgroup', '4xx') and ${module.filtering.signalflow})${var.backend_http_4xx_errors_aggregation_function}
+        B = data('BackendResponseStatus', extrapolation='zero', filter=base_filter and ${module.filtering.signalflow})${var.backend_http_4xx_errors_aggregation_function}
         signal = (A/B).scale(100).fill(0).publish('signal')
         detect(when(signal > threshold(${var.backend_http_4xx_errors_threshold_critical}), lasting="${var.backend_http_4xx_errors_timer}")).publish('CRIT')
         detect(when(signal > threshold(${var.backend_http_4xx_errors_threshold_major}), lasting="${var.backend_http_4xx_errors_timer}") and when(signal <= ${var.backend_http_4xx_errors_threshold_critical})).publish('MAJOR')
@@ -297,8 +297,8 @@ resource "signalfx_detector" "backend_http_5xx_errors" {
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true')
-        A = data('BackendResponseStatus', extrapolation='zero', filter=base_filter and filter('httpstatusgroup', '5xx') and ${module.filter-tags.filter_custom})${var.backend_http_5xx_errors_aggregation_function}
-        B = data('BackendResponseStatus', extrapolation='zero', filter=base_filter and ${module.filter-tags.filter_custom})${var.backend_http_5xx_errors_aggregation_function}
+        A = data('BackendResponseStatus', extrapolation='zero', filter=base_filter and filter('httpstatusgroup', '5xx') and ${module.filtering.signalflow})${var.backend_http_5xx_errors_aggregation_function}
+        B = data('BackendResponseStatus', extrapolation='zero', filter=base_filter and ${module.filtering.signalflow})${var.backend_http_5xx_errors_aggregation_function}
         signal = (A/B).scale(100).fill(0).publish('signal')
         detect(when(signal > threshold(${var.backend_http_5xx_errors_threshold_critical}), lasting="${var.backend_http_5xx_errors_timer}")).publish('CRIT')
         detect(when(signal > threshold(${var.backend_http_5xx_errors_threshold_major}), lasting="${var.backend_http_5xx_errors_timer}") and when(signal <= ${var.backend_http_5xx_errors_threshold_critical})).publish('MAJOR')

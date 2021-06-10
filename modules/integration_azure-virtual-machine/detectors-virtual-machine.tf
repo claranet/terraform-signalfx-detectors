@@ -7,7 +7,7 @@ resource "signalfx_detector" "heartbeat" {
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting
         base_filter = filter('resource_type', 'Microsoft.Compute/virtualMachines') and filter('primary_aggregation_type', 'true') and ${local.not_running_vm_filters_azure}
-        signal = data('Percentage CPU', filter=base_filter and ${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')
+        signal = data('Percentage CPU', filter=base_filter and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
         not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}').publish('CRIT')
     EOF
 
@@ -32,7 +32,7 @@ resource "signalfx_detector" "cpu_usage" {
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Compute/virtualMachines') and filter('primary_aggregation_type', 'true') and ${local.not_running_vm_filters_azure}
-        signal = data('Percentage CPU', filter=base_filter and ${module.filter-tags.filter_custom})${var.cpu_usage_aggregation_function}.publish('signal')
+        signal = data('Percentage CPU', filter=base_filter and ${module.filtering.signalflow})${var.cpu_usage_aggregation_function}.publish('signal')
         detect(when(signal > threshold(${var.cpu_usage_threshold_critical}), lasting="${var.cpu_usage_timer}")).publish('CRIT')
         detect(when(signal > threshold(${var.cpu_usage_threshold_major}), lasting="${var.cpu_usage_timer}") and when(signal <= ${var.cpu_usage_threshold_critical})).publish('MAJOR')
     EOF
@@ -70,8 +70,8 @@ resource "signalfx_detector" "credit_cpu" {
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Compute/virtualMachines') and filter('primary_aggregation_type', 'true') and ${local.not_running_vm_filters_azure}
-        A = data('CPU Credits Remaining', filter=base_filter and ${module.filter-tags.filter_custom})${var.credit_cpu_aggregation_function}
-        B = data('CPU Credits Consumed', filter=base_filter and ${module.filter-tags.filter_custom})${var.credit_cpu_aggregation_function}
+        A = data('CPU Credits Remaining', filter=base_filter and ${module.filtering.signalflow})${var.credit_cpu_aggregation_function}
+        B = data('CPU Credits Consumed', filter=base_filter and ${module.filtering.signalflow})${var.credit_cpu_aggregation_function}
         signal = ((A/(A+B))*100).fill(100).${var.credit_cpu_transformation_function}(over='${var.credit_cpu_timer}').publish('signal')
         detect(when(signal < threshold(${var.credit_cpu_threshold_critical}), lasting="${var.credit_cpu_timer}")).publish('CRIT')
         detect(when(signal < threshold(${var.credit_cpu_threshold_major}), lasting="${var.credit_cpu_timer}") and when(signal >= ${var.credit_cpu_threshold_critical})).publish('MAJOR')

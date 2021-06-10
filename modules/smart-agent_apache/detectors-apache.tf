@@ -8,7 +8,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    signal = data('apache_connections', filter=${local.not_running_vm_filters} and ${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')
+    signal = data('apache_connections', filter=${local.not_running_vm_filters} and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}').publish('CRIT')
 EOF
 
@@ -32,8 +32,8 @@ resource "signalfx_detector" "apache_workers" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    A = data('apache_connections', filter=${module.filter-tags.filter_custom})${var.apache_workers_aggregation_function}${var.apache_workers_transformation_function}
-    B = data('apache_idle_workers', filter=${module.filter-tags.filter_custom})${var.apache_workers_aggregation_function}${var.apache_workers_transformation_function}
+    A = data('apache_connections', filter=${module.filtering.signalflow})${var.apache_workers_aggregation_function}${var.apache_workers_transformation_function}
+    B = data('apache_idle_workers', filter=${module.filtering.signalflow})${var.apache_workers_aggregation_function}${var.apache_workers_transformation_function}
     signal = ((A / (A+B)).scale(100)).publish('signal')
     detect(when(signal > ${var.apache_workers_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.apache_workers_threshold_major}) and when(signal <= ${var.apache_workers_threshold_critical})).publish('MAJOR')

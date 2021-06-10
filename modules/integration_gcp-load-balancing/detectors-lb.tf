@@ -5,8 +5,8 @@ resource "signalfx_detector" "error_rate_4xx" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    A = data('https/request_count', filter=filter('service', 'loadbalancing') and filter('response_code_class', '400')  and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.error_rate_4xx_aggregation_function}${var.error_rate_4xx_transformation_function}
-    B = data('https/request_count', filter=filter('service', 'loadbalancing') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.error_rate_4xx_aggregation_function}${var.error_rate_4xx_transformation_function}
+    A = data('https/request_count', filter=filter('service', 'loadbalancing') and filter('response_code_class', '400')  and ${module.filtering.signalflow}, extrapolation='zero', rollup='sum')${var.error_rate_4xx_aggregation_function}${var.error_rate_4xx_transformation_function}
+    B = data('https/request_count', filter=filter('service', 'loadbalancing') and ${module.filtering.signalflow}, extrapolation='zero', rollup='sum')${var.error_rate_4xx_aggregation_function}${var.error_rate_4xx_transformation_function}
     signal = (A/B).scale(100).fill(value=0).publish('signal')
     detect(when(signal > threshold(${var.error_rate_4xx_threshold_critical}), lasting='${var.error_rate_4xx_lasting_duration_seconds}s', at_least=${var.error_rate_4xx_at_least_percentage}) and when(B > ${var.minimum_traffic})).publish('CRIT')
     detect((when(signal > threshold(${var.error_rate_4xx_threshold_major}), lasting='${var.error_rate_4xx_lasting_duration_seconds}s', at_least=${var.error_rate_4xx_at_least_percentage}) and when(signal <= ${var.error_rate_4xx_threshold_critical}) and when(B > ${var.minimum_traffic})), off=(when(signal <= ${var.error_rate_4xx_threshold_major}, lasting='${var.error_rate_4xx_lasting_duration_seconds / 2}s') or when(signal >= ${var.error_rate_4xx_threshold_critical}, lasting='${var.error_rate_4xx_lasting_duration_seconds}s', at_least=${var.error_rate_4xx_at_least_percentage})), mode='paired').publish('MAJOR')
@@ -44,8 +44,8 @@ resource "signalfx_detector" "error_rate_5xx" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    A = data('https/request_count', filter=filter('service', 'loadbalancing') and filter('response_code_class', '400')  and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.error_rate_5xx_aggregation_function}${var.error_rate_5xx_transformation_function}
-    B = data('https/request_count', filter=filter('service', 'loadbalancing') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.error_rate_5xx_aggregation_function}${var.error_rate_5xx_transformation_function}
+    A = data('https/request_count', filter=filter('service', 'loadbalancing') and filter('response_code_class', '400')  and ${module.filtering.signalflow}, extrapolation='zero', rollup='sum')${var.error_rate_5xx_aggregation_function}${var.error_rate_5xx_transformation_function}
+    B = data('https/request_count', filter=filter('service', 'loadbalancing') and ${module.filtering.signalflow}, extrapolation='zero', rollup='sum')${var.error_rate_5xx_aggregation_function}${var.error_rate_5xx_transformation_function}
     signal = (A/B).scale(100).fill(value=0).publish('signal')
     detect(when(signal > threshold(${var.error_rate_5xx_threshold_critical}), lasting='${var.error_rate_5xx_lasting_duration_seconds}s', at_least=${var.error_rate_5xx_at_least_percentage}) and when(B > ${var.minimum_traffic})).publish('CRIT')
     detect((when(signal > threshold(${var.error_rate_5xx_threshold_major}), lasting='${var.error_rate_5xx_lasting_duration_seconds}s', at_least=${var.error_rate_5xx_at_least_percentage}) and when(signal <= ${var.error_rate_5xx_threshold_critical}) and when(B > ${var.minimum_traffic})), off=(when(signal <= ${var.error_rate_5xx_threshold_major}, lasting='${var.error_rate_5xx_lasting_duration_seconds / 2}s') or when(signal >= ${var.error_rate_5xx_threshold_critical}, lasting='${var.error_rate_5xx_lasting_duration_seconds}s', at_least=${var.error_rate_5xx_at_least_percentage})), mode='paired').publish('MAJOR')
@@ -88,7 +88,7 @@ resource "signalfx_detector" "backend_latency_service" {
   }
 
   program_text = <<-EOF
-    signal = data('https/backend_latencies', filter=filter('service', 'loadbalancing') and filter('backend_target_type', 'BACKEND_SERVICE') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='average')${var.backend_latency_service_aggregation_function}${var.backend_latency_service_transformation_function}.publish('signal')
+    signal = data('https/backend_latencies', filter=filter('service', 'loadbalancing') and filter('backend_target_type', 'BACKEND_SERVICE') and ${module.filtering.signalflow}, extrapolation='zero', rollup='average')${var.backend_latency_service_aggregation_function}${var.backend_latency_service_transformation_function}.publish('signal')
     detect(when(signal > threshold(${var.backend_latency_service_threshold_critical}), lasting='${var.backend_latency_service_lasting_duration_seconds}s', at_least=${var.backend_latency_service_at_least_percentage})).publish('CRIT')
     detect((when(signal > threshold(${var.backend_latency_service_threshold_major}), lasting='${var.backend_latency_service_lasting_duration_seconds}s', at_least=${var.backend_latency_service_at_least_percentage}) and when(signal <= ${var.backend_latency_service_threshold_critical})), off=(when(signal <= ${var.backend_latency_service_threshold_major}, lasting='${var.backend_latency_service_lasting_duration_seconds / 2}s') or when(signal >= ${var.backend_latency_service_threshold_critical}, lasting='${var.backend_latency_service_lasting_duration_seconds}s', at_least=${var.backend_latency_service_at_least_percentage})), mode='paired').publish('MAJOR')
 EOF
@@ -130,7 +130,7 @@ resource "signalfx_detector" "backend_latency_bucket" {
   }
 
   program_text = <<-EOF
-    signal = data('https/backend_latencies', filter=filter('service', 'loadbalancing') and filter('backend_target_type', 'BACKEND_BUCKET') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='average')${var.backend_latency_bucket_aggregation_function}${var.backend_latency_bucket_transformation_function}.publish('signal')
+    signal = data('https/backend_latencies', filter=filter('service', 'loadbalancing') and filter('backend_target_type', 'BACKEND_BUCKET') and ${module.filtering.signalflow}, extrapolation='zero', rollup='average')${var.backend_latency_bucket_aggregation_function}${var.backend_latency_bucket_transformation_function}.publish('signal')
     detect(when(signal > threshold(${var.backend_latency_bucket_threshold_critical}), lasting='${var.backend_latency_bucket_lasting_duration_seconds}s', at_least=${var.backend_latency_bucket_at_least_percentage})).publish('CRIT')
     detect((when(signal > threshold(${var.backend_latency_bucket_threshold_major}), lasting='${var.backend_latency_bucket_lasting_duration_seconds}s', at_least=${var.backend_latency_bucket_at_least_percentage}) and when(signal <= ${var.backend_latency_bucket_threshold_critical})), off=(when(signal <= ${var.backend_latency_bucket_threshold_major}, lasting='${var.backend_latency_bucket_lasting_duration_seconds / 2}s') or when(signal >= ${var.backend_latency_bucket_threshold_critical}, lasting='${var.backend_latency_bucket_lasting_duration_seconds}s', at_least=${var.backend_latency_bucket_at_least_percentage})), mode='paired').publish('MAJOR')
 EOF
@@ -167,7 +167,7 @@ resource "signalfx_detector" "request_count" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('https/request_count', filter=filter('service', 'loadbalancing') and ${module.filter-tags.filter_custom}, extrapolation='last_value', rollup='sum')${var.request_count_aggregation_function}${var.request_count_transformation_function}.rateofchange().publish('signal')
+    signal = data('https/request_count', filter=filter('service', 'loadbalancing') and ${module.filtering.signalflow}, extrapolation='last_value', rollup='sum')${var.request_count_aggregation_function}${var.request_count_transformation_function}.rateofchange().publish('signal')
     detect(when(signal > threshold(${var.request_count_threshold_major}))).publish('MAJOR')
 EOF
 

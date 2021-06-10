@@ -6,7 +6,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    signal = data('ResourceCount', filter=filter('stat', 'mean') and filter('namespace', 'AWS/Kinesis') and ${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')
+    signal = data('ResourceCount', filter=filter('stat', 'mean') and filter('namespace', 'AWS/Kinesis') and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}').publish('CRIT')
 EOF
 
@@ -30,7 +30,7 @@ resource "signalfx_detector" "incoming_records" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('IncomingRecords', filter=filter('namespace', 'AWS/Kinesis') and filter('stat', 'lower') and (not filter('ShardId', '*')) and ${module.filter-tags.filter_custom})${var.incoming_records_aggregation_function}${var.incoming_records_transformation_function}.publish('signal')
+    signal = data('IncomingRecords', filter=filter('namespace', 'AWS/Kinesis') and filter('stat', 'lower') and (not filter('ShardId', '*')) and ${module.filtering.signalflow})${var.incoming_records_aggregation_function}${var.incoming_records_transformation_function}.publish('signal')
     detect(when(signal <= ${var.incoming_records_threshold_critical})).publish('CRIT')
     detect(when(signal <= ${var.incoming_records_threshold_major}) and when(signal > ${var.incoming_records_threshold_critical})).publish('MAJOR')
 EOF

@@ -5,8 +5,8 @@ resource "signalfx_detector" "cache_hits" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    A = data('CacheHits', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.cache_hits_aggregation_function}${var.cache_hits_transformation_function}
-    B = data('CacheMisses', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.cache_hits_aggregation_function}${var.cache_hits_transformation_function}
+    A = data('CacheHits', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filtering.signalflow}, extrapolation='zero', rollup='sum')${var.cache_hits_aggregation_function}${var.cache_hits_transformation_function}
+    B = data('CacheMisses', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filtering.signalflow}, extrapolation='zero', rollup='sum')${var.cache_hits_aggregation_function}${var.cache_hits_transformation_function}
     signal = (A / (A+B)).fill(value=1).scale(100).publish('signal')
     detect(when(signal < threshold(${var.cache_hits_threshold_critical}), lasting='${var.cache_hits_lasting_duration_seconds}s', at_least=${var.cache_hits_at_least_percentage})).publish('CRIT')
     detect((when(signal < threshold(${var.cache_hits_threshold_major}), lasting='${var.cache_hits_lasting_duration_seconds}s', at_least=${var.cache_hits_at_least_percentage}) and when(signal >= ${var.cache_hits_threshold_critical})), off=(when(signal >= ${var.cache_hits_threshold_major}, lasting='${var.cache_hits_lasting_duration_seconds / 2}s') or when(signal <= ${var.cache_hits_threshold_critical}, lasting='${var.cache_hits_lasting_duration_seconds}s', at_least=${var.cache_hits_at_least_percentage})), mode='paired').publish('MAJOR')
@@ -44,7 +44,7 @@ resource "signalfx_detector" "cpu_high" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('EngineCPUUtilization', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'upper') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.cpu_high_aggregation_function}${var.cpu_high_transformation_function}.publish('signal')
+    signal = data('EngineCPUUtilization', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'upper') and filter('CacheNodeId', '*') and ${module.filtering.signalflow})${var.cpu_high_aggregation_function}${var.cpu_high_transformation_function}.publish('signal')
     detect(when(signal > ${var.cpu_high_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.cpu_high_threshold_major}) and when(signal <= ${var.cpu_high_threshold_critical})).publish('MAJOR')
 EOF
@@ -81,7 +81,7 @@ resource "signalfx_detector" "replication_lag" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('ReplicationLag', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'upper') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.replication_lag_aggregation_function}${var.replication_lag_transformation_function}.publish('signal')
+    signal = data('ReplicationLag', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'upper') and filter('CacheNodeId', '*') and ${module.filtering.signalflow})${var.replication_lag_aggregation_function}${var.replication_lag_transformation_function}.publish('signal')
     detect(when(signal > ${var.replication_lag_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.replication_lag_threshold_major}) and when(signal <= ${var.replication_lag_threshold_critical})).publish('MAJOR')
 EOF
@@ -118,8 +118,8 @@ resource "signalfx_detector" "commands" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    A = data('GetTypeCmds', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'lower') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.commands_aggregation_function}${var.commands_transformation_function}
-    B = data('SetTypeCmds', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'lower') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.commands_aggregation_function}${var.commands_transformation_function}
+    A = data('GetTypeCmds', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'lower') and filter('CacheNodeId', '*') and ${module.filtering.signalflow})${var.commands_aggregation_function}${var.commands_transformation_function}
+    B = data('SetTypeCmds', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'lower') and filter('CacheNodeId', '*') and ${module.filtering.signalflow})${var.commands_aggregation_function}${var.commands_transformation_function}
     signal = (A + B).publish('signal')
     detect(when(signal <= ${var.commands_threshold_critical})).publish('CRIT')
     detect(when(signal <= ${var.commands_threshold_major}) and when(signal > ${var.commands_threshold_critical})).publish('MAJOR')

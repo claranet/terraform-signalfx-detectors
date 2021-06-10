@@ -8,7 +8,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    signal = data('phpfpm_requests.accepted', filter=${local.not_running_vm_filters} and ${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')
+    signal = data('phpfpm_requests.accepted', filter=${local.not_running_vm_filters} and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}').publish('CRIT')
 EOF
 
@@ -32,8 +32,8 @@ resource "signalfx_detector" "php_fpm_connect_idle" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    A = data('phpfpm_processes.active', filter=${module.filter-tags.filter_custom})${var.php_fpm_connect_idle_aggregation_function}${var.php_fpm_connect_idle_transformation_function}
-    B = data('phpfpm_processes.idle', filter=${module.filter-tags.filter_custom})${var.php_fpm_connect_idle_aggregation_function}${var.php_fpm_connect_idle_transformation_function}
+    A = data('phpfpm_processes.active', filter=${module.filtering.signalflow})${var.php_fpm_connect_idle_aggregation_function}${var.php_fpm_connect_idle_transformation_function}
+    B = data('phpfpm_processes.idle', filter=${module.filtering.signalflow})${var.php_fpm_connect_idle_aggregation_function}${var.php_fpm_connect_idle_transformation_function}
     signal = ((A / (A+B)).scale(100)).publish('signal')
     detect(when(signal > ${var.php_fpm_connect_idle_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.php_fpm_connect_idle_threshold_major}) and when(signal <= ${var.php_fpm_connect_idle_threshold_critical})).publish('MAJOR')

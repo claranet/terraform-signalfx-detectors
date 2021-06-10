@@ -6,7 +6,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    signal = data('CPUUtilization', filter=filter('stat', 'mean') and filter('namespace', 'AWS/RDS') and ${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')
+    signal = data('CPUUtilization', filter=filter('stat', 'mean') and filter('namespace', 'AWS/RDS') and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}').publish('CRIT')
 EOF
 
@@ -30,7 +30,7 @@ resource "signalfx_detector" "cpu_90_15min" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('CPUUtilization', filter=filter('namespace', 'AWS/RDS') and filter('stat', 'mean') and filter('DBInstanceIdentifier', '*') and ${module.filter-tags.filter_custom})${var.cpu_90_15min_aggregation_function}${var.cpu_90_15min_transformation_function}.publish('signal')
+    signal = data('CPUUtilization', filter=filter('namespace', 'AWS/RDS') and filter('stat', 'mean') and filter('DBInstanceIdentifier', '*') and ${module.filtering.signalflow})${var.cpu_90_15min_aggregation_function}${var.cpu_90_15min_transformation_function}.publish('signal')
     detect(when(signal > ${var.cpu_90_15min_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.cpu_90_15min_threshold_major}) and when(signal <= ${var.cpu_90_15min_threshold_critical})).publish('MAJOR')
 EOF
@@ -67,7 +67,7 @@ resource "signalfx_detector" "free_space_low" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('FreeStorageSpace', filter=filter('namespace', 'AWS/RDS') and filter('stat', 'mean') and filter('DBInstanceIdentifier', '*') and ${module.filter-tags.filter_custom})${var.free_space_low_aggregation_function}${var.free_space_low_transformation_function}.publish('signal')
+    signal = data('FreeStorageSpace', filter=filter('namespace', 'AWS/RDS') and filter('stat', 'mean') and filter('DBInstanceIdentifier', '*') and ${module.filtering.signalflow})${var.free_space_low_aggregation_function}${var.free_space_low_transformation_function}.publish('signal')
     detect(when(signal < ${var.free_space_low_threshold_critical})).publish('CRIT')
     detect(when(signal < ${var.free_space_low_threshold_major}) and when(signal >= ${var.free_space_low_threshold_critical})).publish('MAJOR')
 EOF
@@ -104,7 +104,7 @@ resource "signalfx_detector" "replica_lag" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('ReplicaLag', filter=filter('namespace', 'AWS/RDS') and filter('stat', 'mean') and filter('DBInstanceIdentifier', '*') and ${module.filter-tags.filter_custom})${var.replica_lag_aggregation_function}${var.replica_lag_transformation_function}.publish('signal')
+    signal = data('ReplicaLag', filter=filter('namespace', 'AWS/RDS') and filter('stat', 'mean') and filter('DBInstanceIdentifier', '*') and ${module.filtering.signalflow})${var.replica_lag_aggregation_function}${var.replica_lag_transformation_function}.publish('signal')
     detect(when(signal > ${var.replica_lag_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.replica_lag_threshold_major}) and when(signal <= ${var.replica_lag_threshold_critical})).publish('MAJOR')
 EOF

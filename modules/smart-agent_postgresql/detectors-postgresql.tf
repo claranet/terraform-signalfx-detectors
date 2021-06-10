@@ -8,7 +8,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    signal = data('postgres_database_size', filter=${local.not_running_vm_filters} and ${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')
+    signal = data('postgres_database_size', filter=${local.not_running_vm_filters} and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}').publish('CRIT')
 EOF
 
@@ -32,7 +32,7 @@ resource "signalfx_detector" "deadlocks" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('postgres_deadlocks', filter=${module.filter-tags.filter_custom}, rollup='delta')${var.deadlocks_aggregation_function}${var.deadlocks_transformation_function}.publish('signal')
+    signal = data('postgres_deadlocks', filter=${module.filtering.signalflow}, rollup='delta')${var.deadlocks_aggregation_function}${var.deadlocks_transformation_function}.publish('signal')
     detect(when(signal > ${var.deadlocks_threshold_major})).publish('MAJOR')
     detect(when(signal > ${var.deadlocks_threshold_minor}) and when(signal <= ${var.deadlocks_threshold_major})).publish('MINOR')
 EOF
@@ -69,7 +69,7 @@ resource "signalfx_detector" "hit_ratio" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('postgres_block_hit_ratio', filter=(not filter('index', '*')) and (not filter('schemaname', '*')) and (not filter('type', '*')) and (not filter('table', '*')) and ${module.filter-tags.filter_custom}, rollup='average').scale(100)${var.hit_ratio_aggregation_function}${var.hit_ratio_transformation_function}.publish('signal')
+    signal = data('postgres_block_hit_ratio', filter=(not filter('index', '*')) and (not filter('schemaname', '*')) and (not filter('type', '*')) and (not filter('table', '*')) and ${module.filtering.signalflow}, rollup='average').scale(100)${var.hit_ratio_aggregation_function}${var.hit_ratio_transformation_function}.publish('signal')
     detect(when(signal < ${var.hit_ratio_threshold_minor})).publish('MINOR')
     detect(when(signal < ${var.hit_ratio_threshold_warning}) and when(signal >= ${var.hit_ratio_threshold_minor})).publish('WARN')
 EOF
@@ -106,8 +106,8 @@ resource "signalfx_detector" "rollbacks" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    A = data('postgres_xact_rollbacks', filter=${module.filter-tags.filter_custom}, rollup='delta')${var.rollbacks_aggregation_function}${var.rollbacks_transformation_function}
-    B = data('postgres_xact_commits', filter=${module.filter-tags.filter_custom}, rollup='delta')${var.rollbacks_aggregation_function}${var.rollbacks_transformation_function}
+    A = data('postgres_xact_rollbacks', filter=${module.filtering.signalflow}, rollup='delta')${var.rollbacks_aggregation_function}${var.rollbacks_transformation_function}
+    B = data('postgres_xact_commits', filter=${module.filtering.signalflow}, rollup='delta')${var.rollbacks_aggregation_function}${var.rollbacks_transformation_function}
     signal = (A/B).scale(100).publish('signal')
     detect(when(signal > ${var.rollbacks_threshold_major})).publish('MAJOR')
     detect(when(signal > ${var.rollbacks_threshold_minor}) and when(signal <= ${var.rollbacks_threshold_major})).publish('MINOR')
@@ -145,7 +145,7 @@ resource "signalfx_detector" "conflicts" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('postgres_conflicts', filter=${module.filter-tags.filter_custom}, rollup='average')${var.conflicts_aggregation_function}${var.conflicts_transformation_function}.publish('signal')
+    signal = data('postgres_conflicts', filter=${module.filtering.signalflow}, rollup='average')${var.conflicts_aggregation_function}${var.conflicts_transformation_function}.publish('signal')
     detect(when(signal > ${var.conflicts_threshold_major})).publish('MAJOR')
     detect(when(signal > ${var.conflicts_threshold_minor}) and when(signal <= ${var.conflicts_threshold_major})).publish('MINOR')
 EOF
@@ -182,7 +182,7 @@ resource "signalfx_detector" "max_connections" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('postgres_pct_connections', filter=${module.filter-tags.filter_custom}, rollup='average').scale(100)${var.max_connections_aggregation_function}${var.max_connections_transformation_function}.publish('signal')
+    signal = data('postgres_pct_connections', filter=${module.filtering.signalflow}, rollup='average').scale(100)${var.max_connections_aggregation_function}${var.max_connections_transformation_function}.publish('signal')
     detect(when(signal > ${var.max_connections_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.max_connections_threshold_major}) and when(signal <= ${var.max_connections_threshold_critical})).publish('MAJOR')
 EOF
@@ -219,7 +219,7 @@ resource "signalfx_detector" "replication_lag" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('postgres_replication_lag', filter=${module.filter-tags.filter_custom}, rollup='average')${var.replication_lag_aggregation_function}${var.replication_lag_transformation_function}.publish('signal')
+    signal = data('postgres_replication_lag', filter=${module.filtering.signalflow}, rollup='average')${var.replication_lag_aggregation_function}${var.replication_lag_transformation_function}.publish('signal')
     detect(when(signal > ${var.replication_lag_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.replication_lag_threshold_major}) and when(signal <= ${var.replication_lag_threshold_critical})).publish('MAJOR')
 EOF
@@ -256,7 +256,7 @@ resource "signalfx_detector" "replication_state" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('postgres_replication_state', filter=${module.filter-tags.filter_custom}, rollup='average')${var.replication_state_aggregation_function}${var.replication_state_transformation_function}.publish('signal')
+    signal = data('postgres_replication_state', filter=${module.filtering.signalflow}, rollup='average')${var.replication_state_aggregation_function}${var.replication_state_transformation_function}.publish('signal')
     detect(when(signal < 1)).publish('CRIT')
 EOF
 

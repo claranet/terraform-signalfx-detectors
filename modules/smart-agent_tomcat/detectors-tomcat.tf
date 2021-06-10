@@ -8,7 +8,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    signal = data(' gauge.tomcat.ThreadPool.maxThreads ', filter=${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')
+    signal = data(' gauge.tomcat.ThreadPool.maxThreads ', filter=${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}').publish('CRIT')
 EOF
 
@@ -32,8 +32,8 @@ resource "signalfx_detector" "average_processing_time" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    A = data('counter.tomcat.GlobalRequestProcessor.processingTime', filter=${module.filter-tags.filter_custom}, rollup='delta')${var.average_processing_time_aggregation_function}${var.average_processing_time_transformation_function}
-    B = data('counter.tomcat.GlobalRequestProcessor.requestCount', filter=${module.filter-tags.filter_custom}, rollup='delta')${var.average_processing_time_aggregation_function}${var.average_processing_time_transformation_function}
+    A = data('counter.tomcat.GlobalRequestProcessor.processingTime', filter=${module.filtering.signalflow}, rollup='delta')${var.average_processing_time_aggregation_function}${var.average_processing_time_transformation_function}
+    B = data('counter.tomcat.GlobalRequestProcessor.requestCount', filter=${module.filtering.signalflow}, rollup='delta')${var.average_processing_time_aggregation_function}${var.average_processing_time_transformation_function}
     signal = (A/B).fill(0).publish('signal')
     detect(when(signal > ${var.average_processing_time_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.average_processing_time_threshold_major}) and when(signal <= ${var.average_processing_time_threshold_critical})).publish('MAJOR')
@@ -71,8 +71,8 @@ resource "signalfx_detector" "busy_threads_percentage" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    A = data('gauge.tomcat.ThreadPool.currentThreadsBusy', filter=${module.filter-tags.filter_custom})${var.busy_threads_percentage_aggregation_function}${var.busy_threads_percentage_transformation_function}
-    B = data('gauge.tomcat.ThreadPool.maxThreads', filter=${module.filter-tags.filter_custom})${var.busy_threads_percentage_aggregation_function}${var.busy_threads_percentage_transformation_function}
+    A = data('gauge.tomcat.ThreadPool.currentThreadsBusy', filter=${module.filtering.signalflow})${var.busy_threads_percentage_aggregation_function}${var.busy_threads_percentage_transformation_function}
+    B = data('gauge.tomcat.ThreadPool.maxThreads', filter=${module.filtering.signalflow})${var.busy_threads_percentage_aggregation_function}${var.busy_threads_percentage_transformation_function}
     signal = (A/B).scale(100).fill(0).publish('signal')
     detect(when(signal > ${var.busy_threads_percentage_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.busy_threads_percentage_threshold_major}) and when(signal <= ${var.busy_threads_percentage_threshold_critical})).publish('MAJOR')

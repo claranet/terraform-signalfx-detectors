@@ -6,7 +6,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    signal = data('Nodes', filter=filter('namespace', 'AWS/ES') and filter('stat', 'mean') and ${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')
+    signal = data('Nodes', filter=filter('namespace', 'AWS/ES') and filter('stat', 'mean') and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}').publish('CRIT')
 EOF
 
@@ -30,8 +30,8 @@ resource "signalfx_detector" "cluster_status" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    A = data('ClusterStatus.red', filter=filter('namespace', 'AWS/ES') and filter('stat', 'upper') and ${module.filter-tags.filter_custom})${var.cluster_status_aggregation_function}${var.cluster_status_transformation_function}.publish('A')
-    B = data('ClusterStatus.yellow', filter=filter('namespace', 'AWS/ES') and filter('stat', 'upper') and ${module.filter-tags.filter_custom})${var.cluster_status_aggregation_function}${var.cluster_status_transformation_function}.publish('B')
+    A = data('ClusterStatus.red', filter=filter('namespace', 'AWS/ES') and filter('stat', 'upper') and ${module.filtering.signalflow})${var.cluster_status_aggregation_function}${var.cluster_status_transformation_function}.publish('A')
+    B = data('ClusterStatus.yellow', filter=filter('namespace', 'AWS/ES') and filter('stat', 'upper') and ${module.filtering.signalflow})${var.cluster_status_aggregation_function}${var.cluster_status_transformation_function}.publish('B')
     detect(when(A >= 1)).publish('CRIT')
     detect(when(B >= 1)).publish('MAJOR')
 EOF
@@ -68,7 +68,7 @@ resource "signalfx_detector" "free_space" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('FreeStorageSpace', filter=filter('namespace', 'AWS/ES') and filter('stat', 'lower') and filter('NodeId', '*') and ${module.filter-tags.filter_custom})${var.free_space_aggregation_function}${var.free_space_transformation_function}.publish('signal')
+    signal = data('FreeStorageSpace', filter=filter('namespace', 'AWS/ES') and filter('stat', 'lower') and filter('NodeId', '*') and ${module.filtering.signalflow})${var.free_space_aggregation_function}${var.free_space_transformation_function}.publish('signal')
     detect(when(signal < ${var.free_space_threshold_critical})).publish('CRIT')
     detect(when(signal < ${var.free_space_threshold_major}) and when(signal >= ${var.free_space_threshold_critical})).publish('MAJOR')
 EOF
@@ -105,7 +105,7 @@ resource "signalfx_detector" "cpu_90_15min" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('CPUUtilization', filter=filter('namespace', 'AWS/ES') and filter('stat', 'upper') and filter('NodeId', '*') and ${module.filter-tags.filter_custom})${var.cpu_90_15min_aggregation_function}${var.cpu_90_15min_transformation_function}.publish('signal')
+    signal = data('CPUUtilization', filter=filter('namespace', 'AWS/ES') and filter('stat', 'upper') and filter('NodeId', '*') and ${module.filtering.signalflow})${var.cpu_90_15min_aggregation_function}${var.cpu_90_15min_transformation_function}.publish('signal')
     detect(when(signal > ${var.cpu_90_15min_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.cpu_90_15min_threshold_major}) and when(signal <= ${var.cpu_90_15min_threshold_critical})).publish('MAJOR')
 EOF

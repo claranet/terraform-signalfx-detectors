@@ -8,7 +8,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    signal = data('memcached_items.current', filter=${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')
+    signal = data('memcached_items.current', filter=${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}').publish('CRIT')
 EOF
 
@@ -32,7 +32,7 @@ resource "signalfx_detector" "memcached_max_conn" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('total_events.listen_disabled', filter=${module.filter-tags.filter_custom}, rollup='delta')${var.memcached_max_conn_aggregation_function}${var.memcached_max_conn_transformation_function}.publish('signal')
+    signal = data('total_events.listen_disabled', filter=${module.filtering.signalflow}, rollup='delta')${var.memcached_max_conn_aggregation_function}${var.memcached_max_conn_transformation_function}.publish('signal')
     detect(when(signal > ${var.memcached_max_conn_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.memcached_max_conn_threshold_major}) and when(signal < ${var.memcached_max_conn_threshold_critical})).publish('MAJOR')
 EOF
@@ -69,8 +69,8 @@ resource "signalfx_detector" "memcached_hit_ratio" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    A = data('memcached_ops.hits', filter=${module.filter-tags.filter_custom})${var.memcached_hit_ratio_aggregation_function}${var.memcached_hit_ratio_transformation_function}
-    B = data('memcached_ops.misses', filter=${module.filter-tags.filter_custom})${var.memcached_hit_ratio_aggregation_function}${var.memcached_hit_ratio_transformation_function}
+    A = data('memcached_ops.hits', filter=${module.filtering.signalflow})${var.memcached_hit_ratio_aggregation_function}${var.memcached_hit_ratio_transformation_function}
+    B = data('memcached_ops.misses', filter=${module.filtering.signalflow})${var.memcached_hit_ratio_aggregation_function}${var.memcached_hit_ratio_transformation_function}
     signal = (A / (A+B) * 100).publish('signal')
     detect(when(signal < ${var.memcached_hit_ratio_threshold_major})).publish('MAJOR')
     detect(when(signal < ${var.memcached_hit_ratio_threshold_minor}) and when(signal >= ${var.memcached_hit_ratio_threshold_major})).publish('MINOR')

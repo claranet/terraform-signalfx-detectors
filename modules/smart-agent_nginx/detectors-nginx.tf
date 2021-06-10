@@ -8,7 +8,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    signal = data('nginx_connections.reading', filter=${local.not_running_vm_filters} and ${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')
+    signal = data('nginx_connections.reading', filter=${local.not_running_vm_filters} and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}').publish('CRIT')
 EOF
 
@@ -32,7 +32,7 @@ resource "signalfx_detector" "dropped_connections" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('connections.failed', filter=${module.filter-tags.filter_custom})${var.dropped_connections_aggregation_function}${var.dropped_connections_transformation_function}.publish('signal')
+    signal = data('connections.failed', filter=${module.filtering.signalflow})${var.dropped_connections_aggregation_function}${var.dropped_connections_transformation_function}.publish('signal')
     detect(when(signal > ${var.dropped_connections_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.dropped_connections_threshold_major}) and when(signal <= ${var.dropped_connections_threshold_critical})).publish('MAJOR')
 EOF

@@ -6,7 +6,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    signal = data('EnvironmentHealth', filter=filter('stat', 'mean') and filter('namespace', 'AWS/ElasticBeanstalk') and ${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')
+    signal = data('EnvironmentHealth', filter=filter('stat', 'mean') and filter('namespace', 'AWS/ElasticBeanstalk') and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}').publish('CRIT')
 EOF
 
@@ -30,7 +30,7 @@ resource "signalfx_detector" "health" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('EnvironmentHealth', filter=filter('namespace', 'AWS/ElasticBeanstalk') and filter('stat', 'upper') and ${module.filter-tags.filter_custom})${var.health_aggregation_function}${var.health_transformation_function}.publish('signal')
+    signal = data('EnvironmentHealth', filter=filter('namespace', 'AWS/ElasticBeanstalk') and filter('stat', 'upper') and ${module.filtering.signalflow})${var.health_aggregation_function}${var.health_transformation_function}.publish('signal')
     detect(when(signal >= ${var.health_threshold_critical})).publish('CRIT')
     detect(when(signal >= ${var.health_threshold_major}) and when(signal < ${var.health_threshold_critical})).publish('MAJOR')
 EOF
@@ -67,7 +67,7 @@ resource "signalfx_detector" "latency_p90" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('ApplicationLatencyP90', filter=filter('namespace', 'AWS/ElasticBeanstalk') and filter('stat', 'lower') and (not filter('InstanceId', '*')) and ${module.filter-tags.filter_custom})${var.latency_p90_aggregation_function}${var.latency_p90_transformation_function}.publish('signal')
+    signal = data('ApplicationLatencyP90', filter=filter('namespace', 'AWS/ElasticBeanstalk') and filter('stat', 'lower') and (not filter('InstanceId', '*')) and ${module.filtering.signalflow})${var.latency_p90_aggregation_function}${var.latency_p90_transformation_function}.publish('signal')
     detect(when(signal >= ${var.latency_p90_threshold_critical})).publish('CRIT')
     detect(when(signal >= ${var.latency_p90_threshold_major}) and when(signal < ${var.latency_p90_threshold_critical})).publish('MAJOR')
 EOF
@@ -104,8 +104,8 @@ resource "signalfx_detector" "app_5xx_error_rate" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    A = data('ApplicationRequests5xx', filter=filter('namespace', 'AWS/ElasticBeanstalk') and filter('stat', 'sum') and (not filter('InstanceId', '*')) and ${module.filter-tags.filter_custom})${var.app_5xx_error_rate_aggregation_function}${var.app_5xx_error_rate_transformation_function}
-    B = data('ApplicationRequestsTotal', filter=filter('namespace', 'AWS/ElasticBeanstalk') and filter('stat', 'sum') and (not filter('InstanceId', '*')) and ${module.filter-tags.filter_custom})${var.app_5xx_error_rate_aggregation_function}${var.app_5xx_error_rate_transformation_function}
+    A = data('ApplicationRequests5xx', filter=filter('namespace', 'AWS/ElasticBeanstalk') and filter('stat', 'sum') and (not filter('InstanceId', '*')) and ${module.filtering.signalflow})${var.app_5xx_error_rate_aggregation_function}${var.app_5xx_error_rate_transformation_function}
+    B = data('ApplicationRequestsTotal', filter=filter('namespace', 'AWS/ElasticBeanstalk') and filter('stat', 'sum') and (not filter('InstanceId', '*')) and ${module.filtering.signalflow})${var.app_5xx_error_rate_aggregation_function}${var.app_5xx_error_rate_transformation_function}
     signal = (A/B).scale(100).publish('signal')
     detect(when(signal > ${var.app_5xx_error_rate_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.app_5xx_error_rate_threshold_major}) and when(signal <= ${var.app_5xx_error_rate_threshold_critical})).publish('MAJOR')
@@ -144,7 +144,7 @@ resource "signalfx_detector" "root_filesystem_usage" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('RootFilesystemUtil', filter=filter('namespace', 'AWS/ElasticBeanstalk') and filter('stat', 'lower') and (not filter('InstanceId', '*')) and ${module.filter-tags.filter_custom})${var.root_filesystem_usage_aggregation_function}${var.root_filesystem_usage_transformation_function}.publish('signal')
+    signal = data('RootFilesystemUtil', filter=filter('namespace', 'AWS/ElasticBeanstalk') and filter('stat', 'lower') and (not filter('InstanceId', '*')) and ${module.filtering.signalflow})${var.root_filesystem_usage_aggregation_function}${var.root_filesystem_usage_transformation_function}.publish('signal')
     detect(when(signal > ${var.root_filesystem_usage_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.root_filesystem_usage_threshold_major}) and when(signal <= ${var.root_filesystem_usage_threshold_critical})).publish('MAJOR')
 EOF

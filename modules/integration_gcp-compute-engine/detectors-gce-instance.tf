@@ -6,7 +6,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    signal = data('instance/cpu/usage_time', filter=${local.not_running_vm_filters_gcp} and ${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')
+    signal = data('instance/cpu/usage_time', filter=${local.not_running_vm_filters_gcp} and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}').publish('CRIT')
 EOF
 
@@ -30,7 +30,7 @@ resource "signalfx_detector" "cpu_utilization" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('instance/cpu/utilization', ${module.filter-tags.filter_custom})${var.cpu_utilization_aggregation_function}${var.cpu_utilization_transformation_function}.scale(100).publish('signal')
+    signal = data('instance/cpu/utilization', ${module.filtering.signalflow})${var.cpu_utilization_aggregation_function}${var.cpu_utilization_transformation_function}.scale(100).publish('signal')
     detect(when(signal > ${var.cpu_utilization_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.cpu_utilization_threshold_major}) and when(signal <= ${var.cpu_utilization_threshold_critical})).publish('MAJOR')
 EOF
@@ -67,10 +67,10 @@ resource "signalfx_detector" "disk_throttled_bps" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    A = data('instance/disk/throttled_read_bytes_count', ${module.filter-tags.filter_custom})${var.disk_throttled_bps_aggregation_function}${var.disk_throttled_bps_transformation_function}
-    B = data('instance/disk/throttled_write_bytes_count', ${module.filter-tags.filter_custom})${var.disk_throttled_bps_aggregation_function}${var.disk_throttled_bps_transformation_function}
-    C = data('instance/disk/read_bytes_count', ${module.filter-tags.filter_custom})${var.disk_throttled_bps_aggregation_function}${var.disk_throttled_bps_transformation_function}
-    D = data('instance/disk/write_bytes_count', ${module.filter-tags.filter_custom})${var.disk_throttled_bps_aggregation_function}${var.disk_throttled_bps_transformation_function}
+    A = data('instance/disk/throttled_read_bytes_count', ${module.filtering.signalflow})${var.disk_throttled_bps_aggregation_function}${var.disk_throttled_bps_transformation_function}
+    B = data('instance/disk/throttled_write_bytes_count', ${module.filtering.signalflow})${var.disk_throttled_bps_aggregation_function}${var.disk_throttled_bps_transformation_function}
+    C = data('instance/disk/read_bytes_count', ${module.filtering.signalflow})${var.disk_throttled_bps_aggregation_function}${var.disk_throttled_bps_transformation_function}
+    D = data('instance/disk/write_bytes_count', ${module.filtering.signalflow})${var.disk_throttled_bps_aggregation_function}${var.disk_throttled_bps_transformation_function}
     signal = ((A+B) / (C+D)).scale(100).publish('signal')
     detect(when(signal > ${var.disk_throttled_bps_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.disk_throttled_bps_threshold_major}) and when(signal <= ${var.disk_throttled_bps_threshold_critical})).publish('MAJOR')
@@ -108,10 +108,10 @@ resource "signalfx_detector" "disk_throttled_ops" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    A = data('instance/disk/throttled_read_ops_count', ${module.filter-tags.filter_custom})${var.disk_throttled_ops_aggregation_function}${var.disk_throttled_ops_transformation_function}
-    B = data('instance/disk/throttled_write_ops_count', ${module.filter-tags.filter_custom})${var.disk_throttled_ops_aggregation_function}${var.disk_throttled_ops_transformation_function}
-    C = data('instance/disk/read_ops_count', ${module.filter-tags.filter_custom})${var.disk_throttled_ops_aggregation_function}${var.disk_throttled_ops_transformation_function}
-    D = data('instance/disk/write_ops_count', ${module.filter-tags.filter_custom})${var.disk_throttled_ops_aggregation_function}${var.disk_throttled_ops_transformation_function}
+    A = data('instance/disk/throttled_read_ops_count', ${module.filtering.signalflow})${var.disk_throttled_ops_aggregation_function}${var.disk_throttled_ops_transformation_function}
+    B = data('instance/disk/throttled_write_ops_count', ${module.filtering.signalflow})${var.disk_throttled_ops_aggregation_function}${var.disk_throttled_ops_transformation_function}
+    C = data('instance/disk/read_ops_count', ${module.filtering.signalflow})${var.disk_throttled_ops_aggregation_function}${var.disk_throttled_ops_transformation_function}
+    D = data('instance/disk/write_ops_count', ${module.filtering.signalflow})${var.disk_throttled_ops_aggregation_function}${var.disk_throttled_ops_transformation_function}
     signal = ((A+B) / (C+D)).scale(100).publish('signal')
     detect(when(signal > ${var.disk_throttled_ops_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.disk_throttled_ops_threshold_major}) and when(signal <= ${var.disk_throttled_ops_threshold_critical})).publish('MAJOR')

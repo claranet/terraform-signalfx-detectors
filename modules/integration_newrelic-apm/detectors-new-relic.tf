@@ -6,7 +6,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    signal = data('Apdex/score/*', ${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')
+    signal = data('Apdex/score/*', ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}').publish('MAJOR')
 EOF
 
@@ -30,7 +30,7 @@ resource "signalfx_detector" "error_rate" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('Errors/all/errors_per_minute/*', ${module.filter-tags.filter_custom})${var.error_rate_aggregation_function}${var.error_rate_transformation_function}.publish('signal')
+    signal = data('Errors/all/errors_per_minute/*', ${module.filtering.signalflow})${var.error_rate_aggregation_function}${var.error_rate_transformation_function}.publish('signal')
     detect(when(signal > ${var.error_rate_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.error_rate_threshold_major}) and when(signal <= ${var.error_rate_threshold_critical})).publish('MAJOR')
 EOF
@@ -68,7 +68,7 @@ resource "signalfx_detector" "apdex" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('Apdex/score/*', ${module.filter-tags.filter_custom})${var.apdex_aggregation_function}${var.apdex_transformation_function}.publish('signal')
+    signal = data('Apdex/score/*', ${module.filtering.signalflow})${var.apdex_aggregation_function}${var.apdex_transformation_function}.publish('signal')
     detect(when(signal < ${var.apdex_threshold_critical})).publish('CRIT')
     detect(when(signal < ${var.apdex_threshold_major}) and when(signal >= ${var.apdex_threshold_critical})).publish('MAJOR')
 EOF

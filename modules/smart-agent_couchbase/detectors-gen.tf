@@ -10,8 +10,8 @@ resource "signalfx_detector" "memory_used" {
   }
 
   program_text = <<-EOF
-    A = data('gauge.bucket.op.mem_used', filter=${module.filter-tags.filter_custom})${var.memory_used_aggregation_function}${var.memory_used_transformation_function}
-    B = data('gauge.bucket.op.ep_mem_high_wat', filter=${module.filter-tags.filter_custom})${var.memory_used_aggregation_function}${var.memory_used_transformation_function}
+    A = data('gauge.bucket.op.mem_used', filter=${module.filtering.signalflow})${var.memory_used_aggregation_function}${var.memory_used_transformation_function}
+    B = data('gauge.bucket.op.ep_mem_high_wat', filter=${module.filtering.signalflow})${var.memory_used_aggregation_function}${var.memory_used_transformation_function}
     signal = (A/B).scale(100).fill(0).publish('signal')
     detect(when(signal > ${var.memory_used_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.memory_used_threshold_major}) and when(signal <= ${var.memory_used_threshold_critical})).publish('MAJOR')
@@ -49,7 +49,7 @@ resource "signalfx_detector" "out_of_memory_errors" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('gauge.bucket.op.ep_oom_errors', filter=${module.filter-tags.filter_custom})${var.out_of_memory_errors_aggregation_function}${var.out_of_memory_errors_transformation_function}.publish('signal')
+    signal = data('gauge.bucket.op.ep_oom_errors', filter=${module.filtering.signalflow})${var.out_of_memory_errors_aggregation_function}${var.out_of_memory_errors_transformation_function}.publish('signal')
     detect(when(signal > ${var.out_of_memory_errors_threshold_critical})).publish('CRIT')
 EOF
 
@@ -73,7 +73,7 @@ resource "signalfx_detector" "disk_write_queue" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('gauge.bucket.op.disk_write_queue', filter=${module.filter-tags.filter_custom})${var.disk_write_queue_aggregation_function}${var.disk_write_queue_transformation_function}.publish('signal')
+    signal = data('gauge.bucket.op.disk_write_queue', filter=${module.filtering.signalflow})${var.disk_write_queue_aggregation_function}${var.disk_write_queue_transformation_function}.publish('signal')
     detect(when(signal > ${var.disk_write_queue_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.disk_write_queue_threshold_major}) and when(signal <= ${var.disk_write_queue_threshold_critical})).publish('MAJOR')
 EOF

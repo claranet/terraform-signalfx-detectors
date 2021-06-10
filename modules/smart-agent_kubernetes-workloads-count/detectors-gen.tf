@@ -11,11 +11,11 @@ resource "signalfx_detector" "workloads_count" {
 
   program_text = <<-EOF
     base_filtering = not filter('kubernetes_namespace','ara') and not filter('kubernetes_namespace','bastions') and not filter('kubernetes_namespace','gitlab-runner') and not filter('kubernetes_namespace','logging') and not filter('kubernetes_namespace','monitoring') and not filter('kubernetes_namespace','ingress-nginx') and not filter('kubernetes_namespace','kube-system') and not filter('kubernetes_namespace','kubernetes-replicator')
-    kubernetes_deployment_desired = data('kubernetes.deployment.desired', filter=base_filtering and ${module.filter-tags.filter_custom})${var.workloads_count_aggregation_function}${var.workloads_count_transformation_function}
-    kubernetes_daemon_set_desired = data('kubernetes.daemon_set.desired_scheduled', filter=base_filtering and ${module.filter-tags.filter_custom})${var.workloads_count_aggregation_function}${var.workloads_count_transformation_function}
-    kubernetes_replication_controller_desired = data('kubernetes.replication_controller.desired', filter=base_filtering and ${module.filter-tags.filter_custom})${var.workloads_count_aggregation_function}${var.workloads_count_transformation_function}
-    kubernetes_replica_set_desired = data('kubernetes.replica_set.desired', filter=base_filtering and ${module.filter-tags.filter_custom})${var.workloads_count_aggregation_function}${var.workloads_count_transformation_function}
-    kubernetes_statefulset_desired = data('kubernetes.stateful_set.desired', filter=base_filtering and ${module.filter-tags.filter_custom})${var.workloads_count_aggregation_function}${var.workloads_count_transformation_function}
+    kubernetes_deployment_desired = data('kubernetes.deployment.desired', filter=base_filtering and ${module.filtering.signalflow})${var.workloads_count_aggregation_function}${var.workloads_count_transformation_function}
+    kubernetes_daemon_set_desired = data('kubernetes.daemon_set.desired_scheduled', filter=base_filtering and ${module.filtering.signalflow})${var.workloads_count_aggregation_function}${var.workloads_count_transformation_function}
+    kubernetes_replication_controller_desired = data('kubernetes.replication_controller.desired', filter=base_filtering and ${module.filtering.signalflow})${var.workloads_count_aggregation_function}${var.workloads_count_transformation_function}
+    kubernetes_replica_set_desired = data('kubernetes.replica_set.desired', filter=base_filtering and ${module.filtering.signalflow})${var.workloads_count_aggregation_function}${var.workloads_count_transformation_function}
+    kubernetes_statefulset_desired = data('kubernetes.stateful_set.desired', filter=base_filtering and ${module.filtering.signalflow})${var.workloads_count_aggregation_function}${var.workloads_count_transformation_function}
     signal = (kubernetes_deployment_desired+kubernetes_daemon_set_desired+kubernetes_replication_controller_desired+kubernetes_replica_set_desired+kubernetes_statefulset_desired).publish('signal')
     detect(when(signal > ${var.workloads_count_threshold_minor})).publish('MINOR')
     detect(when(signal > ${var.workloads_count_threshold_warning}) and when(signal <= ${var.workloads_count_threshold_minor})).publish('WARN')

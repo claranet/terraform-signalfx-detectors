@@ -8,7 +8,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    signal = data('gauge.zk_max_file_descriptor_count', filter=filter('plugin', 'zookeeper') and ${local.not_running_vm_filters} and ${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')
+    signal = data('gauge.zk_max_file_descriptor_count', filter=filter('plugin', 'zookeeper') and ${local.not_running_vm_filters} and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}').publish('CRIT')
 EOF
 
@@ -32,7 +32,7 @@ resource "signalfx_detector" "zookeeper_health" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('gauge.zk_service_health', filter=filter('plugin', 'zookeeper') and ${module.filter-tags.filter_custom})${var.zookeeper_health_aggregation_function}${var.zookeeper_health_transformation_function}.publish('signal')
+    signal = data('gauge.zk_service_health', filter=filter('plugin', 'zookeeper') and ${module.filtering.signalflow})${var.zookeeper_health_aggregation_function}${var.zookeeper_health_transformation_function}.publish('signal')
     detect(when(signal != 1)).publish('CRIT')
 EOF
 
@@ -56,7 +56,7 @@ resource "signalfx_detector" "zookeeper_latency" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('gauge.zk_avg_latency', filter=filter('plugin', 'zookeeper') and ${module.filter-tags.filter_custom})${var.zookeeper_latency_aggregation_function}${var.zookeeper_latency_transformation_function}.publish('signal')
+    signal = data('gauge.zk_avg_latency', filter=filter('plugin', 'zookeeper') and ${module.filtering.signalflow})${var.zookeeper_latency_aggregation_function}${var.zookeeper_latency_transformation_function}.publish('signal')
     detect(when(signal > ${var.zookeeper_latency_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.zookeeper_latency_threshold_major}) and when(signal <= ${var.zookeeper_latency_threshold_critical})).publish('MAJOR')
 EOF
@@ -93,8 +93,8 @@ resource "signalfx_detector" "file_descriptors" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    A = data('gauge.zk_open_file_descriptor_count', filter=filter('plugin', 'zookeeper') and ${module.filter-tags.filter_custom}, rollup='average')${var.file_descriptors_aggregation_function}${var.file_descriptors_transformation_function}
-    B = data('gauge.zk_max_file_descriptor_count', filter=filter('plugin', 'zookeeper') and ${module.filter-tags.filter_custom}, rollup='average')${var.file_descriptors_aggregation_function}${var.file_descriptors_transformation_function}
+    A = data('gauge.zk_open_file_descriptor_count', filter=filter('plugin', 'zookeeper') and ${module.filtering.signalflow}, rollup='average')${var.file_descriptors_aggregation_function}${var.file_descriptors_transformation_function}
+    B = data('gauge.zk_max_file_descriptor_count', filter=filter('plugin', 'zookeeper') and ${module.filtering.signalflow}, rollup='average')${var.file_descriptors_aggregation_function}${var.file_descriptors_transformation_function}
     signal = (A/B).scale(100).publish('signal')
     detect(when(signal > ${var.file_descriptors_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.file_descriptors_threshold_major}) and when(signal <= ${var.file_descriptors_threshold_critical})).publish('MAJOR')

@@ -54,7 +54,7 @@ Note the following parameters:
   instance of the module.
   Its value will be added to the `prefixes` list at the start of the [detector 
   name](https://github.com/claranet/terraform-signalfx-detectors/wiki/Templating#example).
-  In general, it will also be used in `filter-tags` sub-module to apply a
+  In general, it will also be used in `filtering` internal sub-module to apply a
   [filtering](https://github.com/claranet/terraform-signalfx-detectors/wiki/Guidance#filtering) based on our default 
   [tagging convention](https://github.com/claranet/terraform-signalfx-detectors/wiki/Tagging-convention) by default.
 

@@ -8,7 +8,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    signal = data('gauge.connections.available', filter=${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')
+    signal = data('gauge.connections.available', filter=${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}').publish('CRIT')
 EOF
 
@@ -32,7 +32,7 @@ resource "signalfx_detector" "page_faults" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('counter.extra_info.page_faults', filter=${module.filter-tags.filter_custom})${var.page_faults_aggregation_function}${var.page_faults_transformation_function}.publish('signal')
+    signal = data('counter.extra_info.page_faults', filter=${module.filtering.signalflow})${var.page_faults_aggregation_function}${var.page_faults_transformation_function}.publish('signal')
     detect(when(signal > ${var.page_faults_threshold_warning})).publish('WARN')
 EOF
 
@@ -56,8 +56,8 @@ resource "signalfx_detector" "max_connections" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    A = data('gauge.connections.current', filter=${module.filter-tags.filter_custom})${var.max_connections_aggregation_function}${var.max_connections_transformation_function}
-    B = data('gauge.connections.available', filter=${module.filter-tags.filter_custom})${var.max_connections_aggregation_function}${var.max_connections_transformation_function}
+    A = data('gauge.connections.current', filter=${module.filtering.signalflow})${var.max_connections_aggregation_function}${var.max_connections_transformation_function}
+    B = data('gauge.connections.available', filter=${module.filtering.signalflow})${var.max_connections_aggregation_function}${var.max_connections_transformation_function}
     signal = (A/(A+B)).scale(100).publish('signal')
     detect(when(signal > ${var.max_connections_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.max_connections_threshold_major}) and when(signal <= ${var.max_connections_threshold_critical})).publish('MAJOR')
@@ -95,8 +95,8 @@ resource "signalfx_detector" "asserts" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    A = data('counter.asserts.regular', filter=${module.filter-tags.filter_custom})${var.asserts_aggregation_function}${var.asserts_transformation_function}
-    B = data('counter.asserts.warning', filter=${module.filter-tags.filter_custom})${var.asserts_aggregation_function}${var.asserts_transformation_function}
+    A = data('counter.asserts.regular', filter=${module.filtering.signalflow})${var.asserts_aggregation_function}${var.asserts_transformation_function}
+    B = data('counter.asserts.warning', filter=${module.filtering.signalflow})${var.asserts_aggregation_function}${var.asserts_transformation_function}
     signal = (A+B).publish('signal')
     detect(when(signal > ${var.asserts_threshold_minor})).publish('MINOR')
 EOF
@@ -121,7 +121,7 @@ resource "signalfx_detector" "primary" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('gauge.repl.is_primary_node', filter=${module.filter-tags.filter_custom})${var.primary_aggregation_function}${var.primary_transformation_function}.publish('signal')
+    signal = data('gauge.repl.is_primary_node', filter=${module.filtering.signalflow})${var.primary_aggregation_function}${var.primary_transformation_function}.publish('signal')
     detect(when(signal > ${var.primary_threshold_critical})).publish('CRIT')
 EOF
 
@@ -145,8 +145,8 @@ resource "signalfx_detector" "secondary" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    A = data('gauge.repl.active_nodes', filter=${module.filter-tags.filter_custom})${var.secondary_aggregation_function}${var.secondary_transformation_function}
-    B = data('gauge.repl.is_primary_node', filter=${module.filter-tags.filter_custom})${var.secondary_aggregation_function}${var.secondary_transformation_function}
+    A = data('gauge.repl.active_nodes', filter=${module.filtering.signalflow})${var.secondary_aggregation_function}${var.secondary_transformation_function}
+    B = data('gauge.repl.is_primary_node', filter=${module.filtering.signalflow})${var.secondary_aggregation_function}${var.secondary_transformation_function}
     signal = (A-B).publish('signal')
     detect(when(signal < ${var.secondary_threshold_critical})).publish('CRIT')
 EOF
@@ -171,7 +171,7 @@ resource "signalfx_detector" "replication_lag" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('gauge.repl.max_lag', filter=${module.filter-tags.filter_custom})${var.replication_lag_aggregation_function}${var.replication_lag_transformation_function}.publish('signal')
+    signal = data('gauge.repl.max_lag', filter=${module.filtering.signalflow})${var.replication_lag_aggregation_function}${var.replication_lag_transformation_function}.publish('signal')
     detect(when(signal > ${var.replication_lag_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.replication_lag_threshold_major}) and when(signal <= ${var.replication_lag_threshold_critical})).publish('MAJOR')
 EOF

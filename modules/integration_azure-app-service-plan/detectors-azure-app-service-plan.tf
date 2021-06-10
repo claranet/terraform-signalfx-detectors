@@ -7,7 +7,7 @@ resource "signalfx_detector" "heartbeat" {
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting
         base_filter = filter('resource_type', 'Microsoft.Web/serverFarms') and filter('primary_aggregation_type', 'true')
-        signal = data('CpuPercentage', filter=base_filter and ${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')
+        signal = data('CpuPercentage', filter=base_filter and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
         not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}').publish('CRIT')
     EOF
 
@@ -32,7 +32,7 @@ resource "signalfx_detector" "cpu_percentage" {
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Web/serverFarms') and filter('primary_aggregation_type', 'true')
-        signal = data('CpuPercentage', filter=base_filter and ${module.filter-tags.filter_custom})${var.cpu_percentage_aggregation_function}.publish('signal')
+        signal = data('CpuPercentage', filter=base_filter and ${module.filtering.signalflow})${var.cpu_percentage_aggregation_function}.publish('signal')
         detect(when(signal > threshold(${var.cpu_percentage_threshold_critical}), lasting="${var.cpu_percentage_timer}")).publish('CRIT')
         detect(when(signal > threshold(${var.cpu_percentage_threshold_major}), lasting="${var.cpu_percentage_timer}") and when(signal <= ${var.cpu_percentage_threshold_critical})).publish('MAJOR')
     EOF
@@ -70,7 +70,7 @@ resource "signalfx_detector" "memory_percentage" {
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Web/serverFarms') and filter('primary_aggregation_type', 'true')
-        signal = data('MemoryPercentage', filter=base_filter and ${module.filter-tags.filter_custom})${var.memory_percentage_aggregation_function}.publish('signal')
+        signal = data('MemoryPercentage', filter=base_filter and ${module.filtering.signalflow})${var.memory_percentage_aggregation_function}.publish('signal')
         detect(when(signal > threshold(${var.memory_percentage_threshold_critical}), lasting="${var.memory_percentage_timer}")).publish('CRIT')
         detect(when(signal > threshold(${var.memory_percentage_threshold_major}), lasting="${var.memory_percentage_timer}") and when(signal <= ${var.memory_percentage_threshold_critical})).publish('MAJOR')
     EOF

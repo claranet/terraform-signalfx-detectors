@@ -7,7 +7,7 @@ resource "signalfx_detector" "heartbeat" {
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting
         base_filter = filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'false') and filter('primary_aggregation_type', 'true')
-        signal = data('CpuTime', base_filter and ${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')
+        signal = data('CpuTime', base_filter and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
         not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}').publish('CRIT')
     EOF
 
@@ -32,7 +32,7 @@ resource "signalfx_detector" "response_time" {
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'false') and filter('primary_aggregation_type', 'true')
-        signal = data('HttpResponseTime', filter=base_filter and ${module.filter-tags.filter_custom})${var.response_time_aggregation_function}.fill(value=None).publish('signal')
+        signal = data('HttpResponseTime', filter=base_filter and ${module.filtering.signalflow})${var.response_time_aggregation_function}.fill(value=None).publish('signal')
         detect(when(signal > threshold(${var.response_time_threshold_critical}), lasting="${var.response_time_timer}")).publish('CRIT')
         detect(when(signal > threshold(${var.response_time_threshold_major}), lasting="${var.response_time_timer}") and when(signal <= ${var.response_time_threshold_critical})).publish('MAJOR')
     EOF
@@ -71,7 +71,7 @@ resource "signalfx_detector" "memory_usage_count" {
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'false') and filter('primary_aggregation_type', 'true')
-        signal = data('MemoryWorkingSet', filter=base_filter and ${module.filter-tags.filter_custom})${var.memory_usage_count_aggregation_function}.publish('signal')
+        signal = data('MemoryWorkingSet', filter=base_filter and ${module.filtering.signalflow})${var.memory_usage_count_aggregation_function}.publish('signal')
         detect(when(signal > threshold(${var.memory_usage_count_threshold_critical}), lasting="${var.memory_usage_count_timer}")).publish('CRIT')
         detect(when(signal > threshold(${var.memory_usage_count_threshold_major}), lasting="${var.memory_usage_count_timer}") and when(signal <= ${var.memory_usage_count_threshold_critical})).publish('MAJOR')
     EOF
@@ -110,8 +110,8 @@ resource "signalfx_detector" "http_5xx_errors_count" {
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'false') and filter('primary_aggregation_type', 'true')
-        A = data('Http5xx', extrapolation="zero", filter=base_filter and ${module.filter-tags.filter_custom})${var.http_5xx_errors_count_aggregation_function}
-        B = data('Requests', extrapolation="zero", filter=base_filter and ${module.filter-tags.filter_custom})${var.http_5xx_errors_count_aggregation_function}
+        A = data('Http5xx', extrapolation="zero", filter=base_filter and ${module.filtering.signalflow})${var.http_5xx_errors_count_aggregation_function}
+        B = data('Requests', extrapolation="zero", filter=base_filter and ${module.filtering.signalflow})${var.http_5xx_errors_count_aggregation_function}
         signal = (A/B).scale(100).fill(0).publish('signal')
         detect(when(signal > threshold(${var.http_5xx_errors_count_threshold_critical}), lasting="${var.http_5xx_errors_count_timer}")).publish('CRIT')
         detect(when(signal > threshold(${var.http_5xx_errors_count_threshold_major}), lasting="${var.http_5xx_errors_count_timer}") and when(signal <= ${var.http_5xx_errors_count_threshold_critical})).publish('MAJOR')
@@ -151,8 +151,8 @@ resource "signalfx_detector" "http_4xx_errors_count" {
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'false') and filter('primary_aggregation_type', 'true')
-        A = data('Http4xx', extrapolation="zero", filter=base_filter and ${module.filter-tags.filter_custom})${var.http_4xx_errors_count_aggregation_function}
-        B = data('Requests', extrapolation="zero", filter=base_filter and ${module.filter-tags.filter_custom})${var.http_4xx_errors_count_aggregation_function}
+        A = data('Http4xx', extrapolation="zero", filter=base_filter and ${module.filtering.signalflow})${var.http_4xx_errors_count_aggregation_function}
+        B = data('Requests', extrapolation="zero", filter=base_filter and ${module.filtering.signalflow})${var.http_4xx_errors_count_aggregation_function}
         signal = (A/B).scale(100).fill(0).publish('signal')
         detect(when(signal > threshold(${var.http_4xx_errors_count_threshold_critical}), lasting="${var.http_4xx_errors_count_timer}")).publish('CRIT')
         detect(when(signal > threshold(${var.http_4xx_errors_count_threshold_major}), lasting="${var.http_4xx_errors_count_timer}") and when(signal <= ${var.http_4xx_errors_count_threshold_critical})).publish('MAJOR')
@@ -191,9 +191,9 @@ resource "signalfx_detector" "http_success_status_rate" {
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'false') and filter('primary_aggregation_type', 'true')
-        A = data('Http2xx', extrapolation="zero", filter=base_filter and ${module.filter-tags.filter_custom})${var.http_success_status_rate_aggregation_function}
-        B = data('Http3xx', extrapolation="zero", filter=base_filter and ${module.filter-tags.filter_custom})${var.http_success_status_rate_aggregation_function}
-        C = data('Requests', extrapolation="zero", filter=base_filter and ${module.filter-tags.filter_custom})${var.http_success_status_rate_aggregation_function}
+        A = data('Http2xx', extrapolation="zero", filter=base_filter and ${module.filtering.signalflow})${var.http_success_status_rate_aggregation_function}
+        B = data('Http3xx', extrapolation="zero", filter=base_filter and ${module.filtering.signalflow})${var.http_success_status_rate_aggregation_function}
+        C = data('Requests', extrapolation="zero", filter=base_filter and ${module.filtering.signalflow})${var.http_success_status_rate_aggregation_function}
         signal = ((A+B)/C).scale(100).fill(100).publish('signal')
         detect(when(signal < threshold(${var.http_success_status_rate_threshold_critical}), lasting="${var.http_success_status_rate_timer}")).publish('CRIT')
         detect(when(signal < threshold(${var.http_success_status_rate_threshold_major}), lasting="${var.http_success_status_rate_timer}") and when(signal >= ${var.http_success_status_rate_threshold_critical})).publish('MAJOR')

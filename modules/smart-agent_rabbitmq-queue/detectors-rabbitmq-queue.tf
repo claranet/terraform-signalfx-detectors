@@ -5,7 +5,7 @@ resource "signalfx_detector" "messages_ready" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('gauge.queue.messages_ready', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom})${var.messages_ready_aggregation_function}${var.messages_ready_transformation_function}.publish('signal')
+    signal = data('gauge.queue.messages_ready', filter=filter('plugin', 'rabbitmq') and ${module.filtering.signalflow})${var.messages_ready_aggregation_function}${var.messages_ready_transformation_function}.publish('signal')
     detect(when(signal > ${var.messages_ready_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.messages_ready_threshold_major}) and when(signal <= ${var.messages_ready_threshold_critical})).publish('MAJOR')
 EOF
@@ -42,7 +42,7 @@ resource "signalfx_detector" "messages_unacknowledged" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('gauge.queue.messages_unacknowledged', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom})${var.messages_unacknowledged_aggregation_function}${var.messages_unacknowledged_transformation_function}.publish('signal')
+    signal = data('gauge.queue.messages_unacknowledged', filter=filter('plugin', 'rabbitmq') and ${module.filtering.signalflow})${var.messages_unacknowledged_aggregation_function}${var.messages_unacknowledged_transformation_function}.publish('signal')
     detect(when(signal > ${var.messages_unacknowledged_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.messages_unacknowledged_threshold_major}) and when(signal <= ${var.messages_unacknowledged_threshold_critical})).publish('MAJOR')
 EOF
@@ -79,8 +79,8 @@ resource "signalfx_detector" "messages_ack_rate" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('counter.queue.message_stats.ack', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom})${var.messages_ack_rate_aggregation_function}.publish('signal')
-    msg = data('gauge.queue.messages', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom})${var.messages_ack_rate_aggregation_function}
+    signal = data('counter.queue.message_stats.ack', filter=filter('plugin', 'rabbitmq') and ${module.filtering.signalflow})${var.messages_ack_rate_aggregation_function}.publish('signal')
+    msg = data('gauge.queue.messages', filter=filter('plugin', 'rabbitmq') and ${module.filtering.signalflow})${var.messages_ack_rate_aggregation_function}
     detect((when((signal >= 0) and (signal <= threshold(${var.messages_ack_rate_threshold_critical}) and (msg > 0)), lasting='${var.messages_ack_rate_lasting_duration_seconds}s', at_least=${var.messages_ack_rate_at_least_percentage}))).publish('CRIT')
     detect((when((signal >= ${var.messages_ack_rate_threshold_critical}) and (signal <= threshold(${var.messages_ack_rate_threshold_major}) and (msg > 0)), lasting='${var.messages_ack_rate_lasting_duration_seconds}s', at_least=${var.messages_ack_rate_at_least_percentage}))).publish('MAJOR')
 EOF
@@ -117,8 +117,8 @@ resource "signalfx_detector" "consumer_use" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('gauge.queue.consumer_use', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom})${var.consumer_use_aggregation_function}.publish('util')
-    msg = data('gauge.queue.messages', filter=filter('plugin', 'rabbitmq') and ${module.filter-tags.filter_custom})${var.consumer_use_aggregation_function}
+    signal = data('gauge.queue.consumer_use', filter=filter('plugin', 'rabbitmq') and ${module.filtering.signalflow})${var.consumer_use_aggregation_function}.publish('util')
+    msg = data('gauge.queue.messages', filter=filter('plugin', 'rabbitmq') and ${module.filtering.signalflow})${var.consumer_use_aggregation_function}
     detect((when((signal < threshold(${var.consumer_use_threshold_critical}) and (msg > 0)), lasting='${var.consumer_use_lasting_duration_seconds}s', at_least=${var.consumer_use_at_least_percentage}))).publish('CRIT')
     detect((when((signal < threshold(${var.consumer_use_threshold_major}) and (msg > 0)), lasting='${var.consumer_use_lasting_duration_seconds}s', at_least=${var.consumer_use_at_least_percentage}))).publish('MAJOR')
 EOF
