@@ -22,14 +22,14 @@ variable "prefixes" {
   default     = []
 }
 
-variable "filter_custom" {
+variable "filtering_custom" {
   description = "Filters as SignalFlow string to either replace or append to default filtering convention which is the only one used if not defined"
   type        = string
   default     = ""
 }
 
-variable "filter_append" {
-  description = "If true, the filter_ will be appended to default filtering convention instead of fully replace it"
+variable "filtering_append" {
+  description = "If true, the `filtering_custom` string will be appended to the default filtering convention instead of fully replace it"
   type        = bool
   default     = false
 }

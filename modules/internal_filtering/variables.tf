@@ -1,17 +1,17 @@
-variable "filter_defaults" {
+variable "filtering_default" {
   description = "Filters as SignalFlow string to enforce the default filtering convention from the template"
   type        = string
   default     = ""
 }
 
-variable "filter_custom" {
+variable "filtering_custom" {
   description = "Filters as SignalFlow string to override the default filtering convention from the user input"
   type        = string
   default     = ""
 }
 
 variable "append_mode" {
-  description = "If true, the filter_custom will be appended to filter_defaults instead of fully replace it"
+  description = "If true, the `filtering_custom` will be appended to `filtering_default` instead of fully replace it"
   type        = bool
   default     = false
 }
