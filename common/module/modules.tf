@@ -1,5 +1,5 @@
 module "filtering" {
-  source = "../../common/internal_filtering"
+  source = "../modules/internal_filtering"
 
   filtering_default = local.filters
   filtering_custom  = var.filtering_custom
