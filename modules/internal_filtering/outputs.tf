@@ -1,5 +1,5 @@
-output "filter_custom" {
-  description = "The full filtering pattern to use in detectors"
-  value       = var.filter_custom == "" ? var.filter_defaults : (var.append_mode ? format("(%s) and (%s)", var.filter_defaults, var.filter_custom) : var.filter_custom)
+output "signalflow" {
+  description = "The full signalflow filtering string to use in detectors"
+  value       = var.filtering_custom == "" ? var.filtering_default : (var.append_mode ? format("(%s) and (%s)", var.filtering_default, var.filtering_custom) : var.filtering_custom)
 }
 
