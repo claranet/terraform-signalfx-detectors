@@ -1,18 +1,18 @@
 variable "filter_defaults" {
-  description = "Filters as SignalFlow string to use when using default filtering convention"
+  description = "Filters as SignalFlow string to enforce the default filtering convention from the template"
   type        = string
   default     = ""
 }
 
-variable "filter_custom_includes" {
-  description = "List of tags to include when custom filtering is used"
-  type        = list(string)
-  default     = []
+variable "filter_custom" {
+  description = "Filters as SignalFlow string to override the default filtering convention from the user input"
+  type        = string
+  default     = ""
 }
 
-variable "filter_custom_excludes" {
-  description = "List of tags to exclude when custom filtering is used"
-  type        = list(string)
-  default     = []
+variable "append_mode" {
+  description = "If true, the custom_filter will be appended to filter_defaults instead of fully replace it"
+  type        = bool
+  default     = false
 }
 
