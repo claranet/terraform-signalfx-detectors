@@ -11,7 +11,7 @@ variable "filter_custom" {
 }
 
 variable "append_mode" {
-  description = "If true, the custom_filter will be appended to filter_defaults instead of fully replace it"
+  description = "If true, the filter_custom will be appended to filter_defaults instead of fully replace it"
   type        = bool
   default     = false
 }
