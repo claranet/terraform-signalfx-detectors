@@ -7,7 +7,7 @@ variable "filtering_default" {
 variable "filtering_custom" {
   description = "Filters as SignalFlow string to override the default filtering convention from the user input"
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "append_mode" {
