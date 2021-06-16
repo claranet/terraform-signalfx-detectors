@@ -25,7 +25,7 @@ variable "prefixes" {
 variable "filtering_custom" {
   description = "Filters as SignalFlow string to either replace or append to default filtering convention which is the only one used if not defined"
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "filtering_append" {
