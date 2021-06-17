@@ -64,7 +64,7 @@ resource "signalfx_detector" "{{ id }}" {
       {%- if type == 'heartbeat' -%}
         {%- for key, signal in signals.items() -%}
           {%- if loop.last %}
-    not_reporting.detector(stream={{ key }}, resource_identifier=None, duration='${var.heartbeat_timeframe}')
+    not_reporting.detector(stream={{ key }}, resource_identifier=None, duration='${var.heartbeat_timeframe}', auto_resolve_after='${local.heartbeat_auto_resolve_after}')
           {%- endif -%}
         {%- endfor -%}
       {%- else %}
