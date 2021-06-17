@@ -1,9 +1,9 @@
 # FILTER TAGS SignalFx
 
-__DEPRECATION WARNING__: this module is kept only for retro compatibility of versions prior to `v1.7.0`.
+__DEPRECATION WARNING__: this module is kept only for retro compatibility of versions prior to `v1.7.0` that referenced it without specifying a tag.
 Since this version, the [../../modules/internal_filtering/](../../modules/internal_filtering/) module
 replaces it and is imported using a relative path source which will ensure each version has its own
-dependency and will avoid undesired breaking change. This module will be dropped in a futur major version.
+dependency and will avoid undesired breaking changes. This module will be dropped in a future major version.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
