@@ -5,8 +5,8 @@ resource "signalfx_detector" "pct_errors" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    A = data('Errors', filter=filter('namespace', 'AWS/Lambda') and filter('stat', 'mean') and filter('Resource', '*') and ${module.filter-tags.filter_custom}, extrapolation='last_value', rollup='average')${var.pct_errors_aggregation_function}${var.pct_errors_transformation_function}
-    B = data('Invocations', filter=filter('namespace', 'AWS/Lambda') and filter('stat', 'mean') and filter('Resource', '*') and ${module.filter-tags.filter_custom}, extrapolation='last_value', rollup='average')${var.pct_errors_aggregation_function}${var.pct_errors_transformation_function}
+    A = data('Errors', filter=filter('namespace', 'AWS/Lambda') and filter('stat', 'mean') and filter('Resource', '*') and ${module.filtering.signalflow}, extrapolation='last_value', rollup='average')${var.pct_errors_aggregation_function}${var.pct_errors_transformation_function}
+    B = data('Invocations', filter=filter('namespace', 'AWS/Lambda') and filter('stat', 'mean') and filter('Resource', '*') and ${module.filtering.signalflow}, extrapolation='last_value', rollup='average')${var.pct_errors_aggregation_function}${var.pct_errors_transformation_function}
     signal = (A/B).scale(100).fill(value=0).publish('signal')
     detect(when(signal > threshold(${var.pct_errors_threshold_critical}), lasting='${var.pct_errors_lasting_duration_seconds}s')).publish('CRIT')
     detect((when(signal > threshold(${var.pct_errors_threshold_major}), lasting='${var.pct_errors_lasting_duration_seconds}s') and when(signal <= ${var.pct_errors_threshold_critical}, lasting='${var.pct_errors_lasting_duration_seconds}s'))).publish('MAJOR')
@@ -44,7 +44,7 @@ resource "signalfx_detector" "throttles" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('Throttles', filter=filter('namespace', 'AWS/Lambda') and filter('stat', 'mean') and filter('Resource', '*') and ${module.filter-tags.filter_custom}, extrapolation='last_value', rollup='average')${var.throttles_aggregation_function}${var.throttles_transformation_function}.publish('signal')
+    signal = data('Throttles', filter=filter('namespace', 'AWS/Lambda') and filter('stat', 'mean') and filter('Resource', '*') and ${module.filtering.signalflow}, extrapolation='last_value', rollup='average')${var.throttles_aggregation_function}${var.throttles_transformation_function}.publish('signal')
     detect(when(signal > threshold(${var.throttles_threshold_critical}))).publish('CRIT')
     detect((when(signal > threshold(${var.throttles_threshold_major})) and when(signal <= ${var.throttles_threshold_critical}))).publish('MAJOR')
 EOF
@@ -81,7 +81,7 @@ resource "signalfx_detector" "invocations" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('Invocations', filter=filter('namespace', 'AWS/Lambda') and filter('stat', 'mean') and filter('Resource', '*') and ${module.filter-tags.filter_custom}, extrapolation='last_value', rollup='average')${var.invocations_aggregation_function}${var.invocations_transformation_function}.publish('signal')
+    signal = data('Invocations', filter=filter('namespace', 'AWS/Lambda') and filter('stat', 'mean') and filter('Resource', '*') and ${module.filtering.signalflow}, extrapolation='last_value', rollup='average')${var.invocations_aggregation_function}${var.invocations_transformation_function}.publish('signal')
     detect(when(signal < threshold(${var.invocations_threshold_major}))).publish('MAJOR')
 EOF
 

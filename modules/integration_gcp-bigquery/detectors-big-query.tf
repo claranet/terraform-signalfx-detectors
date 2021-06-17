@@ -6,7 +6,7 @@ resource "signalfx_detector" "concurrent_queries" {
 
   program_text = <<-EOF
     from signalfx.detectors.aperiodic import conditions
-    signal = data('query/count', ${module.filter-tags.filter_custom})${var.concurrent_queries_aggregation_function}${var.concurrent_queries_transformation_function}.publish('signal')
+    signal = data('query/count', ${module.filtering.signalflow})${var.concurrent_queries_aggregation_function}${var.concurrent_queries_transformation_function}.publish('signal')
     ON_Condition_CRIT = conditions.generic_condition(signal, ${var.concurrent_queries_threshold_critical}, ${var.concurrent_queries_threshold_critical}, 'above', lasting('${var.concurrent_queries_aperiodic_duration}', ${var.concurrent_queries_aperiodic_percentage}), 'observed')
     ON_Condition_MAJOR = conditions.generic_condition(signal, ${var.concurrent_queries_threshold_major}, ${var.concurrent_queries_threshold_critical}, 'within_range', lasting('${var.concurrent_queries_aperiodic_duration}', ${var.concurrent_queries_aperiodic_percentage}), 'observed', strict_2=False)
     detect(ON_Condition_CRIT, off=when(signal is None, '${var.concurrent_queries_clear_duration}')).publish('CRIT')
@@ -47,7 +47,7 @@ resource "signalfx_detector" "execution_time" {
 
   program_text = <<-EOF
     from signalfx.detectors.aperiodic import conditions
-    signal = data('query/execution_times', ${module.filter-tags.filter_custom})${var.execution_time_aggregation_function}${var.execution_time_transformation_function}.publish('signal')
+    signal = data('query/execution_times', ${module.filtering.signalflow})${var.execution_time_aggregation_function}${var.execution_time_transformation_function}.publish('signal')
     ON_Condition_CRIT = conditions.generic_condition(signal, ${var.execution_time_threshold_critical}, ${var.execution_time_threshold_critical}, 'above', lasting('${var.execution_time_aperiodic_duration}', ${var.execution_time_aperiodic_percentage}), 'observed')
     ON_Condition_MAJOR = conditions.generic_condition(signal, ${var.execution_time_threshold_major}, ${var.execution_time_threshold_critical}, 'within_range', lasting('${var.execution_time_aperiodic_duration}', ${var.execution_time_aperiodic_percentage}), 'observed', strict_2=False)
     detect(ON_Condition_CRIT, off=when(signal is None, '${var.execution_time_clear_duration}')).publish('CRIT')
@@ -88,7 +88,7 @@ resource "signalfx_detector" "scanned_bytes" {
 
   program_text = <<-EOF
     from signalfx.detectors.aperiodic import conditions
-    signal = data('query/scanned_bytes', ${module.filter-tags.filter_custom})${var.scanned_bytes_aggregation_function}${var.scanned_bytes_transformation_function}.publish('signal')
+    signal = data('query/scanned_bytes', ${module.filtering.signalflow})${var.scanned_bytes_aggregation_function}${var.scanned_bytes_transformation_function}.publish('signal')
     ON_Condition_CRIT = conditions.generic_condition(signal, ${var.scanned_bytes_threshold_critical}, ${var.scanned_bytes_threshold_critical}, 'above', lasting('${var.scanned_bytes_aperiodic_duration}', ${var.scanned_bytes_aperiodic_percentage}), 'observed')
     ON_Condition_MAJOR = conditions.generic_condition(signal, ${var.scanned_bytes_threshold_major}, ${var.scanned_bytes_threshold_critical}, 'within_range', lasting('${var.scanned_bytes_aperiodic_duration}', ${var.scanned_bytes_aperiodic_percentage}), 'observed', strict_2=False)
     detect(ON_Condition_CRIT, off=when(signal is None, '${var.scanned_bytes_clear_duration}')).publish('CRIT')
@@ -129,7 +129,7 @@ resource "signalfx_detector" "scanned_bytes_billed" {
 
   program_text = <<-EOF
     from signalfx.detectors.aperiodic import conditions
-    signal = data('query/scanned_bytes_billed', ${module.filter-tags.filter_custom})${var.scanned_bytes_billed_aggregation_function}${var.scanned_bytes_billed_transformation_function}.publish('signal')
+    signal = data('query/scanned_bytes_billed', ${module.filtering.signalflow})${var.scanned_bytes_billed_aggregation_function}${var.scanned_bytes_billed_transformation_function}.publish('signal')
     ON_Condition_CRIT = conditions.generic_condition(signal, ${var.scanned_bytes_billed_threshold_critical}, ${var.scanned_bytes_billed_threshold_critical}, 'above', lasting('${var.scanned_bytes_billed_aperiodic_duration}', ${var.scanned_bytes_billed_aperiodic_percentage}), 'observed')
     ON_Condition_MAJOR = conditions.generic_condition(signal, ${var.scanned_bytes_billed_threshold_major}, ${var.scanned_bytes_billed_threshold_critical}, 'within_range', lasting('${var.scanned_bytes_billed_aperiodic_duration}', ${var.scanned_bytes_billed_aperiodic_percentage}), 'observed', strict_2=False)
     detect(ON_Condition_CRIT, off=when(signal is None, '${var.scanned_bytes_billed_clear_duration}')).publish('CRIT')
@@ -170,7 +170,7 @@ resource "signalfx_detector" "available_slots" {
 
   program_text = <<-EOF
     from signalfx.detectors.aperiodic import conditions
-    signal = data('slots/total_available', ${module.filter-tags.filter_custom})${var.available_slots_aggregation_function}${var.available_slots_transformation_function}.publish('signal')
+    signal = data('slots/total_available', ${module.filtering.signalflow})${var.available_slots_aggregation_function}${var.available_slots_transformation_function}.publish('signal')
     ON_Condition_CRIT = conditions.generic_condition(signal, ${var.available_slots_threshold_critical}, ${var.available_slots_threshold_critical}, 'above', lasting('${var.available_slots_aperiodic_duration}', ${var.available_slots_aperiodic_percentage}), 'observed')
     ON_Condition_MAJOR = conditions.generic_condition(signal, ${var.available_slots_threshold_major}, ${var.available_slots_threshold_critical}, 'within_range', lasting('${var.available_slots_aperiodic_duration}', ${var.available_slots_aperiodic_percentage}), 'observed', strict_2=False)
     detect(ON_Condition_CRIT, off=when(signal is None, '${var.available_slots_clear_duration}')).publish('CRIT')
@@ -211,7 +211,7 @@ resource "signalfx_detector" "stored_bytes" {
 
   program_text = <<-EOF
     from signalfx.detectors.aperiodic import conditions
-    signal = data('storage/stored_bytes', ${module.filter-tags.filter_custom})${var.stored_bytes_aggregation_function}${var.stored_bytes_transformation_function}.publish('signal')
+    signal = data('storage/stored_bytes', ${module.filtering.signalflow})${var.stored_bytes_aggregation_function}${var.stored_bytes_transformation_function}.publish('signal')
     ON_Condition_CRIT = conditions.generic_condition(signal, ${var.stored_bytes_threshold_critical}, ${var.stored_bytes_threshold_critical}, 'above', lasting('${var.stored_bytes_aperiodic_duration}', ${var.stored_bytes_aperiodic_percentage}), 'observed')
     ON_Condition_MAJOR = conditions.generic_condition(signal, ${var.stored_bytes_threshold_major}, ${var.stored_bytes_threshold_critical}, 'within_range', lasting('${var.stored_bytes_aperiodic_duration}', ${var.stored_bytes_aperiodic_percentage}), 'observed', strict_2=False)
     detect(ON_Condition_CRIT, off=when(signal is None, '${var.stored_bytes_clear_duration}')).publish('CRIT')
@@ -252,7 +252,7 @@ resource "signalfx_detector" "table_count" {
 
   program_text = <<-EOF
     from signalfx.detectors.aperiodic import conditions
-    signal = data('storage/table_count', ${module.filter-tags.filter_custom})${var.table_count_aggregation_function}${var.table_count_transformation_function}.publish('signal')
+    signal = data('storage/table_count', ${module.filtering.signalflow})${var.table_count_aggregation_function}${var.table_count_transformation_function}.publish('signal')
     ON_Condition_CRIT = conditions.generic_condition(signal, ${var.table_count_threshold_critical}, ${var.table_count_threshold_critical}, 'above', lasting('${var.table_count_aperiodic_duration}', ${var.table_count_aperiodic_percentage}), 'observed')
     ON_Condition_MAJOR = conditions.generic_condition(signal, ${var.table_count_threshold_major}, ${var.table_count_threshold_critical}, 'within_range', lasting('${var.table_count_aperiodic_duration}', ${var.table_count_aperiodic_percentage}), 'observed', strict_2=False)
     detect(ON_Condition_CRIT, off=when(signal is None, '${var.table_count_clear_duration}')).publish('CRIT')
@@ -293,7 +293,7 @@ resource "signalfx_detector" "uploaded_bytes" {
 
   program_text = <<-EOF
     from signalfx.detectors.aperiodic import conditions
-    signal = data('storage/uploaded_bytes', ${module.filter-tags.filter_custom})${var.uploaded_bytes_aggregation_function}${var.uploaded_bytes_transformation_function}.publish('signal')
+    signal = data('storage/uploaded_bytes', ${module.filtering.signalflow})${var.uploaded_bytes_aggregation_function}${var.uploaded_bytes_transformation_function}.publish('signal')
     ON_Condition_CRIT = conditions.generic_condition(signal, ${var.uploaded_bytes_threshold_critical}, ${var.uploaded_bytes_threshold_critical}, 'above', lasting('${var.uploaded_bytes_aperiodic_duration}', ${var.uploaded_bytes_aperiodic_percentage}), 'observed')
     ON_Condition_MAJOR = conditions.generic_condition(signal, ${var.uploaded_bytes_threshold_major}, ${var.uploaded_bytes_threshold_critical}, 'within_range', lasting('${var.uploaded_bytes_aperiodic_duration}', ${var.uploaded_bytes_aperiodic_percentage}), 'observed', strict_2=False)
     detect(ON_Condition_CRIT, off=when(signal is None, '${var.uploaded_bytes_clear_duration}')).publish('CRIT')
@@ -334,7 +334,7 @@ resource "signalfx_detector" "uploaded_bytes_billed" {
 
   program_text = <<-EOF
     from signalfx.detectors.aperiodic import conditions
-    signal = data('storage/uploaded_bytes_billed', ${module.filter-tags.filter_custom})${var.uploaded_bytes_billed_aggregation_function}${var.uploaded_bytes_billed_transformation_function}.publish('signal')
+    signal = data('storage/uploaded_bytes_billed', ${module.filtering.signalflow})${var.uploaded_bytes_billed_aggregation_function}${var.uploaded_bytes_billed_transformation_function}.publish('signal')
     ON_Condition_CRIT = conditions.generic_condition(signal, ${var.uploaded_bytes_billed_threshold_critical}, ${var.uploaded_bytes_billed_threshold_critical}, 'above', lasting('${var.uploaded_bytes_billed_aperiodic_duration}', ${var.uploaded_bytes_billed_aperiodic_percentage}), 'observed')
     ON_Condition_MAJOR = conditions.generic_condition(signal, ${var.uploaded_bytes_billed_threshold_major}, ${var.uploaded_bytes_billed_threshold_critical}, 'within_range', lasting('${var.uploaded_bytes_billed_aperiodic_duration}', ${var.uploaded_bytes_billed_aperiodic_percentage}), 'observed', strict_2=False)
     detect(ON_Condition_CRIT, off=when(signal is None, '${var.uploaded_bytes_billed_clear_duration}')).publish('CRIT')

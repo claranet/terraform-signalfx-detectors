@@ -1,8 +1,8 @@
-module "filter-tags" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//common/filter-tags"
+module "filtering" {
+  source = "../internal_filtering"
 
-  filter_defaults        = coalesce(var.filter_defaults, local.filters)
-  filter_custom_includes = var.filter_custom_includes
-  filter_custom_excludes = var.filter_custom_excludes
+  filtering_default = local.filters
+  filtering_custom  = var.filtering_custom
+  append_mode       = var.filtering_append
 }
 

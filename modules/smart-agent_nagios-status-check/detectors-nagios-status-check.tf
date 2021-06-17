@@ -5,7 +5,7 @@ resource "signalfx_detector" "status_check" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-        signal = data('nagios.state', filter=${module.filter-tags.filter_custom})${var.status_check_aggregation_function}${var.status_check_transformation_function}.publish('signal')
+        signal = data('nagios.state', filter=${module.filtering.signalflow})${var.status_check_aggregation_function}${var.status_check_transformation_function}.publish('signal')
         detect(when(signal == 1, lasting='${var.status_check_lasting_duration_seconds}s')).publish('WARN')
         detect(when(signal == 2, lasting='${var.status_check_lasting_duration_seconds}s')).publish('CRIT')
         detect(when(signal == 3, lasting='${var.status_check_lasting_duration_seconds}s')).publish('MAJOR')

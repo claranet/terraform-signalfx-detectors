@@ -5,7 +5,7 @@ resource "signalfx_detector" "processes" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-        signal = data('ps_count.processes', filter=${module.filter-tags.filter_custom})${var.processes_aggregation_function}${var.processes_transformation_function}.publish('signal')
+        signal = data('ps_count.processes', filter=${module.filtering.signalflow})${var.processes_aggregation_function}${var.processes_transformation_function}.publish('signal')
         detect(when(signal < 1)).publish('CRIT')
         detect(when(signal < ${var.processes_threshold_major}) and when (signal >= 1)).publish('MAJOR')
 EOF

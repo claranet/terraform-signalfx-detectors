@@ -23,5 +23,8 @@ for module in ${MODULES}/${FILTER}/; do
     if ! [ -d "${module}" ]; then
         continue
     fi
+    if [[ $(basename ${module}) == internal_* ]]; then
+        continue
+    fi
     $SCRIPT ${module%"/"} $@
 done

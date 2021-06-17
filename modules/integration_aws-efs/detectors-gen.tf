@@ -11,7 +11,7 @@ resource "signalfx_detector" "used_space" {
 
   program_text = <<-EOF
     base_filtering = filter('namespace', 'AWS/EFS')
-    used_space = data('StorageBytes', filter=base_filtering and filter('StorageClass', 'Total') and filter('stat', 'mean') and ${module.filter-tags.filter_custom})${var.used_space_aggregation_function}${var.used_space_transformation_function}
+    used_space = data('StorageBytes', filter=base_filtering and filter('StorageClass', 'Total') and filter('stat', 'mean') and ${module.filtering.signalflow})${var.used_space_aggregation_function}${var.used_space_transformation_function}
     signal = used_space.scale(0.000000000931323).publish('signal')
     detect(when(signal > ${var.used_space_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.used_space_threshold_major}) and when(signal <= ${var.used_space_threshold_critical})).publish('MAJOR')
@@ -55,7 +55,7 @@ resource "signalfx_detector" "io_limit" {
 
   program_text = <<-EOF
     base_filtering = filter('namespace', 'AWS/EFS')
-    signal = data('PercentIOLimit', filter=base_filtering and filter('stat', 'mean') and ${module.filter-tags.filter_custom})${var.io_limit_aggregation_function}${var.io_limit_transformation_function}.publish('signal')
+    signal = data('PercentIOLimit', filter=base_filtering and filter('stat', 'mean') and ${module.filtering.signalflow})${var.io_limit_aggregation_function}${var.io_limit_transformation_function}.publish('signal')
     detect(when(signal > ${var.io_limit_threshold_major})).publish('MAJOR')
     detect(when(signal > ${var.io_limit_threshold_minor}) and when(signal <= ${var.io_limit_threshold_major})).publish('MINOR')
 EOF
@@ -98,8 +98,8 @@ resource "signalfx_detector" "read_throughput" {
 
   program_text = <<-EOF
     base_filtering = filter('namespace', 'AWS/EFS')
-    read = data('DataReadIOBytes', filter=base_filtering and filter('stat', 'sum') and ${module.filter-tags.filter_custom})${var.read_throughput_aggregation_function}${var.read_throughput_transformation_function}
-    total = data('TotalIOBytes', filter=base_filtering and filter('stat', 'sum') and ${module.filter-tags.filter_custom})${var.read_throughput_aggregation_function}${var.read_throughput_transformation_function}
+    read = data('DataReadIOBytes', filter=base_filtering and filter('stat', 'sum') and ${module.filtering.signalflow})${var.read_throughput_aggregation_function}${var.read_throughput_transformation_function}
+    total = data('TotalIOBytes', filter=base_filtering and filter('stat', 'sum') and ${module.filtering.signalflow})${var.read_throughput_aggregation_function}${var.read_throughput_transformation_function}
     signal = (read/total).scale(100).publish('signal')
     detect(when(signal > ${var.read_throughput_threshold_minor})).publish('MINOR')
     detect(when(signal > ${var.read_throughput_threshold_warning}) and when(signal <= ${var.read_throughput_threshold_minor})).publish('WARN')
@@ -143,8 +143,8 @@ resource "signalfx_detector" "write_throughput" {
 
   program_text = <<-EOF
     base_filtering = filter('namespace', 'AWS/EFS')
-    write = data('DataWriteIOBytes', filter=base_filtering and filter('stat', 'sum') and ${module.filter-tags.filter_custom})${var.write_throughput_aggregation_function}${var.write_throughput_transformation_function}
-    total = data('TotalIOBytes', filter=base_filtering and filter('stat', 'sum') and ${module.filter-tags.filter_custom})${var.write_throughput_aggregation_function}${var.write_throughput_transformation_function}
+    write = data('DataWriteIOBytes', filter=base_filtering and filter('stat', 'sum') and ${module.filtering.signalflow})${var.write_throughput_aggregation_function}${var.write_throughput_transformation_function}
+    total = data('TotalIOBytes', filter=base_filtering and filter('stat', 'sum') and ${module.filtering.signalflow})${var.write_throughput_aggregation_function}${var.write_throughput_transformation_function}
     signal = (write/total).scale(100).publish('signal')
     detect(when(signal > ${var.write_throughput_threshold_minor})).publish('MINOR')
     detect(when(signal > ${var.write_throughput_threshold_warning}) and when(signal <= ${var.write_throughput_threshold_minor})).publish('WARN')
@@ -188,8 +188,8 @@ resource "signalfx_detector" "percent_of_permitted_throughput" {
 
   program_text = <<-EOF
     base_filtering = filter('namespace', 'AWS/EFS')
-    metered = data('MeteredIOBytes', filter=base_filtering and filter('stat', 'sum') and ${module.filter-tags.filter_custom})${var.percent_of_permitted_throughput_aggregation_function}${var.percent_of_permitted_throughput_transformation_function}
-    permitted = data('PermittedThroughput', filter=base_filtering and filter('stat', 'sum') and ${module.filter-tags.filter_custom})${var.percent_of_permitted_throughput_aggregation_function}${var.percent_of_permitted_throughput_transformation_function}
+    metered = data('MeteredIOBytes', filter=base_filtering and filter('stat', 'sum') and ${module.filtering.signalflow})${var.percent_of_permitted_throughput_aggregation_function}${var.percent_of_permitted_throughput_transformation_function}
+    permitted = data('PermittedThroughput', filter=base_filtering and filter('stat', 'sum') and ${module.filtering.signalflow})${var.percent_of_permitted_throughput_aggregation_function}${var.percent_of_permitted_throughput_transformation_function}
     signal = (metered/permitted.scale(1024)).scale(100).publish('signal')
     detect(when(signal > ${var.percent_of_permitted_throughput_threshold_major})).publish('MAJOR')
     detect(when(signal > ${var.percent_of_permitted_throughput_threshold_minor}) and when(signal <= ${var.percent_of_permitted_throughput_threshold_major})).publish('MINOR')
@@ -233,7 +233,7 @@ resource "signalfx_detector" "burst_credit_balance" {
 
   program_text = <<-EOF
     base_filtering = filter('namespace', 'AWS/EFS')
-    signal = data('BurstCreditBalance', filter=base_filtering and filter('stat', 'lower') and ${module.filter-tags.filter_custom})${var.burst_credit_balance_aggregation_function}${var.burst_credit_balance_transformation_function}.publish('signal')
+    signal = data('BurstCreditBalance', filter=base_filtering and filter('stat', 'lower') and ${module.filtering.signalflow})${var.burst_credit_balance_aggregation_function}${var.burst_credit_balance_transformation_function}.publish('signal')
     detect(when(signal < ${var.burst_credit_balance_threshold_major})).publish('MAJOR')
 EOF
 

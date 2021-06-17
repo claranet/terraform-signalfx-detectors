@@ -8,7 +8,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    signal = data('mysql_octets.rx', filter=filter('plugin', 'mysql') and ${local.not_running_vm_filters} and ${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')
+    signal = data('mysql_octets.rx', filter=filter('plugin', 'mysql') and ${local.not_running_vm_filters} and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}').publish('CRIT')
 EOF
 
@@ -32,8 +32,8 @@ resource "signalfx_detector" "mysql_connections" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    A = data('mysql_threads_connected', filter=${module.filter-tags.filter_custom}, rollup='average')${var.connections_aggregation_function}${var.connections_transformation_function}
-    B = data('mysql_max_connections', filter=${module.filter-tags.filter_custom}, rollup='average')${var.connections_aggregation_function}${var.connections_transformation_function}
+    A = data('mysql_threads_connected', filter=${module.filtering.signalflow}, rollup='average')${var.connections_aggregation_function}${var.connections_transformation_function}
+    B = data('mysql_max_connections', filter=${module.filtering.signalflow}, rollup='average')${var.connections_aggregation_function}${var.connections_transformation_function}
     signal = (A/B).scale(100).publish('signal')
     detect(when(signal > ${var.connections_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.connections_threshold_major}) and when(signal <= ${var.connections_threshold_critical})).publish('MAJOR')
@@ -71,8 +71,8 @@ resource "signalfx_detector" "mysql_slow" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    A = data('mysql_slow_queries', filter=(not filter('plugin', 'mysql')) and ${module.filter-tags.filter_custom}, rollup='delta')${var.slow_aggregation_function}${var.slow_transformation_function}
-    B = data('mysql_queries', filter=(not filter('plugin', 'mysql')) and ${module.filter-tags.filter_custom}, rollup='delta')${var.slow_aggregation_function}${var.slow_transformation_function}
+    A = data('mysql_slow_queries', filter=(not filter('plugin', 'mysql')) and ${module.filtering.signalflow}, rollup='delta')${var.slow_aggregation_function}${var.slow_transformation_function}
+    B = data('mysql_queries', filter=(not filter('plugin', 'mysql')) and ${module.filtering.signalflow}, rollup='delta')${var.slow_aggregation_function}${var.slow_transformation_function}
     signal = (A/B).scale(100).publish('signal')
     detect(when(signal > ${var.slow_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.slow_threshold_major}) and when(signal <= ${var.slow_threshold_critical})).publish('MAJOR')
@@ -110,8 +110,8 @@ resource "signalfx_detector" "mysql_pool_efficiency" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    A = data('mysql_bpool_counters.reads', filter=filter('plugin', 'mysql') and ${module.filter-tags.filter_custom}, rollup='delta')${var.pool_efficiency_aggregation_function}${var.pool_efficiency_transformation_function}
-    B = data('mysql_bpool_counters.read_requests', filter=filter('plugin', 'mysql') and ${module.filter-tags.filter_custom}, rollup='delta')${var.pool_efficiency_aggregation_function}${var.pool_efficiency_transformation_function}
+    A = data('mysql_bpool_counters.reads', filter=filter('plugin', 'mysql') and ${module.filtering.signalflow}, rollup='delta')${var.pool_efficiency_aggregation_function}${var.pool_efficiency_transformation_function}
+    B = data('mysql_bpool_counters.read_requests', filter=filter('plugin', 'mysql') and ${module.filtering.signalflow}, rollup='delta')${var.pool_efficiency_aggregation_function}${var.pool_efficiency_transformation_function}
     signal = (A/B).fill(0).scale(100).publish('signal')
     detect(when(signal > ${var.pool_efficiency_threshold_minor})).publish('MINOR')
     detect(when(signal > ${var.pool_efficiency_threshold_warning}) and when(signal <= ${var.pool_efficiency_threshold_minor})).publish('WARN')
@@ -149,8 +149,8 @@ resource "signalfx_detector" "mysql_pool_utilization" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    A = data('mysql_bpool_pages.free', filter=filter('plugin', 'mysql') and ${module.filter-tags.filter_custom}, rollup='average')${var.pool_utilization_aggregation_function}${var.pool_utilization_transformation_function}
-    B = data('mysql_bpool_pages.total', filter=filter('plugin', 'mysql') and ${module.filter-tags.filter_custom}, rollup='average')${var.pool_utilization_aggregation_function}${var.pool_utilization_transformation_function}
+    A = data('mysql_bpool_pages.free', filter=filter('plugin', 'mysql') and ${module.filtering.signalflow}, rollup='average')${var.pool_utilization_aggregation_function}${var.pool_utilization_transformation_function}
+    B = data('mysql_bpool_pages.total', filter=filter('plugin', 'mysql') and ${module.filtering.signalflow}, rollup='average')${var.pool_utilization_aggregation_function}${var.pool_utilization_transformation_function}
     signal = ((B-A)/B).scale(100).publish('signal')
     detect(when(signal > ${var.pool_utilization_threshold_minor})).publish('MINOR')
     detect(when(signal > ${var.pool_utilization_threshold_warning}) and when(signal <= ${var.pool_utilization_threshold_minor})).publish('WARN')
@@ -189,7 +189,7 @@ resource "signalfx_detector" "mysql_threads_anomaly" {
 
   program_text = <<-EOF
     from signalfx.detectors.against_periods import against_periods
-    signal = data('threads.running', filter=filter('plugin', 'mysql') and ${module.filter-tags.filter_custom}, rollup='average')${var.threads_anomaly_aggregation_function}${var.threads_anomaly_transformation_function}.publish('signal')
+    signal = data('threads.running', filter=filter('plugin', 'mysql') and ${module.filtering.signalflow}, rollup='average')${var.threads_anomaly_aggregation_function}${var.threads_anomaly_transformation_function}.publish('signal')
     against_periods.detector_growth_rate(signal, window_to_compare=duration('${var.threads_anomaly_window_to_compare}'), space_between_windows=duration('${var.threads_anomaly_space_between_windows}'), num_windows=${var.threads_anomaly_num_windows}, fire_growth_rate_threshold=${var.threads_anomaly_fire_growth_rate_threshold}, clear_growth_rate_threshold=${var.threads_anomaly_clear_growth_rate_threshold}, discard_historical_outliers=True, orientation='${var.threads_anomaly_orientation}').publish('CRIT')
 EOF
 
@@ -214,7 +214,7 @@ resource "signalfx_detector" "mysql_questions_anomaly" {
 
   program_text = <<-EOF
     from signalfx.detectors.against_periods import against_periods
-    signal = data('mysql_commands.*', filter=filter('plugin', 'mysql') and ${module.filter-tags.filter_custom}, rollup='delta')${var.questions_anomaly_aggregation_function}${var.questions_anomaly_transformation_function}.publish('signal')
+    signal = data('mysql_commands.*', filter=filter('plugin', 'mysql') and ${module.filtering.signalflow}, rollup='delta')${var.questions_anomaly_aggregation_function}${var.questions_anomaly_transformation_function}.publish('signal')
     against_periods.detector_growth_rate(signal, window_to_compare=duration('${var.questions_anomaly_window_to_compare}'), space_between_windows=duration('${var.questions_anomaly_space_between_windows}'), num_windows=${var.questions_anomaly_num_windows}, fire_growth_rate_threshold=${var.questions_anomaly_fire_growth_rate_threshold}, clear_growth_rate_threshold=${var.questions_anomaly_clear_growth_rate_threshold}, discard_historical_outliers=True, orientation='${var.questions_anomaly_orientation}').publish('CRIT')
 EOF
 
@@ -238,7 +238,7 @@ resource "signalfx_detector" "mysql_replication_lag" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('mysql_seconds_behind_master', filter=${module.filter-tags.filter_custom}, rollup='average')${var.replication_lag_aggregation_function}${var.replication_lag_transformation_function}.publish('signal')
+    signal = data('mysql_seconds_behind_master', filter=${module.filtering.signalflow}, rollup='average')${var.replication_lag_aggregation_function}${var.replication_lag_transformation_function}.publish('signal')
     detect(when(signal > ${var.replication_lag_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.replication_lag_threshold_major}) and when(signal <= ${var.replication_lag_threshold_critical})).publish('MAJOR')
   EOF
@@ -275,7 +275,7 @@ resource "signalfx_detector" "mysql_slave_sql_status" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('mysql_slave_sql_running', filter=${module.filter-tags.filter_custom}, rollup='average')${var.slave_sql_status_aggregation_function}${var.slave_sql_status_transformation_function}.publish('signal')
+    signal = data('mysql_slave_sql_running', filter=${module.filtering.signalflow}, rollup='average')${var.slave_sql_status_aggregation_function}${var.slave_sql_status_transformation_function}.publish('signal')
     detect(when(signal < 1)).publish('CRIT')
 EOF
 
@@ -299,7 +299,7 @@ resource "signalfx_detector" "mysql_slave_io_status" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('mysql_slave_io_running', filter=${module.filter-tags.filter_custom}, rollup='average')${var.slave_io_status_aggregation_function}${var.slave_io_status_transformation_function}.publish('signal')
+    signal = data('mysql_slave_io_running', filter=${module.filtering.signalflow}, rollup='average')${var.slave_io_status_aggregation_function}${var.slave_io_status_transformation_function}.publish('signal')
     detect(when(signal < 1)).publish('CRIT')
 EOF
 

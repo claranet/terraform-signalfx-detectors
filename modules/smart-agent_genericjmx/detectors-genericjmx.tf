@@ -5,8 +5,8 @@ resource "signalfx_detector" "jmx_memory_heap" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    A = data('jmx_memory.used', filter=filter('plugin_instance', 'memory-heap') and ${module.filter-tags.filter_custom})${var.memory_heap_aggregation_function}${var.memory_heap_transformation_function}
-    B = data('jmx_memory.max', filter=filter('plugin_instance', 'memory-heap') and ${module.filter-tags.filter_custom})${var.memory_heap_aggregation_function}${var.memory_heap_transformation_function}
+    A = data('jmx_memory.used', filter=filter('plugin_instance', 'memory-heap') and ${module.filtering.signalflow})${var.memory_heap_aggregation_function}${var.memory_heap_transformation_function}
+    B = data('jmx_memory.max', filter=filter('plugin_instance', 'memory-heap') and ${module.filtering.signalflow})${var.memory_heap_aggregation_function}${var.memory_heap_transformation_function}
     signal = (A/B).scale(100).publish('signal')
     detect(when(signal > ${var.memory_heap_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.memory_heap_threshold_major}) and (signal < ${var.memory_heap_threshold_critical})).publish('MAJOR')
@@ -43,8 +43,8 @@ resource "signalfx_detector" "jmx_old_gen" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    A = data('jmx_memory.used', filter=filter('plugin_instance', 'memory_pool-G1 Old Gen') and ${module.filter-tags.filter_custom})${var.gc_old_gen_aggregation_function}${var.gc_old_gen_transformation_function}
-    B = data('jmx_memory.max', filter=filter('plugin_instance', 'memory_pool-G1 Old Gen') and ${module.filter-tags.filter_custom})${var.gc_old_gen_aggregation_function}${var.gc_old_gen_transformation_function}
+    A = data('jmx_memory.used', filter=filter('plugin_instance', 'memory_pool-G1 Old Gen') and ${module.filtering.signalflow})${var.gc_old_gen_aggregation_function}${var.gc_old_gen_transformation_function}
+    B = data('jmx_memory.max', filter=filter('plugin_instance', 'memory_pool-G1 Old Gen') and ${module.filtering.signalflow})${var.gc_old_gen_aggregation_function}${var.gc_old_gen_transformation_function}
     signal = (A/B).scale(100).publish('signal')
     detect(when(signal > ${var.gc_old_gen_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.gc_old_gen_threshold_major}) and (signal < ${var.gc_old_gen_threshold_critical})).publish('MAJOR')

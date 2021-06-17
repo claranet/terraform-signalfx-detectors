@@ -22,22 +22,16 @@ variable "prefixes" {
   default     = []
 }
 
-variable "filter_defaults" {
-  description = "Filters as SignalFlow string to use when using default filtering convention"
+variable "filtering_custom" {
+  description = "Filters as SignalFlow string to either replace or append to default filtering convention which is the only one used if not defined"
   type        = string
-  default     = ""
+  default     = null
 }
 
-variable "filter_custom_includes" {
-  description = "List of tags to include when custom filtering is used"
-  type        = list(string)
-  default     = []
-}
-
-variable "filter_custom_excludes" {
-  description = "List of tags to exclude when custom filtering is used"
-  type        = list(string)
-  default     = []
+variable "filtering_append" {
+  description = "If true, the `filtering_custom` string will be appended to the default filtering convention instead of fully replace it"
+  type        = bool
+  default     = false
 }
 
 variable "detectors_disabled" {

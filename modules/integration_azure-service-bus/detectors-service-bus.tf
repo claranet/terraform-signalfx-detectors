@@ -7,7 +7,7 @@ resource "signalfx_detector" "heartbeat" {
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting
         base_filter = filter('resource_type', 'Microsoft.ServiceBus/namespaces') and filter('primary_aggregation_type', 'true')
-        signal = data('Size', filter=base_filter and ${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')
+        signal = data('Size', filter=base_filter and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
         not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}').publish('CRIT')
     EOF
 
@@ -31,7 +31,7 @@ resource "signalfx_detector" "active_connections" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-        base_filter = filter('resource_type', 'Microsoft.ServiceBus/namespaces') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}
+        base_filter = filter('resource_type', 'Microsoft.ServiceBus/namespaces') and filter('primary_aggregation_type', 'true') and ${module.filtering.signalflow}
         signal = data('ActiveConnections', filter=base_filter)${var.active_connections_aggregation_function}.publish('signal')
         detect(when(signal < threshold(${var.active_connections_threshold_critical}), lasting="${var.active_connections_timer}")).publish('CRIT')
     EOF
@@ -57,7 +57,7 @@ resource "signalfx_detector" "user_errors" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-        base_filter = filter('resource_type', 'Microsoft.ServiceBus/namespaces') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}
+        base_filter = filter('resource_type', 'Microsoft.ServiceBus/namespaces') and filter('primary_aggregation_type', 'true') and ${module.filtering.signalflow}
         A = data('UserErrors', extrapolation='zero', filter=base_filter)${var.user_errors_aggregation_function}
         B = data('IncomingRequests', extrapolation='zero', filter=base_filter)${var.user_errors_aggregation_function}
         signal = (A/B).scale(100).fill(0).publish('signal')
@@ -97,7 +97,7 @@ resource "signalfx_detector" "server_errors" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-        base_filter = filter('resource_type', 'Microsoft.ServiceBus/namespaces') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}
+        base_filter = filter('resource_type', 'Microsoft.ServiceBus/namespaces') and filter('primary_aggregation_type', 'true') and ${module.filtering.signalflow}
         A = data('ServerErrors', extrapolation='zero', filter=base_filter)${var.server_errors_aggregation_function}
         B = data('IncomingRequests', extrapolation='zero', filter=base_filter)${var.server_errors_aggregation_function}
         signal = (A/B).scale(100).fill(0).publish('signal')
@@ -137,9 +137,9 @@ resource "signalfx_detector" "throttled_requests" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    base_filter = filter('resource_type', 'Microsoft.ServiceBus/namespaces') and filter('primary_aggregation_type', 'true') and ${module.filter-tags.filter_custom}
-    A = data('ThrottledRequests', filter=base_filter and ${module.filter-tags.filter_custom})${var.throttled_requests_aggregation_function}${var.throttled_requests_transformation_function}
-    B = data('IncomingRequests', filter=base_filter and ${module.filter-tags.filter_custom})${var.throttled_requests_aggregation_function}${var.throttled_requests_transformation_function}
+    base_filter = filter('resource_type', 'Microsoft.ServiceBus/namespaces') and filter('primary_aggregation_type', 'true') and ${module.filtering.signalflow}
+    A = data('ThrottledRequests', filter=base_filter and ${module.filtering.signalflow})${var.throttled_requests_aggregation_function}${var.throttled_requests_transformation_function}
+    B = data('IncomingRequests', filter=base_filter and ${module.filtering.signalflow})${var.throttled_requests_aggregation_function}${var.throttled_requests_transformation_function}
     signal = (A/B).scale(100).fill(0).publish('signal')
     detect(when(signal > ${var.throttled_requests_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.throttled_requests_threshold_major}) and when(signal <= ${var.throttled_requests_threshold_critical})).publish('MAJOR')

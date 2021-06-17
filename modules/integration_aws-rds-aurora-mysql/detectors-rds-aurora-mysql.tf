@@ -5,7 +5,7 @@ resource "signalfx_detector" "aurora_mysql_replica_lag" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('AuroraReplicaLag', filter=filter('namespace', 'AWS/RDS') and filter('stat', 'mean') and filter('DBInstanceIdentifier', '*') and ${module.filter-tags.filter_custom})${var.aurora_mysql_replica_lag_aggregation_function}${var.aurora_mysql_replica_lag_transformation_function}.publish('signal')
+    signal = data('AuroraReplicaLag', filter=filter('namespace', 'AWS/RDS') and filter('stat', 'mean') and filter('DBInstanceIdentifier', '*') and ${module.filtering.signalflow})${var.aurora_mysql_replica_lag_aggregation_function}${var.aurora_mysql_replica_lag_transformation_function}.publish('signal')
     detect(when(signal > ${var.aurora_mysql_replica_lag_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.aurora_mysql_replica_lag_threshold_major}) and when(signal <= ${var.aurora_mysql_replica_lag_threshold_critical})).publish('MAJOR')
 EOF

@@ -6,7 +6,7 @@ resource "signalfx_detector" "count" {
 
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.Storage/storageAccounts') and filter('primary_aggregation_type', 'true')
-    capacity = data('UsedCapacity', filter=base_filtering and ${module.filter-tags.filter_custom})${var.count_aggregation_function}${var.count_transformation_function}
+    capacity = data('UsedCapacity', filter=base_filtering and ${module.filtering.signalflow})${var.count_aggregation_function}${var.count_transformation_function}
     signal = capacity.fill(None, duration='1d').publish('signal')
     detect(when(signal > ${var.count_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.count_threshold_major}) and when(signal <= ${var.count_threshold_critical})).publish('MAJOR')
@@ -50,7 +50,7 @@ resource "signalfx_detector" "capacity" {
 
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.Storage/storageAccounts') and filter('primary_aggregation_type', 'true')
-    capacity = data('UsedCapacity', filter=base_filtering and ${module.filter-tags.filter_custom})${var.capacity_aggregation_function}${var.capacity_transformation_function}
+    capacity = data('UsedCapacity', filter=base_filtering and ${module.filtering.signalflow})${var.capacity_aggregation_function}${var.capacity_transformation_function}
     signal = capacity.scale(0.0000000000000008881784197001252).publish('signal')
     detect(when(signal > ${var.capacity_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.capacity_threshold_major}) and when(signal <= ${var.capacity_threshold_critical})).publish('MAJOR')
@@ -94,7 +94,7 @@ resource "signalfx_detector" "ingress" {
 
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.Storage/storageAccounts') and filter('primary_aggregation_type', 'true')
-    ingress = data('Ingress', filter=base_filtering and ${module.filter-tags.filter_custom}, rollup='rate')${var.ingress_aggregation_function}${var.ingress_transformation_function}
+    ingress = data('Ingress', filter=base_filtering and ${module.filtering.signalflow}, rollup='rate')${var.ingress_aggregation_function}${var.ingress_transformation_function}
     signal = ingress.scale(0.000000008).publish('signal')
     detect(when(signal > ${var.ingress_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.ingress_threshold_major}) and when(signal <= ${var.ingress_threshold_critical})).publish('MAJOR')
@@ -138,7 +138,7 @@ resource "signalfx_detector" "egress" {
 
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.Storage/storageAccounts') and filter('primary_aggregation_type', 'true')
-    egress = data('Egress', filter=base_filtering and ${module.filter-tags.filter_custom}, rollup='rate')${var.egress_aggregation_function}${var.egress_transformation_function}
+    egress = data('Egress', filter=base_filtering and ${module.filtering.signalflow}, rollup='rate')${var.egress_aggregation_function}${var.egress_transformation_function}
     signal = egress.scale(0.000000008).publish('signal')
     detect(when(signal > ${var.egress_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.egress_threshold_major}) and when(signal <= ${var.egress_threshold_critical})).publish('MAJOR')
@@ -177,7 +177,7 @@ resource "signalfx_detector" "requests_rate" {
 
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.Storage/storageAccounts') and filter('primary_aggregation_type', 'true')
-    signal = data('Transactions', filter=base_filtering and ${module.filter-tags.filter_custom}, rollup='rate')${var.requests_rate_aggregation_function}${var.requests_rate_transformation_function}.publish('signal')
+    signal = data('Transactions', filter=base_filtering and ${module.filtering.signalflow}, rollup='rate')${var.requests_rate_aggregation_function}${var.requests_rate_transformation_function}.publish('signal')
     detect(when(signal > ${var.requests_rate_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.requests_rate_threshold_major}) and when(signal <= ${var.requests_rate_threshold_critical})).publish('MAJOR')
 EOF

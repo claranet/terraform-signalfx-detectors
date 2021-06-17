@@ -5,7 +5,7 @@ resource "signalfx_detector" "node_status" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('cassandra.status', filter=${module.filter-tags.filter_custom})${var.node_status_aggregation_function}${var.node_status_transformation_function}.publish('signal')
+    signal = data('cassandra.status', filter=${module.filtering.signalflow})${var.node_status_aggregation_function}${var.node_status_transformation_function}.publish('signal')
     detect(when(signal == ${var.node_status_threshold_critical})).publish('CRIT')
     detect(when(signal < ${var.node_status_threshold_minor})).publish('MINOR')
 EOF
@@ -42,7 +42,7 @@ resource "signalfx_detector" "node_state" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('cassandra.state', filter=${module.filter-tags.filter_custom})${var.node_state_aggregation_function}${var.node_state_transformation_function}.publish('signal')
+    signal = data('cassandra.state', filter=${module.filtering.signalflow})${var.node_state_aggregation_function}${var.node_state_transformation_function}.publish('signal')
     detect(when(signal > ${var.node_state_threshold_critical})).publish('CRIT')
 EOF
 

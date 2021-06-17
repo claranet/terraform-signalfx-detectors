@@ -7,7 +7,7 @@ resource "signalfx_detector" "heartbeat" {
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting
         base_filter = filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'true') and filter('primary_aggregation_type', 'true')
-        signal = data('AppConnections', filter=base_filter and ${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')
+        signal = data('AppConnections', filter=base_filter and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
         not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}').publish('CRIT')
     EOF
 
@@ -32,8 +32,8 @@ resource "signalfx_detector" "http_5xx_errors_rate" {
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'true') and filter('primary_aggregation_type', 'true')
-        A = data('Http5xx', extrapolation="zero", filter=base_filter and ${module.filter-tags.filter_custom})${var.http_5xx_errors_rate_aggregation_function}
-        B = data('FunctionExecutionCount', extrapolation="zero", filter=base_filter and ${module.filter-tags.filter_custom})${var.http_5xx_errors_rate_aggregation_function}
+        A = data('Http5xx', extrapolation="zero", filter=base_filter and ${module.filtering.signalflow})${var.http_5xx_errors_rate_aggregation_function}
+        B = data('FunctionExecutionCount', extrapolation="zero", filter=base_filter and ${module.filtering.signalflow})${var.http_5xx_errors_rate_aggregation_function}
         signal = (A/B).scale(100).fill(0).publish('signal')
         detect(when(signal > threshold(${var.http_5xx_errors_rate_threshold_critical}), lasting="${var.http_5xx_errors_rate_timer}")).publish('CRIT')
         detect(when(signal > threshold(${var.http_5xx_errors_rate_threshold_major}), lasting="${var.http_5xx_errors_rate_timer}") and when(signal <= ${var.http_5xx_errors_rate_threshold_critical})).publish('MAJOR')
@@ -72,7 +72,7 @@ resource "signalfx_detector" "high_connections_count" {
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'true') and filter('primary_aggregation_type', 'true')
-        signal = data('AppConnections', extrapolation="last_value", filter=base_filter and ${module.filter-tags.filter_custom})${var.high_connections_count_aggregation_function}.publish('signal')
+        signal = data('AppConnections', extrapolation="last_value", filter=base_filter and ${module.filtering.signalflow})${var.high_connections_count_aggregation_function}.publish('signal')
         detect(when(signal > threshold(${var.high_connections_count_threshold_critical}), lasting="${var.high_connections_count_timer}")).publish('CRIT')
         detect(when(signal > threshold(${var.high_connections_count_threshold_major}), lasting="${var.high_connections_count_timer}") and when(signal <= ${var.high_connections_count_threshold_critical})).publish('MAJOR')
     EOF
@@ -110,7 +110,7 @@ resource "signalfx_detector" "high_threads_count" {
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'true') and filter('primary_aggregation_type', 'true')
-        signal = data('Threads', extrapolation='last_value', filter=base_filter and ${module.filter-tags.filter_custom})${var.high_threads_count_aggregation_function}.publish('signal')
+        signal = data('Threads', extrapolation='last_value', filter=base_filter and ${module.filtering.signalflow})${var.high_threads_count_aggregation_function}.publish('signal')
         detect(when(signal > threshold(${var.high_threads_count_threshold_critical}), lasting="${var.high_threads_count_timer}")).publish('CRIT')
         detect(when(signal > threshold(${var.high_threads_count_threshold_major}), lasting="${var.high_threads_count_timer}") and when(signal <= ${var.high_threads_count_threshold_critical})).publish('MAJOR')
     EOF

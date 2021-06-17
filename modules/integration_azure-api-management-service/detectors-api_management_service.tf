@@ -4,7 +4,7 @@ resource "signalfx_detector" "heartbeat" {
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting
         base_filter = filter('resource_type', 'Microsoft.ApiManagement/service') and filter('primary_aggregation_type', 'true')
-        signal = data('NetworkConnectivity', filter=base_filter and ${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')
+        signal = data('NetworkConnectivity', filter=base_filter and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
         not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}').publish('CRIT')
     EOF
 
@@ -26,7 +26,7 @@ resource "signalfx_detector" "capacity" {
 
   program_text = <<-EOF
     base_filter = filter('resource_type', 'Microsoft.ApiManagement/service') and filter('primary_aggregation_type', 'true')
-    signal = data('Capacity', filter=base_filter and ${module.filter-tags.filter_custom})${var.capacity_aggregation_function}${var.capacity_transformation_function}.publish('signal')
+    signal = data('Capacity', filter=base_filter and ${module.filtering.signalflow})${var.capacity_aggregation_function}${var.capacity_transformation_function}.publish('signal')
     detect(when(signal > ${var.capacity_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.capacity_threshold_major}) and when(signal <= ${var.capacity_threshold_critical})).publish('MAJOR')
   EOF
@@ -61,7 +61,7 @@ resource "signalfx_detector" "gateway_requests_duration" {
 
   program_text = <<-EOF
     base_filter = filter('resource_type', 'Microsoft.ApiManagement/service') and filter('primary_aggregation_type', 'true')
-    signal = data('Duration', filter=base_filter and ${module.filter-tags.filter_custom})${var.gateway_requests_duration_aggregation_function}${var.gateway_requests_duration_transformation_function}.scale(0.001).publish('signal')
+    signal = data('Duration', filter=base_filter and ${module.filtering.signalflow})${var.gateway_requests_duration_aggregation_function}${var.gateway_requests_duration_transformation_function}.scale(0.001).publish('signal')
     detect(when(signal > ${var.gateway_requests_duration_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.gateway_requests_duration_threshold_major}) and when(signal <= ${var.gateway_requests_duration_threshold_critical})).publish('MAJOR')
   EOF
@@ -96,7 +96,7 @@ resource "signalfx_detector" "backend_requests_duration" {
 
   program_text = <<-EOF
     base_filter = filter('resource_type', 'Microsoft.ApiManagement/service') and filter('primary_aggregation_type', 'true')
-    signal = data('BackendDuration', filter=base_filter and ${module.filter-tags.filter_custom})${var.backend_requests_duration_aggregation_function}${var.backend_requests_duration_transformation_function}.scale(0.001).publish('signal')
+    signal = data('BackendDuration', filter=base_filter and ${module.filtering.signalflow})${var.backend_requests_duration_aggregation_function}${var.backend_requests_duration_transformation_function}.scale(0.001).publish('signal')
     detect(when(signal > ${var.backend_requests_duration_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.backend_requests_duration_threshold_major}) and when(signal <= ${var.backend_requests_duration_threshold_critical})).publish('MAJOR')
   EOF

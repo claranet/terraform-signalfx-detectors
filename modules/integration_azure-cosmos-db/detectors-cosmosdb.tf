@@ -7,7 +7,7 @@ resource "signalfx_detector" "heartbeat" {
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting
         base_filter = filter('resource_type', 'Microsoft.DocumentDB/databaseAccounts') and filter('primary_aggregation_type', 'true')
-        signal = data('AvailableStorage', filter=base_filter and ${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')
+        signal = data('AvailableStorage', filter=base_filter and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
         not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}').publish('CRIT')
     EOF
 
@@ -32,8 +32,8 @@ resource "signalfx_detector" "db_4xx_requests" {
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.DocumentDB/databaseAccounts') and filter('primary_aggregation_type', 'true')
-        A = data('TotalRequests', extrapolation='zero', filter=base_filter and filter('statuscode', '4*') and ${module.filter-tags.filter_custom})${var.db_4xx_requests_aggregation_function}
-        B = data('TotalRequests', extrapolation='zero', filter=base_filter and ${module.filter-tags.filter_custom})${var.db_4xx_requests_aggregation_function}
+        A = data('TotalRequests', extrapolation='zero', filter=base_filter and filter('statuscode', '4*') and ${module.filtering.signalflow})${var.db_4xx_requests_aggregation_function}
+        B = data('TotalRequests', extrapolation='zero', filter=base_filter and ${module.filtering.signalflow})${var.db_4xx_requests_aggregation_function}
         signal = (A/B).scale(100).fill(0).publish('signal')
         detect(when(signal > threshold(${var.db_4xx_requests_threshold_critical}), lasting="${var.db_4xx_requests_timer}")).publish('CRIT')
         detect(when(signal > threshold(${var.db_4xx_requests_threshold_major}), lasting="${var.db_4xx_requests_timer}") and when(signal <= ${var.db_4xx_requests_threshold_critical})).publish('MAJOR')
@@ -72,8 +72,8 @@ resource "signalfx_detector" "db_5xx_requests" {
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.DocumentDB/databaseAccounts') and filter('primary_aggregation_type', 'true')
-        A = data('TotalRequests', extrapolation='zero', filter=base_filter and filter('statuscode', '5*') and ${module.filter-tags.filter_custom})${var.db_5xx_requests_aggregation_function}
-        B = data('TotalRequests', extrapolation='zero', filter=base_filter and ${module.filter-tags.filter_custom})${var.db_5xx_requests_aggregation_function}
+        A = data('TotalRequests', extrapolation='zero', filter=base_filter and filter('statuscode', '5*') and ${module.filtering.signalflow})${var.db_5xx_requests_aggregation_function}
+        B = data('TotalRequests', extrapolation='zero', filter=base_filter and ${module.filtering.signalflow})${var.db_5xx_requests_aggregation_function}
         signal = (A/B).scale(100).fill(0).publish('signal')
         detect(when(signal > threshold(${var.db_5xx_requests_threshold_critical}), lasting="${var.db_5xx_requests_timer}")).publish('CRIT')
         detect(when(signal > threshold(${var.db_5xx_requests_threshold_major}), lasting="${var.db_5xx_requests_timer}") and when(signal <= ${var.db_5xx_requests_threshold_critical})).publish('MAJOR')
@@ -112,8 +112,8 @@ resource "signalfx_detector" "scaling" {
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.DocumentDB/databaseAccounts') and filter('primary_aggregation_type', 'true')
-        A = data('TotalRequests', extrapolation='zero', filter=base_filter and filter('statuscode', '429') and ${module.filter-tags.filter_custom})${var.scaling_aggregation_function}
-        B = data('TotalRequests', extrapolation='zero', filter=base_filter and ${module.filter-tags.filter_custom})${var.scaling_aggregation_function}
+        A = data('TotalRequests', extrapolation='zero', filter=base_filter and filter('statuscode', '429') and ${module.filtering.signalflow})${var.scaling_aggregation_function}
+        B = data('TotalRequests', extrapolation='zero', filter=base_filter and ${module.filtering.signalflow})${var.scaling_aggregation_function}
         signal = (A/B).scale(100).fill(0).publish('signal')
         detect(when(signal > threshold(${var.scaling_threshold_critical}), lasting="${var.scaling_timer}")).publish('CRIT')
         detect(when(signal > threshold(${var.scaling_threshold_major}), lasting="${var.scaling_timer}") and when(signal <= ${var.scaling_threshold_critical})).publish('MAJOR')
@@ -152,7 +152,7 @@ resource "signalfx_detector" "used_rus_capacity" {
 
   program_text = <<-EOF
     base_filter = filter('resource_type', 'Microsoft.DocumentDB/databaseAccounts') and filter('primary_aggregation_type', 'true')
-    signal = data('NormalizedruConsumption', filter=base_filter and ${module.filter-tags.filter_custom})${var.used_rus_capacity_aggregation_function}${var.used_rus_capacity_transformation_function}.publish('signal')
+    signal = data('NormalizedruConsumption', filter=base_filter and ${module.filtering.signalflow})${var.used_rus_capacity_aggregation_function}${var.used_rus_capacity_transformation_function}.publish('signal')
     detect(when(signal > ${var.used_rus_capacity_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.used_rus_capacity_threshold_major}) and when(signal <= ${var.used_rus_capacity_threshold_critical})).publish('MAJOR')
 EOF

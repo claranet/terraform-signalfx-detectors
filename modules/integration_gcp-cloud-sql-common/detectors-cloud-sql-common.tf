@@ -6,7 +6,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    signal = data('database/cpu/usage_time', filter=${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')
+    signal = data('database/cpu/usage_time', filter=${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}').publish('CRIT')
 EOF
 
@@ -30,7 +30,7 @@ resource "signalfx_detector" "cpu_utilization" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('database/cpu/utilization', ${module.filter-tags.filter_custom})${var.cpu_utilization_aggregation_function}${var.cpu_utilization_transformation_function}.scale(100).publish('signal')
+    signal = data('database/cpu/utilization', ${module.filtering.signalflow})${var.cpu_utilization_aggregation_function}${var.cpu_utilization_transformation_function}.scale(100).publish('signal')
     detect(when(signal > ${var.cpu_utilization_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.cpu_utilization_threshold_major}) and when(signal <= ${var.cpu_utilization_threshold_critical})).publish('MAJOR')
 EOF
@@ -67,7 +67,7 @@ resource "signalfx_detector" "disk_utilization" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('database/disk/utilization', ${module.filter-tags.filter_custom})${var.disk_utilization_aggregation_function}${var.disk_utilization_transformation_function}.scale(100).publish('signal')
+    signal = data('database/disk/utilization', ${module.filtering.signalflow})${var.disk_utilization_aggregation_function}${var.disk_utilization_transformation_function}.scale(100).publish('signal')
     detect(when(signal > ${var.disk_utilization_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.disk_utilization_threshold_major}) and when(signal <= ${var.disk_utilization_threshold_critical})).publish('MAJOR')
 EOF
@@ -105,7 +105,7 @@ resource "signalfx_detector" "disk_utilization_forecast" {
 
   program_text = <<-EOF
     from signalfx.detectors.countdown import countdown
-    signal = data('database/disk/utilization', filter=${module.filter-tags.filter_custom}).publish('signal')
+    signal = data('database/disk/utilization', filter=${module.filtering.signalflow}).publish('signal')
     countdown.hours_left_stream_incr_detector(stream=signal, maximum_capacity=${var.disk_utilization_forecast_maximum_capacity}, lower_threshold=${var.disk_utilization_forecast_hours_till_full}, fire_lasting=lasting('${var.disk_utilization_forecast_fire_lasting_time}', ${var.disk_utilization_forecast_fire_lasting_time_percent}), clear_threshold=${var.disk_utilization_forecast_clear_hours_remaining}, clear_lasting=lasting('${var.disk_utilization_forecast_clear_lasting_time}', ${var.disk_utilization_forecast_clear_lasting_time_percent}), use_double_ewma=${var.disk_utilization_forecast_use_ewma}).publish('CRIT')
 EOF
 
@@ -129,7 +129,7 @@ resource "signalfx_detector" "memory_utilization" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('database/memory/utilization', ${module.filter-tags.filter_custom})${var.memory_utilization_aggregation_function}${var.memory_utilization_transformation_function}.scale(100).publish('signal')
+    signal = data('database/memory/utilization', ${module.filtering.signalflow})${var.memory_utilization_aggregation_function}${var.memory_utilization_transformation_function}.scale(100).publish('signal')
     detect(when(signal > ${var.memory_utilization_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.memory_utilization_threshold_major}) and when(signal <= ${var.memory_utilization_threshold_critical})).publish('MAJOR')
 EOF
@@ -167,7 +167,7 @@ resource "signalfx_detector" "memory_utilization_forecast" {
 
   program_text = <<-EOF
     from signalfx.detectors.countdown import countdown
-    signal = data('database/memory/utilization', filter=${module.filter-tags.filter_custom}).publish('signal')
+    signal = data('database/memory/utilization', filter=${module.filtering.signalflow}).publish('signal')
     countdown.hours_left_stream_incr_detector(stream=signal, maximum_capacity=${var.memory_utilization_forecast_maximum_capacity}, lower_threshold=${var.memory_utilization_forecast_hours_till_full}, fire_lasting=lasting('${var.memory_utilization_forecast_fire_lasting_time}', ${var.memory_utilization_forecast_fire_lasting_time_percent}), clear_threshold=${var.memory_utilization_forecast_clear_hours_remaining}, clear_lasting=lasting('${var.memory_utilization_forecast_clear_lasting_time}', ${var.memory_utilization_forecast_clear_lasting_time_percent}), use_double_ewma=${var.memory_utilization_forecast_use_ewma}).publish('CRIT')
 EOF
 

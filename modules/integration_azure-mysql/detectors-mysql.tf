@@ -7,7 +7,7 @@ resource "signalfx_detector" "heartbeat" {
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting
         base_filter = filter('resource_type', 'Microsoft.DBforMySQL/servers') and filter('primary_aggregation_type', 'true')
-        signal = data('active_connections', filter=base_filter and ${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')
+        signal = data('active_connections', filter=base_filter and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
         not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}').publish('CRIT')
     EOF
 
@@ -32,7 +32,7 @@ resource "signalfx_detector" "cpu_usage" {
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.DBforMySQL/servers') and filter('primary_aggregation_type', 'true')
-        signal = data('cpu_percent', filter=base_filter and ${module.filter-tags.filter_custom})${var.cpu_usage_aggregation_function}.publish('signal')
+        signal = data('cpu_percent', filter=base_filter and ${module.filtering.signalflow})${var.cpu_usage_aggregation_function}.publish('signal')
         detect(when(signal > threshold(${var.cpu_usage_threshold_critical}), lasting="${var.cpu_usage_timer}")).publish('CRIT')
         detect(when(signal > threshold(${var.cpu_usage_threshold_major}), lasting="${var.cpu_usage_timer}") and when(signal <= ${var.cpu_usage_threshold_critical})).publish('MAJOR')
     EOF
@@ -70,7 +70,7 @@ resource "signalfx_detector" "free_storage" {
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.DBforMySQL/servers') and filter('primary_aggregation_type', 'true')
-        signal = data('storage_percent', filter=base_filter and ${module.filter-tags.filter_custom})${var.storage_usage_aggregation_function}.publish('signal')
+        signal = data('storage_percent', filter=base_filter and ${module.filtering.signalflow})${var.storage_usage_aggregation_function}.publish('signal')
         detect(when(signal > threshold(${var.storage_usage_threshold_critical}), lasting="${var.storage_usage_timer}")).publish('CRIT')
         detect(when(signal > threshold(${var.storage_usage_threshold_major}), lasting="${var.storage_usage_timer}") and when(signal <= ${var.storage_usage_threshold_critical})).publish('MAJOR')
     EOF
@@ -108,7 +108,7 @@ resource "signalfx_detector" "io_consumption" {
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.DBforMySQL/servers') and filter('primary_aggregation_type', 'true')
-        signal = data('io_consumption_percent', filter=base_filter and ${module.filter-tags.filter_custom})${var.io_consumption_aggregation_function}.publish('signal')
+        signal = data('io_consumption_percent', filter=base_filter and ${module.filtering.signalflow})${var.io_consumption_aggregation_function}.publish('signal')
         detect(when(signal > threshold(${var.io_consumption_threshold_critical}), lasting="${var.io_consumption_timer}")).publish('CRIT')
         detect(when(signal > threshold(${var.io_consumption_threshold_major}), lasting="${var.io_consumption_timer}") and when(signal <= ${var.io_consumption_threshold_critical})).publish('MAJOR')
     EOF
@@ -146,7 +146,7 @@ resource "signalfx_detector" "memory_usage" {
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.DBforMySQL/servers') and filter('primary_aggregation_type', 'true')
-        signal = data('memory_percent', filter=base_filter and ${module.filter-tags.filter_custom})${var.memory_usage_aggregation_function}.publish('signal')
+        signal = data('memory_percent', filter=base_filter and ${module.filtering.signalflow})${var.memory_usage_aggregation_function}.publish('signal')
         detect(when(signal > threshold(${var.memory_usage_threshold_critical}), lasting="${var.memory_usage_timer}")).publish('CRIT')
         detect(when(signal > threshold(${var.memory_usage_threshold_major}), lasting="${var.memory_usage_timer}") and when(signal <= ${var.memory_usage_threshold_critical})).publish('MAJOR')
     EOF
@@ -184,7 +184,7 @@ resource "signalfx_detector" "replication_lag" {
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.DBforMySQL/servers') and filter('primary_aggregation_type', 'true')
-        signal = data('seconds_behind_master', filter=base_filter and ${module.filter-tags.filter_custom})${var.replication_lag_aggregation_function}.publish('signal')
+        signal = data('seconds_behind_master', filter=base_filter and ${module.filtering.signalflow})${var.replication_lag_aggregation_function}.publish('signal')
         detect(when(signal > threshold(${var.replication_lag_threshold_critical}), lasting="${var.replication_lag_timer}")).publish('CRIT')
         detect(when(signal > threshold(${var.replication_lag_threshold_major}), lasting="${var.replication_lag_timer}") and when(signal <= ${var.replication_lag_threshold_critical})).publish('MAJOR')
     EOF

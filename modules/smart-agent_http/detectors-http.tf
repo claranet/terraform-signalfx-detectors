@@ -8,7 +8,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    signal = data('http.status_code', filter=${local.not_running_vm_filters} and ${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')
+    signal = data('http.status_code', filter=${local.not_running_vm_filters} and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}').publish('CRIT')
 EOF
 
@@ -32,7 +32,7 @@ resource "signalfx_detector" "http_code_matched" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('http.code_matched', filter=${module.filter-tags.filter_custom}, rollup='max')${var.http_code_matched_aggregation_function}${var.http_code_matched_transformation_function}.publish('signal')
+    signal = data('http.code_matched', filter=${module.filtering.signalflow}, rollup='max')${var.http_code_matched_aggregation_function}${var.http_code_matched_transformation_function}.publish('signal')
     detect(when(signal < 1, lasting='${var.http_code_matched_lasting_duration_seconds}s', at_least=${var.http_code_matched_at_least_percentage})).publish('CRIT')
 EOF
 
@@ -57,7 +57,7 @@ resource "signalfx_detector" "http_regex_matched" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('http.regex_matched', filter=${module.filter-tags.filter_custom}, rollup='min')${var.http_regex_matched_aggregation_function}${var.http_regex_matched_transformation_function}.publish('signal')
+    signal = data('http.regex_matched', filter=${module.filtering.signalflow}, rollup='min')${var.http_regex_matched_aggregation_function}${var.http_regex_matched_transformation_function}.publish('signal')
     detect(when(signal < 1, lasting='${var.http_regex_matched_lasting_duration_seconds}s', at_least=${var.http_regex_matched_at_least_percentage})).publish('CRIT')
 EOF
 
@@ -82,7 +82,7 @@ resource "signalfx_detector" "http_response_time" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('http.response_time', filter=${module.filter-tags.filter_custom}, rollup='max')${var.http_response_time_aggregation_function}${var.http_response_time_transformation_function}.publish('signal')
+    signal = data('http.response_time', filter=${module.filtering.signalflow}, rollup='max')${var.http_response_time_aggregation_function}${var.http_response_time_transformation_function}.publish('signal')
     detect(when(signal > ${var.http_response_time_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.http_response_time_threshold_major}) and when(signal <= ${var.http_response_time_threshold_critical})).publish('MAJOR')
 EOF
@@ -119,7 +119,7 @@ resource "signalfx_detector" "http_content_length" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('http.content_length', filter=${module.filter-tags.filter_custom}, rollup='min')${var.http_content_length_aggregation_function}${var.http_content_length_transformation_function}.publish('signal')
+    signal = data('http.content_length', filter=${module.filtering.signalflow}, rollup='min')${var.http_content_length_aggregation_function}${var.http_content_length_transformation_function}.publish('signal')
     detect(when(signal < ${var.http_content_length_threshold_warning})).publish('WARN')
 EOF
 
@@ -143,7 +143,7 @@ resource "signalfx_detector" "certificate_expiration_date" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    A = data('http.cert_expiry', filter=${module.filter-tags.filter_custom}, rollup='min')${var.certificate_expiration_date_aggregation_function}${var.certificate_expiration_date_transformation_function}
+    A = data('http.cert_expiry', filter=${module.filtering.signalflow}, rollup='min')${var.certificate_expiration_date_aggregation_function}${var.certificate_expiration_date_transformation_function}
     signal = (A/86400).publish('signal')
     detect(when(signal < ${var.certificate_expiration_date_threshold_major})).publish('MAJOR')
     detect(when(signal < ${var.certificate_expiration_date_threshold_minor}) and when(signal >= ${var.certificate_expiration_date_threshold_major})).publish('MINOR')
@@ -181,7 +181,7 @@ resource "signalfx_detector" "invalid_tls_certificate" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('http.cert_valid', filter=${module.filter-tags.filter_custom}, rollup='min')${var.invalid_tls_certificate_aggregation_function}${var.invalid_tls_certificate_transformation_function}.publish('signal')
+    signal = data('http.cert_valid', filter=${module.filtering.signalflow}, rollup='min')${var.invalid_tls_certificate_aggregation_function}${var.invalid_tls_certificate_transformation_function}.publish('signal')
     detect(when(signal < 1)).publish('CRIT')
 EOF
 

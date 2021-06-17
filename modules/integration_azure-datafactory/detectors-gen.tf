@@ -11,8 +11,8 @@ resource "signalfx_detector" "activity_error_rate" {
 
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.DataFactory/factories') and filter('primary_aggregation_type', 'true')
-    adf_activity_succeeded_run = data('ActivitySucceededRuns', filter=base_filtering and ${module.filter-tags.filter_custom})${var.activity_error_rate_aggregation_function}${var.activity_error_rate_transformation_function}
-    adf_activity_failed_run = data('ActivityFailedRuns', filter=base_filtering and ${module.filter-tags.filter_custom})${var.activity_error_rate_aggregation_function}${var.activity_error_rate_transformation_function}
+    adf_activity_succeeded_run = data('ActivitySucceededRuns', filter=base_filtering and ${module.filtering.signalflow})${var.activity_error_rate_aggregation_function}${var.activity_error_rate_transformation_function}
+    adf_activity_failed_run = data('ActivityFailedRuns', filter=base_filtering and ${module.filtering.signalflow})${var.activity_error_rate_aggregation_function}${var.activity_error_rate_transformation_function}
     signal = (adf_activity_failed_run/(adf_activity_succeeded_run+adf_activity_failed_run)).scale(100).fill(0).publish('signal')
     detect(when(signal > ${var.activity_error_rate_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.activity_error_rate_threshold_major}) and when(signal <= ${var.activity_error_rate_threshold_critical})).publish('MAJOR')
@@ -56,8 +56,8 @@ resource "signalfx_detector" "pipeline_error_rate" {
 
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.DataFactory/factories') and filter('primary_aggregation_type', 'true')
-    adf_pipeline_succeeded_run = data('PipelineSucceededRuns', filter=base_filtering and ${module.filter-tags.filter_custom})${var.pipeline_error_rate_aggregation_function}${var.pipeline_error_rate_transformation_function}
-    adf_pipeline_failed_run = data('PipelineFailedRuns', filter=base_filtering and ${module.filter-tags.filter_custom})${var.pipeline_error_rate_aggregation_function}${var.pipeline_error_rate_transformation_function}
+    adf_pipeline_succeeded_run = data('PipelineSucceededRuns', filter=base_filtering and ${module.filtering.signalflow})${var.pipeline_error_rate_aggregation_function}${var.pipeline_error_rate_transformation_function}
+    adf_pipeline_failed_run = data('PipelineFailedRuns', filter=base_filtering and ${module.filtering.signalflow})${var.pipeline_error_rate_aggregation_function}${var.pipeline_error_rate_transformation_function}
     signal = (adf_pipeline_failed_run/(adf_pipeline_succeeded_run+adf_pipeline_failed_run)).scale(100).fill(0).publish('signal')
     detect(when(signal > ${var.pipeline_error_rate_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.pipeline_error_rate_threshold_major}) and when(signal <= ${var.pipeline_error_rate_threshold_critical})).publish('MAJOR')
@@ -96,8 +96,8 @@ resource "signalfx_detector" "trigger_error_rate" {
 
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.DataFactory/factories') and filter('primary_aggregation_type', 'true')
-    adf_trigger_succeeded_run = data('triggerSucceededRuns', filter=base_filtering and ${module.filter-tags.filter_custom})${var.trigger_error_rate_aggregation_function}${var.trigger_error_rate_transformation_function}
-    adf_trigger_failed_run = data('triggerFailedRuns', filter=base_filtering and ${module.filter-tags.filter_custom})${var.trigger_error_rate_aggregation_function}${var.trigger_error_rate_transformation_function}
+    adf_trigger_succeeded_run = data('triggerSucceededRuns', filter=base_filtering and ${module.filtering.signalflow})${var.trigger_error_rate_aggregation_function}${var.trigger_error_rate_transformation_function}
+    adf_trigger_failed_run = data('triggerFailedRuns', filter=base_filtering and ${module.filtering.signalflow})${var.trigger_error_rate_aggregation_function}${var.trigger_error_rate_transformation_function}
     signal = (adf_trigger_failed_run/(adf_trigger_succeeded_run+adf_trigger_failed_run)).scale(100).fill(0).publish('signal')
     detect(when(signal > ${var.trigger_error_rate_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.trigger_error_rate_threshold_major}) and when(signal <= ${var.trigger_error_rate_threshold_critical})).publish('MAJOR')
@@ -141,7 +141,7 @@ resource "signalfx_detector" "available_memory" {
 
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.DataFactory/factories') and filter('primary_aggregation_type', 'true')
-    memory = data('IntegrationRuntimeAvailableMemory', filter=base_filtering and ${module.filter-tags.filter_custom})${var.available_memory_aggregation_function}${var.available_memory_transformation_function}
+    memory = data('IntegrationRuntimeAvailableMemory', filter=base_filtering and ${module.filtering.signalflow})${var.available_memory_aggregation_function}${var.available_memory_transformation_function}
     signal = memory.scale(0.000000953674316).publish('signal')
     detect(when(signal < ${var.available_memory_threshold_critical})).publish('CRIT')
     detect(when(signal < ${var.available_memory_threshold_major}) and when(signal >= ${var.available_memory_threshold_critical})).publish('MAJOR')
@@ -185,7 +185,7 @@ resource "signalfx_detector" "cpu_percentage" {
 
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.DataFactory/factories') and filter('primary_aggregation_type', 'true')
-    signal = data('IntegrationRuntimeCpuPercentage', filter=base_filtering and ${module.filter-tags.filter_custom})${var.cpu_percentage_aggregation_function}${var.cpu_percentage_transformation_function}.publish('signal')
+    signal = data('IntegrationRuntimeCpuPercentage', filter=base_filtering and ${module.filtering.signalflow})${var.cpu_percentage_aggregation_function}${var.cpu_percentage_transformation_function}.publish('signal')
     detect(when(signal > ${var.cpu_percentage_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.cpu_percentage_threshold_major}) and when(signal <= ${var.cpu_percentage_threshold_critical})).publish('MAJOR')
 EOF

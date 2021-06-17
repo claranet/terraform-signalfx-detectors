@@ -5,8 +5,8 @@ resource "signalfx_detector" "hit_ratio" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    A = data('GetHits', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.hit_ratio_aggregation_function}${var.hit_ratio_transformation_function}
-    B = data('GetMisses', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom}, extrapolation='zero', rollup='sum')${var.hit_ratio_aggregation_function}${var.hit_ratio_transformation_function}
+    A = data('GetHits', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filtering.signalflow}, extrapolation='zero', rollup='sum')${var.hit_ratio_aggregation_function}${var.hit_ratio_transformation_function}
+    B = data('GetMisses', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filtering.signalflow}, extrapolation='zero', rollup='sum')${var.hit_ratio_aggregation_function}${var.hit_ratio_transformation_function}
     signal = (A / (A+B)).fill(value=1).scale(100).publish('signal')
     detect(when(signal < threshold(${var.hit_ratio_threshold_critical}), lasting='${var.hit_ratio_lasting_duration_seconds}s', at_least=${var.hit_ratio_at_least_percentage})).publish('CRIT')
     detect((when(signal < threshold(${var.hit_ratio_threshold_major}), lasting='${var.hit_ratio_lasting_duration_seconds}s', at_least=${var.hit_ratio_at_least_percentage}) and when(signal >= ${var.hit_ratio_threshold_critical})), off=(when(signal >= ${var.hit_ratio_threshold_major}, lasting='${var.hit_ratio_lasting_duration_seconds / 2}s') or when(signal <= ${var.hit_ratio_threshold_critical}, lasting='${var.hit_ratio_lasting_duration_seconds}s', at_least=${var.hit_ratio_at_least_percentage})), mode='paired').publish('MAJOR')
@@ -44,7 +44,7 @@ resource "signalfx_detector" "cpu" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('CPUUtilization', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.cpu_aggregation_function}${var.cpu_transformation_function}.publish('signal')
+    signal = data('CPUUtilization', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filtering.signalflow})${var.cpu_aggregation_function}${var.cpu_transformation_function}.publish('signal')
     detect(when(signal > ${var.cpu_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.cpu_threshold_major}) and when(signal <= ${var.cpu_threshold_critical})).publish('MAJOR')
 EOF

@@ -6,7 +6,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    signal = data('CPUUtilization', filter=filter('stat', 'mean') and filter('namespace', 'AWS/ElastiCache') and ${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')
+    signal = data('CPUUtilization', filter=filter('stat', 'mean') and filter('namespace', 'AWS/ElastiCache') and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}').publish('CRIT')
 EOF
 
@@ -30,7 +30,7 @@ resource "signalfx_detector" "evictions" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('Evictions', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.evictions_aggregation_function}${var.evictions_transformation_function}.publish('signal')
+    signal = data('Evictions', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filtering.signalflow})${var.evictions_aggregation_function}${var.evictions_transformation_function}.publish('signal')
     detect(when(signal > ${var.evictions_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.evictions_threshold_major}) and when(signal <= ${var.evictions_threshold_critical})).publish('MAJOR')
 EOF
@@ -67,7 +67,7 @@ resource "signalfx_detector" "max_connection" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('CurrConnections', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'upper') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.max_connection_aggregation_function}${var.max_connection_transformation_function}.publish('signal')
+    signal = data('CurrConnections', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'upper') and filter('CacheNodeId', '*') and ${module.filtering.signalflow})${var.max_connection_aggregation_function}${var.max_connection_transformation_function}.publish('signal')
     detect(when(signal > ${var.max_connection_threshold_critical})).publish('CRIT')
 EOF
 
@@ -91,7 +91,7 @@ resource "signalfx_detector" "no_connection" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('CurrConnections', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'lower') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.no_connection_aggregation_function}${var.no_connection_transformation_function}.publish('signal')
+    signal = data('CurrConnections', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'lower') and filter('CacheNodeId', '*') and ${module.filtering.signalflow})${var.no_connection_aggregation_function}${var.no_connection_transformation_function}.publish('signal')
     detect(when(signal <= ${var.no_connection_threshold_critical})).publish('CRIT')
 EOF
 
@@ -115,7 +115,7 @@ resource "signalfx_detector" "swap" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('SwapUsage', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'upper') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.swap_aggregation_function}${var.swap_transformation_function}.publish('signal')
+    signal = data('SwapUsage', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'upper') and filter('CacheNodeId', '*') and ${module.filtering.signalflow})${var.swap_aggregation_function}${var.swap_transformation_function}.publish('signal')
     detect(when(signal > ${var.swap_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.swap_threshold_major}) and when(signal <= ${var.swap_threshold_critical})).publish('MAJOR')
 EOF
@@ -152,7 +152,7 @@ resource "signalfx_detector" "free_memory" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('FreeableMemory', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'lower') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom}).rateofchange()${var.free_memory_aggregation_function}${var.free_memory_transformation_function}.publish('signal')
+    signal = data('FreeableMemory', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'lower') and filter('CacheNodeId', '*') and ${module.filtering.signalflow}).rateofchange()${var.free_memory_aggregation_function}${var.free_memory_transformation_function}.publish('signal')
     detect(when(signal < ${var.free_memory_threshold_major})).publish('MAJOR')
     detect(when(signal < ${var.free_memory_threshold_minor}) and when(signal >= ${var.free_memory_threshold_major})).publish('MINOR')
 EOF
@@ -189,7 +189,7 @@ resource "signalfx_detector" "evictions_growing" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('Evictions', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filter-tags.filter_custom})${var.evictions_growing_aggregation_function}${var.evictions_growing_transformation_function}.rateofchange().scale(100).publish('signal')
+    signal = data('Evictions', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filtering.signalflow})${var.evictions_growing_aggregation_function}${var.evictions_growing_transformation_function}.rateofchange().scale(100).publish('signal')
     detect(when(signal > ${var.evictions_growing_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.evictions_growing_threshold_major}) and when(signal <= ${var.evictions_growing_threshold_critical})).publish('MAJOR')
 EOF

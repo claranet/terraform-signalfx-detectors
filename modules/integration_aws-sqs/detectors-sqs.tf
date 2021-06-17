@@ -6,7 +6,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    signal = data('NumberOfMessagesReceived', filter=filter('stat', 'mean') and filter('namespace', 'AWS/SQS') and ${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')
+    signal = data('NumberOfMessagesReceived', filter=filter('stat', 'mean') and filter('namespace', 'AWS/SQS') and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}').publish('CRIT')
 EOF
 
@@ -30,7 +30,7 @@ resource "signalfx_detector" "visible_messages" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('ApproximateNumberOfMessagesVisible', filter=filter('namespace', 'AWS/SQS') and filter('stat', 'upper') and ${module.filter-tags.filter_custom})${var.visible_messages_aggregation_function}${var.visible_messages_transformation_function}.publish('signal')
+    signal = data('ApproximateNumberOfMessagesVisible', filter=filter('namespace', 'AWS/SQS') and filter('stat', 'upper') and ${module.filtering.signalflow})${var.visible_messages_aggregation_function}${var.visible_messages_transformation_function}.publish('signal')
     detect(when(signal > ${var.visible_messages_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.visible_messages_threshold_major}) and when(signal <= ${var.visible_messages_threshold_critical})).publish('MAJOR')
 EOF
@@ -67,7 +67,7 @@ resource "signalfx_detector" "age_of_oldest_message" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('ApproximateAgeOfOldestMessage', filter=filter('namespace', 'AWS/SQS') and filter('stat', 'upper') and ${module.filter-tags.filter_custom})${var.age_of_oldest_message_aggregation_function}${var.age_of_oldest_message_transformation_function}.publish('signal')
+    signal = data('ApproximateAgeOfOldestMessage', filter=filter('namespace', 'AWS/SQS') and filter('stat', 'upper') and ${module.filtering.signalflow})${var.age_of_oldest_message_aggregation_function}${var.age_of_oldest_message_transformation_function}.publish('signal')
     detect(when(signal > ${var.age_of_oldest_message_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.age_of_oldest_message_threshold_major}) and when(signal <= ${var.age_of_oldest_message_threshold_critical})).publish('MAJOR')
 EOF

@@ -9,7 +9,7 @@ resource "signalfx_detector" "heartbeat" {
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
     base_filtering = filter('resource_type', 'Microsoft.Network/azureFirewalls') and filter('primary_aggregation_type', 'true')
-    signal = data('FirewallHealth', filter=base_filtering and ${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}${var.heartbeat_transformation_function}.publish('signal')
+    signal = data('FirewallHealth', filter=base_filtering and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}${var.heartbeat_transformation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}').publish('CRIT')
 EOF
 
@@ -34,7 +34,7 @@ resource "signalfx_detector" "snat_port_utilization" {
 
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.Network/azureFirewalls') and filter('primary_aggregation_type', 'true')
-    signal = data('SNATPortUtilization', filter=base_filtering and ${module.filter-tags.filter_custom}, rollup='max')${var.snat_port_utilization_aggregation_function}${var.snat_port_utilization_transformation_function}.publish('signal')
+    signal = data('SNATPortUtilization', filter=base_filtering and ${module.filtering.signalflow}, rollup='max')${var.snat_port_utilization_aggregation_function}${var.snat_port_utilization_transformation_function}.publish('signal')
     detect(when(signal > ${var.snat_port_utilization_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.snat_port_utilization_threshold_major}) and when(signal <= ${var.snat_port_utilization_threshold_critical})).publish('MAJOR')
 EOF
@@ -72,7 +72,7 @@ resource "signalfx_detector" "throughput" {
 
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.Network/azureFirewalls') and filter('primary_aggregation_type', 'true')
-    throughput = data('Throughput', filter=base_filtering and ${module.filter-tags.filter_custom})${var.throughput_aggregation_function}${var.throughput_transformation_function}
+    throughput = data('Throughput', filter=base_filtering and ${module.filtering.signalflow})${var.throughput_aggregation_function}${var.throughput_transformation_function}
     signal = throughput.scale(0.000000953674316).publish('signal')
     detect(when(signal >= ${var.throughput_threshold_critical}, lasting='${var.throughput_lasting_duration_critical}')).publish('CRIT')
     detect(when(signal >= ${var.throughput_threshold_major}, lasting='${var.throughput_lasting_duration_major}') and when(signal < ${var.throughput_threshold_critical}, lasting='${var.throughput_lasting_duration_major}')).publish('MAJOR')
@@ -137,7 +137,7 @@ resource "signalfx_detector" "health_state" {
 
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.Network/azureFirewalls') and filter('primary_aggregation_type', 'true')
-    signal = data('FirewallHealth', filter=base_filtering and ${module.filter-tags.filter_custom})${var.health_state_aggregation_function}${var.health_state_transformation_function}.publish('signal')
+    signal = data('FirewallHealth', filter=base_filtering and ${module.filtering.signalflow})${var.health_state_aggregation_function}${var.health_state_transformation_function}.publish('signal')
     detect(when(signal < ${var.health_state_threshold_critical}, lasting='${var.health_state_lasting_duration_critical}')).publish('CRIT')
     detect(when(signal < ${var.health_state_threshold_major}, lasting='${var.health_state_lasting_duration_major}') and when(signal >= ${var.health_state_threshold_critical}, lasting='${var.health_state_lasting_duration_major}')).publish('MAJOR')
 EOF

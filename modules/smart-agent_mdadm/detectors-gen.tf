@@ -5,7 +5,7 @@ resource "signalfx_detector" "disk_failed" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('md_disks.failed', filter=${module.filter-tags.filter_custom})${var.disk_failed_aggregation_function}${var.disk_failed_transformation_function}.publish('signal')
+    signal = data('md_disks.failed', filter=${module.filtering.signalflow})${var.disk_failed_aggregation_function}${var.disk_failed_transformation_function}.publish('signal')
     detect(when(signal > ${var.disk_failed_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.disk_failed_threshold_major}) and when(signal <= ${var.disk_failed_threshold_critical})).publish('MAJOR')
 EOF
@@ -42,7 +42,7 @@ resource "signalfx_detector" "disk_missing" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('md_disks.missing', filter=${module.filter-tags.filter_custom})${var.disk_missing_aggregation_function}${var.disk_missing_transformation_function}.publish('signal')
+    signal = data('md_disks.missing', filter=${module.filtering.signalflow})${var.disk_missing_aggregation_function}${var.disk_missing_transformation_function}.publish('signal')
     detect(when(signal > ${var.disk_missing_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.disk_missing_threshold_major}) and when(signal <= ${var.disk_missing_threshold_critical})).publish('MAJOR')
 EOF

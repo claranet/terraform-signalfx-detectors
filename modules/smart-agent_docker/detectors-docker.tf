@@ -8,7 +8,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
 		from signalfx.detectors.not_reporting import not_reporting
-		signal = data('cpu.usage.system', filter=filter('plugin', 'docker') and ${local.not_running_vm_filters} and ${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')
+		signal = data('cpu.usage.system', filter=filter('plugin', 'docker') and ${local.not_running_vm_filters} and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
 		not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}').publish('CRIT')
 EOF
 
@@ -32,7 +32,7 @@ resource "signalfx_detector" "cpu" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-		signal = data('cpu.percent', filter=filter('plugin', 'docker') and ${module.filter-tags.filter_custom})${var.cpu_aggregation_function}${var.cpu_transformation_function}.publish('signal')
+		signal = data('cpu.percent', filter=filter('plugin', 'docker') and ${module.filtering.signalflow})${var.cpu_aggregation_function}${var.cpu_transformation_function}.publish('signal')
 		detect(when(signal > ${var.cpu_threshold_major})).publish('MAJOR')
 		detect(when(signal > ${var.cpu_threshold_minor}) and when(signal <= ${var.cpu_threshold_major})).publish('MINOR')
 EOF
@@ -69,8 +69,8 @@ resource "signalfx_detector" "throttling" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-		A = data('cpu.throttling_data.throttled_time', filter=filter('plugin', 'docker') and ${module.filter-tags.filter_custom}, rollup='delta')${var.throttling_aggregation_function}${var.throttling_transformation_function}
-		B = data('cpu.throttling_data.throttled_time', filter=filter('plugin', 'docker') and ${module.filter-tags.filter_custom}, rollup='delta')${var.throttling_aggregation_function}${var.throttling_transformation_function}
+		A = data('cpu.throttling_data.throttled_time', filter=filter('plugin', 'docker') and ${module.filtering.signalflow}, rollup='delta')${var.throttling_aggregation_function}${var.throttling_transformation_function}
+		B = data('cpu.throttling_data.throttled_time', filter=filter('plugin', 'docker') and ${module.filtering.signalflow}, rollup='delta')${var.throttling_aggregation_function}${var.throttling_transformation_function}
 		signal = (A/B).scale(100).publish('signal')
 		detect(when(signal > ${var.throttling_threshold_major})).publish('MAJOR')
 		detect(when(signal > ${var.throttling_threshold_minor}) and when(signal <= ${var.throttling_threshold_major})).publish('MINOR')
@@ -108,8 +108,8 @@ resource "signalfx_detector" "memory" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-		A = data('memory.usage.total', filter=filter('plugin', 'docker') and ${module.filter-tags.filter_custom})${var.memory_aggregation_function}${var.memory_transformation_function}
-		B = data('memory.usage.limit', filter=filter('plugin', 'docker') and ${module.filter-tags.filter_custom})${var.memory_aggregation_function}${var.memory_transformation_function}
+		A = data('memory.usage.total', filter=filter('plugin', 'docker') and ${module.filtering.signalflow})${var.memory_aggregation_function}${var.memory_transformation_function}
+		B = data('memory.usage.limit', filter=filter('plugin', 'docker') and ${module.filtering.signalflow})${var.memory_aggregation_function}${var.memory_transformation_function}
 		signal = (A/B).scale(100).publish('signal')
 		detect(when(signal > ${var.memory_threshold_major})).publish('MAJOR')
 		detect(when(signal > ${var.memory_threshold_minor}) and when(signal <= ${var.memory_threshold_major})).publish('MINOR')

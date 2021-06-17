@@ -8,7 +8,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    signal = data('cpu.utilization', filter=${local.not_running_vm_filters} and ${module.filter-tags.filter_custom})${var.heartbeat_aggregation_function}.publish('signal')
+    signal = data('cpu.utilization', filter=${local.not_running_vm_filters} and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}').publish('CRIT')
 EOF
 
@@ -37,7 +37,7 @@ resource "signalfx_detector" "cpu" {
   }
 
   program_text = <<-EOF
-    signal = data('cpu.utilization', filter=${module.filter-tags.filter_custom}, extrapolation='zero')${var.cpu_aggregation_function}${var.cpu_transformation_function}.publish('signal')
+    signal = data('cpu.utilization', filter=${module.filtering.signalflow}, extrapolation='zero')${var.cpu_aggregation_function}${var.cpu_transformation_function}.publish('signal')
     detect(when(signal > ${var.cpu_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.cpu_threshold_major}) and when(signal <= ${var.cpu_threshold_critical})).publish('MAJOR')
 EOF
@@ -74,7 +74,7 @@ resource "signalfx_detector" "load" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
 
   program_text = <<-EOF
-    signal = data('load.midterm', filter=${module.filter-tags.filter_custom})${var.load_aggregation_function}${var.load_transformation_function}.publish('signal')
+    signal = data('load.midterm', filter=${module.filtering.signalflow})${var.load_aggregation_function}${var.load_transformation_function}.publish('signal')
     detect(when(signal > ${var.load_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.load_threshold_major}) and when(signal <= ${var.load_threshold_critical})).publish('MAJOR')
 EOF
@@ -116,7 +116,7 @@ resource "signalfx_detector" "disk_space" {
   }
 
   program_text = <<-EOF
-    signal = data('disk.utilization', filter=${module.filter-tags.filter_custom})${var.disk_space_aggregation_function}${var.disk_space_transformation_function}.publish('signal')
+    signal = data('disk.utilization', filter=${module.filtering.signalflow})${var.disk_space_aggregation_function}${var.disk_space_transformation_function}.publish('signal')
     detect(when(signal > ${var.disk_space_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.disk_space_threshold_major}) and when(signal <= ${var.disk_space_threshold_critical})).publish('MAJOR')
 EOF
@@ -158,7 +158,7 @@ resource "signalfx_detector" "disk_inodes" {
   }
 
   program_text = <<-EOF
-    signal = data('percent_inodes.used', filter=${module.filter-tags.filter_custom})${var.disk_inodes_aggregation_function}${var.disk_inodes_transformation_function}.publish('signal')
+    signal = data('percent_inodes.used', filter=${module.filtering.signalflow})${var.disk_inodes_aggregation_function}${var.disk_inodes_transformation_function}.publish('signal')
     detect(when(signal > ${var.disk_inodes_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.disk_inodes_threshold_major}) and when(signal <= ${var.disk_inodes_threshold_critical})).publish('MAJOR')
 EOF
@@ -200,7 +200,7 @@ resource "signalfx_detector" "memory" {
   }
 
   program_text = <<-EOF
-    signal = data('memory.utilization', filter=${module.filter-tags.filter_custom})${var.memory_aggregation_function}${var.memory_transformation_function}.publish('signal')
+    signal = data('memory.utilization', filter=${module.filtering.signalflow})${var.memory_aggregation_function}${var.memory_transformation_function}.publish('signal')
     detect(when(signal > ${var.memory_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.memory_threshold_major}) and when(signal <= ${var.memory_threshold_critical})).publish('MAJOR')
 EOF
