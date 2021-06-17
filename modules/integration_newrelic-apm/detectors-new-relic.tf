@@ -7,7 +7,7 @@ resource "signalfx_detector" "heartbeat" {
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
     signal = data('Apdex/score/*', ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
-    not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}').publish('MAJOR')
+    not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}', auto_resolve_after='${local.heartbeat_auto_resolve_after}').publish('MAJOR')
 EOF
 
   rule {
