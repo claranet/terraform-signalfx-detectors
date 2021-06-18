@@ -3,6 +3,7 @@ resource "signalfx_detector" "processes" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
         signal = data('ps_count.processes', filter=${module.filtering.signalflow})${var.processes_aggregation_function}${var.processes_transformation_function}.publish('signal')

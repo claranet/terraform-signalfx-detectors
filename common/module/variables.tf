@@ -70,3 +70,9 @@ variable "message_body" {
   default     = ""
 }
 
+variable "extra_tags" {
+  description = "List of tags to add to the detectors resources, useful to find detectors "
+  type        = list(string)
+  default     = []
+}
+

@@ -3,6 +3,7 @@ resource "signalfx_detector" "nginx_ingress_5xx" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     A = data('nginx_ingress_controller_requests', filter=filter('status', '5*') and ${module.filtering.signalflow}, rollup='delta', extrapolation='zero')${var.ingress_5xx_aggregation_function}${var.ingress_5xx_transformation_function}
@@ -42,6 +43,7 @@ resource "signalfx_detector" "nginx_ingress_4xx" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     A = data('nginx_ingress_controller_requests', filter=filter('status', '4*') and ${module.filtering.signalflow}, rollup='delta', extrapolation='zero')${var.ingress_4xx_aggregation_function}${var.ingress_4xx_transformation_function}
@@ -81,6 +83,7 @@ resource "signalfx_detector" "nginx_ingress_latency" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     signal = data('nginx_ingress_controller_ingress_upstream_latency_seconds', filter=${module.filtering.signalflow}, rollup='delta', extrapolation='zero')${var.ingress_latency_aggregation_function}${var.ingress_latency_transformation_function}.publish('signal')

@@ -3,6 +3,7 @@ resource "signalfx_detector" "hpa_scale_exceeded_capacity" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     max = data('kubernetes.hpa.spec.max_replicas', filter=${module.filtering.signalflow})${var.hpa_scale_exceeded_capacity_aggregation_function}${var.hpa_scale_exceeded_capacity_transformation_function}

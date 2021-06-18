@@ -3,6 +3,7 @@ resource "signalfx_detector" "heartbeat" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
@@ -28,6 +29,7 @@ resource "signalfx_detector" "cpu_utilization" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     signal = data('database/cpu/utilization', ${module.filtering.signalflow})${var.cpu_utilization_aggregation_function}${var.cpu_utilization_transformation_function}.scale(100).publish('signal')
@@ -65,6 +67,7 @@ resource "signalfx_detector" "disk_utilization" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     signal = data('database/disk/utilization', ${module.filtering.signalflow})${var.disk_utilization_aggregation_function}${var.disk_utilization_transformation_function}.scale(100).publish('signal')
@@ -102,6 +105,7 @@ resource "signalfx_detector" "disk_utilization_forecast" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     from signalfx.detectors.countdown import countdown
@@ -127,6 +131,7 @@ resource "signalfx_detector" "memory_utilization" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     signal = data('database/memory/utilization', ${module.filtering.signalflow})${var.memory_utilization_aggregation_function}${var.memory_utilization_transformation_function}.scale(100).publish('signal')
@@ -164,6 +169,7 @@ resource "signalfx_detector" "memory_utilization_forecast" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     from signalfx.detectors.countdown import countdown

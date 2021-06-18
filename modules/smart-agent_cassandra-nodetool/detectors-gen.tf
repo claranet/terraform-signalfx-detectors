@@ -3,6 +3,7 @@ resource "signalfx_detector" "node_status" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     signal = data('cassandra.status', filter=${module.filtering.signalflow})${var.node_status_aggregation_function}${var.node_status_transformation_function}.publish('signal')
@@ -40,6 +41,7 @@ resource "signalfx_detector" "node_state" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     signal = data('cassandra.state', filter=${module.filtering.signalflow})${var.node_state_aggregation_function}${var.node_state_transformation_function}.publish('signal')

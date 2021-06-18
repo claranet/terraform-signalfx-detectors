@@ -3,6 +3,7 @@ resource "signalfx_detector" "heartbeat" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   max_delay = 900
 
@@ -31,6 +32,7 @@ resource "signalfx_detector" "snat_port_utilization" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.Network/azureFirewalls') and filter('primary_aggregation_type', 'true')
@@ -69,6 +71,7 @@ resource "signalfx_detector" "throughput" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.Network/azureFirewalls') and filter('primary_aggregation_type', 'true')
@@ -134,6 +137,7 @@ resource "signalfx_detector" "health_state" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.Network/azureFirewalls') and filter('primary_aggregation_type', 'true')

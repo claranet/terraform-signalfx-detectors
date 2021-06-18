@@ -3,6 +3,7 @@ resource "signalfx_detector" "heartbeat" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   max_delay = 900
 
@@ -30,6 +31,7 @@ resource "signalfx_detector" "memcached_max_conn" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     signal = data('total_events.listen_disabled', filter=${module.filtering.signalflow}, rollup='delta')${var.memcached_max_conn_aggregation_function}${var.memcached_max_conn_transformation_function}.publish('signal')
@@ -67,6 +69,7 @@ resource "signalfx_detector" "memcached_hit_ratio" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     A = data('memcached_ops.hits', filter=${module.filtering.signalflow})${var.memcached_hit_ratio_aggregation_function}${var.memcached_hit_ratio_transformation_function}

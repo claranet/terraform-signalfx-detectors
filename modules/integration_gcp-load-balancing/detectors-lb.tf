@@ -3,6 +3,7 @@ resource "signalfx_detector" "error_rate_4xx" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     A = data('https/request_count', filter=filter('service', 'loadbalancing') and filter('response_code_class', '400')  and ${module.filtering.signalflow}, extrapolation='zero', rollup='sum')${var.error_rate_4xx_aggregation_function}${var.error_rate_4xx_transformation_function}
@@ -42,6 +43,7 @@ resource "signalfx_detector" "error_rate_5xx" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     A = data('https/request_count', filter=filter('service', 'loadbalancing') and filter('response_code_class', '400')  and ${module.filtering.signalflow}, extrapolation='zero', rollup='sum')${var.error_rate_5xx_aggregation_function}${var.error_rate_5xx_transformation_function}
@@ -81,6 +83,7 @@ resource "signalfx_detector" "backend_latency_service" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   viz_options {
     label      = "signal"
@@ -123,6 +126,7 @@ resource "signalfx_detector" "backend_latency_bucket" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   viz_options {
     label      = "signal"
@@ -165,6 +169,7 @@ resource "signalfx_detector" "request_count" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     signal = data('https/request_count', filter=filter('service', 'loadbalancing') and ${module.filtering.signalflow}, extrapolation='last_value', rollup='sum')${var.request_count_aggregation_function}${var.request_count_transformation_function}.rateofchange().publish('signal')

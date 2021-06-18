@@ -3,6 +3,7 @@ resource "signalfx_detector" "heartbeat" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
@@ -28,6 +29,7 @@ resource "signalfx_detector" "error_rate" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     signal = data('Errors/all/errors_per_minute/*', ${module.filtering.signalflow})${var.error_rate_aggregation_function}${var.error_rate_transformation_function}.publish('signal')
@@ -66,6 +68,7 @@ resource "signalfx_detector" "apdex" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     signal = data('Apdex/score/*', ${module.filtering.signalflow})${var.apdex_aggregation_function}${var.apdex_transformation_function}.publish('signal')

@@ -3,6 +3,7 @@ resource "signalfx_detector" "errors" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     base_filtering = filter('is_Azure_Function', 'true')

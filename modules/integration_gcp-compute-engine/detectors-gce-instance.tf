@@ -3,6 +3,7 @@ resource "signalfx_detector" "heartbeat" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
@@ -28,6 +29,7 @@ resource "signalfx_detector" "cpu_utilization" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     signal = data('instance/cpu/utilization', ${module.filtering.signalflow})${var.cpu_utilization_aggregation_function}${var.cpu_utilization_transformation_function}.scale(100).publish('signal')
@@ -65,6 +67,7 @@ resource "signalfx_detector" "disk_throttled_bps" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     A = data('instance/disk/throttled_read_bytes_count', ${module.filtering.signalflow})${var.disk_throttled_bps_aggregation_function}${var.disk_throttled_bps_transformation_function}
@@ -106,6 +109,7 @@ resource "signalfx_detector" "disk_throttled_ops" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     A = data('instance/disk/throttled_read_ops_count', ${module.filtering.signalflow})${var.disk_throttled_ops_aggregation_function}${var.disk_throttled_ops_transformation_function}

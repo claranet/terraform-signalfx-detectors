@@ -3,6 +3,7 @@ resource "signalfx_detector" "heartbeat" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   max_delay = 900
 
@@ -30,6 +31,7 @@ resource "signalfx_detector" "server_status" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     signal = data('haproxy_status', filter=filter('type', '2') and ${module.filtering.signalflow})${var.server_status_aggregation_function}${var.server_status_transformation_function}.publish('signal')
@@ -54,6 +56,7 @@ resource "signalfx_detector" "backend_status" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     signal = data('haproxy_status', filter=filter('type', '1') and ${module.filtering.signalflow})${var.backend_status_aggregation_function}${var.backend_status_transformation_function}.publish('signal')
@@ -78,6 +81,7 @@ resource "signalfx_detector" "session_limit" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     A = data('haproxy_session_current', filter=filter('type', '0', '2') and ${module.filtering.signalflow})${var.session_limit_aggregation_function}${var.session_limit_transformation_function}
@@ -117,6 +121,7 @@ resource "signalfx_detector" "http_5xx_response" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     A = data('haproxy_response_5xx', filter=${module.filtering.signalflow}, rollup='delta')${var.http_5xx_response_aggregation_function}${var.http_5xx_response_transformation_function}
@@ -156,6 +161,7 @@ resource "signalfx_detector" "http_4xx_response" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     A = data('haproxy_response_4xx', filter=${module.filtering.signalflow}, rollup='delta')${var.http_4xx_response_aggregation_function}${var.http_4xx_response_transformation_function}

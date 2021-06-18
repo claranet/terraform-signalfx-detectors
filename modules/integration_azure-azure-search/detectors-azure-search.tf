@@ -3,6 +3,7 @@ resource "signalfx_detector" "search_latency" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Search/searchServices') and filter('primary_aggregation_type', 'true')
@@ -41,6 +42,7 @@ resource "signalfx_detector" "search_throttled_queries_rate" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Search/searchServices') and filter('primary_aggregation_type', 'true')

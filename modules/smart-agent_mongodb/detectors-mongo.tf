@@ -3,6 +3,7 @@ resource "signalfx_detector" "heartbeat" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   max_delay = 900
 
@@ -30,6 +31,7 @@ resource "signalfx_detector" "page_faults" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     signal = data('counter.extra_info.page_faults', filter=${module.filtering.signalflow})${var.page_faults_aggregation_function}${var.page_faults_transformation_function}.publish('signal')
@@ -54,6 +56,7 @@ resource "signalfx_detector" "max_connections" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     A = data('gauge.connections.current', filter=${module.filtering.signalflow})${var.max_connections_aggregation_function}${var.max_connections_transformation_function}
@@ -93,6 +96,7 @@ resource "signalfx_detector" "asserts" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     A = data('counter.asserts.regular', filter=${module.filtering.signalflow})${var.asserts_aggregation_function}${var.asserts_transformation_function}
@@ -119,6 +123,7 @@ resource "signalfx_detector" "primary" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     signal = data('gauge.repl.is_primary_node', filter=${module.filtering.signalflow})${var.primary_aggregation_function}${var.primary_transformation_function}.publish('signal')
@@ -143,6 +148,7 @@ resource "signalfx_detector" "secondary" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     A = data('gauge.repl.active_nodes', filter=${module.filtering.signalflow})${var.secondary_aggregation_function}${var.secondary_transformation_function}
@@ -169,6 +175,7 @@ resource "signalfx_detector" "replication_lag" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     signal = data('gauge.repl.max_lag', filter=${module.filtering.signalflow})${var.replication_lag_aggregation_function}${var.replication_lag_transformation_function}.publish('signal')

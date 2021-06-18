@@ -3,6 +3,7 @@ resource "signalfx_detector" "heartbeat" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   max_delay = 900
 
@@ -30,6 +31,7 @@ resource "signalfx_detector" "deadlocks" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     signal = data('postgres_deadlocks', filter=${module.filtering.signalflow}, rollup='delta')${var.deadlocks_aggregation_function}${var.deadlocks_transformation_function}.publish('signal')
@@ -67,6 +69,7 @@ resource "signalfx_detector" "hit_ratio" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     signal = data('postgres_block_hit_ratio', filter=(not filter('index', '*')) and (not filter('schemaname', '*')) and (not filter('type', '*')) and (not filter('table', '*')) and ${module.filtering.signalflow}, rollup='average').scale(100)${var.hit_ratio_aggregation_function}${var.hit_ratio_transformation_function}.publish('signal')
@@ -104,6 +107,7 @@ resource "signalfx_detector" "rollbacks" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     A = data('postgres_xact_rollbacks', filter=${module.filtering.signalflow}, rollup='delta')${var.rollbacks_aggregation_function}${var.rollbacks_transformation_function}
@@ -143,6 +147,7 @@ resource "signalfx_detector" "conflicts" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     signal = data('postgres_conflicts', filter=${module.filtering.signalflow}, rollup='average')${var.conflicts_aggregation_function}${var.conflicts_transformation_function}.publish('signal')
@@ -180,6 +185,7 @@ resource "signalfx_detector" "max_connections" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     signal = data('postgres_pct_connections', filter=${module.filtering.signalflow}, rollup='average').scale(100)${var.max_connections_aggregation_function}${var.max_connections_transformation_function}.publish('signal')
@@ -217,6 +223,7 @@ resource "signalfx_detector" "replication_lag" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     signal = data('postgres_replication_lag', filter=${module.filtering.signalflow}, rollup='average')${var.replication_lag_aggregation_function}${var.replication_lag_transformation_function}.publish('signal')
@@ -254,6 +261,7 @@ resource "signalfx_detector" "replication_state" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     signal = data('postgres_replication_state', filter=${module.filtering.signalflow}, rollup='average')${var.replication_state_aggregation_function}${var.replication_state_transformation_function}.publish('signal')

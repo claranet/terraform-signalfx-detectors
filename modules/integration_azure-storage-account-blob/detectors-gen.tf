@@ -3,6 +3,7 @@ resource "signalfx_detector" "requests_error_rate" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   viz_options {
     label        = "signal"
@@ -48,6 +49,7 @@ resource "signalfx_detector" "latency_e2e" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   viz_options {
     label        = "signal"

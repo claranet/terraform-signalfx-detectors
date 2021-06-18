@@ -3,6 +3,7 @@ resource "signalfx_detector" "aurora_mysql_replica_lag" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     signal = data('AuroraReplicaLag', filter=filter('namespace', 'AWS/RDS') and filter('stat', 'mean') and filter('DBInstanceIdentifier', '*') and ${module.filtering.signalflow})${var.aurora_mysql_replica_lag_aggregation_function}${var.aurora_mysql_replica_lag_transformation_function}.publish('signal')

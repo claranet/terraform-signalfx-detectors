@@ -3,6 +3,7 @@ resource "signalfx_detector" "memory_used" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   viz_options {
     label        = "signal"
@@ -47,6 +48,7 @@ resource "signalfx_detector" "out_of_memory_errors" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     signal = data('gauge.bucket.op.ep_oom_errors', filter=${module.filtering.signalflow})${var.out_of_memory_errors_aggregation_function}${var.out_of_memory_errors_transformation_function}.publish('signal')
@@ -71,6 +73,7 @@ resource "signalfx_detector" "disk_write_queue" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     signal = data('gauge.bucket.op.disk_write_queue', filter=${module.filtering.signalflow})${var.disk_write_queue_aggregation_function}${var.disk_write_queue_transformation_function}.publish('signal')

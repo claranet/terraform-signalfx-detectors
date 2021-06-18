@@ -3,6 +3,7 @@ resource "signalfx_detector" "failover_unavailable" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     signal = data('database/available_for_failover', ${module.filtering.signalflow})${var.failover_unavailable_aggregation_function}${var.failover_unavailable_transformation_function}.publish('signal')
