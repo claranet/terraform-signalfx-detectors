@@ -5,12 +5,12 @@
 locals {
   notifications_team = {
     # Use Jira for severity higher or equal to major for itsm team
-    itsm = merge(notifications_devnull, {
+    itsm = merge(local.notifications_devnull, {
       critical = ["Jira,credentialId"]
       major    = ["Jira,credentialId"]
     })
     # Use PagerDuty for severity higher or equal to major for cloud team
-    cloud = merge(notifications_devnull, {
+    cloud = merge(local.notifications_devnull, {
       critical = ["PagerDuty,credentialId"]
       major    = ["PagerDuty,credentialId"]
     })
@@ -38,7 +38,7 @@ module "signalfx-detectors-smart-agent-system-common-team-itsm" {
 }
 
 # Then import it again for the team "cloud"
-module "signalfx-detectors-smart-agent-system-common-team-itsm" {
+module "signalfx-detectors-smart-agent-system-common-team-cloud" {
   source      = "claranet/detectors/signalfx//modules/smart-agent_system-common"
   version     = ">= 1.7.0, < 2.0.0"
   environment = var.environment

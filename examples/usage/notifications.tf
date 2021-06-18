@@ -59,7 +59,7 @@ locals {
 }
 
 # Now we can import again a module and simply use this local for global notifications assignment
-module "signalfx-detectors-smart-agent-system-common-advanced" {
+module "signalfx-detectors-smart-agent-system-common-notifications" {
   source      = "claranet/detectors/signalfx//modules/smart-agent_system-common"
   version     = ">= 1.7.0, < 2.0.0"
   environment = var.environment
