@@ -40,27 +40,27 @@ locals {
     # Critical alerts are for oncall so we use PagerDuty
     critical = [local.notification_global, module.signalfx-integrations-alerting-pagerduty-nbh.sfx_integration_notification]
     # Major alerts are also important but we only want to warn oncall during business hours
-    major    = [local.notification_global, module.signalfx-integrations-alerting-pagerduty-bh.sfx_integration_notification]
+    major = [local.notification_global, module.signalfx-integrations-alerting-pagerduty-bh.sfx_integration_notification]
     # Minor alerts are should not be disruptive and can be handled when we have time so we use Slack
-    minor    = [local.notification_global, module.signalfx-integrations-alerting-slack.sfx_integration_notification]
+    minor = [local.notification_global, module.signalfx-integrations-alerting-slack.sfx_integration_notification]
     # Same as for minor
-    warning  = [local.notification_global, module.signalfx-integrations-alerting-slack.sfx_integration_notification]
+    warning = [local.notification_global, module.signalfx-integrations-alerting-slack.sfx_integration_notification]
     # And finally, info are only sent to your global email recipient
-    info     = [local.notification_global]
+    info = [local.notification_global]
   }
 }
 
 # Now we can import again a module and simply use this local for global notifications assignment
 module "signalfx-detectors-smart-agent-system-common-advanced" {
-  source        = "github.com/claranet/terraform-signalfx-detectors.git//modules/smart-agent_system-common?ref=v1.7.0"
-  environment   = var.environment
+  source      = "github.com/claranet/terraform-signalfx-detectors.git//modules/smart-agent_system-common?ref=v1.7.0"
+  environment = var.environment
 
   # Use our local defined above to easily map notifications for all detectors of the module
   notifications = local.notifications
 
   # We also enable the disk forecast detector for predictive alerting
   disk_running_out_disabled = false
-  
+
   # However, for this detector only we do not want to create oncall incident so we override its notifications
   disk_running_out_notifications = {
     critical = [module.signalfx-integrations-alerting-slack.sfx_integration_notification]
