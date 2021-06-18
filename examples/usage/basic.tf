@@ -20,13 +20,8 @@ module "signalfx-detectors-smart-agent-system-common-basic" {
   environment = var.environment
 
   # The notifications variable will map for each severity a list of destinations to send alerts to
-  notifications = {
-    critical = ["Email,doc@signalfx.null"]
-    major    = ["Email,doc@signalfx.null"]
-    minor    = ["Email,doc@signalfx.null"]
-    warning  = ["Email,doc@signalfx.null"]
-    info     = ["Email,doc@signalfx.null"]
-  }
+  notifications = local.notifications_devnull
+  # See the ./notifications.tf file for more information about notifications binding
   # -------------------------------------------------------------------------------------------------------
 }
 

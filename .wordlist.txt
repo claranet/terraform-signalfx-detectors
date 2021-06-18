@@ -194,3 +194,6 @@ ruleSeverity
 runbookUrl
 TODO
 instantiation
+myapp
+myenv
+mystack

@@ -11,8 +11,8 @@ command to `init` and `apply` detectors.
 :link: **Contents**
 
 - [Basic](#basic)
-- [Environment](#environment)
-- [Notifications](#notifications)
+  - [Environment](#environment)
+  - [Notifications](#notifications)
 - [Advanced](#advanced)
 - [Notifications](#notifications-1)
 - [Filtering](#filtering)
@@ -33,7 +33,7 @@ argument using either git or [the Terraform Registry](https://registry.terraform
 These [common global variables](https://github.com/claranet/terraform-signalfx-detectors/wiki/Structure#common-global)
 are the result of an opinionated implementation choice detailed below.
 
-## Environment
+### Environment
 
 The `environment` variable is used as:
 
@@ -48,7 +48,7 @@ This makes the modules "environment oriented" and require to deploy the same mod
 environment you have. That said, it is possible to override the filtering policy to not
 use the environment as filter and make any value you want as prefix replacing the environment.
 
-## Notifications
+### Notifications
 
 Every detector has, at least, one alerting rule which has a `severity`.
 The `notifications` variable is a map allowing the user to map any alert of deployed detectors
@@ -116,13 +116,17 @@ to the `common-filters.tf` file and it should be documented in its README.md.
 
 Nevertheless, this is possible to not follow this tagging convention, for example, if you do not want to
 add dimensions to your agent or tags to your cloud managed services by defining the `filtering_custom`
-variable to string following the [SignalFlow syntax](https://dev.splunk.com/observability/docs/signalflow/functions/filter_function/).
+variable to string following the [SignalFlow
+syntax](https://dev.splunk.com/observability/docs/signalflow/functions/filter_function/).
 It is even possible to define it the empty string `""` if you do not want filters at all. In this case,
 the detectors will apply to all MTS.
 
 Finally, it is also possible to combine these 2 approaches by also set the `filtering_append` to `true`.
 From this way both default filtering policy defined in the module and your own custom filtering policy
 defined by `filtering_custom` will be combined with the `and` logical operator.
+One common case is to of this append mode can be to add an exception of the default filtering policy
+(e.g. to prevent monitoring of undesirable instances like temporary instances created by `Packer` to
+build image).
 
 See the [filtering.tf](filtering.tf) file for examples.
 
@@ -133,4 +137,49 @@ avoid to have multiple detectors with the same name in case of multi instantiati
 
 ## Multi instantiation
 
-TODO
+Sometimes, we want to deploy the same module multiple times apart from the classic case of
+deploying per environment of course.
+
+In general, we prefer to keep the "auto discovery" capability of SignalFx especially for
+dynamic infrastructure like cloud instances to automatically monitor all new instances
+which match global dimensions like `stack` or `app` instead of deploying the module
+for each single resource.
+
+That said, it remains possible to use `filter_custom` variable to match each resource,
+for example, by using the `host` dimension. It allows to customize configuration per
+resource if each one have different usage and alerting needs.
+
+Even in this case, we can keep a certain level of discovery for new hosts by using
+wildcard or regex expression to match a group of instances with a common pattern like
+`host:*myenv-mystack-myapp*`.
+
+It can also be useful to use:
+
+- one module instance for generic purpose which apply to everything except a blacklist
+- and other modules instances to manage each exception of the blacklist with a specific
+configuration
+
+Using `filtering_custom` (in append mode or not) is always a requirement for multi
+instantiation to avoid overlap of detectors evaluation (the same resource should never
+be matched by 2 instances of the module) but it can also be the goal itself.
+
+Indeed, as filters are only editable at global level of the module (and so, applied to
+all of these detectors) it can be a way to apply a different filter for a specific
+detector in the module for the same resource(s) by importing the module:
+
+- once with all detectors enabled except the specific one applied to your filtering policy
+- once with all detectors disabled except the specific one with more filters to restrict
+the usage of this detector to a smaller range of resources (e.g. enable the cpu detector
+only for instances not in an auto scaling group)
+
+In fact, by combining the possible configuration of a module with multi instantiation
+method with right filtering overrides, everything becomes possible like using different
+notifications binding to different teams depending on the resource impacted.
+
+When, using multi instantiation for any other need than the default "per environment"
+way it is recommended to use the `prefixes` variables to add one or multiple slug prefixes
+at the start of name of detectors deployed by a module to identify its purpose like it is
+automatically done for the environment.
+
+The file [multi-instantiation.tf](multi-instantiation.tf) shows some examples how to
+use the multi instantiation method.

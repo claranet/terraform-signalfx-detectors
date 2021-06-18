@@ -48,11 +48,20 @@ locals {
     # And finally, info are only sent to your global email recipient
     info = [local.notification_global]
   }
+  # Useless email notifications using for example purpose
+  notifications_devnull = {
+    critical = [local.notification_global]
+    major    = [local.notification_global]
+    minor    = [local.notification_global]
+    warning  = [local.notification_global]
+    info     = [local.notification_global]
+  }
 }
 
 # Now we can import again a module and simply use this local for global notifications assignment
 module "signalfx-detectors-smart-agent-system-common-advanced" {
-  source      = "github.com/claranet/terraform-signalfx-detectors.git//modules/smart-agent_system-common?ref=v1.7.0"
+  source      = "claranet/detectors/signalfx//modules/smart-agent_system-common"
+  version     = ">= 1.7.0, < 2.0.0"
   environment = var.environment
 
   # Use our local defined above to easily map notifications for all detectors of the module

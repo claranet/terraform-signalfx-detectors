@@ -2,15 +2,10 @@ module "signalfx-detectors-smart-agent-system-common-filtering" {
 
   # The minimal configuration same as the basic.tf example file:
   # -------------------------------------------------------------------------------------------------------
-  source      = "github.com/claranet/terraform-signalfx-detectors.git//modules/smart-agent_system-common?ref=v1.7.0"
-  environment = var.environment
-  notifications = {
-    critical = ["Email,doc@signalfx.null"]
-    major    = ["Email,doc@signalfx.null"]
-    minor    = ["Email,doc@signalfx.null"]
-    warning  = ["Email,doc@signalfx.null"]
-    info     = ["Email,doc@signalfx.null"]
-  }
+  source        = "claranet/detectors/signalfx//modules/smart-agent_system-common"
+  version       = ">= 1.7.0, < 2.0.0"
+  environment   = var.environment
+  notifications = local.notifications_devnull
   # -------------------------------------------------------------------------------------------------------
 
   # Use the default filtering policy
@@ -33,6 +28,9 @@ module "signalfx-detectors-smart-agent-system-common-filtering" {
   # dimensions available in our environment. For example, if the default filtering policy allows to split
   # module instances per environment you can want to add more levels like per team or/and per application
   filtering_custom = "filter('team', 'oncall') and filter('app', 'webfront')"
+  # Or, uncomment the following line to keep the default filtering policy but add an exception to prevent
+  # undeseriable alerts.
+  #filtering_custom = "not filter('packer', 'true')"
   # Then enable the append mode to join the default filters and the custom ones with `and` logical operator
   filtering_append = true
   # -------------------------------------------------------------------------------------------------------

@@ -50,6 +50,9 @@ In general, you want probably smarter notifications definition, you can even def
 for different use cases (business hour only vs h24 alert) and assign the right local for each module 
 you call depending on the importance for you.
 
+To go further, please check the [usage](../usage/README.md) to learn by examples
+how to configure your new stack.
+
 # Tips
 
 - If something you want monitor is not available in the modules list, 

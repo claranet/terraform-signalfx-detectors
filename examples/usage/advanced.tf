@@ -2,15 +2,10 @@ module "signalfx-detectors-smart-agent-system-common-advanced" {
 
   # The minimal configuration same as the basic.tf example file:
   # -------------------------------------------------------------------------------------------------------
-  source      = "github.com/claranet/terraform-signalfx-detectors.git//modules/smart-agent_system-common?ref=v1.7.0"
-  environment = var.environment
-  notifications = {
-    critical = ["Email,doc@signalfx.null"]
-    major    = ["Email,doc@signalfx.null"]
-    minor    = ["Email,doc@signalfx.null"]
-    warning  = ["Email,doc@signalfx.null"]
-    info     = ["Email,doc@signalfx.null"]
-  }
+  source        = "claranet/detectors/signalfx//modules/smart-agent_system-common"
+  version       = ">= 1.7.0, < 2.0.0"
+  environment   = var.environment
+  notifications = local.notifications_devnull
   # -------------------------------------------------------------------------------------------------------
 
   # Customize the alert triggering related conditions:
