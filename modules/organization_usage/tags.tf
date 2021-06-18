@@ -1,3 +1,3 @@
-locals = {
+locals {
   tags = ["organization", "usage"]
 }
