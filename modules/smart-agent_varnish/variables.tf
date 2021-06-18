@@ -226,8 +226,8 @@ variable "cache_hit_rate_threshold_minor" {
   default     = 90
 }
 
-variable "cache_hit_rate_threshold_major" {
-  description = "Varnish cache hit rate threshold major"
+variable "cache_hit_rate_threshold_warning" {
+  description = "Varnish cache hit rate threshold warning"
   type        = number
   default     = 80
 }
