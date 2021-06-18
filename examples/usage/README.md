@@ -10,9 +10,13 @@ command to `init` and `apply` detectors.
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 :link: **Contents**
 
-  - [Step by step guide](#step-by-step-guide)
-  - [Notes](#notes)
-- [Tips](#tips)
+- [Basic](#basic)
+- [Environment](#environment)
+- [Notifications](#notifications)
+- [Advanced](#advanced)
+- [Notifications](#notifications-1)
+- [Filtering](#filtering)
+- [Multi instantiation](#multi-instantiation)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
