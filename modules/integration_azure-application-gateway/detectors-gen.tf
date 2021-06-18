@@ -18,8 +18,8 @@ EOF
     notifications         = coalescelist(lookup(var.capacity_units_notifications, "major", []), var.notifications.major)
     runbook_url           = try(coalesce(var.capacity_units_runbook_url, var.runbook_url), "")
     tip                   = var.capacity_units_tip
-    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
-    parameterized_body    = coalesce(var.message_body, local.rule_body)
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 }
 

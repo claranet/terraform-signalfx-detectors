@@ -20,8 +20,8 @@ EOF
     notifications         = coalescelist(lookup(var.ingress_5xx_notifications, "critical", []), var.notifications.critical)
     runbook_url           = try(coalesce(var.ingress_5xx_runbook_url, var.runbook_url), "")
     tip                   = var.ingress_5xx_tip
-    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
-    parameterized_body    = coalesce(var.message_body, local.rule_body)
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
   rule {
@@ -32,8 +32,8 @@ EOF
     notifications         = coalescelist(lookup(var.ingress_5xx_notifications, "major", []), var.notifications.major)
     runbook_url           = try(coalesce(var.ingress_5xx_runbook_url, var.runbook_url), "")
     tip                   = var.ingress_5xx_tip
-    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
-    parameterized_body    = coalesce(var.message_body, local.rule_body)
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 }
 
@@ -59,8 +59,8 @@ EOF
     notifications         = coalescelist(lookup(var.ingress_4xx_notifications, "critical", []), var.notifications.critical)
     runbook_url           = try(coalesce(var.ingress_4xx_runbook_url, var.runbook_url), "")
     tip                   = var.ingress_4xx_tip
-    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
-    parameterized_body    = coalesce(var.message_body, local.rule_body)
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
   rule {
@@ -71,8 +71,8 @@ EOF
     notifications         = coalescelist(lookup(var.ingress_4xx_notifications, "major", []), var.notifications.major)
     runbook_url           = try(coalesce(var.ingress_4xx_runbook_url, var.runbook_url), "")
     tip                   = var.ingress_4xx_tip
-    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
-    parameterized_body    = coalesce(var.message_body, local.rule_body)
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 }
 
@@ -96,8 +96,8 @@ EOF
     notifications         = coalescelist(lookup(var.ingress_latency_notifications, "critical", []), var.notifications.critical)
     runbook_url           = try(coalesce(var.ingress_latency_runbook_url, var.runbook_url), "")
     tip                   = var.ingress_latency_tip
-    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
-    parameterized_body    = coalesce(var.message_body, local.rule_body)
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
   rule {
@@ -108,8 +108,8 @@ EOF
     notifications         = coalescelist(lookup(var.ingress_latency_notifications, "major", []), var.notifications.major)
     runbook_url           = try(coalesce(var.ingress_latency_runbook_url, var.runbook_url), "")
     tip                   = var.ingress_latency_tip
-    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
-    parameterized_body    = coalesce(var.message_body, local.rule_body)
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 }
 

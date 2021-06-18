@@ -20,8 +20,8 @@ EOF
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
     runbook_url           = try(coalesce(var.heartbeat_runbook_url, var.runbook_url), "")
     tip                   = var.heartbeat_tip
-    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
-    parameterized_body    = coalesce(var.message_body, local.rule_body)
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 }
 
@@ -44,8 +44,8 @@ EOF
     notifications         = coalescelist(lookup(var.backend_failed_notifications, "critical", []), var.notifications.critical)
     runbook_url           = try(coalesce(var.backend_failed_runbook_url, var.runbook_url), "")
     tip                   = var.backend_failed_tip
-    parameterized_subject = coalesce(var.message_subject, local.rule_subject_novalue)
-    parameterized_body    = coalesce(var.message_body, local.rule_body)
+    parameterized_subject = var.message_subject == "" ? local.rule_subject_novalue : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 }
 
@@ -68,8 +68,8 @@ EOF
     notifications         = coalescelist(lookup(var.threads_number_notifications, "critical", []), var.notifications.critical)
     runbook_url           = try(coalesce(var.threads_number_runbook_url, var.runbook_url), "")
     tip                   = var.threads_number_tip
-    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
-    parameterized_body    = coalesce(var.message_body, local.rule_body)
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 }
 
@@ -92,8 +92,8 @@ EOF
     notifications         = coalescelist(lookup(var.session_dropped_notifications, "critical", []), var.notifications.critical)
     runbook_url           = try(coalesce(var.session_dropped_runbook_url, var.runbook_url), "")
     tip                   = var.session_dropped_tip
-    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
-    parameterized_body    = coalesce(var.message_body, local.rule_body)
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 }
 
@@ -119,8 +119,8 @@ EOF
     notifications         = coalescelist(lookup(var.cache_hit_rate_notifications, "major", []), var.notifications.major)
     runbook_url           = try(coalesce(var.cache_hit_rate_runbook_url, var.runbook_url), "")
     tip                   = var.cache_hit_rate_tip
-    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
-    parameterized_body    = coalesce(var.message_body, local.rule_body)
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
   rule {
     description           = "is too low > ${var.cache_hit_rate_threshold_minor}"
@@ -130,8 +130,8 @@ EOF
     notifications         = coalescelist(lookup(var.cache_hit_rate_notifications, "minor", []), var.notifications.minor)
     runbook_url           = try(coalesce(var.cache_hit_rate_runbook_url, var.runbook_url), "")
     tip                   = var.cache_hit_rate_tip
-    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
-    parameterized_body    = coalesce(var.message_body, local.rule_body)
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 }
 
@@ -158,8 +158,8 @@ EOF
     notifications         = coalescelist(lookup(var.memory_usage_notifications, "critical", []), var.notifications.critical)
     runbook_url           = try(coalesce(var.memory_usage_runbook_url, var.runbook_url), "")
     tip                   = var.memory_usage_tip
-    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
-    parameterized_body    = coalesce(var.message_body, local.rule_body)
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
   rule {
     description           = "is too low > ${var.memory_usage_threshold_major}"
@@ -169,8 +169,8 @@ EOF
     notifications         = coalescelist(lookup(var.memory_usage_notifications, "major", []), var.notifications.major)
     runbook_url           = try(coalesce(var.memory_usage_runbook_url, var.runbook_url), "")
     tip                   = var.memory_usage_tip
-    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
-    parameterized_body    = coalesce(var.message_body, local.rule_body)
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 }
 

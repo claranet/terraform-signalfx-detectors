@@ -19,8 +19,8 @@ EOF
     notifications         = coalescelist(lookup(var.used_capacity_notifications, "critical", []), var.notifications.critical)
     runbook_url           = try(coalesce(var.used_capacity_runbook_url, var.runbook_url), "")
     tip                   = var.used_capacity_tip
-    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
-    parameterized_body    = coalesce(var.message_body, local.rule_body)
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
   rule {
@@ -31,7 +31,7 @@ EOF
     notifications         = coalescelist(lookup(var.used_capacity_notifications, "major", []), var.notifications.major)
     runbook_url           = try(coalesce(var.used_capacity_runbook_url, var.runbook_url), "")
     tip                   = var.used_capacity_tip
-    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
-    parameterized_body    = coalesce(var.message_body, local.rule_body)
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 }

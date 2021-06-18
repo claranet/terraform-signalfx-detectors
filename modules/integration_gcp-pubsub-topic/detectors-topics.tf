@@ -18,8 +18,8 @@ EOF
     notifications         = coalescelist(lookup(var.sending_operations_notifications, "major", []), var.notifications.major)
     runbook_url           = try(coalesce(var.sending_operations_runbook_url, var.runbook_url), "")
     tip                   = var.sending_operations_tip
-    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
-    parameterized_body    = coalesce(var.message_body, local.rule_body)
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 }
 
@@ -44,8 +44,8 @@ EOF
     notifications         = coalescelist(lookup(var.unavailable_sending_operations_notifications, "critical", []), var.notifications.critical)
     runbook_url           = try(coalesce(var.unavailable_sending_operations_runbook_url, var.runbook_url), "")
     tip                   = var.unavailable_sending_operations_tip
-    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
-    parameterized_body    = coalesce(var.message_body, local.rule_body)
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
   rule {
@@ -56,8 +56,8 @@ EOF
     notifications         = coalescelist(lookup(var.unavailable_sending_operations_notifications, "major", []), var.notifications.major)
     runbook_url           = try(coalesce(var.unavailable_sending_operations_runbook_url, var.runbook_url), "")
     tip                   = var.unavailable_sending_operations_tip
-    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
-    parameterized_body    = coalesce(var.message_body, local.rule_body)
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 }
 
@@ -84,8 +84,8 @@ EOF
     notifications         = coalescelist(lookup(var.unavailable_sending_operations_ratio_notifications, "critical", []), var.notifications.critical)
     runbook_url           = try(coalesce(var.unavailable_sending_operations_ratio_runbook_url, var.runbook_url), "")
     tip                   = var.unavailable_sending_operations_ratio_tip
-    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
-    parameterized_body    = coalesce(var.message_body, local.rule_body)
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
   rule {
@@ -96,8 +96,8 @@ EOF
     notifications         = coalescelist(lookup(var.unavailable_sending_operations_ratio_notifications, "major", []), var.notifications.major)
     runbook_url           = try(coalesce(var.unavailable_sending_operations_ratio_runbook_url, var.runbook_url), "")
     tip                   = var.unavailable_sending_operations_ratio_tip
-    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
-    parameterized_body    = coalesce(var.message_body, local.rule_body)
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 }
 

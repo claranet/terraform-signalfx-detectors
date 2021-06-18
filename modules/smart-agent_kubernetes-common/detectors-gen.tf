@@ -19,8 +19,8 @@ EOF
     notifications         = coalescelist(lookup(var.hpa_scale_exceeded_capacity_notifications, "major", []), var.notifications.major)
     runbook_url           = try(coalesce(var.hpa_scale_exceeded_capacity_runbook_url, var.runbook_url), "")
     tip                   = var.hpa_scale_exceeded_capacity_tip
-    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
-    parameterized_body    = coalesce(var.message_body, local.rule_body)
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 }
 

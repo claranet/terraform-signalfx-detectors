@@ -18,8 +18,8 @@ EOF
     notifications         = coalescelist(lookup(var.node_status_notifications, "critical", []), var.notifications.critical)
     runbook_url           = try(coalesce(var.node_status_runbook_url, var.runbook_url), "")
     tip                   = var.node_status_tip
-    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
-    parameterized_body    = coalesce(var.message_body, local.rule_body)
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
   rule {
@@ -30,8 +30,8 @@ EOF
     notifications         = coalescelist(lookup(var.node_status_notifications, "minor", []), var.notifications.minor)
     runbook_url           = try(coalesce(var.node_status_runbook_url, var.runbook_url), "")
     tip                   = var.node_status_tip
-    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
-    parameterized_body    = coalesce(var.message_body, local.rule_body)
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 }
 
@@ -54,8 +54,8 @@ EOF
     notifications         = coalescelist(lookup(var.node_state_notifications, "critical", []), var.notifications.critical)
     runbook_url           = try(coalesce(var.node_state_runbook_url, var.runbook_url), "")
     tip                   = var.node_state_tip
-    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
-    parameterized_body    = coalesce(var.message_body, local.rule_body)
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 }
 

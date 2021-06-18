@@ -20,8 +20,8 @@ EOF
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
     runbook_url           = try(coalesce(var.heartbeat_runbook_url, var.runbook_url), "")
     tip                   = var.heartbeat_tip
-    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
-    parameterized_body    = coalesce(var.message_body, local.rule_body)
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 }
 
@@ -45,8 +45,8 @@ EOF
     notifications         = coalescelist(lookup(var.memcached_max_conn_notifications, "critical", []), var.notifications.critical)
     runbook_url           = try(coalesce(var.memcached_max_conn_runbook_url, var.runbook_url), "")
     tip                   = var.memcached_max_conn_tip
-    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
-    parameterized_body    = coalesce(var.message_body, local.rule_body)
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
   rule {
@@ -57,8 +57,8 @@ EOF
     notifications         = coalescelist(lookup(var.memcached_max_conn_notifications, "major", []), var.notifications.major)
     runbook_url           = try(coalesce(var.memcached_max_conn_runbook_url, var.runbook_url), "")
     tip                   = var.memcached_max_conn_tip
-    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
-    parameterized_body    = coalesce(var.message_body, local.rule_body)
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 }
 
@@ -84,8 +84,8 @@ EOF
     notifications         = coalescelist(lookup(var.memcached_hit_ratio_notifications, "major", []), var.notifications.major)
     runbook_url           = try(coalesce(var.memcached_hit_ratio_runbook_url, var.runbook_url), "")
     tip                   = var.memcached_hit_ratio_tip
-    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
-    parameterized_body    = coalesce(var.message_body, local.rule_body)
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
   rule {
@@ -96,7 +96,7 @@ EOF
     notifications         = coalescelist(lookup(var.memcached_hit_ratio_notifications, "minor", []), var.notifications.minor)
     runbook_url           = try(coalesce(var.memcached_hit_ratio_runbook_url, var.runbook_url), "")
     tip                   = var.memcached_hit_ratio_tip
-    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
-    parameterized_body    = coalesce(var.message_body, local.rule_body)
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 }
