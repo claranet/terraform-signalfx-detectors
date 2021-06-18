@@ -117,8 +117,8 @@ EOF
     notifications         = coalescelist(lookup(var.{{ id }}_notifications, "{{ severity }}", []), var.notifications.{{ severity }})
     runbook_url           = try(coalesce(var.{{ id }}_runbook_url, var.runbook_url), "")
     tip                   = var.{{ id }}_tip
-    parameterized_subject = local.rule_subject{%- if type == 'heartbeat' -%}_novalue{% endif %}
-    parameterized_body    = local.rule_body
+    parameterized_subject = coalesce(var.message_subject, local.rule_subject{%- if type == 'heartbeat' -%}_novalue{% endif %})
+    parameterized_body    = coalesce(var.message_body, local.rule_body)
   }
   {%- endfor %}
 }

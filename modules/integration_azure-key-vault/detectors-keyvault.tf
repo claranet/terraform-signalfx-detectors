@@ -21,8 +21,8 @@ resource "signalfx_detector" "api_result" {
     notifications         = coalescelist(lookup(var.api_result_notifications, "critical", []), var.notifications.critical)
     runbook_url           = try(coalesce(var.api_result_runbook_url, var.runbook_url), "")
     tip                   = var.api_result_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
+    parameterized_body    = coalesce(var.message_body, local.rule_body)
   }
 
   rule {
@@ -33,8 +33,8 @@ resource "signalfx_detector" "api_result" {
     notifications         = coalescelist(lookup(var.api_result_notifications, "major", []), var.notifications.major)
     runbook_url           = try(coalesce(var.api_result_runbook_url, var.runbook_url), "")
     tip                   = var.api_result_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
+    parameterized_body    = coalesce(var.message_body, local.rule_body)
   }
 }
 
@@ -59,8 +59,8 @@ resource "signalfx_detector" "api_latency" {
     notifications         = coalescelist(lookup(var.api_latency_notifications, "critical", []), var.notifications.critical)
     runbook_url           = try(coalesce(var.api_latency_runbook_url, var.runbook_url), "")
     tip                   = var.api_latency_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
+    parameterized_body    = coalesce(var.message_body, local.rule_body)
   }
 
   rule {
@@ -71,7 +71,7 @@ resource "signalfx_detector" "api_latency" {
     notifications         = coalescelist(lookup(var.api_latency_notifications, "major", []), var.notifications.major)
     runbook_url           = try(coalesce(var.api_latency_runbook_url, var.runbook_url), "")
     tip                   = var.api_latency_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
+    parameterized_body    = coalesce(var.message_body, local.rule_body)
   }
 }

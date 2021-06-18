@@ -19,8 +19,8 @@ resource "signalfx_detector" "heartbeat" {
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
     runbook_url           = try(coalesce(var.heartbeat_runbook_url, var.runbook_url), "")
     tip                   = var.heartbeat_tip
-    parameterized_subject = local.rule_subject_novalue
-    parameterized_body    = local.rule_body
+    parameterized_subject = coalesce(var.message_subject, local.rule_subject_novalue)
+    parameterized_body    = coalesce(var.message_body, local.rule_body)
   }
 }
 
@@ -47,8 +47,8 @@ resource "signalfx_detector" "http_5xx_errors_rate" {
     notifications         = coalescelist(lookup(var.http_5xx_errors_rate_notifications, "critical", []), var.notifications.critical)
     runbook_url           = try(coalesce(var.http_5xx_errors_rate_runbook_url, var.runbook_url), "")
     tip                   = var.http_5xx_errors_rate_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
+    parameterized_body    = coalesce(var.message_body, local.rule_body)
   }
 
   rule {
@@ -59,8 +59,8 @@ resource "signalfx_detector" "http_5xx_errors_rate" {
     notifications         = coalescelist(lookup(var.http_5xx_errors_rate_notifications, "major", []), var.notifications.major)
     runbook_url           = try(coalesce(var.http_5xx_errors_rate_runbook_url, var.runbook_url), "")
     tip                   = var.http_5xx_errors_rate_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
+    parameterized_body    = coalesce(var.message_body, local.rule_body)
   }
 }
 
@@ -85,8 +85,8 @@ resource "signalfx_detector" "high_connections_count" {
     notifications         = coalescelist(lookup(var.high_connections_count_notifications, "critical", []), var.notifications.critical)
     runbook_url           = try(coalesce(var.high_connections_count_runbook_url, var.runbook_url), "")
     tip                   = var.high_connections_count_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
+    parameterized_body    = coalesce(var.message_body, local.rule_body)
   }
 
   rule {
@@ -97,8 +97,8 @@ resource "signalfx_detector" "high_connections_count" {
     notifications         = coalescelist(lookup(var.high_connections_count_notifications, "major", []), var.notifications.major)
     runbook_url           = try(coalesce(var.high_connections_count_runbook_url, var.runbook_url), "")
     tip                   = var.high_connections_count_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
+    parameterized_body    = coalesce(var.message_body, local.rule_body)
   }
 }
 
@@ -123,8 +123,8 @@ resource "signalfx_detector" "high_threads_count" {
     notifications         = coalescelist(lookup(var.high_threads_count_notifications, "critical", []), var.notifications.critical)
     runbook_url           = try(coalesce(var.high_threads_count_runbook_url, var.runbook_url), "")
     tip                   = var.high_threads_count_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
+    parameterized_body    = coalesce(var.message_body, local.rule_body)
   }
 
   rule {
@@ -135,7 +135,7 @@ resource "signalfx_detector" "high_threads_count" {
     notifications         = coalescelist(lookup(var.high_threads_count_notifications, "major", []), var.notifications.major)
     runbook_url           = try(coalesce(var.high_threads_count_runbook_url, var.runbook_url), "")
     tip                   = var.high_threads_count_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
+    parameterized_body    = coalesce(var.message_body, local.rule_body)
   }
 }

@@ -20,8 +20,8 @@ EOF
     notifications         = coalescelist(lookup(var.memory_heap_notifications, "major", []), var.notifications.major)
     runbook_url           = try(coalesce(var.memory_heap_runbook_url, var.runbook_url), "")
     tip                   = var.memory_heap_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
+    parameterized_body    = coalesce(var.message_body, local.rule_body)
   }
   rule {
     description           = "is too high > ${var.memory_heap_threshold_critical}"
@@ -31,8 +31,8 @@ EOF
     notifications         = coalescelist(lookup(var.memory_heap_notifications, "critical", []), var.notifications.critical)
     runbook_url           = try(coalesce(var.memory_heap_runbook_url, var.runbook_url), "")
     tip                   = var.memory_heap_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
+    parameterized_body    = coalesce(var.message_body, local.rule_body)
   }
 }
 
@@ -58,8 +58,8 @@ EOF
     notifications         = coalescelist(lookup(var.gc_old_gen_notifications, "major", []), var.notifications.major)
     runbook_url           = try(coalesce(var.gc_old_gen_runbook_url, var.runbook_url), "")
     tip                   = var.gc_old_gen_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
+    parameterized_body    = coalesce(var.message_body, local.rule_body)
   }
   rule {
     description           = "is too high > ${var.gc_old_gen_threshold_critical}"
@@ -69,8 +69,8 @@ EOF
     notifications         = coalescelist(lookup(var.gc_old_gen_notifications, "critical", []), var.notifications.critical)
     runbook_url           = try(coalesce(var.gc_old_gen_runbook_url, var.runbook_url), "")
     tip                   = var.gc_old_gen_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
+    parameterized_body    = coalesce(var.message_body, local.rule_body)
   }
 }
 

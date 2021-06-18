@@ -18,8 +18,8 @@ EOF
     notifications         = coalescelist(lookup(var.processes_notifications, "critical", []), var.notifications.critical)
     runbook_url           = try(coalesce(var.processes_runbook_url, var.runbook_url), "")
     tip                   = var.processes_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
+    parameterized_body    = coalesce(var.message_body, local.rule_body)
   }
 
   rule {
@@ -30,8 +30,8 @@ EOF
     notifications         = coalescelist(lookup(var.processes_notifications, "major", []), var.notifications.major)
     runbook_url           = try(coalesce(var.processes_runbook_url, var.runbook_url), "")
     tip                   = var.processes_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
+    parameterized_body    = coalesce(var.message_body, local.rule_body)
   }
 }
 

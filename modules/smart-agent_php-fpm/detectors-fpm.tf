@@ -20,8 +20,8 @@ EOF
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
     runbook_url           = try(coalesce(var.heartbeat_runbook_url, var.runbook_url), "")
     tip                   = var.heartbeat_tip
-    parameterized_subject = local.rule_subject_novalue
-    parameterized_body    = local.rule_body
+    parameterized_subject = coalesce(var.message_subject, local.rule_subject_novalue)
+    parameterized_body    = coalesce(var.message_body, local.rule_body)
   }
 }
 
@@ -47,8 +47,8 @@ EOF
     notifications         = coalescelist(lookup(var.php_fpm_connect_idle_notifications, "critical", []), var.notifications.critical)
     runbook_url           = try(coalesce(var.php_fpm_connect_idle_runbook_url, var.runbook_url), "")
     tip                   = var.php_fpm_connect_idle_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
+    parameterized_body    = coalesce(var.message_body, local.rule_body)
   }
 
   rule {
@@ -59,8 +59,8 @@ EOF
     notifications         = coalescelist(lookup(var.php_fpm_connect_idle_notifications, "major", []), var.notifications.major)
     runbook_url           = try(coalesce(var.php_fpm_connect_idle_runbook_url, var.runbook_url), "")
     tip                   = var.php_fpm_connect_idle_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
+    parameterized_body    = coalesce(var.message_body, local.rule_body)
   }
 }
 

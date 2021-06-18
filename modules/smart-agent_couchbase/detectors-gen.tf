@@ -25,8 +25,8 @@ EOF
     notifications         = coalescelist(lookup(var.memory_used_notifications, "critical", []), var.notifications.critical)
     runbook_url           = try(coalesce(var.memory_used_runbook_url, var.runbook_url), "")
     tip                   = var.memory_used_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
+    parameterized_body    = coalesce(var.message_body, local.rule_body)
   }
 
   rule {
@@ -37,8 +37,8 @@ EOF
     notifications         = coalescelist(lookup(var.memory_used_notifications, "major", []), var.notifications.major)
     runbook_url           = try(coalesce(var.memory_used_runbook_url, var.runbook_url), "")
     tip                   = var.memory_used_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
+    parameterized_body    = coalesce(var.message_body, local.rule_body)
   }
 }
 
@@ -61,8 +61,8 @@ EOF
     notifications         = coalescelist(lookup(var.out_of_memory_errors_notifications, "critical", []), var.notifications.critical)
     runbook_url           = try(coalesce(var.out_of_memory_errors_runbook_url, var.runbook_url), "")
     tip                   = var.out_of_memory_errors_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
+    parameterized_body    = coalesce(var.message_body, local.rule_body)
   }
 }
 
@@ -86,8 +86,8 @@ EOF
     notifications         = coalescelist(lookup(var.disk_write_queue_notifications, "critical", []), var.notifications.critical)
     runbook_url           = try(coalesce(var.disk_write_queue_runbook_url, var.runbook_url), "")
     tip                   = var.disk_write_queue_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
+    parameterized_body    = coalesce(var.message_body, local.rule_body)
   }
 
   rule {
@@ -98,8 +98,8 @@ EOF
     notifications         = coalescelist(lookup(var.disk_write_queue_notifications, "major", []), var.notifications.major)
     runbook_url           = try(coalesce(var.disk_write_queue_runbook_url, var.runbook_url), "")
     tip                   = var.disk_write_queue_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
+    parameterized_body    = coalesce(var.message_body, local.rule_body)
   }
 }
 

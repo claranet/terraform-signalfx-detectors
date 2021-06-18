@@ -20,8 +20,8 @@ EOF
     notifications         = coalescelist(lookup(var.volume_space_notifications, "critical", []), var.notifications.critical)
     runbook_url           = try(coalesce(var.volume_space_runbook_url, var.runbook_url), "")
     tip                   = var.volume_space_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
+    parameterized_body    = coalesce(var.message_body, local.rule_body)
   }
 
   rule {
@@ -32,8 +32,8 @@ EOF
     notifications         = coalescelist(lookup(var.volume_space_notifications, "major", []), var.notifications.major)
     runbook_url           = try(coalesce(var.volume_space_runbook_url, var.runbook_url), "")
     tip                   = var.volume_space_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
+    parameterized_body    = coalesce(var.message_body, local.rule_body)
   }
 }
 
@@ -59,8 +59,8 @@ EOF
     notifications         = coalescelist(lookup(var.volume_inodes_notifications, "critical", []), var.notifications.critical)
     runbook_url           = try(coalesce(var.volume_inodes_runbook_url, var.runbook_url), "")
     tip                   = var.volume_inodes_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
+    parameterized_body    = coalesce(var.message_body, local.rule_body)
   }
 
   rule {
@@ -71,8 +71,8 @@ EOF
     notifications         = coalescelist(lookup(var.volume_inodes_notifications, "major", []), var.notifications.major)
     runbook_url           = try(coalesce(var.volume_inodes_runbook_url, var.runbook_url), "")
     tip                   = var.volume_inodes_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = coalesce(var.message_subject, local.rule_subject)
+    parameterized_body    = coalesce(var.message_body, local.rule_body)
   }
 }
 
