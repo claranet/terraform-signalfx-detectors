@@ -94,7 +94,7 @@ make update-module ${MODULE_DIR}
 Congratulations, you just created a working and minimal module!
 
 Now you can edit the yaml configuration files available in its `conf` directory and run again `make update-module`
-command everytime you want update the underlying code and documentation before to push your changes.
+command every time you want update the underlying code and documentation before to push your changes.
 
 For more information about the templates and their generator please check the [dedicated readme](../scripts/templates/README.md).
 You can find a full list of options for the detector template from the [values.yaml](../scripts/templates/values.yaml)
