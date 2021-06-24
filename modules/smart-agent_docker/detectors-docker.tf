@@ -3,6 +3,7 @@ resource "signalfx_detector" "heartbeat" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   max_delay = 900
 
@@ -30,6 +31,7 @@ resource "signalfx_detector" "cpu" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
 		signal = data('cpu.percent', filter=filter('plugin', 'docker') and ${module.filtering.signalflow})${var.cpu_aggregation_function}${var.cpu_transformation_function}.publish('signal')
@@ -67,6 +69,7 @@ resource "signalfx_detector" "throttling" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
 		A = data('cpu.throttling_data.throttled_time', filter=filter('plugin', 'docker') and ${module.filtering.signalflow}, rollup='delta')${var.throttling_aggregation_function}${var.throttling_transformation_function}
@@ -106,6 +109,7 @@ resource "signalfx_detector" "memory" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
 		A = data('memory.usage.total', filter=filter('plugin', 'docker') and ${module.filtering.signalflow})${var.memory_aggregation_function}${var.memory_transformation_function}

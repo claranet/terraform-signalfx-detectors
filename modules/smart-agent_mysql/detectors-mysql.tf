@@ -3,6 +3,7 @@ resource "signalfx_detector" "heartbeat" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   max_delay = 900
 
@@ -30,6 +31,7 @@ resource "signalfx_detector" "mysql_connections" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     A = data('mysql_threads_connected', filter=${module.filtering.signalflow}, rollup='average')${var.connections_aggregation_function}${var.connections_transformation_function}
@@ -69,6 +71,7 @@ resource "signalfx_detector" "mysql_slow" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     A = data('mysql_slow_queries', filter=(not filter('plugin', 'mysql')) and ${module.filtering.signalflow}, rollup='delta')${var.slow_aggregation_function}${var.slow_transformation_function}
@@ -108,6 +111,7 @@ resource "signalfx_detector" "mysql_pool_efficiency" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     A = data('mysql_bpool_counters.reads', filter=filter('plugin', 'mysql') and ${module.filtering.signalflow}, rollup='delta')${var.pool_efficiency_aggregation_function}${var.pool_efficiency_transformation_function}
@@ -147,6 +151,7 @@ resource "signalfx_detector" "mysql_pool_utilization" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     A = data('mysql_bpool_pages.free', filter=filter('plugin', 'mysql') and ${module.filtering.signalflow}, rollup='average')${var.pool_utilization_aggregation_function}${var.pool_utilization_transformation_function}
@@ -186,6 +191,7 @@ resource "signalfx_detector" "mysql_threads_anomaly" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     from signalfx.detectors.against_periods import against_periods
@@ -211,6 +217,7 @@ resource "signalfx_detector" "mysql_questions_anomaly" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     from signalfx.detectors.against_periods import against_periods
@@ -236,6 +243,7 @@ resource "signalfx_detector" "mysql_replication_lag" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     signal = data('mysql_seconds_behind_master', filter=${module.filtering.signalflow}, rollup='average')${var.replication_lag_aggregation_function}${var.replication_lag_transformation_function}.publish('signal')
@@ -273,6 +281,7 @@ resource "signalfx_detector" "mysql_slave_sql_status" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     signal = data('mysql_slave_sql_running', filter=${module.filtering.signalflow}, rollup='average')${var.slave_sql_status_aggregation_function}${var.slave_sql_status_transformation_function}.publish('signal')
@@ -297,6 +306,7 @@ resource "signalfx_detector" "mysql_slave_io_status" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     signal = data('mysql_slave_io_running', filter=${module.filtering.signalflow}, rollup='average')${var.slave_io_status_aggregation_function}${var.slave_io_status_transformation_function}.publish('signal')

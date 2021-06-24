@@ -3,6 +3,7 @@ resource "signalfx_detector" "throttled_requests" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   viz_options {
     label        = "signal"

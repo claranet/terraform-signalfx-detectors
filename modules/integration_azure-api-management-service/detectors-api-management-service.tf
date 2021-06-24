@@ -1,6 +1,12 @@
 resource "signalfx_detector" "heartbeat" {
   name = format("%s %s", local.detector_name_prefix, "Azure API Management Service Heartbeat")
 
+  authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
+
+  max_delay = 900
+
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting
         base_filter = filter('resource_type', 'Microsoft.ApiManagement/service') and filter('primary_aggregation_type', 'true')

@@ -3,6 +3,7 @@ resource "signalfx_detector" "heartbeat" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   max_delay = 900
 
@@ -30,6 +31,7 @@ resource "signalfx_detector" "file_descriptors" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     A = data('gauge.node.fd_used', filter=filter('plugin', 'rabbitmq') and ${module.filtering.signalflow})${var.file_descriptors_aggregation_function}${var.file_descriptors_transformation_function}
@@ -69,6 +71,7 @@ resource "signalfx_detector" "processes" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     A = data('gauge.node.proc_used', filter=filter('plugin', 'rabbitmq') and ${module.filtering.signalflow})${var.processes_aggregation_function}${var.processes_transformation_function}
@@ -108,6 +111,7 @@ resource "signalfx_detector" "sockets" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     A = data('gauge.node.sockets_used', filter=filter('plugin', 'rabbitmq') and ${module.filtering.signalflow})${var.sockets_aggregation_function}${var.sockets_transformation_function}
@@ -147,6 +151,7 @@ resource "signalfx_detector" "vm_memory" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     A = data('gauge.node.mem_used', filter=filter('plugin', 'rabbitmq') and ${module.filtering.signalflow})${var.vm_memory_aggregation_function}${var.vm_memory_transformation_function}

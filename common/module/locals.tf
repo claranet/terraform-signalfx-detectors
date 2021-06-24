@@ -10,6 +10,7 @@ locals {
     local.not_running_vm_filters_azure
   )
   detector_name_prefix = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}]"
+  common_tags          = concat(["terraform", var.environment], var.teams)
   rule_subject_prefix  = "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}}"
   rule_subject_suffix  = "on {{{dimensions}}}"
   rule_subject         = format("%s ({{inputs.signal.value}}) %s", local.rule_subject_prefix, local.rule_subject_suffix)

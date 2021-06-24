@@ -3,6 +3,7 @@ resource "signalfx_detector" "heartbeat" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   max_delay = 900
 
@@ -30,6 +31,7 @@ resource "signalfx_detector" "http_code_matched" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     signal = data('http.code_matched', filter=${module.filtering.signalflow}, rollup='max')${var.http_code_matched_aggregation_function}${var.http_code_matched_transformation_function}.publish('signal')
@@ -55,6 +57,7 @@ resource "signalfx_detector" "http_regex_matched" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     signal = data('http.regex_matched', filter=${module.filtering.signalflow}, rollup='min')${var.http_regex_matched_aggregation_function}${var.http_regex_matched_transformation_function}.publish('signal')
@@ -80,6 +83,7 @@ resource "signalfx_detector" "http_response_time" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     signal = data('http.response_time', filter=${module.filtering.signalflow}, rollup='max')${var.http_response_time_aggregation_function}${var.http_response_time_transformation_function}.publish('signal')
@@ -117,6 +121,7 @@ resource "signalfx_detector" "http_content_length" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     signal = data('http.content_length', filter=${module.filtering.signalflow}, rollup='min')${var.http_content_length_aggregation_function}${var.http_content_length_transformation_function}.publish('signal')
@@ -141,6 +146,7 @@ resource "signalfx_detector" "certificate_expiration_date" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     A = data('http.cert_expiry', filter=${module.filtering.signalflow}, rollup='min')${var.certificate_expiration_date_aggregation_function}${var.certificate_expiration_date_transformation_function}
@@ -179,6 +185,7 @@ resource "signalfx_detector" "invalid_tls_certificate" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     signal = data('http.cert_valid', filter=${module.filtering.signalflow}, rollup='min')${var.invalid_tls_certificate_aggregation_function}${var.invalid_tls_certificate_transformation_function}.publish('signal')

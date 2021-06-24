@@ -3,6 +3,7 @@ resource "signalfx_detector" "status_check" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
         signal = data('nagios.state', filter=${module.filtering.signalflow})${var.status_check_aggregation_function}${var.status_check_transformation_function}.publish('signal')

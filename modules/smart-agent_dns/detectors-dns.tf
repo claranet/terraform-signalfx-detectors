@@ -3,6 +3,7 @@ resource "signalfx_detector" "heartbeat" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   max_delay = 900
 
@@ -30,6 +31,7 @@ resource "signalfx_detector" "dns_query_time" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     signal = data('dns.query_time_ms', filter=filter('plugin', 'telegraf/dns') and ${module.filtering.signalflow})${var.dns_query_time_aggregation_function}${var.dns_query_time_transformation_function}.publish('signal')
@@ -67,6 +69,7 @@ resource "signalfx_detector" "dns_result_code" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     signal = data('dns.result_code', filter=filter('plugin', 'telegraf/dns') and ${module.filtering.signalflow})${var.dns_result_code_aggregation_function}${var.dns_result_code_transformation_function}.publish('signal')

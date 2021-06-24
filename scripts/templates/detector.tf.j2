@@ -15,6 +15,7 @@ resource "signalfx_detector" "{{ id }}" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
   {%- if type == 'heartbeat' %}
 
   max_delay = 900

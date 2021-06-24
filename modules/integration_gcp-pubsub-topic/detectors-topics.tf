@@ -3,6 +3,7 @@ resource "signalfx_detector" "sending_operations" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     reserved_topics = (not filter('topic_id', 'container-analysis-occurrences*', 'container-analysis-notes*', 'cloud-builds', 'gcr'))
@@ -28,6 +29,7 @@ resource "signalfx_detector" "unavailable_sending_operations" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     reserved_topics = (not filter('topic_id', 'container-analysis-occurrences*', 'container-analysis-notes*', 'cloud-builds', 'gcr'))
@@ -66,6 +68,7 @@ resource "signalfx_detector" "unavailable_sending_operations_ratio" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     reserved_topics = (not filter('topic_id', 'container-analysis-occurrences*', 'container-analysis-notes*', 'cloud-builds', 'gcr'))

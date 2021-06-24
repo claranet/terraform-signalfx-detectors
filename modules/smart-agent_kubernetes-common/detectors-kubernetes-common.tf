@@ -3,6 +3,7 @@ resource "signalfx_detector" "heartbeat" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
@@ -28,6 +29,7 @@ resource "signalfx_detector" "node_ready" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     signal = data('kubernetes.node_ready', filter=${module.filtering.signalflow})${var.node_ready_aggregation_function}${var.node_ready_transformation_function}.fill(1).publish('signal')
@@ -65,6 +67,7 @@ resource "signalfx_detector" "pod_phase_status" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     signal = data('kubernetes.pod_phase', filter=(not filter('job', '*')) and (not filter('cronjob', '*')) and ${module.filtering.signalflow})${var.pod_phase_status_aggregation_function}${var.pod_phase_status_transformation_function}.publish('signal')
@@ -89,6 +92,7 @@ resource "signalfx_detector" "terminated" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     signal = data('kubernetes.container_ready', filter=filter('container_status', 'terminated') and (not filter('container_status_reason', 'Completed')) and ${module.filtering.signalflow})${var.terminated_aggregation_function}${var.terminated_transformation_function}.publish('signal')
@@ -113,6 +117,7 @@ resource "signalfx_detector" "oom_killed" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     signal = data('kubernetes.container_ready', filter=filter('container_status', 'terminated') and filter('container_status_reason', 'OOMKilled') and ${module.filtering.signalflow})${var.oom_killed_aggregation_function}${var.oom_killed_transformation_function}.count().publish('signal')
@@ -137,6 +142,7 @@ resource "signalfx_detector" "deployment_crashloopbackoff" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     signal = data('kubernetes.container_restart_count', filter=filter('container_status', 'waiting') and filter('deployment', '*') and filter('container_status_reason', 'CrashLoopBackOff') and ${module.filtering.signalflow}, extrapolation='zero')${var.deployment_crashloopbackoff_aggregation_function}${var.deployment_crashloopbackoff_transformation_function}.publish('signal')
@@ -161,6 +167,7 @@ resource "signalfx_detector" "daemonset_crashloopbackoff" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     signal = data('kubernetes.container_restart_count', filter=filter('container_status', 'waiting') and filter('daemonSet', '*') and filter('container_status_reason', 'CrashLoopBackOff') and ${module.filtering.signalflow}, extrapolation='zero')${var.daemonset_crashloopbackoff_aggregation_function}${var.daemonset_crashloopbackoff_transformation_function}.publish('signal')
@@ -185,6 +192,7 @@ resource "signalfx_detector" "job_failed" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     A = data('kubernetes.job.completions', extrapolation='zero', filter=${module.filtering.signalflow})${var.job_failed_aggregation_function}${var.job_failed_transformation_function}
@@ -212,6 +220,7 @@ resource "signalfx_detector" "daemonset_scheduled" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     A = data('kubernetes.daemon_set.desired_scheduled', filter=${module.filtering.signalflow})${var.daemonset_scheduled_aggregation_function}${var.daemonset_scheduled_transformation_function}
@@ -238,6 +247,7 @@ resource "signalfx_detector" "daemonset_ready" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     A = data('kubernetes.daemon_set.ready', filter=${module.filtering.signalflow})${var.daemonset_ready_aggregation_function}${var.daemonset_ready_transformation_function}
@@ -264,6 +274,7 @@ resource "signalfx_detector" "daemonset_misscheduled" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     signal = data('kubernetes.daemon_set.misscheduled', filter=${module.filtering.signalflow})${var.daemonset_misscheduled_aggregation_function}${var.daemonset_misscheduled_transformation_function}.publish('signal')
@@ -288,6 +299,7 @@ resource "signalfx_detector" "deployment_available" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     A = data('kubernetes.deployment.desired', filter=${module.filtering.signalflow})${var.deployment_available_aggregation_function}${var.deployment_available_transformation_function}
@@ -314,6 +326,7 @@ resource "signalfx_detector" "replicaset_available" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     A = data('kubernetes.replica_set.desired', filter=${module.filtering.signalflow})${var.replicaset_available_aggregation_function}${var.replicaset_available_transformation_function}
@@ -340,6 +353,7 @@ resource "signalfx_detector" "replication_controller_available" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     A = data('kubernetes.replication_controller.desired', filter=${module.filtering.signalflow})${var.replication_controller_available_aggregation_function}${var.replication_controller_available_transformation_function}
@@ -366,6 +380,7 @@ resource "signalfx_detector" "statefulset_ready" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     A = data('kubernetes.stateful_set.desired', filter=${module.filtering.signalflow})${var.statefulset_ready_aggregation_function}${var.statefulset_ready_transformation_function}

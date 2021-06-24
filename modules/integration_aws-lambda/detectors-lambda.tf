@@ -3,6 +3,7 @@ resource "signalfx_detector" "pct_errors" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     A = data('Errors', filter=filter('namespace', 'AWS/Lambda') and filter('stat', 'mean') and filter('Resource', '*') and ${module.filtering.signalflow}, extrapolation='last_value', rollup='average')${var.pct_errors_aggregation_function}${var.pct_errors_transformation_function}
@@ -42,6 +43,7 @@ resource "signalfx_detector" "throttles" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     signal = data('Throttles', filter=filter('namespace', 'AWS/Lambda') and filter('stat', 'mean') and filter('Resource', '*') and ${module.filtering.signalflow}, extrapolation='last_value', rollup='average')${var.throttles_aggregation_function}${var.throttles_transformation_function}.publish('signal')
@@ -79,6 +81,7 @@ resource "signalfx_detector" "invocations" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     signal = data('Invocations', filter=filter('namespace', 'AWS/Lambda') and filter('stat', 'mean') and filter('Resource', '*') and ${module.filtering.signalflow}, extrapolation='last_value', rollup='average')${var.invocations_aggregation_function}${var.invocations_transformation_function}.publish('signal')

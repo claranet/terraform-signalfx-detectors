@@ -3,6 +3,7 @@ resource "signalfx_detector" "heartbeat" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   max_delay = 900
 
@@ -30,6 +31,7 @@ resource "signalfx_detector" "average_processing_time" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     A = data('counter.tomcat.GlobalRequestProcessor.processingTime', filter=${module.filtering.signalflow}, rollup='delta')${var.average_processing_time_aggregation_function}${var.average_processing_time_transformation_function}
@@ -69,6 +71,7 @@ resource "signalfx_detector" "busy_threads_percentage" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     A = data('gauge.tomcat.ThreadPool.currentThreadsBusy', filter=${module.filtering.signalflow})${var.busy_threads_percentage_aggregation_function}${var.busy_threads_percentage_transformation_function}

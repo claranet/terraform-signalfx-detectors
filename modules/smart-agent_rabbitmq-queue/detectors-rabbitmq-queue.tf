@@ -3,6 +3,7 @@ resource "signalfx_detector" "messages_ready" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     signal = data('gauge.queue.messages_ready', filter=filter('plugin', 'rabbitmq') and ${module.filtering.signalflow})${var.messages_ready_aggregation_function}${var.messages_ready_transformation_function}.publish('signal')
@@ -40,6 +41,7 @@ resource "signalfx_detector" "messages_unacknowledged" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     signal = data('gauge.queue.messages_unacknowledged', filter=filter('plugin', 'rabbitmq') and ${module.filtering.signalflow})${var.messages_unacknowledged_aggregation_function}${var.messages_unacknowledged_transformation_function}.publish('signal')
@@ -77,6 +79,7 @@ resource "signalfx_detector" "messages_ack_rate" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     signal = data('counter.queue.message_stats.ack', filter=filter('plugin', 'rabbitmq') and ${module.filtering.signalflow})${var.messages_ack_rate_aggregation_function}.publish('signal')
@@ -115,6 +118,7 @@ resource "signalfx_detector" "consumer_use" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     signal = data('gauge.queue.consumer_use', filter=filter('plugin', 'rabbitmq') and ${module.filtering.signalflow})${var.consumer_use_aggregation_function}.publish('util')

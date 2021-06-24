@@ -49,6 +49,13 @@ locals {
 EOF
 fi
 
+cat <<EOF > "${TARGET}/tags.tf"
+locals {
+  tags = ["$(echo $MODULE | cut -d'_' -f1)", "$(echo $MODULE | cut -d'_' -f2)"]
+}
+
+EOF
+
 cat <<EOF > "${TARGET}/conf/readme.yaml"
 documentations:
 

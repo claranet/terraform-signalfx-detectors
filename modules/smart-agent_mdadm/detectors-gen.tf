@@ -3,6 +3,7 @@ resource "signalfx_detector" "disk_failed" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     signal = data('md_disks.failed', filter=${module.filtering.signalflow})${var.disk_failed_aggregation_function}${var.disk_failed_transformation_function}.publish('signal')
@@ -40,6 +41,7 @@ resource "signalfx_detector" "disk_missing" {
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
     signal = data('md_disks.missing', filter=${module.filtering.signalflow})${var.disk_missing_aggregation_function}${var.disk_missing_transformation_function}.publish('signal')
