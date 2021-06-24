@@ -192,3 +192,8 @@ notEmpty
 readableRule
 ruleSeverity
 runbookUrl
+TODO
+instantiation
+myapp
+myenv
+mystack
