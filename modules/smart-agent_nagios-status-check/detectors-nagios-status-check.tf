@@ -19,8 +19,8 @@ resource "signalfx_detector" "status_check" {
     notifications         = coalescelist(lookup(var.status_check_notifications, "major", []), var.notifications.major)
     runbook_url           = try(coalesce(var.status_check_runbook_url, var.runbook_url), "")
     tip                   = var.status_check_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
   rule {
@@ -31,8 +31,8 @@ resource "signalfx_detector" "status_check" {
     notifications         = coalescelist(lookup(var.status_check_notifications, "critical", []), var.notifications.critical)
     runbook_url           = try(coalesce(var.status_check_runbook_url, var.runbook_url), "")
     tip                   = var.status_check_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
   rule {
@@ -43,8 +43,8 @@ resource "signalfx_detector" "status_check" {
     notifications         = coalescelist(lookup(var.status_check_notifications, "warning", []), var.notifications.warning)
     runbook_url           = try(coalesce(var.status_check_runbook_url, var.runbook_url), "")
     tip                   = var.status_check_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 }
 

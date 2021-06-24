@@ -20,8 +20,8 @@ EOF
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
     runbook_url           = try(coalesce(var.heartbeat_runbook_url, var.runbook_url), "")
     tip                   = var.heartbeat_tip
-    parameterized_subject = local.rule_subject_novalue
-    parameterized_body    = local.rule_body
+    parameterized_subject = var.message_subject == "" ? local.rule_subject_novalue : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 }
 
@@ -44,8 +44,8 @@ EOF
     notifications         = coalescelist(lookup(var.zookeeper_health_notifications, "critical", []), var.notifications.critical)
     runbook_url           = try(coalesce(var.zookeeper_health_runbook_url, var.runbook_url), "")
     tip                   = var.zookeeper_health_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 }
 
@@ -69,8 +69,8 @@ EOF
     notifications         = coalescelist(lookup(var.zookeeper_latency_notifications, "critical", []), var.notifications.critical)
     runbook_url           = try(coalesce(var.zookeeper_latency_runbook_url, var.runbook_url), "")
     tip                   = var.zookeeper_latency_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
   rule {
@@ -81,8 +81,8 @@ EOF
     notifications         = coalescelist(lookup(var.zookeeper_latency_notifications, "major", []), var.notifications.major)
     runbook_url           = try(coalesce(var.zookeeper_latency_runbook_url, var.runbook_url), "")
     tip                   = var.zookeeper_latency_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 }
 
@@ -108,8 +108,8 @@ EOF
     notifications         = coalescelist(lookup(var.file_descriptors_notifications, "critical", []), var.notifications.critical)
     runbook_url           = try(coalesce(var.file_descriptors_runbook_url, var.runbook_url), "")
     tip                   = var.file_descriptors_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
   rule {
@@ -120,8 +120,8 @@ EOF
     notifications         = coalescelist(lookup(var.file_descriptors_notifications, "major", []), var.notifications.major)
     runbook_url           = try(coalesce(var.file_descriptors_runbook_url, var.runbook_url), "")
     tip                   = var.file_descriptors_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 }
 

@@ -57,3 +57,16 @@ variable "teams" {
   type        = list(string)
   default     = []
 }
+
+variable "message_subject" {
+  description = "The subject to use in alerting rules messages which overrides the default template"
+  type        = string
+  default     = ""
+}
+
+variable "message_body" {
+  description = "The body to use in alerting rules messages which overrides the default template"
+  type        = string
+  default     = ""
+}
+

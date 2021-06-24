@@ -19,8 +19,8 @@ resource "signalfx_detector" "heartbeat" {
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
     runbook_url           = try(coalesce(var.heartbeat_runbook_url, var.runbook_url), "")
     tip                   = var.heartbeat_tip
-    parameterized_subject = local.rule_subject_novalue
-    parameterized_body    = local.rule_body
+    parameterized_subject = var.message_subject == "" ? local.rule_subject_novalue : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 }
 
@@ -45,8 +45,8 @@ resource "signalfx_detector" "cpu_percentage" {
     notifications         = coalescelist(lookup(var.cpu_percentage_notifications, "critical", []), var.notifications.critical)
     runbook_url           = try(coalesce(var.cpu_percentage_runbook_url, var.runbook_url), "")
     tip                   = var.cpu_percentage_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
   rule {
@@ -57,8 +57,8 @@ resource "signalfx_detector" "cpu_percentage" {
     notifications         = coalescelist(lookup(var.cpu_percentage_notifications, "major", []), var.notifications.major)
     runbook_url           = try(coalesce(var.cpu_percentage_runbook_url, var.runbook_url), "")
     tip                   = var.cpu_percentage_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 }
 
@@ -83,8 +83,8 @@ resource "signalfx_detector" "memory_percentage" {
     notifications         = coalescelist(lookup(var.memory_percentage_notifications, "critical", []), var.notifications.critical)
     runbook_url           = try(coalesce(var.memory_percentage_runbook_url, var.runbook_url), "")
     tip                   = var.memory_percentage_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
   rule {
@@ -95,7 +95,7 @@ resource "signalfx_detector" "memory_percentage" {
     notifications         = coalescelist(lookup(var.memory_percentage_notifications, "major", []), var.notifications.major)
     runbook_url           = try(coalesce(var.memory_percentage_runbook_url, var.runbook_url), "")
     tip                   = var.memory_percentage_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 }

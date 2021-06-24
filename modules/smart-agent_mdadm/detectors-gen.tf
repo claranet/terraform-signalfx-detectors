@@ -18,8 +18,8 @@ EOF
     notifications         = coalescelist(lookup(var.disk_failed_notifications, "critical", []), var.notifications.critical)
     runbook_url           = try(coalesce(var.disk_failed_runbook_url, var.runbook_url), "")
     tip                   = var.disk_failed_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
   rule {
@@ -30,8 +30,8 @@ EOF
     notifications         = coalescelist(lookup(var.disk_failed_notifications, "major", []), var.notifications.major)
     runbook_url           = try(coalesce(var.disk_failed_runbook_url, var.runbook_url), "")
     tip                   = var.disk_failed_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 }
 
@@ -55,8 +55,8 @@ EOF
     notifications         = coalescelist(lookup(var.disk_missing_notifications, "critical", []), var.notifications.critical)
     runbook_url           = try(coalesce(var.disk_missing_runbook_url, var.runbook_url), "")
     tip                   = var.disk_missing_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
   rule {
@@ -67,8 +67,8 @@ EOF
     notifications         = coalescelist(lookup(var.disk_missing_notifications, "major", []), var.notifications.major)
     runbook_url           = try(coalesce(var.disk_missing_runbook_url, var.runbook_url), "")
     tip                   = var.disk_missing_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 }
 

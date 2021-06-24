@@ -18,8 +18,8 @@ EOF
     notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
     runbook_url           = try(coalesce(var.heartbeat_runbook_url, var.runbook_url), "")
     tip                   = var.heartbeat_tip
-    parameterized_subject = local.rule_subject_novalue
-    parameterized_body    = local.rule_body
+    parameterized_subject = var.message_subject == "" ? local.rule_subject_novalue : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 }
 
@@ -43,8 +43,8 @@ EOF
     notifications         = coalescelist(lookup(var.health_notifications, "critical", []), var.notifications.critical)
     runbook_url           = try(coalesce(var.health_runbook_url, var.runbook_url), "")
     tip                   = var.health_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
   rule {
@@ -55,8 +55,8 @@ EOF
     notifications         = coalescelist(lookup(var.health_notifications, "major", []), var.notifications.major)
     runbook_url           = try(coalesce(var.health_runbook_url, var.runbook_url), "")
     tip                   = var.health_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 }
 
@@ -80,8 +80,8 @@ EOF
     notifications         = coalescelist(lookup(var.latency_p90_notifications, "critical", []), var.notifications.critical)
     runbook_url           = try(coalesce(var.latency_p90_runbook_url, var.runbook_url), "")
     tip                   = var.latency_p90_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
   rule {
@@ -92,8 +92,8 @@ EOF
     notifications         = coalescelist(lookup(var.latency_p90_notifications, "major", []), var.notifications.major)
     runbook_url           = try(coalesce(var.latency_p90_runbook_url, var.runbook_url), "")
     tip                   = var.latency_p90_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 }
 
@@ -119,8 +119,8 @@ EOF
     notifications         = coalescelist(lookup(var.app_5xx_error_rate_notifications, "critical", []), var.notifications.critical)
     runbook_url           = try(coalesce(var.app_5xx_error_rate_runbook_url, var.runbook_url), "")
     tip                   = var.app_5xx_error_rate_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
   rule {
@@ -131,8 +131,8 @@ EOF
     notifications         = coalescelist(lookup(var.app_5xx_error_rate_notifications, "major", []), var.notifications.major)
     runbook_url           = try(coalesce(var.app_5xx_error_rate_runbook_url, var.runbook_url), "")
     tip                   = var.app_5xx_error_rate_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
 }
@@ -157,8 +157,8 @@ EOF
     notifications         = coalescelist(lookup(var.root_filesystem_usage_notifications, "critical", []), var.notifications.critical)
     runbook_url           = try(coalesce(var.root_filesystem_usage_runbook_url, var.runbook_url), "")
     tip                   = var.root_filesystem_usage_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
   rule {
@@ -169,8 +169,8 @@ EOF
     notifications         = coalescelist(lookup(var.root_filesystem_usage_notifications, "major", []), var.notifications.major)
     runbook_url           = try(coalesce(var.root_filesystem_usage_runbook_url, var.runbook_url), "")
     tip                   = var.root_filesystem_usage_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 }
 

@@ -18,8 +18,8 @@ EOF
     notifications         = coalescelist(lookup(var.aurora_mysql_replica_lag_notifications, "critical", []), var.notifications.critical)
     runbook_url           = try(coalesce(var.aurora_mysql_replica_lag_runbook_url, var.runbook_url), "")
     tip                   = var.aurora_mysql_replica_lag_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
   rule {
@@ -30,8 +30,8 @@ EOF
     notifications         = coalescelist(lookup(var.aurora_mysql_replica_lag_notifications, "major", []), var.notifications.major)
     runbook_url           = try(coalesce(var.aurora_mysql_replica_lag_runbook_url, var.runbook_url), "")
     tip                   = var.aurora_mysql_replica_lag_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 }
 

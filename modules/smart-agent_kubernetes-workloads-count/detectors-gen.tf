@@ -29,8 +29,8 @@ EOF
     notifications         = coalescelist(lookup(var.workloads_count_notifications, "minor", []), var.notifications.minor)
     runbook_url           = try(coalesce(var.workloads_count_runbook_url, var.runbook_url), "")
     tip                   = var.workloads_count_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
   rule {
@@ -41,8 +41,8 @@ EOF
     notifications         = coalescelist(lookup(var.workloads_count_notifications, "warning", []), var.notifications.warning)
     runbook_url           = try(coalesce(var.workloads_count_runbook_url, var.runbook_url), "")
     tip                   = var.workloads_count_tip
-    parameterized_subject = local.rule_subject
-    parameterized_body    = local.rule_body
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 }
 
