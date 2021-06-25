@@ -1,0 +1,15 @@
+module: pm2
+name: "up application"
+
+id: up
+transformation: ".min(over='5min')"
+filtering: "(not filter('name', 'pm2-metrics'))"
+exclude_not_running_vm: true
+
+signals:
+  signal:
+    metric: pm2_up
+rules:
+  critical:
+    threshold: 1
+    comparator: ">"
