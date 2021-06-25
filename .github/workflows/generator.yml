@@ -73,5 +73,5 @@ jobs:
 
     - name: Terraform Destroy
       if: always() && steps.destroy.outputs.enabled == '1' && env.SFX_AUTH_TOKEN != null
-      run: terraform -chdir=examples/stack destroy -input=false -lock=false -refresh=false
+      run: echo yes | terraform -chdir=examples/stack destroy -input=false -lock=false -refresh=false
 
