@@ -56,11 +56,11 @@ jobs:
 
     - name: Terraform init
       if: env.SFX_AUTH_TOKEN != null
-      run: terraform init examples/stack
+      run: terraform -chdir=examples/stack init
 
     - name: Terraform validate
       if: env.SFX_AUTH_TOKEN != null
-      run: terraform validate examples/stack
+      run: terraform -chdir=examples/stack validate
 
     - name: Enable destroy
       if: env.SFX_AUTH_TOKEN != null
@@ -69,9 +69,9 @@ jobs:
 
     - name: Terraform Apply
       if: env.SFX_AUTH_TOKEN != null
-      run: echo yes | terraform apply -input=false -lock=false examples/stack
+      run: echo yes | terraform -chdir=examples/stack apply -input=false -lock=false
 
     - name: Terraform Destroy
       if: always() && steps.destroy.outputs.enabled == '1' && env.SFX_AUTH_TOKEN != null
-      run: terraform destroy -input=false -lock=false -auto-approve examples/stack
+      run: terraform -chdir=examples/stack destroy -input=false -lock=false
 
