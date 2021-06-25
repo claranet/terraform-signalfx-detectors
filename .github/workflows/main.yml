@@ -74,11 +74,11 @@ jobs:
     - name: Terraform Apply
       #if: github.ref == 'refs/heads/master' && github.event_name == 'push' && ${{ always() }}
       if: env.SFX_AUTH_TOKEN != null
-      run: terraform -chdir=examples/stack apply -input=false -lock=false -auto-approve
+      run: terraform -chdir=examples/stack apply -input=false -lock=false -refresh=false -auto-approve
 
     - name: Terraform Destroy
       if: always() && steps.destroy.outputs.enabled == '1' && env.SFX_AUTH_TOKEN != null
-      run: terraform -chdir=examples/stack destroy -input=false -lock=false -auto-approve
+      run: terraform -chdir=examples/stack destroy -input=false -lock=false -refresh=false -auto-approve
 
   compliance:
     needs: pre_job
