@@ -23,3 +23,10 @@ output "user_errors" {
   value       = signalfx_detector.user_errors
 }
 
+output "deadlettered_messages" {
+  description = "Detector resource for user_errors"
+  value       = signalfx_detector.deadlettered_messages
+}
+
+
+
