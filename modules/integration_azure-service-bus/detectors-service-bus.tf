@@ -186,6 +186,7 @@ resource "signalfx_detector" "deadlettered_messages" {
         base_filter = filter('resource_type', 'Microsoft.ServiceBus/namespaces') and filter('primary_aggregation_type', 'true') and ${module.filtering.signalflow}
         signal = data('DeadletteredMessages', filter=base_filter)${var.deadlettered_messages_aggregation_function}.publish('signal')
         detect(when(signal > threshold(${var.deadlettered_messages_threshold_critical}), lasting="${var.deadlettered_messages_timer}")).publish('CRIT')
+        detect(when(signal > threshold(${var.deadlettered_messages_threshold_major}), lasting="${var.deadlettered_messages_timer}")).publish('MAJOR')
     EOF
 
   rule {
