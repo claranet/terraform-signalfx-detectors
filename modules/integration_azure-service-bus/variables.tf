@@ -300,6 +300,12 @@ variable "deadlettered_messages_disabled_critical" {
   default     = null
 }
 
+variable "deadlettered_messages_disabled_major" {
+  description = "Disable critical alerting rule for active_connections detector"
+  type        = bool
+  default     = null
+}
+
 variable "deadlettered_messages_notifications" {
   description = "Notification recipients list per severity overridden for active_connections detector"
   type        = map(list(string))
@@ -320,6 +326,12 @@ variable "deadlettered_messages_timer" {
 
 variable "deadlettered_messages_threshold_critical" {
   description = "Critical threshold for deadlettered_messages detector"
+  type        = number
+  default     = 1
+}
+
+variable "deadlettered_messages_threshold_major" {
+  description = "Major threshold for deadlettered_messages detector"
   type        = number
   default     = 1
 }
