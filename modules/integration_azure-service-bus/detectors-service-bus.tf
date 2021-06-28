@@ -190,7 +190,7 @@ resource "signalfx_detector" "deadlettered_messages" {
     EOF
 
   rule {
-    description           = "is too high > ${var.deadlettered_messages_threshold_critical}%"
+    description           = "is too high > ${var.deadlettered_messages_threshold_critical}"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.deadlettered_messages_disabled_critical, var.deadlettered_messages_disabled, var.detectors_disabled)
@@ -202,7 +202,7 @@ resource "signalfx_detector" "deadlettered_messages" {
   }
 
   rule {
-    description           = "is too high > ${var.deadlettered_messages_threshold_major}%"
+    description           = "is too high > ${var.deadlettered_messages_threshold_major}"
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.deadlettered_messages_disabled_major, var.deadlettered_messages_disabled, var.detectors_disabled)

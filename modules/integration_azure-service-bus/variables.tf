@@ -327,11 +327,11 @@ variable "deadlettered_messages_timer" {
 variable "deadlettered_messages_threshold_critical" {
   description = "Critical threshold for deadlettered_messages detector"
   type        = number
-  default     = 1
+  default     = 5
 }
 
 variable "deadlettered_messages_threshold_major" {
   description = "Major threshold for deadlettered_messages detector"
   type        = number
-  default     = 1
+  default     = 10
 }
