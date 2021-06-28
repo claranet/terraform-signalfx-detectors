@@ -1,0 +1,18 @@
+module: pm2
+name: "restarts counter"
+
+id: restarts
+transformation: ".min(over='5min')"
+filtering: "(not filter('name', 'pm2-metrics'))"
+exclude_not_running_vm: true
+
+signals:
+  signal:
+    metric: pm2_restarts
+rules:
+  critical:
+    threshold: 5
+    comparator: ">"
+  major:
+    threshold: 3
+    comparator: ">="
