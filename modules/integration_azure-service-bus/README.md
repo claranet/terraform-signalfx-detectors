@@ -102,6 +102,7 @@ Here is the list of required metrics for detectors in this module.
 * `Size`
 * `ThrottledRequests`
 * `UserErrors`
+* `DeadletteredMessages`
 
 
 
