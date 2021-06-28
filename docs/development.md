@@ -70,30 +70,38 @@ A common contribution which cover most of detectors related changes is the creat
 new module of detectors.
 
 ```bash
-$ echo "Set required input information as environment variables"
-$
-$ SOURCE_TYPE="smart-agent" # or "internal", "integration", "organization", "otel-collector"
-$ MODULE_NAME="my-new-module" # use dash separated word to name your module
-$ MODULE_DIR="${SOURCE_TYPE}_${MODULE_NAME}" # the directory is source+name underscore separated
-$ METRIC_NAME="my_metric_used_for_heartbeat_detector"
-$
-$ echo "Init a new module creating ready directory to welcome detectors"
-$ make init-module ${MODULE_DIR} # same as "make init-module ${SOURCE_TYPE} ${MODULE_NAME}"
-$
-$ echo "Create a new detector using the heartbeat sample configuration and updating module and metric"
-$ cp scripts/templates/examples/heartbeat-simple.yaml modules/${MODULE_DIR}/conf/00-heartbeat.yaml
-$ sed -i "s/^\(module:\).*$/\1 ${MODULE_NAME}/" modules/${MODULE_DIR}/conf/00-heartbeat.yaml
-$ sed -i "s/^\([[:space:]]*metric:\).*$/\1 \"${METRIC_NAME}\"/" modules/${MODULE_DIR}/conf/00-heartbeat.yaml
-$ 
-$ echo "Full update the module (doc, terraform code, add/remove/change detectors...)"
-$ make update-module ${MODULE_DIR}
+# First, enter in the docker based environment as seen in requirements above
+make
+
+# Set required input information as environment variables
+SOURCE_TYPE="smart-agent" # or "internal", "integration", "organization", "otel-collector"
+MODULE_NAME="my-new-module" # use dash separated word to name your module
+MODULE_DIR="${SOURCE_TYPE}_${MODULE_NAME}" # the directory is source+name underscore separated
+METRIC_NAME="my_metric_used_for_heartbeat_detector"
+
+# Init a new module creating ready directory to welcome detectors
+make init-module ${MODULE_DIR} # same as "make init-module ${SOURCE_TYPE} ${MODULE_NAME}"
+
+# Create a new detector using the heartbeat sample configuration and updating module and metric
+cp scripts/templates/examples/heartbeat-simple.yaml modules/${MODULE_DIR}/conf/00-heartbeat.yaml
+sed -i "s/^\(module:\).*$/\1 ${MODULE_NAME}/" modules/${MODULE_DIR}/conf/00-heartbeat.yaml
+sed -i "s/^\([[:space:]]*metric:\).*$/\1 \"${METRIC_NAME}\"/" modules/${MODULE_DIR}/conf/00-heartbeat.yaml
+ 
+# Full update the module (doc, terraform code, add/remove/change detectors...)
+make update-module ${MODULE_DIR}
 ```
 
-That is all! and from now you will have to run `make update-module` before to push any change, it 
-will take care of regenerating code, documentation and even check and validate the module to pass the CI.
+Congratulations, you just created a working and minimal module!
 
-If this is not enough for your change or if you want to fully understand all capabilities and dependencies 
-you will have to read the rest of this documentation.
+Now you can edit the yaml configuration files available in its `conf` directory and run again `make update-module`
+command every time you want update the underlying code and documentation before to push your changes.
+
+For more information about the templates and their generator please check the [dedicated readme](../scripts/templates/README.md).
+You can find a full list of options for the detector template from the [values.yaml](../scripts/templates/values.yaml)
+which is similar to an helm chart.
+
+The rest of this documentation will cover accurately for each kind of change you want apply the related
+command(s) to use in this development environment but the `update-module` should cover any kind of changes.
 
 ## Commands
 

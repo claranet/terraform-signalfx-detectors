@@ -44,9 +44,9 @@ jobs:
         fetch-depth: 2
 
     - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v1.2.1
+      uses: hashicorp/setup-terraform@v1
       with:
-        terraform_version: 0.13.5
+        terraform_version: 1.0.1
         terraform_wrapper: false
 
     - name: Generate example stack importing all modules
@@ -57,11 +57,11 @@ jobs:
 
     - name: Terraform init
       if: env.SFX_AUTH_TOKEN != null
-      run: terraform init examples/stack
+      run: terraform -chdir=examples/stack init
 
     - name: Terraform validate
       if: env.SFX_AUTH_TOKEN != null
-      run: terraform validate examples/stack
+      run: terraform -chdir=examples/stack validate
 
     #- name: Terraform Plan
     #  run: terraform plan -input=false -lock=false -detailed-exitcode examples/stack || if [ $? -ne 2 ]; then exit $?; fi
@@ -74,11 +74,11 @@ jobs:
     - name: Terraform Apply
       #if: github.ref == 'refs/heads/master' && github.event_name == 'push' && ${{ always() }}
       if: env.SFX_AUTH_TOKEN != null
-      run: terraform apply -input=false -lock=false -auto-approve examples/stack
+      run: terraform -chdir=examples/stack apply -input=false -lock=false -refresh=false -auto-approve
 
     - name: Terraform Destroy
       if: always() && steps.destroy.outputs.enabled == '1' && env.SFX_AUTH_TOKEN != null
-      run: terraform destroy -input=false -lock=false -auto-approve examples/stack
+      run: terraform -chdir=examples/stack destroy -input=false -lock=false -refresh=false -auto-approve
 
   compliance:
     needs: pre_job
