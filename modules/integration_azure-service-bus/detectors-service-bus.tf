@@ -174,3 +174,30 @@ EOF
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 }
+
+resource "signalfx_detector" "deadlettered_messages" {
+  name = format("%s %s", local.detector_name_prefix, "Azure Service Bus deadlettered messages")
+
+  authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
+
+  program_text = <<-EOF
+        base_filter = filter('resource_type', 'Microsoft.ServiceBus/namespaces') and filter('primary_aggregation_type', 'true') and ${module.filtering.signalflow}
+        signal = data('DeadletteredMessages', filter=base_filter)${var.deadlettered_messages_aggregation_function}.publish('signal')
+        detect(when(signal < threshold(${var.deadlettered_messages_threshold_critical}), lasting="${var.deadlettered_messages_timer}")).publish('CRIT')
+    EOF
+
+  rule {
+    description           = " < ${var.deadlettered_messages_threshold_critical}"
+    severity              = "Critical"
+    detect_label          = "CRIT"
+    disabled              = coalesce(var.deadlettered_messages_disabled_critical, var.deadlettered_messages_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.deadlettered_messages_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = try(coalesce(var.deadlettered_messages_runbook_url, var.runbook_url), "")
+    tip                   = var.deadlettered_messages_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
+
+}
