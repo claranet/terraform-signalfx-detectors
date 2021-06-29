@@ -4,7 +4,7 @@ output "active_connections" {
 }
 
 output "deadlettered_messages" {
-  description = "Detector resource for user_errors"
+  description = "Detector resource for deadlettered_messages"
   value       = signalfx_detector.deadlettered_messages
 }
 
