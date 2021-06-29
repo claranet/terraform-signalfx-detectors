@@ -82,9 +82,6 @@ This module creates the following SignalFx detectors which could contain one or 
 |Azure Service Bus throttled requests rate|X|X|-|-|-|
 |Azure Service Bus deadlettered messages|X|X|-|-|-|
 
-
-
-
 ## How to collect required metrics?
 
 This module uses metrics available from 
