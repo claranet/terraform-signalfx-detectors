@@ -453,6 +453,7 @@
 |Azure Service Bus throttled requests rate|X|X|-|-|-|
 |Azure Service Bus deadlettered messages|X|X|-|-|-|
 
+
 ## azure-sql-database
 
 |Detector|Critical|Major|Minor|Warning|Info|
