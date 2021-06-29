@@ -3,6 +3,11 @@ output "active_connections" {
   value       = signalfx_detector.active_connections
 }
 
+output "deadlettered_messages" {
+  description = "Detector resource for user_errors"
+  value       = signalfx_detector.deadlettered_messages
+}
+
 output "heartbeat" {
   description = "Detector resource for heartbeat"
   value       = signalfx_detector.heartbeat
@@ -22,11 +27,4 @@ output "user_errors" {
   description = "Detector resource for user_errors"
   value       = signalfx_detector.user_errors
 }
-
-output "deadlettered_messages" {
-  description = "Detector resource for user_errors"
-  value       = signalfx_detector.deadlettered_messages
-}
-
-
 
