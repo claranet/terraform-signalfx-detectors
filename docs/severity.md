@@ -451,7 +451,7 @@
 |Azure Service Bus user error rate|X|X|-|-|-|
 |Azure Service Bus server error rate|X|X|-|-|-|
 |Azure Service Bus throttled requests rate|X|X|-|-|-|
-
+|Azure Service Bus deadlettered messages|X|X|-|-|-|
 
 ## azure-sql-database
 
