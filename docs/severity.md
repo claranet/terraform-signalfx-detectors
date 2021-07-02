@@ -1000,7 +1000,7 @@
 |Varnish backend Failed|X|-|-|-|-|
 |Varnish threads number|X|-|-|-|-|
 |Varnish session dropped|X|-|-|-|-|
-|Varnish hit rate|-|X|X|-|-|
+|Varnish hit rate|-|-|-|X|X|
 |Varnish memory usage|X|X|-|-|-|
 
 
