@@ -1,0 +1,12 @@
+module: "AWS ELB"
+name: "unhealthy instances"
+id: unhealthy_instances_absolute
+transformation: ".min(over='10m')"
+signals:
+  signal:
+    metric: UnHealthyHostCount
+    filter: "filter('namespace', 'AWS/ELB') and filter('stat', 'upper') and (not filter('AvailabilityZone', '*'))"
+rules:
+  critical:
+    threshold: 1
+    comparator: ">="

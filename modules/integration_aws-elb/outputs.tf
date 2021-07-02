@@ -33,3 +33,8 @@ output "no_healthy_instances" {
   value       = signalfx_detector.no_healthy_instances
 }
 
+output "unhealthy_instances_absolute" {
+  description = "Detector resource for unhealthy_instances_absolute"
+  value       = signalfx_detector.unhealthy_instances_absolute
+}
+
