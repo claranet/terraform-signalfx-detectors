@@ -212,6 +212,7 @@
 |AWS ELB backend 4xx error rate|X|X|-|-|-|
 |AWS ELB backend 5xx error rate|X|X|-|-|-|
 |AWS ELB backend latency|X|X|-|-|-|
+|AWS ELB unhealthy instances|X|-|-|-|-|
 
 
 ## aws-kinesis-firehose
