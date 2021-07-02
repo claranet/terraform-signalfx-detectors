@@ -220,13 +220,13 @@ variable "cache_hit_rate_transformation_function" {
   default     = ".min(over='5m')"
 }
 
-variable "cache_hit_rate_threshold_minor" {
-  description = "Varnish cache hit rate threshold minor"
+variable "cache_hit_rate_threshold_info" {
+  description = "Varnish cache hit rate threshold info"
   type        = number
   default     = 90
 }
 
-variable "cache_hit_rate_threshold_warning" {
+variable "cache_hit_rate_threshold_warn" {
   description = "Varnish cache hit rate threshold warning"
   type        = number
   default     = 80

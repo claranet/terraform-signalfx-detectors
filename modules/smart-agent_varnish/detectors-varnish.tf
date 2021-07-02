@@ -117,22 +117,22 @@ resource "signalfx_detector" "cache_hit_rate" {
 EOF
 
   rule {
-    description           = "is too low > ${var.cache_hit_rate_threshold_major}"
-    severity              = "Major"
-    detect_label          = "MAJOR"
+    description           = "is too low > ${var.cache_hit_rate_threshold_warn}"
+    severity              = "Warning"
+    detect_label          = "WARN"
     disabled              = coalesce(var.cache_hit_rate_disabled_major, var.cache_hit_rate_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.cache_hit_rate_notifications, "major", []), var.notifications.major)
+    notifications         = coalescelist(lookup(var.cache_hit_rate_notifications, "warn", []), var.notifications.major)
     runbook_url           = try(coalesce(var.cache_hit_rate_runbook_url, var.runbook_url), "")
     tip                   = var.cache_hit_rate_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
   rule {
-    description           = "is too low > ${var.cache_hit_rate_threshold_minor}"
-    severity              = "Minor"
-    detect_label          = "MINOR"
+    description           = "is too low > ${var.cache_hit_rate_threshold_info}"
+    severity              = "Info"
+    detect_label          = "INFO"
     disabled              = coalesce(var.cache_hit_rate_disabled_minor, var.cache_hit_rate_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.cache_hit_rate_notifications, "minor", []), var.notifications.minor)
+    notifications         = coalescelist(lookup(var.cache_hit_rate_notifications, "info", []), var.notifications.minor)
     runbook_url           = try(coalesce(var.cache_hit_rate_runbook_url, var.runbook_url), "")
     tip                   = var.cache_hit_rate_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
