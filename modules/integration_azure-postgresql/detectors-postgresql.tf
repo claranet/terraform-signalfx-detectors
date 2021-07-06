@@ -7,7 +7,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting
-        base_filter = filter('resource_type', 'Microsoft.DBForPostgreSQL/servers') and filter('primary_aggregation_type', 'true')
+        base_filter = filter('resource_type', 'Microsoft.DB*orPostgreSQL/servers') and filter('primary_aggregation_type', 'true')
         signal = data('network_bytes_ingress', filter=base_filter and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
         not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}', auto_resolve_after='${local.heartbeat_auto_resolve_after}').publish('CRIT')
     EOF
@@ -33,7 +33,7 @@ resource "signalfx_detector" "cpu_usage" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-        base_filter = filter('resource_type', 'Microsoft.DBForPostgreSQL/servers') and filter('primary_aggregation_type', 'true')
+        base_filter = filter('resource_type', 'Microsoft.DB*orPostgreSQL/servers') and filter('primary_aggregation_type', 'true')
         signal = data('cpu_percent', filter=base_filter and ${module.filtering.signalflow})${var.cpu_usage_aggregation_function}.publish('signal')
         detect(when(signal > threshold(${var.cpu_usage_threshold_critical}), lasting="${var.cpu_usage_timer}")).publish('CRIT')
         detect(when(signal > threshold(${var.cpu_usage_threshold_major}), lasting="${var.cpu_usage_timer}") and when(signal <= ${var.cpu_usage_threshold_critical})).publish('MAJOR')
@@ -72,7 +72,7 @@ resource "signalfx_detector" "no_connection" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-        base_filter = filter('resource_type', 'Microsoft.DBForPostgreSQL/servers') and filter('primary_aggregation_type', 'true')
+        base_filter = filter('resource_type', 'Microsoft.DB*orPostgreSQL/servers') and filter('primary_aggregation_type', 'true')
         signal = data('active_connections', extrapolation="zero", filter=base_filter and ${module.filtering.signalflow})${var.no_connection_aggregation_function}.publish('signal')
         detect(when(signal < threshold(1), lasting="${var.no_connection_timer}")).publish('CRIT')
     EOF
@@ -97,7 +97,7 @@ resource "signalfx_detector" "storage_usage" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-        base_filter = filter('resource_type', 'Microsoft.DBForPostgreSQL/servers') and filter('primary_aggregation_type', 'true')
+        base_filter = filter('resource_type', 'Microsoft.DB*orPostgreSQL/servers') and filter('primary_aggregation_type', 'true')
         signal = data('storage_percent', filter=base_filter and ${module.filtering.signalflow})${var.storage_usage_aggregation_function}.publish('signal')
         detect(when(signal > threshold(${var.storage_usage_threshold_critical}), lasting="${var.storage_usage_timer}")).publish('CRIT')
         detect(when(signal > threshold(${var.storage_usage_threshold_major}), lasting="${var.storage_usage_timer}") and when(signal <= ${var.storage_usage_threshold_critical})).publish('MAJOR')
@@ -136,7 +136,7 @@ resource "signalfx_detector" "io_consumption" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-        base_filter = filter('resource_type', 'Microsoft.DBForPostgreSQL/servers') and filter('primary_aggregation_type', 'true')
+        base_filter = filter('resource_type', 'Microsoft.DB*orPostgreSQL/servers') and filter('primary_aggregation_type', 'true')
         signal = data('io_consumption_percent', filter=base_filter and ${module.filtering.signalflow})${var.io_consumption_aggregation_function}.publish('signal')
         detect(when(signal > threshold(${var.io_consumption_threshold_critical}), lasting="${var.io_consumption_timer}")).publish('CRIT')
         detect(when(signal > threshold(${var.io_consumption_threshold_major}), lasting="${var.io_consumption_timer}") and when(signal <= ${var.io_consumption_threshold_critical})).publish('MAJOR')
@@ -175,7 +175,7 @@ resource "signalfx_detector" "memory_usage" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-        base_filter = filter('resource_type', 'Microsoft.DBForPostgreSQL/servers') and filter('primary_aggregation_type', 'true')
+        base_filter = filter('resource_type', 'Microsoft.DB*orPostgreSQL/servers') and filter('primary_aggregation_type', 'true')
         signal = data('memory_percent', filter=base_filter and ${module.filtering.signalflow})${var.memory_usage_aggregation_function}.publish('signal')
         detect(when(signal > threshold(${var.memory_usage_threshold_critical}), lasting="${var.memory_usage_timer}")).publish('CRIT')
         detect(when(signal > threshold(${var.memory_usage_threshold_major}), lasting="${var.memory_usage_timer}") and when(signal <= ${var.memory_usage_threshold_critical})).publish('MAJOR')
@@ -210,7 +210,7 @@ resource "signalfx_detector" "serverlog_storage_usage" {
   name = "${join("", formatlist("[%s]", var.prefixes))}[${var.environment}] Azure PostgreSQL serverlog storage usage"
 
   program_text = <<-EOF
-        base_filter = filter('resource_type', 'Microsoft.DBForPostgreSQL/servers') and filter('primary_aggregation_type', 'true')
+        base_filter = filter('resource_type', 'Microsoft.DB*orPostgreSQL/servers') and filter('primary_aggregation_type', 'true')
         signal = data('serverlog_storage_percent', filter=base_filter and ${module.filtering.signalflow})${var.serverlog_storage_usage_aggregation_function}.publish('signal')
         detect(when(signal > threshold(${var.serverlog_storage_usage_threshold_critical}), lasting="${var.serverlog_storage_usage_timer}")).publish('CRIT')
         detect(when(signal > threshold(${var.serverlog_storage_usage_threshold_major}), lasting="${var.serverlog_storage_usage_timer}") and when(signal <= ${var.serverlog_storage_usage_threshold_critical})).publish('MAJOR')
