@@ -47,7 +47,7 @@ variable "processes_aggregation_function" {
 variable "processes_transformation_function" {
   description = "Transformation function for processes detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".min(over='15m')"
+  default     = ".max(over='15m')"
 }
 
 variable "processes_threshold_major" {
