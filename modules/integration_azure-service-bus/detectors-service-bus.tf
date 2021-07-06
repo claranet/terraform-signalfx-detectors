@@ -186,7 +186,7 @@ resource "signalfx_detector" "deadlettered_messages_rate" {
         base_filter = filter('resource_type', 'Microsoft.ServiceBus/namespaces') and filter('primary_aggregation_type', 'true') and ${module.filtering.signalflow}
         A = data('DeadletteredMessages', extrapolation='zero', filter=base_filter)${var.deadlettered_messages_rate_aggregation_function}
         B = data('Messages', extrapolation='zero', filter=base_filter)${var.deadlettered_messages_rate_aggregation_function}
-        signal = (A/B).scale(100).fill(0).publish('signal')
+        signal = (A/A+B).scale(100).fill(0).publish('signal')
         detect(when(signal > threshold(${var.deadlettered_messages_rate_threshold_critical}), lasting="${var.deadlettered_messages_rate_timer}")).publish('CRIT')
         detect(when(signal > threshold(${var.deadlettered_messages_rate_threshold_major}), lasting="${var.deadlettered_messages_rate_timer}") and when(signal <= ${var.deadlettered_messages_rate_threshold_critical})).publish('MAJOR')
     EOF
