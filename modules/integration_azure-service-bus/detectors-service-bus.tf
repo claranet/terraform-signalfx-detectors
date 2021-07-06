@@ -174,3 +174,45 @@ EOF
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 }
+
+resource "signalfx_detector" "deadlettered_messages_rate" {
+  name = format("%s %s", local.detector_name_prefix, "Azure Service Bus deadlettered messages rate")
+
+  authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
+
+  program_text = <<-EOF
+        base_filter = filter('resource_type', 'Microsoft.ServiceBus/namespaces') and filter('primary_aggregation_type', 'true') and ${module.filtering.signalflow}
+        A = data('DeadletteredMessages', extrapolation='zero', filter=base_filter)${var.deadlettered_messages_rate_aggregation_function}
+        B = data('Messages', extrapolation='zero', filter=base_filter)${var.deadlettered_messages_rate_aggregation_function}
+        signal = (A/(A+B)).scale(100).fill(0).publish('signal')
+        detect(when(signal > threshold(${var.deadlettered_messages_rate_threshold_critical}), lasting="${var.deadlettered_messages_rate_timer}")).publish('CRIT')
+        detect(when(signal > threshold(${var.deadlettered_messages_rate_threshold_major}), lasting="${var.deadlettered_messages_rate_timer}") and when(signal <= ${var.deadlettered_messages_rate_threshold_critical})).publish('MAJOR')
+    EOF
+
+  rule {
+    description           = "is too high > ${var.deadlettered_messages_rate_threshold_critical}"
+    severity              = "Critical"
+    detect_label          = "CRIT"
+    disabled              = coalesce(var.deadlettered_messages_rate_disabled_critical, var.deadlettered_messages_rate_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.deadlettered_messages_rate_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = try(coalesce(var.deadlettered_messages_rate_runbook_url, var.runbook_url), "")
+    tip                   = var.deadlettered_messages_rate_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
+
+  rule {
+    description           = "is too high > ${var.deadlettered_messages_rate_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.deadlettered_messages_rate_disabled_major, var.deadlettered_messages_rate_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.deadlettered_messages_rate_notifications, "major", []), var.notifications.major)
+    runbook_url           = try(coalesce(var.deadlettered_messages_rate_runbook_url, var.runbook_url), "")
+    tip                   = var.deadlettered_messages_rate_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
+
+}

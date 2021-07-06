@@ -273,3 +273,65 @@ variable "throttled_requests_threshold_major" {
   type        = number
   default     = 80
 }
+
+# Deadlettered_messages_rate detector
+
+variable "deadlettered_messages_rate_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "deadlettered_messages_rate_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
+variable "deadlettered_messages_rate_disabled" {
+  description = "Disable all alerting rules for deadlettered_messages_rate detector"
+  type        = bool
+  default     = null
+}
+
+variable "deadlettered_messages_rate_disabled_critical" {
+  description = "Disable critical alerting rule for deadlettered_messages_rate detector"
+  type        = bool
+  default     = null
+}
+
+variable "deadlettered_messages_rate_disabled_major" {
+  description = "Disable critical alerting rule for deadlettered_messages_rate detector"
+  type        = bool
+  default     = null
+}
+
+variable "deadlettered_messages_rate_notifications" {
+  description = "Notification recipients list per severity overridden for deadlettered_messages_rate detector"
+  type        = map(list(string))
+  default     = {}
+}
+
+variable "deadlettered_messages_rate_aggregation_function" {
+  description = "Aggregation function and group by for deadlettered_messages_rate detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ".mean(by=['entityname', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+}
+
+variable "deadlettered_messages_rate_timer" {
+  description = "Evaluation window for deadlettered_messages_rate detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "5m"
+}
+
+variable "deadlettered_messages_rate_threshold_critical" {
+  description = "Critical threshold for deadlettered_messages_rate detector"
+  type        = number
+  default     = 5
+}
+
+variable "deadlettered_messages_rate_threshold_major" {
+  description = "Major threshold for deadlettered_messages_rate detector"
+  type        = number
+  default     = 10
+}

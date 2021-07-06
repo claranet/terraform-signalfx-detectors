@@ -80,6 +80,7 @@ This module creates the following SignalFx detectors which could contain one or 
 |Azure Service Bus user error rate|X|X|-|-|-|
 |Azure Service Bus server error rate|X|X|-|-|-|
 |Azure Service Bus throttled requests rate|X|X|-|-|-|
+|Azure Service Bus deadlettered messages rate|X|X|-|-|-|
 
 ## How to collect required metrics?
 
@@ -96,7 +97,9 @@ with this Terraform [module](https://github.com/claranet/terraform-signalfx-inte
 Here is the list of required metrics for detectors in this module.
 
 * `ActiveConnections`
+* `DeadletteredMessages`
 * `IncomingRequests`
+* `Messages`
 * `ServerErrors`
 * `Size`
 * `ThrottledRequests`
