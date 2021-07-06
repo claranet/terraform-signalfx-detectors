@@ -289,25 +289,25 @@ variable "deadlettered_messages_runbook_url" {
 }
 
 variable "deadlettered_messages_disabled" {
-  description = "Disable all alerting rules for active_connections detector"
+  description = "Disable all alerting rules for deadlettered_messages detector"
   type        = bool
   default     = null
 }
 
 variable "deadlettered_messages_disabled_critical" {
-  description = "Disable critical alerting rule for active_connections detector"
+  description = "Disable critical alerting rule for deadlettered_messages detector"
   type        = bool
   default     = null
 }
 
 variable "deadlettered_messages_disabled_major" {
-  description = "Disable critical alerting rule for active_connections detector"
+  description = "Disable critical alerting rule for deadlettered_messages detector"
   type        = bool
   default     = null
 }
 
 variable "deadlettered_messages_notifications" {
-  description = "Notification recipients list per severity overridden for active_connections detector"
+  description = "Notification recipients list per severity overridden for deadlettered_messages detector"
   type        = map(list(string))
   default     = {}
 }
@@ -315,7 +315,7 @@ variable "deadlettered_messages_notifications" {
 variable "deadlettered_messages_aggregation_function" {
   description = "Aggregation function and group by for deadlettered_messages detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region', 'entityname'])"
+  default     = ".mean(by=['entityname', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
 variable "deadlettered_messages_timer" {

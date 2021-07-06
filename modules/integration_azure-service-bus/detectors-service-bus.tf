@@ -176,7 +176,7 @@ EOF
 }
 
 resource "signalfx_detector" "deadlettered_messages" {
-  name = format("%s %s", local.detector_name_prefix, "Azure Service Bus deadlettered messages")
+  name = format("%s %s", local.detector_name_prefix, "Azure Service Bus deadlettered messages count")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
