@@ -22,7 +22,7 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 
 ```hcl
 module "signalfx-detectors-smart-agent-logstash" {
-  source = "github.com/chungktran/terraform-signalfx-detectors.git//modules/smart-agent_logstash?ref={revision}"
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/smart-agent_logstash?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications
