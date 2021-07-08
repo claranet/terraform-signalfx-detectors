@@ -74,6 +74,7 @@
 - [kubernetes-velero](#kubernetes-velero)
 - [kubernetes-volumes](#kubernetes-volumes)
 - [kubernetes-workloads-count](#kubernetes-workloads-count)
+- [logstash](#logstash)
 - [mdadm](#mdadm)
 - [memcached](#memcached)
 - [mongodb](#mongodb)
@@ -806,6 +807,17 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Kubernetes workloads count|-|-|X|X|-|
+
+
+## logstash
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Logstash events in high|X|X|-|-|-|
+|Logstash events in low|X|X|-|-|-|
+|Logstash events out high|X|X|-|-|-|
+|Logstash events out low|X|X|-|-|-|
+|Logstash cpu usage percent|X|X|-|-|-|
 
 
 ## mdadm

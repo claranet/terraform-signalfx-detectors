@@ -7,7 +7,6 @@
 - [How to use this module?](#how-to-use-this-module)
 - [What are the available detectors in this module?](#what-are-the-available-detectors-in-this-module)
 - [How to collect required metrics?](#how-to-collect-required-metrics)
-  - [Monitors](#monitors)
   - [Examples](#examples)
   - [Metrics](#metrics)
 - [Related documentation](#related-documentation)
@@ -23,7 +22,7 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 
 ```hcl
 module "signalfx-detectors-smart-agent-logstash" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/smart-agent_logstash?ref={revision}"
+  source = "github.com/chungktran/terraform-signalfx-detectors.git//modules/smart-agent_logstash?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications
@@ -57,14 +56,14 @@ Note the following parameters:
   Check the [notification binding](https://github.com/claranet/terraform-signalfx-detectors/wiki/Notifications-binding) 
   documentation to understand the recommended role of each severity.
 
-These 3 parameters along with all variables defined in [common-variables.tf](common-variables.tf) are common to all 
+These 3 parameters alongs with all variables defined in [common-variables.tf](common-variables.tf) are common to all 
 [modules](../) in this repository. Other variables, specific to this module, are available in 
 [variables.tf](variables.tf).
 In general, the default configuration "works" but all of these Terraform 
 [variables](https://www.terraform.io/docs/configuration/variables.html) make it possible to 
 customize the detectors behavior to better fit your needs.
 
-Most of them represent usual tips and rules detailed in the 
+Most of them represent usual tips and rules detailled in the 
 [guidance](https://github.com/claranet/terraform-signalfx-detectors/wiki/Guidance) documentation and listed in the 
 common [variables](https://github.com/claranet/terraform-signalfx-detectors/wiki/Variables) dedicated documentation.
 
@@ -81,6 +80,7 @@ This module creates the following SignalFx detectors which could contain one or 
 |Logstash events in low|X|X|-|-|-|
 |Logstash events out high|X|X|-|-|-|
 |Logstash events out low|X|X|-|-|-|
+|Logstash cpu usage percent|X|X|-|-|-|
 
 ## How to collect required metrics?
 
@@ -103,10 +103,28 @@ in addition to the monitor one which it uses.
       plugin: logstash
 ```
 
+
+### Metrics
+
+
+To filter only required metrics for the detectors of this module, add the 
+[datapointsToExclude](https://docs.signalfx.com/en/latest/integrations/agent/filtering.html) parameter to 
+the corresponding monitor configuration:
+
+```yaml
+    datapointsToExclude:
+      - metricNames:
+        - '*'
+        - '!node.stats.process.process.cpu.percent'
+        - '!${var.events_in_metric_name}'
+        - '!${var.events_out_metric_name}'
+
+```
+
+
+
 ## Related documentation
 
 * [Terraform SignalFx provider](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs)
 * [Terraform SignalFx detector](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector)
 * [Smart Agent monitor](https://docs.signalfx.com/en/latest/integrations/agent/monitors/logstash.html)
-* [RabbitMQ management plugin](https://www.rabbitmq.com/management.html)
-* [Collection script](https://github.com/signalfx/collectd-rabbitmq)
