@@ -25,8 +25,8 @@ module "signalfx-detectors-integration-azure-storage-account-capacity" {
 
   environment                      = var.environment
   notifications                    = local.notifications
-  used_capacity_threshold_major    = 42
   used_capacity_threshold_critical = 42
+  used_capacity_threshold_major    = 42
 }
 ```
 

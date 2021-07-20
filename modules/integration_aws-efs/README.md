@@ -30,12 +30,12 @@ module "signalfx-detectors-integration-aws-efs" {
 
   environment                        = var.environment
   notifications                      = local.notifications
-  used_space_threshold_critical      = 42
   used_space_threshold_major         = 42
   write_throughput_threshold_minor   = 42
-  write_throughput_threshold_warning = 42
   read_throughput_threshold_minor    = 42
   read_throughput_threshold_warning  = 42
+  write_throughput_threshold_warning = 42
+  used_space_threshold_critical      = 42
 }
 ```
 
