@@ -1,0 +1,5 @@
+documentations:
+  - name: Smart Agent monitor
+    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-systemd.html'
+
+source_doc:

@@ -24,9 +24,9 @@
 - [aws-sqs](#aws-sqs)
 - [aws-vpn](#aws-vpn)
 - [azure-api-management-service](#azure-api-management-service)
-- [azure-app-service-plan](#azure-app-service-plan)
-- [azure-app-service](#azure-app-service)
 - [azure-application-gateway](#azure-application-gateway)
+- [azure-app-service](#azure-app-service)
+- [azure-app-service-plan](#azure-app-service-plan)
 - [azure-azure-search](#azure-azure-search)
 - [azure-container-instance](#azure-container-instance)
 - [azure-cosmos-db](#azure-cosmos-db)
@@ -42,12 +42,12 @@
 - [azure-service-bus](#azure-service-bus)
 - [azure-sql-database](#azure-sql-database)
 - [azure-sql-elastic-pool](#azure-sql-elastic-pool)
+- [azure-storage-account](#azure-storage-account)
 - [azure-storage-account-blob](#azure-storage-account-blob)
 - [azure-storage-account-capacity](#azure-storage-account-capacity)
-- [azure-storage-account](#azure-storage-account)
 - [azure-stream-analytics](#azure-stream-analytics)
-- [azure-virtual-machine-scaleset](#azure-virtual-machine-scaleset)
 - [azure-virtual-machine](#azure-virtual-machine)
+- [azure-virtual-machine-scaleset](#azure-virtual-machine-scaleset)
 - [gcp-bigquery](#gcp-bigquery)
 - [gcp-cloud-sql-common](#gcp-cloud-sql-common)
 - [gcp-cloud-sql-failover](#gcp-cloud-sql-failover)
@@ -59,8 +59,8 @@
 - [newrelic-apm](#newrelic-apm)
 - [usage](#usage)
 - [apache](#apache)
-- [cassandra-nodetool](#cassandra-nodetool)
 - [cassandra](#cassandra)
+- [cassandra-nodetool](#cassandra-nodetool)
 - [couchbase](#couchbase)
 - [dns](#dns)
 - [docker](#docker)
@@ -79,8 +79,8 @@
 - [mongodb](#mongodb)
 - [mysql](#mysql)
 - [nagios-status-check](#nagios-status-check)
-- [nginx-ingress](#nginx-ingress)
 - [nginx](#nginx)
+- [nginx-ingress](#nginx-ingress)
 - [ntp](#ntp)
 - [php-fpm](#php-fpm)
 - [postgresql](#postgresql)
@@ -91,6 +91,7 @@
 - [solr](#solr)
 - [supervisor](#supervisor)
 - [system-common](#system-common)
+- [systemd-services](#systemd-services)
 - [tomcat](#tomcat)
 - [varnish](#varnish)
 - [zookeeper](#zookeeper)
@@ -290,27 +291,6 @@
 |Azure API Management Service Duration of backend request|X|X|-|-|-|
 
 
-## azure-app-service-plan
-
-|Detector|Critical|Major|Minor|Warning|Info|
-|---|---|---|---|---|---|
-|Azure App Service Plan heartbeat|X|-|-|-|-|
-|Azure App Service Plan CPU percentage|X|X|-|-|-|
-|Azure App Service Plan memory percentage|X|X|-|-|-|
-
-
-## azure-app-service
-
-|Detector|Critical|Major|Minor|Warning|Info|
-|---|---|---|---|---|---|
-|Azure App Service heartbeat|X|-|-|-|-|
-|Azure App Service response time|X|X|-|-|-|
-|Azure App Service memory usage|X|X|-|-|-|
-|Azure App Service 5xx error rate|X|X|-|-|-|
-|Azure App Service 4xx error rate|X|X|-|-|-|
-|Azure App Service successful response rate|X|X|-|-|-|
-
-
 ## azure-application-gateway
 
 |Detector|Critical|Major|Minor|Warning|Info|
@@ -325,6 +305,27 @@
 |Azure Application Gateway backend 4xx error rate|X|X|-|-|-|
 |Azure Application Gateway backend 5xx error rate|X|X|-|-|-|
 |Azure Application Gateway capacity units|-|X|-|-|-|
+
+
+## azure-app-service
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Azure App Service heartbeat|X|-|-|-|-|
+|Azure App Service response time|X|X|-|-|-|
+|Azure App Service memory usage|X|X|-|-|-|
+|Azure App Service 5xx error rate|X|X|-|-|-|
+|Azure App Service 4xx error rate|X|X|-|-|-|
+|Azure App Service successful response rate|X|X|-|-|-|
+
+
+## azure-app-service-plan
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Azure App Service Plan heartbeat|X|-|-|-|-|
+|Azure App Service Plan CPU percentage|X|X|-|-|-|
+|Azure App Service Plan memory percentage|X|X|-|-|-|
 
 
 ## azure-azure-search
@@ -474,6 +475,17 @@
 |Azure SQL Elastic Pool DTU consumption|X|X|-|-|-|
 
 
+## azure-storage-account
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Azure Storage Account count|X|X|-|-|-|
+|Azure Storage Account capacity|X|X|-|-|-|
+|Azure Storage Account ingress|X|X|-|-|-|
+|Azure Storage Account egress|X|X|-|-|-|
+|Azure Storage Account requests rate|X|X|-|-|-|
+
+
 ## azure-storage-account-blob
 
 |Detector|Critical|Major|Minor|Warning|Info|
@@ -489,17 +501,6 @@
 |Azure storage account Used capacity|X|X|-|-|-|
 
 
-## azure-storage-account
-
-|Detector|Critical|Major|Minor|Warning|Info|
-|---|---|---|---|---|---|
-|Azure Storage Account count|X|X|-|-|-|
-|Azure Storage Account capacity|X|X|-|-|-|
-|Azure Storage Account ingress|X|X|-|-|-|
-|Azure Storage Account egress|X|X|-|-|-|
-|Azure Storage Account requests rate|X|X|-|-|-|
-
-
 ## azure-stream-analytics
 
 |Detector|Critical|Major|Minor|Warning|Info|
@@ -511,13 +512,6 @@
 |Azure Stream Analytics runtime errors rate|X|X|-|-|-|
 
 
-## azure-virtual-machine-scaleset
-
-|Detector|Critical|Major|Minor|Warning|Info|
-|---|---|---|---|---|---|
-|Azure Virtual Machine ScaleSet heartbeat|X|-|-|-|-|
-
-
 ## azure-virtual-machine
 
 |Detector|Critical|Major|Minor|Warning|Info|
@@ -525,6 +519,13 @@
 |Azure Virtual Machine heartbeat|X|-|-|-|-|
 |Azure Virtual Machine CPU usage|X|X|-|-|-|
 |Azure Virtual Machine remaining CPU credit|X|X|-|-|-|
+
+
+## azure-virtual-machine-scaleset
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Azure Virtual Machine ScaleSet heartbeat|X|-|-|-|-|
 
 
 ## gcp-bigquery
@@ -635,14 +636,6 @@
 |Apache busy workers|X|X|-|-|-|
 
 
-## cassandra-nodetool
-
-|Detector|Critical|Major|Minor|Warning|Info|
-|---|---|---|---|---|---|
-|Cassandra nodetool node status|X|-|X|-|-|
-|Cassandra nodetool node state|X|-|-|-|-|
-
-
 ## cassandra
 
 |Detector|Critical|Major|Minor|Warning|Info|
@@ -657,6 +650,14 @@
 |Cassandra transactional read latency real time|X|X|-|-|-|
 |Cassandra transactional write latency real time|X|X|-|-|-|
 |Cassandra storage exceptions count|-|X|-|-|-|
+
+
+## cassandra-nodetool
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Cassandra nodetool node status|X|-|X|-|-|
+|Cassandra nodetool node state|X|-|-|-|-|
 
 
 ## couchbase
@@ -861,6 +862,14 @@
 |Nagios check status|X|X|-|X|-|
 
 
+## nginx
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Nginx heartbeat|X|-|-|-|-|
+|Nginx dropped connections|X|X|-|-|-|
+
+
 ## nginx-ingress
 
 |Detector|Critical|Major|Minor|Warning|Info|
@@ -868,14 +877,6 @@
 |Kubernetes Ingress Nginx 5xx errors ratio|X|X|-|-|-|
 |Kubernetes Ingress Nginx 4xx errors ratio|X|X|-|-|-|
 |Kubernetes Ingress Nginx latency|X|X|-|-|-|
-
-
-## nginx
-
-|Detector|Critical|Major|Minor|Warning|Info|
-|---|---|---|---|---|---|
-|Nginx heartbeat|X|-|-|-|-|
-|Nginx dropped connections|X|X|-|-|-|
 
 
 ## ntp
@@ -981,6 +982,13 @@
 |System disk inodes utilization|X|X|-|-|-|
 |System memory utilization|X|X|-|-|-|
 |System disk space running out|-|X|-|-|-|
+
+
+## systemd-services
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|systemd services aliveness|X|-|-|-|-|
 
 
 ## tomcat
