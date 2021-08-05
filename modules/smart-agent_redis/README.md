@@ -94,7 +94,7 @@ This module creates the following SignalFx detectors which could contain one or 
 This module uses metrics available from 
 [monitors](https://docs.signalfx.com/en/latest/integrations/agent/monitors/_monitor-config.html)
 available in the [SignalFx Smart 
-Agent](https://github.com/signalfx/signalfx-agent). Check the "Related documentation" section for more 
+Agent](https://github.com/signalfx/signalfx-agent). Check the [Related documentation](#related-documentation) section for more 
 information including the official documentation of this monitor.
 
 
