@@ -7,6 +7,7 @@
 - [How to use this module?](#how-to-use-this-module)
 - [What are the available detectors in this module?](#what-are-the-available-detectors-in-this-module)
 - [How to collect required metrics?](#how-to-collect-required-metrics)
+  - [Monitor](#monitor)
   - [Metrics](#metrics)
 - [Related documentation](#related-documentation)
 
@@ -57,7 +58,7 @@ Note the following parameters:
 
 These 3 parameters alongs with all variables defined in [common-variables.tf](common-variables.tf) are common to all 
 [modules](../) in this repository. Other variables, specific to this module, are available in 
-[variables.tf](variables.tf).
+[variables-gen.tf](variables-gen.tf).
 In general, the default configuration "works" but all of these Terraform 
 [variables](https://www.terraform.io/docs/configuration/variables.html) make it possible to 
 customize the detectors behavior to better fit your needs.
@@ -75,7 +76,7 @@ This module creates the following SignalFx detectors which could contain one or 
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|systemd services aliveness|X|-|-|-|-|
+|Systemd-services aliveness|X|-|-|-|-|
 
 ## How to collect required metrics?
 
@@ -86,6 +87,21 @@ Agent](https://github.com/signalfx/signalfx-agent). Check the "Related documenta
 information including the official documentation of this monitor.
 
 
+### Monitor
+
+The detector of this module is based on metrics reported by the [collectd/systemd](https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-systemd.html) monitor.
+
+For example, to monitor the `toto.service` and `titi.service` on your host, your SignalFX agent should look like this:
+
+```yaml
+monitors:
+  …
+  - type: collectd/systemd
+    services:
+      - toto
+      - titi
+  …
+```
 
 
 ### Metrics
