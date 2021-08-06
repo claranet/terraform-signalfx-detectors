@@ -1,0 +1,15 @@
+## Example
+module: systemd-services
+name: "aliveness"
+id: systemd_services
+
+transformation: true
+aggregation: false
+
+signals:
+  signal:
+    metric: "gauge.substate.running"
+rules:
+  critical:
+    threshold: 1
+    comparator: "<"
