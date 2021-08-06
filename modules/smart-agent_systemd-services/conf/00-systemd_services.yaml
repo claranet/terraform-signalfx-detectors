@@ -12,4 +12,4 @@ signals:
 rules:
   critical:
     threshold: 1
-    comparator: "<"
+    comparator: "!="
