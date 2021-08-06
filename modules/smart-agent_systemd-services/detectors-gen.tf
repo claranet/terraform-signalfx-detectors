@@ -7,7 +7,7 @@ resource "signalfx_detector" "systemd_services" {
 
   program_text = <<-EOF
     signal = data('gauge.substate.running', filter=${module.filtering.signalflow})${var.systemd_services_transformation_function}.publish('signal')
-    detect(when(signal < ${var.systemd_services_threshold_critical}))).publish('CRIT')
+    detect(when(signal < ${var.systemd_services_threshold_critical})).publish('CRIT')
 EOF
 
   rule {

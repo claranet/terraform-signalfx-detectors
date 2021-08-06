@@ -40,8 +40,8 @@ resource "signalfx_detector" "cpu" {
 
   program_text = <<-EOF
     signal = data('cpu.utilization', filter=${module.filtering.signalflow}, extrapolation='zero')${var.cpu_aggregation_function}${var.cpu_transformation_function}.publish('signal')
-    detect(when(signal > ${var.cpu_threshold_critical}))).publish('CRIT')
-    detect(when(signal > ${var.cpu_threshold_major} and signal <= ${var.cpu_threshold_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.cpu_threshold_critical})).publish('CRIT')
+    detect(when(signal > ${var.cpu_threshold_major} and signal <= ${var.cpu_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -78,8 +78,8 @@ resource "signalfx_detector" "load" {
 
   program_text = <<-EOF
     signal = data('load.midterm', filter=${module.filtering.signalflow})${var.load_aggregation_function}${var.load_transformation_function}.publish('signal')
-    detect(when(signal > ${var.load_threshold_critical}))).publish('CRIT')
-    detect(when(signal > ${var.load_threshold_major} and signal <= ${var.load_threshold_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.load_threshold_critical})).publish('CRIT')
+    detect(when(signal > ${var.load_threshold_major} and signal <= ${var.load_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -121,8 +121,8 @@ resource "signalfx_detector" "disk_space" {
 
   program_text = <<-EOF
     signal = data('disk.utilization', filter=${module.filtering.signalflow})${var.disk_space_aggregation_function}${var.disk_space_transformation_function}.publish('signal')
-    detect(when(signal > ${var.disk_space_threshold_critical}))).publish('CRIT')
-    detect(when(signal > ${var.disk_space_threshold_major} and signal <= ${var.disk_space_threshold_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.disk_space_threshold_critical})).publish('CRIT')
+    detect(when(signal > ${var.disk_space_threshold_major} and signal <= ${var.disk_space_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -164,8 +164,8 @@ resource "signalfx_detector" "disk_inodes" {
 
   program_text = <<-EOF
     signal = data('percent_inodes.used', filter=${module.filtering.signalflow})${var.disk_inodes_aggregation_function}${var.disk_inodes_transformation_function}.publish('signal')
-    detect(when(signal > ${var.disk_inodes_threshold_critical}))).publish('CRIT')
-    detect(when(signal > ${var.disk_inodes_threshold_major} and signal <= ${var.disk_inodes_threshold_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.disk_inodes_threshold_critical})).publish('CRIT')
+    detect(when(signal > ${var.disk_inodes_threshold_major} and signal <= ${var.disk_inodes_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -207,8 +207,8 @@ resource "signalfx_detector" "memory" {
 
   program_text = <<-EOF
     signal = data('memory.utilization', filter=${module.filtering.signalflow})${var.memory_aggregation_function}${var.memory_transformation_function}.publish('signal')
-    detect(when(signal > ${var.memory_threshold_critical}))).publish('CRIT')
-    detect(when(signal > ${var.memory_threshold_major} and signal <= ${var.memory_threshold_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.memory_threshold_critical})).publish('CRIT')
+    detect(when(signal > ${var.memory_threshold_major} and signal <= ${var.memory_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
