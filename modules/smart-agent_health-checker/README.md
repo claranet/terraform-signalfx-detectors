@@ -104,7 +104,7 @@ monitors:
   …
   - type: collectd/health-checker
     host: 127.0.0.1
-    port: 7474
+    port: 1234
     tcpCheck: true
   …
 ```
