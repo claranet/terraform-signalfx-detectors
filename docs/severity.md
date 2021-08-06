@@ -91,6 +91,7 @@
 - [solr](#solr)
 - [supervisor](#supervisor)
 - [system-common](#system-common)
+- [systemd-services](#systemd-services)
 - [tomcat](#tomcat)
 - [varnish](#varnish)
 - [zookeeper](#zookeeper)
@@ -981,6 +982,13 @@
 |System disk inodes utilization|X|X|-|-|-|
 |System memory utilization|X|X|-|-|-|
 |System disk space running out|-|X|-|-|-|
+
+
+## systemd-services
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Systemd-services aliveness|X|-|-|-|-|
 
 
 ## tomcat
