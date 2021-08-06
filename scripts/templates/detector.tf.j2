@@ -87,8 +87,7 @@ resource "signalfx_detector" "{{ id }}" {
             , at_least=${var.{{ id }}_at_least_percentage_{{ severity }}}
           {%- endif -%}
         {%- endset %}
-    detect(when(signal {{ rule.comparator }} ${var.{{ id }}_threshold_{{ severity }}}{{ when_args }})
-        {%- if 'dependency' in rule %} and when(signal {{ negative_comparator }} ${var.{{ id }}_threshold_{{ rule.dependency }}}{{ when_args }}){%- endif -%})
+    detect(when(signal {{ rule.comparator }} ${var.{{ id }}_threshold_{{ severity }}}{%- if 'dependency' in rule %} and signal {{ negative_comparator }} ${var.{{ id }}_threshold_{{ rule.dependency }}}{%- endif -%}){{ when_args }}))
       {%- endif -%}
     .publish('{{ severity_label }}')
     {%- endfor %}

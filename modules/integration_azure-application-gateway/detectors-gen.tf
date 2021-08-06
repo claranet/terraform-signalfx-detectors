@@ -8,7 +8,7 @@ resource "signalfx_detector" "capacity_units" {
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true')
     signal = data('CapacityUnits', filter=base_filtering and ${module.filtering.signalflow})${var.capacity_units_aggregation_function}${var.capacity_units_transformation_function}.publish('signal')
-    detect(when(signal > ${var.capacity_units_threshold_major})).publish('MAJOR')
+    detect(when(signal > ${var.capacity_units_threshold_major}))).publish('MAJOR')
 EOF
 
   rule {
