@@ -1,10 +1,8 @@
-## Example
 module: systemd-services
-name: "aliveness"
-id: systemd_services
+name: aliveness
 
 transformation: true
-aggregation: false
+aggregation: true
 
 signals:
   signal:
