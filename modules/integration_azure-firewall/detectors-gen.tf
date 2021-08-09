@@ -78,8 +78,8 @@ resource "signalfx_detector" "throughput" {
     throughput = data('Throughput', filter=base_filtering and ${module.filtering.signalflow})${var.throughput_aggregation_function}${var.throughput_transformation_function}
     signal = throughput.scale(0.000000953674316).publish('signal')
     detect(when(signal >= ${var.throughput_threshold_critical}, lasting='${var.throughput_lasting_duration_critical}')).publish('CRIT')
-    detect(when(signal >= ${var.throughput_threshold_major}, lasting='${var.throughput_lasting_duration_major}') and when(signal < ${var.throughput_threshold_critical}, lasting='${var.throughput_lasting_duration_major}')).publish('MAJOR')
-    detect(when(signal >= ${var.throughput_threshold_minor}, lasting='${var.throughput_lasting_duration_minor}') and when(signal < ${var.throughput_threshold_major}, lasting='${var.throughput_lasting_duration_minor}')).publish('MINOR')
+    detect(when(signal >= ${var.throughput_threshold_major}, lasting='${var.throughput_lasting_duration_major}') and when(signal < ${var.throughput_threshold_critical}, lasting='${var.throughput_lasting_duration_critical}')).publish('MAJOR')
+    detect(when(signal >= ${var.throughput_threshold_minor}, lasting='${var.throughput_lasting_duration_minor}') and when(signal < ${var.throughput_threshold_major}, lasting='${var.throughput_lasting_duration_major}')).publish('MINOR')
     detect(when(signal >= ${var.throughput_threshold_warning}, lasting='${var.throughput_lasting_duration_warning}') and when(signal < ${var.throughput_threshold_warning}, lasting='${var.throughput_lasting_duration_warning}')).publish('WARN')
 EOF
 
@@ -143,7 +143,7 @@ resource "signalfx_detector" "health_state" {
     base_filtering = filter('resource_type', 'Microsoft.Network/azureFirewalls') and filter('primary_aggregation_type', 'true')
     signal = data('FirewallHealth', filter=base_filtering and ${module.filtering.signalflow})${var.health_state_aggregation_function}${var.health_state_transformation_function}.publish('signal')
     detect(when(signal < ${var.health_state_threshold_critical}, lasting='${var.health_state_lasting_duration_critical}')).publish('CRIT')
-    detect(when(signal < ${var.health_state_threshold_major}, lasting='${var.health_state_lasting_duration_major}') and when(signal >= ${var.health_state_threshold_critical}, lasting='${var.health_state_lasting_duration_major}')).publish('MAJOR')
+    detect(when(signal < ${var.health_state_threshold_major}, lasting='${var.health_state_lasting_duration_major}') and when(signal >= ${var.health_state_threshold_critical}, lasting='${var.health_state_lasting_duration_critical}')).publish('MAJOR')
 EOF
 
   rule {

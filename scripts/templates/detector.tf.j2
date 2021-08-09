@@ -86,9 +86,20 @@ resource "signalfx_detector" "{{ id }}" {
           {%- if rule.lasting_at_least is number -%}
             , at_least=${var.{{ id }}_at_least_percentage_{{ severity }}}
           {%- endif -%}
-        {%- endset %}
+        {%- endset -%}
+        {%- if 'dependency' in rule %}
+          {%- set dependency_severity = rule.dependency | lower %}
+          {%- set dependency_when_args %}
+            {%- if rules[rule.dependency].lasting_duration is string -%}
+              , lasting='${var.{{ id }}_lasting_duration_{{dependency_severity}}}'
+            {%- endif -%}
+            {%- if rules[rule.dependency].lasting_at_least is number -%}
+              , at_least=${var.{{ id }}_at_least_percentage_{{ severity }}}
+            {%- endif -%}
+          {%- endset -%}
+        {%- endif %}
     detect(when(signal {{ rule.comparator }} ${var.{{ id }}_threshold_{{ severity }}}{{ when_args }})
-        {%- if 'dependency' in rule %} and when(signal {{ negative_comparator }} ${var.{{ id }}_threshold_{{ rule.dependency }}}{{ when_args }}){%- endif -%})
+        {%- if 'dependency' in rule %} and when(signal {{ negative_comparator }} ${var.{{ id }}_threshold_{{ dependency_severity }}}{{ dependency_when_args }}){%- endif -%})
       {%- endif -%}
     .publish('{{ severity_label }}')
     {%- endfor %}
