@@ -85,18 +85,20 @@ variable "{{ id }}_threshold_{{ severity }}" {
   default     = {{ rule.threshold }}
     {%- endif %}
 }
-{% if rule.lasting_duration is string %}
+{% set lasting_duration = rule.lasting_duration|default('None') -%}
+{% if lasting_duration is string %}
 variable "{{ id }}_lasting_duration_{{ severity }}" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "{{ rule.lasting_duration }}"
+  default     = "{{ lasting_duration }}"
 }
 {% endif -%}
-{% if rule.lasting_at_least is number %}
+{% set lasting_at_least = rule.lasting_at_least|default(1.0) -%}
+{% if lasting_at_least is number %}
 variable "{{ id }}_at_least_percentage_{{ severity }}" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
-  default     = "{{ rule.lasting_at_least }}"
+  default     = {{ lasting_at_least }}
 }
 {% endif %}
 {% endfor -%}

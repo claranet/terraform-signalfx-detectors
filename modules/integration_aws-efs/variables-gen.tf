@@ -53,9 +53,33 @@ variable "used_space_threshold_critical" {
   type        = number
 }
 
+variable "used_space_lasting_duration_critical" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "None"
+}
+
+variable "used_space_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1.0
+}
+
 variable "used_space_threshold_major" {
   description = "Major threshold for used_space detector in GB"
   type        = number
+}
+
+variable "used_space_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "None"
+}
+
+variable "used_space_at_least_percentage_major" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1.0
 }
 
 # io_limit detector
@@ -116,10 +140,34 @@ variable "io_limit_threshold_major" {
   default     = 90
 }
 
+variable "io_limit_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "None"
+}
+
+variable "io_limit_at_least_percentage_major" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1.0
+}
+
 variable "io_limit_threshold_minor" {
   description = "Minor threshold for io_limit detector in %"
   type        = number
   default     = 80
+}
+
+variable "io_limit_lasting_duration_minor" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "None"
+}
+
+variable "io_limit_at_least_percentage_minor" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1.0
 }
 
 # read_throughput detector
@@ -177,9 +225,33 @@ variable "read_throughput_threshold_minor" {
   type        = number
 }
 
+variable "read_throughput_lasting_duration_minor" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "None"
+}
+
+variable "read_throughput_at_least_percentage_minor" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1.0
+}
+
 variable "read_throughput_threshold_warning" {
   description = "Warning threshold for read_throughput detector in %"
   type        = number
+}
+
+variable "read_throughput_lasting_duration_warning" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "None"
+}
+
+variable "read_throughput_at_least_percentage_warning" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1.0
 }
 
 # write_throughput detector
@@ -237,9 +309,33 @@ variable "write_throughput_threshold_minor" {
   type        = number
 }
 
+variable "write_throughput_lasting_duration_minor" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "None"
+}
+
+variable "write_throughput_at_least_percentage_minor" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1.0
+}
+
 variable "write_throughput_threshold_warning" {
   description = "Warning threshold for write_throughput detector in %"
   type        = number
+}
+
+variable "write_throughput_lasting_duration_warning" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "None"
+}
+
+variable "write_throughput_at_least_percentage_warning" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1.0
 }
 
 # percent_of_permitted_throughput detector
@@ -300,10 +396,34 @@ variable "percent_of_permitted_throughput_threshold_major" {
   default     = 90
 }
 
+variable "percent_of_permitted_throughput_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "None"
+}
+
+variable "percent_of_permitted_throughput_at_least_percentage_major" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1.0
+}
+
 variable "percent_of_permitted_throughput_threshold_minor" {
   description = "Minor threshold for percent_of_permitted_throughput detector in %"
   type        = number
   default     = 80
+}
+
+variable "percent_of_permitted_throughput_lasting_duration_minor" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "None"
+}
+
+variable "percent_of_permitted_throughput_at_least_percentage_minor" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1.0
 }
 
 # burst_credit_balance detector
@@ -350,5 +470,17 @@ variable "burst_credit_balance_threshold_major" {
   description = "Major threshold for burst_credit_balance detector in credits"
   type        = number
   default     = 1
+}
+
+variable "burst_credit_balance_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "None"
+}
+
+variable "burst_credit_balance_at_least_percentage_major" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1.0
 }
 

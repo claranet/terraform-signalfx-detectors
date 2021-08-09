@@ -54,10 +54,34 @@ variable "count_threshold_critical" {
   default     = 245
 }
 
+variable "count_lasting_duration_critical" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "None"
+}
+
+variable "count_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1.0
+}
+
 variable "count_threshold_major" {
   description = "Major threshold for count detector"
   type        = number
   default     = 240
+}
+
+variable "count_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "None"
+}
+
+variable "count_at_least_percentage_major" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1.0
 }
 
 # capacity detector
@@ -116,10 +140,34 @@ variable "capacity_threshold_critical" {
   default     = 4.8
 }
 
+variable "capacity_lasting_duration_critical" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "None"
+}
+
+variable "capacity_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1.0
+}
+
 variable "capacity_threshold_major" {
   description = "Major threshold for capacity detector in PiB"
   type        = number
   default     = 4.5
+}
+
+variable "capacity_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "None"
+}
+
+variable "capacity_at_least_percentage_major" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1.0
 }
 
 # ingress detector
@@ -178,10 +226,34 @@ variable "ingress_threshold_critical" {
   default     = 9
 }
 
+variable "ingress_lasting_duration_critical" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "None"
+}
+
+variable "ingress_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1.0
+}
+
 variable "ingress_threshold_major" {
   description = "Major threshold for ingress detector in Gbps"
   type        = number
   default     = 8
+}
+
+variable "ingress_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "None"
+}
+
+variable "ingress_at_least_percentage_major" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1.0
 }
 
 # egress detector
@@ -240,10 +312,34 @@ variable "egress_threshold_critical" {
   default     = 48
 }
 
+variable "egress_lasting_duration_critical" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "None"
+}
+
+variable "egress_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1.0
+}
+
 variable "egress_threshold_major" {
   description = "Major threshold for egress detector in Gbps"
   type        = number
   default     = 45
+}
+
+variable "egress_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "None"
+}
+
+variable "egress_at_least_percentage_major" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1.0
 }
 
 # requests_rate detector
@@ -302,9 +398,33 @@ variable "requests_rate_threshold_critical" {
   default     = 19000
 }
 
+variable "requests_rate_lasting_duration_critical" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "None"
+}
+
+variable "requests_rate_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1.0
+}
+
 variable "requests_rate_threshold_major" {
   description = "Major threshold for requests_rate detector"
   type        = number
   default     = 18000
+}
+
+variable "requests_rate_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "None"
+}
+
+variable "requests_rate_at_least_percentage_major" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1.0
 }
 

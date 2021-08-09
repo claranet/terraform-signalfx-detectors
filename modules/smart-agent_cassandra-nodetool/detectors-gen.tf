@@ -7,8 +7,8 @@ resource "signalfx_detector" "node_status" {
 
   program_text = <<-EOF
     signal = data('cassandra.status', filter=${module.filtering.signalflow})${var.node_status_aggregation_function}${var.node_status_transformation_function}.publish('signal')
-    detect(when(signal == ${var.node_status_threshold_critical})).publish('CRIT')
-    detect(when(signal < ${var.node_status_threshold_minor})).publish('MINOR')
+    detect(when(signal == ${var.node_status_threshold_critical}%{ if var.node_status_lasting_duration_critical != "None" }, lasting='${var.node_status_lasting_duration_critical}', at_least=${var.node_status_at_least_percentage_critical}%{ endif })).publish('CRIT')
+    detect(when(signal < ${var.node_status_threshold_minor}%{ if var.node_status_lasting_duration_minor != "None" }, lasting='${var.node_status_lasting_duration_minor}', at_least=${var.node_status_at_least_percentage_minor}%{ endif })).publish('MINOR')
 EOF
 
   rule {
@@ -45,7 +45,7 @@ resource "signalfx_detector" "node_state" {
 
   program_text = <<-EOF
     signal = data('cassandra.state', filter=${module.filtering.signalflow})${var.node_state_aggregation_function}${var.node_state_transformation_function}.publish('signal')
-    detect(when(signal > ${var.node_state_threshold_critical})).publish('CRIT')
+    detect(when(signal > ${var.node_state_threshold_critical}%{ if var.node_state_lasting_duration_critical != "None" }, lasting='${var.node_state_lasting_duration_critical}', at_least=${var.node_state_at_least_percentage_critical}%{ endif })).publish('CRIT')
 EOF
 
   rule {

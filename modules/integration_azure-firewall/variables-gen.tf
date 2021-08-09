@@ -98,10 +98,34 @@ variable "snat_port_utilization_threshold_critical" {
   default     = 85
 }
 
+variable "snat_port_utilization_lasting_duration_critical" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "None"
+}
+
+variable "snat_port_utilization_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1.0
+}
+
 variable "snat_port_utilization_threshold_major" {
   description = "Major threshold for snat_port_utilization detector"
   type        = number
   default     = 95
+}
+
+variable "snat_port_utilization_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "None"
+}
+
+variable "snat_port_utilization_at_least_percentage_major" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1.0
 }
 
 # throughput detector
@@ -180,6 +204,12 @@ variable "throughput_lasting_duration_critical" {
   default     = "300s"
 }
 
+variable "throughput_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1.0
+}
+
 variable "throughput_threshold_major" {
   description = "Major threshold for throughput detector"
   type        = number
@@ -190,6 +220,12 @@ variable "throughput_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
   default     = "300s"
+}
+
+variable "throughput_at_least_percentage_major" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1.0
 }
 
 variable "throughput_threshold_minor" {
@@ -204,6 +240,12 @@ variable "throughput_lasting_duration_minor" {
   default     = "300s"
 }
 
+variable "throughput_at_least_percentage_minor" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1.0
+}
+
 variable "throughput_threshold_warning" {
   description = "Warning threshold for throughput detector"
   type        = number
@@ -214,6 +256,12 @@ variable "throughput_lasting_duration_warning" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
   default     = "300s"
+}
+
+variable "throughput_at_least_percentage_warning" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1.0
 }
 
 # health_state detector
@@ -280,6 +328,12 @@ variable "health_state_lasting_duration_critical" {
   default     = "5m"
 }
 
+variable "health_state_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1.0
+}
+
 variable "health_state_threshold_major" {
   description = "Major threshold for health_state detector"
   type        = number
@@ -290,5 +344,11 @@ variable "health_state_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
   default     = "5m"
+}
+
+variable "health_state_at_least_percentage_major" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1.0
 }
 

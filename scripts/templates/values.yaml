@@ -204,11 +204,11 @@ rules:
     ## @param lasting_duration - string - optional
     ## Minimum duration that conditions must be true 
     ## before raising alert
-    lasting_duration:
+    lasting_duration: 'None'
 
     ## @param lasting_at_least - number - option
     ## Percentage of lasting that conditions must be true 
     ## before raising alert (>= 0.0 and <= 1.0)
     ## lasting value is mandatory to use this parameter
-    lasting_at_least:
+    lasting_at_least: 1.0
 

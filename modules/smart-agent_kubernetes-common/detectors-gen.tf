@@ -9,7 +9,7 @@ resource "signalfx_detector" "hpa_scale_exceeded_capacity" {
     max = data('kubernetes.hpa.spec.max_replicas', filter=${module.filtering.signalflow})${var.hpa_scale_exceeded_capacity_aggregation_function}${var.hpa_scale_exceeded_capacity_transformation_function}
     desired = data('kubernetes.hpa.status.desired_replicas', filter=${module.filtering.signalflow})${var.hpa_scale_exceeded_capacity_aggregation_function}${var.hpa_scale_exceeded_capacity_transformation_function}
     signal = (desired-max).publish('signal')
-    detect(when(signal >= ${var.hpa_scale_exceeded_capacity_threshold_major}, lasting='${var.hpa_scale_exceeded_capacity_lasting_duration_major}')).publish('MAJOR')
+    detect(when(signal >= ${var.hpa_scale_exceeded_capacity_threshold_major}%{ if var.hpa_scale_exceeded_capacity_lasting_duration_major != "None" }, lasting='${var.hpa_scale_exceeded_capacity_lasting_duration_major}', at_least=${var.hpa_scale_exceeded_capacity_at_least_percentage_major}%{ endif })).publish('MAJOR')
 EOF
 
   rule {

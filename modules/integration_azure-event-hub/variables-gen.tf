@@ -60,15 +60,51 @@ variable "throttled_requests_threshold_critical" {
   default     = 30
 }
 
+variable "throttled_requests_lasting_duration_critical" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "None"
+}
+
+variable "throttled_requests_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1.0
+}
+
 variable "throttled_requests_threshold_major" {
   description = "Major threshold for throttled_requests detector in %"
   type        = number
   default     = 15
 }
 
+variable "throttled_requests_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "None"
+}
+
+variable "throttled_requests_at_least_percentage_major" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1.0
+}
+
 variable "throttled_requests_threshold_warning" {
   description = "Warning threshold for throttled_requests detector in %"
   type        = number
   default     = 5
+}
+
+variable "throttled_requests_lasting_duration_warning" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "None"
+}
+
+variable "throttled_requests_at_least_percentage_warning" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1.0
 }
 

@@ -54,10 +54,34 @@ variable "requests_error_rate_threshold_critical" {
   default     = 90
 }
 
+variable "requests_error_rate_lasting_duration_critical" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "None"
+}
+
+variable "requests_error_rate_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1.0
+}
+
 variable "requests_error_rate_threshold_major" {
   description = "Major threshold for requests_error_rate detector in %"
   type        = number
   default     = 80
+}
+
+variable "requests_error_rate_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "None"
+}
+
+variable "requests_error_rate_at_least_percentage_major" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1.0
 }
 
 # latency_e2e detector
@@ -116,9 +140,33 @@ variable "latency_e2e_threshold_critical" {
   default     = 20
 }
 
+variable "latency_e2e_lasting_duration_critical" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "None"
+}
+
+variable "latency_e2e_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1.0
+}
+
 variable "latency_e2e_threshold_major" {
   description = "Major threshold for latency_e2e detector in s"
   type        = number
   default     = 10
+}
+
+variable "latency_e2e_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "None"
+}
+
+variable "latency_e2e_at_least_percentage_major" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1.0
 }
 

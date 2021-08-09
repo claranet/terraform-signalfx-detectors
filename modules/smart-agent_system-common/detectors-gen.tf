@@ -40,8 +40,8 @@ resource "signalfx_detector" "cpu" {
 
   program_text = <<-EOF
     signal = data('cpu.utilization', filter=${module.filtering.signalflow}, extrapolation='zero')${var.cpu_aggregation_function}${var.cpu_transformation_function}.publish('signal')
-    detect(when(signal > ${var.cpu_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.cpu_threshold_major}) and not when(signal > ${var.cpu_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.cpu_threshold_critical}%{ if var.cpu_lasting_duration_critical != "None" }, lasting='${var.cpu_lasting_duration_critical}', at_least=${var.cpu_at_least_percentage_critical}%{ endif })).publish('CRIT')
+    detect(when(signal > ${var.cpu_threshold_major}%{ if var.cpu_lasting_duration_major != "None" }, lasting='${var.cpu_lasting_duration_major}', at_least=${var.cpu_at_least_percentage_major}%{ endif }) and not when(signal > ${var.cpu_threshold_critical}%{ if var.cpu_lasting_duration_critical != "None" }, lasting='${var.cpu_lasting_duration_critical}', at_least=${var.cpu_at_least_percentage_critical}%{ endif })).publish('MAJOR')
 EOF
 
   rule {
@@ -78,8 +78,8 @@ resource "signalfx_detector" "load" {
 
   program_text = <<-EOF
     signal = data('load.midterm', filter=${module.filtering.signalflow})${var.load_aggregation_function}${var.load_transformation_function}.publish('signal')
-    detect(when(signal > ${var.load_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.load_threshold_major}) and not when(signal > ${var.load_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.load_threshold_critical}%{ if var.load_lasting_duration_critical != "None" }, lasting='${var.load_lasting_duration_critical}', at_least=${var.load_at_least_percentage_critical}%{ endif })).publish('CRIT')
+    detect(when(signal > ${var.load_threshold_major}%{ if var.load_lasting_duration_major != "None" }, lasting='${var.load_lasting_duration_major}', at_least=${var.load_at_least_percentage_major}%{ endif }) and not when(signal > ${var.load_threshold_critical}%{ if var.load_lasting_duration_critical != "None" }, lasting='${var.load_lasting_duration_critical}', at_least=${var.load_at_least_percentage_critical}%{ endif })).publish('MAJOR')
 EOF
 
   rule {
@@ -121,8 +121,8 @@ resource "signalfx_detector" "disk_space" {
 
   program_text = <<-EOF
     signal = data('disk.utilization', filter=${module.filtering.signalflow})${var.disk_space_aggregation_function}${var.disk_space_transformation_function}.publish('signal')
-    detect(when(signal > ${var.disk_space_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.disk_space_threshold_major}) and not when(signal > ${var.disk_space_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.disk_space_threshold_critical}%{ if var.disk_space_lasting_duration_critical != "None" }, lasting='${var.disk_space_lasting_duration_critical}', at_least=${var.disk_space_at_least_percentage_critical}%{ endif })).publish('CRIT')
+    detect(when(signal > ${var.disk_space_threshold_major}%{ if var.disk_space_lasting_duration_major != "None" }, lasting='${var.disk_space_lasting_duration_major}', at_least=${var.disk_space_at_least_percentage_major}%{ endif }) and not when(signal > ${var.disk_space_threshold_critical}%{ if var.disk_space_lasting_duration_critical != "None" }, lasting='${var.disk_space_lasting_duration_critical}', at_least=${var.disk_space_at_least_percentage_critical}%{ endif })).publish('MAJOR')
 EOF
 
   rule {
@@ -164,8 +164,8 @@ resource "signalfx_detector" "disk_inodes" {
 
   program_text = <<-EOF
     signal = data('percent_inodes.used', filter=${module.filtering.signalflow})${var.disk_inodes_aggregation_function}${var.disk_inodes_transformation_function}.publish('signal')
-    detect(when(signal > ${var.disk_inodes_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.disk_inodes_threshold_major}) and not when(signal > ${var.disk_inodes_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.disk_inodes_threshold_critical}%{ if var.disk_inodes_lasting_duration_critical != "None" }, lasting='${var.disk_inodes_lasting_duration_critical}', at_least=${var.disk_inodes_at_least_percentage_critical}%{ endif })).publish('CRIT')
+    detect(when(signal > ${var.disk_inodes_threshold_major}%{ if var.disk_inodes_lasting_duration_major != "None" }, lasting='${var.disk_inodes_lasting_duration_major}', at_least=${var.disk_inodes_at_least_percentage_major}%{ endif }) and not when(signal > ${var.disk_inodes_threshold_critical}%{ if var.disk_inodes_lasting_duration_critical != "None" }, lasting='${var.disk_inodes_lasting_duration_critical}', at_least=${var.disk_inodes_at_least_percentage_critical}%{ endif })).publish('MAJOR')
 EOF
 
   rule {
@@ -207,8 +207,8 @@ resource "signalfx_detector" "memory" {
 
   program_text = <<-EOF
     signal = data('memory.utilization', filter=${module.filtering.signalflow})${var.memory_aggregation_function}${var.memory_transformation_function}.publish('signal')
-    detect(when(signal > ${var.memory_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.memory_threshold_major}) and not when(signal > ${var.memory_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.memory_threshold_critical}%{ if var.memory_lasting_duration_critical != "None" }, lasting='${var.memory_lasting_duration_critical}', at_least=${var.memory_at_least_percentage_critical}%{ endif })).publish('CRIT')
+    detect(when(signal > ${var.memory_threshold_major}%{ if var.memory_lasting_duration_major != "None" }, lasting='${var.memory_lasting_duration_major}', at_least=${var.memory_at_least_percentage_major}%{ endif }) and not when(signal > ${var.memory_threshold_critical}%{ if var.memory_lasting_duration_critical != "None" }, lasting='${var.memory_lasting_duration_critical}', at_least=${var.memory_at_least_percentage_critical}%{ endif })).publish('MAJOR')
 EOF
 
   rule {

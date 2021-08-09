@@ -70,21 +70,17 @@ resource "signalfx_detector" "{{ id }}" {
         {%- endfor -%}
       {%- else %}
         {%- set when_args %}
-          {%- if rule.lasting_duration is string -%}
-            , lasting='${var.{{ id }}_lasting_duration_{{severity}}}'
-          {%- endif -%}
-          {%- if rule.lasting_at_least is number -%}
-            , at_least=${var.{{ id }}_at_least_percentage_{{ severity }}}
+	  {%- set lasting_duration = rule.lasting_duration|default('None') -%}
+          {%- if lasting_duration is string -%}
+            %{ if var.{{ id }}_lasting_duration_{{ severity }} != "None" }, lasting='${var.{{ id }}_lasting_duration_{{ severity }}}', at_least=${var.{{ id }}_at_least_percentage_{{ severity }}}%{ endif }
           {%- endif -%}
         {%- endset -%}
         {%- if 'dependency' in rule %}
           {%- set dependency_severity = rule.dependency | lower %}
           {%- set dependency_when_args %}
-            {%- if rules[rule.dependency].lasting_duration is string -%}
-              , lasting='${var.{{ id }}_lasting_duration_{{dependency_severity}}}'
-            {%- endif -%}
-            {%- if rules[rule.dependency].lasting_at_least is number -%}
-              , at_least=${var.{{ id }}_at_least_percentage_{{ severity }}}
+	    {%- set dependency_lasting_duration = rules[rule.dependency].lasting_duration|default('None') -%}
+            {%- if dependency_lasting_duration is string -%}
+              %{ if var.{{ id }}_lasting_duration_{{ dependency_severity }} != "None" }, lasting='${var.{{ id }}_lasting_duration_{{ dependency_severity }}}', at_least=${var.{{ id }}_at_least_percentage_{{ dependency_severity }}}%{ endif }
             {%- endif -%}
           {%- endset -%}
         {%- endif %}
