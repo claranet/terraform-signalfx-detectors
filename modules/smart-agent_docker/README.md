@@ -45,7 +45,7 @@ Note the following parameters:
   Its value will be added to the `prefixes` list at the start of the [detector 
   name](https://github.com/claranet/terraform-signalfx-detectors/wiki/Templating#example).
   In general, it will also be used in the `filtering` internal sub-module to [apply
-  [filters](https://github.com/claranet/terraform-signalfx-detectors/wiki/Guidance#filtering) based on our default 
+  filters](https://github.com/claranet/terraform-signalfx-detectors/wiki/Guidance#filtering) based on our default 
   [tagging convention](https://github.com/claranet/terraform-signalfx-detectors/wiki/Tagging-convention) by default.
 
 * `notifications`: Use this parameter to define where alerts should be sent depending on their severity. It consists 
