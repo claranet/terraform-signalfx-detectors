@@ -1,9 +1,8 @@
 module: health-checker
 name: value
-id: health_checker_value
 
 transformation: true
-aggregation: false
+aggregation: true
 
 signals:
   signal:
@@ -12,3 +11,4 @@ rules:
   critical:
     threshold: 1
     comparator: "!="
+    lasting_duration: 5m
