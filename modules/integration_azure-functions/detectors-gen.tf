@@ -11,7 +11,7 @@ resource "signalfx_detector" "errors" {
     invocations = data('azure.function.invocations', filter=base_filtering and ${module.filtering.signalflow}, rollup='sum', extrapolation='last_value')${var.errors_aggregation_function}${var.errors_transformation_function}
     signal = (errors / invocations).fill(value=0).scale(100).publish('signal')
     detect(when(signal > ${var.errors_threshold_critical}, lasting='${var.errors_lasting_duration_critical}')).publish('CRIT')
-    detect(when(signal > ${var.errors_threshold_major}, lasting='${var.errors_lasting_duration_major}') and when(signal <= ${var.errors_threshold_critical}, lasting='${var.errors_lasting_duration_critical}')).publish('MAJOR')
+    detect(when(signal > ${var.errors_threshold_major}, lasting='${var.errors_lasting_duration_major}') and not when(signal > ${var.errors_threshold_critical}, lasting='${var.errors_lasting_duration_critical}')).publish('MAJOR')
 EOF
 
   rule {

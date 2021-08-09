@@ -15,7 +15,7 @@ resource "signalfx_detector" "memory_used" {
     B = data('gauge.bucket.op.ep_mem_high_wat', filter=${module.filtering.signalflow})${var.memory_used_aggregation_function}${var.memory_used_transformation_function}
     signal = (A/B).scale(100).fill(0).publish('signal')
     detect(when(signal > ${var.memory_used_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.memory_used_threshold_major}) and when(signal <= ${var.memory_used_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.memory_used_threshold_major}) and not when(signal > ${var.memory_used_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -78,7 +78,7 @@ resource "signalfx_detector" "disk_write_queue" {
   program_text = <<-EOF
     signal = data('gauge.bucket.op.disk_write_queue', filter=${module.filtering.signalflow})${var.disk_write_queue_aggregation_function}${var.disk_write_queue_transformation_function}.publish('signal')
     detect(when(signal > ${var.disk_write_queue_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.disk_write_queue_threshold_major}) and when(signal <= ${var.disk_write_queue_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.disk_write_queue_threshold_major}) and not when(signal > ${var.disk_write_queue_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {

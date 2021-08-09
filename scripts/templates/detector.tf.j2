@@ -69,16 +69,6 @@ resource "signalfx_detector" "{{ id }}" {
           {%- endif -%}
         {%- endfor -%}
       {%- else %}
-        {%- if '>' in rule.comparator %}
-          {%- set reverse_comparator = '<' %}
-        {%- else %}
-          {%- set reverse_comparator = '>' %}
-        {%- endif %}
-        {%- if '=' in rule.comparator %}
-          {%- set negative_comparator = reverse_comparator %}
-        {%- else %}
-          {%- set negative_comparator = reverse_comparator ~ '=' %}
-        {%- endif %}
         {%- set when_args %}
           {%- if rule.lasting_duration is string -%}
             , lasting='${var.{{ id }}_lasting_duration_{{severity}}}'
@@ -99,7 +89,7 @@ resource "signalfx_detector" "{{ id }}" {
           {%- endset -%}
         {%- endif %}
     detect(when(signal {{ rule.comparator }} ${var.{{ id }}_threshold_{{ severity }}}{{ when_args }})
-        {%- if 'dependency' in rule %} and when(signal {{ negative_comparator }} ${var.{{ id }}_threshold_{{ dependency_severity }}}{{ dependency_when_args }}){%- endif -%})
+        {%- if 'dependency' in rule %} and not when(signal {{ rules[rule.dependency].comparator }} ${var.{{ id }}_threshold_{{ dependency_severity }}}{{ dependency_when_args }}){%- endif -%})
       {%- endif -%}
     .publish('{{ severity_label }}')
     {%- endfor %}

@@ -19,7 +19,7 @@ resource "signalfx_detector" "workloads_count" {
     kubernetes_statefulset_desired = data('kubernetes.stateful_set.desired', filter=base_filtering and ${module.filtering.signalflow})${var.workloads_count_aggregation_function}${var.workloads_count_transformation_function}
     signal = (kubernetes_deployment_desired+kubernetes_daemon_set_desired+kubernetes_replication_controller_desired+kubernetes_replica_set_desired+kubernetes_statefulset_desired).publish('signal')
     detect(when(signal > ${var.workloads_count_threshold_minor})).publish('MINOR')
-    detect(when(signal > ${var.workloads_count_threshold_warning}) and when(signal <= ${var.workloads_count_threshold_minor})).publish('WARN')
+    detect(when(signal > ${var.workloads_count_threshold_warning}) and not when(signal > ${var.workloads_count_threshold_minor})).publish('WARN')
 EOF
 
   rule {

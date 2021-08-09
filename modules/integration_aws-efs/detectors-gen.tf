@@ -15,7 +15,7 @@ resource "signalfx_detector" "used_space" {
     used_space = data('StorageBytes', filter=base_filtering and filter('StorageClass', 'Total') and filter('stat', 'mean') and ${module.filtering.signalflow})${var.used_space_aggregation_function}${var.used_space_transformation_function}
     signal = used_space.scale(0.000000000931323).publish('signal')
     detect(when(signal > ${var.used_space_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.used_space_threshold_major}) and when(signal <= ${var.used_space_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.used_space_threshold_major}) and not when(signal > ${var.used_space_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -59,7 +59,7 @@ resource "signalfx_detector" "io_limit" {
     base_filtering = filter('namespace', 'AWS/EFS')
     signal = data('PercentIOLimit', filter=base_filtering and filter('stat', 'mean') and ${module.filtering.signalflow})${var.io_limit_aggregation_function}${var.io_limit_transformation_function}.publish('signal')
     detect(when(signal > ${var.io_limit_threshold_major})).publish('MAJOR')
-    detect(when(signal > ${var.io_limit_threshold_minor}) and when(signal <= ${var.io_limit_threshold_major})).publish('MINOR')
+    detect(when(signal > ${var.io_limit_threshold_minor}) and not when(signal > ${var.io_limit_threshold_major})).publish('MINOR')
 EOF
 
   rule {
@@ -105,7 +105,7 @@ resource "signalfx_detector" "read_throughput" {
     total = data('TotalIOBytes', filter=base_filtering and filter('stat', 'sum') and ${module.filtering.signalflow})${var.read_throughput_aggregation_function}${var.read_throughput_transformation_function}
     signal = (read/total).scale(100).publish('signal')
     detect(when(signal > ${var.read_throughput_threshold_minor})).publish('MINOR')
-    detect(when(signal > ${var.read_throughput_threshold_warning}) and when(signal <= ${var.read_throughput_threshold_minor})).publish('WARN')
+    detect(when(signal > ${var.read_throughput_threshold_warning}) and not when(signal > ${var.read_throughput_threshold_minor})).publish('WARN')
 EOF
 
   rule {
@@ -151,7 +151,7 @@ resource "signalfx_detector" "write_throughput" {
     total = data('TotalIOBytes', filter=base_filtering and filter('stat', 'sum') and ${module.filtering.signalflow})${var.write_throughput_aggregation_function}${var.write_throughput_transformation_function}
     signal = (write/total).scale(100).publish('signal')
     detect(when(signal > ${var.write_throughput_threshold_minor})).publish('MINOR')
-    detect(when(signal > ${var.write_throughput_threshold_warning}) and when(signal <= ${var.write_throughput_threshold_minor})).publish('WARN')
+    detect(when(signal > ${var.write_throughput_threshold_warning}) and not when(signal > ${var.write_throughput_threshold_minor})).publish('WARN')
 EOF
 
   rule {
@@ -197,7 +197,7 @@ resource "signalfx_detector" "percent_of_permitted_throughput" {
     permitted = data('PermittedThroughput', filter=base_filtering and filter('stat', 'sum') and ${module.filtering.signalflow})${var.percent_of_permitted_throughput_aggregation_function}${var.percent_of_permitted_throughput_transformation_function}
     signal = (metered/permitted.scale(1024)).scale(100).publish('signal')
     detect(when(signal > ${var.percent_of_permitted_throughput_threshold_major})).publish('MAJOR')
-    detect(when(signal > ${var.percent_of_permitted_throughput_threshold_minor}) and when(signal <= ${var.percent_of_permitted_throughput_threshold_major})).publish('MINOR')
+    detect(when(signal > ${var.percent_of_permitted_throughput_threshold_minor}) and not when(signal > ${var.percent_of_permitted_throughput_threshold_major})).publish('MINOR')
 EOF
 
   rule {

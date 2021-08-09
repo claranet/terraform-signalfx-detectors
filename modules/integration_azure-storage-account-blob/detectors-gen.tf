@@ -16,7 +16,7 @@ resource "signalfx_detector" "requests_error_rate" {
     rate_failed = data('Transactions', filter=base_filtering and filter('responsetype', 'ClientOtherError') and ${module.filtering.signalflow}, rollup='rate')${var.requests_error_rate_aggregation_function}${var.requests_error_rate_transformation_function}
     signal = (rate_failed/(rate_success+rate_failed)).scale(100).fill(0).publish('signal')
     detect(when(signal > ${var.requests_error_rate_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.requests_error_rate_threshold_major}) and when(signal <= ${var.requests_error_rate_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.requests_error_rate_threshold_major}) and not when(signal > ${var.requests_error_rate_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
@@ -61,7 +61,7 @@ resource "signalfx_detector" "latency_e2e" {
     latency = data('SuccessE2ELatency', filter=base_filtering and ${module.filtering.signalflow}, rollup='average')${var.latency_e2e_aggregation_function}${var.latency_e2e_transformation_function}
     signal = latency.scale(0.001).publish('signal')
     detect(when(signal > ${var.latency_e2e_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.latency_e2e_threshold_major}) and when(signal <= ${var.latency_e2e_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.latency_e2e_threshold_major}) and not when(signal > ${var.latency_e2e_threshold_critical})).publish('MAJOR')
 EOF
 
   rule {
