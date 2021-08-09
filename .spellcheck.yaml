@@ -10,6 +10,7 @@ matrix:
   pipeline:
   - pyspelling.filters.markdown:
   - pyspelling.filters.html:
+      mode: html5
   sources:
   - '*.md'
   - 'docs/**/*.md|!docs/severity.md'
