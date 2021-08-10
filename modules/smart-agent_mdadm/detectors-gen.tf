@@ -7,8 +7,8 @@ resource "signalfx_detector" "disk_failed" {
 
   program_text = <<-EOF
     signal = data('md_disks.failed', filter=${module.filtering.signalflow})${var.disk_failed_aggregation_function}${var.disk_failed_transformation_function}.publish('signal')
-    detect(when(signal > ${var.disk_failed_threshold_critical}%{ if var.disk_failed_lasting_duration_critical != "None" }, lasting='${var.disk_failed_lasting_duration_critical}', at_least=${var.disk_failed_at_least_percentage_critical}%{ endif })).publish('CRIT')
-    detect(when(signal > ${var.disk_failed_threshold_major}%{ if var.disk_failed_lasting_duration_major != "None" }, lasting='${var.disk_failed_lasting_duration_major}', at_least=${var.disk_failed_at_least_percentage_major}%{ endif }) and not when(signal > ${var.disk_failed_threshold_critical}%{ if var.disk_failed_lasting_duration_critical != "None" }, lasting='${var.disk_failed_lasting_duration_critical}', at_least=${var.disk_failed_at_least_percentage_critical}%{ endif })).publish('MAJOR')
+    detect(when(signal > ${var.disk_failed_threshold_critical}%{if var.disk_failed_lasting_duration_critical != "None"}, lasting='${var.disk_failed_lasting_duration_critical}', at_least=${var.disk_failed_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.disk_failed_threshold_major}%{if var.disk_failed_lasting_duration_major != "None"}, lasting='${var.disk_failed_lasting_duration_major}', at_least=${var.disk_failed_at_least_percentage_major}%{endif}) and not when(signal > ${var.disk_failed_threshold_critical}%{if var.disk_failed_lasting_duration_critical != "None"}, lasting='${var.disk_failed_lasting_duration_critical}', at_least=${var.disk_failed_at_least_percentage_critical}%{endif})).publish('MAJOR')
 EOF
 
   rule {
@@ -45,8 +45,8 @@ resource "signalfx_detector" "disk_missing" {
 
   program_text = <<-EOF
     signal = data('md_disks.missing', filter=${module.filtering.signalflow})${var.disk_missing_aggregation_function}${var.disk_missing_transformation_function}.publish('signal')
-    detect(when(signal > ${var.disk_missing_threshold_critical}%{ if var.disk_missing_lasting_duration_critical != "None" }, lasting='${var.disk_missing_lasting_duration_critical}', at_least=${var.disk_missing_at_least_percentage_critical}%{ endif })).publish('CRIT')
-    detect(when(signal > ${var.disk_missing_threshold_major}%{ if var.disk_missing_lasting_duration_major != "None" }, lasting='${var.disk_missing_lasting_duration_major}', at_least=${var.disk_missing_at_least_percentage_major}%{ endif }) and not when(signal > ${var.disk_missing_threshold_critical}%{ if var.disk_missing_lasting_duration_critical != "None" }, lasting='${var.disk_missing_lasting_duration_critical}', at_least=${var.disk_missing_at_least_percentage_critical}%{ endif })).publish('MAJOR')
+    detect(when(signal > ${var.disk_missing_threshold_critical}%{if var.disk_missing_lasting_duration_critical != "None"}, lasting='${var.disk_missing_lasting_duration_critical}', at_least=${var.disk_missing_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.disk_missing_threshold_major}%{if var.disk_missing_lasting_duration_major != "None"}, lasting='${var.disk_missing_lasting_duration_major}', at_least=${var.disk_missing_at_least_percentage_major}%{endif}) and not when(signal > ${var.disk_missing_threshold_critical}%{if var.disk_missing_lasting_duration_critical != "None"}, lasting='${var.disk_missing_lasting_duration_critical}', at_least=${var.disk_missing_at_least_percentage_critical}%{endif})).publish('MAJOR')
 EOF
 
   rule {
