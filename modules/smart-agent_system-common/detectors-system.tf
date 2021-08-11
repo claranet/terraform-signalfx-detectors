@@ -7,7 +7,7 @@ resource "signalfx_detector" "disk_running_out" {
 
   program_text = <<-EOF
     from signalfx.detectors.countdown import countdown
-    signal = data('disk.utilization', filter=${module.filtering.signalflow}).publish('signal')
+    signal = data('disk.utilizatione', filter=${module.filtering.signalflow}).publish('signal')
     countdown.hours_left_stream_incr_detector(stream=signal, maximum_capacity=${var.disk_running_out_maximum_capacity}, lower_threshold=${var.disk_running_out_hours_till_full}, fire_lasting=lasting('${var.disk_running_out_fire_lasting_time}', ${var.disk_running_out_fire_lasting_time_percent}), clear_threshold=${var.disk_running_out_clear_hours_remaining}, clear_lasting=lasting('${var.disk_running_out_clear_lasting_time}', ${var.disk_running_out_clear_lasting_time_percent}), use_double_ewma=${var.disk_running_out_use_ewma}).publish('MAJOR')
 EOF
 

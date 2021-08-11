@@ -7,8 +7,6 @@ documentations:
     url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/load.html'
   - name: Smart Agent monitor filesystems
     url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/filesystems.html'
-  - name: Smart Agent monitor memory
-    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/memory.html'
 
 source_doc: |
   There is no one official integration for system generic metrics but instead multiple monitors to fetch 
