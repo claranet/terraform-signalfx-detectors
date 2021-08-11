@@ -59,9 +59,10 @@ resource "signalfx_detector" "{{ id }}" {
     .publish('{{ key }}')
       {%- endif %}
     {%- endfor %}
-    {%- for key, rule in rules.items() %}
-      {%- set severity = key | lower %}
-      {%- set severity_label = severity | replace('critical', 'crit') | replace('warning', 'warn') | upper %}
+    {%- macro macro_when(severity, rule) -%}
+          when(signal {{ rule.comparator }} ${var.{{ id }}_threshold_{{ severity }}}, lasting=%{if var.{{ id }}_lasting_duration_{{ severity }} == null}None%{else}'${var.{{ id }}_lasting_duration_{{ severity }}}'%{endif}, at_least=${var.{{ id }}_at_least_percentage_{{ severity }}})
+    {%- endmacro -%}
+    {%- for severity, rule in rules.items() %}
       {%- if type == 'heartbeat' -%}
         {%- for key, signal in signals.items() -%}
           {%- if loop.last %}
@@ -69,22 +70,15 @@ resource "signalfx_detector" "{{ id }}" {
           {%- endif -%}
         {%- endfor -%}
       {%- else %}
-        {%- set when -%}
-          when(signal {{ rule.comparator }} ${var.{{ id }}_threshold_{{ severity }}}, lasting=${var.{{ id }}_lasting_duration_{{ severity }} == null ? "None" : format("'%s'", var.{{ id }}_lasting_duration_{{ severity }})}, at_least=${var.{{ id }}_at_least_percentage_{{ severity }}})
-        {%- endset %}
-    detect({{ when }}
-        {%- if 'dependency' in rule -%}
-          {%- set dependency_severity = rule.dependency | lower %} and (not when(signal {{ rules[rule.dependency].comparator }} ${var.{{ id }}_threshold_{{ dependency_severity }}}, lasting=${var.{{ id }}_lasting_duration_{{ dependency_severity }} == null ? "None" : format("'%s'", var.{{ id }}_lasting_duration_{{ dependency_severity }})}, at_least=${var.{{id }}_at_least_percentage_{{ dependency_severity }}}))
-        {%- endif %})
+    detect({{ macro_when(severity, rule) }} {%- if 'dependency' in rule %} and (not {{ macro_when(rule.dependency, rules[rule.dependency]) }}) {%- endif -%} )
       {%- endif -%}
-    .publish('{{ severity_label }}')
+    .publish('{{ severity | replace('critical', 'crit') | replace('warning', 'warn') | upper }}')
     {%- endfor %}
 EOF
 
-  {%- for key, rule in rules.items() %}
+  {%- for severity, rule in rules.items() %}
 
   rule {
-    {%- set severity = key | lower %}
     {%- if type == 'heartbeat' %}
     description           = "has not reported in ${var.heartbeat_timeframe}"
     {%- else %}
