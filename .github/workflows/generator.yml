@@ -25,7 +25,7 @@ jobs:
         terraform_wrapper: false
 
     - name: test1
-      run: echo $SHELL
+      run: env
     - name: test2
       run: type j2
     - name: test3
