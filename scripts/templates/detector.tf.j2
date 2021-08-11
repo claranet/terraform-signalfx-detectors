@@ -69,23 +69,13 @@ resource "signalfx_detector" "{{ id }}" {
           {%- endif -%}
         {%- endfor -%}
       {%- else %}
-        {%- set when_args %}
-	  {%- set lasting_duration = rule.lasting_duration|default('None') -%}
-          {%- if lasting_duration is string -%}
-            %{if var.{{ id }}_lasting_duration_{{ severity }} != "None"}, lasting='${var.{{ id }}_lasting_duration_{{ severity }}}', at_least=${var.{{ id }}_at_least_percentage_{{ severity }}}%{endif}
-          {%- endif -%}
-        {%- endset -%}
-        {%- if 'dependency' in rule %}
-          {%- set dependency_severity = rule.dependency | lower %}
-          {%- set dependency_when_args %}
-	    {%- set dependency_lasting_duration = rules[rule.dependency].lasting_duration|default('None') -%}
-            {%- if dependency_lasting_duration is string -%}
-              %{if var.{{ id }}_lasting_duration_{{ dependency_severity }} != "None"}, lasting='${var.{{ id }}_lasting_duration_{{ dependency_severity }}}', at_least=${var.{{ id }}_at_least_percentage_{{ dependency_severity }}}%{endif}
-            {%- endif -%}
-          {%- endset -%}
-        {%- endif %}
-    detect(when(signal {{ rule.comparator }} ${var.{{ id }}_threshold_{{ severity }}}{{ when_args }})
-        {%- if 'dependency' in rule %} and not when(signal {{ rules[rule.dependency].comparator }} ${var.{{ id }}_threshold_{{ dependency_severity }}}{{ dependency_when_args }}){%- endif -%})
+        {%- set when -%}
+          when(signal {{ rule.comparator }} ${var.{{ id }}_threshold_{{ severity }}}, lasting=${var.{{ id }}_lasting_duration_{{ severity }} == null ? "None" : format("'%s'", var.{{ id }}_lasting_duration_{{ severity }})}, at_least=${var.{{ id }}_at_least_percentage_{{ severity }}})
+        {%- endset %}
+    detect({{ when }}
+        {%- if 'dependency' in rule -%}
+          {%- set dependency_severity = rule.dependency | lower %} and (not when(signal {{ rules[rule.dependency].comparator }} ${var.{{ id }}_threshold_{{ dependency_severity }}}, lasting=${var.{{ id }}_lasting_duration_{{ dependency_severity }} == null ? "None" : format("'%s'", var.{{ id }}_lasting_duration_{{ dependency_severity }})}, at_least=${var.{{id }}_at_least_percentage_{{ dependency_severity }}}))
+        {%- endif %})
       {%- endif -%}
     .publish('{{ severity_label }}')
     {%- endfor %}
