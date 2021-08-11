@@ -57,15 +57,14 @@ variable "count_threshold_critical" {
 variable "count_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "None"
+  default     = null
 }
 
 variable "count_at_least_percentage_critical" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
-  default     = 1.0
+  default     = 1
 }
-
 variable "count_threshold_major" {
   description = "Major threshold for count detector"
   type        = number
@@ -75,15 +74,14 @@ variable "count_threshold_major" {
 variable "count_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "None"
+  default     = null
 }
 
 variable "count_at_least_percentage_major" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
-  default     = 1.0
+  default     = 1
 }
-
 # capacity detector
 
 variable "capacity_notifications" {
@@ -143,15 +141,14 @@ variable "capacity_threshold_critical" {
 variable "capacity_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "None"
+  default     = null
 }
 
 variable "capacity_at_least_percentage_critical" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
-  default     = 1.0
+  default     = 1
 }
-
 variable "capacity_threshold_major" {
   description = "Major threshold for capacity detector in PiB"
   type        = number
@@ -161,15 +158,14 @@ variable "capacity_threshold_major" {
 variable "capacity_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "None"
+  default     = null
 }
 
 variable "capacity_at_least_percentage_major" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
-  default     = 1.0
+  default     = 1
 }
-
 # ingress detector
 
 variable "ingress_notifications" {
@@ -229,15 +225,14 @@ variable "ingress_threshold_critical" {
 variable "ingress_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "None"
+  default     = null
 }
 
 variable "ingress_at_least_percentage_critical" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
-  default     = 1.0
+  default     = 1
 }
-
 variable "ingress_threshold_major" {
   description = "Major threshold for ingress detector in Gbps"
   type        = number
@@ -247,15 +242,14 @@ variable "ingress_threshold_major" {
 variable "ingress_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "None"
+  default     = null
 }
 
 variable "ingress_at_least_percentage_major" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
-  default     = 1.0
+  default     = 1
 }
-
 # egress detector
 
 variable "egress_notifications" {
@@ -315,15 +309,14 @@ variable "egress_threshold_critical" {
 variable "egress_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "None"
+  default     = null
 }
 
 variable "egress_at_least_percentage_critical" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
-  default     = 1.0
+  default     = 1
 }
-
 variable "egress_threshold_major" {
   description = "Major threshold for egress detector in Gbps"
   type        = number
@@ -333,15 +326,14 @@ variable "egress_threshold_major" {
 variable "egress_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "None"
+  default     = null
 }
 
 variable "egress_at_least_percentage_major" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
-  default     = 1.0
+  default     = 1
 }
-
 # requests_rate detector
 
 variable "requests_rate_notifications" {
@@ -401,15 +393,14 @@ variable "requests_rate_threshold_critical" {
 variable "requests_rate_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "None"
+  default     = null
 }
 
 variable "requests_rate_at_least_percentage_critical" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
-  default     = 1.0
+  default     = 1
 }
-
 variable "requests_rate_threshold_major" {
   description = "Major threshold for requests_rate detector"
   type        = number
@@ -419,12 +410,11 @@ variable "requests_rate_threshold_major" {
 variable "requests_rate_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "None"
+  default     = null
 }
 
 variable "requests_rate_at_least_percentage_major" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
-  default     = 1.0
+  default     = 1
 }
-

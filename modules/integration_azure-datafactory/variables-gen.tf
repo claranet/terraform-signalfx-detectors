@@ -57,15 +57,14 @@ variable "activity_error_rate_threshold_critical" {
 variable "activity_error_rate_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "None"
+  default     = null
 }
 
 variable "activity_error_rate_at_least_percentage_critical" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
-  default     = 1.0
+  default     = 1
 }
-
 variable "activity_error_rate_threshold_major" {
   description = "Major threshold for activity_error_rate detector in %"
   type        = number
@@ -75,15 +74,14 @@ variable "activity_error_rate_threshold_major" {
 variable "activity_error_rate_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "None"
+  default     = null
 }
 
 variable "activity_error_rate_at_least_percentage_major" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
-  default     = 1.0
+  default     = 1
 }
-
 # pipeline_error_rate detector
 
 variable "pipeline_error_rate_notifications" {
@@ -143,15 +141,14 @@ variable "pipeline_error_rate_threshold_critical" {
 variable "pipeline_error_rate_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "None"
+  default     = null
 }
 
 variable "pipeline_error_rate_at_least_percentage_critical" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
-  default     = 1.0
+  default     = 1
 }
-
 variable "pipeline_error_rate_threshold_major" {
   description = "Major threshold for pipeline_error_rate detector in %"
   type        = number
@@ -161,15 +158,14 @@ variable "pipeline_error_rate_threshold_major" {
 variable "pipeline_error_rate_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "None"
+  default     = null
 }
 
 variable "pipeline_error_rate_at_least_percentage_major" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
-  default     = 1.0
+  default     = 1
 }
-
 # trigger_error_rate detector
 
 variable "trigger_error_rate_notifications" {
@@ -229,15 +225,14 @@ variable "trigger_error_rate_threshold_critical" {
 variable "trigger_error_rate_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "None"
+  default     = null
 }
 
 variable "trigger_error_rate_at_least_percentage_critical" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
-  default     = 1.0
+  default     = 1
 }
-
 variable "trigger_error_rate_threshold_major" {
   description = "Major threshold for trigger_error_rate detector"
   type        = number
@@ -247,15 +242,14 @@ variable "trigger_error_rate_threshold_major" {
 variable "trigger_error_rate_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "None"
+  default     = null
 }
 
 variable "trigger_error_rate_at_least_percentage_major" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
-  default     = 1.0
+  default     = 1
 }
-
 # available_memory detector
 
 variable "available_memory_notifications" {
@@ -315,15 +309,14 @@ variable "available_memory_threshold_critical" {
 variable "available_memory_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "None"
+  default     = null
 }
 
 variable "available_memory_at_least_percentage_critical" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
-  default     = 1.0
+  default     = 1
 }
-
 variable "available_memory_threshold_major" {
   description = "Major threshold for available_memory detector in MB"
   type        = number
@@ -333,15 +326,14 @@ variable "available_memory_threshold_major" {
 variable "available_memory_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "None"
+  default     = null
 }
 
 variable "available_memory_at_least_percentage_major" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
-  default     = 1.0
+  default     = 1
 }
-
 # cpu_percentage detector
 
 variable "cpu_percentage_notifications" {
@@ -401,15 +393,14 @@ variable "cpu_percentage_threshold_critical" {
 variable "cpu_percentage_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "None"
+  default     = null
 }
 
 variable "cpu_percentage_at_least_percentage_critical" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
-  default     = 1.0
+  default     = 1
 }
-
 variable "cpu_percentage_threshold_major" {
   description = "Major threshold for cpu_percentage detector in %"
   type        = number
@@ -419,12 +410,11 @@ variable "cpu_percentage_threshold_major" {
 variable "cpu_percentage_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "None"
+  default     = null
 }
 
 variable "cpu_percentage_at_least_percentage_major" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
-  default     = 1.0
+  default     = 1
 }
-

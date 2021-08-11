@@ -53,6 +53,5 @@ variable "hpa_scale_exceeded_capacity_lasting_duration_major" {
 variable "hpa_scale_exceeded_capacity_at_least_percentage_major" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
-  default     = 1.0
+  default     = 1
 }
-

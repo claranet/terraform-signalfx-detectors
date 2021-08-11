@@ -57,15 +57,14 @@ variable "disk_failed_threshold_critical" {
 variable "disk_failed_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "None"
+  default     = null
 }
 
 variable "disk_failed_at_least_percentage_critical" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
-  default     = 1.0
+  default     = 1
 }
-
 variable "disk_failed_threshold_major" {
   description = "Major threshold for disk_failed detector"
   type        = number
@@ -75,15 +74,14 @@ variable "disk_failed_threshold_major" {
 variable "disk_failed_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "None"
+  default     = null
 }
 
 variable "disk_failed_at_least_percentage_major" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
-  default     = 1.0
+  default     = 1
 }
-
 # disk_missing detector
 
 variable "disk_missing_notifications" {
@@ -143,15 +141,14 @@ variable "disk_missing_threshold_critical" {
 variable "disk_missing_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "None"
+  default     = null
 }
 
 variable "disk_missing_at_least_percentage_critical" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
-  default     = 1.0
+  default     = 1
 }
-
 variable "disk_missing_threshold_major" {
   description = "Major threshold for disk_missing detector"
   type        = number
@@ -161,12 +158,11 @@ variable "disk_missing_threshold_major" {
 variable "disk_missing_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "None"
+  default     = null
 }
 
 variable "disk_missing_at_least_percentage_major" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
-  default     = 1.0
+  default     = 1
 }
-

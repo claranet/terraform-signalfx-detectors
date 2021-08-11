@@ -57,15 +57,14 @@ variable "requests_error_rate_threshold_critical" {
 variable "requests_error_rate_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "None"
+  default     = null
 }
 
 variable "requests_error_rate_at_least_percentage_critical" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
-  default     = 1.0
+  default     = 1
 }
-
 variable "requests_error_rate_threshold_major" {
   description = "Major threshold for requests_error_rate detector in %"
   type        = number
@@ -75,15 +74,14 @@ variable "requests_error_rate_threshold_major" {
 variable "requests_error_rate_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "None"
+  default     = null
 }
 
 variable "requests_error_rate_at_least_percentage_major" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
-  default     = 1.0
+  default     = 1
 }
-
 # latency_e2e detector
 
 variable "latency_e2e_notifications" {
@@ -143,15 +141,14 @@ variable "latency_e2e_threshold_critical" {
 variable "latency_e2e_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "None"
+  default     = null
 }
 
 variable "latency_e2e_at_least_percentage_critical" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
-  default     = 1.0
+  default     = 1
 }
-
 variable "latency_e2e_threshold_major" {
   description = "Major threshold for latency_e2e detector in s"
   type        = number
@@ -161,12 +158,11 @@ variable "latency_e2e_threshold_major" {
 variable "latency_e2e_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "None"
+  default     = null
 }
 
 variable "latency_e2e_at_least_percentage_major" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
-  default     = 1.0
+  default     = 1
 }
-
