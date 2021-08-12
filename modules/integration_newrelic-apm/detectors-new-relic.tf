@@ -34,7 +34,7 @@ resource "signalfx_detector" "error_rate" {
   program_text = <<-EOF
     signal = data('Errors/all/errors_per_minute/*', ${module.filtering.signalflow})${var.error_rate_aggregation_function}${var.error_rate_transformation_function}.publish('signal')
     detect(when(signal > ${var.error_rate_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.error_rate_threshold_major}) and when(signal <= ${var.error_rate_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.error_rate_threshold_major}) and (not when(signal > ${var.error_rate_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {
@@ -73,7 +73,7 @@ resource "signalfx_detector" "apdex" {
   program_text = <<-EOF
     signal = data('Apdex/score/*', ${module.filtering.signalflow})${var.apdex_aggregation_function}${var.apdex_transformation_function}.publish('signal')
     detect(when(signal < ${var.apdex_threshold_critical})).publish('CRIT')
-    detect(when(signal < ${var.apdex_threshold_major}) and when(signal >= ${var.apdex_threshold_critical})).publish('MAJOR')
+    detect(when(signal < ${var.apdex_threshold_major}) and (not when(signal < ${var.apdex_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {

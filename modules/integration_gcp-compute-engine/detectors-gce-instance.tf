@@ -34,7 +34,7 @@ resource "signalfx_detector" "cpu_utilization" {
   program_text = <<-EOF
     signal = data('instance/cpu/utilization', ${module.filtering.signalflow})${var.cpu_utilization_aggregation_function}${var.cpu_utilization_transformation_function}.scale(100).publish('signal')
     detect(when(signal > ${var.cpu_utilization_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.cpu_utilization_threshold_major}) and when(signal <= ${var.cpu_utilization_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.cpu_utilization_threshold_major}) and (not when(signal > ${var.cpu_utilization_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {
@@ -76,7 +76,7 @@ resource "signalfx_detector" "disk_throttled_bps" {
     D = data('instance/disk/write_bytes_count', ${module.filtering.signalflow})${var.disk_throttled_bps_aggregation_function}${var.disk_throttled_bps_transformation_function}
     signal = ((A+B) / (C+D)).scale(100).publish('signal')
     detect(when(signal > ${var.disk_throttled_bps_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.disk_throttled_bps_threshold_major}) and when(signal <= ${var.disk_throttled_bps_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.disk_throttled_bps_threshold_major}) and (not when(signal > ${var.disk_throttled_bps_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {
@@ -118,7 +118,7 @@ resource "signalfx_detector" "disk_throttled_ops" {
     D = data('instance/disk/write_ops_count', ${module.filtering.signalflow})${var.disk_throttled_ops_aggregation_function}${var.disk_throttled_ops_transformation_function}
     signal = ((A+B) / (C+D)).scale(100).publish('signal')
     detect(when(signal > ${var.disk_throttled_ops_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.disk_throttled_ops_threshold_major}) and when(signal <= ${var.disk_throttled_ops_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.disk_throttled_ops_threshold_major}) and (not when(signal > ${var.disk_throttled_ops_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {

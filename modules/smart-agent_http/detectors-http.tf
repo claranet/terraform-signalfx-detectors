@@ -88,7 +88,7 @@ resource "signalfx_detector" "http_response_time" {
   program_text = <<-EOF
     signal = data('http.response_time', filter=${module.filtering.signalflow}, rollup='max')${var.http_response_time_aggregation_function}${var.http_response_time_transformation_function}.publish('signal')
     detect(when(signal > ${var.http_response_time_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.http_response_time_threshold_major}) and when(signal <= ${var.http_response_time_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.http_response_time_threshold_major}) and (not when(signal > ${var.http_response_time_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {
@@ -152,7 +152,7 @@ resource "signalfx_detector" "certificate_expiration_date" {
     A = data('http.cert_expiry', filter=${module.filtering.signalflow}, rollup='min')${var.certificate_expiration_date_aggregation_function}${var.certificate_expiration_date_transformation_function}
     signal = (A/86400).publish('signal')
     detect(when(signal < ${var.certificate_expiration_date_threshold_major})).publish('MAJOR')
-    detect(when(signal < ${var.certificate_expiration_date_threshold_minor}) and when(signal >= ${var.certificate_expiration_date_threshold_major})).publish('MINOR')
+    detect(when(signal < ${var.certificate_expiration_date_threshold_minor}) and (not when(signal < ${var.certificate_expiration_date_threshold_major}))).publish('MINOR')
 EOF
 
   rule {

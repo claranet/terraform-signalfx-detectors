@@ -61,7 +61,7 @@ resource "signalfx_detector" "zookeeper_latency" {
   program_text = <<-EOF
     signal = data('gauge.zk_avg_latency', filter=filter('plugin', 'zookeeper') and ${module.filtering.signalflow})${var.zookeeper_latency_aggregation_function}${var.zookeeper_latency_transformation_function}.publish('signal')
     detect(when(signal > ${var.zookeeper_latency_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.zookeeper_latency_threshold_major}) and when(signal <= ${var.zookeeper_latency_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.zookeeper_latency_threshold_major}) and (not when(signal > ${var.zookeeper_latency_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {
@@ -101,7 +101,7 @@ resource "signalfx_detector" "file_descriptors" {
     B = data('gauge.zk_max_file_descriptor_count', filter=filter('plugin', 'zookeeper') and ${module.filtering.signalflow}, rollup='average')${var.file_descriptors_aggregation_function}${var.file_descriptors_transformation_function}
     signal = (A/B).scale(100).publish('signal')
     detect(when(signal > ${var.file_descriptors_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.file_descriptors_threshold_major}) and when(signal <= ${var.file_descriptors_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.file_descriptors_threshold_major}) and (not when(signal > ${var.file_descriptors_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {

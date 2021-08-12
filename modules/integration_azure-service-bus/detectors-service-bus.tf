@@ -65,7 +65,7 @@ resource "signalfx_detector" "user_errors" {
         B = data('IncomingRequests', extrapolation='zero', filter=base_filter)${var.user_errors_aggregation_function}
         signal = (A/B).scale(100).fill(0).publish('signal')
         detect(when(signal > threshold(${var.user_errors_threshold_critical}), lasting="${var.user_errors_timer}")).publish('CRIT')
-        detect(when(signal > threshold(${var.user_errors_threshold_major}), lasting="${var.user_errors_timer}") and when(signal <= ${var.user_errors_threshold_critical})).publish('MAJOR')
+        detect(when(signal > threshold(${var.user_errors_threshold_major}), lasting="${var.user_errors_timer}") and (not when(signal > ${var.user_errors_threshold_critical}))).publish('MAJOR')
     EOF
 
   rule {
@@ -106,7 +106,7 @@ resource "signalfx_detector" "server_errors" {
         B = data('IncomingRequests', extrapolation='zero', filter=base_filter)${var.server_errors_aggregation_function}
         signal = (A/B).scale(100).fill(0).publish('signal')
         detect(when(signal > threshold(${var.server_errors_threshold_critical}), lasting="${var.server_errors_timer}")).publish('CRIT')
-        detect(when(signal > threshold(${var.server_errors_threshold_major}), lasting="${var.server_errors_timer}") and when(signal <= ${var.server_errors_threshold_critical})).publish('MAJOR')
+        detect(when(signal > threshold(${var.server_errors_threshold_major}), lasting="${var.server_errors_timer}") and (not when(signal > ${var.server_errors_threshold_critical}))).publish('MAJOR')
     EOF
 
   rule {
@@ -147,7 +147,7 @@ resource "signalfx_detector" "throttled_requests" {
     B = data('IncomingRequests', filter=base_filter and ${module.filtering.signalflow})${var.throttled_requests_aggregation_function}${var.throttled_requests_transformation_function}
     signal = (A/B).scale(100).fill(0).publish('signal')
     detect(when(signal > ${var.throttled_requests_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.throttled_requests_threshold_major}) and when(signal <= ${var.throttled_requests_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.throttled_requests_threshold_major}) and (not when(signal > ${var.throttled_requests_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {

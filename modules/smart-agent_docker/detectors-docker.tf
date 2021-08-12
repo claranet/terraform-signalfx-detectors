@@ -36,7 +36,7 @@ resource "signalfx_detector" "cpu" {
   program_text = <<-EOF
 		signal = data('cpu.percent', filter=filter('plugin', 'docker') and ${module.filtering.signalflow})${var.cpu_aggregation_function}${var.cpu_transformation_function}.publish('signal')
 		detect(when(signal > ${var.cpu_threshold_major})).publish('MAJOR')
-		detect(when(signal > ${var.cpu_threshold_minor}) and when(signal <= ${var.cpu_threshold_major})).publish('MINOR')
+		detect(when(signal > ${var.cpu_threshold_minor}) and (not when(signal > ${var.cpu_threshold_major}))).publish('MINOR')
 EOF
 
   rule {
@@ -76,7 +76,7 @@ resource "signalfx_detector" "throttling" {
 		B = data('cpu.throttling_data.throttled_time', filter=filter('plugin', 'docker') and ${module.filtering.signalflow}, rollup='delta')${var.throttling_aggregation_function}${var.throttling_transformation_function}
 		signal = (A/B).scale(100).publish('signal')
 		detect(when(signal > ${var.throttling_threshold_major})).publish('MAJOR')
-		detect(when(signal > ${var.throttling_threshold_minor}) and when(signal <= ${var.throttling_threshold_major})).publish('MINOR')
+		detect(when(signal > ${var.throttling_threshold_minor}) and (not when(signal > ${var.throttling_threshold_major}))).publish('MINOR')
 EOF
 
   rule {
@@ -116,7 +116,7 @@ resource "signalfx_detector" "memory" {
 		B = data('memory.usage.limit', filter=filter('plugin', 'docker') and ${module.filtering.signalflow})${var.memory_aggregation_function}${var.memory_transformation_function}
 		signal = (A/B).scale(100).publish('signal')
 		detect(when(signal > ${var.memory_threshold_major})).publish('MAJOR')
-		detect(when(signal > ${var.memory_threshold_minor}) and when(signal <= ${var.memory_threshold_major})).publish('MINOR')
+		detect(when(signal > ${var.memory_threshold_minor}) and (not when(signal > ${var.memory_threshold_major}))).publish('MINOR')
 EOF
 
   rule {

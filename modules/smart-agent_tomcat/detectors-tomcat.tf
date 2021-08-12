@@ -38,7 +38,7 @@ resource "signalfx_detector" "average_processing_time" {
     B = data('counter.tomcat.GlobalRequestProcessor.requestCount', filter=${module.filtering.signalflow}, rollup='delta')${var.average_processing_time_aggregation_function}${var.average_processing_time_transformation_function}
     signal = (A/B).fill(0).publish('signal')
     detect(when(signal > ${var.average_processing_time_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.average_processing_time_threshold_major}) and when(signal <= ${var.average_processing_time_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.average_processing_time_threshold_major}) and (not when(signal > ${var.average_processing_time_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {
@@ -78,7 +78,7 @@ resource "signalfx_detector" "busy_threads_percentage" {
     B = data('gauge.tomcat.ThreadPool.maxThreads', filter=${module.filtering.signalflow})${var.busy_threads_percentage_aggregation_function}${var.busy_threads_percentage_transformation_function}
     signal = (A/B).scale(100).fill(0).publish('signal')
     detect(when(signal > ${var.busy_threads_percentage_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.busy_threads_percentage_threshold_major}) and when(signal <= ${var.busy_threads_percentage_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.busy_threads_percentage_threshold_major}) and (not when(signal > ${var.busy_threads_percentage_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {

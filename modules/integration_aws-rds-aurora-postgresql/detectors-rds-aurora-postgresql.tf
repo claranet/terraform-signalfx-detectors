@@ -8,7 +8,7 @@ resource "signalfx_detector" "aurora_postgresql_replica_lag" {
   program_text = <<-EOF
     signal = data('RDSToAuroraPostgreSQLReplicaLag', filter=filter('namespace', 'AWS/RDS') and filter('stat', 'mean') and filter('DBInstanceIdentifier', '*') and ${module.filtering.signalflow})${var.aurora_postgresql_replica_lag_aggregation_function}${var.aurora_postgresql_replica_lag_transformation_function}.publish('signal')
     detect(when(signal > ${var.aurora_postgresql_replica_lag_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.aurora_postgresql_replica_lag_threshold_major}) and when(signal <= ${var.aurora_postgresql_replica_lag_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.aurora_postgresql_replica_lag_threshold_major}) and (not when(signal > ${var.aurora_postgresql_replica_lag_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {

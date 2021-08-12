@@ -10,7 +10,7 @@ resource "signalfx_detector" "volume_space" {
     B = data('kubernetes.volume_capacity_bytes', filter=${module.filtering.signalflow} and (not filter('volume_type', 'configMap', 'secret')) and filter('volume_type', '*'))${var.volume_space_aggregation_function}${var.volume_space_transformation_function}
     signal = ((B-A)/B).scale(100).publish('signal')
     detect(when(signal > ${var.volume_space_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.volume_space_threshold_major}) and when(signal < ${var.volume_space_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.volume_space_threshold_major}) and (not when(signal > ${var.volume_space_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {
@@ -50,7 +50,7 @@ resource "signalfx_detector" "volume_inodes" {
     B = data('kubernetes.volume_inodes', filter=${module.filtering.signalflow} and (not filter('volume_type', 'configMap', 'secret')) and filter('volume_type', '*'))${var.volume_inodes_aggregation_function}${var.volume_inodes_transformation_function}
     signal = ((B-A)/B).scale(100).publish('signal')
     detect(when(signal > ${var.volume_inodes_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.volume_inodes_threshold_major}) and when(signal < ${var.volume_inodes_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.volume_inodes_threshold_major}) and (not when(signal > ${var.volume_inodes_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {

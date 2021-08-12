@@ -74,7 +74,7 @@ resource "signalfx_detector" "cluster_initializing_shards" {
   program_text = <<-EOF
     signal = data('elasticsearch.cluster.initializing-shards', filter=filter('plugin', 'elasticsearch') and ${module.filtering.signalflow}, rollup='average')${var.cluster_initializing_shards_aggregation_function}${var.cluster_initializing_shards_transformation_function}.publish('signal')
     detect(when(signal > ${var.cluster_initializing_shards_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.cluster_initializing_shards_threshold_major}) and when(signal <= ${var.cluster_initializing_shards_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.cluster_initializing_shards_threshold_major}) and (not when(signal > ${var.cluster_initializing_shards_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {
@@ -112,7 +112,7 @@ resource "signalfx_detector" "cluster_relocating_shards" {
   program_text = <<-EOF
     signal = data('elasticsearch.cluster.relocating-shards', filter=filter('plugin', 'elasticsearch') and ${module.filtering.signalflow}, rollup='average')${var.cluster_relocating_shards_aggregation_function}${var.cluster_relocating_shards_transformation_function}.publish('signal')
     detect(when(signal > ${var.cluster_relocating_shards_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.cluster_relocating_shards_threshold_major}) and when(signal <= ${var.cluster_relocating_shards_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.cluster_relocating_shards_threshold_major}) and (not when(signal > ${var.cluster_relocating_shards_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {
@@ -150,7 +150,7 @@ resource "signalfx_detector" "cluster_unassigned_shards" {
   program_text = <<-EOF
     signal = data('elasticsearch.cluster.unassigned-shards', filter=filter('plugin', 'elasticsearch') and ${module.filtering.signalflow}, rollup='average')${var.cluster_unassigned_shards_aggregation_function}${var.cluster_unassigned_shards_transformation_function}.publish('signal')
     detect(when(signal > ${var.cluster_unassigned_shards_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.cluster_unassigned_shards_threshold_major}) and when(signal <= ${var.cluster_unassigned_shards_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.cluster_unassigned_shards_threshold_major}) and (not when(signal > ${var.cluster_unassigned_shards_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {
@@ -188,7 +188,7 @@ resource "signalfx_detector" "pending_tasks" {
   program_text = <<-EOF
     signal = data('elasticsearch.cluster.pending-tasks', filter=filter('plugin', 'elasticsearch') and ${module.filtering.signalflow}, rollup='average')${var.pending_tasks_aggregation_function}${var.pending_tasks_transformation_function}.publish('signal')
     detect(when(signal > ${var.pending_tasks_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.pending_tasks_threshold_major}) and when(signal <= ${var.pending_tasks_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.pending_tasks_threshold_major}) and (not when(signal > ${var.pending_tasks_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {
@@ -226,7 +226,7 @@ resource "signalfx_detector" "cpu_usage" {
   program_text = <<-EOF
     signal = data('elasticsearch.process.cpu.percent', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filtering.signalflow}, rollup='average')${var.cpu_usage_aggregation_function}${var.cpu_usage_transformation_function}.publish('signal')
     detect(when(signal > ${var.cpu_usage_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.cpu_usage_threshold_major}) and when(signal <= ${var.cpu_usage_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.cpu_usage_threshold_major}) and (not when(signal > ${var.cpu_usage_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {
@@ -266,7 +266,7 @@ resource "signalfx_detector" "file_descriptors" {
     B = data('elasticsearch.process.max_file_descriptors', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filtering.signalflow}, rollup='average')${var.file_descriptors_aggregation_function}${var.file_descriptors_transformation_function}
     signal = (A/B).scale(100).publish('signal')
     detect(when(signal > ${var.file_descriptors_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.file_descriptors_threshold_major}) and when(signal <= ${var.file_descriptors_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.file_descriptors_threshold_major}) and (not when(signal > ${var.file_descriptors_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {
@@ -304,7 +304,7 @@ resource "signalfx_detector" "jvm_heap_memory_usage" {
   program_text = <<-EOF
     signal = data('elasticsearch.jvm.mem.heap-used-percent', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filtering.signalflow}, rollup='average')${var.jvm_heap_memory_usage_aggregation_function}${var.jvm_heap_memory_usage_transformation_function}.publish('signal')
     detect(when(signal > ${var.jvm_heap_memory_usage_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.jvm_heap_memory_usage_threshold_major}) and when(signal <= ${var.jvm_heap_memory_usage_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.jvm_heap_memory_usage_threshold_major}) and (not when(signal > ${var.jvm_heap_memory_usage_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {
@@ -344,7 +344,7 @@ resource "signalfx_detector" "jvm_memory_young_usage" {
     B = data('elasticsearch.jvm.mem.pools.young.max_in_bytes', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filtering.signalflow}, rollup='average')${var.jvm_memory_young_usage_aggregation_function}${var.jvm_memory_young_usage_transformation_function}
     signal = (A/B).fill(0).scale(100).publish('signal')
     detect(when(signal > ${var.jvm_memory_young_usage_threshold_major})).publish('MAJOR')
-    detect(when(signal > ${var.jvm_memory_young_usage_threshold_minor}) and when(signal <= ${var.jvm_memory_young_usage_threshold_major})).publish('MINOR')
+    detect(when(signal > ${var.jvm_memory_young_usage_threshold_minor}) and (not when(signal > ${var.jvm_memory_young_usage_threshold_major}))).publish('MINOR')
 EOF
 
   rule {
@@ -384,7 +384,7 @@ resource "signalfx_detector" "jvm_memory_old_usage" {
     B = data('elasticsearch.jvm.mem.pools.old.max_in_bytes', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filtering.signalflow}, rollup='average')${var.jvm_memory_old_usage_aggregation_function}${var.jvm_memory_old_usage_transformation_function}
     signal = (A/B).fill(0).scale(100).publish('signal')
     detect(when(signal > ${var.jvm_memory_old_usage_threshold_major})).publish('MAJOR')
-    detect(when(signal > ${var.jvm_memory_old_usage_threshold_minor}) and when(signal <= ${var.jvm_memory_old_usage_threshold_major})).publish('MINOR')
+    detect(when(signal > ${var.jvm_memory_old_usage_threshold_minor}) and (not when(signal > ${var.jvm_memory_old_usage_threshold_major}))).publish('MINOR')
 EOF
 
   rule {
@@ -424,7 +424,7 @@ resource "signalfx_detector" "jvm_gc_old_collection_latency" {
     B = data('elasticsearch.jvm.gc.old-count', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filtering.signalflow}, extrapolation='zero', rollup='delta')${var.jvm_gc_old_collection_latency_aggregation_function}${var.jvm_gc_old_collection_latency_transformation_function}
     signal = (A/B).fill(0).publish('signal')
     detect(when(signal > ${var.jvm_gc_old_collection_latency_threshold_major})).publish('MAJOR')
-    detect(when(signal > ${var.jvm_gc_old_collection_latency_threshold_minor}) and when(signal <= ${var.jvm_gc_old_collection_latency_threshold_major})).publish('MINOR')
+    detect(when(signal > ${var.jvm_gc_old_collection_latency_threshold_minor}) and (not when(signal > ${var.jvm_gc_old_collection_latency_threshold_major}))).publish('MINOR')
 EOF
 
   rule {
@@ -464,7 +464,7 @@ resource "signalfx_detector" "jvm_gc_young_collection_latency" {
     B = data('elasticsearch.jvm.gc.count', filter=filter('plugin', 'elasticsearch') and ${module.filtering.signalflow}, extrapolation='zero', rollup='delta')${var.jvm_gc_young_collection_latency_aggregation_function}${var.jvm_gc_young_collection_latency_transformation_function}
     signal = (A/B).fill(0).publish('signal')
     detect(when(signal > ${var.jvm_gc_young_collection_latency_threshold_major})).publish('MAJOR')
-    detect(when(signal > ${var.jvm_gc_young_collection_latency_threshold_minor}) and when(signal <= ${var.jvm_gc_young_collection_latency_threshold_major})).publish('MINOR')
+    detect(when(signal > ${var.jvm_gc_young_collection_latency_threshold_minor}) and (not when(signal > ${var.jvm_gc_young_collection_latency_threshold_major}))).publish('MINOR')
 EOF
 
   rule {
@@ -504,7 +504,7 @@ resource "signalfx_detector" "indexing_latency" {
     B = data('elasticsearch.indices.indexing.index-total', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filtering.signalflow}, extrapolation='zero', rollup='delta')${var.indexing_latency_aggregation_function}${var.indexing_latency_transformation_function}
     signal = (A/B).fill(0).publish('signal')
     detect(when(signal > ${var.indexing_latency_threshold_major})).publish('MAJOR')
-    detect(when(signal > ${var.indexing_latency_threshold_minor}) and when(signal <= ${var.indexing_latency_threshold_major})).publish('MINOR')
+    detect(when(signal > ${var.indexing_latency_threshold_minor}) and (not when(signal > ${var.indexing_latency_threshold_major}))).publish('MINOR')
 EOF
 
   rule {
@@ -544,7 +544,7 @@ resource "signalfx_detector" "flush_latency" {
     B = data('elasticsearch.indices.flush.total', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filtering.signalflow}, extrapolation='zero', rollup='delta')${var.flush_latency_aggregation_function}${var.flush_latency_transformation_function}
     signal = (A/B).fill(0).publish('signal')
     detect(when(signal > ${var.flush_latency_threshold_major})).publish('MAJOR')
-    detect(when(signal > ${var.flush_latency_threshold_minor}) and when(signal <= ${var.flush_latency_threshold_major})).publish('MINOR')
+    detect(when(signal > ${var.flush_latency_threshold_minor}) and (not when(signal > ${var.flush_latency_threshold_major}))).publish('MINOR')
 EOF
 
   rule {
@@ -584,7 +584,7 @@ resource "signalfx_detector" "search_latency" {
     B = data('elasticsearch.indices.search.query-total', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filtering.signalflow}, extrapolation='zero', rollup='delta')${var.search_latency_aggregation_function}${var.search_latency_transformation_function}
     signal = (A/B).fill(0).publish('signal')
     detect(when(signal > ${var.search_latency_threshold_major})).publish('MAJOR')
-    detect(when(signal > ${var.search_latency_threshold_minor}) and when(signal <= ${var.search_latency_threshold_major})).publish('MINOR')
+    detect(when(signal > ${var.search_latency_threshold_minor}) and (not when(signal > ${var.search_latency_threshold_major}))).publish('MINOR')
 EOF
 
   rule {
@@ -624,7 +624,7 @@ resource "signalfx_detector" "fetch_latency" {
     B = data('elasticsearch.indices.search.fetch-total', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filtering.signalflow}, extrapolation='zero', rollup='delta')${var.fetch_latency_aggregation_function}${var.fetch_latency_transformation_function}
     signal = (A/B).fill(0).publish('signal')
     detect(when(signal > ${var.fetch_latency_threshold_major})).publish('MAJOR')
-    detect(when(signal > ${var.fetch_latency_threshold_minor}) and when(signal <= ${var.fetch_latency_threshold_major})).publish('MINOR')
+    detect(when(signal > ${var.fetch_latency_threshold_minor}) and (not when(signal > ${var.fetch_latency_threshold_major}))).publish('MINOR')
 EOF
 
   rule {
@@ -662,7 +662,7 @@ resource "signalfx_detector" "field_data_evictions_change" {
   program_text = <<-EOF
     signal = data('elasticsearch.indices.fielddata.evictions', filter=filter('plugin', 'elasticsearch') and filter('node_name', '*') and ${module.filtering.signalflow}, extrapolation='zero', rollup='delta').rateofchange()${var.field_data_evictions_change_aggregation_function}${var.field_data_evictions_change_transformation_function}.publish('signal')
     detect(when(signal > ${var.field_data_evictions_change_threshold_major})).publish('MAJOR')
-    detect(when(signal > ${var.field_data_evictions_change_threshold_minor}) and when(signal <= ${var.field_data_evictions_change_threshold_major})).publish('MINOR')
+    detect(when(signal > ${var.field_data_evictions_change_threshold_minor}) and (not when(signal > ${var.field_data_evictions_change_threshold_major}))).publish('MINOR')
 EOF
 
   rule {
@@ -700,7 +700,7 @@ resource "signalfx_detector" "task_time_in_queue_change" {
   program_text = <<-EOF
     signal = data('elasticsearch.cluster.task-max-wait-time', filter=filter('plugin', 'elasticsearch') and ${module.filtering.signalflow}, rollup='average').rateofchange()${var.task_time_in_queue_change_aggregation_function}${var.task_time_in_queue_change_transformation_function}.publish('signal')
     detect(when(signal > ${var.task_time_in_queue_change_threshold_major})).publish('MAJOR')
-    detect(when(signal > ${var.task_time_in_queue_change_threshold_minor}) and when(signal <= ${var.task_time_in_queue_change_threshold_major})).publish('MINOR')
+    detect(when(signal > ${var.task_time_in_queue_change_threshold_minor}) and (not when(signal > ${var.task_time_in_queue_change_threshold_major}))).publish('MINOR')
 EOF
 
   rule {
