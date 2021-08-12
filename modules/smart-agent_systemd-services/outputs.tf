@@ -1,5 +1,5 @@
-output "systemd_services" {
-  description = "Detector resource for systemd_services"
-  value       = signalfx_detector.systemd_services
+output "aliveness" {
+  description = "Detector resource for aliveness"
+  value       = signalfx_detector.aliveness
 }
 
