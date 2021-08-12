@@ -48,6 +48,11 @@ variable "value_lasting_duration_critical" {
   default     = "5m"
 }
 
+variable "value_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
 # status detector
 
 variable "status_notifications" {
@@ -98,3 +103,8 @@ variable "status_lasting_duration_critical" {
   default     = "5m"
 }
 
+variable "status_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}

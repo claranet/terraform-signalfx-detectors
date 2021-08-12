@@ -7,7 +7,7 @@ resource "signalfx_detector" "value" {
 
   program_text = <<-EOF
     signal = data('gauge.service.health.value', filter=${module.filtering.signalflow})${var.value_aggregation_function}${var.value_transformation_function}.publish('signal')
-    detect(when(signal != ${var.value_threshold_critical}, lasting='${var.value_lasting_duration_critical}')).publish('CRIT')
+    detect(when(signal != ${var.value_threshold_critical}, lasting=%{if var.value_lasting_duration_critical == null}None%{else}'${var.value_lasting_duration_critical}'%{endif}, at_least=${var.value_at_least_percentage_critical})).publish('CRIT')
 EOF
 
   rule {
@@ -32,7 +32,7 @@ resource "signalfx_detector" "status" {
 
   program_text = <<-EOF
     signal = data('gauge.service.health.status', filter=${module.filtering.signalflow})${var.status_aggregation_function}${var.status_transformation_function}.publish('signal')
-    detect(when(signal != ${var.status_threshold_critical}, lasting='${var.status_lasting_duration_critical}')).publish('CRIT')
+    detect(when(signal != ${var.status_threshold_critical}, lasting=%{if var.status_lasting_duration_critical == null}None%{else}'${var.status_lasting_duration_critical}'%{endif}, at_least=${var.status_at_least_percentage_critical})).publish('CRIT')
 EOF
 
   rule {
