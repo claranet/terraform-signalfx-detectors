@@ -8,7 +8,7 @@ resource "signalfx_detector" "messages_ready" {
   program_text = <<-EOF
     signal = data('gauge.queue.messages_ready', filter=filter('plugin', 'rabbitmq') and ${module.filtering.signalflow})${var.messages_ready_aggregation_function}${var.messages_ready_transformation_function}.publish('signal')
     detect(when(signal > ${var.messages_ready_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.messages_ready_threshold_major}) and when(signal <= ${var.messages_ready_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.messages_ready_threshold_major}) and (not when(signal > ${var.messages_ready_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {
@@ -46,7 +46,7 @@ resource "signalfx_detector" "messages_unacknowledged" {
   program_text = <<-EOF
     signal = data('gauge.queue.messages_unacknowledged', filter=filter('plugin', 'rabbitmq') and ${module.filtering.signalflow})${var.messages_unacknowledged_aggregation_function}${var.messages_unacknowledged_transformation_function}.publish('signal')
     detect(when(signal > ${var.messages_unacknowledged_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.messages_unacknowledged_threshold_major}) and when(signal <= ${var.messages_unacknowledged_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.messages_unacknowledged_threshold_major}) and (not when(signal > ${var.messages_unacknowledged_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {

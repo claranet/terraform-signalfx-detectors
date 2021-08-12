@@ -34,7 +34,7 @@ resource "signalfx_detector" "cpu_utilization" {
   program_text = <<-EOF
     signal = data('database/cpu/utilization', ${module.filtering.signalflow})${var.cpu_utilization_aggregation_function}${var.cpu_utilization_transformation_function}.scale(100).publish('signal')
     detect(when(signal > ${var.cpu_utilization_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.cpu_utilization_threshold_major}) and when(signal <= ${var.cpu_utilization_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.cpu_utilization_threshold_major}) and (not when(signal > ${var.cpu_utilization_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {
@@ -72,7 +72,7 @@ resource "signalfx_detector" "disk_utilization" {
   program_text = <<-EOF
     signal = data('database/disk/utilization', ${module.filtering.signalflow})${var.disk_utilization_aggregation_function}${var.disk_utilization_transformation_function}.scale(100).publish('signal')
     detect(when(signal > ${var.disk_utilization_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.disk_utilization_threshold_major}) and when(signal <= ${var.disk_utilization_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.disk_utilization_threshold_major}) and (not when(signal > ${var.disk_utilization_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {
@@ -136,7 +136,7 @@ resource "signalfx_detector" "memory_utilization" {
   program_text = <<-EOF
     signal = data('database/memory/utilization', ${module.filtering.signalflow})${var.memory_utilization_aggregation_function}${var.memory_utilization_transformation_function}.scale(100).publish('signal')
     detect(when(signal > ${var.memory_utilization_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.memory_utilization_threshold_major}) and when(signal <= ${var.memory_utilization_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.memory_utilization_threshold_major}) and (not when(signal > ${var.memory_utilization_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {

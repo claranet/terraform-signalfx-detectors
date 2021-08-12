@@ -36,7 +36,7 @@ resource "signalfx_detector" "deadlocks" {
   program_text = <<-EOF
     signal = data('postgres_deadlocks', filter=${module.filtering.signalflow}, rollup='delta')${var.deadlocks_aggregation_function}${var.deadlocks_transformation_function}.publish('signal')
     detect(when(signal > ${var.deadlocks_threshold_major})).publish('MAJOR')
-    detect(when(signal > ${var.deadlocks_threshold_minor}) and when(signal <= ${var.deadlocks_threshold_major})).publish('MINOR')
+    detect(when(signal > ${var.deadlocks_threshold_minor}) and (not when(signal > ${var.deadlocks_threshold_major}))).publish('MINOR')
 EOF
 
   rule {
@@ -74,7 +74,7 @@ resource "signalfx_detector" "hit_ratio" {
   program_text = <<-EOF
     signal = data('postgres_block_hit_ratio', filter=(not filter('index', '*')) and (not filter('schemaname', '*')) and (not filter('type', '*')) and (not filter('table', '*')) and ${module.filtering.signalflow}, rollup='average').scale(100)${var.hit_ratio_aggregation_function}${var.hit_ratio_transformation_function}.publish('signal')
     detect(when(signal < ${var.hit_ratio_threshold_minor})).publish('MINOR')
-    detect(when(signal < ${var.hit_ratio_threshold_warning}) and when(signal >= ${var.hit_ratio_threshold_minor})).publish('WARN')
+    detect(when(signal < ${var.hit_ratio_threshold_warning}) and (not when(signal < ${var.hit_ratio_threshold_minor}))).publish('WARN')
 EOF
 
   rule {
@@ -114,7 +114,7 @@ resource "signalfx_detector" "rollbacks" {
     B = data('postgres_xact_commits', filter=${module.filtering.signalflow}, rollup='delta')${var.rollbacks_aggregation_function}${var.rollbacks_transformation_function}
     signal = (A/B).scale(100).publish('signal')
     detect(when(signal > ${var.rollbacks_threshold_major})).publish('MAJOR')
-    detect(when(signal > ${var.rollbacks_threshold_minor}) and when(signal <= ${var.rollbacks_threshold_major})).publish('MINOR')
+    detect(when(signal > ${var.rollbacks_threshold_minor}) and (not when(signal > ${var.rollbacks_threshold_major}))).publish('MINOR')
 EOF
 
   rule {
@@ -152,7 +152,7 @@ resource "signalfx_detector" "conflicts" {
   program_text = <<-EOF
     signal = data('postgres_conflicts', filter=${module.filtering.signalflow}, rollup='average')${var.conflicts_aggregation_function}${var.conflicts_transformation_function}.publish('signal')
     detect(when(signal > ${var.conflicts_threshold_major})).publish('MAJOR')
-    detect(when(signal > ${var.conflicts_threshold_minor}) and when(signal <= ${var.conflicts_threshold_major})).publish('MINOR')
+    detect(when(signal > ${var.conflicts_threshold_minor}) and (not when(signal > ${var.conflicts_threshold_major}))).publish('MINOR')
 EOF
 
   rule {
@@ -190,7 +190,7 @@ resource "signalfx_detector" "max_connections" {
   program_text = <<-EOF
     signal = data('postgres_pct_connections', filter=${module.filtering.signalflow}, rollup='average').scale(100)${var.max_connections_aggregation_function}${var.max_connections_transformation_function}.publish('signal')
     detect(when(signal > ${var.max_connections_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.max_connections_threshold_major}) and when(signal <= ${var.max_connections_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.max_connections_threshold_major}) and (not when(signal > ${var.max_connections_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {
@@ -228,7 +228,7 @@ resource "signalfx_detector" "replication_lag" {
   program_text = <<-EOF
     signal = data('postgres_replication_lag', filter=${module.filtering.signalflow}, rollup='average')${var.replication_lag_aggregation_function}${var.replication_lag_transformation_function}.publish('signal')
     detect(when(signal > ${var.replication_lag_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.replication_lag_threshold_major}) and when(signal <= ${var.replication_lag_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.replication_lag_threshold_major}) and (not when(signal > ${var.replication_lag_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {

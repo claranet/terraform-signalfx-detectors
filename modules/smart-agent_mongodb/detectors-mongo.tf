@@ -63,7 +63,7 @@ resource "signalfx_detector" "max_connections" {
     B = data('gauge.connections.available', filter=${module.filtering.signalflow})${var.max_connections_aggregation_function}${var.max_connections_transformation_function}
     signal = (A/(A+B)).scale(100).publish('signal')
     detect(when(signal > ${var.max_connections_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.max_connections_threshold_major}) and when(signal <= ${var.max_connections_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.max_connections_threshold_major}) and (not when(signal > ${var.max_connections_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {
@@ -180,7 +180,7 @@ resource "signalfx_detector" "replication_lag" {
   program_text = <<-EOF
     signal = data('gauge.repl.max_lag', filter=${module.filtering.signalflow})${var.replication_lag_aggregation_function}${var.replication_lag_transformation_function}.publish('signal')
     detect(when(signal > ${var.replication_lag_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.replication_lag_threshold_major}) and when(signal <= ${var.replication_lag_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.replication_lag_threshold_major}) and (not when(signal > ${var.replication_lag_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {

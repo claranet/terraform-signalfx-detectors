@@ -11,7 +11,7 @@ resource "signalfx_detector" "api_result" {
         B = data('ServiceApiResult', extrapolation="zero", filter=base_filter and ${module.filtering.signalflow})${var.api_result_aggregation_function}
         signal = (A/B).scale(100).fill(100).publish('signal')
         detect(when(signal < threshold(${var.api_result_threshold_critical}), lasting="${var.api_result_timer}")).publish('CRIT')
-        detect(when(signal < threshold(${var.api_result_threshold_major}), lasting="${var.api_result_timer}") and when(signal >= ${var.api_result_threshold_critical})).publish('MAJOR')
+        detect(when(signal < threshold(${var.api_result_threshold_major}), lasting="${var.api_result_timer}") and (not when(signal < ${var.api_result_threshold_critical}))).publish('MAJOR')
     EOF
 
   rule {
@@ -50,7 +50,7 @@ resource "signalfx_detector" "api_latency" {
         base_filter = filter('resource_type', 'Microsoft.KeyVault/vaults') and filter('primary_aggregation_type', 'true')
         signal = data('ServiceApiLatency', extrapolation="zero", filter=base_filter and not filter('activityname', 'secretlist') and ${module.filtering.signalflow})${var.api_latency_aggregation_function}.publish('signal')
         detect(when(signal > threshold(${var.api_latency_threshold_critical}), lasting="${var.api_latency_timer}")).publish('CRIT')
-        detect(when(signal > threshold(${var.api_latency_threshold_major}), lasting="${var.api_latency_timer}") and when(signal <= ${var.api_latency_threshold_critical})).publish('MAJOR')
+        detect(when(signal > threshold(${var.api_latency_threshold_major}), lasting="${var.api_latency_timer}") and (not when(signal > ${var.api_latency_threshold_critical}))).publish('MAJOR')
     EOF
 
   rule {

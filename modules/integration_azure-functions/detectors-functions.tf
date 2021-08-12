@@ -38,7 +38,7 @@ resource "signalfx_detector" "http_5xx_errors_rate" {
         B = data('FunctionExecutionCount', extrapolation="zero", filter=base_filter and ${module.filtering.signalflow})${var.http_5xx_errors_rate_aggregation_function}
         signal = (A/B).scale(100).fill(0).publish('signal')
         detect(when(signal > threshold(${var.http_5xx_errors_rate_threshold_critical}), lasting="${var.http_5xx_errors_rate_timer}")).publish('CRIT')
-        detect(when(signal > threshold(${var.http_5xx_errors_rate_threshold_major}), lasting="${var.http_5xx_errors_rate_timer}") and when(signal <= ${var.http_5xx_errors_rate_threshold_critical})).publish('MAJOR')
+        detect(when(signal > threshold(${var.http_5xx_errors_rate_threshold_major}), lasting="${var.http_5xx_errors_rate_timer}") and (not when(signal > ${var.http_5xx_errors_rate_threshold_critical}))).publish('MAJOR')
     EOF
 
   rule {
@@ -77,7 +77,7 @@ resource "signalfx_detector" "high_connections_count" {
         base_filter = filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'true') and filter('primary_aggregation_type', 'true')
         signal = data('AppConnections', extrapolation="last_value", filter=base_filter and ${module.filtering.signalflow})${var.high_connections_count_aggregation_function}.publish('signal')
         detect(when(signal > threshold(${var.high_connections_count_threshold_critical}), lasting="${var.high_connections_count_timer}")).publish('CRIT')
-        detect(when(signal > threshold(${var.high_connections_count_threshold_major}), lasting="${var.high_connections_count_timer}") and when(signal <= ${var.high_connections_count_threshold_critical})).publish('MAJOR')
+        detect(when(signal > threshold(${var.high_connections_count_threshold_major}), lasting="${var.high_connections_count_timer}") and (not when(signal > ${var.high_connections_count_threshold_critical}))).publish('MAJOR')
     EOF
 
   rule {
@@ -116,7 +116,7 @@ resource "signalfx_detector" "high_threads_count" {
         base_filter = filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'true') and filter('primary_aggregation_type', 'true')
         signal = data('Threads', extrapolation='last_value', filter=base_filter and ${module.filtering.signalflow})${var.high_threads_count_aggregation_function}.publish('signal')
         detect(when(signal > threshold(${var.high_threads_count_threshold_critical}), lasting="${var.high_threads_count_timer}")).publish('CRIT')
-        detect(when(signal > threshold(${var.high_threads_count_threshold_major}), lasting="${var.high_threads_count_timer}") and when(signal <= ${var.high_threads_count_threshold_critical})).publish('MAJOR')
+        detect(when(signal > threshold(${var.high_threads_count_threshold_major}), lasting="${var.high_threads_count_timer}") and (not when(signal > ${var.high_threads_count_threshold_critical}))).publish('MAJOR')
     EOF
 
   rule {

@@ -36,7 +36,7 @@ resource "signalfx_detector" "no_healthy_instances" {
     B = data('UnHealthyHostCount', filter=filter('namespace', 'AWS/ELB') and filter('stat', 'upper') and (not filter('AvailabilityZone', '*')) and filter('LoadBalancerName', '*') and ${module.filtering.signalflow})${var.no_healthy_instances_aggregation_function}${var.no_healthy_instances_transformation_function}
     signal = (A / (A+B)).scale(100).publish('signal')
     detect(when(signal < ${var.no_healthy_instances_threshold_critical})).publish('CRIT')
-    detect(when(signal < ${var.no_healthy_instances_threshold_major}) and when(signal >= ${var.no_healthy_instances_threshold_critical})).publish('MAJOR')
+    detect(when(signal < ${var.no_healthy_instances_threshold_major}) and (not when(signal < ${var.no_healthy_instances_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {

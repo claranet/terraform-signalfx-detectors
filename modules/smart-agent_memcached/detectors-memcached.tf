@@ -36,7 +36,7 @@ resource "signalfx_detector" "memcached_max_conn" {
   program_text = <<-EOF
     signal = data('total_events.listen_disabled', filter=${module.filtering.signalflow}, rollup='delta')${var.memcached_max_conn_aggregation_function}${var.memcached_max_conn_transformation_function}.publish('signal')
     detect(when(signal > ${var.memcached_max_conn_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.memcached_max_conn_threshold_major}) and when(signal < ${var.memcached_max_conn_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.memcached_max_conn_threshold_major}) and (not when(signal > ${var.memcached_max_conn_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {
@@ -76,7 +76,7 @@ resource "signalfx_detector" "memcached_hit_ratio" {
     B = data('memcached_ops.misses', filter=${module.filtering.signalflow})${var.memcached_hit_ratio_aggregation_function}${var.memcached_hit_ratio_transformation_function}
     signal = (A / (A+B) * 100).publish('signal')
     detect(when(signal < ${var.memcached_hit_ratio_threshold_major})).publish('MAJOR')
-    detect(when(signal < ${var.memcached_hit_ratio_threshold_minor}) and when(signal >= ${var.memcached_hit_ratio_threshold_major})).publish('MINOR')
+    detect(when(signal < ${var.memcached_hit_ratio_threshold_minor}) and (not when(signal < ${var.memcached_hit_ratio_threshold_major}))).publish('MINOR')
 EOF
 
   rule {

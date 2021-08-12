@@ -88,7 +88,7 @@ resource "signalfx_detector" "session_limit" {
     B = data('haproxy_session_limit', filter=${module.filtering.signalflow})${var.session_limit_aggregation_function}${var.session_limit_transformation_function}
     signal = (A/B).scale(100).publish('signal')
     detect(when(signal > ${var.session_limit_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.session_limit_threshold_major}) and when(signal <= ${var.session_limit_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.session_limit_threshold_major}) and (not when(signal > ${var.session_limit_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {
@@ -128,7 +128,7 @@ resource "signalfx_detector" "http_5xx_response" {
     B = data('haproxy_request_total', filter=${module.filtering.signalflow}, rollup='delta')${var.http_5xx_response_aggregation_function}${var.http_5xx_response_transformation_function}
     signal = (A/B).scale(100).publish('signal')
     detect(when(signal > ${var.http_5xx_response_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.http_5xx_response_threshold_major}) and when(signal <= ${var.http_5xx_response_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.http_5xx_response_threshold_major}) and (not when(signal > ${var.http_5xx_response_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {
@@ -168,7 +168,7 @@ resource "signalfx_detector" "http_4xx_response" {
     B = data('haproxy_request_total', filter=${module.filtering.signalflow}, rollup='delta')${var.http_4xx_response_aggregation_function}${var.http_4xx_response_transformation_function}
     signal = (A/B).scale(100).publish('signal')
     detect(when(signal > ${var.http_4xx_response_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.http_4xx_response_threshold_major}) and when(signal <= ${var.http_4xx_response_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.http_4xx_response_threshold_major}) and (not when(signal > ${var.http_4xx_response_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {
