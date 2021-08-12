@@ -7,7 +7,7 @@ resource "signalfx_detector" "aliveness" {
 
   program_text = <<-EOF
     signal = data('gauge.substate.running', filter=${module.filtering.signalflow})${var.aliveness_aggregation_function}${var.aliveness_transformation_function}.publish('signal')
-    detect(when(signal != ${var.aliveness_threshold_critical})).publish('CRIT')
+    detect(when(signal != ${var.aliveness_threshold_critical}, lasting=%{if var.aliveness_lasting_duration_critical == null}None%{else}'${var.aliveness_lasting_duration_critical}'%{endif}, at_least=${var.aliveness_at_least_percentage_critical})).publish('CRIT')
 EOF
 
   rule {
