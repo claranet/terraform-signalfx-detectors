@@ -67,6 +67,7 @@
 - [elasticsearch](#elasticsearch)
 - [genericjmx](#genericjmx)
 - [haproxy](#haproxy)
+- [health-checker](#health-checker)
 - [http](#http)
 - [kong](#kong)
 - [kubernetes-apiserver](#kubernetes-apiserver)
@@ -731,6 +732,14 @@
 |Haproxy session|X|X|-|-|-|
 |Haproxy 5xx response rate|X|X|-|-|-|
 |Haproxy 4xx response rate|X|X|-|-|-|
+
+
+## health-checker
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Health-checker value|X|-|-|-|-|
+|Health-checker status|X|-|-|-|-|
 
 
 ## http
