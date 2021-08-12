@@ -60,6 +60,11 @@ variable "errors_lasting_duration_critical" {
   default     = "900s"
 }
 
+variable "errors_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
 variable "errors_threshold_major" {
   description = "Major threshold for errors detector"
   type        = number
@@ -72,3 +77,8 @@ variable "errors_lasting_duration_major" {
   default     = "900s"
 }
 
+variable "errors_at_least_percentage_major" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}

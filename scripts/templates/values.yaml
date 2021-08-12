@@ -201,14 +201,14 @@ rules:
     ## when(signal > {{severity}}) and when(signal <= {{severity.dependency}})
     #dependency:
 
-    ## @param lasting_duration - string - optional
+    ## @param lasting_duration - string - optional - defaut: None
     ## Minimum duration that conditions must be true 
     ## before raising alert
-    lasting_duration:
+    #lasting_duration:
 
-    ## @param lasting_at_least - number - option
+    ## @param lasting_at_least - number - option - defaut: 1.0
     ## Percentage of lasting that conditions must be true 
     ## before raising alert (>= 0.0 and <= 1.0)
     ## lasting value is mandatory to use this parameter
-    lasting_at_least:
+    #lasting_at_least:
 

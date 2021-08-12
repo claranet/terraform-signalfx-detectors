@@ -15,9 +15,9 @@ resource "signalfx_detector" "throttled_requests" {
     A = data('ThrottledRequests', filter=base_filtering and ${module.filtering.signalflow})${var.throttled_requests_aggregation_function}${var.throttled_requests_transformation_function}
     B = data('IncomingRequests', filter=base_filtering and ${module.filtering.signalflow})${var.throttled_requests_aggregation_function}${var.throttled_requests_transformation_function}
     signal = (A/B).scale(100).fill(0).publish('signal')
-    detect(when(signal > ${var.throttled_requests_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.throttled_requests_threshold_major}) and when(signal <= ${var.throttled_requests_threshold_critical})).publish('MAJOR')
-    detect(when(signal > ${var.throttled_requests_threshold_warning}) and when(signal <= ${var.throttled_requests_threshold_major})).publish('WARN')
+    detect(when(signal > ${var.throttled_requests_threshold_critical}, lasting=%{if var.throttled_requests_lasting_duration_critical == null}None%{else}'${var.throttled_requests_lasting_duration_critical}'%{endif}, at_least=${var.throttled_requests_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal > ${var.throttled_requests_threshold_major}, lasting=%{if var.throttled_requests_lasting_duration_major == null}None%{else}'${var.throttled_requests_lasting_duration_major}'%{endif}, at_least=${var.throttled_requests_at_least_percentage_major}) and (not when(signal > ${var.throttled_requests_threshold_critical}, lasting=%{if var.throttled_requests_lasting_duration_critical == null}None%{else}'${var.throttled_requests_lasting_duration_critical}'%{endif}, at_least=${var.throttled_requests_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.throttled_requests_threshold_warning}, lasting=%{if var.throttled_requests_lasting_duration_warning == null}None%{else}'${var.throttled_requests_lasting_duration_warning}'%{endif}, at_least=${var.throttled_requests_at_least_percentage_warning}) and (not when(signal > ${var.throttled_requests_threshold_major}, lasting=%{if var.throttled_requests_lasting_duration_major == null}None%{else}'${var.throttled_requests_lasting_duration_major}'%{endif}, at_least=${var.throttled_requests_at_least_percentage_major}))).publish('WARN')
 EOF
 
   rule {

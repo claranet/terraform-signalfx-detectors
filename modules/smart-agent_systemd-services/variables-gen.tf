@@ -36,3 +36,14 @@ variable "systemd_services_threshold_critical" {
   default     = 1
 }
 
+variable "systemd_services_lasting_duration_critical" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "systemd_services_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
