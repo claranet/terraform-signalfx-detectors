@@ -54,12 +54,34 @@ variable "memory_used_threshold_critical" {
   default     = 90
 }
 
+variable "memory_used_lasting_duration_critical" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "memory_used_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
 variable "memory_used_threshold_major" {
   description = "Major threshold for memory_used detector in %"
   type        = number
   default     = 70
 }
 
+variable "memory_used_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "memory_used_at_least_percentage_major" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
 # out_of_memory_errors detector
 
 variable "out_of_memory_errors_notifications" {
@@ -104,6 +126,17 @@ variable "out_of_memory_errors_threshold_critical" {
   default     = 0
 }
 
+variable "out_of_memory_errors_lasting_duration_critical" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "out_of_memory_errors_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
 # disk_write_queue detector
 
 variable "disk_write_queue_notifications" {
@@ -160,9 +193,31 @@ variable "disk_write_queue_threshold_critical" {
   default     = 300
 }
 
+variable "disk_write_queue_lasting_duration_critical" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "disk_write_queue_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
 variable "disk_write_queue_threshold_major" {
   description = "Major threshold for disk_write_queue detector"
   type        = number
   default     = 200
 }
 
+variable "disk_write_queue_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "disk_write_queue_at_least_percentage_major" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}

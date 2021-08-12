@@ -54,12 +54,34 @@ variable "node_status_threshold_critical" {
   default     = 0
 }
 
+variable "node_status_lasting_duration_critical" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "node_status_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
 variable "node_status_threshold_minor" {
   description = "Minor threshold for node_status detector"
   type        = number
   default     = 0
 }
 
+variable "node_status_lasting_duration_minor" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "node_status_at_least_percentage_minor" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
 # node_state detector
 
 variable "node_state_notifications" {
@@ -106,3 +128,14 @@ variable "node_state_threshold_critical" {
   default     = 1
 }
 
+variable "node_state_lasting_duration_critical" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "node_state_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}

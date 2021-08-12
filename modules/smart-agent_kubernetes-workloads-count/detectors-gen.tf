@@ -18,8 +18,8 @@ resource "signalfx_detector" "workloads_count" {
     kubernetes_replica_set_desired = data('kubernetes.replica_set.desired', filter=base_filtering and ${module.filtering.signalflow})${var.workloads_count_aggregation_function}${var.workloads_count_transformation_function}
     kubernetes_statefulset_desired = data('kubernetes.stateful_set.desired', filter=base_filtering and ${module.filtering.signalflow})${var.workloads_count_aggregation_function}${var.workloads_count_transformation_function}
     signal = (kubernetes_deployment_desired+kubernetes_daemon_set_desired+kubernetes_replication_controller_desired+kubernetes_replica_set_desired+kubernetes_statefulset_desired).publish('signal')
-    detect(when(signal > ${var.workloads_count_threshold_minor})).publish('MINOR')
-    detect(when(signal > ${var.workloads_count_threshold_warning}) and when(signal <= ${var.workloads_count_threshold_minor})).publish('WARN')
+    detect(when(signal > ${var.workloads_count_threshold_minor}, lasting=%{if var.workloads_count_lasting_duration_minor == null}None%{else}'${var.workloads_count_lasting_duration_minor}'%{endif}, at_least=${var.workloads_count_at_least_percentage_minor})).publish('MINOR')
+    detect(when(signal > ${var.workloads_count_threshold_warning}, lasting=%{if var.workloads_count_lasting_duration_warning == null}None%{else}'${var.workloads_count_lasting_duration_warning}'%{endif}, at_least=${var.workloads_count_at_least_percentage_warning}) and (not when(signal > ${var.workloads_count_threshold_minor}, lasting=%{if var.workloads_count_lasting_duration_minor == null}None%{else}'${var.workloads_count_lasting_duration_minor}'%{endif}, at_least=${var.workloads_count_at_least_percentage_minor}))).publish('WARN')
 EOF
 
   rule {

@@ -92,12 +92,34 @@ variable "cpu_threshold_critical" {
   default     = 90
 }
 
+variable "cpu_lasting_duration_critical" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "cpu_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
 variable "cpu_threshold_major" {
   description = "Major threshold for cpu detector in %"
   type        = number
   default     = 85
 }
 
+variable "cpu_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "cpu_at_least_percentage_major" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
 # load detector
 
 variable "load_notifications" {
@@ -154,12 +176,34 @@ variable "load_threshold_critical" {
   default     = 2.5
 }
 
+variable "load_lasting_duration_critical" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "load_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
 variable "load_threshold_major" {
   description = "Major threshold for load detector"
   type        = number
   default     = 2
 }
 
+variable "load_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "load_at_least_percentage_major" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
 # disk_space detector
 
 variable "disk_space_notifications" {
@@ -216,12 +260,34 @@ variable "disk_space_threshold_critical" {
   default     = 90
 }
 
+variable "disk_space_lasting_duration_critical" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "disk_space_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
 variable "disk_space_threshold_major" {
   description = "Major threshold for disk_space detector in %"
   type        = number
   default     = 80
 }
 
+variable "disk_space_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "disk_space_at_least_percentage_major" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
 # disk_inodes detector
 
 variable "disk_inodes_notifications" {
@@ -278,12 +344,34 @@ variable "disk_inodes_threshold_critical" {
   default     = 95
 }
 
+variable "disk_inodes_lasting_duration_critical" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "disk_inodes_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
 variable "disk_inodes_threshold_major" {
   description = "Major threshold for disk_inodes detector in %"
   type        = number
   default     = 90
 }
 
+variable "disk_inodes_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "disk_inodes_at_least_percentage_major" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
 # memory detector
 
 variable "memory_notifications" {
@@ -340,9 +428,31 @@ variable "memory_threshold_critical" {
   default     = 95
 }
 
+variable "memory_lasting_duration_critical" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "memory_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
 variable "memory_threshold_major" {
   description = "Major threshold for memory detector in %"
   type        = number
   default     = 90
 }
 
+variable "memory_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "memory_at_least_percentage_major" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
