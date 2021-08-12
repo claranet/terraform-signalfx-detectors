@@ -1,0 +1,14 @@
+module: health-checker
+name: value
+
+transformation: true
+aggregation: true
+
+signals:
+  signal:
+    metric: "gauge.service.health.value"
+rules:
+  critical:
+    threshold: 1
+    comparator: "!="
+    lasting_duration: 5m

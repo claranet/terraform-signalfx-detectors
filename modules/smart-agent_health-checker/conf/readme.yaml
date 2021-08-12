@@ -1,0 +1,29 @@
+documentations:
+  - name: Smart Agent monitor
+    url: https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-health-checker.html
+  - name: Collectd source code health_checker.py
+    url: https://github.com/signalfx/collectd-health_checker/blob/master/health_checker.py
+
+source_doc: |
+  ### Monitor
+  
+  The detector of this module is based on metrics reported by the [collectd/health-checker](https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-health-checker.html) monitor.
+
+  It can monitor:
+    * network port (use `health_checker_value`)
+    * check json output of http requests (use `health_checker_value`)
+    * http response code (use `health_checker_status`)
+
+  For example, to monitor the network port 1234 on your host, your SignalFX agent should look like this:
+
+  ```yaml
+  monitors:
+    …
+    - type: collectd/health-checker
+      host: 127.0.0.1
+      port: 1234
+      tcpCheck: true
+    …
+  ```
+
+  I advise you to read the [collectd source code of health_checker.py](https://github.com/signalfx/collectd-health_checker/blob/master/health_checker.py) to understand how this monitor works.
