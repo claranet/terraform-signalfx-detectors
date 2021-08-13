@@ -104,12 +104,12 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |AWS ALB heartbeat|X|-|-|-|-|
-|AWS ALB healthy instances percentage|X|X|-|-|-|
-|AWS ALB latency|X|X|-|-|-|
+|AWS ALB target response time|X|X|-|-|-|
 |AWS ALB 5xx error rate|X|X|-|-|-|
 |AWS ALB 4xx error rate|X|X|-|-|-|
 |AWS ALB target 5xx error rate|X|X|-|-|-|
 |AWS ALB target 4xx error rate|X|X|-|-|-|
+|AWS ALB healthy instances percentage|X|X|-|-|-|
 
 
 ## aws-apigateway
