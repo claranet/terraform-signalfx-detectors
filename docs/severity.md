@@ -208,12 +208,12 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |AWS ELB heartbeat|X|-|-|-|-|
-|AWS ELB healthy instances percentage|X|X|-|-|-|
-|AWS ELB 4xx error rate|X|X|-|-|-|
-|AWS ELB 5xx error rate|X|X|-|-|-|
-|AWS ELB backend 4xx error rate|X|X|-|-|-|
-|AWS ELB backend 5xx error rate|X|X|-|-|-|
 |AWS ELB backend latency|X|X|-|-|-|
+|AWS ELB 5xx error rate|X|X|-|-|-|
+|AWS ELB 4xx error rate|X|X|-|-|-|
+|AWS ELB backend 5xx error rate|X|X|-|-|-|
+|AWS ELB backend 4xx error rate|X|X|-|-|-|
+|AWS ELB healthy instances percentage|X|X|-|-|-|
 
 
 ## aws-kinesis-firehose
