@@ -1,15 +1,15 @@
-output "nginx_ingress_4xx" {
-  description = "Detector resource for nginx_ingress_4xx"
-  value       = signalfx_detector.nginx_ingress_4xx
+output "http_4xx" {
+  description = "Detector resource for http_4xx"
+  value       = signalfx_detector.http_4xx
 }
 
-output "nginx_ingress_5xx" {
-  description = "Detector resource for nginx_ingress_5xx"
-  value       = signalfx_detector.nginx_ingress_5xx
+output "http_5xx" {
+  description = "Detector resource for http_5xx"
+  value       = signalfx_detector.http_5xx
 }
 
-output "nginx_ingress_latency" {
-  description = "Detector resource for nginx_ingress_latency"
-  value       = signalfx_detector.nginx_ingress_latency
+output "latency" {
+  description = "Detector resource for latency"
+  value       = signalfx_detector.latency
 }
 

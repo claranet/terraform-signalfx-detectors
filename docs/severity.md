@@ -875,9 +875,9 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|Kubernetes Ingress Nginx 5xx errors ratio|X|X|-|-|-|
-|Kubernetes Ingress Nginx 4xx errors ratio|X|X|-|-|-|
-|Kubernetes Ingress Nginx latency|X|X|-|-|-|
+|Ingress Nginx latency|X|X|-|-|-|
+|Ingress Nginx 5xx errors ratio|X|X|-|-|-|
+|Ingress Nginx 4xx errors ratio|X|X|-|-|-|
 
 
 ## nginx
