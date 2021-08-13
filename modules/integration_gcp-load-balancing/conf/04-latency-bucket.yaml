@@ -1,0 +1,27 @@
+module: GCP Load Balancer
+name: backend latency per bucket
+id: backend_latency_bucket
+
+transformation: true
+aggregation: ".sum(by=['forwarding_rule_name', 'backend_target_name'])"
+filtering: "filter('service', 'loadbalancing')"
+value_unit: "ms"
+
+signals:
+  signal:
+    metric: "https/backend_latencies"
+    filter: "filter('backend_target_type', 'BACKEND_BUCKET')"
+    extrapolation: zero
+    rollup: average
+rules:
+  critical:
+    threshold: 8000
+    comparator: ">"
+    lasting_duration: 10m
+    lasting_at_least: 0.9
+  major:
+    threshold: 5000
+    comparator: ">"
+    dependency: critical
+    lasting_duration: 10m
+    lasting_at_least: 0.9
