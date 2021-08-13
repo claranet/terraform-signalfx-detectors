@@ -50,7 +50,7 @@ name:
 #aggregation: ".mean(by=['host'])"
 aggregation: true
 
-## @param transformation - string - optional - defaut: true
+## @param transformation - string - optional - default: true
 ## Determine aggregation function added only to {{rules.severity}} with
 ## {{metric}} defined (not used for {{formula}}).
 ## By default or set to true (bool), it uses an empty string variable.
@@ -201,14 +201,28 @@ rules:
     ## when(signal > {{severity}}) and when(signal <= {{severity.dependency}})
     #dependency:
 
-    ## @param lasting_duration - string - optional - defaut: None
+    ## @param lasting_duration - string - optional - default: None
     ## Minimum duration that conditions must be true 
     ## before raising alert
     #lasting_duration:
 
-    ## @param lasting_at_least - number - option - defaut: 1.0
+    ## @param lasting_at_least - number - optional - default: 1.0
     ## Percentage of lasting that conditions must be true 
     ## before raising alert (>= 0.0 and <= 1.0)
     ## lasting value is mandatory to use this parameter
     #lasting_at_least:
+
+    ## @param append_condition - string - optional
+    ## Optional custom condition to append to detector function:
+    ## https://dev.splunk.com/observability/docs/signalflow/functions/detect_function/
+    #
+    ## Often one or some when function(s) string using comparison
+    ## with variables or other signals:
+    ## https://dev.splunk.com/observability/docs/signalflow/functions/when_function/
+    #
+    ## The string will be added as it is to the mandatory threshold
+    ## based condition for this rule so you have to start with a logical
+    ## operator depending on what relation you want beteween them like:
+    ## `or when(B != ${var.toto}` 
+    #append_condition:
 
