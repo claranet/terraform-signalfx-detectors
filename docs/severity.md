@@ -116,9 +116,9 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|AWS ApiGateway latency|X|X|-|-|-|
-|AWS ApiGateway HTTP 5xx error rate|X|X|-|-|-|
-|AWS ApiGateway HTTP 4xx error rate|X|X|-|-|-|
+|AWS APIGateway latency|X|X|-|-|-|
+|AWS APIGateway http 5xx error rate|X|X|-|-|-|
+|AWS APIGateway http 4xx error rate|X|X|-|-|-|
 
 
 ## aws-beanstalk
