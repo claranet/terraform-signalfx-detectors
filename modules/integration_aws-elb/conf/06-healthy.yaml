@@ -1,0 +1,30 @@
+module: AWS ELB
+name: healthy instances percentage
+id: healthy
+
+transformation: true
+aggregation: true
+filtering: "filter('namespace', 'AWS/ELB') and (not filter('AvailabilityZone', '*')) and filter('LoadBalancerName', '*')"
+value_unit: "%"
+
+signals:
+  healthy:
+    metric: HealthyHostCount
+    filter: "filter('stat', 'lower')"
+  unhealthy:
+    metric: UnHealthyHostCount
+    filter: "filter('stat', 'upper')"
+  signal:
+    formula: (healthy / (healthy+unhealthy)).scale(100)
+rules:
+  critical:
+    threshold: 1
+    comparator: "<"
+    description: has fallen below critical capacity
+    lasting_duration: 5m
+  major:
+    threshold: 100
+    comparator: "<"
+    dependency: critical
+    description: is below nominal capacity
+    lasting_duration: 5m
