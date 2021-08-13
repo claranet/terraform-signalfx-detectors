@@ -584,11 +584,11 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|GCP Load Balancer 4xx error rate|X|X|-|-|-|
 |GCP Load Balancer 5xx error rate|X|X|-|-|-|
-|GCP Load Balancer backend latency by service|X|X|-|-|-|
-|GCP Load Balancer backend latency by bucket|X|X|-|-|-|
-|GCP Load Balancer request count|-|X|-|-|-|
+|GCP Load Balancer 4xx error rate|X|X|-|-|-|
+|GCP Load Balancer backend latency per service|X|X|-|-|-|
+|GCP Load Balancer backend latency per bucket|X|X|-|-|-|
+|GCP Load Balancer request count|-|-|X|X|-|
 
 
 ## gcp-pubsub-subscription
