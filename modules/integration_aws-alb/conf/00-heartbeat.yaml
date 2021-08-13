@@ -1,0 +1,13 @@
+module: AWS ALB
+name: heartbeat
+
+transformation: false
+aggregation: true
+filtering: "filter('namespace', 'AWS/ApplicationELB')"
+
+signals:
+  signal:
+    metric: RequestCount
+    filter: "filter('stat', 'sum')"
+rules:
+  critical:
