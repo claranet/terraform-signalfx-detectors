@@ -82,7 +82,7 @@ variable "cpu_aggregation_function" {
   default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
-variable "cpu_timer" {
+variable "cpu_lasting_duration_critical" {
   description = "Evaluation window for cpu detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "15m"
@@ -92,6 +92,12 @@ variable "cpu_threshold_critical" {
   description = "Critical threshold for cpu detector"
   type        = number
   default     = 90
+}
+
+variable "cpu_lasting_duration_major" {
+  description = "Evaluation window for cpu detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "15m"
 }
 
 variable "cpu_threshold_major" {
@@ -144,7 +150,7 @@ variable "free_space_aggregation_function" {
   default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
-variable "free_space_timer" {
+variable "free_space_lasting_duration_critical" {
   description = "Evaluation window for free_space detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "15m"
@@ -154,6 +160,12 @@ variable "free_space_threshold_critical" {
   description = "Critical threshold for free_space detector"
   type        = number
   default     = 90
+}
+
+variable "free_space_lasting_duration_major" {
+  description = "Evaluation window for free_space detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "15m"
 }
 
 variable "free_space_threshold_major" {
@@ -206,7 +218,7 @@ variable "dtu_consumption_aggregation_function" {
   default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
-variable "dtu_consumption_timer" {
+variable "dtu_consumption_lasting_duration_critical" {
   description = "Evaluation window for dtu_consumption detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "15m"
@@ -216,6 +228,12 @@ variable "dtu_consumption_threshold_critical" {
   description = "Critical threshold for dtu_consumption detector"
   type        = number
   default     = 90
+}
+
+variable "dtu_consumption_lasting_duration_major" {
+  description = "Evaluation window for dtu_consumption detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "15m"
 }
 
 variable "dtu_consumption_threshold_major" {

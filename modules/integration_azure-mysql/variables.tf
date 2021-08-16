@@ -82,7 +82,7 @@ variable "cpu_usage_aggregation_function" {
   default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
-variable "cpu_usage_timer" {
+variable "cpu_usage_lasting_duration_critical" {
   description = "Transformation window for cpu_usage detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "15m"
@@ -92,6 +92,12 @@ variable "cpu_usage_threshold_critical" {
   description = "Critical threshold for cpu_usage detector"
   type        = number
   default     = 90
+}
+
+variable "cpu_usage_lasting_duration_major" {
+  description = "Transformation window for cpu_usage detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "15m"
 }
 
 variable "cpu_usage_threshold_major" {
@@ -144,7 +150,7 @@ variable "storage_usage_aggregation_function" {
   default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
-variable "storage_usage_timer" {
+variable "storage_usage_lasting_duration_critical" {
   description = "Transformation window for storage_usage detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "15m"
@@ -154,6 +160,12 @@ variable "storage_usage_threshold_critical" {
   description = "Critical threshold for storage_usage detector"
   type        = number
   default     = 90
+}
+
+variable "storage_usage_lasting_duration_major" {
+  description = "Transformation window for storage_usage detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "15m"
 }
 
 variable "storage_usage_threshold_major" {
@@ -206,7 +218,7 @@ variable "io_consumption_aggregation_function" {
   default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
-variable "io_consumption_timer" {
+variable "io_consumption_lasting_duration_critical" {
   description = "Transformation window for io_consumption detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "15m"
@@ -216,6 +228,12 @@ variable "io_consumption_threshold_critical" {
   description = "Critical threshold for io_consumption detector"
   type        = number
   default     = 90
+}
+
+variable "io_consumption_lasting_duration_major" {
+  description = "Transformation window for io_consumption detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "15m"
 }
 
 variable "io_consumption_threshold_major" {
@@ -268,7 +286,7 @@ variable "memory_usage_aggregation_function" {
   default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
-variable "memory_usage_timer" {
+variable "memory_usage_lasting_duration_critical" {
   description = "Transformation window for memory_usage detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "15m"
@@ -278,6 +296,12 @@ variable "memory_usage_threshold_critical" {
   description = "Critical threshold for memory_usage detector"
   type        = number
   default     = 90
+}
+
+variable "memory_usage_lasting_duration_major" {
+  description = "Transformation window for memory_usage detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "15m"
 }
 
 variable "memory_usage_threshold_major" {
@@ -330,7 +354,7 @@ variable "replication_lag_aggregation_function" {
   default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
-variable "replication_lag_timer" {
+variable "replication_lag_lasting_duration_critical" {
   description = "Transformation window for replication_lag detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "15m"
@@ -340,6 +364,12 @@ variable "replication_lag_threshold_critical" {
   description = "Critical threshold in seconds for replication_lag detector"
   type        = number
   default     = 200
+}
+
+variable "replication_lag_lasting_duration_major" {
+  description = "Transformation window for replication_lag detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "15m"
 }
 
 variable "replication_lag_threshold_major" {

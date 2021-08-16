@@ -82,7 +82,7 @@ variable "cpu_percentage_aggregation_function" {
   default     = ".mean(by=['Instance', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
-variable "cpu_percentage_timer" {
+variable "cpu_percentage_lasting_duration_critical" {
   description = "Evaluation window for cpu_percentage detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "10m"
@@ -92,6 +92,12 @@ variable "cpu_percentage_threshold_critical" {
   description = "Critical threshold for cpu_percentage detector"
   type        = number
   default     = 95
+}
+
+variable "cpu_percentage_lasting_duration_major" {
+  description = "Evaluation window for cpu_percentage detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "10m"
 }
 
 variable "cpu_percentage_threshold_major" {
@@ -144,7 +150,7 @@ variable "memory_percentage_aggregation_function" {
   default     = ".mean(by=['Instance', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
-variable "memory_percentage_timer" {
+variable "memory_percentage_lasting_duration_critical" {
   description = "Evaluation window for memory_percentage detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
@@ -154,6 +160,12 @@ variable "memory_percentage_threshold_critical" {
   description = "Critical threshold for memory_percentage detector"
   type        = number
   default     = 95
+}
+
+variable "memory_percentage_lasting_duration_major" {
+  description = "Evaluation window for memory_percentage detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "5m"
 }
 
 variable "memory_percentage_threshold_major" {

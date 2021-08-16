@@ -35,8 +35,8 @@ resource "signalfx_detector" "su_utilization" {
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.StreamAnalytics/streamingjobs') and filter('primary_aggregation_type', 'true') and ${module.filtering.signalflow}
         signal = data('ResourceUtilization', filter=base_filter)${var.su_utilization_aggregation_function}.publish('signal')
-        detect(when(signal > threshold(${var.su_utilization_threshold_critical}), lasting="${var.su_utilization_timer}")).publish('CRIT')
-        detect(when(signal > threshold(${var.su_utilization_threshold_major}), lasting="${var.su_utilization_timer}") and (not when(signal > ${var.su_utilization_threshold_critical}))).publish('MAJOR')
+        detect(when(signal > threshold(${var.su_utilization_threshold_critical}), lasting="${var.su_utilization_lasting_duration_critical}")).publish('CRIT')
+        detect(when(signal > threshold(${var.su_utilization_threshold_major}), lasting="${var.su_utilization_lasting_duration_major}") and (not when(signal > ${var.su_utilization_threshold_critical}, lasting="${var.su_utilization_lasting_duration_critical}"))).publish('MAJOR')
     EOF
 
   rule {
@@ -76,8 +76,8 @@ resource "signalfx_detector" "failed_function_requests" {
         A = data('AMLCalloutFailedRequests', extrapolation='zero', filter=base_filter)${var.failed_function_requests_aggregation_function}
         B = data('AMLCalloutRequests', extrapolation='zero', filter=base_filter)${var.failed_function_requests_aggregation_function}
         signal = (A/B).scale(100).fill(0).publish('signal')
-        detect(when(signal > threshold(${var.failed_function_requests_threshold_critical}), lasting="${var.failed_function_requests_timer}")).publish('CRIT')
-        detect(when(signal > threshold(${var.failed_function_requests_threshold_major}), lasting="${var.failed_function_requests_timer}") and (not when(signal > ${var.failed_function_requests_threshold_critical}))).publish('MAJOR')
+        detect(when(signal > threshold(${var.failed_function_requests_threshold_critical}), lasting="${var.failed_function_requests_lasting_duration_critical}")).publish('CRIT')
+        detect(when(signal > threshold(${var.failed_function_requests_threshold_major}), lasting="${var.failed_function_requests_lasting_duration_major}") and (not when(signal > ${var.failed_function_requests_threshold_critical}, lasting="${var.failed_function_requests_lasting_duration_critical}"))).publish('MAJOR')
     EOF
 
   rule {
@@ -115,8 +115,8 @@ resource "signalfx_detector" "conversion_errors" {
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.StreamAnalytics/streamingjobs') and filter('primary_aggregation_type', 'true') and ${module.filtering.signalflow}
         signal = data('ConversionErrors', filter=base_filter)${var.conversion_errors_aggregation_function}. publish('signal')
-        detect(when(signal > threshold(${var.conversion_errors_threshold_critical}), lasting="${var.conversion_errors_timer}")).publish('CRIT')
-        detect(when(signal > threshold(${var.conversion_errors_threshold_major}), lasting="${var.conversion_errors_timer}") and (not when(signal > ${var.conversion_errors_threshold_critical}))).publish('MAJOR')
+        detect(when(signal > threshold(${var.conversion_errors_threshold_critical}), lasting="${var.conversion_errors_lasting_duration_critical}")).publish('CRIT')
+        detect(when(signal > threshold(${var.conversion_errors_threshold_major}), lasting="${var.conversion_errors_lasting_duration_major}") and (not when(signal > ${var.conversion_errors_threshold_critical}, lasting="${var.conversion_errors_lasting_duration_critical}"))).publish('MAJOR')
     EOF
 
   rule {
@@ -154,8 +154,8 @@ resource "signalfx_detector" "runtime_errors" {
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.StreamAnalytics/streamingjobs') and filter('primary_aggregation_type', 'true') and ${module.filtering.signalflow}
         signal = data('Errors', filter=base_filter)${var.runtime_errors_aggregation_function}.publish('signal')
-        detect(when(signal > threshold(${var.runtime_errors_threshold_critical}), lasting="${var.runtime_errors_timer}")).publish('CRIT')
-        detect(when(signal > threshold(${var.runtime_errors_threshold_major}), lasting="${var.runtime_errors_timer}") and (not when(signal > ${var.runtime_errors_threshold_critical}))).publish('MAJOR')
+        detect(when(signal > threshold(${var.runtime_errors_threshold_critical}), lasting="${var.runtime_errors_lasting_duration_critical}")).publish('CRIT')
+        detect(when(signal > threshold(${var.runtime_errors_threshold_major}), lasting="${var.runtime_errors_lasting_duration_major}") and (not when(signal > ${var.runtime_errors_threshold_critical}, lasting="${var.runtime_errors_lasting_duration_critical}"))).publish('MAJOR')
     EOF
 
   rule {

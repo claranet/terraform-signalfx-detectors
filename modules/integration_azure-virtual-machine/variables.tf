@@ -82,7 +82,7 @@ variable "cpu_usage_aggregation_function" {
   default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
-variable "cpu_usage_timer" {
+variable "cpu_usage_lasting_duration_critical" {
   description = "Evaluation window for cpu_usage detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "15m"
@@ -92,6 +92,12 @@ variable "cpu_usage_threshold_critical" {
   description = "Critical threshold for cpu_usage detector"
   type        = number
   default     = 90
+}
+
+variable "cpu_usage_lasting_duration_major" {
+  description = "Evaluation window for cpu_usage detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "15m"
 }
 
 variable "cpu_usage_threshold_major" {
@@ -145,12 +151,12 @@ variable "credit_cpu_aggregation_function" {
 }
 
 variable "credit_cpu_transformation_function" {
-  description = "Transformation function for credit_cpu detector (mean, min, max)"
+  description = "Transformation function for load detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = "min"
+  default     = ".min(over='5m')"
 }
 
-variable "credit_cpu_timer" {
+variable "credit_cpu_lasting_duration_critical" {
   description = "Evaluation window for credit_cpu detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
@@ -160,6 +166,12 @@ variable "credit_cpu_threshold_critical" {
   description = "Critical threshold for credit_cpu detector"
   type        = number
   default     = 15
+}
+
+variable "credit_cpu_lasting_duration_major" {
+  description = "Evaluation window for credit_cpu detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "5m"
 }
 
 variable "credit_cpu_threshold_major" {

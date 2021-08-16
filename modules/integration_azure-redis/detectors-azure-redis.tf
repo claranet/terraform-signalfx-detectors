@@ -35,8 +35,8 @@ resource "signalfx_detector" "evictedkeys" {
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Cache/Redis') and filter('primary_aggregation_type', 'true')
         signal = data('evictedkeys', filter=base_filter and ${module.filtering.signalflow})${var.evictedkeys_aggregation_function}.publish('signal')
-        detect(when(signal > threshold(${var.evictedkeys_threshold_critical}), lasting="${var.evictedkeys_timer}")).publish('CRIT')
-        detect(when(signal > threshold(${var.evictedkeys_threshold_major}), lasting="${var.evictedkeys_timer}") and (not when(signal > ${var.evictedkeys_threshold_critical}))).publish('MAJOR')
+        detect(when(signal > threshold(${var.evictedkeys_threshold_critical}), lasting="${var.evictedkeys_lasting_duration_critical}")).publish('CRIT')
+        detect(when(signal > threshold(${var.evictedkeys_threshold_major}), lasting="${var.evictedkeys_lasting_duration_major}") and (not when(signal > ${var.evictedkeys_threshold_critical}, lasting="${var.evictedkeys_lasting_duration_critical}"))).publish('MAJOR')
     EOF
 
   rule {
@@ -74,8 +74,8 @@ resource "signalfx_detector" "percent_processor_time" {
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Cache/Redis') and filter('primary_aggregation_type', 'true')
         signal = data('percentProcessorTime', filter=base_filter and ${module.filtering.signalflow})${var.percent_processor_time_aggregation_function}.publish('signal')
-        detect(when(signal > threshold(${var.percent_processor_time_threshold_critical}), lasting="${var.percent_processor_time_timer}")).publish('CRIT')
-        detect(when(signal > threshold(${var.percent_processor_time_threshold_major}), lasting="${var.percent_processor_time_timer}") and (not when(signal > ${var.percent_processor_time_threshold_critical}))).publish('MAJOR')
+        detect(when(signal > threshold(${var.percent_processor_time_threshold_critical}), lasting="${var.percent_processor_time_lasting_duration_critical}")).publish('CRIT')
+        detect(when(signal > threshold(${var.percent_processor_time_threshold_major}), lasting="${var.percent_processor_time_lasting_duration_major}") and (not when(signal > ${var.percent_processor_time_threshold_critical}, lasting="${var.percent_processor_time_lasting_duration_critical}"))).publish('MAJOR')
     EOF
 
   rule {
@@ -113,8 +113,8 @@ resource "signalfx_detector" "load" {
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Cache/Redis') and filter('primary_aggregation_type', 'true')
         signal = data('serverLoad', filter=base_filter and ${module.filtering.signalflow})${var.load_aggregation_function}.publish('signal')
-        detect(when(signal > threshold(${var.load_threshold_critical}), lasting="${var.load_timer}")).publish('CRIT')
-        detect(when(signal > threshold(${var.load_threshold_major}), lasting="${var.load_timer}") and (not when(signal > ${var.load_threshold_critical}))).publish('MAJOR')
+        detect(when(signal > threshold(${var.load_threshold_critical}), lasting="${var.load_lasting_duration_critical}")).publish('CRIT')
+        detect(when(signal > threshold(${var.load_threshold_major}), lasting="${var.load_lasting_duration_major}") and (not when(signal > ${var.load_threshold_critical}, lasting="${var.load_lasting_duration_critical}"))).publish('MAJOR')
     EOF
 
   rule {
