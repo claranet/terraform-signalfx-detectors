@@ -1,0 +1,21 @@
+module: Kubernetes
+name: daemonsets scheduled
+id: daemonset_scheduled
+
+transformation: true
+aggregation: true
+
+signals:
+  desired:
+    metric: kubernetes.daemon_set.desired_scheduled
+  current:
+    metric: kubernetes.daemon_set.current_scheduled
+  signal:
+    formula: (desired-current).fill(value=0)
+
+rules:
+  critical:
+    threshold: 0
+    comparator: "!="
+    lasting_duration: 5m
+    description: do not match desired value

@@ -1,0 +1,21 @@
+module: Kubernetes
+name: statefulsets ready
+id: statefulset_ready
+
+transformation: true
+aggregation: true
+
+signals:
+  desired:
+    metric: kubernetes.stateful_set.desired
+  ready:
+    metric: kubernetes.stateful_set.ready
+  signal:
+    formula: (desired-ready).fill(value=0)
+
+rules:
+  critical:
+    threshold: 0
+    comparator: "!="
+    lasting_duration: 5m
+    description: do not match desired value

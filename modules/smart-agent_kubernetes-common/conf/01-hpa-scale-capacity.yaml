@@ -1,6 +1,11 @@
-module: kubernetes
+module: Kubernetes
 name: "hpa scale exceeded capacity"
+id: hpa_capacity
+
+transformation: true
+aggregation: true
 tip: "hpa ask to scale for too long, the maximum number of desired Pods has been hit or there is a lack of resources"
+
 signals:
   max:
     metric: kubernetes.hpa.spec.max_replicas
@@ -8,8 +13,9 @@ signals:
     metric: kubernetes.hpa.status.desired_replicas
   signal:
     formula: (desired-max)
+
 rules:
   major:
     threshold: 0
     comparator: ">="
-    lasting_duration: "300s"
+    lasting_duration: 300s
