@@ -868,7 +868,7 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|Nagios check status|X|X|-|X|-|
+|Nagios status check|X|X|-|X|-|
 
 
 ## nginx-ingress
