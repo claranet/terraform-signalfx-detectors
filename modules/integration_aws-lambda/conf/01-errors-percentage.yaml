@@ -1,0 +1,30 @@
+module: AWS Lambda
+name: errors percentage
+id: pct_errors
+
+transformation: true
+aggregation: true
+filtering: "filter('namespace', 'AWS/Lambda') and filter('stat', 'mean') and filter('Resource', '*')"
+value_unit: "%"
+
+signals:
+  errors:
+    metric: Errors
+    extrapolation: last_value
+    rollup: average
+  invocations:
+    metric: Invocations
+    extrapolation: last_value
+    rollup: average
+  signal:
+    formula: (errors/invocations).scale(100).fill(value=0)
+rules:
+  critical:
+    threshold: 25
+    comparator: ">"
+    lasting_duration: 15m
+  major:
+    threshold: 0
+    comparator: ">"
+    dependency: critical
+    lasting_duration: 5m
