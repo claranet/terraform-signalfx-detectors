@@ -1,0 +1,18 @@
+module: HTTP
+name: code
+id: http_code_matched
+
+transformation: true
+aggregation: true
+
+signals:
+  signal:
+    metric: http.code_matched
+    rollup: min
+
+rules:
+  critical:
+    threshold: 1
+    comparator: "<"
+    lasting_duration: 1m
+    description: does not match expected result
