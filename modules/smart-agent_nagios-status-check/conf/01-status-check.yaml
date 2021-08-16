@@ -1,0 +1,26 @@
+module: Nagios
+name: status check
+
+transformation: true
+aggregation: true
+
+signals:
+  signal:
+    metric: nagios.state
+
+rules:
+  warning:
+    threshold: 1
+    comparator: "=="
+    lasting_duration: 15m
+    description: is Warning, check output from host script or related event
+  critical:
+    threshold: 2
+    comparator: "=="
+    lasting_duration: 15m
+    description: is Critical, check output from host script or related event
+  major:
+    threshold: 3
+    comparator: "=="
+    lasting_duration: 15m
+    description: is Unknown, check output from host script or related event
