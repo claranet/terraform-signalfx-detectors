@@ -1,0 +1,29 @@
+module: AWS Elasticache memcached
+name: hit ratio
+
+transformation: true
+aggregation: true
+filtering: "filter('namespace', 'AWS/ElastiCache') and filter('CacheNodeId', '*') and filter('stat', 'mean')"
+value_unit: "%"
+
+signals:
+  hits:
+    metric: GetHits
+    extrapolation: zero
+    rollup: sum
+  misses:
+    metric: GetMisses
+    extrapolation: zero
+    rollup: sum
+  signal:
+    formula: (hits/(hits+misses)).scale(100).fill(value=0)
+rules:
+  critical:
+    threshold: 80
+    comparator: ">"
+    lasting_duration: 5m
+  major:
+    threshold: 60
+    comparator: ">"
+    dependency: critical
+    lasting_duration: 5m

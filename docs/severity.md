@@ -179,8 +179,8 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|AWS ElastiCache memcached hit ratio|X|X|-|-|-|
-|AWS ElastiCache memcached CPU|X|X|-|-|-|
+|AWS Elasticache memcached cpu|X|X|-|-|-|
+|AWS Elasticache memcached hit ratio|X|X|-|-|-|
 
 
 ## aws-elasticache-redis
