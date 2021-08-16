@@ -1,0 +1,22 @@
+module: AWS ElastiCache redis
+name: replication lag
+
+transformation: true
+aggregation: true
+filtering: "filter('namespace', 'AWS/ElastiCache') and filter('stat', 'upper') and filter('CacheNodeId', '*')"
+value_unit: s
+
+signals:
+  signal:
+    metric: ReplicationLag
+
+rules:
+  critical:
+    threshold: 180
+    comparator: ">"
+    lasting_duration: 10m
+  major:
+    threshold: 90
+    comparator: ">"
+    dependency: critical
+    lasting_duration: 10m
