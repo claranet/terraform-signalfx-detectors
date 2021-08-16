@@ -64,7 +64,7 @@ Note the following parameters:
 
 These 3 parameters alongs with all variables defined in [common-variables.tf](common-variables.tf) are common to all 
 [modules](../) in this repository. Other variables, specific to this module, are available in 
-[variables.tf](variables.tf) and [variables-gen.tf](variables-gen.tf).
+[variables-gen.tf](variables-gen.tf).
 In general, the default configuration "works" but all of these Terraform 
 [variables](https://www.terraform.io/docs/configuration/variables.html) make it possible to 
 customize the detectors behavior to better fit your needs.
@@ -82,21 +82,21 @@ This module creates the following SignalFx detectors which could contain one or 
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
+|Kubernetes heartbeat|X|-|-|-|-|
 |Kubernetes hpa scale exceeded capacity|-|X|-|-|-|
-|Kubernetes node heartbeat|X|-|-|-|-|
 |Kubernetes node status|-|X|X|-|-|
-|Kubernetes pod status phase|-|X|-|-|-|
+|Kubernetes pod phase status|-|X|X|X|-|
 |Kubernetes pod terminated abnormally|-|X|-|-|-|
-|Kubernetes container killed by OOM|-|X|-|-|-|
-|Kubernetes deployment in CrashLoopBackOff|-|X|-|-|-|
-|Kubernetes daemonset in CrashLoopBackOff|-|X|-|-|-|
+|Kubernetes container killed by oom|-|X|-|-|-|
+|Kubernetes deployment in crashloopbackoff|-|X|-|-|-|
+|Kubernetes daemonset in crashloopbackoff|-|X|-|-|-|
 |Kubernetes job from cronjob failed|-|X|-|-|-|
-|Kubernetes daemonsets not scheduled|X|-|-|-|-|
-|Kubernetes daemonsets not ready|X|-|-|-|-|
+|Kubernetes daemonsets scheduled|X|-|-|-|-|
+|Kubernetes daemonsets ready|X|-|-|-|-|
 |Kubernetes daemonsets misscheduled|X|-|-|-|-|
 |Kubernetes deployments available|X|-|-|-|-|
 |Kubernetes replicasets available|X|-|-|-|-|
-|Kubernetes replication_controllers available|X|-|-|-|-|
+|Kubernetes replication controllers available|X|-|-|-|-|
 |Kubernetes statefulsets ready|X|-|-|-|-|
 
 ## How to collect required metrics?
