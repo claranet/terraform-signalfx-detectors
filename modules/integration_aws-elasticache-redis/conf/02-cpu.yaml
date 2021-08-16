@@ -1,0 +1,23 @@
+module: AWS ElastiCache redis
+name: CPU
+id: cpu_high
+
+transformation: true
+aggregation: true
+filtering: "filter('namespace', 'AWS/ElastiCache') and filter('stat', 'upper') and filter('CacheNodeId', '*')"
+value_unit: "%"
+
+signals:
+  signal:
+    metric: EngineCPUUtilization
+
+rules:
+  critical:
+    threshold: 90
+    comparator: ">"
+    lasting_duration: 15m
+  major:
+    threshold: 75
+    comparator: ">"
+    dependency: critical
+    lasting_duration: 15m

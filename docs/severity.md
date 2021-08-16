@@ -188,9 +188,9 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |AWS ElastiCache redis cache hit ratio|X|X|-|-|-|
-|AWS ElastiCache redis CPU|X|X|-|-|-|
+|AWS ElastiCache redis cpu|X|X|-|-|-|
 |AWS ElastiCache redis replication lag|X|X|-|-|-|
-|AWS ElastiCache redis commands|X|X|-|-|-|
+|AWS ElastiCache redis commands|-|X|-|-|-|
 
 
 ## aws-elasticsearch
