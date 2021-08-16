@@ -14,7 +14,7 @@ resource "signalfx_detector" "cache_hits" {
     base_filtering = filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*')
     hits = data('CacheHits', filter=base_filtering and ${module.filtering.signalflow})${var.cache_hits_aggregation_function}${var.cache_hits_transformation_function}
     misses = data('CacheMisses', filter=base_filtering and ${module.filtering.signalflow})${var.cache_hits_aggregation_function}${var.cache_hits_transformation_function}
-    signal = (hits/(hits+misses).fill(value=1).scale(100).publish('signal')
+    signal = (hits/(hits+misses)).fill(value=1).scale(100).publish('signal')
     detect(when(signal < ${var.cache_hits_threshold_critical}, lasting=%{if var.cache_hits_lasting_duration_critical == null}None%{else}'${var.cache_hits_lasting_duration_critical}'%{endif}, at_least=${var.cache_hits_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal < ${var.cache_hits_threshold_major}, lasting=%{if var.cache_hits_lasting_duration_major == null}None%{else}'${var.cache_hits_lasting_duration_major}'%{endif}, at_least=${var.cache_hits_at_least_percentage_major}) and (not when(signal < ${var.cache_hits_threshold_critical}, lasting=%{if var.cache_hits_lasting_duration_critical == null}None%{else}'${var.cache_hits_lasting_duration_critical}'%{endif}, at_least=${var.cache_hits_at_least_percentage_critical}))).publish('MAJOR')
 EOF
