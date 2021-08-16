@@ -228,7 +228,7 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|AWS Lambda errors rate|X|X|-|-|-|
+|AWS Lambda errors percentage|X|X|-|-|-|
 |AWS Lambda invocations throttled|X|X|-|-|-|
 |AWS Lambda invocations|-|X|-|-|-|
 
