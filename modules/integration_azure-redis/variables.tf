@@ -82,7 +82,7 @@ variable "evictedkeys_aggregation_function" {
   default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
-variable "evictedkeys_timer" {
+variable "evictedkeys_lasting_duration_critical" {
   description = "Evaluation window for evictedkeys detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
@@ -92,6 +92,12 @@ variable "evictedkeys_threshold_critical" {
   description = "Critical threshold for evictedkeys detector"
   type        = number
   default     = 100
+}
+
+variable "evictedkeys_lasting_duration_major" {
+  description = "Evaluation window for evictedkeys detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "5m"
 }
 
 variable "evictedkeys_threshold_major" {
@@ -144,7 +150,7 @@ variable "percent_processor_time_aggregation_function" {
   default     = ".mean(by=['shardid', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
-variable "percent_processor_time_timer" {
+variable "percent_processor_time_lasting_duration_critical" {
   description = "Evaluation window for percent_processor_time detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
@@ -154,6 +160,12 @@ variable "percent_processor_time_threshold_critical" {
   description = "Critical threshold for percent_processor_time detector"
   type        = number
   default     = 80
+}
+
+variable "percent_processor_time_lasting_duration_major" {
+  description = "Evaluation window for percent_processor_time detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "5m"
 }
 
 variable "percent_processor_time_threshold_major" {
@@ -206,7 +218,7 @@ variable "load_aggregation_function" {
   default     = ".mean(by=['shardid', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
-variable "load_timer" {
+variable "load_lasting_duration_critical" {
   description = "Evaluation window for load detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
@@ -216,6 +228,12 @@ variable "load_threshold_critical" {
   description = "Critical threshold for load detector"
   type        = number
   default     = 90
+}
+
+variable "load_lasting_duration_major" {
+  description = "Evaluation window for load detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "5m"
 }
 
 variable "load_threshold_major" {

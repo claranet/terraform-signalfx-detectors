@@ -82,7 +82,7 @@ variable "http_5xx_errors_rate_aggregation_function" {
   default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
-variable "http_5xx_errors_rate_timer" {
+variable "http_5xx_errors_rate_lasting_duration_critical" {
   description = "Evaluation window for http_5xx_errors_rate detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
@@ -92,6 +92,12 @@ variable "http_5xx_errors_rate_threshold_critical" {
   description = "Critical threshold for http_5xx_errors_rate detector"
   type        = number
   default     = 20
+}
+
+variable "http_5xx_errors_rate_lasting_duration_major" {
+  description = "Evaluation window for http_5xx_errors_rate detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "5m"
 }
 
 variable "http_5xx_errors_rate_threshold_major" {
@@ -144,7 +150,7 @@ variable "high_connections_count_aggregation_function" {
   default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
-variable "high_connections_count_timer" {
+variable "high_connections_count_lasting_duration_critical" {
   description = "Evaluation window for high_connections_count detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
@@ -154,6 +160,12 @@ variable "high_connections_count_threshold_critical" {
   description = "Critical threshold for high_connections_count detector"
   type        = number
   default     = 590
+}
+
+variable "high_connections_count_lasting_duration_major" {
+  description = "Evaluation window for high_connections_count detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "5m"
 }
 
 variable "high_connections_count_threshold_major" {
@@ -206,7 +218,7 @@ variable "high_threads_count_aggregation_function" {
   default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
-variable "high_threads_count_timer" {
+variable "high_threads_count_lasting_duration_critical" {
   description = "Evaluation window for high_threads_count detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
@@ -216,6 +228,12 @@ variable "high_threads_count_threshold_critical" {
   description = "Critical threshold for high_threads_count detector"
   type        = number
   default     = 510
+}
+
+variable "high_threads_count_lasting_duration_major" {
+  description = "Evaluation window for high_threads_count detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "5m"
 }
 
 variable "high_threads_count_threshold_major" {

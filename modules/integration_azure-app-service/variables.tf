@@ -82,7 +82,7 @@ variable "response_time_aggregation_function" {
   default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
-variable "response_time_timer" {
+variable "response_time_lasting_duration_critical" {
   description = "Evaluation window for response_time detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
@@ -92,6 +92,12 @@ variable "response_time_threshold_critical" {
   description = "Critical threshold for response_time detector"
   type        = number
   default     = 10
+}
+
+variable "response_time_lasting_duration_major" {
+  description = "Evaluation window for response_time detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "5m"
 }
 
 variable "response_time_threshold_major" {
@@ -144,7 +150,7 @@ variable "memory_usage_count_aggregation_function" {
   default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
-variable "memory_usage_count_timer" {
+variable "memory_usage_count_lasting_duration_critical" {
   description = "Evaluation window for memory_usage_count detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
@@ -154,6 +160,12 @@ variable "memory_usage_count_threshold_critical" {
   description = "Critical threshold for memory_usage_count detector"
   type        = number
   default     = 1073741824 # 1Gb
+}
+
+variable "memory_usage_count_lasting_duration_major" {
+  description = "Evaluation window for memory_usage_count detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "5m"
 }
 
 variable "memory_usage_count_threshold_major" {
@@ -206,7 +218,7 @@ variable "http_5xx_errors_count_aggregation_function" {
   default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
-variable "http_5xx_errors_count_timer" {
+variable "http_5xx_errors_count_lasting_duration_critical" {
   description = "Evaluation window for http_5xx_errors_count detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
@@ -216,6 +228,12 @@ variable "http_5xx_errors_count_threshold_critical" {
   description = "Critical threshold for http_5xx_errors_count detector"
   type        = number
   default     = 90
+}
+
+variable "http_5xx_errors_count_lasting_duration_major" {
+  description = "Evaluation window for http_5xx_errors_count detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "5m"
 }
 
 variable "http_5xx_errors_count_threshold_major" {
@@ -268,7 +286,7 @@ variable "http_4xx_errors_count_aggregation_function" {
   default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
-variable "http_4xx_errors_count_timer" {
+variable "http_4xx_errors_count_lasting_duration_critical" {
   description = "Evaluation window for http_4xx_errors_count detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
@@ -278,6 +296,12 @@ variable "http_4xx_errors_count_threshold_critical" {
   description = "Critical threshold for http_4xx_errors_count detector"
   type        = number
   default     = 90
+}
+
+variable "http_4xx_errors_count_lasting_duration_major" {
+  description = "Evaluation window for http_4xx_errors_count detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "5m"
 }
 
 variable "http_4xx_errors_count_threshold_major" {
@@ -330,7 +354,7 @@ variable "http_success_status_rate_aggregation_function" {
   default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
-variable "http_success_status_rate_timer" {
+variable "http_success_status_rate_lasting_duration_critical" {
   description = "Evaluation window for http_success_status_rate detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
@@ -340,6 +364,12 @@ variable "http_success_status_rate_threshold_critical" {
   description = "Critical threshold for http_success_status_rate detector"
   type        = number
   default     = 10
+}
+
+variable "http_success_status_rate_lasting_duration_major" {
+  description = "Evaluation window for http_success_status_rate detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "5m"
 }
 
 variable "http_success_status_rate_threshold_major" {

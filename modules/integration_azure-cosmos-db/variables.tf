@@ -82,7 +82,7 @@ variable "db_4xx_requests_aggregation_function" {
   default     = ".sum(by=['databasename', 'collectionname', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
-variable "db_4xx_requests_timer" {
+variable "db_4xx_requests_lasting_duration_critical" {
   description = "Evaluation window for db_4xx_requests detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
@@ -92,6 +92,12 @@ variable "db_4xx_requests_threshold_critical" {
   description = "Critical threshold for db_4xx_requests detector"
   type        = number
   default     = 80
+}
+
+variable "db_4xx_requests_lasting_duration_major" {
+  description = "Evaluation window for db_4xx_requests detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "5m"
 }
 
 variable "db_4xx_requests_threshold_major" {
@@ -144,7 +150,7 @@ variable "db_5xx_requests_aggregation_function" {
   default     = ".sum(by=['databasename', 'collectionname', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
-variable "db_5xx_requests_timer" {
+variable "db_5xx_requests_lasting_duration_critical" {
   description = "Evaluation window for db_5xx_requests detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
@@ -154,6 +160,12 @@ variable "db_5xx_requests_threshold_critical" {
   description = "Critical threshold for db_5xx_requests detector"
   type        = number
   default     = 80
+}
+
+variable "db_5xx_requests_lasting_duration_major" {
+  description = "Evaluation window for db_5xx_requests detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "5m"
 }
 
 variable "db_5xx_requests_threshold_major" {
@@ -206,7 +218,7 @@ variable "scaling_aggregation_function" {
   default     = ".sum(by=['databasename', 'collectionname', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
-variable "scaling_timer" {
+variable "scaling_lasting_duration_critical" {
   description = "Evaluation window for scaling detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
@@ -216,6 +228,12 @@ variable "scaling_threshold_critical" {
   description = "Critical threshold for scaling detector"
   type        = number
   default     = 10
+}
+
+variable "scaling_lasting_duration_major" {
+  description = "Evaluation window for scaling detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "5m"
 }
 
 variable "scaling_threshold_major" {
