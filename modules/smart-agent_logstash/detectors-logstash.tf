@@ -229,14 +229,14 @@ EOF
 }
 
 resource "signalfx_detector" "queued_disk" {
-  name = format("%s %s", local.detector_name_prefix, "Logstash queued events")
+  name = format("%s %s", local.detector_name_prefix, "Logstash queued disk")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('node.stats.pipelines.queue.events_count', filter=filter('plugin','logstash') and ${module.filtering.signalflow})${var.queued_disk_aggregation_function}${var.queued_disk_transformation_function}.publish('signal')
+    signal = data('node.stats.pipelines.queue.queue_size_in_bytes', filter=filter('plugin','logstash') and ${module.filtering.signalflow})${var.queued_disk_aggregation_function}${var.queued_disk_transformation_function}.publish('signal')
     detect(when(signal >= ${var.queued_disk_threshold_critical},lasting='${var.queued_disk_threshold_critical_lasting}')).publish('CRIT')
     detect(when(signal > ${var.queued_disk_threshold_major},lasting='${var.queued_disk_threshold_major_lasting}') and when(signal < ${var.queued_disk_threshold_critical},lasting='${var.queued_disk_threshold_critical_lasting}')).publish('MAJOR')
 EOF
