@@ -373,3 +373,149 @@ variable "cpu_usage_percent_threshold_major_lasting" {
   default     = "10m"
 }
 
+# Queued events
+variable "queued_events_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "queued_events_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
+variable "queued_events_disabled" {
+  description = "Disable all alerting rules for queued_events detector"
+  type        = bool
+  default     = null
+}
+
+variable "queued_events_disabled_critical" {
+  description = "Disable critical alerting rule for queued_events detector"
+  type        = bool
+  default     = null
+}
+
+variable "queued_events_disabled_major" {
+  description = "Disable major alerting rule for queued_events detector"
+  type        = bool
+  default     = null
+}
+
+variable "queued_events_notifications" {
+  description = "Notification recipients list per severity overridden for queued_events detector"
+  type        = map(list(string))
+  default     = {}
+}
+
+variable "queued_events_aggregation_function" {
+  description = "Aggregation function and group by for queued_events detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ""
+}
+
+variable "queued_events_transformation_function" {
+  description = "Transformation function for queued_events detector (i.e. \".mean(over='5m')\")"
+  type        = string
+  default     = ".mean(over='5m')"
+}
+
+variable "queued_events_threshold_critical" {
+  description = "Critical threshold for queued_events detector"
+  type        = number
+  default     = 200000
+}
+
+variable "queued_events_threshold_critical_lasting" {
+  description = "Critical threshold lasting for queued_events detector"
+  type        = string
+  default     = "10m"
+}
+
+variable "queued_events_threshold_major" {
+  description = "Major threshold for queued_events detector"
+  type        = number
+  default     = 150000
+}
+
+variable "queued_events_threshold_major_lasting" {
+  description = "Major threshold lasting for queued_events detector"
+  type        = string
+  default     = "10m"
+}
+
+# Queued disk
+variable "queued_disk_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "queued_disk_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
+variable "queued_disk_disabled" {
+  description = "Disable all alerting rules for queued_disk detector"
+  type        = bool
+  default     = null
+}
+
+variable "queued_disk_disabled_critical" {
+  description = "Disable critical alerting rule for queued_disk detector"
+  type        = bool
+  default     = null
+}
+
+variable "queued_disk_disabled_major" {
+  description = "Disable major alerting rule for queued_disk detector"
+  type        = bool
+  default     = null
+}
+
+variable "queued_disk_notifications" {
+  description = "Notification recipients list per severity overridden for queued_disk detector"
+  type        = map(list(string))
+  default     = {}
+}
+
+variable "queued_disk_aggregation_function" {
+  description = "Aggregation function and group by for queued_disk detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ""
+}
+
+variable "queued_disk_transformation_function" {
+  description = "Transformation function for queued_disk detector (i.e. \".mean(over='5m')\")"
+  type        = string
+  default     = ".mean(over='5m')"
+}
+
+variable "queued_disk_threshold_critical" {
+  description = "Critical threshold for queued_disk detector"
+  type        = number
+  default     = 10000000000
+}
+
+variable "queued_disk_threshold_critical_lasting" {
+  description = "Critical threshold lasting for queued_disk detector"
+  type        = string
+  default     = "10m"
+}
+
+variable "queued_disk_threshold_major" {
+  description = "Major threshold for queued_disk detector"
+  type        = number
+  default     = 8000000000
+}
+
+variable "queued_disk_threshold_major_lasting" {
+  description = "Major threshold lasting for queued_disk detector"
+  type        = string
+  default     = "10m"
+}
+
