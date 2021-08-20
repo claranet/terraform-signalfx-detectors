@@ -425,7 +425,7 @@ variable "queued_events_transformation_function" {
 variable "queued_events_threshold_critical" {
   description = "Critical threshold for queued_events detector"
   type        = number
-  default     = 200000
+  default     = 2000000
 }
 
 variable "queued_events_threshold_critical_lasting" {
@@ -437,7 +437,7 @@ variable "queued_events_threshold_critical_lasting" {
 variable "queued_events_threshold_major" {
   description = "Major threshold for queued_events detector"
   type        = number
-  default     = 150000
+  default     = 1000000
 }
 
 variable "queued_events_threshold_major_lasting" {
