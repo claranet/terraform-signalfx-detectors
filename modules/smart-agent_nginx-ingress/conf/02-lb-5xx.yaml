@@ -3,7 +3,7 @@ name: 5xx errors ratio
 id: http_5xx
 
 transformation: true
-aggregation: true
+aggregation: ".sum(by=['controller_namespace', 'controller_class', 'ingress'])"
 value_unit: "%"
 
 signals:

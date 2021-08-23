@@ -2,7 +2,7 @@ module: AWS ELB
 name: heartbeat
 
 transformation: false
-aggregation: true
+aggregation: ".mean(by=['LoadBalancerName'])"
 filtering: "filter('namespace', 'AWS/ELB')"
 
 signals:

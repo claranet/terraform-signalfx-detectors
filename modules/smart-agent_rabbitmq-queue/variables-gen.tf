@@ -15,7 +15,7 @@ variable "messages_ready_aggregation_function" {
 variable "messages_ready_transformation_function" {
   description = "Transformation function for messages_ready detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".min(over='20m')"
+  default     = ""
 }
 
 variable "messages_ready_tip" {
@@ -57,7 +57,7 @@ variable "messages_ready_threshold_critical" {
 variable "messages_ready_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "20m"
 }
 
 variable "messages_ready_at_least_percentage_critical" {
@@ -74,7 +74,7 @@ variable "messages_ready_threshold_major" {
 variable "messages_ready_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "20m"
 }
 
 variable "messages_ready_at_least_percentage_major" {
@@ -99,7 +99,7 @@ variable "messages_unacknowledged_aggregation_function" {
 variable "messages_unacknowledged_transformation_function" {
   description = "Transformation function for messages_unacknowledged detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".min(over='20m')"
+  default     = ""
 }
 
 variable "messages_unacknowledged_tip" {
@@ -141,7 +141,7 @@ variable "messages_unacknowledged_threshold_critical" {
 variable "messages_unacknowledged_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "20m"
 }
 
 variable "messages_unacknowledged_at_least_percentage_critical" {
@@ -158,7 +158,7 @@ variable "messages_unacknowledged_threshold_major" {
 variable "messages_unacknowledged_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "20m"
 }
 
 variable "messages_unacknowledged_at_least_percentage_major" {
@@ -183,7 +183,7 @@ variable "messages_ack_rate_aggregation_function" {
 variable "messages_ack_rate_transformation_function" {
   description = "Transformation function for messages_ack_rate detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".min(over='20m')"
+  default     = ""
 }
 
 variable "messages_ack_rate_tip" {
@@ -267,7 +267,7 @@ variable "consumer_use_aggregation_function" {
 variable "consumer_use_transformation_function" {
   description = "Transformation function for consumer_use detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".min(over='20m')"
+  default     = ""
 }
 
 variable "consumer_use_tip" {

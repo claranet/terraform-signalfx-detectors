@@ -5,6 +5,7 @@ id: http_content_length
 transformation: true
 aggregation: true
 value_unit: bytes
+disabled: true
 
 signals:
   signal:

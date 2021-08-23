@@ -120,35 +120,18 @@ variable "hit_ratio_disabled" {
   default     = null
 }
 
-variable "hit_ratio_disabled_critical" {
-  description = "Disable critical alerting rule for hit_ratio detector"
-  type        = bool
-  default     = null
-}
-
 variable "hit_ratio_disabled_major" {
   description = "Disable major alerting rule for hit_ratio detector"
   type        = bool
   default     = null
 }
 
-variable "hit_ratio_threshold_critical" {
-  description = "Critical threshold for hit_ratio detector in %"
-  type        = number
-  default     = 80
+variable "hit_ratio_disabled_minor" {
+  description = "Disable minor alerting rule for hit_ratio detector"
+  type        = bool
+  default     = null
 }
 
-variable "hit_ratio_lasting_duration_critical" {
-  description = "Minimum duration that conditions must be true before raising alert"
-  type        = string
-  default     = "5m"
-}
-
-variable "hit_ratio_at_least_percentage_critical" {
-  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
-  type        = number
-  default     = 1
-}
 variable "hit_ratio_threshold_major" {
   description = "Major threshold for hit_ratio detector in %"
   type        = number
@@ -162,6 +145,23 @@ variable "hit_ratio_lasting_duration_major" {
 }
 
 variable "hit_ratio_at_least_percentage_major" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
+variable "hit_ratio_threshold_minor" {
+  description = "Minor threshold for hit_ratio detector in %"
+  type        = number
+  default     = 80
+}
+
+variable "hit_ratio_lasting_duration_minor" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "5m"
+}
+
+variable "hit_ratio_at_least_percentage_minor" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1

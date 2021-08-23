@@ -75,7 +75,7 @@ This module creates the following SignalFx detectors which could contain one or 
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|AWS ElastiCache redis cache hit ratio|X|X|-|-|-|
+|AWS ElastiCache redis cache hit ratio|-|X|X|-|-|
 |AWS ElastiCache redis cpu|X|X|-|-|-|
 |AWS ElastiCache redis replication lag|X|X|-|-|-|
 |AWS ElastiCache redis commands|-|X|-|-|-|

@@ -74,7 +74,7 @@ variable "pct_errors_threshold_major" {
 variable "pct_errors_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "5m"
+  default     = "15m"
 }
 
 variable "pct_errors_at_least_percentage_major" {

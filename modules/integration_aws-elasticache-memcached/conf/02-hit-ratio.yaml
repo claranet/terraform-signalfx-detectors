@@ -18,12 +18,12 @@ signals:
   signal:
     formula: (hits/(hits+misses)).scale(100).fill(value=0)
 rules:
-  critical:
-    threshold: 80
-    comparator: ">"
-    lasting_duration: 5m
   major:
     threshold: 60
-    comparator: ">"
-    dependency: critical
+    comparator: "<"
+    lasting_duration: 5m
+  minor:
+    threshold: 80
+    comparator: "<"
+    dependency: major
     lasting_duration: 5m
