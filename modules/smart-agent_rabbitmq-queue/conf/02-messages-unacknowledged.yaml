@@ -1,0 +1,20 @@
+module: RabbitMQ Queue
+name: messages unacknowledged
+
+transformation: ".min(over='20m')"
+aggregation: true
+filtering: "filter('plugin', 'rabbitmq')"
+disabled: true
+
+signals:
+  signal:
+    metric: gauge.queue.messages_unacknowledged
+
+rules:
+  critical:
+    threshold: 15000
+    comparator: ">"
+  major:
+    threshold: 10000
+    comparator: ">"
+    dependency: critical

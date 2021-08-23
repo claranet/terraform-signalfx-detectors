@@ -44,7 +44,7 @@ variable "search_latency_aggregation_function" {
   default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
-variable "search_latency_timer" {
+variable "search_latency_lasting_duration_critical" {
   description = "Evaluation window for search_latency detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
@@ -54,6 +54,12 @@ variable "search_latency_threshold_critical" {
   description = "Critical threshold for search_latency detector"
   type        = number
   default     = 4
+}
+
+variable "search_latency_lasting_duration_major" {
+  description = "Evaluation window for search_latency detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "5m"
 }
 
 variable "search_latency_threshold_major" {
@@ -106,7 +112,7 @@ variable "search_throttled_queries_rate_aggregation_function" {
   default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
-variable "search_throttled_queries_rate_timer" {
+variable "search_throttled_queries_rate_lasting_duration_critical" {
   description = "Evaluation window for search_throttled_queries_rate detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
@@ -116,6 +122,12 @@ variable "search_throttled_queries_rate_threshold_critical" {
   description = "Critical threshold for search_throttled_queries_rate detector"
   type        = number
   default     = 50
+}
+
+variable "search_throttled_queries_rate_lasting_duration_major" {
+  description = "Evaluation window for search_throttled_queries_rate detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "5m"
 }
 
 variable "search_throttled_queries_rate_threshold_major" {

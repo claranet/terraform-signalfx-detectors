@@ -1,0 +1,25 @@
+module: TLS
+name: certificate expiry date
+id: certificate_expiration_date
+
+transformation: true
+aggregation: true
+value_unit: days
+
+signals:
+  expiry:
+    metric: http.cert_expiry
+    rollup: min
+  signal:
+    formula: (expiry/86400)
+
+rules:
+  major:
+    threshold: 15
+    comparator: "<"
+    description: is too soon
+  minor:
+    threshold: 30
+    comparator: "<"
+    description: is too soon
+    dependency: major

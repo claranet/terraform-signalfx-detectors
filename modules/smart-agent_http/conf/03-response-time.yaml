@@ -1,0 +1,21 @@
+module: HTTP
+name: response time
+id: http_response_time
+
+transformation: true
+aggregation: true
+
+signals:
+  signal:
+    metric: http.response_time
+    rollup: max
+
+rules:
+  critical:
+    threshold: 2
+    comparator: ">"
+    lasting_duration: 15m
+  major:
+    threshold: 1
+    comparator: ">"
+    lasting_duration: 15m

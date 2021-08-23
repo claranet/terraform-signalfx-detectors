@@ -35,8 +35,8 @@ resource "signalfx_detector" "cpu" {
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Sql/servers/elasticpools') and filter('primary_aggregation_type', 'true')
         signal = data('cpu_percent', filter=base_filter and ${module.filtering.signalflow})${var.cpu_aggregation_function}.publish('signal')
-        detect(when(signal > threshold(${var.cpu_threshold_critical}), lasting="${var.cpu_timer}")).publish('CRIT')
-        detect(when(signal > threshold(${var.cpu_threshold_major}), lasting="${var.cpu_timer}") and (not when(signal > ${var.cpu_threshold_critical}))).publish('MAJOR')
+        detect(when(signal > threshold(${var.cpu_threshold_critical}), lasting="${var.cpu_lasting_duration_critical}")).publish('CRIT')
+        detect(when(signal > threshold(${var.cpu_threshold_major}), lasting="${var.cpu_lasting_duration_major}") and (not when(signal > ${var.cpu_threshold_critical}, lasting="${var.cpu_lasting_duration_critical}"))).publish('MAJOR')
     EOF
 
   rule {
@@ -74,8 +74,8 @@ resource "signalfx_detector" "free_space" {
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Sql/servers/elasticpools') and filter('primary_aggregation_type', 'true')
         signal = data('storage_percent', filter=base_filter and ${module.filtering.signalflow})${var.free_space_aggregation_function}.publish('signal')
-        detect(when(signal > threshold(${var.free_space_threshold_critical}), lasting="${var.free_space_timer}")).publish('CRIT')
-        detect(when(signal > threshold(${var.free_space_threshold_major}), lasting="${var.free_space_timer}") and (not when(signal > ${var.free_space_threshold_critical}))).publish('MAJOR')
+        detect(when(signal > threshold(${var.free_space_threshold_critical}), lasting="${var.free_space_lasting_duration_critical}")).publish('CRIT')
+        detect(when(signal > threshold(${var.free_space_threshold_major}), lasting="${var.free_space_lasting_duration_major}") and (not when(signal > ${var.free_space_threshold_critical}, lasting="${var.free_space_lasting_duration_critical}"))).publish('MAJOR')
     EOF
 
   rule {
@@ -113,8 +113,8 @@ resource "signalfx_detector" "dtu_consumption" {
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.Sql/servers/elasticpools') and filter('primary_aggregation_type', 'true')
         signal = data('dtu_consumption_percent', filter=base_filter and ${module.filtering.signalflow})${var.dtu_consumption_aggregation_function}.publish('signal')
-        detect(when(signal > threshold(${var.dtu_consumption_threshold_critical}), lasting="${var.dtu_consumption_timer}")).publish('CRIT')
-        detect(when(signal > threshold(${var.dtu_consumption_threshold_major}), lasting="${var.dtu_consumption_timer}") and (not when(signal > ${var.dtu_consumption_threshold_critical}))).publish('MAJOR')
+        detect(when(signal > threshold(${var.dtu_consumption_threshold_critical}), lasting="${var.dtu_consumption_lasting_duration_critical}")).publish('CRIT')
+        detect(when(signal > threshold(${var.dtu_consumption_threshold_major}), lasting="${var.dtu_consumption_lasting_duration_major}") and (not when(signal > ${var.dtu_consumption_threshold_critical}, lasting="${var.dtu_consumption_lasting_duration_critical}"))).publish('MAJOR')
     EOF
 
   rule {

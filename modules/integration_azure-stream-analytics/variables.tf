@@ -82,7 +82,7 @@ variable "su_utilization_aggregation_function" {
   default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
-variable "su_utilization_timer" {
+variable "su_utilization_lasting_duration_critical" {
   description = "Evaluation window for su_utilization detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
@@ -92,6 +92,12 @@ variable "su_utilization_threshold_critical" {
   description = "Critical threshold for su_utilization detector"
   type        = number
   default     = 95
+}
+
+variable "su_utilization_lasting_duration_major" {
+  description = "Evaluation window for su_utilization detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "5m"
 }
 
 variable "su_utilization_threshold_major" {
@@ -144,7 +150,7 @@ variable "failed_function_requests_aggregation_function" {
   default     = ".mean(by=['logicalname', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
-variable "failed_function_requests_timer" {
+variable "failed_function_requests_lasting_duration_critical" {
   description = "Evaluation window for failed_function_requests detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
@@ -154,6 +160,12 @@ variable "failed_function_requests_threshold_critical" {
   description = "Critical threshold for failed_function_requests detector"
   type        = number
   default     = 10
+}
+
+variable "failed_function_requests_lasting_duration_major" {
+  description = "Evaluation window for failed_function_requests detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "5m"
 }
 
 variable "failed_function_requests_threshold_major" {
@@ -206,7 +218,7 @@ variable "conversion_errors_aggregation_function" {
   default     = ".mean(by=['logicalname', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
-variable "conversion_errors_timer" {
+variable "conversion_errors_lasting_duration_critical" {
   description = "Evaluation window for conversion_errors detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
@@ -216,6 +228,12 @@ variable "conversion_errors_threshold_critical" {
   description = "Critical threshold for conversion_errors detector"
   type        = number
   default     = 10
+}
+
+variable "conversion_errors_lasting_duration_major" {
+  description = "Evaluation window for conversion_errors detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "5m"
 }
 
 variable "conversion_errors_threshold_major" {
@@ -268,7 +286,7 @@ variable "runtime_errors_aggregation_function" {
   default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
-variable "runtime_errors_timer" {
+variable "runtime_errors_lasting_duration_critical" {
   description = "Evaluation window for runtime_errors detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
@@ -278,6 +296,12 @@ variable "runtime_errors_threshold_critical" {
   description = "Critical threshold for runtime_errors detector"
   type        = number
   default     = 10
+}
+
+variable "runtime_errors_lasting_duration_major" {
+  description = "Evaluation window for runtime_errors detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "5m"
 }
 
 variable "runtime_errors_threshold_major" {

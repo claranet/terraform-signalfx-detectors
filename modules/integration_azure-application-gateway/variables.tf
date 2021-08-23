@@ -76,7 +76,7 @@ variable "total_requests_aggregation_function" {
   default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
-variable "total_requests_timer" {
+variable "total_requests_lasting_duration_critical" {
   description = "Evaluation window for total_requests detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
@@ -126,7 +126,7 @@ variable "backend_connect_time_aggregation_function" {
   default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region', 'backendhttpsetting', 'backendpool', 'backendserver'])"
 }
 
-variable "backend_connect_time_timer" {
+variable "backend_connect_time_lasting_duration_critical" {
   description = "Evaluation window for backend_connect_time detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
@@ -136,6 +136,12 @@ variable "backend_connect_time_threshold_critical" {
   description = "Critical threshold for backend_connect_time detector"
   type        = number
   default     = 50
+}
+
+variable "backend_connect_time_lasting_duration_major" {
+  description = "Evaluation window for backend_connect_time detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "5m"
 }
 
 variable "backend_connect_time_threshold_major" {
@@ -188,7 +194,7 @@ variable "failed_requests_aggregation_function" {
   default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region', 'backendsettingspool'])"
 }
 
-variable "failed_requests_timer" {
+variable "failed_requests_lasting_duration_critical" {
   description = "Evaluation window for failed_requests detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
@@ -198,6 +204,12 @@ variable "failed_requests_threshold_critical" {
   description = "Critical threshold for failed_requests detector"
   type        = number
   default     = 95
+}
+
+variable "failed_requests_lasting_duration_major" {
+  description = "Evaluation window for failed_requests detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "5m"
 }
 
 variable "failed_requests_threshold_major" {
@@ -250,7 +262,7 @@ variable "unhealthy_host_ratio_aggregation_function" {
   default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region', 'backendsettingspool'])"
 }
 
-variable "unhealthy_host_ratio_timer" {
+variable "unhealthy_host_ratio_lasting_duration_critical" {
   description = "Evaluation window for unhealthy_host_ratio detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
@@ -260,6 +272,12 @@ variable "unhealthy_host_ratio_threshold_critical" {
   description = "Critical threshold for unhealthy_host_ratio detector"
   type        = number
   default     = 75
+}
+
+variable "unhealthy_host_ratio_lasting_duration_major" {
+  description = "Evaluation window for unhealthy_host_ratio detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "5m"
 }
 
 variable "unhealthy_host_ratio_threshold_major" {
@@ -312,7 +330,7 @@ variable "http_4xx_errors_aggregation_function" {
   default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
-variable "http_4xx_errors_timer" {
+variable "http_4xx_errors_lasting_duration_critical" {
   description = "Evaluation window for http_4xx_errors detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
@@ -322,6 +340,12 @@ variable "http_4xx_errors_threshold_critical" {
   description = "Critical threshold for http_4xx_errors detector"
   type        = number
   default     = 95
+}
+
+variable "http_4xx_errors_lasting_duration_major" {
+  description = "Evaluation window for http_4xx_errors detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "5m"
 }
 
 variable "http_4xx_errors_threshold_major" {
@@ -374,7 +398,7 @@ variable "http_5xx_errors_aggregation_function" {
   default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
-variable "http_5xx_errors_timer" {
+variable "http_5xx_errors_lasting_duration_critical" {
   description = "Evaluation window for http_5xx_errors detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
@@ -384,6 +408,12 @@ variable "http_5xx_errors_threshold_critical" {
   description = "Critical threshold for http_5xx_errors detector"
   type        = number
   default     = 95
+}
+
+variable "http_5xx_errors_lasting_duration_major" {
+  description = "Evaluation window for http_5xx_errors detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "5m"
 }
 
 variable "http_5xx_errors_threshold_major" {
@@ -436,7 +466,7 @@ variable "backend_http_4xx_errors_aggregation_function" {
   default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region', 'backendhttpsetting', 'backendpool', 'backendserver'])"
 }
 
-variable "backend_http_4xx_errors_timer" {
+variable "backend_http_4xx_errors_lasting_duration_critical" {
   description = "Evaluation window for backend_http_4xx_errors detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
@@ -446,6 +476,12 @@ variable "backend_http_4xx_errors_threshold_critical" {
   description = "Critical threshold for backend_http_4xx_errors detector"
   type        = number
   default     = 95
+}
+
+variable "backend_http_4xx_errors_lasting_duration_major" {
+  description = "Evaluation window for backend_http_4xx_errors detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "5m"
 }
 
 variable "backend_http_4xx_errors_threshold_major" {
@@ -498,7 +534,7 @@ variable "backend_http_5xx_errors_aggregation_function" {
   default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region', 'backendhttpsetting', 'backendpool', 'backendserver'])"
 }
 
-variable "backend_http_5xx_errors_timer" {
+variable "backend_http_5xx_errors_lasting_duration_critical" {
   description = "Evaluation window for backend_http_5xx_errors detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
@@ -508,6 +544,12 @@ variable "backend_http_5xx_errors_threshold_critical" {
   description = "Critical threshold for backend_http_5xx_errors detector"
   type        = number
   default     = 95
+}
+
+variable "backend_http_5xx_errors_lasting_duration_major" {
+  description = "Evaluation window for backend_http_5xx_errors detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "5m"
 }
 
 variable "backend_http_5xx_errors_threshold_major" {

@@ -44,7 +44,7 @@ variable "api_result_aggregation_function" {
   default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
-variable "api_result_timer" {
+variable "api_result_lasting_duration_critical" {
   description = "Evaluation window for api_result detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
@@ -54,6 +54,12 @@ variable "api_result_threshold_critical" {
   description = "Critical threshold for api_result detector"
   type        = number
   default     = 10
+}
+
+variable "api_result_lasting_duration_major" {
+  description = "Evaluation window for api_result detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "5m"
 }
 
 variable "api_result_threshold_major" {
@@ -106,7 +112,7 @@ variable "api_latency_aggregation_function" {
   default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
-variable "api_latency_timer" {
+variable "api_latency_lasting_duration_critical" {
   description = "Evaluation window for api_latency detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
@@ -116,6 +122,12 @@ variable "api_latency_threshold_critical" {
   description = "Critical threshold for api_latency detector"
   type        = number
   default     = 100
+}
+
+variable "api_latency_lasting_duration_major" {
+  description = "Evaluation window for api_latency detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "5m"
 }
 
 variable "api_latency_threshold_major" {

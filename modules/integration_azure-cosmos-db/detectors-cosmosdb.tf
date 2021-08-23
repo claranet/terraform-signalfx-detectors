@@ -37,8 +37,8 @@ resource "signalfx_detector" "db_4xx_requests" {
         A = data('TotalRequests', extrapolation='zero', filter=base_filter and filter('statuscode', '4*') and ${module.filtering.signalflow})${var.db_4xx_requests_aggregation_function}
         B = data('TotalRequests', extrapolation='zero', filter=base_filter and ${module.filtering.signalflow})${var.db_4xx_requests_aggregation_function}
         signal = (A/B).scale(100).fill(0).publish('signal')
-        detect(when(signal > threshold(${var.db_4xx_requests_threshold_critical}), lasting="${var.db_4xx_requests_timer}")).publish('CRIT')
-        detect(when(signal > threshold(${var.db_4xx_requests_threshold_major}), lasting="${var.db_4xx_requests_timer}") and (not when(signal > ${var.db_4xx_requests_threshold_critical}))).publish('MAJOR')
+        detect(when(signal > threshold(${var.db_4xx_requests_threshold_critical}), lasting="${var.db_4xx_requests_lasting_duration_critical}")).publish('CRIT')
+        detect(when(signal > threshold(${var.db_4xx_requests_threshold_major}), lasting="${var.db_4xx_requests_lasting_duration_major}") and (not when(signal > ${var.db_4xx_requests_threshold_critical}, lasting="${var.db_4xx_requests_lasting_duration_critical}"))).publish('MAJOR')
     EOF
 
   rule {
@@ -78,8 +78,8 @@ resource "signalfx_detector" "db_5xx_requests" {
         A = data('TotalRequests', extrapolation='zero', filter=base_filter and filter('statuscode', '5*') and ${module.filtering.signalflow})${var.db_5xx_requests_aggregation_function}
         B = data('TotalRequests', extrapolation='zero', filter=base_filter and ${module.filtering.signalflow})${var.db_5xx_requests_aggregation_function}
         signal = (A/B).scale(100).fill(0).publish('signal')
-        detect(when(signal > threshold(${var.db_5xx_requests_threshold_critical}), lasting="${var.db_5xx_requests_timer}")).publish('CRIT')
-        detect(when(signal > threshold(${var.db_5xx_requests_threshold_major}), lasting="${var.db_5xx_requests_timer}") and (not when(signal > ${var.db_5xx_requests_threshold_critical}))).publish('MAJOR')
+        detect(when(signal > threshold(${var.db_5xx_requests_threshold_critical}), lasting="${var.db_5xx_requests_lasting_duration_critical}")).publish('CRIT')
+        detect(when(signal > threshold(${var.db_5xx_requests_threshold_major}), lasting="${var.db_5xx_requests_lasting_duration_major}") and (not when(signal > ${var.db_5xx_requests_threshold_critical}, lasting="${var.db_5xx_requests_lasting_duration_critical}"))).publish('MAJOR')
     EOF
 
   rule {
@@ -119,8 +119,8 @@ resource "signalfx_detector" "scaling" {
         A = data('TotalRequests', extrapolation='zero', filter=base_filter and filter('statuscode', '429') and ${module.filtering.signalflow})${var.scaling_aggregation_function}
         B = data('TotalRequests', extrapolation='zero', filter=base_filter and ${module.filtering.signalflow})${var.scaling_aggregation_function}
         signal = (A/B).scale(100).fill(0).publish('signal')
-        detect(when(signal > threshold(${var.scaling_threshold_critical}), lasting="${var.scaling_timer}")).publish('CRIT')
-        detect(when(signal > threshold(${var.scaling_threshold_major}), lasting="${var.scaling_timer}") and (not when(signal > ${var.scaling_threshold_critical}))).publish('MAJOR')
+        detect(when(signal > threshold(${var.scaling_threshold_critical}), lasting="${var.scaling_lasting_duration_critical}")).publish('CRIT')
+        detect(when(signal > threshold(${var.scaling_threshold_major}), lasting="${var.scaling_lasting_duration_major}") and (not when(signal > ${var.scaling_threshold_critical}, lasting="${var.scaling_lasting_duration_critical}"))).publish('MAJOR')
     EOF
 
   rule {

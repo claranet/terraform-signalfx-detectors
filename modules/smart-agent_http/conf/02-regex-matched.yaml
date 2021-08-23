@@ -1,0 +1,18 @@
+module: HTTP
+name: regex expression
+id: http_regex_matched
+
+transformation: true
+aggregation: true
+
+signals:
+  signal:
+    metric: http.regex_matched
+    rollup: min
+
+rules:
+  critical:
+    threshold: 1
+    comparator: "<"
+    lasting_duration: 1m
+    description: does not match in body response

@@ -1,0 +1,19 @@
+module: Kubernetes
+name: container killed by OOM
+id: oom_killed
+
+transformation: true
+aggregation: true
+filtering: "filter('container_status', 'terminated') and filter('container_status_reason', 'OOMKilled')"
+
+signals:
+  killed:
+    metric: kubernetes.container_ready
+  signal:
+    formula: (killed.count())
+
+rules:
+  major:
+    threshold: 0
+    comparator: ">"
+    lasting_duration: 1m
