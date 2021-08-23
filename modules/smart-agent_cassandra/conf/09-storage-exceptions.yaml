@@ -1,0 +1,13 @@
+module: cassandra
+name: storage exceptions count
+
+transformation: ".min(over='30m')"
+aggregation: true
+
+signals:
+  signal:
+    metric: counter.cassandra.Storage.Exceptions.Count
+rules:
+  major:
+    threshold: 0
+    comparator: '>'

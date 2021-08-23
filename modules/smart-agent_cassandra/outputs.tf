@@ -1,50 +1,50 @@
-output "casread_p99_latency" {
-  description = "Detector resource for casread_p99_latency"
-  value       = signalfx_detector.casread_p99_latency
-}
-
-output "casread_real_time_latency" {
-  description = "Detector resource for casread_real_time_latency"
-  value       = signalfx_detector.casread_real_time_latency
-}
-
-output "caswrite_p99_latency" {
-  description = "Detector resource for caswrite_p99_latency"
-  value       = signalfx_detector.caswrite_p99_latency
-}
-
-output "caswrite_real_time_latency" {
-  description = "Detector resource for caswrite_real_time_latency"
-  value       = signalfx_detector.caswrite_real_time_latency
-}
-
 output "heartbeat" {
   description = "Detector resource for heartbeat"
   value       = signalfx_detector.heartbeat
 }
 
-output "read_p99_latency" {
-  description = "Detector resource for read_p99_latency"
-  value       = signalfx_detector.read_p99_latency
+output "read_latency_99th_percentile" {
+  description = "Detector resource for read_latency_99th_percentile"
+  value       = signalfx_detector.read_latency_99th_percentile
 }
 
-output "read_real_time_latency" {
-  description = "Detector resource for read_real_time_latency"
-  value       = signalfx_detector.read_real_time_latency
+output "read_latency_real_time" {
+  description = "Detector resource for read_latency_real_time"
+  value       = signalfx_detector.read_latency_real_time
 }
 
-output "storage_exceptions" {
-  description = "Detector resource for storage_exceptions"
-  value       = signalfx_detector.storage_exceptions
+output "storage_exceptions_count" {
+  description = "Detector resource for storage_exceptions_count"
+  value       = signalfx_detector.storage_exceptions_count
 }
 
-output "write_p99_latency" {
-  description = "Detector resource for write_p99_latency"
-  value       = signalfx_detector.write_p99_latency
+output "transactional_read_latency_99th_percentile" {
+  description = "Detector resource for transactional_read_latency_99th_percentile"
+  value       = signalfx_detector.transactional_read_latency_99th_percentile
 }
 
-output "write_real_time_latency" {
-  description = "Detector resource for write_real_time_latency"
-  value       = signalfx_detector.write_real_time_latency
+output "transactional_read_latency_real_time" {
+  description = "Detector resource for transactional_read_latency_real_time"
+  value       = signalfx_detector.transactional_read_latency_real_time
+}
+
+output "transactional_write_latency_99th_percentile" {
+  description = "Detector resource for transactional_write_latency_99th_percentile"
+  value       = signalfx_detector.transactional_write_latency_99th_percentile
+}
+
+output "transactional_write_latency_real_time" {
+  description = "Detector resource for transactional_write_latency_real_time"
+  value       = signalfx_detector.transactional_write_latency_real_time
+}
+
+output "write_latency_99th_percentile" {
+  description = "Detector resource for write_latency_99th_percentile"
+  value       = signalfx_detector.write_latency_99th_percentile
+}
+
+output "write_latency_real_time" {
+  description = "Detector resource for write_latency_real_time"
+  value       = signalfx_detector.write_latency_real_time
 }
 
