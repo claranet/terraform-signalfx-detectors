@@ -1,0 +1,21 @@
+module: Kubernetes
+name: deployments available
+id: deployment_available
+
+transformation: true
+aggregation: true
+
+signals:
+  desired:
+    metric: kubernetes.deployment.desired
+  available:
+    metric: kubernetes.deployment.available
+  signal:
+    formula: (desired-available).fill(value=0)
+
+rules:
+  critical:
+    threshold: 0
+    comparator: "!="
+    lasting_duration: 5m
+    description: do not match desired value

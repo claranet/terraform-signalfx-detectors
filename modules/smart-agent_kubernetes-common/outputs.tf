@@ -33,9 +33,9 @@ output "heartbeat" {
   value       = signalfx_detector.heartbeat
 }
 
-output "hpa_scale_exceeded_capacity" {
-  description = "Detector resource for hpa_scale_exceeded_capacity"
-  value       = signalfx_detector.hpa_scale_exceeded_capacity
+output "hpa_capacity" {
+  description = "Detector resource for hpa_capacity"
+  value       = signalfx_detector.hpa_capacity
 }
 
 output "job_failed" {

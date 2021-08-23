@@ -1,0 +1,19 @@
+module: TLS
+name: certificate
+id: invalid_tls_certificate
+
+transformation: true
+aggregation: true
+value_unit: days
+
+signals:
+  signal:
+    metric: http.cert_valid
+    rollup: min
+
+rules:
+  critical:
+    threshold: 1
+    comparator: "<"
+    description: is invalid
+    lasting_duration: 1m

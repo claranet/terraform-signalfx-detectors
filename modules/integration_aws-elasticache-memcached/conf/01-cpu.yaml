@@ -1,0 +1,21 @@
+module: AWS Elasticache memcached
+name: cpu
+
+transformation: true
+aggregation: true
+filtering: "filter('namespace', 'AWS/ElastiCache') and filter('CacheNodeId', '*') and filter('stat', 'mean')"
+value_unit: "%"
+
+signals:
+  signal:
+    metric: CPUUtilization
+rules:
+  critical:
+    threshold: 90
+    comparator: ">"
+    lasting_duration: 15m
+  major:
+    threshold: 75
+    comparator: ">"
+    dependency: critical
+    lasting_duration: 15m

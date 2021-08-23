@@ -1,0 +1,19 @@
+module: RabbitMQ Queue
+name: messages ready
+
+transformation: ".min(over='20m')"
+aggregation: true
+filtering: "filter('plugin', 'rabbitmq')"
+
+signals:
+  signal:
+    metric: gauge.queue.messages_ready
+
+rules:
+  critical:
+    threshold: 15000
+    comparator: ">"
+  major:
+    threshold: 10000
+    comparator: ">"
+    dependency: critical

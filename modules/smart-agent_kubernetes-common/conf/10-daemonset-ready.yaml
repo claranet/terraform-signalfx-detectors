@@ -1,0 +1,20 @@
+module: Kubernetes
+name: daemonsets ready
+id: daemonset_ready
+
+transformation: true
+aggregation: true
+
+signals:
+  ready:
+    metric: kubernetes.daemon_set.ready
+  desired:
+    metric: kubernetes.daemon_set.desired_scheduled
+  signal:
+    formula: (ready/desired).scale(100)
+
+rules:
+  critical:
+    threshold: 100
+    comparator: "<"
+    lasting_duration: 5m

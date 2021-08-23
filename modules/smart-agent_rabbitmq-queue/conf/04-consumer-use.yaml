@@ -1,0 +1,30 @@
+module: RabbitMQ Queue
+name: consumer use
+
+transformation: ".min(over='20m')"
+aggregation: true
+filtering: "filter('plugin', 'rabbitmq')"
+disabled: true
+
+signals:
+  msg:
+    metric: gauge.queue.messages
+  signal:
+    metric: gauge.queue.consumer_use
+
+rules:
+  critical:
+    threshold: 0.8
+    comparator: "<"
+    lasting_duration: 10m
+    lasting_at_least: 0.9
+    append_condition: and when(msg > 0)
+    description: is too low and consumers seems too slow
+  major:
+    threshold: 1
+    comparator: "<"
+    dependency: critical
+    lasting_duration: 10m
+    lasting_at_least: 0.9
+    append_condition: and when(msg > 0)
+    description: is too low and consumers seems too slow

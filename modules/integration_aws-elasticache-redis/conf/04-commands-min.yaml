@@ -1,0 +1,20 @@
+module: AWS ElastiCache redis
+name: commands
+
+transformation: true
+aggregation: true
+filtering: "filter('namespace', 'AWS/ElastiCache') and filter('stat', 'lower') and filter('CacheNodeId', '*')"
+
+signals:
+  get:
+    metric: GetTypeCmds
+  set:
+    metric: SetTypeCmds
+  signal:
+    formula: (get+set)
+
+rules:
+  major:
+    threshold: 0
+    comparator: "<="
+    lasting_duration: 15m

@@ -1,0 +1,24 @@
+module: Kubernetes
+name: node status
+id: node_ready
+
+transformation: true
+aggregation: true
+
+signals:
+  ready:
+    metric: kubernetes.node_ready
+  signal:
+    formula: (ready.fill(value=1))
+
+rules:
+  major:
+    threshold: 0
+    comparator: "=="
+    lasting_duration: 1h
+    description: is not ready
+  minor:
+    threshold: -1
+    comparator: "=="
+    lasting_duration: 20m
+    description: is in unknown state

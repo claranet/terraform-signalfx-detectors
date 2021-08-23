@@ -76,7 +76,7 @@ variable "active_connections_aggregation_function" {
   default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
-variable "active_connections_timer" {
+variable "active_connections_lasting_duration_critical" {
   description = "Evaluation window for active_connections detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
@@ -132,7 +132,7 @@ variable "user_errors_aggregation_function" {
   default     = ".mean(by=['entityname', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
-variable "user_errors_timer" {
+variable "user_errors_lasting_duration_critical" {
   description = "Evaluation window for user_errors detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
@@ -142,6 +142,12 @@ variable "user_errors_threshold_critical" {
   description = "Critical threshold for user_errors detector"
   type        = number
   default     = 90
+}
+
+variable "user_errors_lasting_duration_major" {
+  description = "Evaluation window for user_errors detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "5m"
 }
 
 variable "user_errors_threshold_major" {
@@ -194,7 +200,7 @@ variable "server_errors_aggregation_function" {
   default     = ".mean(by=['entityname', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
-variable "server_errors_timer" {
+variable "server_errors_lasting_duration_critical" {
   description = "Evaluation window for server_errors detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
   default     = "5m"
@@ -204,6 +210,12 @@ variable "server_errors_threshold_critical" {
   description = "Critical threshold for server_errors detector"
   type        = number
   default     = 90
+}
+
+variable "server_errors_lasting_duration_major" {
+  description = "Evaluation window for server_errors detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "5m"
 }
 
 variable "server_errors_threshold_major" {

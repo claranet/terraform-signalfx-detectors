@@ -1,0 +1,29 @@
+module: AWS ElastiCache redis
+name: cache hit ratio
+id: cache_hits
+
+transformation: true
+aggregation: true
+filtering: "filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*')"
+value_unit: "%"
+
+signals:
+  hits:
+    metric: CacheHits
+  misses:
+    metric: CacheMisses
+  signal:
+    formula: (hits/(hits+misses)).fill(value=1).scale(100)
+
+rules:
+  critical:
+    threshold: 60
+    comparator: "<"
+    lasting_duration: 5m
+    lasting_at_least: 0.9
+  major:
+    threshold: 80
+    comparator: "<"
+    dependency: critical
+    lasting_duration: 5m
+    lasting_at_least: 0.9

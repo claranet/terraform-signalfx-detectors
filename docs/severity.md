@@ -179,8 +179,8 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|AWS ElastiCache memcached hit ratio|X|X|-|-|-|
-|AWS ElastiCache memcached CPU|X|X|-|-|-|
+|AWS Elasticache memcached cpu|X|X|-|-|-|
+|AWS Elasticache memcached hit ratio|X|X|-|-|-|
 
 
 ## aws-elasticache-redis
@@ -188,9 +188,9 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |AWS ElastiCache redis cache hit ratio|X|X|-|-|-|
-|AWS ElastiCache redis CPU|X|X|-|-|-|
+|AWS ElastiCache redis cpu|X|X|-|-|-|
 |AWS ElastiCache redis replication lag|X|X|-|-|-|
-|AWS ElastiCache redis commands|X|X|-|-|-|
+|AWS ElastiCache redis commands|-|X|-|-|-|
 
 
 ## aws-elasticsearch
@@ -228,7 +228,7 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|AWS Lambda errors rate|X|X|-|-|-|
+|AWS Lambda errors percentage|X|X|-|-|-|
 |AWS Lambda invocations throttled|X|X|-|-|-|
 |AWS Lambda invocations|-|X|-|-|-|
 
@@ -774,21 +774,21 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
+|Kubernetes heartbeat|X|-|-|-|-|
 |Kubernetes hpa scale exceeded capacity|-|X|-|-|-|
-|Kubernetes node heartbeat|X|-|-|-|-|
 |Kubernetes node status|-|X|X|-|-|
-|Kubernetes pod status phase|-|X|-|-|-|
+|Kubernetes pod phase status|-|X|X|X|-|
 |Kubernetes pod terminated abnormally|-|X|-|-|-|
-|Kubernetes container killed by OOM|-|X|-|-|-|
-|Kubernetes deployment in CrashLoopBackOff|-|X|-|-|-|
-|Kubernetes daemonset in CrashLoopBackOff|-|X|-|-|-|
+|Kubernetes container killed by oom|-|X|-|-|-|
+|Kubernetes deployment in crashloopbackoff|-|X|-|-|-|
+|Kubernetes daemonset in crashloopbackoff|-|X|-|-|-|
 |Kubernetes job from cronjob failed|-|X|-|-|-|
-|Kubernetes daemonsets not scheduled|X|-|-|-|-|
-|Kubernetes daemonsets not ready|X|-|-|-|-|
+|Kubernetes daemonsets scheduled|X|-|-|-|-|
+|Kubernetes daemonsets ready|X|-|-|-|-|
 |Kubernetes daemonsets misscheduled|X|-|-|-|-|
 |Kubernetes deployments available|X|-|-|-|-|
 |Kubernetes replicasets available|X|-|-|-|-|
-|Kubernetes replication_controllers available|X|-|-|-|-|
+|Kubernetes replication controllers available|X|-|-|-|-|
 |Kubernetes statefulsets ready|X|-|-|-|-|
 
 
@@ -868,7 +868,7 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|Nagios check status|X|X|-|X|-|
+|Nagios status check|X|X|-|X|-|
 
 
 ## nginx-ingress

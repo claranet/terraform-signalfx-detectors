@@ -1,0 +1,18 @@
+module: HTTP
+name: content length
+id: http_content_length
+
+transformation: true
+aggregation: true
+value_unit: bytes
+
+signals:
+  signal:
+    metric: http.content_length
+    rollup: min
+
+rules:
+  warning:
+    threshold: 10
+    comparator: "<"
+    lasting_duration: 10m
