@@ -59,7 +59,7 @@ variable "read_latency_99th_percentile_aggregation_function" {
 variable "read_latency_99th_percentile_transformation_function" {
   description = "Transformation function for read_latency_99th_percentile detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".min(over='15m')"
+  default     = ""
 }
 
 variable "read_latency_99th_percentile_tip" {
@@ -101,7 +101,7 @@ variable "read_latency_99th_percentile_threshold_critical" {
 variable "read_latency_99th_percentile_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "15m"
 }
 
 variable "read_latency_99th_percentile_at_least_percentage_critical" {
@@ -118,7 +118,7 @@ variable "read_latency_99th_percentile_threshold_major" {
 variable "read_latency_99th_percentile_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "15m"
 }
 
 variable "read_latency_99th_percentile_at_least_percentage_major" {
@@ -143,7 +143,7 @@ variable "write_latency_99th_percentile_aggregation_function" {
 variable "write_latency_99th_percentile_transformation_function" {
   description = "Transformation function for write_latency_99th_percentile detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".min(over='15m')"
+  default     = ""
 }
 
 variable "write_latency_99th_percentile_tip" {
@@ -185,7 +185,7 @@ variable "write_latency_99th_percentile_threshold_critical" {
 variable "write_latency_99th_percentile_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "15m"
 }
 
 variable "write_latency_99th_percentile_at_least_percentage_critical" {
@@ -202,7 +202,7 @@ variable "write_latency_99th_percentile_threshold_major" {
 variable "write_latency_99th_percentile_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "15m"
 }
 
 variable "write_latency_99th_percentile_at_least_percentage_major" {
@@ -227,7 +227,7 @@ variable "read_latency_real_time_aggregation_function" {
 variable "read_latency_real_time_transformation_function" {
   description = "Transformation function for read_latency_real_time detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".min(over='15m')"
+  default     = ""
 }
 
 variable "read_latency_real_time_tip" {
@@ -269,7 +269,7 @@ variable "read_latency_real_time_threshold_critical" {
 variable "read_latency_real_time_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "15m"
 }
 
 variable "read_latency_real_time_at_least_percentage_critical" {
@@ -286,7 +286,7 @@ variable "read_latency_real_time_threshold_major" {
 variable "read_latency_real_time_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "15m"
 }
 
 variable "read_latency_real_time_at_least_percentage_major" {
@@ -311,7 +311,7 @@ variable "write_latency_real_time_aggregation_function" {
 variable "write_latency_real_time_transformation_function" {
   description = "Transformation function for write_latency_real_time detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".min(over='15m')"
+  default     = ""
 }
 
 variable "write_latency_real_time_tip" {
@@ -353,7 +353,7 @@ variable "write_latency_real_time_threshold_critical" {
 variable "write_latency_real_time_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "15m"
 }
 
 variable "write_latency_real_time_at_least_percentage_critical" {
@@ -370,7 +370,7 @@ variable "write_latency_real_time_threshold_major" {
 variable "write_latency_real_time_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "15m"
 }
 
 variable "write_latency_real_time_at_least_percentage_major" {
@@ -395,7 +395,7 @@ variable "transactional_read_latency_99th_percentile_aggregation_function" {
 variable "transactional_read_latency_99th_percentile_transformation_function" {
   description = "Transformation function for transactional_read_latency_99th_percentile detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".min(over='15m')"
+  default     = ""
 }
 
 variable "transactional_read_latency_99th_percentile_tip" {
@@ -437,7 +437,7 @@ variable "transactional_read_latency_99th_percentile_threshold_critical" {
 variable "transactional_read_latency_99th_percentile_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "15m"
 }
 
 variable "transactional_read_latency_99th_percentile_at_least_percentage_critical" {
@@ -454,7 +454,7 @@ variable "transactional_read_latency_99th_percentile_threshold_major" {
 variable "transactional_read_latency_99th_percentile_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "15m"
 }
 
 variable "transactional_read_latency_99th_percentile_at_least_percentage_major" {
@@ -479,7 +479,7 @@ variable "transactional_write_latency_99th_percentile_aggregation_function" {
 variable "transactional_write_latency_99th_percentile_transformation_function" {
   description = "Transformation function for transactional_write_latency_99th_percentile detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".min(over='15m')"
+  default     = ""
 }
 
 variable "transactional_write_latency_99th_percentile_tip" {
@@ -521,7 +521,7 @@ variable "transactional_write_latency_99th_percentile_threshold_critical" {
 variable "transactional_write_latency_99th_percentile_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "15m"
 }
 
 variable "transactional_write_latency_99th_percentile_at_least_percentage_critical" {
@@ -538,7 +538,7 @@ variable "transactional_write_latency_99th_percentile_threshold_major" {
 variable "transactional_write_latency_99th_percentile_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "15m"
 }
 
 variable "transactional_write_latency_99th_percentile_at_least_percentage_major" {
@@ -563,7 +563,7 @@ variable "transactional_read_latency_real_time_aggregation_function" {
 variable "transactional_read_latency_real_time_transformation_function" {
   description = "Transformation function for transactional_read_latency_real_time detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".min(over='15m')"
+  default     = ""
 }
 
 variable "transactional_read_latency_real_time_tip" {
@@ -605,7 +605,7 @@ variable "transactional_read_latency_real_time_threshold_critical" {
 variable "transactional_read_latency_real_time_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "15m"
 }
 
 variable "transactional_read_latency_real_time_at_least_percentage_critical" {
@@ -622,7 +622,7 @@ variable "transactional_read_latency_real_time_threshold_major" {
 variable "transactional_read_latency_real_time_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "15m"
 }
 
 variable "transactional_read_latency_real_time_at_least_percentage_major" {
@@ -647,7 +647,7 @@ variable "transactional_write_latency_real_time_aggregation_function" {
 variable "transactional_write_latency_real_time_transformation_function" {
   description = "Transformation function for transactional_write_latency_real_time detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".min(over='15m')"
+  default     = ""
 }
 
 variable "transactional_write_latency_real_time_tip" {
@@ -689,7 +689,7 @@ variable "transactional_write_latency_real_time_threshold_critical" {
 variable "transactional_write_latency_real_time_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "15m"
 }
 
 variable "transactional_write_latency_real_time_at_least_percentage_critical" {
@@ -706,7 +706,7 @@ variable "transactional_write_latency_real_time_threshold_major" {
 variable "transactional_write_latency_real_time_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "15m"
 }
 
 variable "transactional_write_latency_real_time_at_least_percentage_major" {
@@ -731,7 +731,7 @@ variable "storage_exceptions_count_aggregation_function" {
 variable "storage_exceptions_count_transformation_function" {
   description = "Transformation function for storage_exceptions_count detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".min(over='30m')"
+  default     = ".sum(over='5m')"
 }
 
 variable "storage_exceptions_count_tip" {

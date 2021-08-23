@@ -1,7 +1,7 @@
 module: cassandra
 name: storage exceptions count
 
-transformation: ".min(over='30m')"
+transformation: ".sum(over='5m')"
 aggregation: true
 
 signals:
