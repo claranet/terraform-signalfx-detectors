@@ -1,7 +1,7 @@
 module: cassandra
 name: write latency 99th percentile
 
-transformation: ".min(over='15m')"
+transformation: true
 aggregation: true
 value_unit: s
 
@@ -12,7 +12,9 @@ rules:
   critical:
     threshold: 1
     comparator: '>'
+    lasting_duration: 15m
   major:
     threshold: 0.5
     comparator: '>'
+    lasting_duration: 15m
     dependency: critical
