@@ -1,0 +1,21 @@
+module: cassandra
+name: write latency real time
+
+transformation: ".min(over='15m')"
+aggregation: true
+value_unit: s
+
+signals:
+  A:
+    metric: counter.cassandra.ClientRequest.Write.TotalLatency.Count
+  B:
+    metric: counter.cassandra.ClientRequest.Write.Latency.Count
+  signal:
+    formula: (A/B).fill(0)
+rules:
+  critical:
+    threshold: 1
+    comparator: '>'
+  major:
+    threshold: 0.5
+    comparator: '>'

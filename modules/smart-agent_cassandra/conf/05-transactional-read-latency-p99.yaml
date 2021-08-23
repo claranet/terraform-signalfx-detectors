@@ -1,0 +1,17 @@
+module: cassandra
+name: transactional read latency 99th percentile
+
+transformation: ".min(over='15m')"
+aggregation: true
+value_unit: s
+
+signals:
+  signal:
+    metric: gauge.cassandra.ClientRequest.CASRead.Latency.99thPercentile
+rules:
+  critical:
+    threshold: 2
+    comparator: '>'
+  major:
+    threshold: 1
+    comparator: '>'

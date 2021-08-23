@@ -1,0 +1,21 @@
+module: apache
+name: busy workers
+
+transformation: ".mean(over='10m')"
+aggregation: true
+
+signals:
+  A:
+    metric: apache_connections
+  B:
+    metric: apache_idle_workers
+  signal:
+    formula: ((A / (A+B)).scale(100))
+rules:
+  critical:
+    threshold: 90
+    comparator: '>'
+  major:
+    threshold: 80
+    comparator: '>'
+
