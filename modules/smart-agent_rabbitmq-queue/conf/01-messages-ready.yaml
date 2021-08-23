@@ -1,7 +1,7 @@
 module: RabbitMQ Queue
 name: messages ready
 
-transformation: ".min(over='20m')"
+transformation: true
 aggregation: true
 filtering: "filter('plugin', 'rabbitmq')"
 
@@ -13,7 +13,9 @@ rules:
   critical:
     threshold: 15000
     comparator: ">"
+    lasting_duration: 20m
   major:
     threshold: 10000
     comparator: ">"
+    lasting_duration: 20m
     dependency: critical

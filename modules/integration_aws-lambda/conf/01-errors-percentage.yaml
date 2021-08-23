@@ -27,4 +27,4 @@ rules:
     threshold: 0
     comparator: ">"
     dependency: critical
-    lasting_duration: 5m
+    lasting_duration: 15m

@@ -18,4 +18,4 @@ rules:
   major:
     threshold: 0
     comparator: ">="
-    lasting_duration: 300s
+    lasting_duration: 5m

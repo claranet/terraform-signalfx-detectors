@@ -1,7 +1,7 @@
 module: RabbitMQ Queue
 name: messages ack rate
 
-transformation: ".min(over='20m')"
+transformation: true
 aggregation: true
 filtering: "filter('plugin', 'rabbitmq')"
 disabled: true

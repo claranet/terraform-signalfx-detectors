@@ -9,7 +9,7 @@ variable "latency_notifications" {
 variable "latency_aggregation_function" {
   description = "Aggregation function and group by for latency detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".sum(by=['controller_namespace', 'controller_class', 'ingress'])"
 }
 
 variable "latency_transformation_function" {
@@ -93,7 +93,7 @@ variable "http_5xx_notifications" {
 variable "http_5xx_aggregation_function" {
   description = "Aggregation function and group by for http_5xx detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".sum(by=['controller_namespace', 'controller_class', 'ingress'])"
 }
 
 variable "http_5xx_transformation_function" {
@@ -177,7 +177,7 @@ variable "http_4xx_notifications" {
 variable "http_4xx_aggregation_function" {
   description = "Aggregation function and group by for http_4xx detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".sum(by=['controller_namespace', 'controller_class', 'ingress'])"
 }
 
 variable "http_4xx_transformation_function" {

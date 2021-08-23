@@ -265,7 +265,7 @@ variable "http_content_length_runbook_url" {
 variable "http_content_length_disabled" {
   description = "Disable all alerting rules for http_content_length detector"
   type        = bool
-  default     = null
+  default     = true
 }
 
 variable "http_content_length_threshold_warning" {

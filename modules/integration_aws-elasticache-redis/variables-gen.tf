@@ -36,39 +36,22 @@ variable "cache_hits_disabled" {
   default     = null
 }
 
-variable "cache_hits_disabled_critical" {
-  description = "Disable critical alerting rule for cache_hits detector"
-  type        = bool
-  default     = null
-}
-
 variable "cache_hits_disabled_major" {
   description = "Disable major alerting rule for cache_hits detector"
   type        = bool
   default     = null
 }
 
-variable "cache_hits_threshold_critical" {
-  description = "Critical threshold for cache_hits detector in %"
-  type        = number
-  default     = 60
+variable "cache_hits_disabled_minor" {
+  description = "Disable minor alerting rule for cache_hits detector"
+  type        = bool
+  default     = null
 }
 
-variable "cache_hits_lasting_duration_critical" {
-  description = "Minimum duration that conditions must be true before raising alert"
-  type        = string
-  default     = "5m"
-}
-
-variable "cache_hits_at_least_percentage_critical" {
-  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
-  type        = number
-  default     = 0.9
-}
 variable "cache_hits_threshold_major" {
   description = "Major threshold for cache_hits detector in %"
   type        = number
-  default     = 80
+  default     = 60
 }
 
 variable "cache_hits_lasting_duration_major" {
@@ -78,6 +61,23 @@ variable "cache_hits_lasting_duration_major" {
 }
 
 variable "cache_hits_at_least_percentage_major" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 0.9
+}
+variable "cache_hits_threshold_minor" {
+  description = "Minor threshold for cache_hits detector in %"
+  type        = number
+  default     = 80
+}
+
+variable "cache_hits_lasting_duration_minor" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "5m"
+}
+
+variable "cache_hits_at_least_percentage_minor" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 0.9
@@ -267,7 +267,7 @@ variable "commands_aggregation_function" {
 variable "commands_transformation_function" {
   description = "Transformation function for commands detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ""
+  default     = ".sum(over='15m')"
 }
 
 variable "commands_tip" {
@@ -297,7 +297,7 @@ variable "commands_threshold_major" {
 variable "commands_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "15m"
+  default     = null
 }
 
 variable "commands_at_least_percentage_major" {
