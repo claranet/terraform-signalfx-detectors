@@ -48,7 +48,7 @@ resource "signalfx_detector" "cpu_high" {
   program_text = <<-EOF
     signal = data('EngineCPUUtilization', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'upper') and filter('CacheNodeId', '*') and ${module.filtering.signalflow})${var.cpu_high_aggregation_function}${var.cpu_high_transformation_function}.publish('signal')
     detect(when(signal > ${var.cpu_high_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.cpu_high_threshold_major}) and when(signal <= ${var.cpu_high_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.cpu_high_threshold_major}) and (not when(signal > ${var.cpu_high_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {
@@ -86,7 +86,7 @@ resource "signalfx_detector" "replication_lag" {
   program_text = <<-EOF
     signal = data('ReplicationLag', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'upper') and filter('CacheNodeId', '*') and ${module.filtering.signalflow})${var.replication_lag_aggregation_function}${var.replication_lag_transformation_function}.publish('signal')
     detect(when(signal > ${var.replication_lag_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.replication_lag_threshold_major}) and when(signal <= ${var.replication_lag_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.replication_lag_threshold_major}) and (not when(signal > ${var.replication_lag_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {
@@ -126,7 +126,7 @@ resource "signalfx_detector" "commands" {
     B = data('SetTypeCmds', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'lower') and filter('CacheNodeId', '*') and ${module.filtering.signalflow})${var.commands_aggregation_function}${var.commands_transformation_function}
     signal = (A + B).publish('signal')
     detect(when(signal <= ${var.commands_threshold_critical})).publish('CRIT')
-    detect(when(signal <= ${var.commands_threshold_major}) and when(signal > ${var.commands_threshold_critical})).publish('MAJOR')
+    detect(when(signal <= ${var.commands_threshold_major}) and (not when(signal <= ${var.commands_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {

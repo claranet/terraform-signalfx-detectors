@@ -38,7 +38,7 @@ resource "signalfx_detector" "mysql_connections" {
     B = data('mysql_max_connections', filter=${module.filtering.signalflow}, rollup='average')${var.connections_aggregation_function}${var.connections_transformation_function}
     signal = (A/B).scale(100).publish('signal')
     detect(when(signal > ${var.connections_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.connections_threshold_major}) and when(signal <= ${var.connections_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.connections_threshold_major}) and (not when(signal > ${var.connections_threshold_critical}))).publish('MAJOR')
   EOF
 
   rule {
@@ -78,7 +78,7 @@ resource "signalfx_detector" "mysql_slow" {
     B = data('mysql_queries', filter=(not filter('plugin', 'mysql')) and ${module.filtering.signalflow}, rollup='delta')${var.slow_aggregation_function}${var.slow_transformation_function}
     signal = (A/B).scale(100).publish('signal')
     detect(when(signal > ${var.slow_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.slow_threshold_major}) and when(signal <= ${var.slow_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.slow_threshold_major}) and (not when(signal > ${var.slow_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {
@@ -118,7 +118,7 @@ resource "signalfx_detector" "mysql_pool_efficiency" {
     B = data('mysql_bpool_counters.read_requests', filter=filter('plugin', 'mysql') and ${module.filtering.signalflow}, rollup='delta')${var.pool_efficiency_aggregation_function}${var.pool_efficiency_transformation_function}
     signal = (A/B).fill(0).scale(100).publish('signal')
     detect(when(signal > ${var.pool_efficiency_threshold_minor})).publish('MINOR')
-    detect(when(signal > ${var.pool_efficiency_threshold_warning}) and when(signal <= ${var.pool_efficiency_threshold_minor})).publish('WARN')
+    detect(when(signal > ${var.pool_efficiency_threshold_warning}) and (not when(signal > ${var.pool_efficiency_threshold_minor}))).publish('WARN')
 EOF
 
   rule {
@@ -158,7 +158,7 @@ resource "signalfx_detector" "mysql_pool_utilization" {
     B = data('mysql_bpool_pages.total', filter=filter('plugin', 'mysql') and ${module.filtering.signalflow}, rollup='average')${var.pool_utilization_aggregation_function}${var.pool_utilization_transformation_function}
     signal = ((B-A)/B).scale(100).publish('signal')
     detect(when(signal > ${var.pool_utilization_threshold_minor})).publish('MINOR')
-    detect(when(signal > ${var.pool_utilization_threshold_warning}) and when(signal <= ${var.pool_utilization_threshold_minor})).publish('WARN')
+    detect(when(signal > ${var.pool_utilization_threshold_warning}) and (not when(signal > ${var.pool_utilization_threshold_minor}))).publish('WARN')
 EOF
 
   rule {
@@ -248,7 +248,7 @@ resource "signalfx_detector" "mysql_replication_lag" {
   program_text = <<-EOF
     signal = data('mysql_seconds_behind_master', filter=${module.filtering.signalflow}, rollup='average')${var.replication_lag_aggregation_function}${var.replication_lag_transformation_function}.publish('signal')
     detect(when(signal > ${var.replication_lag_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.replication_lag_threshold_major}) and when(signal <= ${var.replication_lag_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.replication_lag_threshold_major}) and (not when(signal > ${var.replication_lag_threshold_critical}))).publish('MAJOR')
   EOF
 
   rule {

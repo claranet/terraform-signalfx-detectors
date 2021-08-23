@@ -34,7 +34,7 @@ resource "signalfx_detector" "oldest_unacked_message" {
   program_text = <<-EOF
     signal = data('subscription/oldest_unacked_message_age', filter=filter('monitored_resource', 'pubsub_subscription') and ${module.filtering.signalflow})${var.oldest_unacked_message_aggregation_function}${var.oldest_unacked_message_transformation_function}.publish('signal')
     detect(when(signal >= ${var.oldest_unacked_message_threshold_critical})).publish('CRIT')
-    detect(when(signal >= ${var.oldest_unacked_message_threshold_major}) and when(signal < ${var.oldest_unacked_message_threshold_critical})).publish('MAJOR')
+    detect(when(signal >= ${var.oldest_unacked_message_threshold_major}) and (not when(signal >= ${var.oldest_unacked_message_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {
@@ -72,7 +72,7 @@ resource "signalfx_detector" "push_latency" {
   program_text = <<-EOF
     signal = data('subscription/push_request_latencies', filter=filter('monitored_resource', 'pubsub_subscription') and ${module.filtering.signalflow}, extrapolation='zero', rollup='average')${var.push_latency_aggregation_function}${var.push_latency_transformation_function}.publish('signal')
     detect(when(signal >= ${var.push_latency_threshold_critical})).publish('CRIT')
-    detect(when(signal >= ${var.push_latency_threshold_major}) and when(signal < ${var.push_latency_threshold_critical})).publish('MAJOR')
+    detect(when(signal >= ${var.push_latency_threshold_major}) and (not when(signal >= ${var.push_latency_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {

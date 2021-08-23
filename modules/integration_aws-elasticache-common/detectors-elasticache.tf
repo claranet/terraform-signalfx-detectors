@@ -34,7 +34,7 @@ resource "signalfx_detector" "evictions" {
   program_text = <<-EOF
     signal = data('Evictions', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filtering.signalflow})${var.evictions_aggregation_function}${var.evictions_transformation_function}.publish('signal')
     detect(when(signal > ${var.evictions_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.evictions_threshold_major}) and when(signal <= ${var.evictions_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.evictions_threshold_major}) and (not when(signal > ${var.evictions_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {
@@ -122,7 +122,7 @@ resource "signalfx_detector" "swap" {
   program_text = <<-EOF
     signal = data('SwapUsage', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'upper') and filter('CacheNodeId', '*') and ${module.filtering.signalflow})${var.swap_aggregation_function}${var.swap_transformation_function}.publish('signal')
     detect(when(signal > ${var.swap_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.swap_threshold_major}) and when(signal <= ${var.swap_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.swap_threshold_major}) and (not when(signal > ${var.swap_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {
@@ -160,7 +160,7 @@ resource "signalfx_detector" "free_memory" {
   program_text = <<-EOF
     signal = data('FreeableMemory', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'lower') and filter('CacheNodeId', '*') and ${module.filtering.signalflow}).rateofchange()${var.free_memory_aggregation_function}${var.free_memory_transformation_function}.publish('signal')
     detect(when(signal < ${var.free_memory_threshold_major})).publish('MAJOR')
-    detect(when(signal < ${var.free_memory_threshold_minor}) and when(signal >= ${var.free_memory_threshold_major})).publish('MINOR')
+    detect(when(signal < ${var.free_memory_threshold_minor}) and (not when(signal < ${var.free_memory_threshold_major}))).publish('MINOR')
 EOF
 
   rule {
@@ -198,7 +198,7 @@ resource "signalfx_detector" "evictions_growing" {
   program_text = <<-EOF
     signal = data('Evictions', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filtering.signalflow})${var.evictions_growing_aggregation_function}${var.evictions_growing_transformation_function}.rateofchange().scale(100).publish('signal')
     detect(when(signal > ${var.evictions_growing_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.evictions_growing_threshold_major}) and when(signal <= ${var.evictions_growing_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.evictions_growing_threshold_major}) and (not when(signal > ${var.evictions_growing_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {

@@ -38,7 +38,7 @@ resource "signalfx_detector" "treatment_limit" {
     B = data('kong_nginx_http_current_connections', filter=filter('state', 'accepted') and ${module.filtering.signalflow})${var.treatment_limit_aggregation_function}${var.treatment_limit_transformation_function}
     signal = ((A-B)/A).scale(100).publish('signal')
     detect(when(signal > ${var.treatment_limit_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.treatment_limit_threshold_major}) and when(signal <= ${var.treatment_limit_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.treatment_limit_threshold_major}) and (not when(signal > ${var.treatment_limit_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {

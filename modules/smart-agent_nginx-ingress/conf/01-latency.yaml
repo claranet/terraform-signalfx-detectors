@@ -1,0 +1,24 @@
+module: Ingress Nginx
+name: latency
+
+transformation: true
+aggregation: true
+value_unit: "s"
+
+signals:
+  signal:
+    metric: nginx_ingress_controller_ingress_upstream_latency_seconds
+    extrapolation: zero
+    rollup: delta
+rules:
+  critical:
+    threshold: 1
+    comparator: ">"
+    lasting_duration: 10m
+    lasting_at_least: 0.9
+  major:
+    threshold: 3
+    comparator: ">"
+    dependency: critical
+    lasting_duration: 10m
+    lasting_at_least: 0.9

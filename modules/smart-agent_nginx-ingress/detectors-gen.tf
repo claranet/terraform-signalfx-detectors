@@ -1,19 +1,23 @@
-# Monitoring Api Gateway latency
 resource "signalfx_detector" "latency" {
-  name = format("%s %s", local.detector_name_prefix, "AWS ApiGateway latency")
+  name = format("%s %s", local.detector_name_prefix, "Ingress Nginx latency")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
+  viz_options {
+    label        = "signal"
+    value_suffix = "s"
+  }
+
   program_text = <<-EOF
-    signal = data('Latency', filter=filter('namespace', 'AWS/ApiGateway') and filter('stat', 'mean') and (not filter('Stage', '*')) and (not filter('Method', '*')) and (not filter('Resource', '*')) and ${module.filtering.signalflow}, extrapolation='zero', rollup='average')${var.latency_aggregation_function}${var.latency_transformation_function}.publish('signal')
-    detect(when(signal > threshold(${var.latency_threshold_critical}), lasting='${var.latency_lasting_duration_seconds}s', at_least=${var.latency_at_least_percentage})).publish('CRIT')
-    detect((when(signal > threshold(${var.latency_threshold_major}), lasting='${var.latency_lasting_duration_seconds}s', at_least=${var.latency_at_least_percentage}) and when(signal <= ${var.latency_threshold_critical})), off=(when(signal <= ${var.latency_threshold_major}, lasting='${var.latency_lasting_duration_seconds / 2}s') or when(signal >= ${var.latency_threshold_critical}, lasting='${var.latency_lasting_duration_seconds}s', at_least=${var.latency_at_least_percentage})), mode='paired').publish('MAJOR')
+    signal = data('nginx_ingress_controller_ingress_upstream_latency_seconds', filter=${module.filtering.signalflow}, rollup='delta', extrapolation='zero')${var.latency_aggregation_function}${var.latency_transformation_function}.publish('signal')
+    detect(when(signal > ${var.latency_threshold_critical}, lasting=%{if var.latency_lasting_duration_critical == null}None%{else}'${var.latency_lasting_duration_critical}'%{endif}, at_least=${var.latency_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal > ${var.latency_threshold_major}, lasting=%{if var.latency_lasting_duration_major == null}None%{else}'${var.latency_lasting_duration_major}'%{endif}, at_least=${var.latency_at_least_percentage_major}) and (not when(signal > ${var.latency_threshold_critical}, lasting=%{if var.latency_lasting_duration_critical == null}None%{else}'${var.latency_lasting_duration_critical}'%{endif}, at_least=${var.latency_at_least_percentage_critical}))).publish('MAJOR')
 EOF
 
   rule {
-    description           = "is too high > ${var.latency_threshold_critical}ms"
+    description           = "is too high > ${var.latency_threshold_critical}s"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.latency_disabled_critical, var.latency_disabled, var.detectors_disabled)
@@ -25,7 +29,7 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.latency_threshold_major}ms"
+    description           = "is too high > ${var.latency_threshold_major}s"
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.latency_disabled_major, var.latency_disabled, var.detectors_disabled)
@@ -37,20 +41,24 @@ EOF
   }
 }
 
-# Monitoring API Gateway 5xx errors percent
 resource "signalfx_detector" "http_5xx" {
-  name = format("%s %s", local.detector_name_prefix, "AWS ApiGateway HTTP 5xx error rate")
+  name = format("%s %s", local.detector_name_prefix, "Ingress Nginx 5xx errors ratio")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
+  viz_options {
+    label        = "signal"
+    value_suffix = "%"
+  }
+
   program_text = <<-EOF
-    A = data('${var.is_v2 ? "5xx" : "5XXError"}', filter=filter('namespace', 'AWS/ApiGateway') and filter('stat', 'sum') and (not filter('Stage', '*')) and (not filter('Method', '*')) and (not filter('Resource', '*')) and ${module.filtering.signalflow}, extrapolation='zero', rollup='sum')${var.http_5xx_aggregation_function}${var.http_5xx_transformation_function}
-    B = data('Count', filter=filter('namespace', 'AWS/ApiGateway') and filter('stat', 'sum') and (not filter('Stage', '*')) and (not filter('Method', '*')) and (not filter('Resource', '*')) and ${module.filtering.signalflow}, extrapolation='zero', rollup='sum')${var.http_5xx_aggregation_function}${var.http_5xx_transformation_function}
-    signal = (A/B).scale(100).fill(value=0).publish('signal')
-    detect(when(signal > threshold(${var.http_5xx_threshold_critical}), lasting='${var.http_5xx_lasting_duration_seconds}s', at_least=${var.http_5xx_at_least_percentage}) and when(B > ${var.minimum_traffic})).publish('CRIT')
-    detect((when(signal > threshold(${var.http_5xx_threshold_major}), lasting='${var.http_5xx_lasting_duration_seconds}s', at_least=${var.http_5xx_at_least_percentage}) and when(signal <= ${var.http_5xx_threshold_critical}) and when(B > ${var.minimum_traffic})), off=(when(signal <= ${var.http_5xx_threshold_major}, lasting='${var.http_5xx_lasting_duration_seconds / 2}s') or when(signal >= ${var.http_5xx_threshold_critical}, lasting='${var.http_5xx_lasting_duration_seconds}s', at_least=${var.http_5xx_at_least_percentage})), mode='paired').publish('MAJOR')
+    errors = data('nginx_ingress_controller_requests', filter=filter('status', '5*') and ${module.filtering.signalflow}, rollup='delta', extrapolation='zero')${var.http_5xx_aggregation_function}${var.http_5xx_transformation_function}
+    requests = data('nginx_ingress_controller_requests', filter=${module.filtering.signalflow}, rollup='delta', extrapolation='zero')${var.http_5xx_aggregation_function}${var.http_5xx_transformation_function}
+    signal = (errors/requests).scale(100).fill(value=0).publish('signal')
+    detect(when(signal > ${var.http_5xx_threshold_critical}, lasting=%{if var.http_5xx_lasting_duration_critical == null}None%{else}'${var.http_5xx_lasting_duration_critical}'%{endif}, at_least=${var.http_5xx_at_least_percentage_critical}) and when(requests > ${var.minimum_traffic})).publish('CRIT')
+    detect(when(signal > ${var.http_5xx_threshold_major}, lasting=%{if var.http_5xx_lasting_duration_major == null}None%{else}'${var.http_5xx_lasting_duration_major}'%{endif}, at_least=${var.http_5xx_at_least_percentage_major}) and when(requests > ${var.minimum_traffic}) and (not when(signal > ${var.http_5xx_threshold_critical}, lasting=%{if var.http_5xx_lasting_duration_critical == null}None%{else}'${var.http_5xx_lasting_duration_critical}'%{endif}, at_least=${var.http_5xx_at_least_percentage_critical}) and when(requests > ${var.minimum_traffic}))).publish('MAJOR')
 EOF
 
   rule {
@@ -78,20 +86,24 @@ EOF
   }
 }
 
-# Monitoring API Gateway 4xx errors percent
 resource "signalfx_detector" "http_4xx" {
-  name = format("%s %s", local.detector_name_prefix, "AWS ApiGateway HTTP 4xx error rate")
+  name = format("%s %s", local.detector_name_prefix, "Ingress Nginx 4xx errors ratio")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
+  viz_options {
+    label        = "signal"
+    value_suffix = "%"
+  }
+
   program_text = <<-EOF
-    A = data('${var.is_v2 ? "4xx" : "4XXError"}', filter=filter('namespace', 'AWS/ApiGateway') and filter('stat', 'sum') and (not filter('Stage', '*')) and (not filter('Method', '*')) and (not filter('Resource', '*')) and ${module.filtering.signalflow}, extrapolation='zero', rollup='sum')${var.http_4xx_aggregation_function}${var.http_4xx_transformation_function}
-    B = data('Count', filter=filter('namespace', 'AWS/ApiGateway') and filter('stat', 'sum') and (not filter('Stage', '*')) and (not filter('Method', '*')) and (not filter('Resource', '*')) and ${module.filtering.signalflow}, extrapolation='zero', rollup='sum')${var.http_4xx_aggregation_function}${var.http_4xx_transformation_function}
-    signal = (A/B).scale(100).fill(value=0).publish('signal')
-    detect(when(signal > threshold(${var.http_4xx_threshold_critical}), lasting='${var.http_4xx_lasting_duration_seconds}s', at_least=${var.http_4xx_at_least_percentage}) and when(B > ${var.minimum_traffic})).publish('CRIT')
-    detect((when(signal > threshold(${var.http_4xx_threshold_major}), lasting='${var.http_4xx_lasting_duration_seconds}s', at_least=${var.http_4xx_at_least_percentage}) and when(signal <= ${var.http_4xx_threshold_critical}) and when(B > ${var.minimum_traffic})), off=(when(signal <= ${var.http_4xx_threshold_major}, lasting='${var.http_4xx_lasting_duration_seconds / 2}s') or when(signal >= ${var.http_4xx_threshold_critical}, lasting='${var.http_4xx_lasting_duration_seconds}s', at_least=${var.http_4xx_at_least_percentage})), mode='paired').publish('MAJOR')
+    errors = data('nginx_ingress_controller_requests', filter=filter('status', '4*') and ${module.filtering.signalflow}, rollup='delta', extrapolation='zero')${var.http_4xx_aggregation_function}${var.http_4xx_transformation_function}
+    requests = data('nginx_ingress_controller_requests', filter=${module.filtering.signalflow}, rollup='delta', extrapolation='zero')${var.http_4xx_aggregation_function}${var.http_4xx_transformation_function}
+    signal = (errors/requests).scale(100).fill(value=0).publish('signal')
+    detect(when(signal > ${var.http_4xx_threshold_critical}, lasting=%{if var.http_4xx_lasting_duration_critical == null}None%{else}'${var.http_4xx_lasting_duration_critical}'%{endif}, at_least=${var.http_4xx_at_least_percentage_critical}) and when(requests > ${var.minimum_traffic})).publish('CRIT')
+    detect(when(signal > ${var.http_4xx_threshold_major}, lasting=%{if var.http_4xx_lasting_duration_major == null}None%{else}'${var.http_4xx_lasting_duration_major}'%{endif}, at_least=${var.http_4xx_at_least_percentage_major}) and when(requests > ${var.minimum_traffic}) and (not when(signal > ${var.http_4xx_threshold_critical}, lasting=%{if var.http_4xx_lasting_duration_critical == null}None%{else}'${var.http_4xx_lasting_duration_critical}'%{endif}, at_least=${var.http_4xx_at_least_percentage_critical}) and when(requests > ${var.minimum_traffic}))).publish('MAJOR')
 EOF
 
   rule {

@@ -23,13 +23,13 @@ output "elb_5xx" {
   value       = signalfx_detector.elb_5xx
 }
 
+output "healthy" {
+  description = "Detector resource for healthy"
+  value       = signalfx_detector.healthy
+}
+
 output "heartbeat" {
   description = "Detector resource for heartbeat"
   value       = signalfx_detector.heartbeat
-}
-
-output "no_healthy_instances" {
-  description = "Detector resource for no_healthy_instances"
-  value       = signalfx_detector.no_healthy_instances
 }
 

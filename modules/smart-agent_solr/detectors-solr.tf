@@ -36,7 +36,7 @@ resource "signalfx_detector" "errors" {
   program_text = <<-EOF
     signal = data('counter.solr.zookeeper_errors', filter=${module.filtering.signalflow})${var.errors_aggregation_function}${var.errors_transformation_function}.publish('signal')
     detect(when(signal >= ${var.errors_threshold_critical})).publish('CRIT')
-    detect(when(signal >= ${var.errors_threshold_major}) and when(signal <= ${var.errors_threshold_critical})).publish('MAJOR')
+    detect(when(signal >= ${var.errors_threshold_major}) and (not when(signal >= ${var.errors_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {
@@ -74,7 +74,7 @@ resource "signalfx_detector" "searcher_warmup_time" {
   program_text = <<-EOF
     signal = data('gauge.solr.searcher_warmup', filter=${module.filtering.signalflow})${var.searcher_warmup_time_aggregation_function}${var.searcher_warmup_time_transformation_function}.publish('signal')
     detect(when(signal >= ${var.searcher_warmup_time_threshold_critical})).publish('CRIT')
-    detect(when(signal >= ${var.searcher_warmup_time_threshold_major}) and when(signal <= ${var.searcher_warmup_time_threshold_critical})).publish('MAJOR')
+    detect(when(signal >= ${var.searcher_warmup_time_threshold_major}) and (not when(signal >= ${var.searcher_warmup_time_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {

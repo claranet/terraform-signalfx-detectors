@@ -36,7 +36,7 @@ resource "signalfx_detector" "dropped_connections" {
   program_text = <<-EOF
     signal = data('connections.failed', filter=${module.filtering.signalflow})${var.dropped_connections_aggregation_function}${var.dropped_connections_transformation_function}.publish('signal')
     detect(when(signal > ${var.dropped_connections_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.dropped_connections_threshold_major}) and when(signal <= ${var.dropped_connections_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.dropped_connections_threshold_major}) and (not when(signal > ${var.dropped_connections_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {
