@@ -15,3 +15,4 @@ rules:
   major:
     threshold: 0.5
     comparator: '>'
+    dependency: critical

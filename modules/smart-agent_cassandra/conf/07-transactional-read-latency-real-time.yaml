@@ -19,3 +19,4 @@ rules:
   major:
     threshold: 1
     comparator: '>'
+    dependency: critical

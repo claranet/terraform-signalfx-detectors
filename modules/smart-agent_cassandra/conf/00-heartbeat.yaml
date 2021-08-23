@@ -1,7 +1,7 @@
 module: cassandra
 name: heartbeat
 
-transformation: false
+transformation: ".mean(by=['cluster'])"
 aggregation: true
 exclude_not_running_vm: true
 
