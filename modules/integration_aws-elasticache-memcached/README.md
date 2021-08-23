@@ -76,7 +76,7 @@ This module creates the following SignalFx detectors which could contain one or 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |AWS Elasticache memcached cpu|X|X|-|-|-|
-|AWS Elasticache memcached hit ratio|X|X|-|-|-|
+|AWS Elasticache memcached hit ratio|-|X|X|-|-|
 
 ## How to collect required metrics?
 

@@ -59,16 +59,16 @@ resource "signalfx_detector" "hit_ratio" {
     hits = data('GetHits', filter=base_filtering and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.hit_ratio_aggregation_function}${var.hit_ratio_transformation_function}
     misses = data('GetMisses', filter=base_filtering and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.hit_ratio_aggregation_function}${var.hit_ratio_transformation_function}
     signal = (hits/(hits+misses)).scale(100).fill(value=0).publish('signal')
-    detect(when(signal > ${var.hit_ratio_threshold_critical}, lasting=%{if var.hit_ratio_lasting_duration_critical == null}None%{else}'${var.hit_ratio_lasting_duration_critical}'%{endif}, at_least=${var.hit_ratio_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal > ${var.hit_ratio_threshold_major}, lasting=%{if var.hit_ratio_lasting_duration_major == null}None%{else}'${var.hit_ratio_lasting_duration_major}'%{endif}, at_least=${var.hit_ratio_at_least_percentage_major}) and (not when(signal > ${var.hit_ratio_threshold_critical}, lasting=%{if var.hit_ratio_lasting_duration_critical == null}None%{else}'${var.hit_ratio_lasting_duration_critical}'%{endif}, at_least=${var.hit_ratio_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal < ${var.hit_ratio_threshold_major}, lasting=%{if var.hit_ratio_lasting_duration_major == null}None%{else}'${var.hit_ratio_lasting_duration_major}'%{endif}, at_least=${var.hit_ratio_at_least_percentage_major})).publish('MAJOR')
+    detect(when(signal < ${var.hit_ratio_threshold_minor}, lasting=%{if var.hit_ratio_lasting_duration_minor == null}None%{else}'${var.hit_ratio_lasting_duration_minor}'%{endif}, at_least=${var.hit_ratio_at_least_percentage_minor}) and (not when(signal < ${var.hit_ratio_threshold_major}, lasting=%{if var.hit_ratio_lasting_duration_major == null}None%{else}'${var.hit_ratio_lasting_duration_major}'%{endif}, at_least=${var.hit_ratio_at_least_percentage_major}))).publish('MINOR')
 EOF
 
   rule {
-    description           = "is too high > ${var.hit_ratio_threshold_critical}%"
-    severity              = "Critical"
-    detect_label          = "CRIT"
-    disabled              = coalesce(var.hit_ratio_disabled_critical, var.hit_ratio_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.hit_ratio_notifications, "critical", []), var.notifications.critical)
+    description           = "is too low < ${var.hit_ratio_threshold_major}%"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.hit_ratio_disabled_major, var.hit_ratio_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.hit_ratio_notifications, "major", []), var.notifications.major)
     runbook_url           = try(coalesce(var.hit_ratio_runbook_url, var.runbook_url), "")
     tip                   = var.hit_ratio_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -76,11 +76,11 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.hit_ratio_threshold_major}%"
-    severity              = "Major"
-    detect_label          = "MAJOR"
-    disabled              = coalesce(var.hit_ratio_disabled_major, var.hit_ratio_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.hit_ratio_notifications, "major", []), var.notifications.major)
+    description           = "is too low < ${var.hit_ratio_threshold_minor}%"
+    severity              = "Minor"
+    detect_label          = "MINOR"
+    disabled              = coalesce(var.hit_ratio_disabled_minor, var.hit_ratio_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.hit_ratio_notifications, "minor", []), var.notifications.minor)
     runbook_url           = try(coalesce(var.hit_ratio_runbook_url, var.runbook_url), "")
     tip                   = var.hit_ratio_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject

@@ -85,7 +85,7 @@ variable "hpa_capacity_threshold_major" {
 variable "hpa_capacity_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "300s"
+  default     = "5m"
 }
 
 variable "hpa_capacity_at_least_percentage_major" {
@@ -331,7 +331,7 @@ variable "terminated_threshold_major" {
 variable "terminated_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "5m"
+  default     = "10m"
 }
 
 variable "terminated_at_least_percentage_major" {

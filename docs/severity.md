@@ -180,14 +180,14 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |AWS Elasticache memcached cpu|X|X|-|-|-|
-|AWS Elasticache memcached hit ratio|X|X|-|-|-|
+|AWS Elasticache memcached hit ratio|-|X|X|-|-|
 
 
 ## aws-elasticache-redis
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|AWS ElastiCache redis cache hit ratio|X|X|-|-|-|
+|AWS ElastiCache redis cache hit ratio|-|X|X|-|-|
 |AWS ElastiCache redis cpu|X|X|-|-|-|
 |AWS ElastiCache redis replication lag|X|X|-|-|-|
 |AWS ElastiCache redis commands|-|X|-|-|-|
