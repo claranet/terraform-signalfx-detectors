@@ -5,6 +5,8 @@ resource "signalfx_detector" "heartbeat" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
+  max_delay = 900
+
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
     signal = data('subscription/pull_request_count', filter=${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
