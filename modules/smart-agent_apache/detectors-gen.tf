@@ -38,7 +38,7 @@ resource "signalfx_detector" "busy_workers" {
     B = data('apache_idle_workers', filter=${module.filtering.signalflow})${var.busy_workers_aggregation_function}${var.busy_workers_transformation_function}
     signal = ((A / (A+B)).scale(100)).publish('signal')
     detect(when(signal > ${var.busy_workers_threshold_critical}, lasting=%{if var.busy_workers_lasting_duration_critical == null}None%{else}'${var.busy_workers_lasting_duration_critical}'%{endif}, at_least=${var.busy_workers_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal > ${var.busy_workers_threshold_major}, lasting=%{if var.busy_workers_lasting_duration_major == null}None%{else}'${var.busy_workers_lasting_duration_major}'%{endif}, at_least=${var.busy_workers_at_least_percentage_major})).publish('MAJOR')
+    detect(when(signal > ${var.busy_workers_threshold_major}, lasting=%{if var.busy_workers_lasting_duration_major == null}None%{else}'${var.busy_workers_lasting_duration_major}'%{endif}, at_least=${var.busy_workers_at_least_percentage_major}) and (not when(signal > ${var.busy_workers_threshold_critical}, lasting=%{if var.busy_workers_lasting_duration_critical == null}None%{else}'${var.busy_workers_lasting_duration_critical}'%{endif}, at_least=${var.busy_workers_at_least_percentage_critical}))).publish('MAJOR')
 EOF
 
   rule {
