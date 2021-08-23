@@ -9,7 +9,7 @@ resource "signalfx_detector" "search_latency" {
         base_filter = filter('resource_type', 'Microsoft.Search/searchServices') and filter('primary_aggregation_type', 'true')
         signal = data('SearchLatency', filter=base_filter and ${module.filtering.signalflow})${var.search_latency_aggregation_function}.publish('signal')
         detect(when(signal > threshold(${var.search_latency_threshold_critical}), lasting="${var.search_latency_timer}")).publish('CRIT')
-        detect(when(signal > threshold(${var.search_latency_threshold_major}), lasting="${var.search_latency_timer}") and when(signal <= ${var.search_latency_threshold_critical})).publish('MAJOR')
+        detect(when(signal > threshold(${var.search_latency_threshold_major}), lasting="${var.search_latency_timer}") and (not when(signal > ${var.search_latency_threshold_critical}))).publish('MAJOR')
     EOF
 
   rule {
@@ -48,7 +48,7 @@ resource "signalfx_detector" "search_throttled_queries_rate" {
         base_filter = filter('resource_type', 'Microsoft.Search/searchServices') and filter('primary_aggregation_type', 'true')
         signal = data('ThrottledSearchQueriesPercentage', filter=base_filter and ${module.filtering.signalflow})${var.search_throttled_queries_rate_aggregation_function}.publish('signal')
         detect(when(signal > threshold(${var.search_throttled_queries_rate_threshold_critical}), lasting="${var.search_throttled_queries_rate_timer}")).publish('CRIT')
-        detect(when(signal > threshold(${var.search_throttled_queries_rate_threshold_major}), lasting="${var.search_throttled_queries_rate_timer}") and when(signal <= ${var.search_throttled_queries_rate_threshold_critical})).publish('MAJOR')
+        detect(when(signal > threshold(${var.search_throttled_queries_rate_threshold_major}), lasting="${var.search_throttled_queries_rate_timer}") and (not when(signal > ${var.search_throttled_queries_rate_threshold_critical}))).publish('MAJOR')
     EOF
 
   rule {

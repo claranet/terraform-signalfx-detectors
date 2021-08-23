@@ -34,7 +34,7 @@ resource "signalfx_detector" "incoming_records" {
   program_text = <<-EOF
     signal = data('IncomingRecords', filter=filter('namespace', 'AWS/Kinesis') and filter('stat', 'lower') and (not filter('ShardId', '*')) and ${module.filtering.signalflow})${var.incoming_records_aggregation_function}${var.incoming_records_transformation_function}.publish('signal')
     detect(when(signal <= ${var.incoming_records_threshold_critical})).publish('CRIT')
-    detect(when(signal <= ${var.incoming_records_threshold_major}) and when(signal > ${var.incoming_records_threshold_critical})).publish('MAJOR')
+    detect(when(signal <= ${var.incoming_records_threshold_major}) and (not when(signal <= ${var.incoming_records_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {

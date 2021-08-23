@@ -73,7 +73,7 @@ resource "signalfx_detector" "free_space" {
   program_text = <<-EOF
     signal = data('FreeStorageSpace', filter=filter('namespace', 'AWS/ES') and filter('stat', 'lower') and filter('NodeId', '*') and ${module.filtering.signalflow})${var.free_space_aggregation_function}${var.free_space_transformation_function}.publish('signal')
     detect(when(signal < ${var.free_space_threshold_critical})).publish('CRIT')
-    detect(when(signal < ${var.free_space_threshold_major}) and when(signal >= ${var.free_space_threshold_critical})).publish('MAJOR')
+    detect(when(signal < ${var.free_space_threshold_major}) and (not when(signal < ${var.free_space_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {
@@ -111,7 +111,7 @@ resource "signalfx_detector" "cpu_90_15min" {
   program_text = <<-EOF
     signal = data('CPUUtilization', filter=filter('namespace', 'AWS/ES') and filter('stat', 'upper') and filter('NodeId', '*') and ${module.filtering.signalflow})${var.cpu_90_15min_aggregation_function}${var.cpu_90_15min_transformation_function}.publish('signal')
     detect(when(signal > ${var.cpu_90_15min_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.cpu_90_15min_threshold_major}) and when(signal <= ${var.cpu_90_15min_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.cpu_90_15min_threshold_major}) and (not when(signal > ${var.cpu_90_15min_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {

@@ -38,7 +38,7 @@ resource "signalfx_detector" "file_descriptors" {
     B = data('gauge.node.fd_total', filter=filter('plugin', 'rabbitmq') and ${module.filtering.signalflow})${var.file_descriptors_aggregation_function}${var.file_descriptors_transformation_function}
     signal = (A/B).scale(100).publish('signal')
     detect(when(signal > ${var.file_descriptors_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.file_descriptors_threshold_major}) and when(signal <= ${var.file_descriptors_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.file_descriptors_threshold_major}) and (not when(signal > ${var.file_descriptors_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {
@@ -78,7 +78,7 @@ resource "signalfx_detector" "processes" {
     B = data('gauge.node.proc_total', filter=filter('plugin', 'rabbitmq') and ${module.filtering.signalflow})${var.processes_aggregation_function}${var.processes_transformation_function}
     signal = (A/B).scale(100).publish('signal')
     detect(when(signal > ${var.processes_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.processes_threshold_major}) and when(signal <= ${var.processes_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.processes_threshold_major}) and (not when(signal > ${var.processes_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {
@@ -118,7 +118,7 @@ resource "signalfx_detector" "sockets" {
     B = data('gauge.node.sockets_total', filter=filter('plugin', 'rabbitmq') and ${module.filtering.signalflow})${var.sockets_aggregation_function}${var.sockets_transformation_function}
     signal = (A/B).scale(100).publish('signal')
     detect(when(signal > ${var.sockets_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.sockets_threshold_major}) and when(signal < ${var.sockets_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.sockets_threshold_major}) and (not when(signal > ${var.sockets_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {
@@ -158,7 +158,7 @@ resource "signalfx_detector" "vm_memory" {
     B = data('gauge.node.mem_limit', filter=filter('plugin', 'rabbitmq') and ${module.filtering.signalflow})${var.vm_memory_aggregation_function}${var.vm_memory_transformation_function}
     signal = (A/B).scale(100).publish('signal')
     detect(when(signal > ${var.vm_memory_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.vm_memory_threshold_major}) and when(signal < ${var.vm_memory_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.vm_memory_threshold_major}) and (not when(signal > ${var.vm_memory_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {

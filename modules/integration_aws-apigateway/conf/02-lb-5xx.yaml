@@ -1,0 +1,34 @@
+module: AWS APIGateway
+name: HTTP 5xx error rate
+id: http_5xx
+
+transformation: true
+aggregation: true
+filtering: "filter('namespace', 'AWS/ApiGateway') and filter('stat', 'sum') and (not filter('Stage', '*')) and (not filter('Method', '*')) and (not filter('Resource', '*'))"
+value_unit: "%"
+
+signals:
+  errors:
+    metric: '${var.is_v2 ? "5xx" : "5XXError"}'
+    extrapolation: zero
+    rollup: sum
+  requests:
+    metric: Count
+    extrapolation: zero
+    rollup: sum
+  signal:
+    formula: (errors/requests).scale(100).fill(value=0)
+rules:
+  critical:
+    threshold: 10
+    comparator: ">"
+    lasting_duration: 5m
+    lasting_at_least: 0.9
+    append_condition: and when(requests > ${var.minimum_traffic})
+  major:
+    threshold: 5
+    comparator: ">"
+    dependency: critical
+    lasting_duration: 5m
+    lasting_at_least: 0.9
+    append_condition: and when(requests > ${var.minimum_traffic})

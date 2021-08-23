@@ -36,7 +36,7 @@ resource "signalfx_detector" "dns_query_time" {
   program_text = <<-EOF
     signal = data('dns.query_time_ms', filter=filter('plugin', 'telegraf/dns') and ${module.filtering.signalflow})${var.dns_query_time_aggregation_function}${var.dns_query_time_transformation_function}.publish('signal')
     detect(when(signal > ${var.dns_query_time_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.dns_query_time_threshold_major}) and when(signal <= ${var.dns_query_time_threshold_critical})).publish('MAJOR')
+    detect(when(signal > ${var.dns_query_time_threshold_major}) and (not when(signal > ${var.dns_query_time_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {

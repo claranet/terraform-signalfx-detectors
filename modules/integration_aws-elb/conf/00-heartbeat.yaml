@@ -1,0 +1,13 @@
+module: AWS ELB
+name: heartbeat
+
+transformation: false
+aggregation: true
+filtering: "filter('namespace', 'AWS/ELB')"
+
+signals:
+  signal:
+    metric: HealthyHostCount
+    filter: "filter('stat', 'mean')"
+rules:
+  critical:

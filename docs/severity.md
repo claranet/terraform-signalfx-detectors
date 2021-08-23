@@ -104,21 +104,21 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |AWS ALB heartbeat|X|-|-|-|-|
-|AWS ALB healthy instances percentage|X|X|-|-|-|
-|AWS ALB latency|X|X|-|-|-|
+|AWS ALB target response time|X|X|-|-|-|
 |AWS ALB 5xx error rate|X|X|-|-|-|
 |AWS ALB 4xx error rate|X|X|-|-|-|
 |AWS ALB target 5xx error rate|X|X|-|-|-|
 |AWS ALB target 4xx error rate|X|X|-|-|-|
+|AWS ALB healthy instances percentage|X|X|-|-|-|
 
 
 ## aws-apigateway
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|AWS ApiGateway latency|X|X|-|-|-|
-|AWS ApiGateway HTTP 5xx error rate|X|X|-|-|-|
-|AWS ApiGateway HTTP 4xx error rate|X|X|-|-|-|
+|AWS APIGateway latency|X|X|-|-|-|
+|AWS APIGateway http 5xx error rate|X|X|-|-|-|
+|AWS APIGateway http 4xx error rate|X|X|-|-|-|
 
 
 ## aws-beanstalk
@@ -208,12 +208,12 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |AWS ELB heartbeat|X|-|-|-|-|
-|AWS ELB healthy instances percentage|X|X|-|-|-|
-|AWS ELB 4xx error rate|X|X|-|-|-|
-|AWS ELB 5xx error rate|X|X|-|-|-|
-|AWS ELB backend 4xx error rate|X|X|-|-|-|
-|AWS ELB backend 5xx error rate|X|X|-|-|-|
 |AWS ELB backend latency|X|X|-|-|-|
+|AWS ELB 5xx error rate|X|X|-|-|-|
+|AWS ELB 4xx error rate|X|X|-|-|-|
+|AWS ELB backend 5xx error rate|X|X|-|-|-|
+|AWS ELB backend 4xx error rate|X|X|-|-|-|
+|AWS ELB healthy instances percentage|X|X|-|-|-|
 
 
 ## aws-kinesis-firehose
@@ -584,11 +584,11 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|GCP Load Balancer 4xx error rate|X|X|-|-|-|
 |GCP Load Balancer 5xx error rate|X|X|-|-|-|
-|GCP Load Balancer backend latency by service|X|X|-|-|-|
-|GCP Load Balancer backend latency by bucket|X|X|-|-|-|
-|GCP Load Balancer request count|-|X|-|-|-|
+|GCP Load Balancer 4xx error rate|X|X|-|-|-|
+|GCP Load Balancer backend latency per service|X|X|-|-|-|
+|GCP Load Balancer backend latency per bucket|X|X|-|-|-|
+|GCP Load Balancer request count|-|-|X|X|-|
 
 
 ## gcp-pubsub-subscription
@@ -875,9 +875,9 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|Kubernetes Ingress Nginx 5xx errors ratio|X|X|-|-|-|
-|Kubernetes Ingress Nginx 4xx errors ratio|X|X|-|-|-|
-|Kubernetes Ingress Nginx latency|X|X|-|-|-|
+|Ingress Nginx latency|X|X|-|-|-|
+|Ingress Nginx 5xx errors ratio|X|X|-|-|-|
+|Ingress Nginx 4xx errors ratio|X|X|-|-|-|
 
 
 ## nginx

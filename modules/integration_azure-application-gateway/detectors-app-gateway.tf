@@ -63,7 +63,7 @@ resource "signalfx_detector" "backend_connect_time" {
         base_filter = filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true')
         signal = data('BackendConnectTime', filter=base_filter and ${module.filtering.signalflow})${var.backend_connect_time_aggregation_function}.publish('signal')
         detect(when(signal > threshold(${var.backend_connect_time_threshold_critical}), lasting="${var.backend_connect_time_timer}")).publish('CRIT')
-        detect(when(signal > threshold(${var.backend_connect_time_threshold_major}), lasting="${var.backend_connect_time_timer}") and when(signal <= ${var.backend_connect_time_threshold_critical})).publish('MAJOR')
+        detect(when(signal > threshold(${var.backend_connect_time_threshold_major}), lasting="${var.backend_connect_time_timer}") and (not when(signal > ${var.backend_connect_time_threshold_critical}))).publish('MAJOR')
     EOF
 
   rule {
@@ -105,7 +105,7 @@ resource "signalfx_detector" "failed_requests" {
         B = data('TotalRequests', extrapolation='zero', filter=base_filter and ${module.filtering.signalflow})${var.failed_requests_aggregation_function}
         signal = (A/B).scale(100).fill(0).publish('signal')
         detect(when(signal > threshold(${var.failed_requests_threshold_critical}), lasting="${var.failed_requests_timer}")).publish('CRIT')
-        detect(when(signal > threshold(${var.failed_requests_threshold_major}), lasting="${var.failed_requests_timer}") and when(signal <= ${var.failed_requests_threshold_critical})).publish('MAJOR')
+        detect(when(signal > threshold(${var.failed_requests_threshold_major}), lasting="${var.failed_requests_timer}") and (not when(signal > ${var.failed_requests_threshold_critical}))).publish('MAJOR')
     EOF
 
   rule {
@@ -146,7 +146,7 @@ resource "signalfx_detector" "unhealthy_host_ratio" {
         B = data('HealthyHostCount', filter=base_filter and ${module.filtering.signalflow})${var.unhealthy_host_ratio_aggregation_function}
         signal = (A/(A+B)).scale(100).publish('signal')
         detect(when(signal >= threshold(${var.unhealthy_host_ratio_threshold_critical}), lasting="${var.unhealthy_host_ratio_timer}")).publish('CRIT')
-        detect(when(signal >= threshold(${var.unhealthy_host_ratio_threshold_major}), lasting="${var.unhealthy_host_ratio_timer}") and when(signal < ${var.unhealthy_host_ratio_threshold_critical})).publish('MAJOR')
+        detect(when(signal >= threshold(${var.unhealthy_host_ratio_threshold_major}), lasting="${var.unhealthy_host_ratio_timer}") and (not when(signal >= ${var.unhealthy_host_ratio_threshold_critical}))).publish('MAJOR')
     EOF
 
   rule {
@@ -187,7 +187,7 @@ resource "signalfx_detector" "http_4xx_errors" {
         B = data('ResponseStatus', extrapolation='zero', filter=base_filter and ${module.filtering.signalflow})${var.http_4xx_errors_aggregation_function}
         signal = (A/B).scale(100).fill(0).publish('signal')
         detect(when(signal > threshold(${var.http_4xx_errors_threshold_critical}), lasting="${var.http_4xx_errors_timer}")).publish('CRIT')
-        detect(when(signal > threshold(${var.http_4xx_errors_threshold_major}), lasting="${var.http_4xx_errors_timer}") and when(signal <= ${var.http_4xx_errors_threshold_critical})).publish('MAJOR')
+        detect(when(signal > threshold(${var.http_4xx_errors_threshold_major}), lasting="${var.http_4xx_errors_timer}") and (not when(signal > ${var.http_4xx_errors_threshold_critical}))).publish('MAJOR')
     EOF
 
   rule {
@@ -228,7 +228,7 @@ resource "signalfx_detector" "http_5xx_errors" {
         B = data('ResponseStatus', extrapolation='zero', filter=base_filter and ${module.filtering.signalflow})${var.http_5xx_errors_aggregation_function}
         signal = (A/B).scale(100).fill(0).publish('signal')
         detect(when(signal > threshold(${var.http_5xx_errors_threshold_critical}), lasting="${var.http_5xx_errors_timer}")).publish('CRIT')
-        detect(when(signal > threshold(${var.http_5xx_errors_threshold_major}), lasting="${var.http_5xx_errors_timer}") and when(signal <= ${var.http_5xx_errors_threshold_critical})).publish('MAJOR')
+        detect(when(signal > threshold(${var.http_5xx_errors_threshold_major}), lasting="${var.http_5xx_errors_timer}") and (not when(signal > ${var.http_5xx_errors_threshold_critical}))).publish('MAJOR')
     EOF
 
   rule {
@@ -269,7 +269,7 @@ resource "signalfx_detector" "backend_http_4xx_errors" {
         B = data('BackendResponseStatus', extrapolation='zero', filter=base_filter and ${module.filtering.signalflow})${var.backend_http_4xx_errors_aggregation_function}
         signal = (A/B).scale(100).fill(0).publish('signal')
         detect(when(signal > threshold(${var.backend_http_4xx_errors_threshold_critical}), lasting="${var.backend_http_4xx_errors_timer}")).publish('CRIT')
-        detect(when(signal > threshold(${var.backend_http_4xx_errors_threshold_major}), lasting="${var.backend_http_4xx_errors_timer}") and when(signal <= ${var.backend_http_4xx_errors_threshold_critical})).publish('MAJOR')
+        detect(when(signal > threshold(${var.backend_http_4xx_errors_threshold_major}), lasting="${var.backend_http_4xx_errors_timer}") and (not when(signal > ${var.backend_http_4xx_errors_threshold_critical}))).publish('MAJOR')
     EOF
 
   rule {
@@ -310,7 +310,7 @@ resource "signalfx_detector" "backend_http_5xx_errors" {
         B = data('BackendResponseStatus', extrapolation='zero', filter=base_filter and ${module.filtering.signalflow})${var.backend_http_5xx_errors_aggregation_function}
         signal = (A/B).scale(100).fill(0).publish('signal')
         detect(when(signal > threshold(${var.backend_http_5xx_errors_threshold_critical}), lasting="${var.backend_http_5xx_errors_timer}")).publish('CRIT')
-        detect(when(signal > threshold(${var.backend_http_5xx_errors_threshold_major}), lasting="${var.backend_http_5xx_errors_timer}") and when(signal <= ${var.backend_http_5xx_errors_threshold_critical})).publish('MAJOR')
+        detect(when(signal > threshold(${var.backend_http_5xx_errors_threshold_major}), lasting="${var.backend_http_5xx_errors_timer}") and (not when(signal > ${var.backend_http_5xx_errors_threshold_critical}))).publish('MAJOR')
     EOF
 
   rule {
