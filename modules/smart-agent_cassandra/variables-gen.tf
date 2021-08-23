@@ -12,6 +12,12 @@ variable "heartbeat_aggregation_function" {
   default     = ""
 }
 
+variable "heartbeat_transformation_function" {
+  description = "Transformation function for heartbeat detector (i.e. \".mean(over='5m')\")"
+  type        = string
+  default     = ".mean(by=['cluster'])"
+}
+
 variable "heartbeat_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
