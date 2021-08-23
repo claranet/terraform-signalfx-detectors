@@ -1,7 +1,7 @@
 module: AWS ElastiCache redis
 name: commands
 
-transformation: true
+transformation: ".sum(over='15m')"
 aggregation: true
 filtering: "filter('namespace', 'AWS/ElastiCache') and filter('stat', 'lower') and filter('CacheNodeId', '*')"
 
@@ -17,4 +17,3 @@ rules:
   major:
     threshold: 0
     comparator: "<="
-    lasting_duration: 15m

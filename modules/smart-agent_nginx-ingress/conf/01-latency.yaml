@@ -2,7 +2,7 @@ module: Ingress Nginx
 name: latency
 
 transformation: true
-aggregation: true
+aggregation: ".sum(by=['controller_namespace', 'controller_class', 'ingress'])"
 value_unit: "s"
 
 signals:
