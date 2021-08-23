@@ -1,6 +1,6 @@
-output "apache_workers" {
-  description = "Detector resource for apache_workers"
-  value       = signalfx_detector.apache_workers
+output "busy_workers" {
+  description = "Detector resource for busy_workers"
+  value       = signalfx_detector.busy_workers
 }
 
 output "heartbeat" {

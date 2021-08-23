@@ -1,0 +1,18 @@
+module: cassandra
+name: write latency 99th percentile
+
+transformation: ".min(over='15m')"
+aggregation: true
+value_unit: s
+
+signals:
+  signal:
+    metric: gauge.cassandra.ClientRequest.Write.Latency.99thPercentile
+rules:
+  critical:
+    threshold: 1
+    comparator: '>'
+  major:
+    threshold: 0.5
+    comparator: '>'
+    dependency: critical
