@@ -1,0 +1,27 @@
+module: redis
+name: hitrate
+
+filtering: "filter('plugin', 'redis_info')"
+
+value_unit: "%"
+
+signals:
+  A:
+    metric: derive.keyspace_hits
+    rollup: delta
+  B:
+    metric: derive.keyspace_misses
+    rollup: delta
+  signal:
+    formula: (A/(A+B)).scale(100)
+
+rules:
+  critical:
+    threshold: 10
+    comparator: '<'
+    lasting_duration: 5m
+  major:
+    threshold: 30
+    comparator: '<'
+    lasting_duration: 5m
+    dependency: critical

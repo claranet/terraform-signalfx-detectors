@@ -1,0 +1,23 @@
+module: redis
+name: evicted keys change rate
+
+filtering: "filter('plugin', 'redis_info')"
+
+signals:
+  signal:
+    metric: counter.evicted_keys
+    rollup: delta
+    function: ".rateofchange()"
+
+rules:
+  critical:
+    threshold: 50
+    comparator: '>'
+    lasting_duration: 15m
+    lasting_at_least: 0.5
+  major:
+    threshold: 25
+    comparator: '>'
+    lasting_duration: 15m
+    lasting_at_least: 0.5
+    dependency: critical

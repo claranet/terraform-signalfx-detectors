@@ -1,0 +1,21 @@
+module: redis
+name: rejected connections
+tip: maxclient reached
+
+filtering: "filter('plugin', 'redis_info')"
+
+signals:
+  signal:
+    metric: counter.rejected_connections
+    rollup: delta
+
+transformation: ".sum(over='5m')"
+
+rules:
+  critical:
+    threshold: 5
+    comparator: '>'
+  major:
+    threshold: 0
+    comparator: '>'
+    dependency: critical
