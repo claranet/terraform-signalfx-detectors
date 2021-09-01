@@ -1,5 +1,6 @@
 module: redis
 name: low memory fragmentation ratio
+runbook_url: "https://www.dynatrace.com/news/blog/introducing-redis-server-monitoring/#key-metrics"
 
 filtering: "filter('plugin', 'redis_info')"
 

@@ -540,7 +540,7 @@ variable "high_memory_fragmentation_ratio_tip" {
 variable "high_memory_fragmentation_ratio_runbook_url" {
   description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
   type        = string
-  default     = ""
+  default     = "https://www.dynatrace.com/news/blog/introducing-redis-server-monitoring/#key-metrics"
 }
 
 variable "high_memory_fragmentation_ratio_disabled" {
@@ -624,7 +624,7 @@ variable "low_memory_fragmentation_ratio_tip" {
 variable "low_memory_fragmentation_ratio_runbook_url" {
   description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
   type        = string
-  default     = ""
+  default     = "https://www.dynatrace.com/news/blog/introducing-redis-server-monitoring/#key-metrics"
 }
 
 variable "low_memory_fragmentation_ratio_disabled" {
