@@ -51,9 +51,9 @@ variable "buffer_aggregation_function" {
 }
 
 variable "buffer_transformation_function" {
-  description = "Transformation function for buffer detector (i.e. \".mean(over='5m')\")"
+  description = "Transformation function for buffer detector (i.e. \".mean(over='10m')\")"
   type        = string
-  default     = ".max(over='5min')"
+  default     = ".max(over='10min')"
 }
 
 variable "buffer_tip" {
@@ -78,4 +78,10 @@ variable "buffer_threshold" {
   description = "Major threshold for up detector"
   type        = number
   default     = 1
+}
+
+variable "buffer_auto_resolve_after" {
+  description = "Auto resolve the alert if there are no DATA after some time (i.e. \"5m\")"
+  type        = string
+  default     = "5m"
 }
