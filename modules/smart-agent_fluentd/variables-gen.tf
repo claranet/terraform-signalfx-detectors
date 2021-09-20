@@ -80,8 +80,8 @@ variable "buffer_threshold" {
   default     = 1
 }
 
-variable "buffer_auto_resolve_after" {
-  description = "Auto resolve the alert if there are no DATA after some time (i.e. \"5m\")"
+variable "buffer_auto_clear_duration" {
+  description = "Duration for the buffer_auto clear condition"
   type        = string
   default     = "5m"
 }
