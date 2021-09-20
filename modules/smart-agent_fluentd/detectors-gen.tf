@@ -35,9 +35,8 @@ resource "signalfx_detector" "buffer" {
 
   program_text = <<-EOF
     signal = data('fluentd_output_status_buffer_stage_length', filter=${local.not_running_vm_filters} and ${module.filtering.signalflow})${var.buffer_aggregation_function}${var.buffer_transformation_function}.publish('signal')
-    detect(when(signal < ${var.buffer_threshold}) and not when(signal is None, '${var.buffer_auto_resolve_after}')).publish('MAJOR')
+    detect(when(signal < ${var.buffer_threshold}), off=when(signal is None, '${var.buffer_auto_clear_duration}')).publish('MAJOR')
 EOF
-
   rule {
     description           = "is too low < ${var.buffer_threshold}"
     severity              = "Major"
