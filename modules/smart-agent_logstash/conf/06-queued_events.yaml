@@ -1,0 +1,21 @@
+module: logstash
+name: queued events
+
+transformation: ".min(over='10m')"
+aggregation: true
+
+signals:
+  signal:
+    metric: node.stats.pipelines.queue.events_count
+    rollup: latest
+rules:
+  warning:
+    description: is high
+    threshold: 1000000
+    comparator: '>='
+    dependency: minor
+  minor:
+    description: is too high
+    threshold: 2000000
+    comparator: '>='
+

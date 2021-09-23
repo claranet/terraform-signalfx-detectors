@@ -1,0 +1,12 @@
+module: logstash
+name: heartbeat
+
+transformation: false
+aggregation: true
+
+signals:
+  signal:
+    metric: node.stats.events.events.in
+rules:
+  critical:
+
