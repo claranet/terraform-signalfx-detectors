@@ -33,6 +33,6 @@ variable "heartbeat_disabled" {
 variable "heartbeat_timeframe" {
   description = "Timeframe for heartbeat detector (i.e. \"10m\")"
   type        = string
-  default     = "20m"
+  default     = "10m"
 }
 
