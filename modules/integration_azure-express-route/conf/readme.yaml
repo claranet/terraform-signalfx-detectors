@@ -1,0 +1,5 @@
+documentations:
+  - name: Verifying ExpressRoute connectivity
+    url: https://docs.microsoft.com/en-us/azure/expressroute/expressroute-troubleshooting-expressroute-overview
+
+source_doc:

@@ -1,0 +1,14 @@
+## Example
+module: Azure Express Route
+name: heartbeat
+
+transformation: true
+aggregation: true
+
+filtering: "filter('resource_type', 'Microsoft.Network/expressRouteCircuits') and filter('primary_aggregation_type', 'true')"
+
+signals:
+  signal:
+    metric: "BgpAvailability"
+rules:
+  critical:

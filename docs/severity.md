@@ -32,6 +32,7 @@
 - [azure-cosmos-db](#azure-cosmos-db)
 - [azure-datafactory](#azure-datafactory)
 - [azure-event-hub](#azure-event-hub)
+- [azure-express-route](#azure-express-route)
 - [azure-firewall](#azure-firewall)
 - [azure-functions](#azure-functions)
 - [azure-key-vault](#azure-key-vault)
@@ -373,6 +374,15 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Azure Event Hub throttled requests|X|X|-|X|-|
+
+
+## azure-express-route
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Azure Express Route heartbeat|X|-|-|-|-|
+|Azure Express Route bgp availability|X|X|-|-|-|
+|Azure Express Route arp availability|X|X|-|-|-|
 
 
 ## azure-firewall
