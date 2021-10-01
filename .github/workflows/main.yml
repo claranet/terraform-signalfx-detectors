@@ -21,11 +21,42 @@ jobs:
       with:
         concurrent_skipping: 'same_content'
         do_not_skip: '["pull_request", "workflow_dispatch", "schedule"]'
-        paths: '["modules/**.tf", "modules/**/conf/detector-*.yaml", "scripts/**", "Makefile", ".github/workflows/main.yml"]'
+        paths: '["**.tf", "**.yaml", "scripts/**", "Makefile", ".github/workflows/main.yml"]'
+
+  changed_files:
+    runs-on: ubuntu-latest
+    outputs:
+      modules_tf: ${{ steps.changes.outputs.modules_tf }}
+      modules_yaml: ${{ steps.changes.outputs.modules_yaml }}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Get changed files
+      id: changes
+      # Set outputs using the command.
+      run: |
+        echo ${GITHUB_REF}
+        if [ "${GITHUB_REF}" == "refs/heads/master" ]; then
+          echo "::set-output name=modules_tf::*,"
+          echo "::set-output name=modules_yaml::*,"
+          echo "master detected, consider all files as changed"
+        else
+          changed_files=$(git diff --name-only --diff-filter=ACMRT $(git merge-base --fork-point origin/master))
+          changed_files_tf=$(echo "${changed_files}" | grep '\.tf$') || changed_files_tf=""
+          changed_files_yaml=$(echo "${changed_files}" | grep '\.yaml$') || changed_files_yaml=""
+          echo ::set-output name=modules_tf::$(dirname $(echo "${changed_files_tf}") | uniq | tr '\n' ',') || true
+          echo ::set-output name=modules_yaml::$(dirname $(echo "${changed_files_yaml}") | uniq | tr '\n' ',') || true
+          echo -e "tf changed files:\n${changed_files_tf}"
+          echo -e "yaml changed files:\n${changed_files_yaml}"
+        fi
+      continue-on-error: true
 
   deployment:
     # The type of runner that the job will run on
-    needs: pre_job
+    needs: [pre_job, changed_files]
     if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
     #runs-on: hashicorp/terraform:full
     runs-on: ubuntu-latest
@@ -49,9 +80,14 @@ jobs:
         terraform_version: 1.0.1
         terraform_wrapper: false
 
-    - name: Generate example stack importing all modules
-      run: make init-stack
-    
+    - name: Generate example stack importing changed modules
+      run: |
+        make init-stack-common
+        echo "${{needs.changed_files.outputs.modules_tf}}" | while read -d ',' dir; do
+          echo "process ${dir}.."
+          make init-stack-modules "$(basename ${dir})"
+        done
+
     - name: Terraform fmt
       run: terraform fmt -recursive -write=false -diff -check .
 
@@ -63,8 +99,8 @@ jobs:
       if: env.SFX_AUTH_TOKEN != null
       run: terraform -chdir=examples/stack validate
 
-    #- name: Terraform Plan
-    #  run: terraform plan -input=false -lock=false -detailed-exitcode examples/stack || if [ $? -ne 2 ]; then exit $?; fi
+#    - name: Terraform Plan
+#      run: terraform plan -input=false -lock=false -detailed-exitcode examples/stack || if [ $? -ne 2 ]; then exit $?; fi
 
     - name: Enable destroy
       if: env.SFX_AUTH_TOKEN != null
@@ -81,7 +117,7 @@ jobs:
       run: terraform -chdir=examples/stack destroy -input=false -lock=false -refresh=false -auto-approve
 
   compliance:
-    needs: pre_job
+    needs: [pre_job, changed_files]
     if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
     runs-on: ubuntu-latest
     container:
@@ -94,10 +130,14 @@ jobs:
         fetch-depth: 0
 
     - name: Check and lint
-      run: make check-module
+      run: |
+        echo "${{needs.changed_files.outputs.modules_tf}}" | while read -d ',' dir; do
+          echo "process ${dir}.."
+          make check-module "$(basename ${dir})"
+        done
 
   outputs:
-    needs: pre_job
+    needs: [pre_job, changed_files]
     if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
     runs-on: ubuntu-latest
     container:
@@ -110,13 +150,17 @@ jobs:
         fetch-depth: 0
 
     - name: Generate modules outputs
-      run: make update-module-outputs
+      run: |
+        echo "${{needs.changed_files.outputs.modules_tf}}" | while read -d ',' dir; do
+          echo "process ${dir}.."
+          make update-module-outputs "$(basename ${dir})"
+        done
 
     - name: Check for changes
       run: git diff --exit-code
 
   gen:
-    needs: pre_job
+    needs: [pre_job, changed_files]
     if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
     runs-on: ubuntu-latest
     container:
@@ -129,7 +173,12 @@ jobs:
         fetch-depth: 0
 
     - name: Generate modules detectors from preset configs
-      run: make update-module-detectors
+      run: |
+        echo "${{needs.changed_files.outputs.modules_yaml}}"
+        echo -n "${{needs.changed_files.outputs.modules_yaml}}" | while read -d ',' dir; do
+          echo "process $(dirname ${dir}).."
+          make update-module-detectors "$(basename $(dirname ${dir}))"
+        done
 
     - name: Check for changes
       run: |

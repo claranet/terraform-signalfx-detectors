@@ -18,29 +18,36 @@ jobs:
       with:
         concurrent_skipping: 'same_content'
         do_not_skip: '["pull_request", "workflow_dispatch", "schedule"]'
-        paths: '["modules/**.tf", "modules/**/conf/detector-*.yaml", "scripts/**", "Makefile", ".github/workflows/main.yml"]'
+        paths: '["**.md", "**/readme.yaml", "scripts/**", "Makefile", ".github/workflows/doc.yml"]'
 
-  toc:
-    needs: pre_job
-    if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
+  changed_files:
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    outputs:
+      modules_readme: ${{ steps.changes.outputs.modules_readme }}
     steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - name: Checkout
       uses: actions/checkout@v2
-
-    - name: TOC Generator
-      uses: technote-space/toc-generator@v4
       with:
-        TARGET_PATHS: '.'
-        TOC_TITLE: ':link: **Contents**'
-        MAX_HEADER_LEVEL: 3
-        CREATE_PR: false
+        fetch-depth: 0
+
+    - name: Get changed files
+      id: changes
+      # Set outputs using the command.
+      run: |
+        echo ${GITHUB_REF}
+        if [ "${GITHUB_REF}" == "refs/heads/master" ]; then
+          echo "::set-output name=modules_readme::*,"
+          echo "master detected, consider all files as changed"
+        else
+          changed_files=$(git diff --name-only --diff-filter=ACMRT $(git merge-base --fork-point origin/master))
+          changed_files_readme=$(echo "${changed_files}" | grep 'readme\.yaml$') || changed_files_readme=""
+          echo ::set-output name=modules_readme::$(dirname $(echo "${changed_files_readme}") | uniq | tr '\n' ',') || true
+          echo -e "readme changed files:\n${changed_files_readme}"
+        fi
+      continue-on-error: true
 
   modules:
-    needs: pre_job
+    needs: [pre_job, changed_files]
     if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
     runs-on: ubuntu-latest
     container:
@@ -53,7 +60,13 @@ jobs:
         fetch-depth: 0
 
     - name: Generate modules doc
-      run: make update-module-doc
+      run: |
+        echo "${{needs.changed_files.outputs.modules_readme}}"
+        echo -n "${{needs.changed_files.outputs.modules_readme}}" | while read -d ',' dir; do
+          echo "process $(dirname ${dir}).."
+          make update-module-readme "$(basename $(dirname ${dir}))"
+        done
+        make update-toc
 
     - name: Check for changes
       run: git diff --exit-code
@@ -77,7 +90,7 @@ jobs:
     - name: Check for changes
       run: git diff --exit-code
 
-  spellcheck:
+  spell_check:
     needs: pre_job
     if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
     runs-on: ubuntu-latest
@@ -89,7 +102,7 @@ jobs:
     - name: Run PySpelling
       uses: rojopolis/spellcheck-github-actions@0.14.0
 
-  dead-links:
+  dead_links:
     needs: pre_job
     if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
     runs-on: ubuntu-latest
