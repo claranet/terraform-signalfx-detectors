@@ -141,3 +141,40 @@ EOF
   }
 }
 
+resource "signalfx_detector" "jvm_memory_pressure" {
+  name = format("%s %s", local.detector_name_prefix, "AWS ElasticSearch JVMMemoryPressure")
+
+  authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
+
+  program_text = <<-EOF
+    signal = data('JVMMemoryPressure', filter=filter('namespace', 'AWS/ES') and filter('stat', 'upper') and filter('NodeId', '*') and ${module.filtering.signalflow})${var.jvm_memory_pressure_aggregation_function}${var.jvm_memory_pressure_transformation_function}.publish('signal')
+    detect(when(signal > ${var.jvm_memory_pressure_threshold_critical})).publish('CRIT')
+    detect(when(signal > ${var.jvm_memory_pressure_threshold_major}) and when(signal <= ${var.jvm_memory_pressure_threshold_critical})).publish('MAJOR')
+EOF
+
+  rule {
+    description           = "is too high > ${var.jvm_memory_pressure_threshold_critical}"
+    severity              = "Critical"
+    detect_label          = "CRIT"
+    disabled              = coalesce(var.jvm_memory_pressure_disabled_critical, var.jvm_memory_pressure_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.jvm_memory_pressure_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = try(coalesce(var.jvm_memory_pressure_runbook_url, var.runbook_url), "")
+    tip                   = var.jvm_memory_pressure_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
+
+  rule {
+    description           = "is too high > ${var.jvm_memory_pressure_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.jvm_memory_pressure_disabled_major, var.jvm_memory_pressure_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.jvm_memory_pressure_notifications, "major", []), var.notifications.major)
+    runbook_url           = try(coalesce(var.jvm_memory_pressure_runbook_url, var.runbook_url), "")
+    tip                   = var.jvm_memory_pressure_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
+}
