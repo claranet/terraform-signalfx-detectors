@@ -79,6 +79,7 @@ This module creates the following SignalFx detectors which could contain one or 
 |AWS ElasticSearch cluster status|X|X|-|-|-|
 |AWS ElasticSearch cluster free storage space|X|X|-|-|-|
 |AWS ElasticSearch cluster CPU|X|X|-|-|-|
+|AWS ElasticSearch JVM memory pressure|X|X|-|-|-|
 
 ## How to collect required metrics?
 
@@ -99,6 +100,7 @@ Here is the list of required metrics for detectors in this module.
 * `CPUUtilization`
 * `FreeStorageSpace`
 * `Nodes`
+* `JVMMemoryPressure`
 
 
 
