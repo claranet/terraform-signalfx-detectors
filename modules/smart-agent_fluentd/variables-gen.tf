@@ -80,8 +80,3 @@ variable "buffer_threshold" {
   default     = 1
 }
 
-variable "buffer_auto_clear_duration" {
-  description = "Duration for the buffer_auto clear condition"
-  type        = string
-  default     = "5m"
-}
