@@ -80,3 +80,8 @@ variable "buffer_threshold" {
   default     = 1
 }
 
+variable "buffer_lasting_seconds" {
+  description = "Minimum duration that conditions must be true before raising alert (in seconds)"
+  type        = number
+  default     = 300
+}
