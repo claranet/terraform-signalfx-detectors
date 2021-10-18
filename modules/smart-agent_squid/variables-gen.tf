@@ -68,19 +68,19 @@ variable "status_disabled" {
   default     = null
 }
 
-variable "status_threshold_major" {
-  description = "Major threshold for status detector"
+variable "status_threshold_critical" {
+  description = "Critical threshold for status detector"
   type        = number
   default     = 1
 }
 
-variable "status_lasting_duration_major" {
+variable "status_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
   default     = "5m"
 }
 
-variable "status_at_least_percentage_major" {
+variable "status_at_least_percentage_critical" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1
@@ -132,7 +132,7 @@ variable "server_errors_disabled_major" {
 variable "server_errors_threshold_critical" {
   description = "Critical threshold for server_errors detector"
   type        = number
-  default     = 25
+  default     = 50
 }
 
 variable "server_errors_lasting_duration_critical" {
@@ -149,7 +149,7 @@ variable "server_errors_at_least_percentage_critical" {
 variable "server_errors_threshold_major" {
   description = "Major threshold for server_errors detector"
   type        = number
-  default     = 50
+  default     = 25
 }
 
 variable "server_errors_lasting_duration_major" {
@@ -195,19 +195,19 @@ variable "total_requests_disabled" {
   default     = null
 }
 
-variable "total_requests_threshold_major" {
-  description = "Major threshold for total_requests detector"
+variable "total_requests_threshold_critical" {
+  description = "Critical threshold for total_requests detector"
   type        = number
   default     = 1
 }
 
-variable "total_requests_lasting_duration_major" {
+variable "total_requests_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
   default     = "5m"
 }
 
-variable "total_requests_at_least_percentage_major" {
+variable "total_requests_at_least_percentage_critical" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1

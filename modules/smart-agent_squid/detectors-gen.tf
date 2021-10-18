@@ -35,15 +35,15 @@ resource "signalfx_detector" "status" {
 
   program_text = <<-EOF
     signal = data('squid_up', filter=${module.filtering.signalflow})${var.status_aggregation_function}.publish('signal')
-    detect(when(signal < ${var.status_threshold_major}, lasting=%{if var.status_lasting_duration_major == null}None%{else}'${var.status_lasting_duration_major}'%{endif}, at_least=${var.status_at_least_percentage_major})).publish('MAJOR')
+    detect(when(signal < ${var.status_threshold_critical}, lasting=%{if var.status_lasting_duration_critical == null}None%{else}'${var.status_lasting_duration_critical}'%{endif}, at_least=${var.status_at_least_percentage_critical})).publish('CRIT')
 EOF
 
   rule {
-    description           = "is too low < ${var.status_threshold_major}"
-    severity              = "Major"
-    detect_label          = "MAJOR"
+    description           = "is too low < ${var.status_threshold_critical}"
+    severity              = "Critical"
+    detect_label          = "CRIT"
     disabled              = coalesce(var.status_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.status_notifications, "major", []), var.notifications.major)
+    notifications         = coalescelist(lookup(var.status_notifications, "critical", []), var.notifications.critical)
     runbook_url           = try(coalesce(var.status_runbook_url, var.runbook_url), "")
     tip                   = var.status_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -100,15 +100,15 @@ resource "signalfx_detector" "total_requests" {
 
   program_text = <<-EOF
     signal = data('squid_client_http_requests_total', filter=${module.filtering.signalflow})${var.total_requests_aggregation_function}.publish('signal')
-    detect(when(signal <= ${var.total_requests_threshold_major}, lasting=%{if var.total_requests_lasting_duration_major == null}None%{else}'${var.total_requests_lasting_duration_major}'%{endif}, at_least=${var.total_requests_at_least_percentage_major})).publish('MAJOR')
+    detect(when(signal <= ${var.total_requests_threshold_critical}, lasting=%{if var.total_requests_lasting_duration_critical == null}None%{else}'${var.total_requests_lasting_duration_critical}'%{endif}, at_least=${var.total_requests_at_least_percentage_critical})).publish('CRIT')
 EOF
 
   rule {
-    description           = "is too low <= ${var.total_requests_threshold_major}"
-    severity              = "Major"
-    detect_label          = "MAJOR"
+    description           = "is too low <= ${var.total_requests_threshold_critical}"
+    severity              = "Critical"
+    detect_label          = "CRIT"
     disabled              = coalesce(var.total_requests_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.total_requests_notifications, "major", []), var.notifications.major)
+    notifications         = coalescelist(lookup(var.total_requests_notifications, "critical", []), var.notifications.critical)
     runbook_url           = try(coalesce(var.total_requests_runbook_url, var.runbook_url), "")
     tip                   = var.total_requests_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject

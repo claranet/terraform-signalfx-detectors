@@ -978,9 +978,9 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Squid heartbeat|X|-|-|-|-|
-|Squid status|-|X|-|-|-|
+|Squid status|X|-|-|-|-|
 |Squid server_errors|X|X|-|-|-|
-|Squid total_requests|-|X|-|-|-|
+|Squid total_requests|X|-|-|-|-|
 
 
 ## supervisor

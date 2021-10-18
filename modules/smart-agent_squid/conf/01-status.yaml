@@ -9,7 +9,7 @@ signals:
     metric: squid_up
 
 rules:
-  major:
+  critical:
     threshold: 1
     comparator: "<"
     lasting_duration: "5m"

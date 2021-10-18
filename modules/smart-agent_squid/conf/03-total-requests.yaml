@@ -9,7 +9,7 @@ signals:
     metric: squid_client_http_requests_total
 
 rules:
-  major:
+  critical:
     threshold: 1
     comparator: "<="
     lasting_duration: '5m'

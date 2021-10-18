@@ -15,11 +15,11 @@ signals:
     formula: (A/B).scale(100).fill(0)
 rules:
   critical:
-    threshold: 25
+    threshold: 50
     comparator: ">="
     lasting_duration: "5m"
   major:
-    threshold: 50
+    threshold: 25
     comparator: ">="
     lasting_duration: "5m"
     dependency: critical
