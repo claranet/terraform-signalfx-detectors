@@ -1,0 +1,15 @@
+module: squid
+name: status
+
+transformation: false
+aggregation: true
+
+signals:
+  signal:
+    metric: squid_up
+
+rules:
+  major:
+    threshold: 1
+    comparator: "<"
+    lasting_duration: "5m"

@@ -1,0 +1,25 @@
+module: squid
+name: server_errors
+
+transformation: false
+aggregation: true
+
+signals:
+  A:
+    metric: squid_server_all_errors_total
+    extrapolation: 'zero'
+  B:
+    metric: squid_server_all_requests_total
+    extrapolation: 'zero'
+  signal:
+    formula: (A/B).scale(100).fill(0)
+rules:
+  critical:
+    threshold: 25
+    comparator: ">="
+    lasting_duration: "5m"
+  major:
+    threshold: 50
+    comparator: ">="
+    lasting_duration: "5m"
+    dependency: critical

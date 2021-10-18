@@ -1,0 +1,15 @@
+module: squid
+name: total_requests
+
+transformation: false
+aggregation: true
+
+signals:
+  signal:
+    metric: squid_client_http_requests_total
+
+rules:
+  major:
+    threshold: 1
+    comparator: "<="
+    lasting_duration: '5m'

@@ -1,0 +1,17 @@
+documentations:
+  - name: Squid Exporter
+    url: https://github.com/boynux/squid-exporter
+
+source_doc:
+
+notes: |
+  Theses detectors are based on metric collected by prometheus squid exporter on Open Telemtry Agent.
+
+  ```
+    prometheus_exec/squid:
+    exec: /etc/otel/collector/scripts/squid-exporter -listen 127.0.0.1:9095 -metrics-path "/metrics" -squid-hostname localhost -squid-port 3128 -extractservicetimes false
+    port: 9095
+    scrape_interval: 60s
+  ```
+
+
