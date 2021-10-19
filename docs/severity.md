@@ -90,6 +90,7 @@
 - [rabbitmq-queue](#rabbitmq-queue)
 - [redis](#redis)
 - [solr](#solr)
+- [squid](#squid)
 - [supervisor](#supervisor)
 - [system-common](#system-common)
 - [systemd-services](#systemd-services)
@@ -970,6 +971,16 @@
 |Apache Solr heartbeat|X|-|-|-|-|
 |Apache Solr errors count|X|X|-|-|-|
 |Apache Solr searcher warmup time|X|X|-|-|-|
+
+
+## squid
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Squid heartbeat|X|-|-|-|-|
+|Squid status|X|-|-|-|-|
+|Squid server_errors|X|X|-|-|-|
+|Squid total_requests|X|-|-|-|-|
 
 
 ## supervisor
