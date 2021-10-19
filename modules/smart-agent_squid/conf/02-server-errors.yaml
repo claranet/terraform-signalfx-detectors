@@ -1,7 +1,7 @@
 module: squid
 name: server_errors
 
-transformation: false
+transformation: true
 aggregation: true
 
 signals:

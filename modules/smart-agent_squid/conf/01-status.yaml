@@ -1,7 +1,7 @@
 module: squid
 name: status
 
-transformation: false
+transformation: true
 aggregation: true
 
 signals:

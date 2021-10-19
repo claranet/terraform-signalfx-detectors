@@ -50,6 +50,12 @@ variable "status_aggregation_function" {
   default     = ""
 }
 
+variable "status_transformation_function" {
+  description = "Transformation function for status detector (i.e. \".mean(over='5m')\")"
+  type        = string
+  default     = ""
+}
+
 variable "status_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -95,6 +101,12 @@ variable "server_errors_notifications" {
 
 variable "server_errors_aggregation_function" {
   description = "Aggregation function and group by for server_errors detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ""
+}
+
+variable "server_errors_transformation_function" {
+  description = "Transformation function for server_errors detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
 }
@@ -171,8 +183,8 @@ variable "total_requests_notifications" {
   default     = {}
 }
 
-variable "total_requests_aggregation_function" {
-  description = "Aggregation function and group by for total_requests detector (i.e. \".mean(by=['host'])\")"
+variable "total_requests_transformation_function" {
+  description = "Transformation function for total_requests detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
 }

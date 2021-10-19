@@ -34,7 +34,7 @@ resource "signalfx_detector" "status" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('squid_up', filter=${module.filtering.signalflow})${var.status_aggregation_function}.publish('signal')
+    signal = data('squid_up', filter=${module.filtering.signalflow})${var.status_aggregation_function}${var.status_transformation_function}.publish('signal')
     detect(when(signal < ${var.status_threshold_critical}, lasting=%{if var.status_lasting_duration_critical == null}None%{else}'${var.status_lasting_duration_critical}'%{endif}, at_least=${var.status_at_least_percentage_critical})).publish('CRIT')
 EOF
 
@@ -59,8 +59,8 @@ resource "signalfx_detector" "server_errors" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    A = data('squid_server_all_errors_total', filter=${module.filtering.signalflow}, extrapolation='zero')${var.server_errors_aggregation_function}
-    B = data('squid_server_all_requests_total', filter=${module.filtering.signalflow}, extrapolation='zero')${var.server_errors_aggregation_function}
+    A = data('squid_server_all_errors_total', filter=${module.filtering.signalflow}, extrapolation='zero')${var.server_errors_aggregation_function}${var.server_errors_transformation_function}
+    B = data('squid_server_all_requests_total', filter=${module.filtering.signalflow}, extrapolation='zero')${var.server_errors_aggregation_function}${var.server_errors_transformation_function}
     signal = (A/B).scale(100).fill(0).publish('signal')
     detect(when(signal >= ${var.server_errors_threshold_critical}, lasting=%{if var.server_errors_lasting_duration_critical == null}None%{else}'${var.server_errors_lasting_duration_critical}'%{endif}, at_least=${var.server_errors_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal >= ${var.server_errors_threshold_major}, lasting=%{if var.server_errors_lasting_duration_major == null}None%{else}'${var.server_errors_lasting_duration_major}'%{endif}, at_least=${var.server_errors_at_least_percentage_major}) and (not when(signal >= ${var.server_errors_threshold_critical}, lasting=%{if var.server_errors_lasting_duration_critical == null}None%{else}'${var.server_errors_lasting_duration_critical}'%{endif}, at_least=${var.server_errors_at_least_percentage_critical}))).publish('MAJOR')
@@ -99,7 +99,7 @@ resource "signalfx_detector" "total_requests" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('squid_client_http_requests_total', filter=${module.filtering.signalflow})${var.total_requests_aggregation_function}.publish('signal')
+    signal = data('squid_client_http_requests_total', filter=${module.filtering.signalflow})${var.total_requests_transformation_function}.publish('signal')
     detect(when(signal <= ${var.total_requests_threshold_critical}, lasting=%{if var.total_requests_lasting_duration_critical == null}None%{else}'${var.total_requests_lasting_duration_critical}'%{endif}, at_least=${var.total_requests_at_least_percentage_critical})).publish('CRIT')
 EOF
 

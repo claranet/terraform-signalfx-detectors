@@ -8,7 +8,6 @@
 - [What are the available detectors in this module?](#what-are-the-available-detectors-in-this-module)
 - [How to collect required metrics?](#how-to-collect-required-metrics)
   - [Metrics](#metrics)
-- [Notes](#notes)
 - [Related documentation](#related-documentation)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -90,6 +89,49 @@ Agent](https://github.com/signalfx/signalfx-agent). Check the [Related documenta
 information including the official documentation of this monitor.
 
 
+These detectors are based on metric collected by the [squid exporter prometheus](https://github.com/boynux/squid-exporter).
+
+```
+receivers:
+  prometheus_exec/squid:
+  exec: /etc/otel/collector/scripts/squid-exporter -listen 127.0.0.1:{{port}} -metrics-path "/metrics" -squid-hostname localhost -squid-port 3128 -extractservicetimes false
+  port: 9095
+  scrape_interval: 60s
+processors:
+  filter/squid:
+    metrics:
+      include:
+        match_type: regexp
+        metric_names:
+          - squid_server_all_.*
+          - squid_client_http_.*
+          - squid_up
+  metricstransform/squid:
+    transforms:
+    - action: update
+      include: squid_up
+      match_type: strict
+      operations:
+      # Empty the `host` label set by the exporter for squid_up metric only:
+      # https://github.com/boynux/squid-exporter/blob/afadec8336ae6d8208ef9085156ba3803a5b71ca/collector/metrics.go
+      # It can cause conflict with the `host.name` dimension from the new OpenTelemetry convention
+      - action: update_label
+        label: host
+        value_actions:
+          # change to the host value provided for `squid-hostname` parameter
+          - value: localhost
+            new_value:
+  resourcedetection/internal:
+    detectors: [system, gce, ecs, ec2, azure]
+    # Useful in combination with the prometheus receivers which set `host.name` dimension from the scrapped url but we prefer to keep the hostname where the agent runs.
+    override: true
+service:
+  pipelines:
+    metrics/squid:
+      receivers: [prometheus_exec/squid]
+      processors: [resourcedetection/internal, filter/squid, metricstransform/squid]
+      exporters: [signalfx]
+```
 
 
 ### Metrics
@@ -110,16 +152,6 @@ the corresponding monitor configuration:
 
 ```
 
-## Notes
-
-Theses detectors are based on metric collected by prometheus squid exporter on Open Telemtry Agent.
-
-```
-  prometheus_exec/squid:
-  exec: /etc/otel/collector/scripts/squid-exporter -listen 127.0.0.1:9095 -metrics-path "/metrics" -squid-hostname localhost -squid-port 3128 -extractservicetimes false
-  port: 9095
-  scrape_interval: 60s
-```
 
 
 ## Related documentation
