@@ -11,10 +11,17 @@ signals:
   signal:
     metric: "ArpAvailability"
 rules:
-  critical:
+  warning:
+    threshold: 100
+    comparator: "<"
+    lasting_duration: "2m"
+  major:
     threshold: 99
     comparator: "<"
-  major:
+    lasting_duration: "2m"
+    dependency: warning
+  critical:
     threshold: 95
     comparator: "<"
-    dependency: critical
+    lasting_duration: "2m"
+    dependency: major

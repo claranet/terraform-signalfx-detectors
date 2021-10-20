@@ -77,7 +77,7 @@ This module creates the following SignalFx detectors which could contain one or 
 |---|---|---|---|---|---|
 |Azure Express Route heartbeat|X|-|-|-|-|
 |Azure Express Route bgp availability|X|X|-|X|-|
-|Azure Express Route arp availability|X|X|-|-|-|
+|Azure Express Route arp availability|X|X|-|X|-|
 
 ## How to collect required metrics?
 

@@ -15,13 +15,13 @@ rules:
     threshold: 100
     comparator: "<"
     lasting_duration: '2m'
-  critical:
+  major:
     threshold: 99
     comparator: "<"
     lasting_duration: '2m'
     dependency: warning
-  major:
+  critical:
     threshold: 95
     comparator: "<"
     lasting_duration: '2m'
-    dependency: critical
+    dependency: major
