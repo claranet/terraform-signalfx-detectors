@@ -1,6 +1,7 @@
 resource "signalfx_detector" "heartbeat" {
   name = format("%s %s", local.detector_name_prefix, "Nginx heartbeat")
 
+
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
