@@ -1,4 +1,4 @@
-SUPPORTED_COMMANDS := init-module update-module update-module-doc update-module-readme update-module-tf update-module-detectors update-module-outputs check-module
+SUPPORTED_COMMANDS := init-module update-module update-module-doc update-module-readme update-module-tf update-module-detectors update-module-outputs check-module init-stack init-stack-modules
 SUPPORTS_MAKE_ARGS := $(findstring $(firstword $(MAKECMDGOALS)), $(SUPPORTED_COMMANDS))
 ifneq "$(SUPPORTS_MAKE_ARGS)" ""
   COMMAND_ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
@@ -87,10 +87,17 @@ update-module-detectors:
 	./scripts/module/loop_wrapper.sh ./scripts/module/gen_detectors.sh
 	
 .PHONY: init-stack
-init-stack: 
+init-stack: init-stack-common init-stack-modules
+
+.PHONY: init-stack-common
+init-stack-common: 
 	@echo 'Bootstrap stack in "examples/stack"'
 	./scripts/stack/bootstrap.sh
-	./scripts/module/loop_wrapper.sh ./scripts/stack/gen_module.sh "$(REV)" > examples/stack/detectors.tf
+	> examples/stack/detectors.tf
+
+.PHONY: init-stack-modules
+init-stack-modules: 
+	./scripts/module/loop_wrapper.sh ./scripts/stack/gen_module.sh "$(REV)" >> examples/stack/detectors.tf
 
 .PHONY: init-module
 init-module: 

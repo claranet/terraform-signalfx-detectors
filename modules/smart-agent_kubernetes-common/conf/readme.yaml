@@ -1,4 +1,6 @@
 documentations:
+
+
   - name: Smart Agent monitor kubernetes-cluster
     url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/kubernetes-cluster.html'
   - name: Smart Agent monitor kubelet-stats
