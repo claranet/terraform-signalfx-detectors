@@ -13,7 +13,6 @@ resource "signalfx_detector" "heartbeat" {
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}', auto_resolve_after='${local.heartbeat_auto_resolve_after}').publish('CRIT')
 EOF
 
-
   rule {
     description           = "has not reported in ${var.heartbeat_timeframe}"
     severity              = "Critical"
