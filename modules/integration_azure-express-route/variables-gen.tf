@@ -80,6 +80,12 @@ variable "bgp_availability_disabled" {
   default     = null
 }
 
+variable "bgp_availability_disabled_warning" {
+  description = "Disable warning alerting rule for bgp_availability detector"
+  type        = bool
+  default     = null
+}
+
 variable "bgp_availability_disabled_critical" {
   description = "Disable critical alerting rule for bgp_availability detector"
   type        = bool
@@ -92,6 +98,23 @@ variable "bgp_availability_disabled_major" {
   default     = null
 }
 
+variable "bgp_availability_threshold_warning" {
+  description = "Warning threshold for bgp_availability detector"
+  type        = number
+  default     = 100
+}
+
+variable "bgp_availability_lasting_duration_warning" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "2m"
+}
+
+variable "bgp_availability_at_least_percentage_warning" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
 variable "bgp_availability_threshold_critical" {
   description = "Critical threshold for bgp_availability detector"
   type        = number
@@ -101,7 +124,7 @@ variable "bgp_availability_threshold_critical" {
 variable "bgp_availability_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "2m"
 }
 
 variable "bgp_availability_at_least_percentage_critical" {
@@ -118,7 +141,7 @@ variable "bgp_availability_threshold_major" {
 variable "bgp_availability_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "2m"
 }
 
 variable "bgp_availability_at_least_percentage_major" {

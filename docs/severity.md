@@ -381,7 +381,7 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Azure Express Route heartbeat|X|-|-|-|-|
-|Azure Express Route bgp availability|X|X|-|-|-|
+|Azure Express Route bgp availability|X|X|-|X|-|
 |Azure Express Route arp availability|X|X|-|-|-|
 
 
