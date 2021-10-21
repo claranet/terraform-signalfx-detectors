@@ -18,3 +18,8 @@ output "heartbeat" {
   value       = signalfx_detector.heartbeat
 }
 
+output "jvm_memory_pressure" {
+  description = "Detector resource for jvm_memory_pressure"
+  value       = signalfx_detector.jvm_memory_pressure
+}
+
