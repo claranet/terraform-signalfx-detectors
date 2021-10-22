@@ -1,0 +1,20 @@
+module: wallix-bastion
+name: total number of current sessions
+id: current_sessions
+
+transformation: ".mean(over='5m')"
+aggregation: true
+
+signals:
+  signal:
+    metric: wallix_bastion_sessions
+    filter: "filter('status', 'current')"
+
+rules:
+  major:
+    threshold: 75
+    comparator: ">"
+  minor:
+    threshold: 50
+    comparator: ">"
+    dependency: major

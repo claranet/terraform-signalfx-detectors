@@ -61,6 +61,7 @@
 - [usage](#usage)
 - [kong](#kong)
 - [squid](#squid)
+- [wallix-bastion](#wallix-bastion)
 - [apache](#apache)
 - [cassandra-nodetool](#cassandra-nodetool)
 - [cassandra](#cassandra)
@@ -657,6 +658,15 @@
 |Squid status|X|-|-|-|-|
 |Squid server errors ratio|X|X|-|-|-|
 |Squid total amount of requests|X|-|-|-|-|
+
+
+## wallix-bastion
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Wallix-bastion heartbeat|X|-|-|-|-|
+|Wallix-bastion status|X|-|-|-|-|
+|Wallix-bastion total number of current sessions|-|X|X|-|-|
 
 
 ## apache
