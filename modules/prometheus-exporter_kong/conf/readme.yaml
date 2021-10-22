@@ -1,0 +1,32 @@
+documentations:
+  - name: Kong
+    url: 'https://konghq.com/'
+  - name: Kong Prometheus Plugin
+    url: 'https://docs.konghq.com/hub/kong-inc/prometheus/'
+
+source_doc: |
+  Kong provides a [prometheus plugin](https://docs.konghq.com/hub/kong-inc/prometheus/).
+  It must be enabled to expose its metrics in Prometheus exposition format which can be scraped by the agent.
+
+  ### Examples
+
+  Here is an example of SignalFx agent configuration using:
+
+  ```yaml
+    - type: prometheus-exporter
+      host: 127.0.0.1
+      port: 8444
+      useHTTPS: true
+      skipVerify: true
+      datapointsToExclude:
+        - metricNames:
+          - '*'
+          - '!kong_http_status'
+          - '!kong_latency'
+          - '!kong_nginx_metric_errors_total'
+          - '!kong_datastore_reachable'
+          - '!kong_nginx_http_current_connections'
+  ```
+
+  It uses whitelist [filtering](https://docs.signalfx.com/en/latest/integrations/agent/filtering.html) 
+  to keep only interesting metrics. Only the last two are required by this module.

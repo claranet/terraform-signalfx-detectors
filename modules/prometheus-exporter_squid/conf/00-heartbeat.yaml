@@ -1,7 +1,7 @@
 module: squid
 name: heartbeat
 
-transformation: false
+transformation: true
 aggregation: true
 exclude_not_running_vm: true
 
