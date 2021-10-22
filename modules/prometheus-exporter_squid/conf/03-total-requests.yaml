@@ -1,8 +1,9 @@
 module: squid
-name: total_requests
+name: total amount of requests
+id: total_requests
 
 transformation: true
-aggregation: false
+aggregation: true
 
 signals:
   signal:

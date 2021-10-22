@@ -58,6 +58,8 @@
 - [gcp-pubsub-topic](#gcp-pubsub-topic)
 - [newrelic-apm](#newrelic-apm)
 - [usage](#usage)
+- [kong](#kong)
+- [squid](#squid)
 - [apache](#apache)
 - [cassandra-nodetool](#cassandra-nodetool)
 - [cassandra](#cassandra)
@@ -69,7 +71,6 @@
 - [haproxy](#haproxy)
 - [health-checker](#health-checker)
 - [http](#http)
-- [kong](#kong)
 - [kubernetes-apiserver](#kubernetes-apiserver)
 - [kubernetes-common](#kubernetes-common)
 - [kubernetes-velero](#kubernetes-velero)
@@ -90,7 +91,6 @@
 - [rabbitmq-queue](#rabbitmq-queue)
 - [redis](#redis)
 - [solr](#solr)
-- [squid](#squid)
 - [supervisor](#supervisor)
 - [system-common](#system-common)
 - [systemd-services](#systemd-services)
@@ -631,6 +631,24 @@
 |Organization usage custom metrics ratio per host included|-|X|-|-|-|
 
 
+## kong
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Kong heartbeat|X|-|-|-|-|
+|Kong treatment limit|X|X|-|-|-|
+
+
+## squid
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Squid heartbeat|X|-|-|-|-|
+|Squid status|X|-|-|-|-|
+|Squid server errors ratio|X|X|-|-|-|
+|Squid total amount of requests|X|-|-|-|-|
+
+
 ## apache
 
 |Detector|Critical|Major|Minor|Warning|Info|
@@ -755,14 +773,6 @@
 |HTTP content length|-|-|-|X|-|
 |TLS certificate expiry date|-|X|X|-|-|
 |TLS certificate|X|-|-|-|-|
-
-
-## kong
-
-|Detector|Critical|Major|Minor|Warning|Info|
-|---|---|---|---|---|---|
-|Kong heartbeat|X|-|-|-|-|
-|Kong treatment limit|X|X|-|-|-|
 
 
 ## kubernetes-apiserver
@@ -972,16 +982,6 @@
 |Apache Solr heartbeat|X|-|-|-|-|
 |Apache Solr errors count|X|X|-|-|-|
 |Apache Solr searcher warmup time|X|X|-|-|-|
-
-
-## squid
-
-|Detector|Critical|Major|Minor|Warning|Info|
-|---|---|---|---|---|---|
-|Squid heartbeat|X|-|-|-|-|
-|Squid status|X|-|-|-|-|
-|Squid server_errors|X|X|-|-|-|
-|Squid total_requests|X|-|-|-|-|
 
 
 ## supervisor

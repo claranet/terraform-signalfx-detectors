@@ -1,5 +1,6 @@
 module: squid
-name: server_errors
+name: server errors ratio
+id: server_errors
 
 transformation: true
 aggregation: true

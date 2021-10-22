@@ -1,11 +1,19 @@
 documentations:
-  - name: Squid Exporter
+  - name: Squid Server
+    url: http://www.squid-cache.org/
+  - name: Prometheus Exporter for Squid
     url: https://github.com/boynux/squid-exporter
 
 source_doc: |
-  These detectors are based on metric collected by the [squid exporter prometheus](https://github.com/boynux/squid-exporter).
+  The detectors of this module uses metrics from the [squid exporter prometheus](https://github.com/boynux/squid-exporter).
+  Check its documentation to install and configure it appropriately with your Squid server.
 
-  ```
+  ### Examples
+  
+  Here is a sample configuration fragment for the [OpenTelemetry Collector](https://opentelemetry.io/docs/collector/) agent using
+  the [prometheusexec receiver](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/receiver/prometheusexecreceiver).
+
+  ```yaml
   receivers:
     prometheus_exec/squid:
     exec: /etc/otel/collector/scripts/squid-exporter -listen 127.0.0.1:{{port}} -metrics-path "/metrics" -squid-hostname localhost -squid-port 3128 -extractservicetimes false

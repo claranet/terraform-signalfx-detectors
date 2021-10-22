@@ -1,4 +1,4 @@
-# SQUID SignalFx detectors
+# KONG SignalFx detectors
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -7,6 +7,7 @@
 - [How to use this module?](#how-to-use-this-module)
 - [What are the available detectors in this module?](#what-are-the-available-detectors-in-this-module)
 - [How to collect required metrics?](#how-to-collect-required-metrics)
+  - [Examples](#examples)
   - [Metrics](#metrics)
 - [Related documentation](#related-documentation)
 
@@ -20,8 +21,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-smart-agent-squid" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/smart-agent_squid?ref={revision}"
+module "signalfx-detectors-prometheus-exporter-kong" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/prometheus-exporter_kong?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications
@@ -57,7 +58,7 @@ Note the following parameters:
 
 These 3 parameters alongs with all variables defined in [common-variables.tf](common-variables.tf) are common to all 
 [modules](../) in this repository. Other variables, specific to this module, are available in 
-[variables-gen.tf](variables-gen.tf).
+[variables.tf](variables.tf).
 In general, the default configuration "works" but all of these Terraform 
 [variables](https://www.terraform.io/docs/configuration/variables.html) make it possible to 
 customize the detectors behavior to better fit your needs.
@@ -75,82 +76,55 @@ This module creates the following SignalFx detectors which could contain one or 
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|Squid heartbeat|X|-|-|-|-|
-|Squid status|X|-|-|-|-|
-|Squid server_errors|X|X|-|-|-|
-|Squid total_requests|X|-|-|-|-|
+|Kong heartbeat|X|-|-|-|-|
+|Kong treatment limit|X|X|-|-|-|
 
 ## How to collect required metrics?
 
 This module uses metrics available from 
-[monitors](https://docs.signalfx.com/en/latest/integrations/agent/monitors/_monitor-config.html)
-available in the [SignalFx Smart 
-Agent](https://github.com/signalfx/signalfx-agent). Check the [Related documentation](#related-documentation) section for more 
-information including the official documentation of this monitor.
+the scraping of a server following the [OpenMetrics convention](https://openmetrics.io/) based on and compatible with [the Prometheus
+exposition format](https://github.com/prometheus/docs/blob/main/content/docs/instrumenting/exposition_formats.md#openmetrics-text-format).
+They are generally called "Prometheus Exporter" which can be fetched by both the [SignalFx Smart Agent](https://github.com/signalfx/signalfx-agent)
+thanks to its [prometheus exporter monitor](https://docs.signalfx.com/en/latest/integrations/agent/monitors/prometheus-exporter.html) and the
+[OpenTelemetry Collector](https://github.com/signalfx/splunk-otel-collector) using its [prometheus
+receiver](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/receiver/prometheusreceiver) or its derivates.
 
 
-These detectors are based on metric collected by the [squid exporter prometheus](https://github.com/boynux/squid-exporter).
+Kong provides a [prometheus plugin](https://docs.konghq.com/hub/kong-inc/prometheus/).
+It must be enabled to expose its metrics in Prometheus exposition format which can be scraped by the agent.
 
+### Examples
+
+Here is an example of SignalFx agent configuration using:
+
+```yaml
+  - type: prometheus-exporter
+    host: 127.0.0.1
+    port: 8444
+    useHTTPS: true
+    skipVerify: true
+    datapointsToExclude:
+      - metricNames:
+        - '*'
+        - '!kong_http_status'
+        - '!kong_latency'
+        - '!kong_nginx_metric_errors_total'
+        - '!kong_datastore_reachable'
+        - '!kong_nginx_http_current_connections'
 ```
-receivers:
-  prometheus_exec/squid:
-  exec: /etc/otel/collector/scripts/squid-exporter -listen 127.0.0.1:{{port}} -metrics-path "/metrics" -squid-hostname localhost -squid-port 3128 -extractservicetimes false
-  port: 9095
-  scrape_interval: 60s
-processors:
-  filter/squid:
-    metrics:
-      include:
-        match_type: regexp
-        metric_names:
-          - squid_server_all_.*
-          - squid_client_http_.*
-          - squid_up
-  metricstransform/squid:
-    transforms:
-    - action: update
-      include: squid_up
-      match_type: strict
-      operations:
-      # Empty the `host` label set by the exporter for squid_up metric only:
-      # https://github.com/boynux/squid-exporter/blob/afadec8336ae6d8208ef9085156ba3803a5b71ca/collector/metrics.go
-      # It can cause conflict with the `host.name` dimension from the new OpenTelemetry convention
-      - action: update_label
-        label: host
-        value_actions:
-          # change to the host value provided for `squid-hostname` parameter
-          - value: localhost
-            new_value:
-  resourcedetection/internal:
-    detectors: [system, gce, ecs, ec2, azure]
-    # Useful in combination with the prometheus receivers which set `host.name` dimension from the scrapped url but we prefer to keep the hostname where the agent runs.
-    override: true
-service:
-  pipelines:
-    metrics/squid:
-      receivers: [prometheus_exec/squid]
-      processors: [resourcedetection/internal, filter/squid, metricstransform/squid]
-      exporters: [signalfx]
-```
+
+It uses whitelist [filtering](https://docs.signalfx.com/en/latest/integrations/agent/filtering.html) 
+to keep only interesting metrics. Only the last two are required by this module.
 
 
 ### Metrics
 
 
-To filter only required metrics for the detectors of this module, add the 
-[datapointsToExclude](https://docs.signalfx.com/en/latest/integrations/agent/filtering.html) parameter to 
-the corresponding monitor configuration:
+Here is the list of required metrics for detectors in this module.
 
-```yaml
-    datapointsToExclude:
-      - metricNames:
-        - '*'
-        - '!squid_client_http_requests_total'
-        - '!squid_server_all_errors_total'
-        - '!squid_server_all_requests_total'
-        - '!squid_up'
+* `kong_datastore_reachable`
+* `kong_nginx_http_current_connections`
 
-```
 
 
 
@@ -158,4 +132,5 @@ the corresponding monitor configuration:
 
 * [Terraform SignalFx provider](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs)
 * [Terraform SignalFx detector](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector)
-* [Squid Exporter](https://github.com/boynux/squid-exporter)
+* [Kong](https://konghq.com/)
+* [Kong Prometheus Plugin](https://docs.konghq.com/hub/kong-inc/prometheus/)

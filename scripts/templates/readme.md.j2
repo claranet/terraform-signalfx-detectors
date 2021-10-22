@@ -73,8 +73,16 @@ available in the [SignalFx Smart
 Agent](https://github.com/signalfx/signalfx-agent). Check the [Related documentation](#related-documentation) section for more 
 information including the official documentation of this monitor.
 {% elif source_type == 'otel-collector' -%}
-[receivers](https://github.com/open-telemetry/opentelemetry-collector/blob/master/receiver/README.md) 
-available in the [OpenTelemetry Collector](https://github.com/open-telemetry/opentelemetry-collector-contrib).
+the [receivers](https://github.com/open-telemetry/opentelemetry-collector/blob/master/receiver/README.md) 
+in the [OpenTelemetry Collector](https://github.com/open-telemetry/opentelemetry-collector-contrib).
+It can be embedded in the software to monitor or it can be a binary to install and configure it separately.
+{% elif source_type == 'prometheus-exporter' -%}
+the scraping of a server following the [OpenMetrics convention](https://openmetrics.io/) based on and compatible with [the Prometheus
+exposition format](https://github.com/prometheus/docs/blob/main/content/docs/instrumenting/exposition_formats.md#openmetrics-text-format).
+They are generally called "Prometheus Exporter" which can be fetched by both the [SignalFx Smart Agent](https://github.com/signalfx/signalfx-agent)
+thanks to its [prometheus exporter monitor](https://docs.signalfx.com/en/latest/integrations/agent/monitors/prometheus-exporter.html) and the
+[OpenTelemetry Collector](https://github.com/signalfx/splunk-otel-collector) using its [prometheus
+receiver](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/receiver/prometheusreceiver) or its derivates.
 {% elif source_type == 'integration_aws' -%}
 the [AWS integration](https://docs.signalfx.com/en/latest/integrations/amazon-web-services.html) configurable 
 with this Terraform [module](https://github.com/claranet/terraform-signalfx-integrations/tree/master/cloud/aws).

@@ -10,6 +10,7 @@ ARGS=$@
 MODULE=${ARGS// /-}
 if [[ $MODULE != smart-agent_* ]] &&
    [[ $MODULE != otel-collector_* ]] &&
+   [[ $MODULE != prometheus-exporter_* ]] &&
    [[ $MODULE != integration_* ]] &&
    [[ $MODULE != organization_* ]] &&
    [[ $MODULE != internal_* ]] ; then
