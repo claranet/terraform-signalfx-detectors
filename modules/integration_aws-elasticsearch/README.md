@@ -57,7 +57,7 @@ Note the following parameters:
 
 These 3 parameters alongs with all variables defined in [common-variables.tf](common-variables.tf) are common to all 
 [modules](../) in this repository. Other variables, specific to this module, are available in 
-[variables.tf](variables.tf).
+[variables.tf](variables.tf) and [variables-gen.tf](variables-gen.tf).
 In general, the default configuration "works" but all of these Terraform 
 [variables](https://www.terraform.io/docs/configuration/variables.html) make it possible to 
 customize the detectors behavior to better fit your needs.
@@ -79,6 +79,7 @@ This module creates the following SignalFx detectors which could contain one or 
 |AWS ElasticSearch cluster status|X|X|-|-|-|
 |AWS ElasticSearch cluster free storage space|X|X|-|-|-|
 |AWS ElasticSearch cluster CPU|X|X|-|-|-|
+|AWS Elasticsearch jvm memory pressure|X|X|-|-|-|
 
 ## How to collect required metrics?
 
@@ -98,6 +99,7 @@ Here is the list of required metrics for detectors in this module.
 * `ClusterStatus.yellow`
 * `CPUUtilization`
 * `FreeStorageSpace`
+* `JVMMemoryPressure`
 * `Nodes`
 
 

@@ -1,0 +1,21 @@
+module: AWS Elasticsearch
+name: JVM Memory Pressure
+
+transformation: ".min(over='15m')"
+aggregation: true
+filtering: "filter('namespace', 'AWS/ES') and filter('stat', 'upper') and filter('NodeId', '*')"
+value_unit: "%"
+tip: "The cluster could encounter out of memory errors if usage increases. Consider scaling vertically."
+
+signals:
+  signal:
+    metric: JVMMemoryPressure
+
+rules:
+  critical:
+    threshold: 90
+    comparator: ">"
+  major:
+    threshold: 80
+    comparator: ">"
+    dependency: critical
