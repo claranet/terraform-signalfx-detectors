@@ -1,0 +1,45 @@
+documentations:
+  - name: Wallix-Bastion
+    url: https://www.wallix.com/privileged-access-management
+  - name: Prometheus Exporter for Wallix-Bastion
+    url: https://github.com/claranet/wallix_bastion_exporter
+
+source_doc: |
+  The detectors of this module uses metrics from the [wallix-bastion exporter prometheus](https://github.com/claranet/wallix_bastion_exporter).
+  Check its documentation to install and configure it appropriately with your Wallix Bastion instance.
+
+  ### Examples
+  
+  Here is a sample configuration fragment for the [OpenTelemetry Collector](https://opentelemetry.io/docs/collector/) agent using
+  the [prometheusexec receiver](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/receiver/prometheusexecreceiver).
+
+  ```yaml
+  receivers:
+    prometheus_exec/wallix:
+      exec: /etc/otel/collector/scripts/wallix_bastion_exporter/wallix_bastion_exporter --listen-address ":{{port}}" --skip-verify
+      port: 9191
+      scrape_interval: 300s
+      env:
+        - name: WALLIX_USERNAME
+          value: monitoring
+        - name: WALLIX_PASSWORD
+          value: my_awesome_password
+  processors:
+    filter/wallix:
+      metrics:
+        include:
+          match_type: regexp
+          metric_names:
+            - wallix_bastion.*
+    resourcedetection/internal:
+      detectors: [system, gce, ecs, ec2, azure]
+      # Useful in combination with the prometheus receivers which set `host.name` dimension from the scrapped url but we prefer to keep the hostname where the agent runs.
+      override: true
+  service:
+    pipelines:
+      metrics/wallix:
+        receivers: [prometheus_exec/wallix]
+        processors: [resourcedetection/internal, filter/wallix, metricstransform/wallix]
+        exporters: [signalfx]
+  ```
+
