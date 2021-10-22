@@ -1,0 +1,27 @@
+## Example
+module: Azure Express Route
+name: "BGP Availability"
+
+transformation: true
+aggregation: true
+
+filtering: "filter('resource_type', 'Microsoft.Network/expressRouteCircuits') and filter('primary_aggregation_type', 'true')"
+
+signals:
+  signal:
+    metric: "BgpAvailability"
+rules:
+  warning:
+    threshold: 100
+    comparator: "<"
+    lasting_duration: '2m'
+  major:
+    threshold: 99
+    comparator: "<"
+    lasting_duration: '2m'
+    dependency: warning
+  critical:
+    threshold: 95
+    comparator: "<"
+    lasting_duration: '2m'
+    dependency: major
