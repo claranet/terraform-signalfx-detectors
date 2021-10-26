@@ -1,0 +1,26 @@
+module: AWS Backup
+name: Check
+id: backup
+
+transformation: ".min(over='23h')"
+aggregation: true
+filtering: "filter('namespace', 'AWS/Backup')"
+value_unit: "count"
+
+signals:
+  created:
+    metric: NumberOfBackupJobsCreated
+    extrapolation: zero
+    rollup: sum
+  completed:
+    metric: NumberOfBackupJobsCompleted
+    extrapolation: zero
+    rollup: sum
+  signal:
+    formula: created - completed
+rules:
+  critical:
+    threshold: 0
+    comparator: ">"
+    lasting_duration: 1d
+    lasting_at_least: 0.9
