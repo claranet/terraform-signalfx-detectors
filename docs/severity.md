@@ -6,6 +6,7 @@
 
 - [aws-alb](#aws-alb)
 - [aws-apigateway](#aws-apigateway)
+- [aws-backup](#aws-backup)
 - [aws-beanstalk](#aws-beanstalk)
 - [aws-ecs-cluster](#aws-ecs-cluster)
 - [aws-ecs-service](#aws-ecs-service)
@@ -122,6 +123,13 @@
 |AWS APIGateway latency|X|X|-|-|-|
 |AWS APIGateway http 5xx error rate|X|X|-|-|-|
 |AWS APIGateway http 4xx error rate|X|X|-|-|-|
+
+
+## aws-backup
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|AWS Backup status|X|-|-|-|-|
 
 
 ## aws-beanstalk
