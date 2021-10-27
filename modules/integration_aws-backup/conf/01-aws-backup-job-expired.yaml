@@ -1,6 +1,6 @@
 module: AWS Backup
-name: not started
-id: backup_not_started
+name: job expired
+id: backup_job_expired
 
 transformation: ".min(over='1h')"
 aggregation: true
@@ -9,7 +9,7 @@ value_unit: "count"
 
 signals:
   failed:
-    metric: NumberOfBackupJobsFailed
+    metric: NumberOfBackupJobsExpired
     extrapolation: zero
     rollup: sum
   signal:

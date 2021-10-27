@@ -1,6 +1,6 @@
 module: AWS Backup
-name: failed
-id: backup_failed
+name: copy jobs failed
+id: backup_copy_jobs_failed
 
 transformation: ".min(over='1h')"
 aggregation: true
@@ -9,7 +9,7 @@ value_unit: "count"
 
 signals:
   failed:
-    metric: NumberOfBackupJobsFailed
+    metric: NumberOfCopyJobsFailed
     extrapolation: zero
     rollup: sum
   signal:

@@ -130,7 +130,8 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |AWS Backup failed|X|-|-|-|-|
-|AWS Backup not started|X|-|-|-|-|
+|AWS Backup job expired|X|-|-|-|-|
+|AWS Backup copy jobs failed|X|-|-|-|-|
 
 
 ## aws-beanstalk
