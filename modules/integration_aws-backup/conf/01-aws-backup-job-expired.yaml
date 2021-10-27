@@ -18,5 +18,5 @@ rules:
   critical:
     threshold: 0
     comparator: ">"
-    lasting_duration: 1d
+    lasting_duration: 2h
     lasting_at_least: 0.9

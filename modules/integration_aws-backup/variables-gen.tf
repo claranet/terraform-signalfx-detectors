@@ -45,7 +45,7 @@ variable "backup_failed_threshold_critical" {
 variable "backup_failed_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "1d"
+  default     = "2h"
 }
 
 variable "backup_failed_at_least_percentage_critical" {
@@ -100,7 +100,7 @@ variable "backup_job_expired_threshold_critical" {
 variable "backup_job_expired_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "1d"
+  default     = "2h"
 }
 
 variable "backup_job_expired_at_least_percentage_critical" {
@@ -155,7 +155,7 @@ variable "backup_copy_jobs_failed_threshold_critical" {
 variable "backup_copy_jobs_failed_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "1d"
+  default     = "2h"
 }
 
 variable "backup_copy_jobs_failed_at_least_percentage_critical" {
