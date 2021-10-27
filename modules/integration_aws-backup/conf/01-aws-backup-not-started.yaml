@@ -1,23 +1,19 @@
 module: AWS Backup
-name: Status
-id: backup
+name: not started
+id: backup_not_started
 
-transformation: true
+transformation: ".min(over='1h')"
 aggregation: true
 filtering: "filter('namespace', 'AWS/Backup')"
 value_unit: "count"
 
 signals:
-  created:
-    metric: NumberOfBackupJobsCreated
-    extrapolation: zero
-    rollup: sum
-  completed:
-    metric: NumberOfBackupJobsCompleted
+  failed:
+    metric: NumberOfBackupJobsFailed
     extrapolation: zero
     rollup: sum
   signal:
-    formula: created - completed
+    formula: failed
 rules:
   critical:
     threshold: 0

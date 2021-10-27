@@ -76,6 +76,7 @@ This module creates the following SignalFx detectors which could contain one or 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |AWS Backup status|X|-|-|-|-|
+|AWS Backup not started|X|-|-|-|-|
 
 ## How to collect required metrics?
 
@@ -93,6 +94,7 @@ Here is the list of required metrics for detectors in this module.
 
 * `NumberOfBackupJobsCompleted`
 * `NumberOfBackupJobsCreated`
+* `NumberOfBackupJobsFailed`
 
 
 

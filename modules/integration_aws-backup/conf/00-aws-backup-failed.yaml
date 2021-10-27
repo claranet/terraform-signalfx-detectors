@@ -1,0 +1,26 @@
+module: AWS Backup
+name: Status
+id: backup_failed
+
+transformation: ".min(over='1d')"
+aggregation: true
+filtering: "filter('namespace', 'AWS/Backup')"
+value_unit: "count"
+
+signals:
+  created:
+    metric: NumberOfBackupJobsCreated
+    extrapolation: zero
+    rollup: sum
+  completed:
+    metric: NumberOfBackupJobsCompleted
+    extrapolation: zero
+    rollup: sum
+  signal:
+    formula: created - completed
+rules:
+  critical:
+    threshold: 0
+    comparator: ">"
+    lasting_duration: 1d
+    lasting_at_least: 0.9

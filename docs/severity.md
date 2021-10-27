@@ -130,6 +130,7 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |AWS Backup status|X|-|-|-|-|
+|AWS Backup not started|X|-|-|-|-|
 
 
 ## aws-beanstalk
