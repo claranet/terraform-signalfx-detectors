@@ -1,3 +1,8 @@
 documentations:
   - name: CloudWatch metrics
     url: 'https://docs.aws.amazon.com/aws-backup/latest/devguide/cloudwatch.html'
+
+source_doc: |
+  **NumberOfBackupJobsFailed** only shows "The number of backup jobs that AWS Backup scheduled but did not start".
+  If a job is started but then failed, we will not be able to check the jobs status throught this variable. So we
+  compare NumberOfBackupJobsCreated and NumberOfBackupJobsCompleted over a day.

@@ -75,7 +75,7 @@ This module creates the following SignalFx detectors which could contain one or 
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|AWS Backup status|X|-|-|-|-|
+|AWS Backup failed|X|-|-|-|-|
 |AWS Backup not started|X|-|-|-|-|
 
 ## How to collect required metrics?
@@ -85,7 +85,9 @@ the [AWS integration](https://docs.signalfx.com/en/latest/integrations/amazon-we
 with this Terraform [module](https://github.com/claranet/terraform-signalfx-integrations/tree/master/cloud/aws).
 
 
-
+**NumberOfBackupJobsFailed** only shows "The number of backup jobs that AWS Backup scheduled but did not start".
+If a job is started but then failed, we will not be able to check the jobs status throught this variable. So we
+compare NumberOfBackupJobsCreated and NumberOfBackupJobsCompleted over a day.
 
 ### Metrics
 

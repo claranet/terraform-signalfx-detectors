@@ -129,7 +129,7 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|AWS Backup status|X|-|-|-|-|
+|AWS Backup failed|X|-|-|-|-|
 |AWS Backup not started|X|-|-|-|-|
 
 

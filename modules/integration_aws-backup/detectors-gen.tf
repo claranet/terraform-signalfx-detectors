@@ -1,5 +1,5 @@
 resource "signalfx_detector" "backup_failed" {
-  name = format("%s %s", local.detector_name_prefix, "AWS Backup status")
+  name = format("%s %s", local.detector_name_prefix, "AWS Backup failed")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)

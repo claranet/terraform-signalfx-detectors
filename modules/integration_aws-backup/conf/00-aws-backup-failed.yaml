@@ -1,5 +1,5 @@
 module: AWS Backup
-name: Status
+name: Failed
 id: backup_failed
 
 transformation: ".min(over='1d')"
