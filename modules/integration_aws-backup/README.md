@@ -78,6 +78,7 @@ This module creates the following SignalFx detectors which could contain one or 
 |AWS Backup failed|X|-|-|-|-|
 |AWS Backup job expired|X|-|-|-|-|
 |AWS Backup copy jobs failed|X|-|-|-|-|
+|AWS Backup check|X|-|-|-|-|
 
 ## How to collect required metrics?
 
@@ -93,6 +94,8 @@ with this Terraform [module](https://github.com/claranet/terraform-signalfx-inte
 
 Here is the list of required metrics for detectors in this module.
 
+* `NumberOfBackupJobsCompleted`
+* `NumberOfBackupJobsCreated`
 * `NumberOfBackupJobsExpired`
 * `NumberOfBackupJobsFailed`
 * `NumberOfCopyJobsFailed`

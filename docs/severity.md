@@ -132,6 +132,7 @@
 |AWS Backup failed|X|-|-|-|-|
 |AWS Backup job expired|X|-|-|-|-|
 |AWS Backup copy jobs failed|X|-|-|-|-|
+|AWS Backup check|X|-|-|-|-|
 
 
 ## aws-beanstalk
