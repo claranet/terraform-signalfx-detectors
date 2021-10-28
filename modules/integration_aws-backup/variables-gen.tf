@@ -180,7 +180,7 @@ variable "backup_aggregation_function" {
 variable "backup_transformation_function" {
   description = "Transformation function for backup detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".min(23h)"
+  default     = ".min(over='23h')"
 }
 
 variable "backup_tip" {
