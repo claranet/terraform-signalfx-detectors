@@ -2,7 +2,7 @@ module: AWS Backup
 name: Check
 id: backup
 
-transformation: ".min(23h)"
+transformation: ".min(over='23h')"
 aggregation: true
 filtering: "filter('namespace', 'AWS/Backup')"
 value_unit: "count"
