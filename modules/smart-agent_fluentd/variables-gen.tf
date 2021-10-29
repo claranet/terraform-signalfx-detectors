@@ -77,7 +77,7 @@ variable "buffer_runbook_url" {
 variable "buffer_threshold" {
   description = "Major threshold for up detector"
   type        = number
-  default     = 1
+  default     = 10
 }
 
 variable "buffer_lasting_seconds" {
