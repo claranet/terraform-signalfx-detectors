@@ -9,7 +9,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    signal = data('fluentd_output_status_buffer_stage_length', filter=${local.not_running_vm_filters} and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
+    signal = data('fluentd_output_status_buffer_queue_length', filter=${local.not_running_vm_filters} and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}', auto_resolve_after='${local.heartbeat_auto_resolve_after}').publish('MAJOR')
 EOF
 
@@ -34,11 +34,11 @@ resource "signalfx_detector" "buffer" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('fluentd_output_status_buffer_stage_length', filter=${local.not_running_vm_filters} and ${module.filtering.signalflow})${var.buffer_aggregation_function}${var.buffer_transformation_function}.publish('signal')
-    detect(when(signal < ${var.buffer_threshold}, lasting="${var.buffer_lasting_seconds}s")).publish('MAJOR')
+    signal = data('fluentd_output_status_buffer_queue_length', filter=${local.not_running_vm_filters} and ${module.filtering.signalflow})${var.buffer_aggregation_function}${var.buffer_transformation_function}.publish('signal')
+    detect(when(signal > ${var.buffer_threshold}, lasting="${var.buffer_lasting_seconds}s")).publish('MAJOR')
 EOF
   rule {
-    description           = "is too low < ${var.buffer_threshold}"
+    description           = "is too high > ${var.buffer_threshold}"
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.buffer_disabled, var.buffer_disabled, var.detectors_disabled)
