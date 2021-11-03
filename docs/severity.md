@@ -652,6 +652,32 @@
 |Kong treatment limit|X|X|-|-|-|
 
 
+## oracle
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Oracle heartbeat|X|-|-|-|-|
+|Oracle listener|X|-|-|-|-|
+|Oracle dbisdown|X|-|-|-|-|
+|Oracle pdbisdown|X|-|-|-|-|
+|Oracle blocking_sessions|X|-|-|-|-|
+|Oracle alertlogerror|X|-|-|-|-|
+|Oracle fra_usage|X|-|-|X|-|
+|Oracle sessions_limits|X|-|-|X|-|
+|Oracle process_limits|X|-|-|X|-|
+|Oracle stby_replication|X|-|-|-|-|
+|Oracle oracledb_export|X|-|-|-|-|
+|Oracle oracle_rman_incr|X|-|-|-|-|
+|Oracle oracle_rman_arch|X|-|-|-|-|
+|Oracle user_expiration|X|-|-|-|-|
+|Oracle tablespace_cdb|X|-|-|-|-|
+|Oracle tablespace_pdb|X|-|-|-|-|
+|Oracle tablespace_single|X|-|-|-|-|
+|Oracle dbvagent|X|-|-|-|-|
+|Oracle dbvnet|X|-|-|-|-|
+|Oracle dbvctl|X|-|-|-|-|
+
+
 ## squid
 
 |Detector|Critical|Major|Minor|Warning|Info|

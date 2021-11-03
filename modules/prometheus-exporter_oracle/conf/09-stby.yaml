@@ -1,0 +1,15 @@
+module: oracle
+name: STBY_Replication
+
+transformation: true
+aggregation: true
+
+signals:
+  signal:
+    metric: oracledb_STBY_Replication_count 
+
+rules:
+  critical:
+    threshold: 0
+    comparator: ">"
+    lasting_duration: "5m"

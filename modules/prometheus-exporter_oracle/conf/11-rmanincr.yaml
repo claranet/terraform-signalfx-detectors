@@ -1,0 +1,15 @@
+module: oracle
+name: Oracle_RMAN_INCR
+
+transformation: true
+aggregation: true
+
+signals:
+  signal:
+    metric: oracledb_Oracle_RMAN_Incr_value   
+
+rules:
+  critical:
+    threshold: 0
+    comparator: ">"
+    lasting_duration: "60m"

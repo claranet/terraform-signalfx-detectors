@@ -1,0 +1,15 @@
+module: oracle
+name: AlertLogError
+
+transformation: true
+aggregation: true
+
+signals:
+  signal:
+    metric: oracledb_AlertLogError_count
+
+rules:
+  critical:
+    threshold: 0
+    comparator: ">"
+    lasting_duration: "5m"

@@ -1,0 +1,13 @@
+module: oracle
+name: heartbeat
+
+transformation: true
+aggregation: true
+exclude_not_running_vm: true
+
+signals:
+  signal:
+    metric: oracledb_up
+
+rules:
+  critical:

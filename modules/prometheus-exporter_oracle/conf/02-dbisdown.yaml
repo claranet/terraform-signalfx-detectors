@@ -1,0 +1,15 @@
+module: oracle
+name: dbisdown
+
+transformation: true
+aggregation: true
+
+signals:
+  signal:
+    metric: oracledb_up
+
+rules:
+  critical:
+    threshold: 1
+    comparator: "<"
+    lasting_duration: "5m"

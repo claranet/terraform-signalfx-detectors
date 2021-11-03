@@ -1,0 +1,15 @@
+module: oracle
+name: Tablespace_CDB
+
+transformation: true
+aggregation: true
+
+signals:
+  signal:
+    metric: oracledb_tablespace_usage_pct_PDB_V2_real_ts_used_pct
+
+rules:
+  critical:
+    threshold: 90
+    comparator: ">"
+    lasting_duration: "15m"

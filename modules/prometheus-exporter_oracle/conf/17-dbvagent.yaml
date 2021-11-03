@@ -1,0 +1,15 @@
+module: oracle
+name: dbvagent
+
+transformation: true
+aggregation: true
+
+signals:
+  signal:
+    metric: dbvagent
+
+rules:
+  critical:
+    threshold: 1
+    comparator: "<"
+    lasting_duration: "5m"
