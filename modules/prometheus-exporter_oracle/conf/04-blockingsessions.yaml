@@ -1,0 +1,15 @@
+module: oracle
+name: blocking_sessions
+
+transformation: true
+aggregation: true
+
+signals:
+  signal:
+    metric: oracledb_blocking_sessions_count
+
+rules:
+  critical:
+    threshold: 0
+    comparator: ">"
+    lasting_duration: "5m"

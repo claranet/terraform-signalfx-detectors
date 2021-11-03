@@ -1,0 +1,15 @@
+module: oracle
+name: User_expiration
+
+transformation: true
+aggregation: true
+
+signals:
+  signal:
+    metric: oracledb_User_pass_expiration_V2_count    
+
+rules:
+  critical:
+    threshold: 0
+    comparator: ">"
+    lasting_duration: "60m"

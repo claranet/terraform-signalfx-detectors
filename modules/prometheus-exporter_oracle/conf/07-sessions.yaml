@@ -1,0 +1,19 @@
+module: oracle
+name: sessions_limits
+
+transformation: true
+aggregation: true
+
+signals:
+  signal:
+    metric: oracledb_Sessions_limits_value 
+
+rules:
+  warning:
+    threshold: 85 
+    comparator: ">"
+    lasting_duration: "5m"
+  critical:
+    threshold: 96
+    comparator: ">"
+    lasting_duration: "5m"

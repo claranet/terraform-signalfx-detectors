@@ -1,0 +1,15 @@
+module: oracle
+name: OracleDB_export
+
+transformation: true
+aggregation: true
+
+signals:
+  signal:
+    metric: oracledb_Oracle_exports_value  
+
+rules:
+  critical:
+    threshold: 0
+    comparator: ">"
+    lasting_duration: "5m"
