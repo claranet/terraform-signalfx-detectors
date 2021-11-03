@@ -139,6 +139,11 @@ variable "restarts_threshold_critical" {
 variable "restarts_threshold_major" {
   description = "Major threshold for restarts detector"
   type        = number
-  default     = 3
+  default     = 2
 }
 
+variable "restarts_counter_timeshift" {
+  description = "Timeframe for the timeshift on the restart counter (i.e. \"10m\""
+  type        = string
+  default     = "10m"
+}

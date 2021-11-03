@@ -62,7 +62,8 @@ resource "signalfx_detector" "restarts" {
 
   program_text = <<-EOF
     base_filtering = (not filter('name', 'pm2-metrics'))
-    signal = data('pm2_restarts', filter=${local.not_running_vm_filters} and base_filtering and ${module.filtering.signalflow})${var.restarts_aggregation_function}${var.restarts_transformation_function}.publish('signal')
+    A = data('pm2_restarts', filter=${local.not_running_vm_filters} and base_filtering and ${module.filtering.signalflow})${var.restarts_aggregation_function}${var.restarts_transformation_function}
+    signal = (A - A.timeshift("${var.restarts_counter_timeshift}")).publish('signal')
     detect(when(signal > ${var.restarts_threshold_critical})).publish('CRIT')
     detect(when(signal >= ${var.restarts_threshold_major})).publish('MAJOR')
 EOF
