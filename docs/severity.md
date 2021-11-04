@@ -87,6 +87,7 @@
 - [nginx](#nginx)
 - [ntp](#ntp)
 - [php-fpm](#php-fpm)
+- [pm2](#pm2)
 - [postgresql](#postgresql)
 - [processes](#processes)
 - [rabbitmq-node](#rabbitmq-node)
@@ -934,6 +935,15 @@
 |---|---|---|---|---|---|
 |PHP-FPM heartbeat|X|-|-|-|-|
 |PHP-FPM busy workers|X|X|-|-|-|
+
+
+## pm2
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Pm2 heartbeat|X|-|-|-|-|
+|Pm2 up application|X|-|-|-|-|
+|Pm2 restarts counter|X|X|-|-|-|
 
 
 ## postgresql
