@@ -1,5 +1,6 @@
 module: oracle
-name: dbisdown
+name: "Database status"
+id: dbisdown
 
 transformation: true
 aggregation: true
@@ -13,3 +14,5 @@ rules:
     threshold: 1
     comparator: "<"
     lasting_duration: "5m"
+    description: "is down"
+tip: "database is not started, check status on server and logfile"

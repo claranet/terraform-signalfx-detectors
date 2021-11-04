@@ -2,6 +2,13 @@
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+:link: **Contents**
+
+- [How to use this module?](#how-to-use-this-module)
+- [What are the available detectors in this module?](#what-are-the-available-detectors-in-this-module)
+- [How to collect required metrics?](#how-to-collect-required-metrics)
+  - [Metrics](#metrics)
+- [Related documentation](#related-documentation)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -69,25 +76,25 @@ This module creates the following SignalFx detectors which could contain one or 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Oracle heartbeat|X|-|-|-|-|
-|Oracle listener|X|-|-|-|-|
-|Oracle dbisdown|X|-|-|-|-|
-|Oracle pdbisdown|X|-|-|-|-|
-|Oracle blocking_sessions|X|-|-|-|-|
-|Oracle alertlogerror|X|-|-|-|-|
-|Oracle fra_usage|X|-|-|X|-|
-|Oracle sessions_limits|X|-|-|X|-|
-|Oracle process_limits|X|-|-|X|-|
-|Oracle stby_replication|X|-|-|-|-|
-|Oracle oracledb_export|X|-|-|-|-|
-|Oracle oracle_rman_incr|X|-|-|-|-|
-|Oracle oracle_rman_arch|X|-|-|-|-|
-|Oracle user_expiration|X|-|-|-|-|
-|Oracle tablespace_cdb|X|-|-|-|-|
-|Oracle tablespace_pdb|X|-|-|-|-|
-|Oracle tablespace_single|X|-|-|-|-|
-|Oracle dbvagent|X|-|-|-|-|
-|Oracle dbvnet|X|-|-|-|-|
-|Oracle dbvctl|X|-|-|-|-|
+|Oracle process listener|X|-|-|-|-|
+|Oracle database status|X|-|-|-|-|
+|Oracle pluggable database|X|-|-|-|-|
+|Oracle blocking(s) session(s)|X|-|-|-|-|
+|Oracle alert.log|X|-|-|-|-|
+|Oracle fast recovery area usage|X|-|-|X|-|
+|Oracle limit for sessions|X|-|-|X|-|
+|Oracle limit for processes|X|-|-|X|-|
+|Oracle gap in standby database replication|X|-|-|-|-|
+|Oracle database last export|X|-|-|-|-|
+|Oracle rman incremental backup|X|-|-|-|-|
+|Oracle rman archivelog backup|X|-|-|-|-|
+|Oracle user expiration|X|-|-|-|-|
+|Oracle tablespace usage on container database|X|-|-|-|-|
+|Oracle tablespace usage on pluggable database|X|-|-|-|-|
+|Oracle tablespace usage on database|X|-|-|-|-|
+|Oracle process dbvagent|X|-|-|-|-|
+|Oracle process dbvnet|X|-|-|-|-|
+|Oracle process dbvctl|X|-|-|-|-|
 
 ## How to collect required metrics?
 

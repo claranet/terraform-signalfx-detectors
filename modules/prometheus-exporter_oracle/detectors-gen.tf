@@ -27,7 +27,7 @@ EOF
 }
 
 resource "signalfx_detector" "listener" {
-  name = format("%s %s", local.detector_name_prefix, "Oracle listener")
+  name = format("%s %s", local.detector_name_prefix, "Oracle process listener")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
@@ -39,7 +39,7 @@ resource "signalfx_detector" "listener" {
 EOF
 
   rule {
-    description           = "is too low < ${var.listener_threshold_critical}"
+    description           = "is not started < ${var.listener_threshold_critical}"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.listener_disabled, var.detectors_disabled)
@@ -52,7 +52,7 @@ EOF
 }
 
 resource "signalfx_detector" "dbisdown" {
-  name = format("%s %s", local.detector_name_prefix, "Oracle dbisdown")
+  name = format("%s %s", local.detector_name_prefix, "Oracle database status")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
@@ -64,7 +64,7 @@ resource "signalfx_detector" "dbisdown" {
 EOF
 
   rule {
-    description           = "is too low < ${var.dbisdown_threshold_critical}"
+    description           = "is down < ${var.dbisdown_threshold_critical}"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.dbisdown_disabled, var.detectors_disabled)
@@ -77,7 +77,7 @@ EOF
 }
 
 resource "signalfx_detector" "pdbisdown" {
-  name = format("%s %s", local.detector_name_prefix, "Oracle pdbisdown")
+  name = format("%s %s", local.detector_name_prefix, "Oracle pluggable database")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
@@ -89,7 +89,7 @@ resource "signalfx_detector" "pdbisdown" {
 EOF
 
   rule {
-    description           = "is too high > ${var.pdbisdown_threshold_critical}"
+    description           = "is down > ${var.pdbisdown_threshold_critical}"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.pdbisdown_disabled, var.detectors_disabled)
@@ -102,7 +102,7 @@ EOF
 }
 
 resource "signalfx_detector" "blocking_sessions" {
-  name = format("%s %s", local.detector_name_prefix, "Oracle blocking_sessions")
+  name = format("%s %s", local.detector_name_prefix, "Oracle blocking(s) session(s)")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
@@ -114,7 +114,7 @@ resource "signalfx_detector" "blocking_sessions" {
 EOF
 
   rule {
-    description           = "is too high > ${var.blocking_sessions_threshold_critical}"
+    description           = "is detected > ${var.blocking_sessions_threshold_critical}"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.blocking_sessions_disabled, var.detectors_disabled)
@@ -127,7 +127,7 @@ EOF
 }
 
 resource "signalfx_detector" "alertlogerror" {
-  name = format("%s %s", local.detector_name_prefix, "Oracle alertlogerror")
+  name = format("%s %s", local.detector_name_prefix, "Oracle alert.log")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
@@ -139,7 +139,7 @@ resource "signalfx_detector" "alertlogerror" {
 EOF
 
   rule {
-    description           = "is too high > ${var.alertlogerror_threshold_critical}"
+    description           = "error(s) detected > ${var.alertlogerror_threshold_critical}"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.alertlogerror_disabled, var.detectors_disabled)
@@ -152,7 +152,7 @@ EOF
 }
 
 resource "signalfx_detector" "fra_usage" {
-  name = format("%s %s", local.detector_name_prefix, "Oracle fra_usage")
+  name = format("%s %s", local.detector_name_prefix, "Oracle fast recovery area usage")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
@@ -165,7 +165,7 @@ resource "signalfx_detector" "fra_usage" {
 EOF
 
   rule {
-    description           = "is too high > ${var.fra_usage_threshold_warning}"
+    description           = "warning is reached > ${var.fra_usage_threshold_warning}"
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.fra_usage_disabled_warning, var.fra_usage_disabled, var.detectors_disabled)
@@ -177,7 +177,7 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.fra_usage_threshold_critical}"
+    description           = "critical is reached > ${var.fra_usage_threshold_critical}"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.fra_usage_disabled_critical, var.fra_usage_disabled, var.detectors_disabled)
@@ -190,7 +190,7 @@ EOF
 }
 
 resource "signalfx_detector" "sessions_limits" {
-  name = format("%s %s", local.detector_name_prefix, "Oracle sessions_limits")
+  name = format("%s %s", local.detector_name_prefix, "Oracle limit for sessions")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
@@ -203,7 +203,7 @@ resource "signalfx_detector" "sessions_limits" {
 EOF
 
   rule {
-    description           = "is too high > ${var.sessions_limits_threshold_warning}"
+    description           = "warning is reached > ${var.sessions_limits_threshold_warning}"
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.sessions_limits_disabled_warning, var.sessions_limits_disabled, var.detectors_disabled)
@@ -215,7 +215,7 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.sessions_limits_threshold_critical}"
+    description           = "critical is reached > ${var.sessions_limits_threshold_critical}"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.sessions_limits_disabled_critical, var.sessions_limits_disabled, var.detectors_disabled)
@@ -228,7 +228,7 @@ EOF
 }
 
 resource "signalfx_detector" "process_limits" {
-  name = format("%s %s", local.detector_name_prefix, "Oracle process_limits")
+  name = format("%s %s", local.detector_name_prefix, "Oracle limit for processes")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
@@ -241,7 +241,7 @@ resource "signalfx_detector" "process_limits" {
 EOF
 
   rule {
-    description           = "is too high > ${var.process_limits_threshold_warning}"
+    description           = "warning is reached > ${var.process_limits_threshold_warning}"
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.process_limits_disabled_warning, var.process_limits_disabled, var.detectors_disabled)
@@ -253,7 +253,7 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.process_limits_threshold_critical}"
+    description           = "critical is reached > ${var.process_limits_threshold_critical}"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.process_limits_disabled_critical, var.process_limits_disabled, var.detectors_disabled)
@@ -266,7 +266,7 @@ EOF
 }
 
 resource "signalfx_detector" "stby_replication" {
-  name = format("%s %s", local.detector_name_prefix, "Oracle stby_replication")
+  name = format("%s %s", local.detector_name_prefix, "Oracle gap in standby database replication")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
@@ -278,7 +278,7 @@ resource "signalfx_detector" "stby_replication" {
 EOF
 
   rule {
-    description           = "is too high > ${var.stby_replication_threshold_critical}"
+    description           = "GAP detected > ${var.stby_replication_threshold_critical}"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.stby_replication_disabled, var.detectors_disabled)
@@ -291,7 +291,7 @@ EOF
 }
 
 resource "signalfx_detector" "oracledb_export" {
-  name = format("%s %s", local.detector_name_prefix, "Oracle oracledb_export")
+  name = format("%s %s", local.detector_name_prefix, "Oracle database last export")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
@@ -316,7 +316,7 @@ EOF
 }
 
 resource "signalfx_detector" "oracle_rman_incr" {
-  name = format("%s %s", local.detector_name_prefix, "Oracle oracle_rman_incr")
+  name = format("%s %s", local.detector_name_prefix, "Oracle rman incremental backup")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
@@ -341,7 +341,7 @@ EOF
 }
 
 resource "signalfx_detector" "oracle_rman_arch" {
-  name = format("%s %s", local.detector_name_prefix, "Oracle oracle_rman_arch")
+  name = format("%s %s", local.detector_name_prefix, "Oracle rman archivelog backup")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
@@ -366,7 +366,7 @@ EOF
 }
 
 resource "signalfx_detector" "user_expiration" {
-  name = format("%s %s", local.detector_name_prefix, "Oracle user_expiration")
+  name = format("%s %s", local.detector_name_prefix, "Oracle user expiration")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
@@ -378,7 +378,7 @@ resource "signalfx_detector" "user_expiration" {
 EOF
 
   rule {
-    description           = "is too high > ${var.user_expiration_threshold_critical}"
+    description           = "is detected > ${var.user_expiration_threshold_critical}"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.user_expiration_disabled, var.detectors_disabled)
@@ -391,7 +391,7 @@ EOF
 }
 
 resource "signalfx_detector" "tablespace_cdb" {
-  name = format("%s %s", local.detector_name_prefix, "Oracle tablespace_cdb")
+  name = format("%s %s", local.detector_name_prefix, "Oracle tablespace usage on container database")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
@@ -416,7 +416,7 @@ EOF
 }
 
 resource "signalfx_detector" "tablespace_pdb" {
-  name = format("%s %s", local.detector_name_prefix, "Oracle tablespace_pdb")
+  name = format("%s %s", local.detector_name_prefix, "Oracle tablespace usage on pluggable database")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
@@ -428,7 +428,7 @@ resource "signalfx_detector" "tablespace_pdb" {
 EOF
 
   rule {
-    description           = "is too high > ${var.tablespace_pdb_threshold_critical}"
+    description           = "usage % detected > ${var.tablespace_pdb_threshold_critical}"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.tablespace_pdb_disabled, var.detectors_disabled)
@@ -441,7 +441,7 @@ EOF
 }
 
 resource "signalfx_detector" "tablespace_single" {
-  name = format("%s %s", local.detector_name_prefix, "Oracle tablespace_single")
+  name = format("%s %s", local.detector_name_prefix, "Oracle tablespace usage on database")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
@@ -453,7 +453,7 @@ resource "signalfx_detector" "tablespace_single" {
 EOF
 
   rule {
-    description           = "is too high > ${var.tablespace_single_threshold_critical}"
+    description           = "usage % detected > ${var.tablespace_single_threshold_critical}"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.tablespace_single_disabled, var.detectors_disabled)
@@ -466,7 +466,7 @@ EOF
 }
 
 resource "signalfx_detector" "dbvagent" {
-  name = format("%s %s", local.detector_name_prefix, "Oracle dbvagent")
+  name = format("%s %s", local.detector_name_prefix, "Oracle process dbvagent")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
@@ -478,7 +478,7 @@ resource "signalfx_detector" "dbvagent" {
 EOF
 
   rule {
-    description           = "is too low < ${var.dbvagent_threshold_critical}"
+    description           = "is not started < ${var.dbvagent_threshold_critical}"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.dbvagent_disabled, var.detectors_disabled)
@@ -491,7 +491,7 @@ EOF
 }
 
 resource "signalfx_detector" "dbvnet" {
-  name = format("%s %s", local.detector_name_prefix, "Oracle dbvnet")
+  name = format("%s %s", local.detector_name_prefix, "Oracle process dbvnet")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
@@ -503,7 +503,7 @@ resource "signalfx_detector" "dbvnet" {
 EOF
 
   rule {
-    description           = "is too low < ${var.dbvnet_threshold_critical}"
+    description           = "is not started < ${var.dbvnet_threshold_critical}"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.dbvnet_disabled, var.detectors_disabled)
@@ -516,7 +516,7 @@ EOF
 }
 
 resource "signalfx_detector" "dbvctl" {
-  name = format("%s %s", local.detector_name_prefix, "Oracle dbvctl")
+  name = format("%s %s", local.detector_name_prefix, "Oracle process dbvctl")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
@@ -528,7 +528,7 @@ resource "signalfx_detector" "dbvctl" {
 EOF
 
   rule {
-    description           = "is too low < ${var.dbvctl_threshold_critical}"
+    description           = "is not started < ${var.dbvctl_threshold_critical}"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.dbvctl_disabled, var.detectors_disabled)

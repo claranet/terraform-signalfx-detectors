@@ -1,5 +1,6 @@
 module: oracle
-name: AlertLogError
+name: "Alert.log"
+id: AlertLogError
 
 transformation: true
 aggregation: true
@@ -13,3 +14,4 @@ rules:
     threshold: 0
     comparator: ">"
     lasting_duration: "5m"
+    description: "error(s) detected"

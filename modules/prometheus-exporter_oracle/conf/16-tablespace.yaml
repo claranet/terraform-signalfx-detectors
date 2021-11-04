@@ -1,5 +1,6 @@
 module: oracle
-name: Tablespace_Single
+name: "tablespace usage on database"
+id: Tablespace_Single
 
 transformation: true
 aggregation: true
@@ -13,3 +14,4 @@ rules:
     threshold: 90
     comparator: ">"
     lasting_duration: "15m"
+    description: "usage % detected"
