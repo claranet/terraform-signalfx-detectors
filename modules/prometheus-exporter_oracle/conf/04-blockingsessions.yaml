@@ -1,6 +1,6 @@
 module: oracle
-name: blocking_sessions
-
+name: "Blocking(s) session(s)"
+id: blocking_sessions
 transformation: true
 aggregation: true
 
@@ -13,3 +13,5 @@ rules:
     threshold: 0
     comparator: ">"
     lasting_duration: "5m"
+    description: "is detected"
+tip: "One or more oracle session(s) are currently blocking, check sessions activity on oracle sid with oramenu or direct SQL"

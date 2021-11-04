@@ -1,5 +1,6 @@
 module: oracle
-name: sessions_limits
+name: "limit for sessions"
+id: sessions_limits
 
 transformation: true
 aggregation: true
@@ -13,7 +14,9 @@ rules:
     threshold: 85 
     comparator: ">"
     lasting_duration: "5m"
+    description: "warning is reached"
   critical:
     threshold: 96
     comparator: ">"
     lasting_duration: "5m"
+    description: "critical is reached"

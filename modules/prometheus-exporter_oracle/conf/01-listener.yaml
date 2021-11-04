@@ -1,5 +1,6 @@
 module: oracle
-name: listener
+name: "Process listener"
+id: listener
 
 transformation: true
 aggregation: true
@@ -13,3 +14,5 @@ rules:
     threshold: 1
     comparator: "<"
     lasting_duration: "5m"
+    description: "is not started"
+tip: "the listener process is not started, means that application can not connect to the database"

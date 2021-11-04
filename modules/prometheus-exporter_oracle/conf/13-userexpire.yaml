@@ -1,5 +1,6 @@
 module: oracle
-name: User_expiration
+name: "user expiration" 
+id: User_expiration
 
 transformation: true
 aggregation: true
@@ -13,3 +14,5 @@ rules:
     threshold: 0
     comparator: ">"
     lasting_duration: "60m"
+    description: "is detected"
+tip: "One or more oracle user will expire in next 15 days"

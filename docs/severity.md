@@ -2,6 +2,105 @@
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+:link: **Contents**
+
+- [aws-alb](#aws-alb)
+- [aws-apigateway](#aws-apigateway)
+- [aws-beanstalk](#aws-beanstalk)
+- [aws-ecs-cluster](#aws-ecs-cluster)
+- [aws-ecs-service](#aws-ecs-service)
+- [aws-efs](#aws-efs)
+- [aws-elasticache-common](#aws-elasticache-common)
+- [aws-elasticache-memcached](#aws-elasticache-memcached)
+- [aws-elasticache-redis](#aws-elasticache-redis)
+- [aws-elasticsearch](#aws-elasticsearch)
+- [aws-elb](#aws-elb)
+- [aws-kinesis-firehose](#aws-kinesis-firehose)
+- [aws-lambda](#aws-lambda)
+- [aws-nlb](#aws-nlb)
+- [aws-rds-aurora-mysql](#aws-rds-aurora-mysql)
+- [aws-rds-aurora-postgresql](#aws-rds-aurora-postgresql)
+- [aws-rds-common](#aws-rds-common)
+- [aws-sqs](#aws-sqs)
+- [aws-vpn](#aws-vpn)
+- [azure-api-management-service](#azure-api-management-service)
+- [azure-app-service-plan](#azure-app-service-plan)
+- [azure-app-service](#azure-app-service)
+- [azure-application-gateway](#azure-application-gateway)
+- [azure-azure-search](#azure-azure-search)
+- [azure-container-instance](#azure-container-instance)
+- [azure-cosmos-db](#azure-cosmos-db)
+- [azure-datafactory](#azure-datafactory)
+- [azure-event-hub](#azure-event-hub)
+- [azure-express-route](#azure-express-route)
+- [azure-firewall](#azure-firewall)
+- [azure-functions](#azure-functions)
+- [azure-key-vault](#azure-key-vault)
+- [azure-load-balancer](#azure-load-balancer)
+- [azure-mysql](#azure-mysql)
+- [azure-postgresql](#azure-postgresql)
+- [azure-redis](#azure-redis)
+- [azure-service-bus](#azure-service-bus)
+- [azure-sql-database](#azure-sql-database)
+- [azure-sql-elastic-pool](#azure-sql-elastic-pool)
+- [azure-storage-account-blob](#azure-storage-account-blob)
+- [azure-storage-account-capacity](#azure-storage-account-capacity)
+- [azure-storage-account](#azure-storage-account)
+- [azure-stream-analytics](#azure-stream-analytics)
+- [azure-virtual-machine-scaleset](#azure-virtual-machine-scaleset)
+- [azure-virtual-machine](#azure-virtual-machine)
+- [gcp-bigquery](#gcp-bigquery)
+- [gcp-cloud-sql-common](#gcp-cloud-sql-common)
+- [gcp-cloud-sql-failover](#gcp-cloud-sql-failover)
+- [gcp-cloud-sql-mysql](#gcp-cloud-sql-mysql)
+- [gcp-compute-engine](#gcp-compute-engine)
+- [gcp-load-balancing](#gcp-load-balancing)
+- [gcp-pubsub-subscription](#gcp-pubsub-subscription)
+- [gcp-pubsub-topic](#gcp-pubsub-topic)
+- [newrelic-apm](#newrelic-apm)
+- [usage](#usage)
+- [kong](#kong)
+- [oracle](#oracle)
+- [squid](#squid)
+- [wallix-bastion](#wallix-bastion)
+- [apache](#apache)
+- [cassandra-nodetool](#cassandra-nodetool)
+- [cassandra](#cassandra)
+- [couchbase](#couchbase)
+- [dns](#dns)
+- [docker](#docker)
+- [elasticsearch](#elasticsearch)
+- [genericjmx](#genericjmx)
+- [haproxy](#haproxy)
+- [health-checker](#health-checker)
+- [http](#http)
+- [kubernetes-apiserver](#kubernetes-apiserver)
+- [kubernetes-common](#kubernetes-common)
+- [kubernetes-velero](#kubernetes-velero)
+- [kubernetes-volumes](#kubernetes-volumes)
+- [kubernetes-workloads-count](#kubernetes-workloads-count)
+- [mdadm](#mdadm)
+- [memcached](#memcached)
+- [mongodb](#mongodb)
+- [mysql](#mysql)
+- [nagios-status-check](#nagios-status-check)
+- [nginx-ingress](#nginx-ingress)
+- [nginx](#nginx)
+- [ntp](#ntp)
+- [php-fpm](#php-fpm)
+- [postgresql](#postgresql)
+- [processes](#processes)
+- [rabbitmq-node](#rabbitmq-node)
+- [rabbitmq-queue](#rabbitmq-queue)
+- [redis](#redis)
+- [solr](#solr)
+- [supervisor](#supervisor)
+- [system-common](#system-common)
+- [systemd-services](#systemd-services)
+- [tomcat](#tomcat)
+- [varnish](#varnish)
+- [zookeeper](#zookeeper)
+
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## aws-alb
@@ -557,25 +656,25 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Oracle heartbeat|X|-|-|-|-|
-|Oracle listener|X|-|-|-|-|
-|Oracle dbisdown|X|-|-|-|-|
-|Oracle pdbisdown|X|-|-|-|-|
-|Oracle blocking_sessions|X|-|-|-|-|
-|Oracle alertlogerror|X|-|-|-|-|
-|Oracle fra_usage|X|-|-|X|-|
-|Oracle sessions_limits|X|-|-|X|-|
-|Oracle process_limits|X|-|-|X|-|
-|Oracle stby_replication|X|-|-|-|-|
-|Oracle oracledb_export|X|-|-|-|-|
-|Oracle oracle_rman_incr|X|-|-|-|-|
-|Oracle oracle_rman_arch|X|-|-|-|-|
-|Oracle user_expiration|X|-|-|-|-|
-|Oracle tablespace_cdb|X|-|-|-|-|
-|Oracle tablespace_pdb|X|-|-|-|-|
-|Oracle tablespace_single|X|-|-|-|-|
-|Oracle dbvagent|X|-|-|-|-|
-|Oracle dbvnet|X|-|-|-|-|
-|Oracle dbvctl|X|-|-|-|-|
+|Oracle process listener|X|-|-|-|-|
+|Oracle database status|X|-|-|-|-|
+|Oracle pluggable database|X|-|-|-|-|
+|Oracle blocking(s) session(s)|X|-|-|-|-|
+|Oracle alert.log|X|-|-|-|-|
+|Oracle fast recovery area usage|X|-|-|X|-|
+|Oracle limit for sessions|X|-|-|X|-|
+|Oracle limit for processes|X|-|-|X|-|
+|Oracle gap in standby database replication|X|-|-|-|-|
+|Oracle database last export|X|-|-|-|-|
+|Oracle rman incremental backup|X|-|-|-|-|
+|Oracle rman archivelog backup|X|-|-|-|-|
+|Oracle user expiration|X|-|-|-|-|
+|Oracle tablespace usage on container database|X|-|-|-|-|
+|Oracle tablespace usage on pluggable database|X|-|-|-|-|
+|Oracle tablespace usage on database|X|-|-|-|-|
+|Oracle process dbvagent|X|-|-|-|-|
+|Oracle process dbvnet|X|-|-|-|-|
+|Oracle process dbvctl|X|-|-|-|-|
 
 
 ## squid

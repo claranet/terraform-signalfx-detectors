@@ -65,7 +65,9 @@ variable "listener_transformation_function" {
 variable "listener_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
-  default     = ""
+  default     = <<-EOF
+    the listener process is not started, means that application can not connect to the database
+EOF
 }
 
 variable "listener_runbook_url" {
@@ -120,7 +122,9 @@ variable "dbisdown_transformation_function" {
 variable "dbisdown_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
-  default     = ""
+  default     = <<-EOF
+    database is not started, check status on server and logfile
+EOF
 }
 
 variable "dbisdown_runbook_url" {
@@ -175,7 +179,9 @@ variable "pdbisdown_transformation_function" {
 variable "pdbisdown_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
-  default     = ""
+  default     = <<-EOF
+    The pluggable database is not started, check the status from the container database which manage it
+EOF
 }
 
 variable "pdbisdown_runbook_url" {
@@ -230,7 +236,9 @@ variable "blocking_sessions_transformation_function" {
 variable "blocking_sessions_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
-  default     = ""
+  default     = <<-EOF
+    One or more oracle session(s) are currently blocking, check sessions activity on oracle sid with oramenu or direct SQL
+EOF
 }
 
 variable "blocking_sessions_runbook_url" {
@@ -592,7 +600,9 @@ variable "stby_replication_transformation_function" {
 variable "stby_replication_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
-  default     = ""
+  default     = <<-EOF
+    GAP is detected on standby replication, check primary last sequence and standby. Also check logfiles
+EOF
 }
 
 variable "stby_replication_runbook_url" {
@@ -702,7 +712,9 @@ variable "oracle_rman_incr_transformation_function" {
 variable "oracle_rman_incr_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
-  default     = ""
+  default     = <<-EOF
+    Last rman incremental backup is ko, check logfiles
+EOF
 }
 
 variable "oracle_rman_incr_runbook_url" {
@@ -757,7 +769,9 @@ variable "oracle_rman_arch_transformation_function" {
 variable "oracle_rman_arch_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
-  default     = ""
+  default     = <<-EOF
+    Last rman archivelog backup is ko, check logfiles
+EOF
 }
 
 variable "oracle_rman_arch_runbook_url" {
@@ -812,7 +826,9 @@ variable "user_expiration_transformation_function" {
 variable "user_expiration_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
-  default     = ""
+  default     = <<-EOF
+    One or more oracle user will expire in next 15 days
+EOF
 }
 
 variable "user_expiration_runbook_url" {
@@ -1142,7 +1158,9 @@ variable "dbvctl_transformation_function" {
 variable "dbvctl_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
-  default     = ""
+  default     = <<-EOF
+    standby replication is not working
+EOF
 }
 
 variable "dbvctl_runbook_url" {

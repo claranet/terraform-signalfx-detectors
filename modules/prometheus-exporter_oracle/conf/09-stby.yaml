@@ -1,5 +1,6 @@
 module: oracle
-name: STBY_Replication
+name: "gap in standby database replication"
+id: STBY_Replication
 
 transformation: true
 aggregation: true
@@ -13,3 +14,5 @@ rules:
     threshold: 0
     comparator: ">"
     lasting_duration: "5m"
+    description: "GAP detected"
+tip: "GAP is detected on standby replication, check primary last sequence and standby. Also check logfiles"

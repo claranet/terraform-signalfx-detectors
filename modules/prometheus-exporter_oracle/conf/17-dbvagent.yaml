@@ -1,5 +1,6 @@
 module: oracle
-name: dbvagent
+name: "process dbvagent"
+id: dbvagent
 
 transformation: true
 aggregation: true
@@ -13,3 +14,4 @@ rules:
     threshold: 1
     comparator: "<"
     lasting_duration: "5m"
+    description: "is not started"

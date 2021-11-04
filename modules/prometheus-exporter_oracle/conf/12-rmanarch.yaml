@@ -1,5 +1,6 @@
 module: oracle
-name: Oracle_RMAN_ARCH
+name: "rman archivelog backup"
+id: Oracle_RMAN_ARCH
 
 transformation: true
 aggregation: true
@@ -13,3 +14,5 @@ rules:
     threshold: 0
     comparator: ">"
     lasting_duration: "60m"
+    decription: "is ko"
+tip: "Last rman archivelog backup is ko, check logfiles"

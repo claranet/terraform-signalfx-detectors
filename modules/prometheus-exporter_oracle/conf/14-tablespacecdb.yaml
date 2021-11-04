@@ -1,5 +1,6 @@
 module: oracle
-name: Tablespace_CDB
+name: "tablespace usage on container database"
+id: Tablespace_CDB
 
 transformation: true
 aggregation: true
@@ -13,3 +14,4 @@ rules:
     threshold: 90
     comparator: ">"
     lasting_duration: "15m"
+    decription: "usage % detected"

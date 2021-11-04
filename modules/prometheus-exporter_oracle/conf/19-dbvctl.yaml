@@ -1,5 +1,6 @@
 module: oracle
-name: dbvctl
+name: "process dbvctl"
+id: dbvctl
 
 transformation: true
 aggregation: true
@@ -13,3 +14,5 @@ rules:
     threshold: 1
     comparator: "<"
     lasting_duration: "5m"
+    description: "is not started"
+tip: "standby replication is not working"
