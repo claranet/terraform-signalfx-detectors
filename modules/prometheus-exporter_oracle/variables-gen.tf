@@ -110,7 +110,7 @@ variable "dbisdown_notifications" {
 variable "dbisdown_aggregation_function" {
   description = "Aggregation function and group by for dbisdown detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".mean(by=['job])"
 }
 
 variable "dbisdown_transformation_function" {
@@ -167,7 +167,7 @@ variable "pdbisdown_notifications" {
 variable "pdbisdown_aggregation_function" {
   description = "Aggregation function and group by for pdbisdown detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".mean(by=['job])"
 }
 
 variable "pdbisdown_transformation_function" {
@@ -224,7 +224,7 @@ variable "blocking_sessions_notifications" {
 variable "blocking_sessions_aggregation_function" {
   description = "Aggregation function and group by for blocking_sessions detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".mean(by=['job])"
 }
 
 variable "blocking_sessions_transformation_function" {
@@ -281,7 +281,7 @@ variable "alertlogerror_notifications" {
 variable "alertlogerror_aggregation_function" {
   description = "Aggregation function and group by for alertlogerror detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".mean(by=['job])"
 }
 
 variable "alertlogerror_transformation_function" {
@@ -336,7 +336,7 @@ variable "fra_usage_notifications" {
 variable "fra_usage_aggregation_function" {
   description = "Aggregation function and group by for fra_usage detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".mean(by=['job])"
 }
 
 variable "fra_usage_transformation_function" {
@@ -420,7 +420,7 @@ variable "sessions_limits_notifications" {
 variable "sessions_limits_aggregation_function" {
   description = "Aggregation function and group by for sessions_limits detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".mean(by=['job])"
 }
 
 variable "sessions_limits_transformation_function" {
@@ -504,7 +504,7 @@ variable "process_limits_notifications" {
 variable "process_limits_aggregation_function" {
   description = "Aggregation function and group by for process_limits detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".mean(by=['job])"
 }
 
 variable "process_limits_transformation_function" {
@@ -588,7 +588,7 @@ variable "stby_replication_notifications" {
 variable "stby_replication_aggregation_function" {
   description = "Aggregation function and group by for stby_replication detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".mean(by=['job])"
 }
 
 variable "stby_replication_transformation_function" {
@@ -645,7 +645,7 @@ variable "oracledb_export_notifications" {
 variable "oracledb_export_aggregation_function" {
   description = "Aggregation function and group by for oracledb_export detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".mean(by=['job])"
 }
 
 variable "oracledb_export_transformation_function" {
@@ -700,7 +700,7 @@ variable "oracle_rman_incr_notifications" {
 variable "oracle_rman_incr_aggregation_function" {
   description = "Aggregation function and group by for oracle_rman_incr detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".mean(by=['job])"
 }
 
 variable "oracle_rman_incr_transformation_function" {
@@ -757,7 +757,7 @@ variable "oracle_rman_arch_notifications" {
 variable "oracle_rman_arch_aggregation_function" {
   description = "Aggregation function and group by for oracle_rman_arch detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".mean(by=['job])"
 }
 
 variable "oracle_rman_arch_transformation_function" {
@@ -814,7 +814,7 @@ variable "user_expiration_notifications" {
 variable "user_expiration_aggregation_function" {
   description = "Aggregation function and group by for user_expiration detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".mean(by=['job])"
 }
 
 variable "user_expiration_transformation_function" {
@@ -871,7 +871,7 @@ variable "tablespace_cdb_notifications" {
 variable "tablespace_cdb_aggregation_function" {
   description = "Aggregation function and group by for tablespace_cdb detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".mean(by=['job])"
 }
 
 variable "tablespace_cdb_transformation_function" {
@@ -926,7 +926,7 @@ variable "tablespace_pdb_notifications" {
 variable "tablespace_pdb_aggregation_function" {
   description = "Aggregation function and group by for tablespace_pdb detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".mean(by=['job])"
 }
 
 variable "tablespace_pdb_transformation_function" {
@@ -981,7 +981,7 @@ variable "tablespace_single_notifications" {
 variable "tablespace_single_aggregation_function" {
   description = "Aggregation function and group by for tablespace_single detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".mean(by=['job])"
 }
 
 variable "tablespace_single_transformation_function" {
@@ -1036,7 +1036,7 @@ variable "dbvagent_notifications" {
 variable "dbvagent_aggregation_function" {
   description = "Aggregation function and group by for dbvagent detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".mean(by=['job])"
 }
 
 variable "dbvagent_transformation_function" {
@@ -1091,7 +1091,7 @@ variable "dbvnet_notifications" {
 variable "dbvnet_aggregation_function" {
   description = "Aggregation function and group by for dbvnet detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".mean(by=['job])"
 }
 
 variable "dbvnet_transformation_function" {
@@ -1146,7 +1146,7 @@ variable "dbvctl_notifications" {
 variable "dbvctl_aggregation_function" {
   description = "Aggregation function and group by for dbvctl detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".mean(by=['job])"
 }
 
 variable "dbvctl_transformation_function" {

@@ -3,11 +3,12 @@ name: "process dbvagent"
 id: dbvagent
 
 transformation: true
-aggregation: true
+aggregation: ".mean(by=['job])"
 
 signals:
   signal:
     metric: dbvagent
+    rollup: latest
 
 rules:
   critical:

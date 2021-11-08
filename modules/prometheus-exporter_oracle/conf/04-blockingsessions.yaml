@@ -2,11 +2,12 @@ module: oracle
 name: "Blocking(s) session(s)"
 id: blocking_sessions
 transformation: true
-aggregation: true
+aggregation: ".mean(by=['job])"
 
 signals:
   signal:
     metric: oracledb_blocking_sessions_count
+    rollup: latest
 
 rules:
   critical:

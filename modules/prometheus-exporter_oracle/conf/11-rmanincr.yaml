@@ -3,11 +3,12 @@ name: "rman incremental backup"
 id: Oracle_RMAN_INCR
 
 transformation: true
-aggregation: true
+aggregation: ".mean(by=['job])"
 
 signals:
   signal:
-    metric: oracledb_Oracle_RMAN_Incr_value   
+    metric: oracledb_Oracle_RMAN_Incr_value
+    rollup: latest
 
 rules:
   critical:

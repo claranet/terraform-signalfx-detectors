@@ -3,11 +3,12 @@ name: "user expiration"
 id: User_expiration
 
 transformation: true
-aggregation: true
+aggregation: ".mean(by=['job])"
 
 signals:
   signal:
-    metric: oracledb_User_pass_expiration_V2_count    
+    metric: oracledb_User_pass_expiration_V2_count
+    rollup: latest
 
 rules:
   critical:

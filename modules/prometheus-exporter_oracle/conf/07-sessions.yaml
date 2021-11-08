@@ -3,11 +3,12 @@ name: "limit for sessions"
 id: sessions_limits
 
 transformation: true
-aggregation: true
+aggregation: ".mean(by=['job])"
 
 signals:
   signal:
     metric: oracledb_Sessions_limits_value 
+    rollup: latest
 
 rules:
   warning:
