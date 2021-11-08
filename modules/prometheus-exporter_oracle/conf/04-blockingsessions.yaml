@@ -2,7 +2,7 @@ module: oracle
 name: "Blocking(s) session(s)"
 id: blocking_sessions
 transformation: true
-aggregation: ".mean(by=['job])"
+aggregation: ".mean(by=['job'])"
 
 signals:
   signal:

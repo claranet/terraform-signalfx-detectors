@@ -3,7 +3,7 @@ name: "tablespace usage on pluggable database"
 id: Tablespace_PDB
 
 transformation: true
-aggregation: ".mean(by=['job])"
+aggregation: ".mean(by=['job'])"
 
 signals:
   signal:
