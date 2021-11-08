@@ -3,7 +3,7 @@ name: "process dbvagent"
 id: dbvagent
 
 transformation: true
-aggregation: ".mean(by=['job])"
+aggregation: ".mean(by=['job'])"
 
 signals:
   signal:
