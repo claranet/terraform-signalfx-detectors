@@ -3,11 +3,12 @@ name: "Pluggable database"
 id: pdbisdown
 
 transformation: true
-aggregation: true
+aggregation: ".mean(by=['job])"
 
 signals:
   signal:
     metric: oracledb_Pdb_is_up_count
+    rollup: latest
 
 rules:
   critical:

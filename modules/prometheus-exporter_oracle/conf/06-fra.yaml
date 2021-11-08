@@ -3,11 +3,13 @@ name: "fast recovery area usage"
 id: fra_usage
 
 transformation: true
-aggregation: true
+aggregation: ".mean(by=['job])"
 
 signals:
   signal:
     metric: oracledb_FRA_Usage_value
+    rollup: latest
+
 
 rules:
   warning:

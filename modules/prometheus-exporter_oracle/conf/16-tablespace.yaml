@@ -3,11 +3,12 @@ name: "tablespace usage on database"
 id: Tablespace_Single
 
 transformation: true
-aggregation: true
+aggregation: ".mean(by=['job])"
 
 signals:
   signal:
     metric: oracledb_tablespace_usage_pct_NOCDB_V2_real_ts_used_pct
+    rollup: latest
 
 rules:
   critical:

@@ -3,11 +3,12 @@ name: "rman archivelog backup"
 id: Oracle_RMAN_ARCH
 
 transformation: true
-aggregation: true
+aggregation: ".mean(by=['job])"
 
 signals:
   signal:
-    metric: oracledb_Oracle_RMAN_Arch_value   
+    metric: oracledb_Oracle_RMAN_Arch_value
+    rollup: latest
 
 rules:
   critical:

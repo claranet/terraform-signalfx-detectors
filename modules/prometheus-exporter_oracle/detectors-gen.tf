@@ -59,7 +59,7 @@ resource "signalfx_detector" "dbisdown" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('oracledb_up', filter=${module.filtering.signalflow})${var.dbisdown_aggregation_function}${var.dbisdown_transformation_function}.publish('signal')
+    signal = data('oracledb_up', filter=${module.filtering.signalflow}, rollup='latest')${var.dbisdown_aggregation_function}${var.dbisdown_transformation_function}.publish('signal')
     detect(when(signal < ${var.dbisdown_threshold_critical}, lasting=%{if var.dbisdown_lasting_duration_critical == null}None%{else}'${var.dbisdown_lasting_duration_critical}'%{endif}, at_least=${var.dbisdown_at_least_percentage_critical})).publish('CRIT')
 EOF
 
@@ -84,7 +84,7 @@ resource "signalfx_detector" "pdbisdown" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('oracledb_Pdb_is_up_count', filter=${module.filtering.signalflow})${var.pdbisdown_aggregation_function}${var.pdbisdown_transformation_function}.publish('signal')
+    signal = data('oracledb_Pdb_is_up_count', filter=${module.filtering.signalflow}, rollup='latest')${var.pdbisdown_aggregation_function}${var.pdbisdown_transformation_function}.publish('signal')
     detect(when(signal > ${var.pdbisdown_threshold_critical}, lasting=%{if var.pdbisdown_lasting_duration_critical == null}None%{else}'${var.pdbisdown_lasting_duration_critical}'%{endif}, at_least=${var.pdbisdown_at_least_percentage_critical})).publish('CRIT')
 EOF
 
@@ -109,7 +109,7 @@ resource "signalfx_detector" "blocking_sessions" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('oracledb_blocking_sessions_count', filter=${module.filtering.signalflow})${var.blocking_sessions_aggregation_function}${var.blocking_sessions_transformation_function}.publish('signal')
+    signal = data('oracledb_blocking_sessions_count', filter=${module.filtering.signalflow}, rollup='latest')${var.blocking_sessions_aggregation_function}${var.blocking_sessions_transformation_function}.publish('signal')
     detect(when(signal > ${var.blocking_sessions_threshold_critical}, lasting=%{if var.blocking_sessions_lasting_duration_critical == null}None%{else}'${var.blocking_sessions_lasting_duration_critical}'%{endif}, at_least=${var.blocking_sessions_at_least_percentage_critical})).publish('CRIT')
 EOF
 
@@ -134,7 +134,7 @@ resource "signalfx_detector" "alertlogerror" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('oracledb_AlertLogError_count', filter=${module.filtering.signalflow})${var.alertlogerror_aggregation_function}${var.alertlogerror_transformation_function}.publish('signal')
+    signal = data('oracledb_AlertLogError_count', filter=${module.filtering.signalflow}, rollup='latest')${var.alertlogerror_aggregation_function}${var.alertlogerror_transformation_function}.publish('signal')
     detect(when(signal > ${var.alertlogerror_threshold_critical}, lasting=%{if var.alertlogerror_lasting_duration_critical == null}None%{else}'${var.alertlogerror_lasting_duration_critical}'%{endif}, at_least=${var.alertlogerror_at_least_percentage_critical})).publish('CRIT')
 EOF
 
@@ -159,7 +159,7 @@ resource "signalfx_detector" "fra_usage" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('oracledb_FRA_Usage_value', filter=${module.filtering.signalflow})${var.fra_usage_aggregation_function}${var.fra_usage_transformation_function}.publish('signal')
+    signal = data('oracledb_FRA_Usage_value', filter=${module.filtering.signalflow}, rollup='latest')${var.fra_usage_aggregation_function}${var.fra_usage_transformation_function}.publish('signal')
     detect(when(signal > ${var.fra_usage_threshold_warning}, lasting=%{if var.fra_usage_lasting_duration_warning == null}None%{else}'${var.fra_usage_lasting_duration_warning}'%{endif}, at_least=${var.fra_usage_at_least_percentage_warning})).publish('WARN')
     detect(when(signal > ${var.fra_usage_threshold_critical}, lasting=%{if var.fra_usage_lasting_duration_critical == null}None%{else}'${var.fra_usage_lasting_duration_critical}'%{endif}, at_least=${var.fra_usage_at_least_percentage_critical})).publish('CRIT')
 EOF
@@ -197,7 +197,7 @@ resource "signalfx_detector" "sessions_limits" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('oracledb_Sessions_limits_value', filter=${module.filtering.signalflow})${var.sessions_limits_aggregation_function}${var.sessions_limits_transformation_function}.publish('signal')
+    signal = data('oracledb_Sessions_limits_value', filter=${module.filtering.signalflow}, rollup='latest')${var.sessions_limits_aggregation_function}${var.sessions_limits_transformation_function}.publish('signal')
     detect(when(signal > ${var.sessions_limits_threshold_warning}, lasting=%{if var.sessions_limits_lasting_duration_warning == null}None%{else}'${var.sessions_limits_lasting_duration_warning}'%{endif}, at_least=${var.sessions_limits_at_least_percentage_warning})).publish('WARN')
     detect(when(signal > ${var.sessions_limits_threshold_critical}, lasting=%{if var.sessions_limits_lasting_duration_critical == null}None%{else}'${var.sessions_limits_lasting_duration_critical}'%{endif}, at_least=${var.sessions_limits_at_least_percentage_critical})).publish('CRIT')
 EOF
@@ -235,7 +235,7 @@ resource "signalfx_detector" "process_limits" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('oracledb_Process_limits_value', filter=${module.filtering.signalflow})${var.process_limits_aggregation_function}${var.process_limits_transformation_function}.publish('signal')
+    signal = data('oracledb_Process_limits_value', filter=${module.filtering.signalflow}, rollup='latest')${var.process_limits_aggregation_function}${var.process_limits_transformation_function}.publish('signal')
     detect(when(signal > ${var.process_limits_threshold_warning}, lasting=%{if var.process_limits_lasting_duration_warning == null}None%{else}'${var.process_limits_lasting_duration_warning}'%{endif}, at_least=${var.process_limits_at_least_percentage_warning})).publish('WARN')
     detect(when(signal > ${var.process_limits_threshold_critical}, lasting=%{if var.process_limits_lasting_duration_critical == null}None%{else}'${var.process_limits_lasting_duration_critical}'%{endif}, at_least=${var.process_limits_at_least_percentage_critical})).publish('CRIT')
 EOF
@@ -273,7 +273,7 @@ resource "signalfx_detector" "stby_replication" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('oracledb_STBY_Replication_count', filter=${module.filtering.signalflow})${var.stby_replication_aggregation_function}${var.stby_replication_transformation_function}.publish('signal')
+    signal = data('oracledb_STBY_Replication_count', filter=${module.filtering.signalflow}, rollup='latest')${var.stby_replication_aggregation_function}${var.stby_replication_transformation_function}.publish('signal')
     detect(when(signal > ${var.stby_replication_threshold_critical}, lasting=%{if var.stby_replication_lasting_duration_critical == null}None%{else}'${var.stby_replication_lasting_duration_critical}'%{endif}, at_least=${var.stby_replication_at_least_percentage_critical})).publish('CRIT')
 EOF
 
@@ -298,7 +298,7 @@ resource "signalfx_detector" "oracledb_export" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('oracledb_Oracle_exports_value', filter=${module.filtering.signalflow})${var.oracledb_export_aggregation_function}${var.oracledb_export_transformation_function}.publish('signal')
+    signal = data('oracledb_Oracle_exports_value', filter=${module.filtering.signalflow}, rollup='latest')${var.oracledb_export_aggregation_function}${var.oracledb_export_transformation_function}.publish('signal')
     detect(when(signal > ${var.oracledb_export_threshold_critical}, lasting=%{if var.oracledb_export_lasting_duration_critical == null}None%{else}'${var.oracledb_export_lasting_duration_critical}'%{endif}, at_least=${var.oracledb_export_at_least_percentage_critical})).publish('CRIT')
 EOF
 
@@ -323,7 +323,7 @@ resource "signalfx_detector" "oracle_rman_incr" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('oracledb_Oracle_RMAN_Incr_value', filter=${module.filtering.signalflow})${var.oracle_rman_incr_aggregation_function}${var.oracle_rman_incr_transformation_function}.publish('signal')
+    signal = data('oracledb_Oracle_RMAN_Incr_value', filter=${module.filtering.signalflow}, rollup='latest')${var.oracle_rman_incr_aggregation_function}${var.oracle_rman_incr_transformation_function}.publish('signal')
     detect(when(signal > ${var.oracle_rman_incr_threshold_critical}, lasting=%{if var.oracle_rman_incr_lasting_duration_critical == null}None%{else}'${var.oracle_rman_incr_lasting_duration_critical}'%{endif}, at_least=${var.oracle_rman_incr_at_least_percentage_critical})).publish('CRIT')
 EOF
 
@@ -348,7 +348,7 @@ resource "signalfx_detector" "oracle_rman_arch" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('oracledb_Oracle_RMAN_Arch_value', filter=${module.filtering.signalflow})${var.oracle_rman_arch_aggregation_function}${var.oracle_rman_arch_transformation_function}.publish('signal')
+    signal = data('oracledb_Oracle_RMAN_Arch_value', filter=${module.filtering.signalflow}, rollup='latest')${var.oracle_rman_arch_aggregation_function}${var.oracle_rman_arch_transformation_function}.publish('signal')
     detect(when(signal > ${var.oracle_rman_arch_threshold_critical}, lasting=%{if var.oracle_rman_arch_lasting_duration_critical == null}None%{else}'${var.oracle_rman_arch_lasting_duration_critical}'%{endif}, at_least=${var.oracle_rman_arch_at_least_percentage_critical})).publish('CRIT')
 EOF
 
@@ -373,7 +373,7 @@ resource "signalfx_detector" "user_expiration" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('oracledb_User_pass_expiration_V2_count', filter=${module.filtering.signalflow})${var.user_expiration_aggregation_function}${var.user_expiration_transformation_function}.publish('signal')
+    signal = data('oracledb_User_pass_expiration_V2_count', filter=${module.filtering.signalflow}, rollup='latest')${var.user_expiration_aggregation_function}${var.user_expiration_transformation_function}.publish('signal')
     detect(when(signal > ${var.user_expiration_threshold_critical}, lasting=%{if var.user_expiration_lasting_duration_critical == null}None%{else}'${var.user_expiration_lasting_duration_critical}'%{endif}, at_least=${var.user_expiration_at_least_percentage_critical})).publish('CRIT')
 EOF
 
@@ -398,7 +398,7 @@ resource "signalfx_detector" "tablespace_cdb" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('oracledb_tablespace_usage_pct_PDB_V2_real_ts_used_pct', filter=${module.filtering.signalflow})${var.tablespace_cdb_aggregation_function}${var.tablespace_cdb_transformation_function}.publish('signal')
+    signal = data('oracledb_tablespace_usage_pct_PDB_V2_real_ts_used_pct', filter=${module.filtering.signalflow}, rollup='latest')${var.tablespace_cdb_aggregation_function}${var.tablespace_cdb_transformation_function}.publish('signal')
     detect(when(signal > ${var.tablespace_cdb_threshold_critical}, lasting=%{if var.tablespace_cdb_lasting_duration_critical == null}None%{else}'${var.tablespace_cdb_lasting_duration_critical}'%{endif}, at_least=${var.tablespace_cdb_at_least_percentage_critical})).publish('CRIT')
 EOF
 
@@ -423,7 +423,7 @@ resource "signalfx_detector" "tablespace_pdb" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('oracledb_tablespace_usage_pct_PDB_V2_real_ts_used_pct', filter=${module.filtering.signalflow})${var.tablespace_pdb_aggregation_function}${var.tablespace_pdb_transformation_function}.publish('signal')
+    signal = data('oracledb_tablespace_usage_pct_PDB_V2_real_ts_used_pct', filter=${module.filtering.signalflow}, rollup='latest')${var.tablespace_pdb_aggregation_function}${var.tablespace_pdb_transformation_function}.publish('signal')
     detect(when(signal > ${var.tablespace_pdb_threshold_critical}, lasting=%{if var.tablespace_pdb_lasting_duration_critical == null}None%{else}'${var.tablespace_pdb_lasting_duration_critical}'%{endif}, at_least=${var.tablespace_pdb_at_least_percentage_critical})).publish('CRIT')
 EOF
 
@@ -448,7 +448,7 @@ resource "signalfx_detector" "tablespace_single" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('oracledb_tablespace_usage_pct_NOCDB_V2_real_ts_used_pct', filter=${module.filtering.signalflow})${var.tablespace_single_aggregation_function}${var.tablespace_single_transformation_function}.publish('signal')
+    signal = data('oracledb_tablespace_usage_pct_NOCDB_V2_real_ts_used_pct', filter=${module.filtering.signalflow}, rollup='latest')${var.tablespace_single_aggregation_function}${var.tablespace_single_transformation_function}.publish('signal')
     detect(when(signal > ${var.tablespace_single_threshold_critical}, lasting=%{if var.tablespace_single_lasting_duration_critical == null}None%{else}'${var.tablespace_single_lasting_duration_critical}'%{endif}, at_least=${var.tablespace_single_at_least_percentage_critical})).publish('CRIT')
 EOF
 
@@ -473,7 +473,7 @@ resource "signalfx_detector" "dbvagent" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('dbvagent', filter=${module.filtering.signalflow})${var.dbvagent_aggregation_function}${var.dbvagent_transformation_function}.publish('signal')
+    signal = data('dbvagent', filter=${module.filtering.signalflow}, rollup='latest')${var.dbvagent_aggregation_function}${var.dbvagent_transformation_function}.publish('signal')
     detect(when(signal < ${var.dbvagent_threshold_critical}, lasting=%{if var.dbvagent_lasting_duration_critical == null}None%{else}'${var.dbvagent_lasting_duration_critical}'%{endif}, at_least=${var.dbvagent_at_least_percentage_critical})).publish('CRIT')
 EOF
 
@@ -498,7 +498,7 @@ resource "signalfx_detector" "dbvnet" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('dbvnet', filter=${module.filtering.signalflow})${var.dbvnet_aggregation_function}${var.dbvnet_transformation_function}.publish('signal')
+    signal = data('dbvnet', filter=${module.filtering.signalflow}, rollup='latest')${var.dbvnet_aggregation_function}${var.dbvnet_transformation_function}.publish('signal')
     detect(when(signal < ${var.dbvnet_threshold_critical}, lasting=%{if var.dbvnet_lasting_duration_critical == null}None%{else}'${var.dbvnet_lasting_duration_critical}'%{endif}, at_least=${var.dbvnet_at_least_percentage_critical})).publish('CRIT')
 EOF
 
@@ -523,7 +523,7 @@ resource "signalfx_detector" "dbvctl" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('dbvctl', filter=${module.filtering.signalflow})${var.dbvctl_aggregation_function}${var.dbvctl_transformation_function}.publish('signal')
+    signal = data('dbvctl', filter=${module.filtering.signalflow}, rollup='latest')${var.dbvctl_aggregation_function}${var.dbvctl_transformation_function}.publish('signal')
     detect(when(signal < ${var.dbvctl_threshold_critical}, lasting=%{if var.dbvctl_lasting_duration_critical == null}None%{else}'${var.dbvctl_lasting_duration_critical}'%{endif}, at_least=${var.dbvctl_at_least_percentage_critical})).publish('CRIT')
 EOF
 

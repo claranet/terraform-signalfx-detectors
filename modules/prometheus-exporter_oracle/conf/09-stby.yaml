@@ -3,11 +3,12 @@ name: "gap in standby database replication"
 id: STBY_Replication
 
 transformation: true
-aggregation: true
+aggregation: ".mean(by=['job])"
 
 signals:
   signal:
     metric: oracledb_STBY_Replication_count 
+    rollup: latest
 
 rules:
   critical:

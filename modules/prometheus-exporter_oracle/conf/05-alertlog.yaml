@@ -3,11 +3,12 @@ name: "Alert.log"
 id: AlertLogError
 
 transformation: true
-aggregation: true
+aggregation: ".mean(by=['job])"
 
 signals:
   signal:
     metric: oracledb_AlertLogError_count
+    rollup: latest
 
 rules:
   critical:

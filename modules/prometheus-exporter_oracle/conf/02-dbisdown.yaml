@@ -3,11 +3,11 @@ name: "Database status"
 id: dbisdown
 
 transformation: true
-aggregation: true
-
+aggregation: ".mean(by=['job])"
 signals:
   signal:
     metric: oracledb_up
+    rollup: latest
 
 rules:
   critical:

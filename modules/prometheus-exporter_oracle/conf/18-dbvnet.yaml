@@ -3,11 +3,12 @@ name: "process dbvnet"
 id: dbvnet
 
 transformation: true
-aggregation: true
+aggregation: ".mean(by=['job])"
 
 signals:
   signal:
     metric: dbvnet
+    rollup: latest
 
 rules:
   critical:

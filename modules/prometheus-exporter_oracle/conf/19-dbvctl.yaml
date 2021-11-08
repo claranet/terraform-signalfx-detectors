@@ -3,11 +3,12 @@ name: "process dbvctl"
 id: dbvctl
 
 transformation: true
-aggregation: true
+aggregation: ".mean(by=['job])"
 
 signals:
   signal:
     metric: dbvctl
+    rollup: latest
 
 rules:
   critical:

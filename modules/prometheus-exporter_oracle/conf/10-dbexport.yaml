@@ -3,11 +3,12 @@ name: "database last export"
 id: OracleDB_export
 
 transformation: true
-aggregation: true
+aggregation: ".mean(by=['job])"
 
 signals:
   signal:
-    metric: oracledb_Oracle_exports_value  
+    metric: oracledb_Oracle_exports_value
+    rollup: latest
 
 rules:
   critical:

@@ -3,11 +3,12 @@ name: "tablespace usage on container database"
 id: Tablespace_CDB
 
 transformation: true
-aggregation: true
+aggregation: ".mean(by=['job])"
 
 signals:
   signal:
     metric: oracledb_tablespace_usage_pct_PDB_V2_real_ts_used_pct
+    rollup: latest
 
 rules:
   critical:
