@@ -8,7 +8,6 @@ aggregation: ".mean(by=['dbname','dbtype','hostname'])"
 signals:
   signal:
     metric: oracledb_tablespace_usage_pct_PDB_V2_real_ts_used_pct
-    rollup: latest
 
 rules:
   critical:
