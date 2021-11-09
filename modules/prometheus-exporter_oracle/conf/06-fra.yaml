@@ -12,13 +12,12 @@ signals:
 
 
 rules:
-  warning:
+  critical:
     threshold: 85
     comparator: ">"
-    lasting_duration: "5m"
-    description: "warning is reached"
-  critical:
+    lasting_duration: "15m"
+  major:
     threshold: 96
     comparator: ">"
-    lasting_duration: "5m"
-    description: "critical is reached"
+    lasting_duration: "15m"
+tip: "Oracle Fast recovery area is almost full, check archivelogs generation and deletion with rman backup. If needed and possible, check and change db_recovery_file_dest size"

@@ -1,5 +1,5 @@
 module: oracle
-name: "limit for sessions"
+name: "number of sessions compared to limit"
 id: sessions_limits
 
 transformation: true
@@ -11,13 +11,12 @@ signals:
     rollup: latest
 
 rules:
-  warning:
+  critical:
     threshold: 85 
     comparator: ">"
-    lasting_duration: "5m"
-    description: "warning is reached"
-  critical:
+    lasting_duration: "15m"
+  major:
     threshold: 96
     comparator: ">"
-    lasting_duration: "5m"
-    description: "critical is reached"
+    lasting_duration: "15m"
+tip: "Oracle sessions usage are too close, if usage is 100% then the DB will not be accessible until sessions will be freed"

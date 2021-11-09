@@ -16,4 +16,6 @@ rules:
     comparator: "<"
     lasting_duration: "5m"
     description: "is down"
-tip: "database is not started, check status on server and logfile"
+tip: "oracle database is down, check status on server and logfile"
+
+

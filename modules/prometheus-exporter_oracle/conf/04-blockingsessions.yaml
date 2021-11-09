@@ -1,5 +1,5 @@
 module: oracle
-name: "Blocking(s) session(s)"
+name: "Blocking session(s)"
 id: blocking_sessions
 transformation: true
 aggregation: ".mean(by=['dbname','dbtype','hostname'])"
@@ -13,6 +13,5 @@ rules:
   critical:
     threshold: 0
     comparator: ">"
-    lasting_duration: "5m"
-    description: "is detected"
+    lasting_duration: "15m"
 tip: "One or more oracle session(s) are currently blocking, check sessions activity on oracle sid with oramenu or direct SQL"

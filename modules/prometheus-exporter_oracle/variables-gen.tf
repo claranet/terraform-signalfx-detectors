@@ -12,12 +12,6 @@ variable "heartbeat_aggregation_function" {
   default     = ".mean(by=['hostname'])"
 }
 
-variable "heartbeat_transformation_function" {
-  description = "Transformation function for heartbeat detector (i.e. \".mean(over='5m')\")"
-  type        = string
-  default     = ""
-}
-
 variable "heartbeat_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -123,7 +117,7 @@ variable "dbisdown_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
   default     = <<-EOF
-    database is not started, check status on server and logfile
+    oracle database is down, check status on server and logfile
 EOF
 }
 
@@ -180,7 +174,7 @@ variable "pdbisdown_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
   default     = <<-EOF
-    The pluggable database is not started, check the status from the container database which manage it
+    The pluggable database is down, check the status from the container database which manage it
 EOF
 }
 
@@ -262,7 +256,7 @@ variable "blocking_sessions_threshold_critical" {
 variable "blocking_sessions_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "5m"
+  default     = "15m"
 }
 
 variable "blocking_sessions_at_least_percentage_critical" {
@@ -317,7 +311,7 @@ variable "alertlogerror_threshold_critical" {
 variable "alertlogerror_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "5m"
+  default     = "15m"
 }
 
 variable "alertlogerror_at_least_percentage_critical" {
@@ -348,7 +342,9 @@ variable "fra_usage_transformation_function" {
 variable "fra_usage_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
-  default     = ""
+  default     = <<-EOF
+    Oracle Fast recovery area is almost full, check archivelogs generation and deletion with rman backup. If needed and possible, check and change db_recovery_file_dest size
+EOF
 }
 
 variable "fra_usage_runbook_url" {
@@ -363,48 +359,48 @@ variable "fra_usage_disabled" {
   default     = null
 }
 
-variable "fra_usage_disabled_warning" {
-  description = "Disable warning alerting rule for fra_usage detector"
-  type        = bool
-  default     = null
-}
-
 variable "fra_usage_disabled_critical" {
   description = "Disable critical alerting rule for fra_usage detector"
   type        = bool
   default     = null
 }
 
-variable "fra_usage_threshold_warning" {
-  description = "Warning threshold for fra_usage detector"
-  type        = number
-  default     = 85
+variable "fra_usage_disabled_major" {
+  description = "Disable major alerting rule for fra_usage detector"
+  type        = bool
+  default     = null
 }
 
-variable "fra_usage_lasting_duration_warning" {
-  description = "Minimum duration that conditions must be true before raising alert"
-  type        = string
-  default     = "5m"
-}
-
-variable "fra_usage_at_least_percentage_warning" {
-  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
-  type        = number
-  default     = 1
-}
 variable "fra_usage_threshold_critical" {
   description = "Critical threshold for fra_usage detector"
   type        = number
-  default     = 96
+  default     = 85
 }
 
 variable "fra_usage_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "5m"
+  default     = "15m"
 }
 
 variable "fra_usage_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
+variable "fra_usage_threshold_major" {
+  description = "Major threshold for fra_usage detector"
+  type        = number
+  default     = 96
+}
+
+variable "fra_usage_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "15m"
+}
+
+variable "fra_usage_at_least_percentage_major" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1
@@ -432,7 +428,9 @@ variable "sessions_limits_transformation_function" {
 variable "sessions_limits_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
-  default     = ""
+  default     = <<-EOF
+    Oracle sessions usage are too close, if usage is 100% then the DB will not be accessible until sessions will be freed
+EOF
 }
 
 variable "sessions_limits_runbook_url" {
@@ -447,48 +445,48 @@ variable "sessions_limits_disabled" {
   default     = null
 }
 
-variable "sessions_limits_disabled_warning" {
-  description = "Disable warning alerting rule for sessions_limits detector"
-  type        = bool
-  default     = null
-}
-
 variable "sessions_limits_disabled_critical" {
   description = "Disable critical alerting rule for sessions_limits detector"
   type        = bool
   default     = null
 }
 
-variable "sessions_limits_threshold_warning" {
-  description = "Warning threshold for sessions_limits detector"
-  type        = number
-  default     = 85
+variable "sessions_limits_disabled_major" {
+  description = "Disable major alerting rule for sessions_limits detector"
+  type        = bool
+  default     = null
 }
 
-variable "sessions_limits_lasting_duration_warning" {
-  description = "Minimum duration that conditions must be true before raising alert"
-  type        = string
-  default     = "5m"
-}
-
-variable "sessions_limits_at_least_percentage_warning" {
-  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
-  type        = number
-  default     = 1
-}
 variable "sessions_limits_threshold_critical" {
   description = "Critical threshold for sessions_limits detector"
   type        = number
-  default     = 96
+  default     = 85
 }
 
 variable "sessions_limits_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "5m"
+  default     = "15m"
 }
 
 variable "sessions_limits_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
+variable "sessions_limits_threshold_major" {
+  description = "Major threshold for sessions_limits detector"
+  type        = number
+  default     = 96
+}
+
+variable "sessions_limits_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "15m"
+}
+
+variable "sessions_limits_at_least_percentage_major" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1
@@ -516,7 +514,9 @@ variable "process_limits_transformation_function" {
 variable "process_limits_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
-  default     = ""
+  default     = <<-EOF
+    Oracle server processes related to the database are too close, if usage is 100% then the DB will not be accessible until processes will be freed
+EOF
 }
 
 variable "process_limits_runbook_url" {
@@ -531,48 +531,48 @@ variable "process_limits_disabled" {
   default     = null
 }
 
-variable "process_limits_disabled_warning" {
-  description = "Disable warning alerting rule for process_limits detector"
-  type        = bool
-  default     = null
-}
-
 variable "process_limits_disabled_critical" {
   description = "Disable critical alerting rule for process_limits detector"
   type        = bool
   default     = null
 }
 
-variable "process_limits_threshold_warning" {
-  description = "Warning threshold for process_limits detector"
-  type        = number
-  default     = 85
+variable "process_limits_disabled_major" {
+  description = "Disable major alerting rule for process_limits detector"
+  type        = bool
+  default     = null
 }
 
-variable "process_limits_lasting_duration_warning" {
-  description = "Minimum duration that conditions must be true before raising alert"
-  type        = string
-  default     = "5m"
-}
-
-variable "process_limits_at_least_percentage_warning" {
-  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
-  type        = number
-  default     = 1
-}
 variable "process_limits_threshold_critical" {
   description = "Critical threshold for process_limits detector"
   type        = number
-  default     = 96
+  default     = 85
 }
 
 variable "process_limits_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "5m"
+  default     = "15m"
 }
 
 variable "process_limits_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
+variable "process_limits_threshold_major" {
+  description = "Major threshold for process_limits detector"
+  type        = number
+  default     = 96
+}
+
+variable "process_limits_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "15m"
+}
+
+variable "process_limits_at_least_percentage_major" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1
@@ -672,19 +672,19 @@ variable "oracledb_export_disabled" {
   default     = null
 }
 
-variable "oracledb_export_threshold_critical" {
-  description = "Critical threshold for oracledb_export detector"
+variable "oracledb_export_threshold_warning" {
+  description = "Warning threshold for oracledb_export detector"
   type        = number
   default     = 0
 }
 
-variable "oracledb_export_lasting_duration_critical" {
+variable "oracledb_export_lasting_duration_warning" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "5m"
+  default     = "120m"
 }
 
-variable "oracledb_export_at_least_percentage_critical" {
+variable "oracledb_export_at_least_percentage_warning" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1
@@ -738,7 +738,7 @@ variable "oracle_rman_incr_threshold_critical" {
 variable "oracle_rman_incr_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "60m"
+  default     = "120m"
 }
 
 variable "oracle_rman_incr_at_least_percentage_critical" {

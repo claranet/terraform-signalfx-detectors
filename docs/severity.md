@@ -659,19 +659,19 @@
 |Oracle process listener|X|-|-|-|-|
 |Oracle database status|X|-|-|-|-|
 |Oracle pluggable database|X|-|-|-|-|
-|Oracle blocking(s) session(s)|X|-|-|-|-|
-|Oracle alert.log|X|-|-|-|-|
-|Oracle fast recovery area usage|X|-|-|X|-|
-|Oracle limit for sessions|X|-|-|X|-|
-|Oracle limit for processes|X|-|-|X|-|
+|Oracle blocking session(s)|X|-|-|-|-|
+|Oracle alert.log errors count|X|-|-|-|-|
+|Oracle fast recovery area usage|X|X|-|-|-|
+|Oracle number of sessions compared to limit|X|X|-|-|-|
+|Oracle number of processes compared to limit|X|X|-|-|-|
 |Oracle gap in standby database replication|X|-|-|-|-|
-|Oracle database last export|X|-|-|-|-|
+|Oracle database last export|-|-|-|X|-|
 |Oracle rman incremental backup|X|-|-|-|-|
 |Oracle rman archivelog backup|X|-|-|-|-|
 |Oracle user expiration|X|-|-|-|-|
 |Oracle tablespace usage on container database|X|-|-|-|-|
 |Oracle tablespace usage on pluggable database|X|-|-|-|-|
-|Oracle tablespace usage on database|X|-|-|-|-|
+|Oracle tablespace usage on non-cdb database|X|-|-|-|-|
 |Oracle process dbvagent|X|-|-|-|-|
 |Oracle process dbvnet|X|-|-|-|-|
 |Oracle process dbvctl|X|-|-|-|-|

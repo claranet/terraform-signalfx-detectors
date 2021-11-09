@@ -1,7 +1,7 @@
 module: oracle
 name: heartbeat
 
-transformation: true
+transformation: false
 aggregation: ".mean(by=['hostname'])"
 
 exclude_not_running_vm: true
