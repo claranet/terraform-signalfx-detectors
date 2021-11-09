@@ -3,7 +3,7 @@ name: "process dbvctl"
 id: dbvctl
 
 transformation: true
-aggregation: ".mean(by=['job'])"
+aggregation: ".mean(by=['hostname'])"
 
 signals:
   signal:

@@ -3,7 +3,7 @@ name: "rman archivelog backup"
 id: Oracle_RMAN_ARCH
 
 transformation: true
-aggregation: ".mean(by=['job'])"
+aggregation: ".mean(by=['dbname','dbtype','hostname'])"
 
 signals:
   signal:

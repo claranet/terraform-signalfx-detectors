@@ -2,12 +2,13 @@ module: oracle
 name: heartbeat
 
 transformation: true
-aggregation: true
+aggregation: ".mean(by=['hostname'])"
+
 exclude_not_running_vm: true
 
 signals:
   signal:
-    metric: oracledb_up
+    metric: oracledb_Sessions_limits_value
 
 rules:
   critical:

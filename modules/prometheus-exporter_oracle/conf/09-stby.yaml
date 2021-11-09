@@ -3,7 +3,7 @@ name: "gap in standby database replication"
 id: STBY_Replication
 
 transformation: true
-aggregation: ".mean(by=['job'])"
+aggregation: ".mean(by=['dbname','dbtype','hostname'])"
 
 signals:
   signal:

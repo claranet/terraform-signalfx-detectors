@@ -3,7 +3,7 @@ name: "tablespace usage on database"
 id: Tablespace_Single
 
 transformation: true
-aggregation: ".mean(by=['job'])"
+aggregation: ".mean(by=['dbname','dbtype','hostname'])"
 
 signals:
   signal:

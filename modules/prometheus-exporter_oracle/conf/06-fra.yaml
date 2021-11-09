@@ -3,7 +3,7 @@ name: "fast recovery area usage"
 id: fra_usage
 
 transformation: true
-aggregation: ".mean(by=['job'])"
+aggregation: ".mean(by=['dbname','dbtype','hostname'])"
 
 signals:
   signal:
