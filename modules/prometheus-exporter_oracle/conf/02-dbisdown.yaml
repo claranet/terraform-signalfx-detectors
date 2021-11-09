@@ -3,7 +3,8 @@ name: "Database status"
 id: dbisdown
 
 transformation: true
-aggregation: ".mean(by=['job'])"
+aggregation: ".mean(by=['dbname','dbtype','hostname'])"
+
 signals:
   signal:
     metric: oracledb_up
