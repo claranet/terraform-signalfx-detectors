@@ -1,5 +1,5 @@
 module: oracle
-name: "Alert.log"
+name: "Alert.log errors count"
 id: AlertLogError
 
 transformation: true
@@ -14,5 +14,5 @@ rules:
   critical:
     threshold: 0
     comparator: ">"
-    lasting_duration: "5m"
+    lasting_duration: "15m"
     description: "error(s) detected"

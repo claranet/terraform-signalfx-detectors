@@ -11,8 +11,8 @@ signals:
     rollup: latest
 
 rules:
-  critical:
+  warning:
     threshold: 0
     comparator: ">"
-    lasting_duration: "5m"
+    lasting_duration: "120m"
     decription: "is ko"

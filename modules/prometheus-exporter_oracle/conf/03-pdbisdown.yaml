@@ -16,4 +16,4 @@ rules:
     comparator: ">"
     lasting_duration: "5m"     
     description: "is down"
-tip: "The pluggable database is not started, check the status from the container database which manage it"
+tip: "The pluggable database is down, check the status from the container database which manage it"

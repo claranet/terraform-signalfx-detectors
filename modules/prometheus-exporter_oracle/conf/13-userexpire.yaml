@@ -1,6 +1,5 @@
 module: oracle
 name: "user expiration" 
-id: User_expiration
 
 transformation: true
 aggregation: ".mean(by=['dbname','dbtype','hostname'])"

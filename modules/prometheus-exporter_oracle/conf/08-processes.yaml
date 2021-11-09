@@ -1,5 +1,5 @@
 module: oracle
-name: "limit for processes"
+name: "number of processes compared to limit"
 id: process_limits
 
 transformation: true
@@ -11,13 +11,12 @@ signals:
     rollup: latest
 
 rules:
-  warning:
+  critical:
     threshold: 85
     comparator: ">"
-    lasting_duration: "5m"
-    description: "warning is reached"
-  critical:
+    lasting_duration: "15m"
+  major:
     threshold: 96
     comparator: ">"
-    lasting_duration: "5m"
-    description: "critical is reached"
+    lasting_duration: "15m"
+tip: "Oracle server processes related to the database are too close, if usage is 100% then the DB will not be accessible until processes will be freed"

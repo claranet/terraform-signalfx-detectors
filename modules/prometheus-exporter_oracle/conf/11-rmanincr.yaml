@@ -14,6 +14,6 @@ rules:
   critical:
     threshold: 0
     comparator: ">"
-    lasting_duration: "60m"
+    lasting_duration: "120m"
     decription: "is ko"
 tip: "Last rman incremental backup is ko, check logfiles"
