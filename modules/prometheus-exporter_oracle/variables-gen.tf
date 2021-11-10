@@ -871,7 +871,7 @@ variable "tablespace_cdb_notifications" {
 variable "tablespace_cdb_aggregation_function" {
   description = "Aggregation function and group by for tablespace_cdb detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['dbname','dbtype','hostname'])"
+  default     = ""
 }
 
 variable "tablespace_cdb_transformation_function" {
@@ -926,7 +926,7 @@ variable "tablespace_pdb_notifications" {
 variable "tablespace_pdb_aggregation_function" {
   description = "Aggregation function and group by for tablespace_pdb detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['dbname','dbtype','hostname'])"
+  default     = ""
 }
 
 variable "tablespace_pdb_transformation_function" {
@@ -981,7 +981,7 @@ variable "tablespace_single_notifications" {
 variable "tablespace_single_aggregation_function" {
   description = "Aggregation function and group by for tablespace_single detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['dbname','dbtype','hostname'])"
+  default     = ""
 }
 
 variable "tablespace_single_transformation_function" {

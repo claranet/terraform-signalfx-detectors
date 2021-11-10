@@ -3,7 +3,6 @@ name: "tablespace usage on non-CDB database"
 id: Tablespace_Single
 
 transformation: true
-aggregation: ".mean(by=['dbname','dbtype','hostname'])"
 
 signals:
   signal:
