@@ -398,7 +398,7 @@ resource "signalfx_detector" "tablespace_cdb" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('oracledb_tablespace_usage_pct_CDB_V2_real_ts_used_pct', filter=${module.filtering.signalflow})${var.tablespace_cdb_aggregation_function}${var.tablespace_cdb_transformation_function}.publish('signal')
+    signal = data('oracledb_tablespace_usage_pct_CDB_V2_real_ts_used_pct', filter=${module.filtering.signalflow}, rollup='max')${var.tablespace_cdb_aggregation_function}${var.tablespace_cdb_transformation_function}.publish('signal')
     detect(when(signal > ${var.tablespace_cdb_threshold_critical}, lasting=%{if var.tablespace_cdb_lasting_duration_critical == null}None%{else}'${var.tablespace_cdb_lasting_duration_critical}'%{endif}, at_least=${var.tablespace_cdb_at_least_percentage_critical})).publish('CRIT')
 EOF
 
@@ -423,7 +423,7 @@ resource "signalfx_detector" "tablespace_pdb" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('oracledb_tablespace_usage_pct_PDB_V2_real_ts_used_pct', filter=${module.filtering.signalflow})${var.tablespace_pdb_aggregation_function}${var.tablespace_pdb_transformation_function}.publish('signal')
+    signal = data('oracledb_tablespace_usage_pct_PDB_V2_real_ts_used_pct', filter=${module.filtering.signalflow}, rollup='max')${var.tablespace_pdb_aggregation_function}${var.tablespace_pdb_transformation_function}.publish('signal')
     detect(when(signal > ${var.tablespace_pdb_threshold_critical}, lasting=%{if var.tablespace_pdb_lasting_duration_critical == null}None%{else}'${var.tablespace_pdb_lasting_duration_critical}'%{endif}, at_least=${var.tablespace_pdb_at_least_percentage_critical})).publish('CRIT')
 EOF
 
@@ -448,7 +448,7 @@ resource "signalfx_detector" "tablespace_single" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('oracledb_tablespace_usage_pct_NOCDB_V2_real_ts_used_pct', filter=${module.filtering.signalflow})${var.tablespace_single_aggregation_function}${var.tablespace_single_transformation_function}.publish('signal')
+    signal = data('oracledb_tablespace_usage_pct_NOCDB_V2_real_ts_used_pct', filter=${module.filtering.signalflow}, rollup='max')${var.tablespace_single_aggregation_function}${var.tablespace_single_transformation_function}.publish('signal')
     detect(when(signal > ${var.tablespace_single_threshold_critical}, lasting=%{if var.tablespace_single_lasting_duration_critical == null}None%{else}'${var.tablespace_single_lasting_duration_critical}'%{endif}, at_least=${var.tablespace_single_at_least_percentage_critical})).publish('CRIT')
 EOF
 

@@ -8,6 +8,7 @@ aggregation: ".mean(by=['dbname','dbtype','hostname'])"
 signals:
   signal:
     metric: oracledb_tablespace_usage_pct_NOCDB_V2_real_ts_used_pct
+    rollup: max
 
 rules:
   critical:
