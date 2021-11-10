@@ -53,7 +53,7 @@ variable "buffer_aggregation_function" {
 variable "buffer_transformation_function" {
   description = "Transformation function for buffer detector (i.e. \".mean(over='10m')\")"
   type        = string
-  default     = ".max(over='10min')"
+  default     = ".min(over='10min')"
 }
 
 variable "buffer_tip" {
