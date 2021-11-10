@@ -1,3 +1,7 @@
 documentations:
+  - name: Templates and customs metrics definition - GENERIC
+    url: 'https://confluence.fr.clara.net/pages/viewpage.action?pageId=239233358'
+  - name: Default CS DBA ORACLE Monitoring Matrix
+    url: 'https://confluence.fr.clara.net/display/CDBA/MATRICE+PAR+DEFAUT+FINALE+-+Tout+outils+de+supervision'
 
 source_doc:

@@ -141,3 +141,4 @@ Here is the list of required metrics for detectors in this module.
 
 * [Terraform SignalFx provider](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs)
 * [Terraform SignalFx detector](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector)
+* [Templates and customs metrics definition - GENERIC](https://confluence.fr.clara.net/pages/viewpage.action?pageId=239233358)
