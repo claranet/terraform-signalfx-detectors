@@ -3,7 +3,6 @@ name: "tablespace usage on container database"
 id: Tablespace_CDB
 
 transformation: true
-aggregation: ".mean(by=['dbname','dbtype','hostname'])"
 
 signals:
   signal:
