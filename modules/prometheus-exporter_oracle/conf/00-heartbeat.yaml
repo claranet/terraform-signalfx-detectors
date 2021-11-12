@@ -8,7 +8,7 @@ exclude_not_running_vm: true
 
 signals:
   signal:
-    metric: oracledb_Sessions_limits_value
+    metric: oracledb_Process_limits_value
 
 rules:
   critical:

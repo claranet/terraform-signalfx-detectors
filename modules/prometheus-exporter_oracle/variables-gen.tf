@@ -466,7 +466,7 @@ variable "sessions_limits_threshold_critical" {
 variable "sessions_limits_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "15m"
+  default     = "5m"
 }
 
 variable "sessions_limits_at_least_percentage_critical" {
@@ -483,7 +483,7 @@ variable "sessions_limits_threshold_major" {
 variable "sessions_limits_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "15m"
+  default     = "5m"
 }
 
 variable "sessions_limits_at_least_percentage_major" {
@@ -552,7 +552,7 @@ variable "process_limits_threshold_critical" {
 variable "process_limits_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "15m"
+  default     = "5m"
 }
 
 variable "process_limits_at_least_percentage_critical" {
@@ -569,7 +569,7 @@ variable "process_limits_threshold_major" {
 variable "process_limits_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "15m"
+  default     = "5m"
 }
 
 variable "process_limits_at_least_percentage_major" {
@@ -713,7 +713,7 @@ variable "oracle_rman_incr_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
   default     = <<-EOF
-    Last rman incremental backup is ko, check logfiles
+    Last rman incremental backup is ko, check logfiles and table CHECK_RMANBKP on LAMI user (or C##LAMI if container DB)
 EOF
 }
 
@@ -770,7 +770,7 @@ variable "oracle_rman_arch_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
   default     = <<-EOF
-    Last rman archivelog backup is ko, check logfiles
+    Last rman archivelog backup is ko, check logfiles and table CHECK_RMANBKP on LAMI user (or C##LAMI if container DB)
 EOF
 }
 

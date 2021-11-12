@@ -14,4 +14,4 @@ rules:
     threshold: 90
     comparator: ">"
     lasting_duration: "15m"
-    decription: "usage % detected"
+    description: "usage % detected"
