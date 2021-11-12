@@ -9,7 +9,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    signal = data('oracledb_Sessions_limits_value', filter=${local.not_running_vm_filters} and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
+    signal = data('oracledb_Process_limits_value', filter=${local.not_running_vm_filters} and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}', auto_resolve_after='${local.heartbeat_auto_resolve_after}').publish('CRIT')
 EOF
 
@@ -298,12 +298,12 @@ resource "signalfx_detector" "oracledb_export" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('oracledb_Oracle_exports_value', filter=${module.filtering.signalflow}, rollup='latest')${var.oracledb_export_aggregation_function}${var.oracledb_export_transformation_function}.publish('signal')
+    signal = data('oracledb_Oracle_exports_value', filter=${module.filtering.signalflow}, rollup='max')${var.oracledb_export_aggregation_function}${var.oracledb_export_transformation_function}.publish('signal')
     detect(when(signal > ${var.oracledb_export_threshold_warning}, lasting=%{if var.oracledb_export_lasting_duration_warning == null}None%{else}'${var.oracledb_export_lasting_duration_warning}'%{endif}, at_least=${var.oracledb_export_at_least_percentage_warning})).publish('WARN')
 EOF
 
   rule {
-    description           = "is too high > ${var.oracledb_export_threshold_warning}"
+    description           = "is ko > ${var.oracledb_export_threshold_warning}"
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.oracledb_export_disabled, var.detectors_disabled)
@@ -328,7 +328,7 @@ resource "signalfx_detector" "oracle_rman_incr" {
 EOF
 
   rule {
-    description           = "is too high > ${var.oracle_rman_incr_threshold_critical}"
+    description           = "is ko > ${var.oracle_rman_incr_threshold_critical}"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.oracle_rman_incr_disabled, var.detectors_disabled)
@@ -353,7 +353,7 @@ resource "signalfx_detector" "oracle_rman_arch" {
 EOF
 
   rule {
-    description           = "is too high > ${var.oracle_rman_arch_threshold_critical}"
+    description           = "is ko > ${var.oracle_rman_arch_threshold_critical}"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.oracle_rman_arch_disabled, var.detectors_disabled)
@@ -403,7 +403,7 @@ resource "signalfx_detector" "tablespace_cdb" {
 EOF
 
   rule {
-    description           = "is too high > ${var.tablespace_cdb_threshold_critical}"
+    description           = "usage % detected > ${var.tablespace_cdb_threshold_critical}"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.tablespace_cdb_disabled, var.detectors_disabled)

@@ -8,11 +8,11 @@ aggregation: ".mean(by=['dbname','dbtype','hostname'])"
 signals:
   signal:
     metric: oracledb_Oracle_exports_value
-    rollup: latest
+    rollup: max
 
 rules:
   warning:
     threshold: 0
     comparator: ">"
     lasting_duration: "120m"
-    decription: "is ko"
+    description: "is ko"

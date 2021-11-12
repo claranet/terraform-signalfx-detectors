@@ -15,5 +15,5 @@ rules:
     threshold: 0
     comparator: ">"
     lasting_duration: "60m"
-    decription: "is ko"
-tip: "Last rman archivelog backup is ko, check logfiles"
+    description: "is ko"
+tip: "Last rman archivelog backup is ko, check logfiles and table CHECK_RMANBKP on LAMI user (or C##LAMI if container DB)"
