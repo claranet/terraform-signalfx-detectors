@@ -109,7 +109,7 @@ resource "signalfx_detector" "blocking_sessions" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('oracledb_blocking_sessions_count', filter=${module.filtering.signalflow}, rollup='latest')${var.blocking_sessions_aggregation_function}${var.blocking_sessions_transformation_function}.publish('signal')
+    signal = data('oracledb_blocking_sessions_count', filter=${module.filtering.signalflow}, rollup='max')${var.blocking_sessions_aggregation_function}${var.blocking_sessions_transformation_function}.publish('signal')
     detect(when(signal > ${var.blocking_sessions_threshold_critical}, lasting=%{if var.blocking_sessions_lasting_duration_critical == null}None%{else}'${var.blocking_sessions_lasting_duration_critical}'%{endif}, at_least=${var.blocking_sessions_at_least_percentage_critical})).publish('CRIT')
 EOF
 
@@ -159,7 +159,7 @@ resource "signalfx_detector" "fra_usage" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('oracledb_FRA_Usage_value', filter=${module.filtering.signalflow}, rollup='latest')${var.fra_usage_aggregation_function}${var.fra_usage_transformation_function}.publish('signal')
+    signal = data('oracledb_FRA_Usage_value', filter=${module.filtering.signalflow}, rollup='max')${var.fra_usage_aggregation_function}${var.fra_usage_transformation_function}.publish('signal')
     detect(when(signal > ${var.fra_usage_threshold_critical}, lasting=%{if var.fra_usage_lasting_duration_critical == null}None%{else}'${var.fra_usage_lasting_duration_critical}'%{endif}, at_least=${var.fra_usage_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal > ${var.fra_usage_threshold_major}, lasting=%{if var.fra_usage_lasting_duration_major == null}None%{else}'${var.fra_usage_lasting_duration_major}'%{endif}, at_least=${var.fra_usage_at_least_percentage_major})).publish('MAJOR')
 EOF
@@ -197,7 +197,7 @@ resource "signalfx_detector" "sessions_limits" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('oracledb_Sessions_limits_value', filter=${module.filtering.signalflow}, rollup='latest')${var.sessions_limits_aggregation_function}${var.sessions_limits_transformation_function}.publish('signal')
+    signal = data('oracledb_Sessions_limits_value', filter=${module.filtering.signalflow}, rollup='max')${var.sessions_limits_aggregation_function}${var.sessions_limits_transformation_function}.publish('signal')
     detect(when(signal > ${var.sessions_limits_threshold_critical}, lasting=%{if var.sessions_limits_lasting_duration_critical == null}None%{else}'${var.sessions_limits_lasting_duration_critical}'%{endif}, at_least=${var.sessions_limits_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal > ${var.sessions_limits_threshold_major}, lasting=%{if var.sessions_limits_lasting_duration_major == null}None%{else}'${var.sessions_limits_lasting_duration_major}'%{endif}, at_least=${var.sessions_limits_at_least_percentage_major})).publish('MAJOR')
 EOF
@@ -235,7 +235,7 @@ resource "signalfx_detector" "process_limits" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('oracledb_Process_limits_value', filter=${module.filtering.signalflow}, rollup='latest')${var.process_limits_aggregation_function}${var.process_limits_transformation_function}.publish('signal')
+    signal = data('oracledb_Process_limits_value', filter=${module.filtering.signalflow}, rollup='max')${var.process_limits_aggregation_function}${var.process_limits_transformation_function}.publish('signal')
     detect(when(signal > ${var.process_limits_threshold_critical}, lasting=%{if var.process_limits_lasting_duration_critical == null}None%{else}'${var.process_limits_lasting_duration_critical}'%{endif}, at_least=${var.process_limits_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal > ${var.process_limits_threshold_major}, lasting=%{if var.process_limits_lasting_duration_major == null}None%{else}'${var.process_limits_lasting_duration_major}'%{endif}, at_least=${var.process_limits_at_least_percentage_major})).publish('MAJOR')
 EOF

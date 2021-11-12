@@ -7,7 +7,7 @@ aggregation: ".mean(by=['dbname','dbtype','hostname'])"
 signals:
   signal:
     metric: oracledb_blocking_sessions_count
-    rollup: latest
+    rollup: max
 
 rules:
   critical:
