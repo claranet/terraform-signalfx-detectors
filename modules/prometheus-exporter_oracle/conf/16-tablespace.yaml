@@ -7,7 +7,7 @@ transformation: true
 signals:
   signal:
     metric: oracledb_tablespace_usage_pct_NOCDB_V2_real_ts_used_pct
-    rollup: max
+    rollup: latest
 
 rules:
   critical:

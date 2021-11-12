@@ -645,7 +645,7 @@ variable "oracledb_export_notifications" {
 variable "oracledb_export_aggregation_function" {
   description = "Aggregation function and group by for oracledb_export detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['dbname','dbtype','hostname'])"
+  default     = ""
 }
 
 variable "oracledb_export_transformation_function" {
