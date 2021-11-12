@@ -8,7 +8,7 @@ aggregation: ".mean(by=['dbname','dbtype','hostname'])"
 signals:
   signal:
     metric: oracledb_Process_limits_value 
-    rollup: latest
+    rollup: max
 
 rules:
   critical:

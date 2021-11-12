@@ -275,7 +275,7 @@ variable "alertlogerror_notifications" {
 variable "alertlogerror_aggregation_function" {
   description = "Aggregation function and group by for alertlogerror detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['dbname','dbtype','hostname'])"
+  default     = ""
 }
 
 variable "alertlogerror_transformation_function" {

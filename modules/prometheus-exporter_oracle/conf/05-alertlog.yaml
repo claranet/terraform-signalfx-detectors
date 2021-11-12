@@ -3,7 +3,6 @@ name: "Alert.log errors count"
 id: AlertLogError
 
 transformation: true
-aggregation: ".mean(by=['dbname','dbtype','hostname'])"
 
 signals:
   signal:
