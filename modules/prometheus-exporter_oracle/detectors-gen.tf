@@ -109,7 +109,7 @@ resource "signalfx_detector" "blocking_sessions" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('oracledb_blocking_sessions_count', filter=${module.filtering.signalflow}, rollup='max')${var.blocking_sessions_aggregation_function}${var.blocking_sessions_transformation_function}.publish('signal')
+    signal = data('oracledb_blocking_sessions_count', filter=${module.filtering.signalflow}, rollup='latest')${var.blocking_sessions_aggregation_function}${var.blocking_sessions_transformation_function}.publish('signal')
     detect(when(signal > ${var.blocking_sessions_threshold_critical}, lasting=%{if var.blocking_sessions_lasting_duration_critical == null}None%{else}'${var.blocking_sessions_lasting_duration_critical}'%{endif}, at_least=${var.blocking_sessions_at_least_percentage_critical})).publish('CRIT')
 EOF
 
@@ -159,7 +159,7 @@ resource "signalfx_detector" "fra_usage" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('oracledb_FRA_Usage_value', filter=${module.filtering.signalflow}, rollup='max')${var.fra_usage_aggregation_function}${var.fra_usage_transformation_function}.publish('signal')
+    signal = data('oracledb_FRA_Usage_value', filter=${module.filtering.signalflow}, rollup='latest')${var.fra_usage_aggregation_function}${var.fra_usage_transformation_function}.publish('signal')
     detect(when(signal > ${var.fra_usage_threshold_critical}, lasting=%{if var.fra_usage_lasting_duration_critical == null}None%{else}'${var.fra_usage_lasting_duration_critical}'%{endif}, at_least=${var.fra_usage_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal > ${var.fra_usage_threshold_major}, lasting=%{if var.fra_usage_lasting_duration_major == null}None%{else}'${var.fra_usage_lasting_duration_major}'%{endif}, at_least=${var.fra_usage_at_least_percentage_major})).publish('MAJOR')
 EOF
@@ -197,7 +197,7 @@ resource "signalfx_detector" "sessions_limits" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('oracledb_Sessions_limits_value', filter=${module.filtering.signalflow}, rollup='max')${var.sessions_limits_aggregation_function}${var.sessions_limits_transformation_function}.publish('signal')
+    signal = data('oracledb_Sessions_limits_value', filter=${module.filtering.signalflow}, rollup='latest')${var.sessions_limits_aggregation_function}${var.sessions_limits_transformation_function}.publish('signal')
     detect(when(signal > ${var.sessions_limits_threshold_critical}, lasting=%{if var.sessions_limits_lasting_duration_critical == null}None%{else}'${var.sessions_limits_lasting_duration_critical}'%{endif}, at_least=${var.sessions_limits_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal > ${var.sessions_limits_threshold_major}, lasting=%{if var.sessions_limits_lasting_duration_major == null}None%{else}'${var.sessions_limits_lasting_duration_major}'%{endif}, at_least=${var.sessions_limits_at_least_percentage_major})).publish('MAJOR')
 EOF
@@ -235,7 +235,7 @@ resource "signalfx_detector" "process_limits" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('oracledb_Process_limits_value', filter=${module.filtering.signalflow}, rollup='max')${var.process_limits_aggregation_function}${var.process_limits_transformation_function}.publish('signal')
+    signal = data('oracledb_Process_limits_value', filter=${module.filtering.signalflow}, rollup='latest')${var.process_limits_aggregation_function}${var.process_limits_transformation_function}.publish('signal')
     detect(when(signal > ${var.process_limits_threshold_critical}, lasting=%{if var.process_limits_lasting_duration_critical == null}None%{else}'${var.process_limits_lasting_duration_critical}'%{endif}, at_least=${var.process_limits_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal > ${var.process_limits_threshold_major}, lasting=%{if var.process_limits_lasting_duration_major == null}None%{else}'${var.process_limits_lasting_duration_major}'%{endif}, at_least=${var.process_limits_at_least_percentage_major})).publish('MAJOR')
 EOF
@@ -298,7 +298,7 @@ resource "signalfx_detector" "oracledb_export" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('oracledb_Oracle_exports_value', filter=${module.filtering.signalflow}, rollup='max')${var.oracledb_export_aggregation_function}${var.oracledb_export_transformation_function}.publish('signal')
+    signal = data('oracledb_Oracle_exports_value', filter=${module.filtering.signalflow}, rollup='latest')${var.oracledb_export_aggregation_function}${var.oracledb_export_transformation_function}.publish('signal')
     detect(when(signal > ${var.oracledb_export_threshold_warning}, lasting=%{if var.oracledb_export_lasting_duration_warning == null}None%{else}'${var.oracledb_export_lasting_duration_warning}'%{endif}, at_least=${var.oracledb_export_at_least_percentage_warning})).publish('WARN')
 EOF
 
@@ -398,7 +398,7 @@ resource "signalfx_detector" "tablespace_cdb" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('oracledb_tablespace_usage_pct_CDB_V2_real_ts_used_pct', filter=${module.filtering.signalflow}, rollup='max')${var.tablespace_cdb_aggregation_function}${var.tablespace_cdb_transformation_function}.publish('signal')
+    signal = data('oracledb_tablespace_usage_pct_CDB_V2_real_ts_used_pct', filter=${module.filtering.signalflow}, rollup='latest')${var.tablespace_cdb_aggregation_function}${var.tablespace_cdb_transformation_function}.publish('signal')
     detect(when(signal > ${var.tablespace_cdb_threshold_critical}, lasting=%{if var.tablespace_cdb_lasting_duration_critical == null}None%{else}'${var.tablespace_cdb_lasting_duration_critical}'%{endif}, at_least=${var.tablespace_cdb_at_least_percentage_critical})).publish('CRIT')
 EOF
 
@@ -423,7 +423,7 @@ resource "signalfx_detector" "tablespace_pdb" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('oracledb_tablespace_usage_pct_PDB_V2_real_ts_used_pct', filter=${module.filtering.signalflow}, rollup='max')${var.tablespace_pdb_aggregation_function}${var.tablespace_pdb_transformation_function}.publish('signal')
+    signal = data('oracledb_tablespace_usage_pct_PDB_V2_real_ts_used_pct', filter=${module.filtering.signalflow}, rollup='latest')${var.tablespace_pdb_aggregation_function}${var.tablespace_pdb_transformation_function}.publish('signal')
     detect(when(signal > ${var.tablespace_pdb_threshold_critical}, lasting=%{if var.tablespace_pdb_lasting_duration_critical == null}None%{else}'${var.tablespace_pdb_lasting_duration_critical}'%{endif}, at_least=${var.tablespace_pdb_at_least_percentage_critical})).publish('CRIT')
 EOF
 
@@ -448,7 +448,7 @@ resource "signalfx_detector" "tablespace_single" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('oracledb_tablespace_usage_pct_NOCDB_V2_real_ts_used_pct', filter=${module.filtering.signalflow}, rollup='max')${var.tablespace_single_aggregation_function}${var.tablespace_single_transformation_function}.publish('signal')
+    signal = data('oracledb_tablespace_usage_pct_NOCDB_V2_real_ts_used_pct', filter=${module.filtering.signalflow}, rollup='latest')${var.tablespace_single_aggregation_function}${var.tablespace_single_transformation_function}.publish('signal')
     detect(when(signal > ${var.tablespace_single_threshold_critical}, lasting=%{if var.tablespace_single_lasting_duration_critical == null}None%{else}'${var.tablespace_single_lasting_duration_critical}'%{endif}, at_least=${var.tablespace_single_at_least_percentage_critical})).publish('CRIT')
 EOF
 

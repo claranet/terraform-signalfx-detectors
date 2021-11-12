@@ -3,12 +3,11 @@ name: "database last export"
 id: OracleDB_export
 
 transformation: true
-aggregation: ".mean(by=['dbname','dbtype','hostname'])"
 
 signals:
   signal:
     metric: oracledb_Oracle_exports_value
-    rollup: max
+    rollup: latest
 
 rules:
   warning:
