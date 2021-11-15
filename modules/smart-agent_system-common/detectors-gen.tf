@@ -77,7 +77,9 @@ resource "signalfx_detector" "load" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('load.midterm', filter=${module.filtering.signalflow})${var.load_aggregation_function}${var.load_transformation_function}.publish('signal')
+    load = data('load.midterm', filter=${module.filtering.signalflow})${var.load_aggregation_function}${var.load_transformation_function}
+    num_processors = data('cpu.num_processors', filter=${module.filtering.signalflow})${var.load_aggregation_function}${var.load_transformation_function}
+    signal = (${var.per_cpu_enabled ? "load / num_processors" : "load"}).publish('signal')
     detect(when(signal > ${var.load_threshold_critical}, lasting=%{if var.load_lasting_duration_critical == null}None%{else}'${var.load_lasting_duration_critical}'%{endif}, at_least=${var.load_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal > ${var.load_threshold_major}, lasting=%{if var.load_lasting_duration_major == null}None%{else}'${var.load_lasting_duration_major}'%{endif}, at_least=${var.load_at_least_percentage_major}) and (not when(signal > ${var.load_threshold_critical}, lasting=%{if var.load_lasting_duration_critical == null}None%{else}'${var.load_lasting_duration_critical}'%{endif}, at_least=${var.load_at_least_percentage_critical}))).publish('MAJOR')
 EOF

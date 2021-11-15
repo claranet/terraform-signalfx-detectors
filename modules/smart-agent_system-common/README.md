@@ -117,6 +117,7 @@ the corresponding monitor configuration:
     datapointsToExclude:
       - metricNames:
         - '*'
+        - '!cpu.num_processors'
         - '!cpu.utilization'
         - '!disk.utilization'
         - '!load.midterm'

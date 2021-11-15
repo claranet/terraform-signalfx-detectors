@@ -1,3 +1,11 @@
+# Module specific
+
+variable "per_cpu_enabled" {
+  description = "Is perCPU option is enabled for the load monitor of the agent"
+  type        = bool
+  default     = true
+}
+
 # disk_running_out detector
 
 variable "disk_running_out_tip" {
