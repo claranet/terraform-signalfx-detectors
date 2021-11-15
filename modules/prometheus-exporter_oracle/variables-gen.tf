@@ -287,7 +287,9 @@ variable "alertlogerror_transformation_function" {
 variable "alertlogerror_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
-  default     = ""
+  default     = <<-EOF
+    Check alert.log file for the related database and fix the issue depending on the ORA error(s) detected.
+EOF
 }
 
 variable "alertlogerror_runbook_url" {

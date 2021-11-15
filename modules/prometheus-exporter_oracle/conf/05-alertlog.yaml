@@ -15,3 +15,4 @@ rules:
     comparator: ">"
     lasting_duration: "15m"
     description: "error(s) detected"
+tip: "Check alert.log file for the related database and fix the issue depending on the ORA error(s) detected."
