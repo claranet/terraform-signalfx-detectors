@@ -1,0 +1,21 @@
+---
+module: "Azure Service Bus"
+name: "deadlettered messages count"
+id: deadlettered_messages
+
+filtering: "filter('resource_type', 'Microsoft.ServiceBus/namespaces') and filter('primary_aggregation_type', 'true')"
+aggregation: ".mean(by=['entityname', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+transformation: ".min(over='5m')"
+
+signals:
+  signal:
+    metric: DeadletteredMessages
+rules:
+  critical:
+    threshold: 10
+    comparator: ">"
+  major:
+    threshold: 5
+    comparator: ">"
+    dependency: critical
+...
