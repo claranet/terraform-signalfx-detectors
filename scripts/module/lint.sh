@@ -4,11 +4,11 @@ set -ue -o pipefail
 out_file="tmp-outputs.tf"
 
 # Clean when exit
-err() {
+clean() {
     rm -f ${out_file}
 }
 
-trap 'err $LINENO' ERR TERM EXIT INT
+trap 'clean $LINENO' ERR TERM EXIT INT
 
 TARGET="${1:-}"
 cd ${TARGET}
@@ -39,4 +39,4 @@ done
 
 echo "Lint module ${TARGET}"
 eval "$TFLINT_CMD"
-rm ${out_file}
+clean
