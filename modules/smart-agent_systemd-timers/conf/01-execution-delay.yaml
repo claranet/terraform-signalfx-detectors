@@ -1,0 +1,18 @@
+module: systemd-timers
+name: "execution delay"
+aggregation: true
+transformation: true
+disabled: true
+signals:
+  A:
+    metric: gauge.active_state.active
+  B:
+    metric: gauge.active_state.activating
+  signal:
+    formula: "(A+B)"
+rules:
+  major:
+    threshold: 1
+    comparator: "<"
+    description: "is too long"
+    lasting_duration: 1d
