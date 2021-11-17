@@ -4,7 +4,7 @@ name: backend latency
 transformation: true
 aggregation: true
 filtering: "filter('namespace', 'AWS/ApplicationELB')"
-value_unit: "s"
+value_unit: "Second"
 
 signals:
   signal:

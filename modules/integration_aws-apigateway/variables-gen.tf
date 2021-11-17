@@ -49,7 +49,7 @@ variable "latency_disabled_major" {
 }
 
 variable "latency_threshold_critical" {
-  description = "Critical threshold for latency detector in ms"
+  description = "Critical threshold for latency detector in Millisecond"
   type        = number
   default     = 1000
 }
@@ -66,7 +66,7 @@ variable "latency_at_least_percentage_critical" {
   default     = 0.9
 }
 variable "latency_threshold_major" {
-  description = "Major threshold for latency detector in ms"
+  description = "Major threshold for latency detector in Millisecond"
   type        = number
   default     = 3000
 }

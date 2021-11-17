@@ -46,20 +46,20 @@ resource "signalfx_detector" "capacity" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   viz_options {
-    label        = "signal"
-    value_suffix = "PiB"
+    label      = "signal"
+    value_unit = "Pebibyte"
   }
 
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.Storage/storageAccounts') and filter('primary_aggregation_type', 'true')
     capacity = data('UsedCapacity', filter=base_filtering and ${module.filtering.signalflow})${var.capacity_aggregation_function}${var.capacity_transformation_function}
-    signal = capacity.scale(0.0000000000000008881784197001252).publish('signal')
+    signal = capacity.scale(1/1024**5).publish('signal')
     detect(when(signal > ${var.capacity_threshold_critical}, lasting=%{if var.capacity_lasting_duration_critical == null}None%{else}'${var.capacity_lasting_duration_critical}'%{endif}, at_least=${var.capacity_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal > ${var.capacity_threshold_major}, lasting=%{if var.capacity_lasting_duration_major == null}None%{else}'${var.capacity_lasting_duration_major}'%{endif}, at_least=${var.capacity_at_least_percentage_major}) and (not when(signal > ${var.capacity_threshold_critical}, lasting=%{if var.capacity_lasting_duration_critical == null}None%{else}'${var.capacity_lasting_duration_critical}'%{endif}, at_least=${var.capacity_at_least_percentage_critical}))).publish('MAJOR')
 EOF
 
   rule {
-    description           = "is too high > ${var.capacity_threshold_critical}PiB"
+    description           = "is too high > ${var.capacity_threshold_critical}Pebibyte"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.capacity_disabled_critical, var.capacity_disabled, var.detectors_disabled)
@@ -71,7 +71,7 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.capacity_threshold_major}PiB"
+    description           = "is too high > ${var.capacity_threshold_major}Pebibyte"
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.capacity_disabled_major, var.capacity_disabled, var.detectors_disabled)

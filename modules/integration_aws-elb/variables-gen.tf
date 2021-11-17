@@ -87,7 +87,7 @@ variable "backend_latency_disabled_major" {
 }
 
 variable "backend_latency_threshold_critical" {
-  description = "Critical threshold for backend_latency detector in s"
+  description = "Critical threshold for backend_latency detector in Second"
   type        = number
   default     = 1
 }
@@ -104,7 +104,7 @@ variable "backend_latency_at_least_percentage_critical" {
   default     = 0.9
 }
 variable "backend_latency_threshold_major" {
-  description = "Major threshold for backend_latency detector in s"
+  description = "Major threshold for backend_latency detector in Second"
   type        = number
   default     = 3
 }

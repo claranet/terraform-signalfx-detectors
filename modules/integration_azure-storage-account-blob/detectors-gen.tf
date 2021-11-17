@@ -52,8 +52,8 @@ resource "signalfx_detector" "latency_e2e" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   viz_options {
-    label        = "signal"
-    value_suffix = "s"
+    label      = "signal"
+    value_unit = "Second"
   }
 
   program_text = <<-EOF
@@ -65,7 +65,7 @@ resource "signalfx_detector" "latency_e2e" {
 EOF
 
   rule {
-    description           = "is too high > ${var.latency_e2e_threshold_critical}s"
+    description           = "is too high > ${var.latency_e2e_threshold_critical}Second"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.latency_e2e_disabled_critical, var.latency_e2e_disabled, var.detectors_disabled)
@@ -77,7 +77,7 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.latency_e2e_threshold_major}s"
+    description           = "is too high > ${var.latency_e2e_threshold_major}Second"
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.latency_e2e_disabled_major, var.latency_e2e_disabled, var.detectors_disabled)

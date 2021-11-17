@@ -96,8 +96,8 @@ resource "signalfx_detector" "replication_lag" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   viz_options {
-    label        = "signal"
-    value_suffix = "s"
+    label      = "signal"
+    value_unit = "Second"
   }
 
   program_text = <<-EOF
@@ -108,7 +108,7 @@ resource "signalfx_detector" "replication_lag" {
 EOF
 
   rule {
-    description           = "is too high > ${var.replication_lag_threshold_critical}s"
+    description           = "is too high > ${var.replication_lag_threshold_critical}Second"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.replication_lag_disabled_critical, var.replication_lag_disabled, var.detectors_disabled)
@@ -120,7 +120,7 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.replication_lag_threshold_major}s"
+    description           = "is too high > ${var.replication_lag_threshold_major}Second"
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.replication_lag_disabled_major, var.replication_lag_disabled, var.detectors_disabled)

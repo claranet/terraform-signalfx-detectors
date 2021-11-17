@@ -4,7 +4,7 @@ name: replication lag
 transformation: true
 aggregation: true
 filtering: "filter('namespace', 'AWS/ElastiCache') and filter('stat', 'upper') and filter('CacheNodeId', '*')"
-value_unit: s
+value_unit: "Second"
 
 signals:
   signal:

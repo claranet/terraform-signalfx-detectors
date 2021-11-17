@@ -4,7 +4,7 @@ id: http_content_length
 
 transformation: true
 aggregation: true
-value_unit: bytes
+value_unit: "Byte"
 disabled: true
 
 signals:

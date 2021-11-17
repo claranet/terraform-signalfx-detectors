@@ -133,7 +133,7 @@ variable "capacity_disabled_major" {
 }
 
 variable "capacity_threshold_critical" {
-  description = "Critical threshold for capacity detector in PiB"
+  description = "Critical threshold for capacity detector in Pebibyte"
   type        = number
   default     = 4.8
 }
@@ -150,7 +150,7 @@ variable "capacity_at_least_percentage_critical" {
   default     = 1
 }
 variable "capacity_threshold_major" {
-  description = "Major threshold for capacity detector in PiB"
+  description = "Major threshold for capacity detector in Pebibyte"
   type        = number
   default     = 4.5
 }

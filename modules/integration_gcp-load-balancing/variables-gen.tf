@@ -217,7 +217,7 @@ variable "backend_latency_service_disabled_major" {
 }
 
 variable "backend_latency_service_threshold_critical" {
-  description = "Critical threshold for backend_latency_service detector in ms"
+  description = "Critical threshold for backend_latency_service detector in Millisecond"
   type        = number
   default     = 3000
 }
@@ -234,7 +234,7 @@ variable "backend_latency_service_at_least_percentage_critical" {
   default     = 0.9
 }
 variable "backend_latency_service_threshold_major" {
-  description = "Major threshold for backend_latency_service detector in ms"
+  description = "Major threshold for backend_latency_service detector in Millisecond"
   type        = number
   default     = 1000
 }
@@ -301,7 +301,7 @@ variable "backend_latency_bucket_disabled_major" {
 }
 
 variable "backend_latency_bucket_threshold_critical" {
-  description = "Critical threshold for backend_latency_bucket detector in ms"
+  description = "Critical threshold for backend_latency_bucket detector in Millisecond"
   type        = number
   default     = 8000
 }
@@ -318,7 +318,7 @@ variable "backend_latency_bucket_at_least_percentage_critical" {
   default     = 0.9
 }
 variable "backend_latency_bucket_threshold_major" {
-  description = "Major threshold for backend_latency_bucket detector in ms"
+  description = "Major threshold for backend_latency_bucket detector in Millisecond"
   type        = number
   default     = 5000
 }

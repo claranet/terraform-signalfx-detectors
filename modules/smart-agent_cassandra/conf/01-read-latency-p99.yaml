@@ -3,7 +3,7 @@ name: read latency 99th percentile
 
 transformation: true
 aggregation: true
-value_unit: s
+value_unit: "Second"
 
 signals:
   signal:

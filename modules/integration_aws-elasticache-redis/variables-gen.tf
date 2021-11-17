@@ -217,7 +217,7 @@ variable "replication_lag_disabled_major" {
 }
 
 variable "replication_lag_threshold_critical" {
-  description = "Critical threshold for replication_lag detector in s"
+  description = "Critical threshold for replication_lag detector in Second"
   type        = number
   default     = 180
 }
@@ -234,7 +234,7 @@ variable "replication_lag_at_least_percentage_critical" {
   default     = 1
 }
 variable "replication_lag_threshold_major" {
-  description = "Major threshold for replication_lag detector in s"
+  description = "Major threshold for replication_lag detector in Second"
   type        = number
   default     = 90
 }

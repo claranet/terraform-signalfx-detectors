@@ -3,7 +3,7 @@ name: write latency real time
 
 transformation: true
 aggregation: true
-value_unit: s
+value_unit: "Second"
 
 signals:
   A:

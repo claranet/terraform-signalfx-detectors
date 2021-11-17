@@ -122,8 +122,8 @@ resource "signalfx_detector" "http_content_length" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   viz_options {
-    label        = "signal"
-    value_suffix = "bytes"
+    label      = "signal"
+    value_unit = "Byte"
   }
 
   program_text = <<-EOF
@@ -132,7 +132,7 @@ resource "signalfx_detector" "http_content_length" {
 EOF
 
   rule {
-    description           = "is too low < ${var.http_content_length_threshold_warning}bytes"
+    description           = "is too low < ${var.http_content_length_threshold_warning}Byte"
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.http_content_length_disabled, var.detectors_disabled)
