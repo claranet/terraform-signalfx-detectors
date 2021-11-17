@@ -72,8 +72,14 @@ resource "signalfx_detector" "free_space" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
+  viz_options {
+    label      = "signal"
+    value_unit = "Gigibyte"
+  }
+
   program_text = <<-EOF
-    signal = data('FreeStorageSpace', filter=filter('namespace', 'AWS/ES') and filter('stat', 'lower') and filter('NodeId', '*') and ${module.filtering.signalflow})${var.free_space_aggregation_function}${var.free_space_transformation_function}.publish('signal')
+    free = data('FreeStorageSpace', filter=filter('namespace', 'AWS/ES') and filter('stat', 'lower') and filter('NodeId', '*') and ${module.filtering.signalflow})${var.free_space_aggregation_function}${var.free_space_transformation_function}
+    signal = free.scale(0.001).publish('signal')
     detect(when(signal < ${var.free_space_threshold_critical})).publish('CRIT')
     detect(when(signal < ${var.free_space_threshold_major}) and (not when(signal < ${var.free_space_threshold_critical}))).publish('MAJOR')
 EOF

@@ -6,20 +6,20 @@ resource "signalfx_detector" "used_space" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   viz_options {
-    label        = "signal"
-    value_suffix = "GB"
+    label      = "signal"
+    value_unit = "Gigibyte"
   }
 
   program_text = <<-EOF
     base_filtering = filter('namespace', 'AWS/EFS')
     used_space = data('StorageBytes', filter=base_filtering and filter('StorageClass', 'Total') and filter('stat', 'mean') and ${module.filtering.signalflow})${var.used_space_aggregation_function}${var.used_space_transformation_function}
-    signal = used_space.scale(0.000000000931323).publish('signal')
+    signal = used_space.scale(1/1024**3).publish('signal')
     detect(when(signal > ${var.used_space_threshold_critical}, lasting=%{if var.used_space_lasting_duration_critical == null}None%{else}'${var.used_space_lasting_duration_critical}'%{endif}, at_least=${var.used_space_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal > ${var.used_space_threshold_major}, lasting=%{if var.used_space_lasting_duration_major == null}None%{else}'${var.used_space_lasting_duration_major}'%{endif}, at_least=${var.used_space_at_least_percentage_major}) and (not when(signal > ${var.used_space_threshold_critical}, lasting=%{if var.used_space_lasting_duration_critical == null}None%{else}'${var.used_space_lasting_duration_critical}'%{endif}, at_least=${var.used_space_at_least_percentage_critical}))).publish('MAJOR')
 EOF
 
   rule {
-    description           = "is too high > ${var.used_space_threshold_critical}GB"
+    description           = "is too high > ${var.used_space_threshold_critical}Gigibyte"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.used_space_disabled_critical, var.used_space_disabled, var.detectors_disabled)
@@ -31,7 +31,7 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.used_space_threshold_major}GB"
+    description           = "is too high > ${var.used_space_threshold_major}Gigibyte"
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.used_space_disabled_major, var.used_space_disabled, var.detectors_disabled)
