@@ -5,8 +5,8 @@ documentations:
     url: 'https://github.com/signalfx/collectd-solr'
 
 source_doc: |
-  Check the [integration 
-  documentation](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.apache.solr.html) 
+  Check the [integration
+  documentation](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.apache.solr.html)
   in addition to the monitor one which it uses.
 
   ### Monitors

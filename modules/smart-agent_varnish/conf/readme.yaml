@@ -5,12 +5,12 @@ documentations:
     url: 'https://varnish-cache.org/docs/trunk/reference/varnishstat.html'
 
 source_doc: |
-  There is no SignalFx official integration for `varnish` but there is still a 
+  There is no SignalFx official integration for `varnish` but there is still a
   [monitor](https://docs.signalfx.com/en/latest/integrations/agent/monitors/telegraf-varnish.html) to use.
 
   ### Monitors
 
-  This monitor is only available from agent version `>= 5.5.0` 
+  This monitor is only available from agent version `>= 5.5.0`
 
   It uses the `varnishstat` command which must be installed on the varnish host next to the `signalfx-agent`
   which must be able to run this command:
@@ -20,7 +20,7 @@ source_doc: |
   ```
 
   ### Varnish
-  
+
   For varnish 4 only:
 
   In the **/etc/default/varnishncsa** file:

@@ -20,9 +20,9 @@ dependency and will avoid undesired breaking changes. This module will be droppe
 This module usage should be transparent because it should be used inside each detectors modules directly.
 Here is a simple example but it is advisable to see how are created other existing detectors modules:
 
-This directory defines a [Terraform](https://www.terraform.io/) 
-[module](https://www.terraform.io/docs/modules/usage.html). It is a "common" used internally by modules of 
-detectors. That said it could be used by everyone by adding `module` configuration and setting its `source` 
+This directory defines a [Terraform](https://www.terraform.io/)
+[module](https://www.terraform.io/docs/modules/usage.html). It is a "common" used internally by modules of
+detectors. That said it could be used by everyone by adding `module` configuration and setting its `source`
 parameter to URL of this folder:
 
 ```hcl
@@ -53,42 +53,42 @@ resource "signalfx_detector" "disk" {
 
 Note the following parameters:
 
-* `source`: Use this parameter to specify the URL of the module. The double slash (`//`) is intentional  and required. 
+* `source`: Use this parameter to specify the URL of the module. The double slash (`//`) is intentional  and required.
   Terraform uses it to specify subfolders within a Git repo (see [module
   sources](https://www.terraform.io/docs/modules/sources.html)). The `ref` parameter specifies a specific Git tag in
-  this repository. It is recommended to use the latest "pinned" version in place of `{revision}`. Avoid using a branch 
-  like `master` except for testing purpose. Note that every modules in this repository are available on the Terraform 
-  [registry](https://registry.terraform.io/modules/claranet/detectors/signalfx) and we recommend using it as source 
+  this repository. It is recommended to use the latest "pinned" version in place of `{revision}`. Avoid using a branch
+  like `master` except for testing purpose. Note that every modules in this repository are available on the Terraform
+  [registry](https://registry.terraform.io/modules/claranet/detectors/signalfx) and we recommend using it as source
   instead of `git` which is more flexible but less future-proof.
 
-* `filter_defaults`: Use this parameter to specify the `default` filters as a pure 
-  [signalflow](https://dev.splunk.com/observability/docs/signalflow/functions/filter_function/) string. If you do not 
-  define next parameters it will output this so it is basically useless if for a static value. nevertheless, it could 
+* `filter_defaults`: Use this parameter to specify the `default` filters as a pure
+  [signalflow](https://dev.splunk.com/observability/docs/signalflow/functions/filter_function/) string. If you do not
+  define next parameters it will output this so it is basically useless if for a static value. nevertheless, it could
   be useful to generate a dynamic value from terraform capabilities from your own code.
 
-* `filter_custom_includes` and `filter_custom_excludes`: Use these parameters to specify the `custom` filters as a 
-  list of strings `"key:value"` formatted. If you define at least one of them the `filter_defaults` value will not be 
+* `filter_custom_includes` and `filter_custom_excludes`: Use these parameters to specify the `custom` filters as a
+  list of strings `"key:value"` formatted. If you define at least one of them the `filter_defaults` value will not be
   used anymore and the output will be composed from the list of dimensions to include or exclude respectively.
 
 ## Why?
 
 This module has only one goal: provide a conditional outputs from user inputs.
-It should never be useful in your terraform stack but in another module only. 
+It should never be useful in your terraform stack but in another module only.
 
 It was created for detectors modules which forward user inputs to this one and allow to either:
 
 * use the default filtering signalflow string defined in the detectors module calling this one
 * or define a custom filtering string using user inputs from their stacks calling the detectors module
 
-This enfore a filtering that follows the [tagging 
-convention](https://github.com/claranet/terraform-signalfx-detectors/wiki/Tagging-convention) by default but allow 
+This enfore a filtering that follows the [tagging
+convention](https://github.com/claranet/terraform-signalfx-detectors/wiki/Tagging-convention) by default but allow
 users to define custom one based on simple inclusion / exclusion lists.
 
-In this way we can use the `filter_custom` output as a "constant" in terraform code but its value could change depending 
+In this way we can use the `filter_custom` output as a "constant" in terraform code but its value could change depending
 on its parent module configuration.
 
-It is useful for example to [multi 
-instance](https://github.com/claranet/terraform-signalfx-detectors/wiki/Guidance#Multiple-instances) the same detectors 
+It is useful for example to [multi
+instance](https://github.com/claranet/terraform-signalfx-detectors/wiki/Guidance#Multiple-instances) the same detectors
 module to make an exception or deploy monitoring per resource.
 
 ## Related documentation

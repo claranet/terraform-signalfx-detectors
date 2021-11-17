@@ -7,12 +7,12 @@ documentations:
     url: 'https://github.com/signalfx/collectd-rabbitmq'
 
 source_doc: |
-  Check the [integration 
-  documentation](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.elasticsearch.html) 
+  Check the [integration
+  documentation](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.elasticsearch.html)
   in addition to the monitor one which it uses.
 
   ### Monitors
-  
+
   You have to enable the following `extraMetrics` in your monitor configuration:
 
   * `elasticsearch.process.max_file_descriptors`
@@ -40,13 +40,13 @@ source_doc: |
   * `elasticsearch.indices.search.fetch-time`
   * `elasticsearch.indices.search.fetch-total`
 
-  You also have to configure following parameters from the 
-  [elasticsearch](https://docs.signalfx.com/en/latest/integrations/agent/monitors/elasticsearch.html) 
+  You also have to configure following parameters from the
+  [elasticsearch](https://docs.signalfx.com/en/latest/integrations/agent/monitors/elasticsearch.html)
   monitor configuration:
 
   * `enableEnhancedClusterHealthStats` to `true`
   * `enableEnhancedNodeIndicesStats` to `['search', 'indexing', 'flush', 'fielddata', 'query_cache', 'request_cache']`
-  * `clusterHealthStatsMasterOnly: false` will work in any case but prefer to set to `true` you collect from master 
+  * `clusterHealthStatsMasterOnly: false` will work in any case but prefer to set to `true` you collect from master
   node or if the master and data are the same node.
 
   ### Examples

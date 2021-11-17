@@ -6,7 +6,7 @@ documentations:
 
 source_doc: |
   ### Monitor
-  
+
   The detector of this module is based on metrics reported by the [collectd/health-checker](https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-health-checker.html) monitor.
 
   It can monitor:

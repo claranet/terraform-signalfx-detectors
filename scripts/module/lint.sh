@@ -14,7 +14,7 @@ TARGET="${1:-}"
 cd ${TARGET}
 CI="${CI:-false}"
 TFLINT_CMD="tflint --disable-rule=terraform_module_pinned_source --enable-rule=terraform_unused_declarations"
-if [ $CI == "true" ]; then 
+if [ $CI == "true" ]; then
     TFLINT_CMD="$TFLINT_CMD --loglevel=info"
 fi
 

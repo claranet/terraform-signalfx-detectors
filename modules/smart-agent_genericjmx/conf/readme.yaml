@@ -5,18 +5,18 @@ documentations:
     url: 'https://collectd.org/wiki/index.php/Plugin:GenericJMX'
 
 source_doc: |
-  There is no SignalFx official integration for `jmx` but there is still a 
+  There is no SignalFx official integration for `jmx` but there is still a
   [monitor](https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-genericjmx.html) to use.
 
   ### Agent
 
-  The agent requires to [Java 
-  plugin](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.java.html) 
-  for Collectd which is already installed in the [SignalFx Smart 
+  The agent requires to [Java
+  plugin](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.java.html)
+  for Collectd which is already installed in the [SignalFx Smart
   Agent](https://github.com/signalfx/signalfx-agent/).
 
   ### Monitors
-  
+
   This module could be used on every `collectd/genericjmx` based monitors like `cassandra` or `tomcat`.
   If your software does not have its own monitor so you can simply use `collectd/genericjmx`:
 
@@ -39,5 +39,5 @@ source_doc: |
 
 
 notes: |
-  You can collect more metrics than used in this module defining `mBeanDefinitions` parameter on your monitor 
+  You can collect more metrics than used in this module defining `mBeanDefinitions` parameter on your monitor
   configuration for metrology or troubleshooting purposes.

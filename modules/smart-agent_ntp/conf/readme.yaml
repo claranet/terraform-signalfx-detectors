@@ -3,7 +3,7 @@ documentations:
     url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/ntp.html'
 
 source_doc: |
-  There is no SignalFx official integration for `ntp` but there is still a 
+  There is no SignalFx official integration for `ntp` but there is still a
   [monitor](https://docs.signalfx.com/en/latest/integrations/agent/monitors/ntp.html) to use.
 
   ### Monitors

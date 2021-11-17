@@ -12,7 +12,7 @@
 
 ## How to use this module?
 
-This directory defines a classic [Terraform](https://www.terraform.io/) 
+This directory defines a classic [Terraform](https://www.terraform.io/)
 [module](https://www.terraform.io/docs/modules/usage.html) which can be used by everyone by adding `module`
 configuration and setting its `source` parameter to URL of this folder:
 
@@ -44,17 +44,17 @@ resource "signalfx_detector" "disk" {
 
 Note the following parameters:
 
-* `source`: Use this parameter to specify the URL of the module. The double slash (`//`) is intentional  and required. 
+* `source`: Use this parameter to specify the URL of the module. The double slash (`//`) is intentional  and required.
   Terraform uses it to specify subfolders within a Git repo (see [module
   sources](https://www.terraform.io/docs/modules/sources.html)). The `ref` parameter specifies a specific Git tag in
-  this repository. It is recommended to use the latest "pinned" version in place of `{revision}`. Avoid using a branch 
-  like `master` except for testing purpose. Note that every modules in this repository are available on the Terraform 
-  [registry](https://registry.terraform.io/modules/claranet/detectors/signalfx) and we recommend using it as source 
+  this repository. It is recommended to use the latest "pinned" version in place of `{revision}`. Avoid using a branch
+  like `master` except for testing purpose. Note that every modules in this repository are available on the Terraform
+  [registry](https://registry.terraform.io/modules/claranet/detectors/signalfx) and we recommend using it as source
   instead of `git` which is more flexible but less future-proof.
 
-* `filtering_default`: Use this parameter to specify the **default** filters as a pure 
-  [signalflow](https://dev.splunk.com/observability/docs/signalflow/functions/filter_function/) string. If you do not 
-  define next parameters it will output this so it is basically useless. Nevertheless, it could 
+* `filtering_default`: Use this parameter to specify the **default** filters as a pure
+  [signalflow](https://dev.splunk.com/observability/docs/signalflow/functions/filter_function/) string. If you do not
+  define next parameters it will output this so it is basically useless. Nevertheless, it could
   be useful to generate a dynamic value from terraform capabilities like variables from your own code.
 
 * `filtering_custom`: Use this parameter to specify the **custom** filters as a pure signalflow string again.
@@ -78,11 +78,11 @@ It was created for detectors modules which forward user inputs to this one and a
 convention](https://github.com/claranet/terraform-signalfx-detectors/wiki/Tagging-convention).
 - allow the user to override this filtering by a custom one either by replace the default one or append to it.
 
-In this way we can use the `signalflow` output as a "constant" in terraform code but its value could change depending 
+In this way we can use the `signalflow` output as a "constant" in terraform code but its value could change depending
 on its parent module configuration.
 
-It is useful for example to [multi 
-instance](https://github.com/claranet/terraform-signalfx-detectors/wiki/Guidance#Multiple-instances) the same detectors 
+It is useful for example to [multi
+instance](https://github.com/claranet/terraform-signalfx-detectors/wiki/Guidance#Multiple-instances) the same detectors
 module to make an exception or deploy monitoring per resource.
 
 ## Related documentation

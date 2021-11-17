@@ -3,16 +3,16 @@ documentations:
     url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/kubernetes-apiserver.html'
 
 source_doc: |
-  Follow the 
-  [kubernetes-apiserver](https://docs.signalfx.com/en/latest/integrations/agent/monitors/kubernetes-apiserver.html) 
+  Follow the
+  [kubernetes-apiserver](https://docs.signalfx.com/en/latest/integrations/agent/monitors/kubernetes-apiserver.html)
   monitor configuration to collect metrics.
 
 notes: |
   For now this module only contains an heartbeat detector to check the health of the api server.
-  
-  As for any control plane components you should enable alerting notifications only when you host the master 
+
+  As for any control plane components you should enable alerting notifications only when you host the master
   nodes yourself. In general, we do not want to trigger alerts on components we don't manage.
 
-  That said, it remains possible to configure the monitor to retrieve metrics from a full managed cluster like `GKE` 
-  for metrology purpose and even deploy these detectors without oncall notifications to check for the underlying 
+  That said, it remains possible to configure the monitor to retrieve metrics from a full managed cluster like `GKE`
+  for metrology purpose and even deploy these detectors without oncall notifications to check for the underlying
   provider availability.

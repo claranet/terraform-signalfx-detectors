@@ -11,9 +11,9 @@ documentations:
 source_doc: |
   ### Agent
 
-  Here is the official [main 
-  documentation](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.kubernetes.html) for 
-  kubernetes including the `signalfx-agent` installation which must be installed as 
+  Here is the official [main
+  documentation](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.kubernetes.html) for
+  kubernetes including the `signalfx-agent` installation which must be installed as
   [daemonset](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) on your cluster.
 
   ### Monitors
@@ -24,7 +24,7 @@ source_doc: |
   * [kubelet-stats](https://docs.signalfx.com/en/latest/integrations/agent/monitors/kubelet-stats.html) for Kubernetes `< 1.18
   * [kubernetes-cluster](https://docs.signalfx.com/en/latest/integrations/agent/monitors/kubernetes-cluster.html)
 
-  [Others](https://docs.signalfx.com/en/latest/integrations/kubernetes/k8s-monitors-observers.html#monitors-observers) 
+  [Others](https://docs.signalfx.com/en/latest/integrations/kubernetes/k8s-monitors-observers.html#monitors-observers)
   exist to increase visibility or may be in future to enrich this modules or create new ones.
 
   The `kubernetes-cluster` requires to enable the following `extraMetrics`:
@@ -141,7 +141,7 @@ source_doc: |
 
 
 notes: |
-  This module should suit to every kubernetes clusters full managed or not and could be complete with others 
+  This module should suit to every kubernetes clusters full managed or not and could be complete with others
   modules covering more data sources like `kubernetes-volumes` or use cases like `kubernetes-apiserver`.
 
   ### About `node_ready` detector

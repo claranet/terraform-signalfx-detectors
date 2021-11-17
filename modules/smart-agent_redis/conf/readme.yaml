@@ -5,8 +5,8 @@ documentations:
     url: 'https://github.com/signalfx/redis-collectd-plugin'
 
 source_doc: |
-  Check the [integration 
-  documentation](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.redis.html) 
+  Check the [integration
+  documentation](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.redis.html)
   in addition to the monitor one which it uses.
 
   ### Monitors
@@ -20,6 +20,6 @@ source_doc: |
   Some of them are available since agent version `v5.4.2` like the two first.
 
 notes: |
-  * The "keyspace full" detector uses number of keys from database index 0, 
+  * The "keyspace full" detector uses number of keys from database index 0,
   it will not work for other databases (1-15 by default).
   This detector is disabled by default because it makes sens only when redis is used as cache.

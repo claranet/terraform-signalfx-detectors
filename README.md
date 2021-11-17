@@ -24,20 +24,20 @@
 
 ## 🥅 Goal
 
-This project aims to speed up alerting deployment and apply infrastructure as code 
-process to your monitoring. It could also be a place to collect, share and improve 
+This project aims to speed up alerting deployment and apply infrastructure as code
+process to your monitoring. It could also be a place to collect, share and improve
 alerting rules on popular services and environments through SignalFx and Terraform.
 
-__Note__: These templates implementation is opinionated and enforce best practices 
-which ensure homogeneity but it will also restrict the usage and capabilities even 
+__Note__: These templates implementation is opinionated and enforce best practices
+which ensure homogeneity but it will also restrict the usage and capabilities even
 if it tries to provide as much flexibility as possible.
 
 ## 📦 Modules
 
-This repository consists in a collection of generic pre-built detectors for SignalFx 
+This repository consists in a collection of generic pre-built detectors for SignalFx
 broken down into multiple terraform modules in [modules](./modules/README.md) directory.
 
-Each module is fully independent and it is dedicated to monitor one service 
+Each module is fully independent and it is dedicated to monitor one service
 thanks to the metrics and information it provides. It contains:
 
 - Terraform source code to be use as module
@@ -46,10 +46,10 @@ thanks to the metrics and information it provides. It contains:
 
 ## 🚀 Usage
 
-A module is a collection of [detectors 
-resource](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector) 
-with global and per-detector variables available to adapt the default alerting 
-behavior to suit your requirements changing the underlying detectors configuration 
+A module is a collection of [detectors
+resource](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector)
+with global and per-detector variables available to adapt the default alerting
+behavior to suit your requirements changing the underlying detectors configuration
 at deployment thanks to Terraform.
 
 [Instructions in Wiki](https://github.com/claranet/terraform-signalfx-detectors/wiki).
@@ -58,22 +58,22 @@ at deployment thanks to Terraform.
 
 Contributions from the community are most welcome!
 
-There are many ways to contribute: writing code, add or improve detectors, 
+There are many ways to contribute: writing code, add or improve detectors,
 documentation, reporting issues, discussing better error tracking...
 
 [Instructions in CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## 🚧 Roadmap
 
-You can go to [github 
-milestones](https://github.com/claranet/terraform-signalfx-detectors/milestones) 
-to know what is planned in future versions browsing [available 
+You can go to [github
+milestones](https://github.com/claranet/terraform-signalfx-detectors/milestones)
+to know what is planned in future versions browsing [available
 issues](https://github.com/claranet/terraform-signalfx-detectors/issues).
 
 ## 🚨 Changelog
 
-Read carefully release notes of each [github 
-release](https://github.com/claranet/terraform-signalfx-detectors/releases) 
+Read carefully release notes of each [github
+release](https://github.com/claranet/terraform-signalfx-detectors/releases)
 before upgrading to a new version.
 
 ## 📝 License

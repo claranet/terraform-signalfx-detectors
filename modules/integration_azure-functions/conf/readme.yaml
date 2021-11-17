@@ -16,5 +16,5 @@ source_doc: |
   The wrapper is available for following languages:
   * [C#](https://github.com/signalfx/azure-function-csharp)
   * [Java](https://github.com/signalfx/azure-function-java)
-  * [NodeJs](https://github.com/signalfx/azure-function-nodejs) 
+  * [NodeJs](https://github.com/signalfx/azure-function-nodejs)
   * [Python](https://github.com/claranet/signalfx-azure-function-python)

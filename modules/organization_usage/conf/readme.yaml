@@ -1,7 +1,7 @@
 notes: |
   The `is_parent` parameter allow to deploy either on a parent org or a child org.
 
-  This module could be used with related 
+  This module could be used with related
   [dashboards](https://github.com/claranet/terraform-signalfx-dashboards/tree/master/organization/usage):
 
   ```hcl

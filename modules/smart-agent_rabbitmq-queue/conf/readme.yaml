@@ -7,20 +7,20 @@ documentations:
     url: 'https://github.com/signalfx/collectd-rabbitmq'
 
 source_doc: |
-  Check the [integration 
-  documentation](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.rabbitmq.html) 
+  Check the [integration
+  documentation](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.rabbitmq.html)
   in addition to the monitor one which it uses.
 
   ### Monitors
-  
+
   You have to enable the following `extraMetrics` in your monitor configuration:
 
   * `gauge.queue.messages_unacknowledged`
   * `counter.queue.message_stats.ack`
   * `gauge.queue.consumer_utilisation`
 
-  You also have to enable `collectNodes` and `collectQueues` parameters from the 
-  [collectd/rabbitmq](https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-rabbitmq.html) 
+  You also have to enable `collectNodes` and `collectQueues` parameters from the
+  [collectd/rabbitmq](https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-rabbitmq.html)
   monitor configuration.
 
   ### Examples
@@ -38,9 +38,9 @@ source_doc: |
   ```
 
 notes: |
-  The default behavior is to alert when the number of ready message in any queue will be above 
-  `messages_ready` thresholds. Please enable the other detectors and configure thresholds according to 
-  your needs and use cases. 
+  The default behavior is to alert when the number of ready message in any queue will be above
+  `messages_ready` thresholds. Please enable the other detectors and configure thresholds according to
+  your needs and use cases.
 
-  Call this module several times with different filters to speficy custom 
-  thresholds (on a particular queue for example). 
+  Call this module several times with different filters to speficy custom
+  thresholds (on a particular queue for example).

@@ -3,8 +3,8 @@ documentations:
     url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/docker-container-stats.html'
 
 source_doc: |
-  Follow the 
-  [docker-container-stats](https://docs.signalfx.com/en/latest/integrations/agent/monitors/docker-container-stats.html) 
+  Follow the
+  [docker-container-stats](https://docs.signalfx.com/en/latest/integrations/agent/monitors/docker-container-stats.html)
   monitor configuration to collect metrics.
 
   It requires to enable the following `extraMetrics`:
@@ -16,5 +16,5 @@ notes: |
   This module aims to be used with simple, docker only based hosts.
 
   Prefer to use `kubernetes-*` modules only for kubernetes infrastructure
-  while it does not make sens to monitor Docker in such environment and this will 
+  while it does not make sens to monitor Docker in such environment and this will
   lead to duplicated detectors and alerts.

@@ -7,12 +7,12 @@ documentations:
     url: 'https://github.com/signalfx/collectd-rabbitmq'
 
 source_doc: |
-  Check the [integration 
-  documentation](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.rabbitmq.html) 
+  Check the [integration
+  documentation](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.rabbitmq.html)
   in addition to the monitor one which it uses.
 
   ### Monitors
-  
+
   You have to enable the following `extraMetrics` in your monitor configuration:
 
   * `gauge.node.proc_used`
@@ -20,8 +20,8 @@ source_doc: |
   * `gauge.node.sockets_used`
   * `gauge.node.sockets_total`
 
-  You also have to enable `collectNodes` and `collectQueues` parameters from the 
-  [collectd/rabbitmq](https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-rabbitmq.html) 
+  You also have to enable `collectNodes` and `collectQueues` parameters from the
+  [collectd/rabbitmq](https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-rabbitmq.html)
   monitor configuration.
 
   ### Examples

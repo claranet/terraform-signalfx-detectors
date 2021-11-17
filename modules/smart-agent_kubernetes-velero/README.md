@@ -19,9 +19,9 @@
 
 ## How to use this module?
 
-This directory defines a [Terraform](https://www.terraform.io/) 
+This directory defines a [Terraform](https://www.terraform.io/)
 [module](https://www.terraform.io/docs/modules/usage.html) you can use in your
-existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/Getting-started#stack) by adding a 
+existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/Getting-started#stack) by adding a
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
@@ -35,43 +35,43 @@ module "signalfx-detectors-smart-agent-kubernetes-velero" {
 
 Note the following parameters:
 
-* `source`: Use this parameter to specify the URL of the module. The double slash (`//`) is intentional  and required. 
+* `source`: Use this parameter to specify the URL of the module. The double slash (`//`) is intentional  and required.
   Terraform uses it to specify subfolders within a Git repo (see [module
   sources](https://www.terraform.io/docs/modules/sources.html)). The `ref` parameter specifies a specific Git tag in
-  this repository. It is recommended to use the latest "pinned" version in place of `{revision}`. Avoid using a branch 
-  like `master` except for testing purpose. Note that every modules in this repository are available on the Terraform 
-  [registry](https://registry.terraform.io/modules/claranet/detectors/signalfx) and we recommend using it as source 
+  this repository. It is recommended to use the latest "pinned" version in place of `{revision}`. Avoid using a branch
+  like `master` except for testing purpose. Note that every modules in this repository are available on the Terraform
+  [registry](https://registry.terraform.io/modules/claranet/detectors/signalfx) and we recommend using it as source
   instead of `git` which is more flexible but less future-proof.
 
-* `environment`: Use this parameter to specify the 
-  [environment](https://github.com/claranet/terraform-signalfx-detectors/wiki/Getting-started#environment) used by this 
+* `environment`: Use this parameter to specify the
+  [environment](https://github.com/claranet/terraform-signalfx-detectors/wiki/Getting-started#environment) used by this
   instance of the module.
-  Its value will be added to the `prefixes` list at the start of the [detector 
+  Its value will be added to the `prefixes` list at the start of the [detector
   name](https://github.com/claranet/terraform-signalfx-detectors/wiki/Templating#example).
   In general, it will also be used in the `filtering` internal sub-module to [apply
-  filters](https://github.com/claranet/terraform-signalfx-detectors/wiki/Guidance#filtering) based on our default 
+  filters](https://github.com/claranet/terraform-signalfx-detectors/wiki/Guidance#filtering) based on our default
   [tagging convention](https://github.com/claranet/terraform-signalfx-detectors/wiki/Tagging-convention) by default.
 
-* `notifications`: Use this parameter to define where alerts should be sent depending on their severity. It consists 
-  of a Terraform [object](https://www.terraform.io/docs/configuration/types.html#object-) where each key represents an 
-  available [detector rule severity](https://docs.signalfx.com/en/latest/detect-alert/set-up-detectors.html#severity) 
-  and its value is a list of recipients. Every recipients must respect the [detector notification 
+* `notifications`: Use this parameter to define where alerts should be sent depending on their severity. It consists
+  of a Terraform [object](https://www.terraform.io/docs/configuration/types.html#object-) where each key represents an
+  available [detector rule severity](https://docs.signalfx.com/en/latest/detect-alert/set-up-detectors.html#severity)
+  and its value is a list of recipients. Every recipients must respect the [detector notification
   format](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector#notification-format).
-  Check the [notification binding](https://github.com/claranet/terraform-signalfx-detectors/wiki/Notifications-binding) 
+  Check the [notification binding](https://github.com/claranet/terraform-signalfx-detectors/wiki/Notifications-binding)
   documentation to understand the recommended role of each severity.
 
-These 3 parameters alongs with all variables defined in [common-variables.tf](common-variables.tf) are common to all 
-[modules](../) in this repository. Other variables, specific to this module, are available in 
+These 3 parameters alongs with all variables defined in [common-variables.tf](common-variables.tf) are common to all
+[modules](../) in this repository. Other variables, specific to this module, are available in
 [variables.tf](variables.tf).
-In general, the default configuration "works" but all of these Terraform 
-[variables](https://www.terraform.io/docs/configuration/variables.html) make it possible to 
+In general, the default configuration "works" but all of these Terraform
+[variables](https://www.terraform.io/docs/configuration/variables.html) make it possible to
 customize the detectors behavior to better fit your needs.
 
-Most of them represent usual tips and rules detailled in the 
-[guidance](https://github.com/claranet/terraform-signalfx-detectors/wiki/Guidance) documentation and listed in the 
+Most of them represent usual tips and rules detailled in the
+[guidance](https://github.com/claranet/terraform-signalfx-detectors/wiki/Guidance) documentation and listed in the
 common [variables](https://github.com/claranet/terraform-signalfx-detectors/wiki/Variables) dedicated documentation.
 
-Feel free to explore the [wiki](https://github.com/claranet/terraform-signalfx-detectors/wiki) for more information about 
+Feel free to explore the [wiki](https://github.com/claranet/terraform-signalfx-detectors/wiki) for more information about
 general usage of this repository.
 
 ## What are the available detectors in this module?
@@ -88,18 +88,18 @@ This module creates the following SignalFx detectors which could contain one or 
 
 ## How to collect required metrics?
 
-This module uses metrics available from 
+This module uses metrics available from
 [monitors](https://docs.signalfx.com/en/latest/integrations/agent/monitors/_monitor-config.html)
-available in the [SignalFx Smart 
-Agent](https://github.com/signalfx/signalfx-agent). Check the [Related documentation](#related-documentation) section for more 
+available in the [SignalFx Smart
+Agent](https://github.com/signalfx/signalfx-agent). Check the [Related documentation](#related-documentation) section for more
 information including the official documentation of this monitor.
 
 
 ### Agent
 
-Here is the official [main 
-documentation](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.kubernetes.html) for 
-kubernetes including the `signalfx-agent` installation which must be installed as 
+Here is the official [main
+documentation](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.kubernetes.html) for
+kubernetes including the `signalfx-agent` installation which must be installed as
 [daemonset](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) on your cluster.
 
 ### Monitors
@@ -108,11 +108,11 @@ The detectors in this module are based on metrics reported by the following moni
 
 * [prometheus/velero](https://docs.signalfx.com/en/latest/integrations/agent/monitors/prometheus-velero.html)
 
-This monitor is only available for agent `>= 5.5.5` but it is basically a wrapper around [prometheus exporter 
-monitor](https://docs.signalfx.com/en/latest/integrations/agent/monitors/prometheus-exporter.html) to filter important 
+This monitor is only available for agent `>= 5.5.5` but it is basically a wrapper around [prometheus exporter
+monitor](https://docs.signalfx.com/en/latest/integrations/agent/monitors/prometheus-exporter.html) to filter important
 metrics while prometheus metrics are considered as custom metrics which could have an impact on SignalFx billing.
 
-You must configure it for every velero deployments so this is almost sure you will need to use [service 
+You must configure it for every velero deployments so this is almost sure you will need to use [service
 discovery](https://docs.signalfx.com/en/latest/integrations/agent/auto-discovery.html) to do it dynamically.
 
 Detectors in this module will at least require these metrics:
@@ -148,8 +148,8 @@ monitors:
 ### Metrics
 
 
-To filter only required metrics for the detectors of this module, add the 
-[datapointsToExclude](https://docs.signalfx.com/en/latest/integrations/agent/filtering.html) parameter to 
+To filter only required metrics for the detectors of this module, add the
+[datapointsToExclude](https://docs.signalfx.com/en/latest/integrations/agent/filtering.html) parameter to
 the corresponding monitor configuration:
 
 ```yaml
@@ -183,10 +183,10 @@ monitors:
         - '!velero_restore_success_total'
 ```
 
-It uses whitelist [filtering](https://docs.signalfx.com/en/latest/integrations/agent/filtering.html) 
+It uses whitelist [filtering](https://docs.signalfx.com/en/latest/integrations/agent/filtering.html)
 to keep only interesting metrics. The last one is not required by this module.
 
-You can replace `prometheus/velero` by `prometheus-exporter` to make this module works 
+You can replace `prometheus/velero` by `prometheus-exporter` to make this module works
 with agent version prior `5.5.5`.
 
 
