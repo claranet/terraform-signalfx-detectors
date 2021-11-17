@@ -71,6 +71,11 @@ resource "signalfx_detector" "free_space_low" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
+  viz_options {
+    label        = "signal"
+    value_unit   = "Gigibyte"
+  }
+
   program_text = <<-EOF
     free = data('FreeStorageSpace', filter=filter('namespace', 'AWS/RDS') and filter('stat', 'mean') and filter('DBInstanceIdentifier', '*') and ${module.filtering.signalflow})${var.free_space_low_aggregation_function}${var.free_space_low_transformation_function}
     signal = free.scale(1/1024**3).publish('signal') # Bytes to Gigibytes
