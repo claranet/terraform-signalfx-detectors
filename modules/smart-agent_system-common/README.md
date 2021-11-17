@@ -98,12 +98,20 @@ all useful metrics from `cpu`, `load`, `filesystems` and `memory`.
 
 ### Monitors
 
-You have to enable the `inodes` group in `extraGroups` parameter of the `filesystems` monitor configuration (only 
-available for `Linux`) to work with the inodes detector.
+#### Inodes
 
-It is highly recommended to define `perCPU: true` in the `load` monitor configuration to get the __ratio__ of load 
-per CPU/core which makes more sens for the generic load detector.
-For `Helm` deployment on `Kubernetes`, you can use `loadPerCPU` option available from `1.2.0` version.
+To use inodes based detectors you must enable the `inodes` group in `extraGroups` parameter of the `filesystems` monitor configuration
+
+Inodes metrics areonly available for `Linux`).
+
+#### Load
+
+You have two choices to use load based detectors:
+  - either keep the `per_cpu_enabled` enabled (variable default value) __and__ define `perCPU: true` in the [load monitor](https://docs.signalfx.com/en/latest/integrations/agent/monitors/load.html) configuration (for Kubernetes, you can use `loadPerCPU` option from the Helm chart available from `1.2.0` version).
+  - or override the `per_cpu_enabled` to `false` __and__ keep the default configuration for the [load monitor](https://docs.signalfx.com/en/latest/integrations/agent/monitors/load.html) with `perCPU: false` or not defined
+
+In both cases, the goal is to get alerts based on the __ratio__ of load by dividing the original load per the number of CPU/cores which is the only way to get generic and relevant alerts for load.
+It mainly depends if you want to collect 2 metrics instead of 1 and if you want the load one to be raw or already averaged.
 
 
 ### Metrics
@@ -117,6 +125,7 @@ the corresponding monitor configuration:
     datapointsToExclude:
       - metricNames:
         - '*'
+        - '!cpu.num_processors'
         - '!cpu.utilization'
         - '!disk.utilization'
         - '!load.midterm'

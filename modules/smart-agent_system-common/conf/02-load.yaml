@@ -3,8 +3,12 @@ name: "load 5m ratio"
 id: load
 transformation: ".min(over='30m')"
 signals:
-  signal:
+  load:
     metric: load.midterm
+  num_processors:
+    metric: cpu.num_processors
+  signal:
+    formula: '(${var.per_cpu_enabled ? "load" : "load/num_processors"})'
 rules:
   critical:
     threshold: 2.5
