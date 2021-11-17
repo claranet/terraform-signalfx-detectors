@@ -462,6 +462,7 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
+|Azure Service Bus deadlettered messages count|X|X|-|-|-|
 |Azure Service Bus heartbeat|X|-|-|-|-|
 |Azure Service Bus no active connections|X|-|-|-|-|
 |Azure Service Bus user error rate|X|X|-|-|-|
