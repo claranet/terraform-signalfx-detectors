@@ -141,13 +141,13 @@ variable "free_space_transformation_function" {
 variable "free_space_threshold_critical" {
   description = "Critical threshold for free_space detector"
   type        = number
-  default     = 20480
+  default     = 20
 }
 
 variable "free_space_threshold_major" {
   description = "Major threshold for free_space detector"
   type        = number
-  default     = 40960
+  default     = 40
 }
 
 # CPU_90_15min detector
