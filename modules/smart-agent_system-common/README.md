@@ -104,6 +104,11 @@ To use inodes based detectors you must enable the `inodes` group in `extraGroups
 
 Inodes metrics areonly available for `Linux`).
 
+#### Space
+
+You can exclude squashfs filesystems from the collect using `fsTypes: ["!squashfs"]` parameter in the agent configuration.
+But we exclude it explicitly in related detector for safety to prevent any alert on this filesystem type.
+
 #### Load
 
 You have two choices to use load based detectors:
