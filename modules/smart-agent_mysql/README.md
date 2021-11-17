@@ -9,7 +9,7 @@
 - [How to collect required metrics?](#how-to-collect-required-metrics)
   - [Monitors](#monitors)
   - [MySQL](#mysql)
-  - [Examples](#examples)
+  - [Suggested configuration](#suggested-configuration)
   - [Metrics](#metrics)
 - [Notes](#notes)
 - [Related documentation](#related-documentation)
@@ -129,9 +129,9 @@ You can use [this terraform module](https://github.com/claranet/terraform-signal
 or follow instruction in [integration
 documentation](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.mysql.html#creating-a-mysql-user-for-collectd).
 
-### Examples
+### Suggested configuration
 
-Here is a sample configuration fragment for the SignalFx agent monitors:
+Here is a suggested configuration fragment for the SignalFx agent monitors:
 
 ```yaml
   - type: collectd/mysql
@@ -168,7 +168,11 @@ Here is a sample configuration fragment for the SignalFx agent monitors:
       dbname: *mysqlDBName
       username: *mysqlUser
       password: *mysqlPass
+    # if `mysqlHost` is 'localhost' (unix socket connection) and `mysqlUser` have different right
+    # when connecting via tcp than unix socket
+    # you should use the second connectionString
     connectionString: '{{.username}}:{{.password}}@tcp({{.host}}:{{.port}})/{{.dbname}}'
+    #connectionString: '{{.username}}:{{.password}}@unix(/var/run/mysqld/mysqld.sock)/{{.dbname}}'
     queries:
       # Requires signalfx-agent >= v5.4.0
       - query: 'SHOW SLAVE STATUS;'
@@ -206,9 +210,13 @@ Here is a sample configuration fragment for the SignalFx agent monitors:
             valueColumn: "Value"
 ```
 
-__Note__: By default this configuration is for [standard
+__Note__: This configuration should be your default for [standard
 deployment](https://github.com/claranet/terraform-signalfx-detectors/wiki/Guidance#deployment-mode).
-You have to `disableHostDimensions: true` and add your MySQL server as `host` dimension in `extraDimensions`.
+If the mysql server is not on the same host as the signalfx agent you have to:
+  * uncomment `disableHostDimensions: true`
+  * uncomment `host: *mysqlHost` in `extraDimensions`.
+
+__Note__: If you deploy this configuration via ansible, you will need to escape `connectionString` with `{% raw %}…{% endraw %}`.
 
 
 ### Metrics
