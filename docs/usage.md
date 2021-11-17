@@ -136,17 +136,17 @@ Terraform will perform the following actions:
                 **Cleared at**:
                 *{{timestamp}}*
                 {{/if}}
-               
+              
                 {{#notEmpty dimensions}}
                 **Dimensions**:
                 *{{{dimensions}}}*
                 {{/notEmpty}}
-               
+              
                 {{#if anomalous}}
                 {{#if runbookUrl}}**Runbook**:
                 Go to [this page]({{{runbookUrl}}}) for help and analysis.
                 {{/if}}
-               
+              
                 {{#if tip}}**Tip**:
                 {{{tip}}}
                 {{/if}}
@@ -172,17 +172,17 @@ Terraform will perform the following actions:
                 **Cleared at**:
                 *{{timestamp}}*
                 {{/if}}
-               
+              
                 {{#notEmpty dimensions}}
                 **Dimensions**:
                 *{{{dimensions}}}*
                 {{/notEmpty}}
-               
+              
                 {{#if anomalous}}
                 {{#if runbookUrl}}**Runbook**:
                 Go to [this page]({{{runbookUrl}}}) for help and analysis.
                 {{/if}}
-               
+              
                 {{#if tip}}**Tip**:
                 {{{tip}}}
                 {{/if}}

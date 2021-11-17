@@ -24,7 +24,7 @@ tf="$(./scripts/stack/gen_module.sh ${TARGET})"
 detectors=""
 metrics=""
 # if there is at least one detector in the module (avoid error on new fresh module)
-if compgen -G "${TARGET}/detectors-*.tf" > /dev/null; then 
+if compgen -G "${TARGET}/detectors-*.tf" > /dev/null; then
     # generate markdown matrix with severity per detector
     detectors="$(./scripts/module/gen_severity.sh ${TARGET})"
     # list all metrics used in `data()` signalflow function (grep "data()", sed pick only metric name, sort then replace newline by comma)

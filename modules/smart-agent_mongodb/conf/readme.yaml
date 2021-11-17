@@ -27,7 +27,7 @@ source_doc: |
   This is the only way to make the replicaset related detectors to work.
 
   ### Examples
- 
+
   ```yaml
     - type: collectd/mongodb
       host: &mongoHost localhost

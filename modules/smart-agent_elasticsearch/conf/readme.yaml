@@ -12,7 +12,7 @@ source_doc: |
   in addition to the monitor one which it uses.
 
   ### Monitors
- 
+
   You have to enable the following `extraMetrics` in your monitor configuration:
 
   * `elasticsearch.process.max_file_descriptors`

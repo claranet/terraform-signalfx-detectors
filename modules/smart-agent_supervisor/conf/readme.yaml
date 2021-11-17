@@ -9,7 +9,7 @@ source_doc: |
   [monitor](https://docs.signalfx.com/en/latest/integrations/agent/monitors/supervisor.html) to use.
 
   ### Monitors
- 
+
   This monitor is only available for agent `>= 5.2.0`.
 
   ### Supervisor

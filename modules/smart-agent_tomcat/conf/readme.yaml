@@ -16,7 +16,7 @@ source_doc: |
   Agent](https://github.com/signalfx/signalfx-agent/).
 
   ### Monitors
- 
+
   This monitor is only available from agent version `>= 5.5.5` but you can use `genericjmx` monitor for
   previous versions with defining the [same
   mBeans](https://github.com/signalfx/signalfx-agent/blob/master/pkg/monitors/collectd/tomcat/mbeans.go) in

@@ -98,7 +98,7 @@ with bundled `md` collectd plugin.
 
 ### Monitors
 
-The Collectd plugin requires access on MD devices owned by user `root` and group `disk`. 
+The Collectd plugin requires access on MD devices owned by user `root` and group `disk`.
 So you have to allow the user running signalfx-agent to run `mdadm` on these devices by adding it to `disk` group:
 
 ```bash

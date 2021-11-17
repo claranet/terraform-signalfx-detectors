@@ -9,7 +9,7 @@ source_doc: |
   [monitor](https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-php-fpm.html) to use.
 
   ### Monitors
- 
+
   This monitor is only available for agent `>= 5.2.0` but for previous versions you can use the generic
   [collectd/custom](https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-custom.html)
   monitor with [this

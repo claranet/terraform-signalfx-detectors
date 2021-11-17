@@ -153,7 +153,7 @@ This is why we have also have use
 [templating](https://github.com/claranet/terraform-signalfx-detectors/wiki/Structure) thanks to
 terraform to make it possible to customize their configuration and adapt their behavior at deployment.
 
-This is why all modules must provide, at least, these Terraform 
+This is why all modules must provide, at least, these Terraform
 [variables](https://github.com/claranet/terraform-signalfx-detectors/wiki/Variables) to enjoy this
 templating and provide to the user common customization capabilities.
 

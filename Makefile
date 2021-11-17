@@ -44,7 +44,7 @@ update-module: update-module-tf check-module update-module-readme update-severit
 update-module-doc: update-module-readme update-toc
 
 .PHONY: update-module-readme
-update-module-readme: 
+update-module-readme:
 	./scripts/module/loop_wrapper.sh ./scripts/module/gen_doc.sh
 
 sev_dst = docs/severity.md
@@ -60,7 +60,7 @@ update-severity:
 update-severity-doc: update-severity update-toc
 
 .PHONY: update-toc
-update-toc: 
+update-toc:
 	doctoc --github --title ':link: **Contents**' --maxlevel 3 .
 
 .PHONY: check-module
@@ -79,26 +79,26 @@ check-deadlinks:
 update-module-tf: update-module-detectors update-module-outputs
 
 .PHONY: update-module-outputs
-update-module-outputs: 
+update-module-outputs:
 	./scripts/module/loop_wrapper.sh ./scripts/module/gen_outputs.sh
 
 .PHONY: update-module-detectors
-update-module-detectors: 
+update-module-detectors:
 	./scripts/module/loop_wrapper.sh ./scripts/module/gen_detectors.sh
 	
 .PHONY: init-stack
 init-stack: init-stack-common init-stack-modules
 
 .PHONY: init-stack-common
-init-stack-common: 
+init-stack-common:
 	@echo 'Bootstrap stack in "examples/stack"'
 	./scripts/stack/bootstrap.sh
 	> examples/stack/detectors.tf
 
 .PHONY: init-stack-modules
-init-stack-modules: 
+init-stack-modules:
 	./scripts/module/loop_wrapper.sh ./scripts/stack/gen_module.sh "$(REV)" >> examples/stack/detectors.tf
 
 .PHONY: init-module
-init-module: 
+init-module:
 	./scripts/module/bootstrap.sh $(COMMAND_ARGS)

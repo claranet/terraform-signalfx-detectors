@@ -20,7 +20,7 @@ source_doc: |
   ```
 
   ### Varnish
- 
+
   For varnish 4 only:
 
   In the **/etc/default/varnishncsa** file:

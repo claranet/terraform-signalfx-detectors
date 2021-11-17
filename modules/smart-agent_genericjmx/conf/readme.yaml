@@ -16,7 +16,7 @@ source_doc: |
   Agent](https://github.com/signalfx/signalfx-agent/).
 
   ### Monitors
- 
+
   This module could be used on every `collectd/genericjmx` based monitors like `cassandra` or `tomcat`.
   If your software does not have its own monitor so you can simply use `collectd/genericjmx`:
 

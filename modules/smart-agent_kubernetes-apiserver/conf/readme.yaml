@@ -9,7 +9,7 @@ source_doc: |
 
 notes: |
   For now this module only contains an heartbeat detector to check the health of the api server.
- 
+
   As for any control plane components you should enable alerting notifications only when you host the master
   nodes yourself. In general, we do not want to trigger alerts on components we don't manage.
 

@@ -9,7 +9,7 @@ notes: |
   ### Kubernetes Workloads Count
   This detector allows to set a custom limit on the total count of workloads configured on a Kubernetes cluster. This represents the sum of deployments, replicasets, statefulsets and daemonsets desired.
   It can allow you set a capacity limit and be warned when it has been reached.
- 
+
   The following namespaces are excluded:
     * ara
     * bastions

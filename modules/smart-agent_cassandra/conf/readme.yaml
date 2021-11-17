@@ -17,7 +17,7 @@ source_doc: |
   Agent](https://github.com/signalfx/signalfx-agent/).
 
   ### Monitors
- 
+
   You have to enable the following `extraMetrics` in your monitor configuration:
 
   * `counter.cassandra.Storage.Exceptions.Count`
