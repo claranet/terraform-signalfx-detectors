@@ -122,7 +122,7 @@ resource "signalfx_detector" "disk_space" {
   }
 
   program_text = <<-EOF
-    signal = data('disk.utilization', filter=not filter('fs_type', 'squashfs') and ${module.filtering.signalflow})${var.disk_space_aggregation_function}${var.disk_space_transformation_function}.publish('signal')
+    signal = data('disk.utilization', filter=(not filter('fs_type', 'squashfs')) and ${module.filtering.signalflow})${var.disk_space_aggregation_function}${var.disk_space_transformation_function}.publish('signal')
     detect(when(signal > ${var.disk_space_threshold_critical}, lasting=%{if var.disk_space_lasting_duration_critical == null}None%{else}'${var.disk_space_lasting_duration_critical}'%{endif}, at_least=${var.disk_space_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal > ${var.disk_space_threshold_major}, lasting=%{if var.disk_space_lasting_duration_major == null}None%{else}'${var.disk_space_lasting_duration_major}'%{endif}, at_least=${var.disk_space_at_least_percentage_major}) and (not when(signal > ${var.disk_space_threshold_critical}, lasting=%{if var.disk_space_lasting_duration_critical == null}None%{else}'${var.disk_space_lasting_duration_critical}'%{endif}, at_least=${var.disk_space_at_least_percentage_critical}))).publish('MAJOR')
 EOF
