@@ -15,7 +15,7 @@ echo -e "|Detector|Critical|Major|Minor|Warning|Info|\n|---|---|---|---|---|---|
 
 for tf in ${TARGET}/detectors-*.tf; do
     line_table=""
-    while read line 
+    while read line
     do
         if [[ "$line" =~ ^name ]]; then
             if [[ ! -z ${line_table} ]]; then
