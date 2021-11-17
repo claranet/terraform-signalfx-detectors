@@ -5,8 +5,8 @@ documentations:
     url: 'https://collectd.org/wiki/index.php/Plugin:memcached'
 
 source_doc: |
-  Check the [integration 
-  documentation](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.memcached.html) 
+  Check the [integration
+  documentation](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.memcached.html)
   in addition to the monitor one which it uses.
 
   ### Monitors

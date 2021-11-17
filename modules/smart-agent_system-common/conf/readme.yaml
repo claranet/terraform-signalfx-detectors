@@ -11,19 +11,19 @@ documentations:
     url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/memory.html'
 
 source_doc: |
-  There is no one official integration for system generic metrics but instead multiple monitors to fetch 
+  There is no one official integration for system generic metrics but instead multiple monitors to fetch
   all useful metrics from `cpu`, `load`, `filesystems` and `memory`.
 
   ### Monitors
-  
+ 
   #### Inodes
-  
+ 
   To use inodes based detectors you must enable the `inodes` group in `extraGroups` parameter of the `filesystems` monitor configuration
 
   Inodes metrics areonly available for `Linux`).
 
   #### Space
-  
+ 
   You can exclude squashfs filesystems from the collect using `fsTypes: ["!squashfs"]` parameter in the agent configuration.
   But we exclude it explicitly in related detector for safety to prevent any alert on this filesystem type.
 

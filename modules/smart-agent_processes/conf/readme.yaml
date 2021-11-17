@@ -3,13 +3,13 @@ documentations:
     url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-processes.html'
 
 source_doc: |
-  There is no SignalFx official integration for `processes` but there is still a 
+  There is no SignalFx official integration for `processes` but there is still a
   [monitor](https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-processes.html) to use.
 
 notes: |
-  By default, only `critical` rule is enabled. This allows the detector to check if the service has, at least, 
+  By default, only `critical` rule is enabled. This allows the detector to check if the service has, at least,
   one process running.
 
-  Optionally, this is possible to enable `warning` rule to check if the service has a minimal amount of process 
-  running (i.e. I need 5 "foo" processes for my api to run correctly, so I will update 
+  Optionally, this is possible to enable `warning` rule to check if the service has a minimal amount of process
+  running (i.e. I need 5 "foo" processes for my api to run correctly, so I will update
   `processes_threshold_warning` to `5` and `processes_disabled_warning` to `null`).

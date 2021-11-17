@@ -11,7 +11,7 @@ This is the table of correspondence of `source` terraform module from the:
 - old path based on tree structure used by `v0.*.*` versions
 - new path based on flat structure used by `v1+` versions
 
-It is especially useful to upgrade from `v0.4.1` (the last "tree" based version) to `v1.0.0` 
+It is especially useful to upgrade from `v0.4.1` (the last "tree" based version) to `v1.0.0`
 (the first "flat" based version).
 
 | Old path                               | New path                                             |
@@ -95,11 +95,11 @@ It is especially useful to upgrade from `v0.4.1` (the last "tree" based version)
 | //middleware/varnish                   | //modules/smart-agent_varnish                        |
 | //database/zookeeper                   | //modules/smart-agent_zookeeper                      |
 
-Here is a bash script to update existing terraform configuration files from the old tree path to 
+Here is a bash script to update existing terraform configuration files from the old tree path to
 the new flat and terraform registry compliant one:
 
 ```bash
-while IFS= read -r line; do 
+while IFS= read -r line; do
   old=$(echo $line | cut -d '|' -f2 | xargs)
   new=$(echo $line | cut -d '|' -f3 | xargs)
   sed -i "s#${old}#${new}#g" $@

@@ -5,8 +5,8 @@ documentations:
     url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/sql.html'
 
 source_doc: |
-  Check the [integration 
-  documentation](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.mysql.html) 
+  Check the [integration
+  documentation](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.mysql.html)
   in addition to the monitor one which it uses.
 
   ### Monitors
@@ -31,8 +31,8 @@ source_doc: |
   ### MySQL
 
   You have to configure your MySQL database to provide a user to collect metrics.
-  You can use [this terraform module](https://github.com/claranet/terraform-signalfx-integrations/tree/master/database/mysql) 
-  or follow instruction in [integration 
+  You can use [this terraform module](https://github.com/claranet/terraform-signalfx-integrations/tree/master/database/mysql)
+  or follow instruction in [integration
   documentation](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.mysql.html#creating-a-mysql-user-for-collectd).
 
   ### Examples
@@ -112,10 +112,10 @@ source_doc: |
               valueColumn: "Value"
   ```
 
-  __Note__: By default this configuration is for [standard 
-  deployment](https://github.com/claranet/terraform-signalfx-detectors/wiki/Guidance#deployment-mode). 
+  __Note__: By default this configuration is for [standard
+  deployment](https://github.com/claranet/terraform-signalfx-detectors/wiki/Guidance#deployment-mode).
   You have to `disableHostDimensions: true` and add your MySQL server as `host` dimension in `extraDimensions`.
 
 notes: |
-  The `mysql_threads_anomaly` detector monitors query rate change of all `mysql_commands.*` metrics but only 
+  The `mysql_threads_anomaly` detector monitors query rate change of all `mysql_commands.*` metrics but only
   `select`, `update`, `delete` and `insert` are enabled by default so feel free to more in `extraMetrics`.

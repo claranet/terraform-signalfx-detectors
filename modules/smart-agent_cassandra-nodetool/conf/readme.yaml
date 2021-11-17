@@ -4,13 +4,13 @@ documentations:
 
 source_doc: |
 
-  This module leverages the powerful `JMX` monitor to retrieve equivalent information 
-  from the output of [Cassandra 
-  Nodetool](https://cassandra.apache.org/doc/latest/tools/nodetool/nodetool.html) like 
+  This module leverages the powerful `JMX` monitor to retrieve equivalent information
+  from the output of [Cassandra
+  Nodetool](https://cassandra.apache.org/doc/latest/tools/nodetool/nodetool.html) like
   the `status` and the `state` of a node and push them as metrics.
 
-  The advantage of this method is we do not need to make the agent able to run `nodetool` 
-  command on Cassandra nodes (i.e. by configuring `sudo`) and rely on an unsafe output 
+  The advantage of this method is we do not need to make the agent able to run `nodetool`
+  command on Cassandra nodes (i.e. by configuring `sudo`) and rely on an unsafe output
   parsing:
 
   ```
@@ -28,8 +28,8 @@ source_doc: |
 
   ### Monitors
 
-  You will need to put the [groovy script](./scripts/cassandra.groovy) in all your 
-  cassandra nodes into `/etc/signalfx` directory then configure the `jmx` 
+  You will need to put the [groovy script](./scripts/cassandra.groovy) in all your
+  cassandra nodes into `/etc/signalfx` directory then configure the `jmx`
   monitor like the following:
 
   ```yaml
@@ -41,15 +41,15 @@ source_doc: |
 
   ### JMX
 
-  This module uses the [Cassandra](https://cassandra.apache.org/doc/latest/operating/metrics.html) 
+  This module uses the [Cassandra](https://cassandra.apache.org/doc/latest/operating/metrics.html)
   specific metrics.
 
-  You must [enable JMX 
-  Remote](https://docs.datastax.com/en/cassandra-oss/2.1/cassandra/security/secureJmxAuthentication.html) 
+  You must [enable JMX
+  Remote](https://docs.datastax.com/en/cassandra-oss/2.1/cassandra/security/secureJmxAuthentication.html)
   on your `cassandra` servers.
 
 notes : |
-  - this module could be a good addition to the main [cassandra](../smart-agent_cassandra/) 
+  - this module could be a good addition to the main [cassandra](../smart-agent_cassandra/)
   module.
   - `cassandra.status` possible values are `1 == Live`, `0 == Dead`, `-1 == Unknown`
   - `cassandra.state` possible values are `1 == Normal`, `2 == Leave`, `3 == Join`

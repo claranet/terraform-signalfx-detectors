@@ -5,8 +5,8 @@ documentations:
     url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/sql.html'
 
 source_doc: |
-  Check the [integration 
-  documentation](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.postgresql.html) 
+  Check the [integration
+  documentation](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.postgresql.html)
   in addition to the monitor one which it uses.
 
   ### Monitors
@@ -34,8 +34,8 @@ source_doc: |
   You have to configure your PostgreSQL database to provide a user to collect metrics.
 
   And you also have to [enable statement tracking](https://www.postgresql.org/docs/9.3/pgstatstatements.html#AEN160631).
-  More information available on 
-  [postgresl](https://docs.signalfx.com/en/latest/integrations/agent/monitors/postgresql.html#metrics-about-queries) 
+  More information available on
+  [postgresl](https://docs.signalfx.com/en/latest/integrations/agent/monitors/postgresql.html#metrics-about-queries)
   monitor documentation.
 
   ### Examples
@@ -83,8 +83,8 @@ source_doc: |
   #            valueColumn: "count"
   ```
 
-  __Note__: By default this configuration is for [standard 
-  deployment](https://github.com/claranet/terraform-signalfx-detectors/wiki/Guidance#deployment-mode). 
+  __Note__: By default this configuration is for [standard
+  deployment](https://github.com/claranet/terraform-signalfx-detectors/wiki/Guidance#deployment-mode).
   You have to `disableHostDimensions: true` and add your PostgreSQL server as `host` dimension in `extraDimensions`.
 
 notes: |
@@ -95,8 +95,8 @@ notes: |
   Indeed, metrics are sent "per database" basis so this detector could raise alert for a deleted databse
   in addition to the usual alert when the database server does not reponse anymore.
 
-  * For metrics about queries execution time, you must enable `pg_stat_statements` extension which should be specified 
-  in the `shared_preload_libraries` config option in the main PostgreSQL configuration at server start up. Then, the 
+  * For metrics about queries execution time, you must enable `pg_stat_statements` extension which should be specified
+  in the `shared_preload_libraries` config option in the main PostgreSQL configuration at server start up. Then, the
   extension must be enabled for each database by running `CREATE EXTENSION IF NOT EXISTS pg_stat_statements;` on each database.
 
   * Replica metrics are not available on Aurora

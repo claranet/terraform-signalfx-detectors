@@ -9,7 +9,7 @@ source_doc: |
   Check its documentation to install and configure it appropriately with your Wallix Bastion instance.
 
   ### Examples
-  
+ 
   Here is a sample configuration fragment for the [OpenTelemetry Collector](https://opentelemetry.io/docs/collector/) agent using
   the [prometheusexec receiver](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/receiver/prometheusexecreceiver).
 

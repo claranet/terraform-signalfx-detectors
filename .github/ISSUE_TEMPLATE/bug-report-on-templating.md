@@ -36,7 +36,7 @@ module "signalfx-detectors-system-generic" {
   notifications = local.notifications
   // additional config
 }
-``` 
+```
 
 **To Reproduce**
 Steps to reproduce the behavior:

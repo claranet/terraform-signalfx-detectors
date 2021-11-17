@@ -3,13 +3,13 @@ documentations:
     url: 'https://cloud.google.com/monitoring/api/metrics_gcp#gcp-cloudsql'
 
 notes: |
-  * The NewRelic integration from SignalFx still uses the deprecated [REST API 
+  * The NewRelic integration from SignalFx still uses the deprecated [REST API
   v1](https://docs.newrelic.com/docs/apis/rest-api-v1-deprecated/new-relic-rest-api-v1).
-  * It also generate too many metrics all considered as custom which could have a big 
+  * It also generate too many metrics all considered as custom which could have a big
   impact in the SignalFx billing so you have to filter as much as possible to avoid that.
-  * Sadly, the `errors_per_minute` filter is not available so the `errors` detector will 
-  not work except if you do not filter on `type` which is dangerous for billing, so the 
-  detector works and is available but we do not recommend until the integration supports 
+  * Sadly, the `errors_per_minute` filter is not available so the `errors` detector will
+  not work except if you do not filter on `type` which is dangerous for billing, so the
+  detector works and is available but we do not recommend until the integration supports
   this filter.
-  * The `apdex` detector could work with a filter on `Apdex` metric and will not generate 
+  * The `apdex` detector could work with a filter on `Apdex` metric and will not generate
   too many metrics

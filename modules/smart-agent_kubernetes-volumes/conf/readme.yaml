@@ -5,9 +5,9 @@ documentations:
 source_doc: |
   ### Agent
 
-  Here is the official [main 
-  documentation](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.kubernetes.html) for 
-  kubernetes including the `signalfx-agent` installation which must be installed as 
+  Here is the official [main
+  documentation](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.kubernetes.html) for
+  kubernetes including the `signalfx-agent` installation which must be installed as
   [daemonset](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) on your cluster.
 
   ### Monitors
@@ -16,10 +16,10 @@ source_doc: |
 
   * [kubernetes-volumes](https://docs.signalfx.com/en/latest/integrations/agent/monitors/kubernetes-volumes.html)
 
-  The `kubernetes-volumes` monitor does support non persistent volume types filtered out in this module before 
+  The `kubernetes-volumes` monitor does support non persistent volume types filtered out in this module before
   `signalfx-agent` `v5.3.2` version.
 
-  [Others](https://docs.signalfx.com/en/latest/integrations/kubernetes/k8s-monitors-observers.html#monitors-observers) 
+  [Others](https://docs.signalfx.com/en/latest/integrations/kubernetes/k8s-monitors-observers.html#monitors-observers)
   exist to increase visibility or may be in future to enrich this modules or create new ones.
 
   The `kubernetes-volumes` requires to enable the following `extraMetrics`:
@@ -27,7 +27,7 @@ source_doc: |
   * `kubernetes.volume_inodes`
   * `kubernetes.volume_inodes_free`
 
-  It requires to give to the agent the authorization to read `persistentvolumes`. See examples below 
+  It requires to give to the agent the authorization to read `persistentvolumes`. See examples below
   to configure its role.
 
   ### Examples
@@ -62,5 +62,5 @@ notes: |
   * In addition to the base permissions granted to the cluster role associated to the SignalFx Agent's service account in the official Helm Chart,
   it must also have the `get`, `list` and `watch` on `persistentvolumes` and `persistentvolumeclaim` resources.
 
-  * If you use the [Helm chart](https://github.com/signalfx/signalfx-agent/tree/master/deployments/k8s/helm/signalfx-agent) 
+  * If you use the [Helm chart](https://github.com/signalfx/signalfx-agent/tree/master/deployments/k8s/helm/signalfx-agent)
   to deploy the agent, so you need chart version `>= 1.5.0` and enable `gatherVolumesMetrics: true` in `values.yml`.

@@ -28,5 +28,5 @@ source_doc: |
           - '!kong_nginx_http_current_connections'
   ```
 
-  It uses whitelist [filtering](https://docs.signalfx.com/en/latest/integrations/agent/filtering.html) 
+  It uses whitelist [filtering](https://docs.signalfx.com/en/latest/integrations/agent/filtering.html)
   to keep only interesting metrics. Only the last two are required by this module.

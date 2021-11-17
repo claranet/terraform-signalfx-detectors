@@ -1,9 +1,9 @@
 # Templates
 
-A list of [Jinja2](https://jinja.palletsprojects.com/) 
+A list of [Jinja2](https://jinja.palletsprojects.com/)
 based templates to render content in this repository.
-Like the terraform code from [SignalFx 
-provider](https://github.com/splunk-terraform/terraform-provider-signalfx) 
+Like the terraform code from [SignalFx
+provider](https://github.com/splunk-terraform/terraform-provider-signalfx)
 or the modules readmes.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
@@ -23,10 +23,10 @@ or the modules readmes.
 
 ## Requirements
 
-Before being able to use the j2 based generator(s) you have to [setup your 
+Before being able to use the j2 based generator(s) you have to [setup your
 environment](../../docs/environment.md).
 
-Then, you can either run `make` to enter in the docker container and use all 
+Then, you can either run `make` to enter in the docker container and use all
 available commands like `j2` or run the container as a "one shot" command like:
 ```bash
 $ docker run --rm -ti -v "${PWD}:/work" claranet/terraform-ci:latest j2 scripts/templates/detector.tf.j2 scripts/templates/examples/heartbeat-simple.yaml
@@ -51,8 +51,8 @@ EOF
   }
 }
 
-You should be able to use those templates with any compatible Jinja2 renderer. 
-This environment and next sections of this documentation uses the 
+You should be able to use those templates with any compatible Jinja2 renderer.
+This environment and next sections of this documentation uses the
 [j2cli](https://github.com/kolypto/j2cli#installation) with yaml dependency enabled.
 
 ```
@@ -61,20 +61,20 @@ This environment and next sections of this documentation uses the
 
 At the root of this directory there are:
 
-* all available templates files `*.j2` like [the detector resource](./detector.tf.j2) 
-and [the variables declaration](./variables.tf.j2) templates to use with the [detector 
-generator](#detector) or the [readme template](./readme.md.j2) for 
+* all available templates files `*.j2` like [the detector resource](./detector.tf.j2)
+and [the variables declaration](./variables.tf.j2) templates to use with the [detector
+generator](#detector) or the [readme template](./readme.md.j2) for
 the [readme generator](#readme) used internally.
 
-* [values.yaml](./values.yaml) with all configuration options available for the 
+* [values.yaml](./values.yaml) with all configuration options available for the
 [detector](#detector) generator. Copy it to create your own preset configuration.
 
-* [examples](examples) directory containing fake preset configurations to test the 
+* [examples](examples) directory containing fake preset configurations to test the
 detector generator.
 
 ## Generators
 
-A generator always consist in: 
+A generator always consist in:
 
 * a configuration file in `yaml` format
 * a template file in `jinja2` format
@@ -96,8 +96,8 @@ which should improve reliability and understanding.
 
 ### Limits
 
-This generator follows our [Templating 
-model](https://github.com/claranet/terraform-signalfx-detectors/wiki/Templating) are 
+This generator follows our [Templating
+model](https://github.com/claranet/terraform-signalfx-detectors/wiki/Templating) are
 which is opinionated and implement its common "rules" only.
 
 * it is not useful outside the context of this repository
@@ -106,16 +106,16 @@ which is opinionated and implement its common "rules" only.
 
 This is an helper, it should not be fully trusted and could be not up to date so:
 
-* it could allow to fully generate a detector followed by its yaml configuration like 
-[those of the system module](../../modules/smart-agent_system-common/conf) producing 
-detectors in the [detectors-gen.tf](../../modules/smart-agent_system-common/detectors-gen.tf) 
+* it could allow to fully generate a detector followed by its yaml configuration like
+[those of the system module](../../modules/smart-agent_system-common/conf) producing
+detectors in the [detectors-gen.tf](../../modules/smart-agent_system-common/detectors-gen.tf)
 file.
-* it could be used as base to implement most advanced needs, not followed by a yaml 
-configuration file but helping developer to bootstrap a "skeleton" of code like for the 
-detectors in [detectors-system.tf](../../modules/smart-agent_system-common/detectors-system.tf) 
+* it could be used as base to implement most advanced needs, not followed by a yaml
+configuration file but helping developer to bootstrap a "skeleton" of code like for the
+detectors in [detectors-system.tf](../../modules/smart-agent_system-common/detectors-system.tf)
 file.
 
-The code will be generated (only in first case) and detectors deployed to ensure it 
+The code will be generated (only in first case) and detectors deployed to ensure it
 "works" to give you the time to __test__ properly the detector itself.
 
 ### Usage
@@ -123,10 +123,10 @@ The code will be generated (only in first case) and detectors deployed to ensure
 1. (Optional) Crete a new module if you do not work on an existing one.
 `make module {source}_{module}` replacing `{source}` and `{module}` appropriately.
 1. Create your new yaml configuration file following [values.yaml](./values.yaml)
-You can take examples on existing ones like [those of the system 
+You can take examples on existing ones like [those of the system
 module](../../modules/smart-agent_system-common/conf)
-1. Put in the module `conf` directory prefixed with `[0-9][0-9]-` numbering to 
-set the order code generated in the `detectors-gen.tf` file like 
+1. Put in the module `conf` directory prefixed with `[0-9][0-9]-` numbering to
+set the order code generated in the `detectors-gen.tf` file like
 `modules/source_module/conf/00-heartbeat.yaml`.
 1. Generate terraform code from this configuration file `make detectors`.
 1. Git add, commit and push!
@@ -140,7 +140,7 @@ $ j2 ./scripts/templates/detector.tf.j2 {yaml_file}
 $ j2 ./scripts/templates/variables.tf.j2 {yaml_file}
 ```
 
-If you do not need to split both (variables and resource codes) into different 
+If you do not need to split both (variables and resource codes) into different
 destination you can generate both of them in one command:
 
 ```bash
@@ -149,7 +149,7 @@ j2 <(cat scripts/templates/variables.tf.j2 scripts/templates/detector.tf.j2) {ya
 
 ## Readme
 
-The modules readmes are generated from their yaml configuration located inside 
+The modules readmes are generated from their yaml configuration located inside
 the module in `conf` directory.
 
 This template is used internally and it does not aims to be run manually.

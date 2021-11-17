@@ -9,8 +9,8 @@ documentations:
     url: 'https://github.com/signalfx/collectd-haproxy'
 
 source_doc: |
-  Check the [integration 
-  documentation](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.haproxy.html) 
+  Check the [integration
+  documentation](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.haproxy.html)
   in addition to the monitor one which it uses.
 
   ### Monitors
