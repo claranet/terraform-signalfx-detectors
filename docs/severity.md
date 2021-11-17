@@ -968,6 +968,7 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
+|Oracle process listener|X|-|-|-|-|
 |Processes aliveness|X|X|-|-|-|
 
 
