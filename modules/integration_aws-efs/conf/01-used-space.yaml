@@ -1,7 +1,7 @@
 module: "AWS EFS"
 name: "Used Space"
 filtering: "filter('namespace', 'AWS/EFS')"
-value_unit: "GB"
+value_unit: "Gigibyte"
 transformation: ".max(over='15m')"
 signals:
   used_space:
@@ -9,7 +9,7 @@ signals:
     filter: "filter('StorageClass', 'Total') and filter('stat', 'mean')"
   signal:
     formula:
-      used_space.scale(0.000000000931323) # 1/1024^3
+      used_space.scale(1/1024**3)
 rules:
   critical:
     comparator: ">"
