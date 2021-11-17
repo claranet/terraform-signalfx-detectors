@@ -72,8 +72,8 @@ resource "signalfx_detector" "free_space_low" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   viz_options {
-    label        = "signal"
-    value_unit   = "Gigibyte"
+    label      = "signal"
+    value_unit = "Gigibyte"
   }
 
   program_text = <<-EOF
