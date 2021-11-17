@@ -98,8 +98,8 @@ resource "signalfx_detector" "backend_latency_service" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   viz_options {
-    label        = "signal"
-    value_suffix = "ms"
+    label      = "signal"
+    value_unit = "Millisecond"
   }
 
   program_text = <<-EOF
@@ -110,7 +110,7 @@ resource "signalfx_detector" "backend_latency_service" {
 EOF
 
   rule {
-    description           = "is too high > ${var.backend_latency_service_threshold_critical}ms"
+    description           = "is too high > ${var.backend_latency_service_threshold_critical}Millisecond"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.backend_latency_service_disabled_critical, var.backend_latency_service_disabled, var.detectors_disabled)
@@ -122,7 +122,7 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.backend_latency_service_threshold_major}ms"
+    description           = "is too high > ${var.backend_latency_service_threshold_major}Millisecond"
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.backend_latency_service_disabled_major, var.backend_latency_service_disabled, var.detectors_disabled)
@@ -142,8 +142,8 @@ resource "signalfx_detector" "backend_latency_bucket" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   viz_options {
-    label        = "signal"
-    value_suffix = "ms"
+    label      = "signal"
+    value_unit = "Millisecond"
   }
 
   program_text = <<-EOF
@@ -154,7 +154,7 @@ resource "signalfx_detector" "backend_latency_bucket" {
 EOF
 
   rule {
-    description           = "is too high > ${var.backend_latency_bucket_threshold_critical}ms"
+    description           = "is too high > ${var.backend_latency_bucket_threshold_critical}Millisecond"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.backend_latency_bucket_disabled_critical, var.backend_latency_bucket_disabled, var.detectors_disabled)
@@ -166,7 +166,7 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.backend_latency_bucket_threshold_major}ms"
+    description           = "is too high > ${var.backend_latency_bucket_threshold_major}Millisecond"
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.backend_latency_bucket_disabled_major, var.backend_latency_bucket_disabled, var.detectors_disabled)

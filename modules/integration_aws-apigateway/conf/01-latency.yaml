@@ -4,7 +4,7 @@ name: latency
 transformation: true
 aggregation: true
 filtering: "filter('namespace', 'AWS/ApiGateway') and filter('stat', 'mean') and (not filter('Stage', '*')) and (not filter('Method', '*')) and (not filter('Resource', '*'))"
-value_unit: "ms"
+value_unit: "Millisecond"
 
 signals:
   signal:

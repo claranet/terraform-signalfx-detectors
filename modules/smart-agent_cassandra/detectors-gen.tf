@@ -34,8 +34,8 @@ resource "signalfx_detector" "read_latency_99th_percentile" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   viz_options {
-    label        = "signal"
-    value_suffix = "s"
+    label      = "signal"
+    value_unit = "Second"
   }
 
   program_text = <<-EOF
@@ -45,7 +45,7 @@ resource "signalfx_detector" "read_latency_99th_percentile" {
 EOF
 
   rule {
-    description           = "is too high > ${var.read_latency_99th_percentile_threshold_critical}s"
+    description           = "is too high > ${var.read_latency_99th_percentile_threshold_critical}Second"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.read_latency_99th_percentile_disabled_critical, var.read_latency_99th_percentile_disabled, var.detectors_disabled)
@@ -57,7 +57,7 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.read_latency_99th_percentile_threshold_major}s"
+    description           = "is too high > ${var.read_latency_99th_percentile_threshold_major}Second"
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.read_latency_99th_percentile_disabled_major, var.read_latency_99th_percentile_disabled, var.detectors_disabled)
@@ -77,8 +77,8 @@ resource "signalfx_detector" "write_latency_99th_percentile" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   viz_options {
-    label        = "signal"
-    value_suffix = "s"
+    label      = "signal"
+    value_unit = "Second"
   }
 
   program_text = <<-EOF
@@ -88,7 +88,7 @@ resource "signalfx_detector" "write_latency_99th_percentile" {
 EOF
 
   rule {
-    description           = "is too high > ${var.write_latency_99th_percentile_threshold_critical}s"
+    description           = "is too high > ${var.write_latency_99th_percentile_threshold_critical}Second"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.write_latency_99th_percentile_disabled_critical, var.write_latency_99th_percentile_disabled, var.detectors_disabled)
@@ -100,7 +100,7 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.write_latency_99th_percentile_threshold_major}s"
+    description           = "is too high > ${var.write_latency_99th_percentile_threshold_major}Second"
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.write_latency_99th_percentile_disabled_major, var.write_latency_99th_percentile_disabled, var.detectors_disabled)
@@ -120,8 +120,8 @@ resource "signalfx_detector" "read_latency_real_time" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   viz_options {
-    label        = "signal"
-    value_suffix = "s"
+    label      = "signal"
+    value_unit = "Second"
   }
 
   program_text = <<-EOF
@@ -133,7 +133,7 @@ resource "signalfx_detector" "read_latency_real_time" {
 EOF
 
   rule {
-    description           = "is too high > ${var.read_latency_real_time_threshold_critical}s"
+    description           = "is too high > ${var.read_latency_real_time_threshold_critical}Second"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.read_latency_real_time_disabled_critical, var.read_latency_real_time_disabled, var.detectors_disabled)
@@ -145,7 +145,7 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.read_latency_real_time_threshold_major}s"
+    description           = "is too high > ${var.read_latency_real_time_threshold_major}Second"
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.read_latency_real_time_disabled_major, var.read_latency_real_time_disabled, var.detectors_disabled)
@@ -165,8 +165,8 @@ resource "signalfx_detector" "write_latency_real_time" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   viz_options {
-    label        = "signal"
-    value_suffix = "s"
+    label      = "signal"
+    value_unit = "Second"
   }
 
   program_text = <<-EOF
@@ -178,7 +178,7 @@ resource "signalfx_detector" "write_latency_real_time" {
 EOF
 
   rule {
-    description           = "is too high > ${var.write_latency_real_time_threshold_critical}s"
+    description           = "is too high > ${var.write_latency_real_time_threshold_critical}Second"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.write_latency_real_time_disabled_critical, var.write_latency_real_time_disabled, var.detectors_disabled)
@@ -190,7 +190,7 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.write_latency_real_time_threshold_major}s"
+    description           = "is too high > ${var.write_latency_real_time_threshold_major}Second"
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.write_latency_real_time_disabled_major, var.write_latency_real_time_disabled, var.detectors_disabled)
@@ -210,8 +210,8 @@ resource "signalfx_detector" "transactional_read_latency_99th_percentile" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   viz_options {
-    label        = "signal"
-    value_suffix = "s"
+    label      = "signal"
+    value_unit = "Second"
   }
 
   program_text = <<-EOF
@@ -221,7 +221,7 @@ resource "signalfx_detector" "transactional_read_latency_99th_percentile" {
 EOF
 
   rule {
-    description           = "is too high > ${var.transactional_read_latency_99th_percentile_threshold_critical}s"
+    description           = "is too high > ${var.transactional_read_latency_99th_percentile_threshold_critical}Second"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.transactional_read_latency_99th_percentile_disabled_critical, var.transactional_read_latency_99th_percentile_disabled, var.detectors_disabled)
@@ -233,7 +233,7 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.transactional_read_latency_99th_percentile_threshold_major}s"
+    description           = "is too high > ${var.transactional_read_latency_99th_percentile_threshold_major}Second"
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.transactional_read_latency_99th_percentile_disabled_major, var.transactional_read_latency_99th_percentile_disabled, var.detectors_disabled)
@@ -253,8 +253,8 @@ resource "signalfx_detector" "transactional_write_latency_99th_percentile" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   viz_options {
-    label        = "signal"
-    value_suffix = "s"
+    label      = "signal"
+    value_unit = "Second"
   }
 
   program_text = <<-EOF
@@ -264,7 +264,7 @@ resource "signalfx_detector" "transactional_write_latency_99th_percentile" {
 EOF
 
   rule {
-    description           = "is too high > ${var.transactional_write_latency_99th_percentile_threshold_critical}s"
+    description           = "is too high > ${var.transactional_write_latency_99th_percentile_threshold_critical}Second"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.transactional_write_latency_99th_percentile_disabled_critical, var.transactional_write_latency_99th_percentile_disabled, var.detectors_disabled)
@@ -276,7 +276,7 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.transactional_write_latency_99th_percentile_threshold_major}s"
+    description           = "is too high > ${var.transactional_write_latency_99th_percentile_threshold_major}Second"
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.transactional_write_latency_99th_percentile_disabled_major, var.transactional_write_latency_99th_percentile_disabled, var.detectors_disabled)
@@ -296,8 +296,8 @@ resource "signalfx_detector" "transactional_read_latency_real_time" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   viz_options {
-    label        = "signal"
-    value_suffix = "s"
+    label      = "signal"
+    value_unit = "Second"
   }
 
   program_text = <<-EOF
@@ -309,7 +309,7 @@ resource "signalfx_detector" "transactional_read_latency_real_time" {
 EOF
 
   rule {
-    description           = "is too high > ${var.transactional_read_latency_real_time_threshold_critical}s"
+    description           = "is too high > ${var.transactional_read_latency_real_time_threshold_critical}Second"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.transactional_read_latency_real_time_disabled_critical, var.transactional_read_latency_real_time_disabled, var.detectors_disabled)
@@ -321,7 +321,7 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.transactional_read_latency_real_time_threshold_major}s"
+    description           = "is too high > ${var.transactional_read_latency_real_time_threshold_major}Second"
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.transactional_read_latency_real_time_disabled_major, var.transactional_read_latency_real_time_disabled, var.detectors_disabled)
@@ -341,8 +341,8 @@ resource "signalfx_detector" "transactional_write_latency_real_time" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   viz_options {
-    label        = "signal"
-    value_suffix = "s"
+    label      = "signal"
+    value_unit = "Second"
   }
 
   program_text = <<-EOF
@@ -354,7 +354,7 @@ resource "signalfx_detector" "transactional_write_latency_real_time" {
 EOF
 
   rule {
-    description           = "is too high > ${var.transactional_write_latency_real_time_threshold_critical}s"
+    description           = "is too high > ${var.transactional_write_latency_real_time_threshold_critical}Second"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.transactional_write_latency_real_time_disabled_critical, var.transactional_write_latency_real_time_disabled, var.detectors_disabled)
@@ -366,7 +366,7 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.transactional_write_latency_real_time_threshold_major}s"
+    description           = "is too high > ${var.transactional_write_latency_real_time_threshold_major}Second"
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.transactional_write_latency_real_time_disabled_major, var.transactional_write_latency_real_time_disabled, var.detectors_disabled)

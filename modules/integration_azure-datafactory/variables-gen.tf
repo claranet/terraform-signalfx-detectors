@@ -301,7 +301,7 @@ variable "available_memory_disabled_major" {
 }
 
 variable "available_memory_threshold_critical" {
-  description = "Critical threshold for available_memory detector in MB"
+  description = "Critical threshold for available_memory detector in Mebibyte"
   type        = number
   default     = 256
 }
@@ -318,7 +318,7 @@ variable "available_memory_at_least_percentage_critical" {
   default     = 1
 }
 variable "available_memory_threshold_major" {
-  description = "Major threshold for available_memory detector in MB"
+  description = "Major threshold for available_memory detector in Mebibyte"
   type        = number
   default     = 512
 }

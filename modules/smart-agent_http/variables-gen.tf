@@ -269,7 +269,7 @@ variable "http_content_length_disabled" {
 }
 
 variable "http_content_length_threshold_warning" {
-  description = "Warning threshold for http_content_length detector in bytes"
+  description = "Warning threshold for http_content_length detector in Byte"
   type        = number
   default     = 10
 }

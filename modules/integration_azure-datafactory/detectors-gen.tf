@@ -139,20 +139,20 @@ resource "signalfx_detector" "available_memory" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   viz_options {
-    label        = "signal"
-    value_suffix = "MB"
+    label      = "signal"
+    value_unit = "Mebibyte"
   }
 
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.DataFactory/factories') and filter('primary_aggregation_type', 'true')
     memory = data('IntegrationRuntimeAvailableMemory', filter=base_filtering and ${module.filtering.signalflow})${var.available_memory_aggregation_function}${var.available_memory_transformation_function}
-    signal = memory.scale(0.000000953674316).publish('signal')
+    signal = memory.scale(1/1024**2).publish('signal')
     detect(when(signal < ${var.available_memory_threshold_critical}, lasting=%{if var.available_memory_lasting_duration_critical == null}None%{else}'${var.available_memory_lasting_duration_critical}'%{endif}, at_least=${var.available_memory_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal < ${var.available_memory_threshold_major}, lasting=%{if var.available_memory_lasting_duration_major == null}None%{else}'${var.available_memory_lasting_duration_major}'%{endif}, at_least=${var.available_memory_at_least_percentage_major}) and (not when(signal < ${var.available_memory_threshold_critical}, lasting=%{if var.available_memory_lasting_duration_critical == null}None%{else}'${var.available_memory_lasting_duration_critical}'%{endif}, at_least=${var.available_memory_at_least_percentage_critical}))).publish('MAJOR')
 EOF
 
   rule {
-    description           = "is too low < ${var.available_memory_threshold_critical}MB"
+    description           = "is too low < ${var.available_memory_threshold_critical}Mebibyte"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.available_memory_disabled_critical, var.available_memory_disabled, var.detectors_disabled)
@@ -164,7 +164,7 @@ EOF
   }
 
   rule {
-    description           = "is too low < ${var.available_memory_threshold_major}MB"
+    description           = "is too low < ${var.available_memory_threshold_major}Mebibyte"
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.available_memory_disabled_major, var.available_memory_disabled, var.detectors_disabled)

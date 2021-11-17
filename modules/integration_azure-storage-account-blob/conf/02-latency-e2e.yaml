@@ -4,7 +4,7 @@ filtering: "filter('resource_type', 'Microsoft.Storage/storageAccounts') and fil
 aggregation: ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 transformation: ".min(over='15m')"
 disabled: true
-value_unit: "s"
+value_unit: "Second"
 signals:
   latency:
     metric: "SuccessE2ELatency"

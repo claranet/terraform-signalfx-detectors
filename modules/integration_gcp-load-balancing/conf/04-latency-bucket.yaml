@@ -5,7 +5,7 @@ id: backend_latency_bucket
 transformation: true
 aggregation: ".sum(by=['forwarding_rule_name', 'backend_target_name'])"
 filtering: "filter('service', 'loadbalancing')"
-value_unit: "ms"
+value_unit: "Millisecond"
 
 signals:
   signal:

@@ -133,7 +133,7 @@ variable "latency_e2e_disabled_major" {
 }
 
 variable "latency_e2e_threshold_critical" {
-  description = "Critical threshold for latency_e2e detector in s"
+  description = "Critical threshold for latency_e2e detector in Second"
   type        = number
   default     = 20
 }
@@ -150,7 +150,7 @@ variable "latency_e2e_at_least_percentage_critical" {
   default     = 1
 }
 variable "latency_e2e_threshold_major" {
-  description = "Major threshold for latency_e2e detector in s"
+  description = "Major threshold for latency_e2e detector in Second"
   type        = number
   default     = 10
 }

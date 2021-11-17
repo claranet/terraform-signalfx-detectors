@@ -3,7 +3,7 @@ name: latency
 
 transformation: true
 aggregation: ".sum(by=['controller_namespace', 'controller_class', 'ingress'])"
-value_unit: "s"
+value_unit: "Second"
 
 signals:
   signal:

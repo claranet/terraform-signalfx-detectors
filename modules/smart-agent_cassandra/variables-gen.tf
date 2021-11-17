@@ -93,7 +93,7 @@ variable "read_latency_99th_percentile_disabled_major" {
 }
 
 variable "read_latency_99th_percentile_threshold_critical" {
-  description = "Critical threshold for read_latency_99th_percentile detector in s"
+  description = "Critical threshold for read_latency_99th_percentile detector in Second"
   type        = number
   default     = 2
 }
@@ -110,7 +110,7 @@ variable "read_latency_99th_percentile_at_least_percentage_critical" {
   default     = 1
 }
 variable "read_latency_99th_percentile_threshold_major" {
-  description = "Major threshold for read_latency_99th_percentile detector in s"
+  description = "Major threshold for read_latency_99th_percentile detector in Second"
   type        = number
   default     = 1
 }
@@ -177,7 +177,7 @@ variable "write_latency_99th_percentile_disabled_major" {
 }
 
 variable "write_latency_99th_percentile_threshold_critical" {
-  description = "Critical threshold for write_latency_99th_percentile detector in s"
+  description = "Critical threshold for write_latency_99th_percentile detector in Second"
   type        = number
   default     = 1
 }
@@ -194,7 +194,7 @@ variable "write_latency_99th_percentile_at_least_percentage_critical" {
   default     = 1
 }
 variable "write_latency_99th_percentile_threshold_major" {
-  description = "Major threshold for write_latency_99th_percentile detector in s"
+  description = "Major threshold for write_latency_99th_percentile detector in Second"
   type        = number
   default     = 0.5
 }
@@ -261,7 +261,7 @@ variable "read_latency_real_time_disabled_major" {
 }
 
 variable "read_latency_real_time_threshold_critical" {
-  description = "Critical threshold for read_latency_real_time detector in s"
+  description = "Critical threshold for read_latency_real_time detector in Second"
   type        = number
   default     = 2
 }
@@ -278,7 +278,7 @@ variable "read_latency_real_time_at_least_percentage_critical" {
   default     = 1
 }
 variable "read_latency_real_time_threshold_major" {
-  description = "Major threshold for read_latency_real_time detector in s"
+  description = "Major threshold for read_latency_real_time detector in Second"
   type        = number
   default     = 1
 }
@@ -345,7 +345,7 @@ variable "write_latency_real_time_disabled_major" {
 }
 
 variable "write_latency_real_time_threshold_critical" {
-  description = "Critical threshold for write_latency_real_time detector in s"
+  description = "Critical threshold for write_latency_real_time detector in Second"
   type        = number
   default     = 1
 }
@@ -362,7 +362,7 @@ variable "write_latency_real_time_at_least_percentage_critical" {
   default     = 1
 }
 variable "write_latency_real_time_threshold_major" {
-  description = "Major threshold for write_latency_real_time detector in s"
+  description = "Major threshold for write_latency_real_time detector in Second"
   type        = number
   default     = 0.5
 }
@@ -429,7 +429,7 @@ variable "transactional_read_latency_99th_percentile_disabled_major" {
 }
 
 variable "transactional_read_latency_99th_percentile_threshold_critical" {
-  description = "Critical threshold for transactional_read_latency_99th_percentile detector in s"
+  description = "Critical threshold for transactional_read_latency_99th_percentile detector in Second"
   type        = number
   default     = 2
 }
@@ -446,7 +446,7 @@ variable "transactional_read_latency_99th_percentile_at_least_percentage_critica
   default     = 1
 }
 variable "transactional_read_latency_99th_percentile_threshold_major" {
-  description = "Major threshold for transactional_read_latency_99th_percentile detector in s"
+  description = "Major threshold for transactional_read_latency_99th_percentile detector in Second"
   type        = number
   default     = 1
 }
@@ -513,7 +513,7 @@ variable "transactional_write_latency_99th_percentile_disabled_major" {
 }
 
 variable "transactional_write_latency_99th_percentile_threshold_critical" {
-  description = "Critical threshold for transactional_write_latency_99th_percentile detector in s"
+  description = "Critical threshold for transactional_write_latency_99th_percentile detector in Second"
   type        = number
   default     = 1
 }
@@ -530,7 +530,7 @@ variable "transactional_write_latency_99th_percentile_at_least_percentage_critic
   default     = 1
 }
 variable "transactional_write_latency_99th_percentile_threshold_major" {
-  description = "Major threshold for transactional_write_latency_99th_percentile detector in s"
+  description = "Major threshold for transactional_write_latency_99th_percentile detector in Second"
   type        = number
   default     = 0.5
 }
@@ -597,7 +597,7 @@ variable "transactional_read_latency_real_time_disabled_major" {
 }
 
 variable "transactional_read_latency_real_time_threshold_critical" {
-  description = "Critical threshold for transactional_read_latency_real_time detector in s"
+  description = "Critical threshold for transactional_read_latency_real_time detector in Second"
   type        = number
   default     = 2
 }
@@ -614,7 +614,7 @@ variable "transactional_read_latency_real_time_at_least_percentage_critical" {
   default     = 1
 }
 variable "transactional_read_latency_real_time_threshold_major" {
-  description = "Major threshold for transactional_read_latency_real_time detector in s"
+  description = "Major threshold for transactional_read_latency_real_time detector in Second"
   type        = number
   default     = 1
 }
@@ -681,7 +681,7 @@ variable "transactional_write_latency_real_time_disabled_major" {
 }
 
 variable "transactional_write_latency_real_time_threshold_critical" {
-  description = "Critical threshold for transactional_write_latency_real_time detector in s"
+  description = "Critical threshold for transactional_write_latency_real_time detector in Second"
   type        = number
   default     = 1
 }
@@ -698,7 +698,7 @@ variable "transactional_write_latency_real_time_at_least_percentage_critical" {
   default     = 1
 }
 variable "transactional_write_latency_real_time_threshold_major" {
-  description = "Major threshold for transactional_write_latency_real_time detector in s"
+  description = "Major threshold for transactional_write_latency_real_time detector in Second"
   type        = number
   default     = 0.5
 }
