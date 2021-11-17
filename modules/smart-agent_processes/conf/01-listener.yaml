@@ -3,7 +3,7 @@ name: "Process listener"
 id: listener
 
 transformation: true
-aggregation: ".mean(by=['hostname'])"
+aggregation: true
 
 signals:
   signal:

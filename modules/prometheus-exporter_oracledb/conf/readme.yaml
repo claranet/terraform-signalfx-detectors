@@ -1,0 +1,83 @@
+documentations:
+  - name: Prometheus Exporter for oracledb
+    url: https://github.com/iamseth/oracledb_exporter
+
+source_doc: |
+  The detectors of this module uses defaults metrics from the [oracledb exporter] (https://github.com/iamseth/oracledb_exporter) and optionnaly custom metrics from custom templates which have to be specified during the deployment.  
+  Check its documentation to install and configure it appropriately with your Oracle database host.
+
+  by default in this module, only the metric oracledb_up is used with the default.metrics related to the [oracledb exporter]. 
+
+  ### Examples
+
+  Here is a sample configuration fragment for the [OpenTelemetry Collector](https://opentelemetry.io/docs/collector/) agent using
+  the [prometheusexec receiver](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/receiver/prometheusexecreceiver).
+  
+  In this example we have an oracle instance which is running in Multitenant mode, means that we have one Container Database and one pluggable database. 
+  
+  important : Both needs a dedicated prometheus port to upload metrics.
+  
+  {PATH_TO_ORACLEDB_BIN} = directory related to the oracledb_exporter binary which is used,
+  {PATH_TO_ORACLEDB_TEMPLATE} = directory related to the templates which are used (default & custom)
+  {ORACLE_HOME}= Oracle Home related to rdbms software
+  {TNS_PORT} = Oracle listener port on which the DB is listening.
+  {CONTAINER_DB} = name of the container DB (instance name)
+  {PLUGGABLE_DB} = name of the pluggable Database
+  {HOSTNAME} = name of the DB server host
+  
+  ```yaml
+
+  receivers:
+    prometheus_exec/oracle-exporter-1:
+    exec: {PATH_TO_ORACLEDB_BIN}/oracledb_exporter --default.metrics "{PATH_TO_ORACLEDB_TEMPLATE}/default-metrics.toml" --log.level error --web.listen-address :{{port}}
+    port: {PROMETHEUS_PORT_1}
+    scrape_interval: 300s
+    env:
+      - name: DATA_SOURCE_NAME
+        value: "{USER}/{PASSWORD}@//localhost:{TNS_PORT}/{CONTAINER_DB}"
+      - name: LD_LIBRARY_PATH
+        value: "{ORACLE_HOME}/lib"
+      - name: ORACLE_HOME
+        value: "{ORACLE_HOME}"
+  
+    prometheus_exec/oracle-exporter-2:
+    exec: {PATH_TO_ORACLEDB_BIN}/oracledb_exporter --default.metrics "{PATH_TO_ORACLEDB_TEMPLATE}/default-metrics.toml" --log.level error --web.listen-address :{{port}}
+    port: {PROMETHEUS_PORT_2}
+    scrape_interval: 300s
+    env:
+      - name: DATA_SOURCE_NAME
+        value: "{USER}/{PASSWORD}@//localhost:{TNS_PORT}/{PLUGGABLE_DB}"
+      - name: LD_LIBRARY_PATH
+        value: "{ORACLE_HOME}/lib"
+      - name: ORACLE_HOME
+        value: "{ORACLE_HOME}"
+  
+  processors:
+    resource/add_dimensions-dbname-1:
+      attributes:
+        - action: upsert
+          key: dbname
+          value: {CONTAINER_DB}
+        - action: upsert
+          key: dbtype
+          value: container_DB
+    resource/add_dimensions-dbname-2:
+      attributes:
+        - action: upsert
+          key: dbname
+          value: {PLUGGABLE_DB}
+        - action: upsert
+          key: dbtype
+          value: pluggable_DB
+  
+  service:
+    pipelines:
+      metrics/oracle-exporter-1:
+        receivers: [prometheus_exec/oracle-exporter-1]
+        processors: [resource/add_dimensions-dbname-1,resource/add_global_dimensions]
+        exporters: [signalfx]
+      metrics/oracle-exporter-2:
+        receivers: [prometheus_exec/oracle-exporter-2]
+        processors: [resource/add_dimensions-dbname-2,resource/add_global_dimensions]
+        exporters: [signalfx]
+  ```

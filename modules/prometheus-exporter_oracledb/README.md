@@ -1,4 +1,4 @@
-# ORACLE SignalFx detectors
+# ORACLEDB SignalFx detectors
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -7,6 +7,7 @@
 - [How to use this module?](#how-to-use-this-module)
 - [What are the available detectors in this module?](#what-are-the-available-detectors-in-this-module)
 - [How to collect required metrics?](#how-to-collect-required-metrics)
+  - [Examples](#examples)
   - [Metrics](#metrics)
 - [Related documentation](#related-documentation)
 
@@ -20,8 +21,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-prometheus-exporter-oracle" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/prometheus-exporter_oracle?ref={revision}"
+module "signalfx-detectors-prometheus-exporter-oracledb" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/prometheus-exporter_oracledb?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications
@@ -76,25 +77,7 @@ This module creates the following SignalFx detectors which could contain one or 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Oracle heartbeat|X|-|-|-|-|
-|Oracle process listener|X|-|-|-|-|
 |Oracle database status|X|-|-|-|-|
-|Oracle pluggable database|X|-|-|-|-|
-|Oracle blocking session(s)|X|-|-|-|-|
-|Oracle alert.log errors count|X|-|-|-|-|
-|Oracle fast recovery area usage|X|X|-|-|-|
-|Oracle number of sessions compared to limit|X|X|-|-|-|
-|Oracle number of processes compared to limit|X|X|-|-|-|
-|Oracle gap in standby database replication|X|-|-|-|-|
-|Oracle database last export|-|-|-|X|-|
-|Oracle rman incremental backup|X|-|-|-|-|
-|Oracle rman archivelog backup|X|-|-|-|-|
-|Oracle user expiration|X|-|-|-|-|
-|Oracle tablespace usage on container database|X|-|-|-|-|
-|Oracle tablespace usage on pluggable database|X|-|-|-|-|
-|Oracle tablespace usage on non-cdb database|X|-|-|-|-|
-|Oracle process dbvagent|X|-|-|-|-|
-|Oracle process dbvnet|X|-|-|-|-|
-|Oracle process dbvctl|X|-|-|-|-|
 
 ## How to collect required metrics?
 
@@ -107,6 +90,84 @@ thanks to its [prometheus exporter monitor](https://docs.signalfx.com/en/latest/
 receiver](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/receiver/prometheusreceiver) or its derivates.
 
 
+The detectors of this module uses defaults metrics from the [oracledb exporter] (https://github.com/iamseth/oracledb_exporter) and optionnaly custom metrics from custom templates which have to be specified during the deployment.  
+Check its documentation to install and configure it appropriately with your Oracle database host.
+
+by default in this module, only the metric oracledb_up is used with the default.metrics related to the [oracledb exporter]. 
+
+### Examples
+
+Here is a sample configuration fragment for the [OpenTelemetry Collector](https://opentelemetry.io/docs/collector/) agent using
+the [prometheusexec receiver](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/receiver/prometheusexecreceiver).
+
+In this example we have an oracle instance which is running in Multitenant mode, means that we have one Container Database and one pluggable database. 
+
+important : Both needs a dedicated prometheus port to upload metrics.
+
+{PATH_TO_ORACLEDB_BIN} = directory related to the oracledb_exporter binary which is used,
+{PATH_TO_ORACLEDB_TEMPLATE} = directory related to the templates which are used (default & custom)
+{ORACLE_HOME}= Oracle Home related to rdbms software
+{TNS_PORT} = Oracle listener port on which the DB is listening.
+{CONTAINER_DB} = name of the container DB (instance name)
+{PLUGGABLE_DB} = name of the pluggable Database
+{HOSTNAME} = name of the DB server host
+
+```yaml
+
+receivers:
+  prometheus_exec/oracle-exporter-1:
+  exec: {PATH_TO_ORACLEDB_BIN}/oracledb_exporter --default.metrics "{PATH_TO_ORACLEDB_TEMPLATE}/default-metrics.toml" --log.level error --web.listen-address :{{port}}
+  port: {PROMETHEUS_PORT_1}
+  scrape_interval: 300s
+  env:
+    - name: DATA_SOURCE_NAME
+      value: "{USER}/{PASSWORD}@//localhost:{TNS_PORT}/{CONTAINER_DB}"
+    - name: LD_LIBRARY_PATH
+      value: "{ORACLE_HOME}/lib"
+    - name: ORACLE_HOME
+      value: "{ORACLE_HOME}"
+
+  prometheus_exec/oracle-exporter-2:
+  exec: {PATH_TO_ORACLEDB_BIN}/oracledb_exporter --default.metrics "{PATH_TO_ORACLEDB_TEMPLATE}/default-metrics.toml" --log.level error --web.listen-address :{{port}}
+  port: {PROMETHEUS_PORT_2}
+  scrape_interval: 300s
+  env:
+    - name: DATA_SOURCE_NAME
+      value: "{USER}/{PASSWORD}@//localhost:{TNS_PORT}/{PLUGGABLE_DB}"
+    - name: LD_LIBRARY_PATH
+      value: "{ORACLE_HOME}/lib"
+    - name: ORACLE_HOME
+      value: "{ORACLE_HOME}"
+
+processors:
+  resource/add_dimensions-dbname-1:
+    attributes:
+      - action: upsert
+        key: dbname
+        value: {CONTAINER_DB}
+      - action: upsert
+        key: dbtype
+        value: container_DB
+  resource/add_dimensions-dbname-2:
+    attributes:
+      - action: upsert
+        key: dbname
+        value: {PLUGGABLE_DB}
+      - action: upsert
+        key: dbtype
+        value: pluggable_DB
+
+service:
+  pipelines:
+    metrics/oracle-exporter-1:
+      receivers: [prometheus_exec/oracle-exporter-1]
+      processors: [resource/add_dimensions-dbname-1,resource/add_global_dimensions]
+      exporters: [signalfx]
+    metrics/oracle-exporter-2:
+      receivers: [prometheus_exec/oracle-exporter-2]
+      processors: [resource/add_dimensions-dbname-2,resource/add_global_dimensions]
+      exporters: [signalfx]
+```
 
 
 ### Metrics
@@ -114,25 +175,7 @@ receiver](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree
 
 Here is the list of required metrics for detectors in this module.
 
-* `dbvagent`
-* `dbvctl`
-* `dbvnet`
-* `oracledb_AlertLogError_count`
-* `oracledb_blocking_sessions_count`
-* `oracledb_FRA_Usage_value`
-* `oracledb_Oracle_exports_value`
-* `oracledb_Oracle_RMAN_Arch_value`
-* `oracledb_Oracle_RMAN_Incr_value`
-* `oracledb_Pdb_is_up_count`
-* `oracledb_Process_limits_value`
-* `oracledb_Sessions_limits_value`
-* `oracledb_STBY_Replication_count`
-* `oracledb_tablespace_usage_pct_CDB_V2_real_ts_used_pct`
-* `oracledb_tablespace_usage_pct_NOCDB_V2_real_ts_used_pct`
-* `oracledb_tablespace_usage_pct_PDB_V2_real_ts_used_pct`
 * `oracledb_up`
-* `oracledb_User_pass_expiration_V2_count`
-* `tnslsnr`
 
 
 
@@ -141,3 +184,4 @@ Here is the list of required metrics for detectors in this module.
 
 * [Terraform SignalFx provider](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs)
 * [Terraform SignalFx detector](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector)
+* [Prometheus Exporter for oracledb](https://github.com/iamseth/oracledb_exporter)

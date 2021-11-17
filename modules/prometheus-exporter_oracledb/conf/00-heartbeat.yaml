@@ -1,14 +1,14 @@
 module: oracle
 name: heartbeat
 
-transformation: false
-aggregation: ".mean(by=['hostname'])"
+transformation: true
+aggregation: true
 
 exclude_not_running_vm: true
 
 signals:
   signal:
-    metric: oracledb_Process_limits_value
+    metric: oracledb_up
 
 rules:
   critical:

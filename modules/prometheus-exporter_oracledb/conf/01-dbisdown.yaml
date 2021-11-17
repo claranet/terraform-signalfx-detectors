@@ -2,19 +2,17 @@ module: oracle
 name: "Database status"
 id: dbisdown
 
-transformation: true
-aggregation: ".mean(by=['dbname','dbtype','hostname'])"
+transformation: ".max(over='10m')"
+aggregation: true
 
 signals:
   signal:
     metric: oracledb_up
-    rollup: latest
 
 rules:
   critical:
     threshold: 1
     comparator: "<"
-    lasting_duration: "5m"
     description: "is down"
 tip: "oracle database is down, check status on server and logfile"
 
