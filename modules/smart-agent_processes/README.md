@@ -76,7 +76,6 @@ This module creates the following SignalFx detectors which could contain one or 
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|Oracle process listener|X|-|-|-|-|
 |Processes aliveness|X|X|-|-|-|
 
 ## How to collect required metrics?
@@ -104,7 +103,6 @@ the corresponding monitor configuration:
       - metricNames:
         - '*'
         - '!ps_count.processes'
-        - '!tnslsnr'
 
 ```
 
