@@ -965,7 +965,7 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|Processes aliveness|X|X|-|-|-|
+|Processes aliveness count|X|X|-|-|-|
 
 
 ## rabbitmq-node
