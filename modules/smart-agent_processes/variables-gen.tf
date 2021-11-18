@@ -45,7 +45,7 @@ variable "processes_disabled_critical" {
 variable "processes_disabled_major" {
   description = "Disable major alerting rule for processes detector"
   type        = bool
-  default     = null
+  default     = true
 }
 
 variable "processes_threshold_critical" {
