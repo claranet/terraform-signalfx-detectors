@@ -3,7 +3,7 @@ documentations:
     url: https://github.com/iamseth/oracledb_exporter
 
 source_doc: |
-  The detectors of this module uses defaults metrics from the [oracledb exporter](https://github.com/iamseth/oracledb_exporter) 
+  The detectors of this module uses defaults metrics from the [oracledb exporter](https://github.com/iamseth/oracledb_exporter).
   Check its documentation to install and configure it appropriately with your Oracle database host.
 
   ### Examples

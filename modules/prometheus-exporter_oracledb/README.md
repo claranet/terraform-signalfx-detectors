@@ -90,7 +90,7 @@ thanks to its [prometheus exporter monitor](https://docs.signalfx.com/en/latest/
 receiver](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/receiver/prometheusreceiver) or its derivates.
 
 
-The detectors of this module uses defaults metrics from the [oracledb exporter] (https://github.com/iamseth/oracledb_exporter) 
+The detectors of this module uses defaults metrics from the [oracledb exporter](https://github.com/iamseth/oracledb_exporter).
 Check its documentation to install and configure it appropriately with your Oracle database host.
 
 ### Examples
@@ -100,7 +100,7 @@ the [prometheusexec receiver](https://github.com/open-telemetry/opentelemetry-co
 
 In this example we have an oracle instance which is running in Multitenant mode, means that we have one Container Database and one pluggable database. 
 
-_important_ : Both needs a dedicated prometheus port to upload metrics.
+_Important_: Both needs a dedicated prometheus port to upload metrics.
 
 Environment variables used in the following sample configuration: 
 
@@ -116,7 +116,6 @@ Environment variables used in the following sample configuration:
 
 
 ```yaml
-
 receivers:
   prometheus_exec/oracle-exporter-1:
   exec: ${PATH_TO_ORACLEDB_BIN}/oracledb_exporter --default.metrics "${PATH_TO_ORACLEDB_TEMPLATE}/default-metrics.toml" --log.level error --web.listen-address :{{port}}
