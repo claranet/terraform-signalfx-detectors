@@ -1,3 +1,4 @@
+---
 ## Detector generator configuration
 #
 ## Based on jinja2 see the official documentation:
@@ -226,3 +227,8 @@ rules:
     ## `or when(B != ${var.toto}`
     #append_condition:
 
+    ## @param disabled - bool - optional
+    ## Allows to disable this specific alerting rule
+    ## Only works if set to `true`.
+    #disabled:
+...
