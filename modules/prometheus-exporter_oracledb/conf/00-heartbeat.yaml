@@ -1,7 +1,6 @@
 module: oracle
 name: heartbeat
 
-transformation: true
 aggregation: true
 
 exclude_not_running_vm: true

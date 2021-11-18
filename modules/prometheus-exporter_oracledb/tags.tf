@@ -1,4 +1,4 @@
 locals {
-  tags = ["prometheus-exporter", "oracle"]
+  tags = ["prometheus-exporter", "oracledb"]
 }
 
