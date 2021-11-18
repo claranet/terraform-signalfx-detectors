@@ -60,6 +60,7 @@
 - [newrelic-apm](#newrelic-apm)
 - [usage](#usage)
 - [kong](#kong)
+- [oracledb](#oracledb)
 - [squid](#squid)
 - [wallix-bastion](#wallix-bastion)
 - [apache](#apache)
@@ -650,6 +651,14 @@
 |---|---|---|---|---|---|
 |Kong heartbeat|X|-|-|-|-|
 |Kong treatment limit|X|X|-|-|-|
+
+
+## oracledb
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Oracle heartbeat|X|-|-|-|-|
+|Oracle database status|X|-|-|-|-|
 
 
 ## squid

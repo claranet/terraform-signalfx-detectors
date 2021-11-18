@@ -1,0 +1,19 @@
+module: oracle
+name: "Database status"
+id: dbisdown
+
+transformation: ".max(over='10m')"
+aggregation: true
+
+signals:
+  signal:
+    metric: oracledb_up
+
+rules:
+  critical:
+    threshold: 1
+    comparator: "<"
+    description: "is down"
+tip: "oracle database is down, check status on server and logfile"
+
+

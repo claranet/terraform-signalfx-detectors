@@ -35,4 +35,3 @@ EOF
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 }
-
