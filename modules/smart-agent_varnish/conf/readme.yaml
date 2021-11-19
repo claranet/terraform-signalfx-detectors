@@ -34,3 +34,19 @@ source_doc: |
   systemctl start varnishncsa.service
   systemctl enable varnishncsa.service
   ```
+
+  ### Examples
+
+  Here is a signalfx-agent configuration sample fragment:
+
+  ```yaml
+  monitors:
+    …
+    - type: telegraf/varnish
+      extraMetrics: ["varnish.s0.g_bytes","varnish.s0.g_space"]
+      stats: ["MAIN.*","SMA.*"]
+    …
+  ```
+
+  _Note_: `varnish.s0.g_bytes` and `varnish.s0.g_space` are both extraMetrics to enable and they come
+  from `SMA` varnishstat section to append to `stats` parameter.
