@@ -62,7 +62,7 @@ variable "{{ id }}_disabled" {
 variable "{{ id }}_disabled_{{ severity }}" {
   description = "Disable {{ severity }} alerting rule for {{ id }} detector"
   type        = bool
-  default     = null
+  default     = {% if rule.disabled is sameas true %}true{% else %}null{% endif %}
 }
 
 {% endfor -%}
