@@ -9,7 +9,7 @@ variable "deadlettered_messages_notifications" {
 variable "deadlettered_messages_aggregation_function" {
   description = "Aggregation function and group by for deadlettered_messages detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['entityname', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".mean(by=['EntityName', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
 variable "deadlettered_messages_transformation_function" {
