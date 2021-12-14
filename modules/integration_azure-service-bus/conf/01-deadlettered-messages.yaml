@@ -15,7 +15,7 @@ rules:
     threshold: 10
     comparator: ">"
   major:
-    threshold: 5
+    threshold: 0
     comparator: ">"
     dependency: critical
 ...

@@ -68,7 +68,7 @@ variable "deadlettered_messages_at_least_percentage_critical" {
 variable "deadlettered_messages_threshold_major" {
   description = "Major threshold for deadlettered_messages detector"
   type        = number
-  default     = 5
+  default     = 0
 }
 
 variable "deadlettered_messages_lasting_duration_major" {
