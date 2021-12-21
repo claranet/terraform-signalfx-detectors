@@ -35,7 +35,7 @@ variable "heartbeat_timeframe" {
 variable "heartbeat_aggregation_function" {
   description = "Aggregation function and group by for heartbeat detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['entityname', 'azure_resource_name', 'azure_resource_group_name'])"
+  default     = ".mean(by=['EntityName', 'azure_resource_name', 'azure_resource_group_name'])"
 }
 
 # Active_connections detector
@@ -129,7 +129,7 @@ variable "user_errors_notifications" {
 variable "user_errors_aggregation_function" {
   description = "Aggregation function and group by for user_errors detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['entityname', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".mean(by=['EntityName', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
 variable "user_errors_lasting_duration_critical" {
@@ -197,7 +197,7 @@ variable "server_errors_notifications" {
 variable "server_errors_aggregation_function" {
   description = "Aggregation function and group by for server_errors detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['entityname', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".mean(by=['EntityName', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
 variable "server_errors_lasting_duration_critical" {
