@@ -6,7 +6,7 @@ aggregation: true
 
 signals:
   signal:
-    metric: squid_up
+    metric: wallix_bastion_up
 
 rules:
   critical:

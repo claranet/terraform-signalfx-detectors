@@ -135,8 +135,8 @@ service:
 
 Here is the list of required metrics for detectors in this module.
 
-* `squid_up`
 * `wallix_bastion_sessions`
+* `wallix_bastion_up`
 
 
 
