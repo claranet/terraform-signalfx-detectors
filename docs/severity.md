@@ -37,6 +37,7 @@
 - [azure-functions](#azure-functions)
 - [azure-key-vault](#azure-key-vault)
 - [azure-load-balancer](#azure-load-balancer)
+- [azure-mariadb](#azure-mariadb)
 - [azure-mysql](#azure-mysql)
 - [azure-postgresql](#azure-postgresql)
 - [azure-redis](#azure-redis)
@@ -422,6 +423,18 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Azure Load balancer heartbeat|X|-|-|-|-|
+
+
+## azure-mariadb
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Azure MariaDB heartbeat|X|-|-|-|-|
+|Azure MariaDB cpu usage|X|X|-|-|-|
+|Azure MariaDB storage usage|X|X|-|-|-|
+|Azure MariaDB io consumption|X|X|-|-|-|
+|Azure MariaDB memory usage|X|X|-|-|-|
+|Azure MariaDB replication lag|X|X|-|-|-|
 
 
 ## azure-mysql
