@@ -57,7 +57,7 @@ Note the following parameters:
 
 These 3 parameters alongs with all variables defined in [common-variables.tf](common-variables.tf) are common to all
 [modules](../) in this repository. Other variables, specific to this module, are available in
-[variables.tf](variables.tf).
+[variables-gen.tf](variables-gen.tf).
 In general, the default configuration "works" but all of these Terraform
 [variables](https://www.terraform.io/docs/configuration/variables.html) make it possible to
 customize the detectors behavior to better fit your needs.
@@ -76,9 +76,9 @@ This module creates the following SignalFx detectors which could contain one or 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Azure MySQL heartbeat|X|-|-|-|-|
-|Azure MySQL CPU usage|X|X|-|-|-|
+|Azure MySQL cpu usage|X|X|-|-|-|
 |Azure MySQL storage usage|X|X|-|-|-|
-|Azure MySQL IO consumption|X|X|-|-|-|
+|Azure MySQL io consumption|X|X|-|-|-|
 |Azure MySQL memory usage|X|X|-|-|-|
 |Azure MySQL replication lag|X|X|-|-|-|
 
