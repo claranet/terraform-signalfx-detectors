@@ -678,6 +678,7 @@
 |Wallix-bastion heartbeat|X|-|-|-|-|
 |Wallix-bastion status|X|-|-|-|-|
 |Wallix-bastion total number of current sessions|-|X|X|-|-|
+|Wallix-bastion encryption status|-|-|-|X|-|
 
 
 ## apache
