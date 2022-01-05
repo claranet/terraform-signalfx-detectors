@@ -219,19 +219,19 @@ variable "encryption_status_disabled" {
   default     = null
 }
 
-variable "encryption_status_threshold_warning" {
-  description = "Warning threshold for encryption_status detector"
+variable "encryption_status_threshold_critical" {
+  description = "Critical threshold for encryption_status detector"
   type        = number
   default     = 1
 }
 
-variable "encryption_status_lasting_duration_warning" {
+variable "encryption_status_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "15m"
+  default     = null
 }
 
-variable "encryption_status_at_least_percentage_warning" {
+variable "encryption_status_at_least_percentage_critical" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1
