@@ -1,0 +1,21 @@
+module: logstash
+name: events in low
+
+transformation: ".min(over='10m')"
+aggregation: true
+
+signals:
+  signal:
+    metric: node.stats.events.events.in
+    rollup: delta
+rules:
+  warning:
+    description: is low
+    threshold: 100
+    comparator: '<='
+    dependency: minor
+  minor:
+    description: is too low
+    threshold: 0
+    comparator: '<='
+

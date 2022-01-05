@@ -1,0 +1,23 @@
+module: logstash
+name: queued disk
+
+transformation: ".min(over='10m')"
+aggregation: true
+
+signals:
+  disk:
+    metric: node.stats.pipelines.queue.queue_size_in_bytes
+    rollup: latest
+  signal:
+    formula: (disk / 1000000)
+rules:
+  warning:
+    description: is high
+    threshold: 8000
+    comparator: '>='
+    dependency: minor
+  minor:
+    description: is too high
+    threshold: 10000
+    comparator: '>='
+

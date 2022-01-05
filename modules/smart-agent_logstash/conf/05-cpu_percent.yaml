@@ -1,0 +1,19 @@
+module: logstash
+name: cpu percent
+
+transformation: ".min(over='10m')"
+aggregation: true
+
+signals:
+  signal:
+    metric: node.stats.process.process.cpu.percent
+rules:
+  warning:
+    description: is high
+    threshold: 90
+    comparator: '>='
+  minor:
+    description: is too high
+    threshold: 100
+    comparator: '>='
+
