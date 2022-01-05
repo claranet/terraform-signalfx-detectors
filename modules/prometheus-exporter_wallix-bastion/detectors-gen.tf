@@ -98,15 +98,15 @@ resource "signalfx_detector" "encryption_status" {
 
   program_text = <<-EOF
     signal = data('wallix_bastion_encryption_status', filter=${module.filtering.signalflow})${var.encryption_status_aggregation_function}${var.encryption_status_transformation_function}.publish('signal')
-    detect(when(signal != ${var.encryption_status_threshold_warning}, lasting=%{if var.encryption_status_lasting_duration_warning == null}None%{else}'${var.encryption_status_lasting_duration_warning}'%{endif}, at_least=${var.encryption_status_at_least_percentage_warning})).publish('WARN')
+    detect(when(signal != ${var.encryption_status_threshold_critical}, lasting=%{if var.encryption_status_lasting_duration_critical == null}None%{else}'${var.encryption_status_lasting_duration_critical}'%{endif}, at_least=${var.encryption_status_at_least_percentage_critical})).publish('CRIT')
 EOF
 
   rule {
-    description           = "is not ready != ${var.encryption_status_threshold_warning}"
-    severity              = "Warning"
-    detect_label          = "WARN"
+    description           = "is not ready != ${var.encryption_status_threshold_critical}"
+    severity              = "Critical"
+    detect_label          = "CRIT"
     disabled              = coalesce(var.encryption_status_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.encryption_status_notifications, "warning", []), var.notifications.warning)
+    notifications         = coalescelist(lookup(var.encryption_status_notifications, "critical", []), var.notifications.critical)
     runbook_url           = try(coalesce(var.encryption_status_runbook_url, var.runbook_url), "")
     tip                   = var.encryption_status_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject

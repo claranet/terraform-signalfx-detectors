@@ -1,0 +1,15 @@
+module: wallix-bastion
+name: encryption status
+
+transformation: true
+aggregation: true
+
+signals:
+  signal:
+    metric: wallix_bastion_encryption_status
+
+rules:
+  critical:
+    threshold: 1
+    comparator: "!="
+    description: is not ready
