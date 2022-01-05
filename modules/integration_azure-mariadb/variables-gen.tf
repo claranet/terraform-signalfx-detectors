@@ -42,338 +42,338 @@ variable "heartbeat_timeframe" {
   default     = "10m"
 }
 
-# cpu_usage detector
+# cpu detector
 
-variable "cpu_usage_notifications" {
-  description = "Notification recipients list per severity overridden for cpu_usage detector"
+variable "cpu_notifications" {
+  description = "Notification recipients list per severity overridden for cpu detector"
   type        = map(list(string))
   default     = {}
 }
 
-variable "cpu_usage_aggregation_function" {
-  description = "Aggregation function and group by for cpu_usage detector (i.e. \".mean(by=['host'])\")"
+variable "cpu_aggregation_function" {
+  description = "Aggregation function and group by for cpu detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
-variable "cpu_usage_transformation_function" {
-  description = "Transformation function for cpu_usage detector (i.e. \".mean(over='5m')\")"
+variable "cpu_transformation_function" {
+  description = "Transformation function for cpu detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
 }
 
-variable "cpu_usage_tip" {
+variable "cpu_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
   default     = ""
 }
 
-variable "cpu_usage_runbook_url" {
+variable "cpu_runbook_url" {
   description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
   type        = string
   default     = ""
 }
 
-variable "cpu_usage_disabled" {
-  description = "Disable all alerting rules for cpu_usage detector"
+variable "cpu_disabled" {
+  description = "Disable all alerting rules for cpu detector"
   type        = bool
   default     = null
 }
 
-variable "cpu_usage_disabled_major" {
-  description = "Disable major alerting rule for cpu_usage detector"
+variable "cpu_disabled_major" {
+  description = "Disable major alerting rule for cpu detector"
   type        = bool
   default     = null
 }
 
-variable "cpu_usage_disabled_critical" {
-  description = "Disable critical alerting rule for cpu_usage detector"
+variable "cpu_disabled_critical" {
+  description = "Disable critical alerting rule for cpu detector"
   type        = bool
   default     = null
 }
 
-variable "cpu_usage_threshold_major" {
-  description = "Major threshold for cpu_usage detector in %"
+variable "cpu_threshold_major" {
+  description = "Major threshold for cpu detector in %"
   type        = number
   default     = 80
 }
 
-variable "cpu_usage_lasting_duration_major" {
+variable "cpu_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
   default     = "15m"
 }
 
-variable "cpu_usage_at_least_percentage_major" {
+variable "cpu_at_least_percentage_major" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1
 }
-variable "cpu_usage_threshold_critical" {
-  description = "Critical threshold for cpu_usage detector in %"
+variable "cpu_threshold_critical" {
+  description = "Critical threshold for cpu detector in %"
   type        = number
   default     = 90
 }
 
-variable "cpu_usage_lasting_duration_critical" {
+variable "cpu_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
   default     = "15m"
 }
 
-variable "cpu_usage_at_least_percentage_critical" {
+variable "cpu_at_least_percentage_critical" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1
 }
-# storage_usage detector
+# storage detector
 
-variable "storage_usage_notifications" {
-  description = "Notification recipients list per severity overridden for storage_usage detector"
+variable "storage_notifications" {
+  description = "Notification recipients list per severity overridden for storage detector"
   type        = map(list(string))
   default     = {}
 }
 
-variable "storage_usage_aggregation_function" {
-  description = "Aggregation function and group by for storage_usage detector (i.e. \".mean(by=['host'])\")"
+variable "storage_aggregation_function" {
+  description = "Aggregation function and group by for storage detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
-variable "storage_usage_transformation_function" {
-  description = "Transformation function for storage_usage detector (i.e. \".mean(over='5m')\")"
+variable "storage_transformation_function" {
+  description = "Transformation function for storage detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
 }
 
-variable "storage_usage_tip" {
+variable "storage_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
   default     = ""
 }
 
-variable "storage_usage_runbook_url" {
+variable "storage_runbook_url" {
   description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
   type        = string
   default     = ""
 }
 
-variable "storage_usage_disabled" {
-  description = "Disable all alerting rules for storage_usage detector"
+variable "storage_disabled" {
+  description = "Disable all alerting rules for storage detector"
   type        = bool
   default     = null
 }
 
-variable "storage_usage_disabled_major" {
-  description = "Disable major alerting rule for storage_usage detector"
+variable "storage_disabled_major" {
+  description = "Disable major alerting rule for storage detector"
   type        = bool
   default     = null
 }
 
-variable "storage_usage_disabled_critical" {
-  description = "Disable critical alerting rule for storage_usage detector"
+variable "storage_disabled_critical" {
+  description = "Disable critical alerting rule for storage detector"
   type        = bool
   default     = null
 }
 
-variable "storage_usage_threshold_major" {
-  description = "Major threshold for storage_usage detector in %"
+variable "storage_threshold_major" {
+  description = "Major threshold for storage detector in %"
   type        = number
   default     = 80
 }
 
-variable "storage_usage_lasting_duration_major" {
+variable "storage_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
   default     = "15m"
 }
 
-variable "storage_usage_at_least_percentage_major" {
+variable "storage_at_least_percentage_major" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1
 }
-variable "storage_usage_threshold_critical" {
-  description = "Critical threshold for storage_usage detector in %"
+variable "storage_threshold_critical" {
+  description = "Critical threshold for storage detector in %"
   type        = number
   default     = 90
 }
 
-variable "storage_usage_lasting_duration_critical" {
+variable "storage_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
   default     = "15m"
 }
 
-variable "storage_usage_at_least_percentage_critical" {
+variable "storage_at_least_percentage_critical" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1
 }
-# io_consumption detector
+# io detector
 
-variable "io_consumption_notifications" {
-  description = "Notification recipients list per severity overridden for io_consumption detector"
+variable "io_notifications" {
+  description = "Notification recipients list per severity overridden for io detector"
   type        = map(list(string))
   default     = {}
 }
 
-variable "io_consumption_aggregation_function" {
-  description = "Aggregation function and group by for io_consumption detector (i.e. \".mean(by=['host'])\")"
+variable "io_aggregation_function" {
+  description = "Aggregation function and group by for io detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
-variable "io_consumption_transformation_function" {
-  description = "Transformation function for io_consumption detector (i.e. \".mean(over='5m')\")"
+variable "io_transformation_function" {
+  description = "Transformation function for io detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
 }
 
-variable "io_consumption_tip" {
+variable "io_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
   default     = ""
 }
 
-variable "io_consumption_runbook_url" {
+variable "io_runbook_url" {
   description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
   type        = string
   default     = ""
 }
 
-variable "io_consumption_disabled" {
-  description = "Disable all alerting rules for io_consumption detector"
+variable "io_disabled" {
+  description = "Disable all alerting rules for io detector"
   type        = bool
   default     = null
 }
 
-variable "io_consumption_disabled_major" {
-  description = "Disable major alerting rule for io_consumption detector"
+variable "io_disabled_major" {
+  description = "Disable major alerting rule for io detector"
   type        = bool
   default     = null
 }
 
-variable "io_consumption_disabled_critical" {
-  description = "Disable critical alerting rule for io_consumption detector"
+variable "io_disabled_critical" {
+  description = "Disable critical alerting rule for io detector"
   type        = bool
   default     = null
 }
 
-variable "io_consumption_threshold_major" {
-  description = "Major threshold for io_consumption detector in %"
+variable "io_threshold_major" {
+  description = "Major threshold for io detector in %"
   type        = number
   default     = 80
 }
 
-variable "io_consumption_lasting_duration_major" {
+variable "io_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
   default     = "15m"
 }
 
-variable "io_consumption_at_least_percentage_major" {
+variable "io_at_least_percentage_major" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1
 }
-variable "io_consumption_threshold_critical" {
-  description = "Critical threshold for io_consumption detector in %"
+variable "io_threshold_critical" {
+  description = "Critical threshold for io detector in %"
   type        = number
   default     = 90
 }
 
-variable "io_consumption_lasting_duration_critical" {
+variable "io_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
   default     = "15m"
 }
 
-variable "io_consumption_at_least_percentage_critical" {
+variable "io_at_least_percentage_critical" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1
 }
-# memory_usage detector
+# memory detector
 
-variable "memory_usage_notifications" {
-  description = "Notification recipients list per severity overridden for memory_usage detector"
+variable "memory_notifications" {
+  description = "Notification recipients list per severity overridden for memory detector"
   type        = map(list(string))
   default     = {}
 }
 
-variable "memory_usage_aggregation_function" {
-  description = "Aggregation function and group by for memory_usage detector (i.e. \".mean(by=['host'])\")"
+variable "memory_aggregation_function" {
+  description = "Aggregation function and group by for memory detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
-variable "memory_usage_transformation_function" {
-  description = "Transformation function for memory_usage detector (i.e. \".mean(over='5m')\")"
+variable "memory_transformation_function" {
+  description = "Transformation function for memory detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
 }
 
-variable "memory_usage_tip" {
+variable "memory_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
   default     = ""
 }
 
-variable "memory_usage_runbook_url" {
+variable "memory_runbook_url" {
   description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
   type        = string
   default     = ""
 }
 
-variable "memory_usage_disabled" {
-  description = "Disable all alerting rules for memory_usage detector"
+variable "memory_disabled" {
+  description = "Disable all alerting rules for memory detector"
   type        = bool
   default     = null
 }
 
-variable "memory_usage_disabled_major" {
-  description = "Disable major alerting rule for memory_usage detector"
+variable "memory_disabled_major" {
+  description = "Disable major alerting rule for memory detector"
   type        = bool
   default     = null
 }
 
-variable "memory_usage_disabled_critical" {
-  description = "Disable critical alerting rule for memory_usage detector"
+variable "memory_disabled_critical" {
+  description = "Disable critical alerting rule for memory detector"
   type        = bool
   default     = null
 }
 
-variable "memory_usage_threshold_major" {
-  description = "Major threshold for memory_usage detector in %"
+variable "memory_threshold_major" {
+  description = "Major threshold for memory detector in %"
   type        = number
   default     = 80
 }
 
-variable "memory_usage_lasting_duration_major" {
+variable "memory_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
   default     = "15m"
 }
 
-variable "memory_usage_at_least_percentage_major" {
+variable "memory_at_least_percentage_major" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1
 }
-variable "memory_usage_threshold_critical" {
-  description = "Critical threshold for memory_usage detector in %"
+variable "memory_threshold_critical" {
+  description = "Critical threshold for memory detector in %"
   type        = number
   default     = 90
 }
 
-variable "memory_usage_lasting_duration_critical" {
+variable "memory_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
   default     = "15m"
 }
 
-variable "memory_usage_at_least_percentage_critical" {
+variable "memory_at_least_percentage_critical" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1
@@ -429,7 +429,7 @@ variable "replication_lag_disabled_critical" {
 }
 
 variable "replication_lag_threshold_major" {
-  description = "Major threshold for replication_lag detector in seconds"
+  description = "Major threshold for replication_lag detector in Second"
   type        = number
   default     = 100
 }
@@ -446,7 +446,7 @@ variable "replication_lag_at_least_percentage_major" {
   default     = 1
 }
 variable "replication_lag_threshold_critical" {
-  description = "Critical threshold for replication_lag detector in seconds"
+  description = "Critical threshold for replication_lag detector in Second"
   type        = number
   default     = 200
 }
