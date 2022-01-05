@@ -89,3 +89,28 @@ EOF
   }
 }
 
+resource "signalfx_detector" "encryption_status" {
+  name = format("%s %s", local.detector_name_prefix, "Wallix-bastion encryption status")
+
+  authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
+
+  program_text = <<-EOF
+    signal = data('wallix_bastion_encryption_status', filter=${module.filtering.signalflow})${var.encryption_status_aggregation_function}${var.encryption_status_transformation_function}.publish('signal')
+    detect(when(signal != ${var.encryption_status_threshold_warning}, lasting=%{if var.encryption_status_lasting_duration_warning == null}None%{else}'${var.encryption_status_lasting_duration_warning}'%{endif}, at_least=${var.encryption_status_at_least_percentage_warning})).publish('WARN')
+EOF
+
+  rule {
+    description           = "is not ready != ${var.encryption_status_threshold_warning}"
+    severity              = "Warning"
+    detect_label          = "WARN"
+    disabled              = coalesce(var.encryption_status_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.encryption_status_notifications, "warning", []), var.notifications.warning)
+    runbook_url           = try(coalesce(var.encryption_status_runbook_url, var.runbook_url), "")
+    tip                   = var.encryption_status_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
+}
+

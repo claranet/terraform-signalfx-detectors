@@ -79,6 +79,7 @@ This module creates the following SignalFx detectors which could contain one or 
 |Wallix-bastion heartbeat|X|-|-|-|-|
 |Wallix-bastion status|X|-|-|-|-|
 |Wallix-bastion total number of current sessions|-|X|X|-|-|
+|Wallix-bastion encryption status|-|-|-|X|-|
 
 ## How to collect required metrics?
 
@@ -135,6 +136,7 @@ service:
 
 Here is the list of required metrics for detectors in this module.
 
+* `wallix_bastion_encryption_status`
 * `wallix_bastion_sessions`
 * `wallix_bastion_up`
 

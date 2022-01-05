@@ -181,3 +181,58 @@ variable "current_sessions_at_least_percentage_minor" {
   type        = number
   default     = 1
 }
+# encryption_status detector
+
+variable "encryption_status_notifications" {
+  description = "Notification recipients list per severity overridden for encryption_status detector"
+  type        = map(list(string))
+  default     = {}
+}
+
+variable "encryption_status_aggregation_function" {
+  description = "Aggregation function and group by for encryption_status detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ""
+}
+
+variable "encryption_status_transformation_function" {
+  description = "Transformation function for encryption_status detector (i.e. \".mean(over='5m')\")"
+  type        = string
+  default     = ""
+}
+
+variable "encryption_status_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "encryption_status_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
+variable "encryption_status_disabled" {
+  description = "Disable all alerting rules for encryption_status detector"
+  type        = bool
+  default     = null
+}
+
+variable "encryption_status_threshold_warning" {
+  description = "Warning threshold for encryption_status detector"
+  type        = number
+  default     = 1
+}
+
+variable "encryption_status_lasting_duration_warning" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "15m"
+}
+
+variable "encryption_status_at_least_percentage_warning" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}

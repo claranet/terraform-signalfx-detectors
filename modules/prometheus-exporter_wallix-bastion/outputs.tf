@@ -3,6 +3,11 @@ output "current_sessions" {
   value       = signalfx_detector.current_sessions
 }
 
+output "encryption_status" {
+  description = "Detector resource for encryption_status"
+  value       = signalfx_detector.encryption_status
+}
+
 output "heartbeat" {
   description = "Detector resource for heartbeat"
   value       = signalfx_detector.heartbeat
