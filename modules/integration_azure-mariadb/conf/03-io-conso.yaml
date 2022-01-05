@@ -1,4 +1,5 @@
 module: Azure MariaDB
+id: io
 name: "IO consumption"
 
 transformation: true
