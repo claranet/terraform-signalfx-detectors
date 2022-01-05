@@ -1,0 +1,13 @@
+module: Azure MariaDB
+name: heartbeat
+
+transformation: true
+aggregation: ".mean(by=['azure_resource_id'])"
+
+filtering: "filter('resource_type', 'Microsoft.DBforMariaDB/servers') and filter('primary_aggregation_type', 'true')"
+
+signals:
+  signal:
+    metric: "active_connections"
+rules:
+  critical:
