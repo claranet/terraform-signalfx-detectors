@@ -1,5 +1,6 @@
 module: Azure MySQL
-name: "storage usage"
+id: storage
+name: "Storage usage"
 
 transformation: true
 aggregation: ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"

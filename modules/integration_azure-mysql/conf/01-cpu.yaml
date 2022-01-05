@@ -1,4 +1,5 @@
 module: Azure MySQL
+id: cpu
 name: "CPU usage"
 
 transformation: true
