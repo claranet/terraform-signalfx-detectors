@@ -429,9 +429,9 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Azure MySQL heartbeat|X|-|-|-|-|
-|Azure MySQL CPU usage|X|X|-|-|-|
+|Azure MySQL cpu usage|X|X|-|-|-|
 |Azure MySQL storage usage|X|X|-|-|-|
-|Azure MySQL IO consumption|X|X|-|-|-|
+|Azure MySQL io consumption|X|X|-|-|-|
 |Azure MySQL memory usage|X|X|-|-|-|
 |Azure MySQL replication lag|X|X|-|-|-|
 

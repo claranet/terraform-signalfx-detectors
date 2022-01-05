@@ -1,0 +1,23 @@
+module: Azure MySQL
+id: cpu
+name: "CPU usage"
+
+transformation: true
+aggregation: ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+
+filtering: "filter('resource_type', 'Microsoft.DBforMySQL/servers') and filter('primary_aggregation_type', 'true')"
+value_unit: "%"
+
+signals:
+  signal:
+    metric: "cpu_percent"
+rules:
+  major:
+    threshold: 80
+    comparator: ">"
+    lasting_duration: '15m'
+  critical:
+    threshold: 90
+    comparator: ">"
+    lasting_duration: '15m'
+    dependency: major
