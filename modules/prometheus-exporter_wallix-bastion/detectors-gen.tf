@@ -97,7 +97,8 @@ resource "signalfx_detector" "encryption_status" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('wallix_bastion_encryption_status', filter=${module.filtering.signalflow})${var.encryption_status_aggregation_function}${var.encryption_status_transformation_function}.publish('signal')
+    status = data('wallix_bastion_encryption_status', filter=${module.filtering.signalflow})${var.encryption_status_aggregation_function}${var.encryption_status_transformation_function}
+    signal = status.fill(value=1).publish('signal')
     detect(when(signal != ${var.encryption_status_threshold_critical}, lasting=%{if var.encryption_status_lasting_duration_critical == null}None%{else}'${var.encryption_status_lasting_duration_critical}'%{endif}, at_least=${var.encryption_status_at_least_percentage_critical})).publish('CRIT')
 EOF
 
