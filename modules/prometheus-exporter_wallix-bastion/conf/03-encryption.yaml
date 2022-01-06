@@ -5,8 +5,10 @@ transformation: true
 aggregation: true
 
 signals:
-  signal:
+  status:
     metric: wallix_bastion_encryption_status
+  signal:
+    formula: status.fill(value=1)
 
 rules:
   critical:
