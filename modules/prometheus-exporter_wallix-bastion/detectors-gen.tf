@@ -115,3 +115,28 @@ EOF
   }
 }
 
+resource "signalfx_detector" "license" {
+  name = format("%s %s", local.detector_name_prefix, "Wallix-bastion license")
+
+  authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
+
+  program_text = <<-EOF
+    signal = data('wallix_bastion_license_is_expired', filter=${module.filtering.signalflow}, extrapolation='zero')${var.license_aggregation_function}${var.license_transformation_function}.publish('signal')
+    detect(when(signal > ${var.license_threshold_critical}, lasting=%{if var.license_lasting_duration_critical == null}None%{else}'${var.license_lasting_duration_critical}'%{endif}, at_least=${var.license_at_least_percentage_critical})).publish('CRIT')
+EOF
+
+  rule {
+    description           = "is expired > ${var.license_threshold_critical}"
+    severity              = "Critical"
+    detect_label          = "CRIT"
+    disabled              = coalesce(var.license_disabled, var.detectors_disabled)
+    notifications         = coalescelist(lookup(var.license_notifications, "critical", []), var.notifications.critical)
+    runbook_url           = try(coalesce(var.license_runbook_url, var.runbook_url), "")
+    tip                   = var.license_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
+}
+

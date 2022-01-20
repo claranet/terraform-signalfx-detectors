@@ -13,6 +13,11 @@ output "heartbeat" {
   value       = signalfx_detector.heartbeat
 }
 
+output "license" {
+  description = "Detector resource for license"
+  value       = signalfx_detector.license
+}
+
 output "status" {
   description = "Detector resource for status"
   value       = signalfx_detector.status
