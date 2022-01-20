@@ -1,5 +1,10 @@
 documentations:
   - name: CloudWatch metrics
-    url: 'https://docs.aws.amazon.com/lambda/latest/dg/monitoring-metrics.html'
+    url: "https://docs.aws.amazon.com/lambda/latest/dg/monitoring-metrics.html"
   - name: Splunk Observability metrics
-    url: 'https://docs.splunk.com/Observability/gdi/get-data-in/connect/aws/aws-metrics.html#aws-lambda'
+    url: "https://docs.splunk.com/Observability/gdi/get-data-in/connect/aws/aws-metrics.html#aws-lambda"
+
+notes: |
+  * The error detector uses an extrapolation policy `latest`. The goal is to force the alert to remain until a new execution
+  of the same lambda function happend in success. Depending on the frequency of the at which the function executes the alert
+  may take time to self resolve.

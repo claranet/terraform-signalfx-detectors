@@ -3,14 +3,14 @@ name: invocations
 
 transformation: ".sum(over='1h')"
 aggregation: true
-filtering: "filter('namespace', 'AWS/Lambda') and filter('stat', 'mean') and filter('Resource', '*')"
+filtering: "filter('namespace', 'AWS/Lambda') and filter('stat', 'sum') and filter('Resource', '*')"
 disabled: true
 
 signals:
   signal:
     metric: Invocations
     extrapolation: last_value
-    rollup: average
+    rollup: sum
 rules:
   major:
     threshold: 1

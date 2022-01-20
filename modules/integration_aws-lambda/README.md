@@ -8,6 +8,7 @@
 - [What are the available detectors in this module?](#what-are-the-available-detectors-in-this-module)
 - [How to collect required metrics?](#how-to-collect-required-metrics)
   - [Metrics](#metrics)
+- [Notes](#notes)
 - [Related documentation](#related-documentation)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -100,6 +101,11 @@ Here is the list of required metrics for detectors in this module.
 * `Throttles`
 
 
+## Notes
+
+* The error detector uses an extrapolation policy `latest`. The goal is to force the alert to remain until a new execution
+of the same lambda function happend in success. Depending on the frequency of the at which the function executes the alert
+may take time to self resolve.
 
 
 ## Related documentation
