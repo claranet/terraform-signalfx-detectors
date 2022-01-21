@@ -9,7 +9,7 @@ MODULE=${TARGET#"modules/"}
 SEV_GLOBAL="${SEV_GLOBAL:-false}"
 
 if [[ ${SEV_GLOBAL} == "true" ]]; then
-    echo -e "## $(echo ${MODULE} | cut -d'_' -f 2)\n"
+    echo -e "## ${MODULE}\n"
 fi
 echo -e "|Detector|Critical|Major|Minor|Warning|Info|\n|---|---|---|---|---|---|"
 
