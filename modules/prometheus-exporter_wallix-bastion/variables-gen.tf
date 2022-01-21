@@ -236,3 +236,58 @@ variable "encryption_status_at_least_percentage_critical" {
   type        = number
   default     = 1
 }
+# license detector
+
+variable "license_notifications" {
+  description = "Notification recipients list per severity overridden for license detector"
+  type        = map(list(string))
+  default     = {}
+}
+
+variable "license_aggregation_function" {
+  description = "Aggregation function and group by for license detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ""
+}
+
+variable "license_transformation_function" {
+  description = "Transformation function for license detector (i.e. \".mean(over='5m')\")"
+  type        = string
+  default     = ""
+}
+
+variable "license_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "license_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
+variable "license_disabled" {
+  description = "Disable all alerting rules for license detector"
+  type        = bool
+  default     = null
+}
+
+variable "license_threshold_critical" {
+  description = "Critical threshold for license detector"
+  type        = number
+  default     = 0
+}
+
+variable "license_lasting_duration_critical" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "license_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}

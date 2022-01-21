@@ -1,0 +1,16 @@
+module: wallix-bastion
+name: license
+
+transformation: true
+aggregation: true
+
+signals:
+  signal:
+    metric: wallix_bastion_license_is_expired
+    extrapolation: zero
+
+rules:
+  critical:
+    threshold: 0
+    comparator: ">"
+    description: is expired
