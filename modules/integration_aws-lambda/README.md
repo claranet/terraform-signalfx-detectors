@@ -104,7 +104,7 @@ Here is the list of required metrics for detectors in this module.
 ## Notes
 
 * The error detector uses an extrapolation policy `latest`. The goal is to force the alert to remain until a new execution
-of the same lambda function happend in success. Depending on the frequency of the at which the function executes the alert
+of the same lambda function happens in success. Depending on the frequency at which the function executes, the alert
 may take time to self resolve.
 
 
