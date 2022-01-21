@@ -4,108 +4,108 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 :link: **Contents**
 
-- [aws-alb](#aws-alb)
-- [aws-apigateway](#aws-apigateway)
-- [aws-beanstalk](#aws-beanstalk)
-- [aws-ecs-cluster](#aws-ecs-cluster)
-- [aws-ecs-service](#aws-ecs-service)
-- [aws-efs](#aws-efs)
-- [aws-elasticache-common](#aws-elasticache-common)
-- [aws-elasticache-memcached](#aws-elasticache-memcached)
-- [aws-elasticache-redis](#aws-elasticache-redis)
-- [aws-elasticsearch](#aws-elasticsearch)
-- [aws-elb](#aws-elb)
-- [aws-kinesis-firehose](#aws-kinesis-firehose)
-- [aws-lambda](#aws-lambda)
-- [aws-nlb](#aws-nlb)
-- [aws-rds-aurora-mysql](#aws-rds-aurora-mysql)
-- [aws-rds-aurora-postgresql](#aws-rds-aurora-postgresql)
-- [aws-rds-common](#aws-rds-common)
-- [aws-sqs](#aws-sqs)
-- [aws-vpn](#aws-vpn)
-- [azure-api-management-service](#azure-api-management-service)
-- [azure-app-service-plan](#azure-app-service-plan)
-- [azure-app-service](#azure-app-service)
-- [azure-application-gateway](#azure-application-gateway)
-- [azure-azure-search](#azure-azure-search)
-- [azure-container-instance](#azure-container-instance)
-- [azure-cosmos-db](#azure-cosmos-db)
-- [azure-datafactory](#azure-datafactory)
-- [azure-event-hub](#azure-event-hub)
-- [azure-express-route](#azure-express-route)
-- [azure-firewall](#azure-firewall)
-- [azure-functions](#azure-functions)
-- [azure-key-vault](#azure-key-vault)
-- [azure-load-balancer](#azure-load-balancer)
-- [azure-mariadb](#azure-mariadb)
-- [azure-mysql](#azure-mysql)
-- [azure-postgresql](#azure-postgresql)
-- [azure-redis](#azure-redis)
-- [azure-service-bus](#azure-service-bus)
-- [azure-sql-database](#azure-sql-database)
-- [azure-sql-elastic-pool](#azure-sql-elastic-pool)
-- [azure-storage-account-blob](#azure-storage-account-blob)
-- [azure-storage-account-capacity](#azure-storage-account-capacity)
-- [azure-storage-account](#azure-storage-account)
-- [azure-stream-analytics](#azure-stream-analytics)
-- [azure-virtual-machine-scaleset](#azure-virtual-machine-scaleset)
-- [azure-virtual-machine](#azure-virtual-machine)
-- [gcp-bigquery](#gcp-bigquery)
-- [gcp-cloud-sql-common](#gcp-cloud-sql-common)
-- [gcp-cloud-sql-failover](#gcp-cloud-sql-failover)
-- [gcp-cloud-sql-mysql](#gcp-cloud-sql-mysql)
-- [gcp-compute-engine](#gcp-compute-engine)
-- [gcp-load-balancing](#gcp-load-balancing)
-- [gcp-pubsub-subscription](#gcp-pubsub-subscription)
-- [gcp-pubsub-topic](#gcp-pubsub-topic)
-- [newrelic-apm](#newrelic-apm)
-- [usage](#usage)
-- [kong](#kong)
-- [oracledb](#oracledb)
-- [squid](#squid)
-- [wallix-bastion](#wallix-bastion)
-- [apache](#apache)
-- [cassandra-nodetool](#cassandra-nodetool)
-- [cassandra](#cassandra)
-- [couchbase](#couchbase)
-- [dns](#dns)
-- [docker](#docker)
-- [elasticsearch](#elasticsearch)
-- [genericjmx](#genericjmx)
-- [haproxy](#haproxy)
-- [health-checker](#health-checker)
-- [http](#http)
-- [kubernetes-apiserver](#kubernetes-apiserver)
-- [kubernetes-common](#kubernetes-common)
-- [kubernetes-velero](#kubernetes-velero)
-- [kubernetes-volumes](#kubernetes-volumes)
-- [kubernetes-workloads-count](#kubernetes-workloads-count)
-- [mdadm](#mdadm)
-- [memcached](#memcached)
-- [mongodb](#mongodb)
-- [mysql](#mysql)
-- [nagios-status-check](#nagios-status-check)
-- [nginx-ingress](#nginx-ingress)
-- [nginx](#nginx)
-- [ntp](#ntp)
-- [php-fpm](#php-fpm)
-- [postgresql](#postgresql)
-- [processes](#processes)
-- [rabbitmq-node](#rabbitmq-node)
-- [rabbitmq-queue](#rabbitmq-queue)
-- [redis](#redis)
-- [solr](#solr)
-- [supervisor](#supervisor)
-- [system-common](#system-common)
-- [systemd-services](#systemd-services)
-- [systemd-timers](#systemd-timers)
-- [tomcat](#tomcat)
-- [varnish](#varnish)
-- [zookeeper](#zookeeper)
+- [integration_aws-alb](#integration_aws-alb)
+- [integration_aws-apigateway](#integration_aws-apigateway)
+- [integration_aws-beanstalk](#integration_aws-beanstalk)
+- [integration_aws-ecs-cluster](#integration_aws-ecs-cluster)
+- [integration_aws-ecs-service](#integration_aws-ecs-service)
+- [integration_aws-efs](#integration_aws-efs)
+- [integration_aws-elasticache-common](#integration_aws-elasticache-common)
+- [integration_aws-elasticache-memcached](#integration_aws-elasticache-memcached)
+- [integration_aws-elasticache-redis](#integration_aws-elasticache-redis)
+- [integration_aws-elasticsearch](#integration_aws-elasticsearch)
+- [integration_aws-elb](#integration_aws-elb)
+- [integration_aws-kinesis-firehose](#integration_aws-kinesis-firehose)
+- [integration_aws-lambda](#integration_aws-lambda)
+- [integration_aws-nlb](#integration_aws-nlb)
+- [integration_aws-rds-aurora-mysql](#integration_aws-rds-aurora-mysql)
+- [integration_aws-rds-aurora-postgresql](#integration_aws-rds-aurora-postgresql)
+- [integration_aws-rds-common](#integration_aws-rds-common)
+- [integration_aws-sqs](#integration_aws-sqs)
+- [integration_aws-vpn](#integration_aws-vpn)
+- [integration_azure-api-management-service](#integration_azure-api-management-service)
+- [integration_azure-app-service-plan](#integration_azure-app-service-plan)
+- [integration_azure-app-service](#integration_azure-app-service)
+- [integration_azure-application-gateway](#integration_azure-application-gateway)
+- [integration_azure-azure-search](#integration_azure-azure-search)
+- [integration_azure-container-instance](#integration_azure-container-instance)
+- [integration_azure-cosmos-db](#integration_azure-cosmos-db)
+- [integration_azure-datafactory](#integration_azure-datafactory)
+- [integration_azure-event-hub](#integration_azure-event-hub)
+- [integration_azure-express-route](#integration_azure-express-route)
+- [integration_azure-firewall](#integration_azure-firewall)
+- [integration_azure-functions](#integration_azure-functions)
+- [integration_azure-key-vault](#integration_azure-key-vault)
+- [integration_azure-load-balancer](#integration_azure-load-balancer)
+- [integration_azure-mariadb](#integration_azure-mariadb)
+- [integration_azure-mysql](#integration_azure-mysql)
+- [integration_azure-postgresql](#integration_azure-postgresql)
+- [integration_azure-redis](#integration_azure-redis)
+- [integration_azure-service-bus](#integration_azure-service-bus)
+- [integration_azure-sql-database](#integration_azure-sql-database)
+- [integration_azure-sql-elastic-pool](#integration_azure-sql-elastic-pool)
+- [integration_azure-storage-account-blob](#integration_azure-storage-account-blob)
+- [integration_azure-storage-account-capacity](#integration_azure-storage-account-capacity)
+- [integration_azure-storage-account](#integration_azure-storage-account)
+- [integration_azure-stream-analytics](#integration_azure-stream-analytics)
+- [integration_azure-virtual-machine-scaleset](#integration_azure-virtual-machine-scaleset)
+- [integration_azure-virtual-machine](#integration_azure-virtual-machine)
+- [integration_gcp-bigquery](#integration_gcp-bigquery)
+- [integration_gcp-cloud-sql-common](#integration_gcp-cloud-sql-common)
+- [integration_gcp-cloud-sql-failover](#integration_gcp-cloud-sql-failover)
+- [integration_gcp-cloud-sql-mysql](#integration_gcp-cloud-sql-mysql)
+- [integration_gcp-compute-engine](#integration_gcp-compute-engine)
+- [integration_gcp-load-balancing](#integration_gcp-load-balancing)
+- [integration_gcp-pubsub-subscription](#integration_gcp-pubsub-subscription)
+- [integration_gcp-pubsub-topic](#integration_gcp-pubsub-topic)
+- [integration_newrelic-apm](#integration_newrelic-apm)
+- [organization_usage](#organization_usage)
+- [prometheus-exporter_kong](#prometheus-exporter_kong)
+- [prometheus-exporter_oracledb](#prometheus-exporter_oracledb)
+- [prometheus-exporter_squid](#prometheus-exporter_squid)
+- [prometheus-exporter_wallix-bastion](#prometheus-exporter_wallix-bastion)
+- [smart-agent_apache](#smart-agent_apache)
+- [smart-agent_cassandra-nodetool](#smart-agent_cassandra-nodetool)
+- [smart-agent_cassandra](#smart-agent_cassandra)
+- [smart-agent_couchbase](#smart-agent_couchbase)
+- [smart-agent_dns](#smart-agent_dns)
+- [smart-agent_docker](#smart-agent_docker)
+- [smart-agent_elasticsearch](#smart-agent_elasticsearch)
+- [smart-agent_genericjmx](#smart-agent_genericjmx)
+- [smart-agent_haproxy](#smart-agent_haproxy)
+- [smart-agent_health-checker](#smart-agent_health-checker)
+- [smart-agent_http](#smart-agent_http)
+- [smart-agent_kubernetes-apiserver](#smart-agent_kubernetes-apiserver)
+- [smart-agent_kubernetes-common](#smart-agent_kubernetes-common)
+- [smart-agent_kubernetes-velero](#smart-agent_kubernetes-velero)
+- [smart-agent_kubernetes-volumes](#smart-agent_kubernetes-volumes)
+- [smart-agent_kubernetes-workloads-count](#smart-agent_kubernetes-workloads-count)
+- [smart-agent_mdadm](#smart-agent_mdadm)
+- [smart-agent_memcached](#smart-agent_memcached)
+- [smart-agent_mongodb](#smart-agent_mongodb)
+- [smart-agent_mysql](#smart-agent_mysql)
+- [smart-agent_nagios-status-check](#smart-agent_nagios-status-check)
+- [smart-agent_nginx-ingress](#smart-agent_nginx-ingress)
+- [smart-agent_nginx](#smart-agent_nginx)
+- [smart-agent_ntp](#smart-agent_ntp)
+- [smart-agent_php-fpm](#smart-agent_php-fpm)
+- [smart-agent_postgresql](#smart-agent_postgresql)
+- [smart-agent_processes](#smart-agent_processes)
+- [smart-agent_rabbitmq-node](#smart-agent_rabbitmq-node)
+- [smart-agent_rabbitmq-queue](#smart-agent_rabbitmq-queue)
+- [smart-agent_redis](#smart-agent_redis)
+- [smart-agent_solr](#smart-agent_solr)
+- [smart-agent_supervisor](#smart-agent_supervisor)
+- [smart-agent_system-common](#smart-agent_system-common)
+- [smart-agent_systemd-services](#smart-agent_systemd-services)
+- [smart-agent_systemd-timers](#smart-agent_systemd-timers)
+- [smart-agent_tomcat](#smart-agent_tomcat)
+- [smart-agent_varnish](#smart-agent_varnish)
+- [smart-agent_zookeeper](#smart-agent_zookeeper)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## aws-alb
+## integration_aws-alb
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -118,7 +118,7 @@
 |AWS ALB healthy instances percentage|X|X|-|-|-|
 
 
-## aws-apigateway
+## integration_aws-apigateway
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -127,7 +127,7 @@
 |AWS APIGateway http 4xx error rate|X|X|-|-|-|
 
 
-## aws-beanstalk
+## integration_aws-beanstalk
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -138,7 +138,7 @@
 |AWS Beanstalk instance root filesystem usage|X|X|-|-|-|
 
 
-## aws-ecs-cluster
+## integration_aws-ecs-cluster
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -147,7 +147,7 @@
 |AWS ECS cluster memory utilization|X|X|-|-|-|
 
 
-## aws-ecs-service
+## integration_aws-ecs-service
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -156,7 +156,7 @@
 |AWS ECS service memory utilization|X|X|-|-|-|
 
 
-## aws-efs
+## integration_aws-efs
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -168,7 +168,7 @@
 |AWS EFS burst credit balance|-|X|-|-|-|
 
 
-## aws-elasticache-common
+## integration_aws-elasticache-common
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -181,7 +181,7 @@
 |AWS ElastiCache evictions changing rate grows|X|X|-|-|-|
 
 
-## aws-elasticache-memcached
+## integration_aws-elasticache-memcached
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -189,7 +189,7 @@
 |AWS Elasticache memcached hit ratio|-|X|X|-|-|
 
 
-## aws-elasticache-redis
+## integration_aws-elasticache-redis
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -199,7 +199,7 @@
 |AWS ElastiCache redis commands|-|X|-|-|-|
 
 
-## aws-elasticsearch
+## integration_aws-elasticsearch
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -210,7 +210,7 @@
 |AWS Elasticsearch jvm memory pressure|X|X|-|-|-|
 
 
-## aws-elb
+## integration_aws-elb
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -223,7 +223,7 @@
 |AWS ELB healthy instances percentage|X|X|-|-|-|
 
 
-## aws-kinesis-firehose
+## integration_aws-kinesis-firehose
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -231,7 +231,7 @@
 |AWS Kinesis incoming records|X|X|-|-|-|
 
 
-## aws-lambda
+## integration_aws-lambda
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -240,7 +240,7 @@
 |AWS Lambda invocations|-|X|-|-|-|
 
 
-## aws-nlb
+## integration_aws-nlb
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -248,21 +248,21 @@
 |AWS NLB healthy instances percentage|X|X|-|-|-|
 
 
-## aws-rds-aurora-mysql
+## integration_aws-rds-aurora-mysql
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |AWS RDS Aurora Mysql replica lag|X|X|-|-|-|
 
 
-## aws-rds-aurora-postgresql
+## integration_aws-rds-aurora-postgresql
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |AWS RDS Aurora PostgreSQL replica lag|X|X|-|-|-|
 
 
-## aws-rds-common
+## integration_aws-rds-common
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -272,7 +272,7 @@
 |AWS RDS replica lag|X|X|-|-|-|
 
 
-## aws-sqs
+## integration_aws-sqs
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -281,7 +281,7 @@
 |AWS SQS Age of the oldest message|X|X|-|-|-|
 
 
-## aws-vpn
+## integration_aws-vpn
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -289,7 +289,7 @@
 |AWS VPN tunnel state|X|-|-|-|-|
 
 
-## azure-api-management-service
+## integration_azure-api-management-service
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -299,7 +299,7 @@
 |Azure API Management Service Duration of backend request|X|X|-|-|-|
 
 
-## azure-app-service-plan
+## integration_azure-app-service-plan
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -308,7 +308,7 @@
 |Azure App Service Plan memory percentage|X|X|-|-|-|
 
 
-## azure-app-service
+## integration_azure-app-service
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -320,7 +320,7 @@
 |Azure App Service successful response rate|X|X|-|-|-|
 
 
-## azure-application-gateway
+## integration_azure-application-gateway
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -336,7 +336,7 @@
 |Azure Application Gateway capacity units|-|X|-|-|-|
 
 
-## azure-azure-search
+## integration_azure-azure-search
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -344,14 +344,14 @@
 |Azure Search throttled queries rate|X|X|-|-|-|
 
 
-## azure-container-instance
+## integration_azure-container-instance
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Azure Container Instance heartbeat|X|-|-|-|-|
 
 
-## azure-cosmos-db
+## integration_azure-cosmos-db
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -362,7 +362,7 @@
 |Azure Cosmos DB used RUs capacity|X|X|-|-|-|
 
 
-## azure-datafactory
+## integration_azure-datafactory
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -373,14 +373,14 @@
 |Azure DataFactory cpu percentage|X|X|-|-|-|
 
 
-## azure-event-hub
+## integration_azure-event-hub
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Azure Event Hub throttled requests|X|X|-|X|-|
 
 
-## azure-express-route
+## integration_azure-express-route
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -389,7 +389,7 @@
 |Azure Express Route arp availability|X|X|-|X|-|
 
 
-## azure-firewall
+## integration_azure-firewall
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -399,7 +399,7 @@
 |Azure firewall health state|X|X|-|-|-|
 
 
-## azure-functions
+## integration_azure-functions
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -410,7 +410,7 @@
 |Azure Functions wrapper errors|X|X|-|-|-|
 
 
-## azure-key-vault
+## integration_azure-key-vault
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -418,14 +418,14 @@
 |Azure Key Vault API latency|X|X|-|-|-|
 
 
-## azure-load-balancer
+## integration_azure-load-balancer
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Azure Load balancer heartbeat|X|-|-|-|-|
 
 
-## azure-mariadb
+## integration_azure-mariadb
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -437,7 +437,7 @@
 |Azure MariaDB replication lag|X|X|-|-|-|
 
 
-## azure-mysql
+## integration_azure-mysql
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -449,7 +449,7 @@
 |Azure MySQL replication lag|X|X|-|-|-|
 
 
-## azure-postgresql
+## integration_azure-postgresql
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -462,7 +462,7 @@
 ||X|X|-|-|-|
 
 
-## azure-redis
+## integration_azure-redis
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -472,7 +472,7 @@
 |Azure Redis load|X|X|-|-|-|
 
 
-## azure-service-bus
+## integration_azure-service-bus
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -484,7 +484,7 @@
 |Azure Service Bus throttled requests rate|X|X|-|-|-|
 
 
-## azure-sql-database
+## integration_azure-sql-database
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -495,7 +495,7 @@
 |Azure SQL Database deadlocks count|X|-|-|-|-|
 
 
-## azure-sql-elastic-pool
+## integration_azure-sql-elastic-pool
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -505,7 +505,7 @@
 |Azure SQL Elastic Pool DTU consumption|X|X|-|-|-|
 
 
-## azure-storage-account-blob
+## integration_azure-storage-account-blob
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -513,14 +513,14 @@
 |Azure Storage Account on Blob latency e2e|X|X|-|-|-|
 
 
-## azure-storage-account-capacity
+## integration_azure-storage-account-capacity
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Azure storage account Used capacity|X|X|-|-|-|
 
 
-## azure-storage-account
+## integration_azure-storage-account
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -531,7 +531,7 @@
 |Azure Storage Account requests rate|X|X|-|-|-|
 
 
-## azure-stream-analytics
+## integration_azure-stream-analytics
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -542,14 +542,14 @@
 |Azure Stream Analytics runtime errors rate|X|X|-|-|-|
 
 
-## azure-virtual-machine-scaleset
+## integration_azure-virtual-machine-scaleset
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Azure Virtual Machine ScaleSet heartbeat|X|-|-|-|-|
 
 
-## azure-virtual-machine
+## integration_azure-virtual-machine
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -558,7 +558,7 @@
 |Azure Virtual Machine remaining CPU credit|X|X|-|-|-|
 
 
-## gcp-bigquery
+## integration_gcp-bigquery
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -573,7 +573,7 @@
 |GCP BigQuery uploaded bytes billed|X|X|-|-|-|
 
 
-## gcp-cloud-sql-common
+## integration_gcp-cloud-sql-common
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -585,21 +585,21 @@
 |GCP Cloud SQL memory is running out|X|-|-|-|-|
 
 
-## gcp-cloud-sql-failover
+## integration_gcp-cloud-sql-failover
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |GCP Cloud SQL failover|-|X|-|-|-|
 
 
-## gcp-cloud-sql-mysql
+## integration_gcp-cloud-sql-mysql
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |GCP Cloud SQL MySQL replication lag|X|X|-|-|-|
 
 
-## gcp-compute-engine
+## integration_gcp-compute-engine
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -609,7 +609,7 @@
 |GCP GCE Instance disk throttled ops|X|X|-|-|-|
 
 
-## gcp-load-balancing
+## integration_gcp-load-balancing
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -620,7 +620,7 @@
 |GCP Load Balancer request count|-|-|X|X|-|
 
 
-## gcp-pubsub-subscription
+## integration_gcp-pubsub-subscription
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -629,7 +629,7 @@
 |GCP Pub/Sub Subscription latency on push endpoint|X|X|-|-|-|
 
 
-## gcp-pubsub-topic
+## integration_gcp-pubsub-topic
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -638,7 +638,7 @@
 |GCP Pub/Sub Topic sending unavailable messages ratio|X|X|-|-|-|
 
 
-## newrelic-apm
+## integration_newrelic-apm
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -647,7 +647,7 @@
 |New Relic apdex score ratio|X|X|-|-|-|
 
 
-## usage
+## organization_usage
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -658,7 +658,7 @@
 |Organization usage custom metrics ratio per host included|-|X|-|-|-|
 
 
-## kong
+## prometheus-exporter_kong
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -666,7 +666,7 @@
 |Kong treatment limit|X|X|-|-|-|
 
 
-## oracledb
+## prometheus-exporter_oracledb
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -674,7 +674,7 @@
 |Oracle database status|X|-|-|-|-|
 
 
-## squid
+## prometheus-exporter_squid
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -684,7 +684,7 @@
 |Squid total amount of requests|X|-|-|-|-|
 
 
-## wallix-bastion
+## prometheus-exporter_wallix-bastion
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -695,7 +695,7 @@
 |Wallix-bastion license|X|-|-|-|-|
 
 
-## apache
+## smart-agent_apache
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -703,7 +703,7 @@
 |Apache busy workers|X|X|-|-|-|
 
 
-## cassandra-nodetool
+## smart-agent_cassandra-nodetool
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -711,7 +711,7 @@
 |Cassandra nodetool node state|X|-|-|-|-|
 
 
-## cassandra
+## smart-agent_cassandra
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -727,7 +727,7 @@
 |Cassandra storage exceptions count|-|X|-|-|-|
 
 
-## couchbase
+## smart-agent_couchbase
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -736,7 +736,7 @@
 |Couchbase disk write queue|X|X|-|-|-|
 
 
-## dns
+## smart-agent_dns
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -745,7 +745,7 @@
 |DNS query result|X|-|-|-|-|
 
 
-## docker
+## smart-agent_docker
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -755,7 +755,7 @@
 |Docker memory usage|-|X|X|-|-|
 
 
-## elasticsearch
+## smart-agent_elasticsearch
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -780,7 +780,7 @@
 |Elasticsearch max time spent by task in queue rate of change|-|X|X|-|-|
 
 
-## genericjmx
+## smart-agent_genericjmx
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -788,7 +788,7 @@
 |JMX GC old generation usage|X|X|-|-|-|
 
 
-## haproxy
+## smart-agent_haproxy
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -800,7 +800,7 @@
 |Haproxy 4xx response rate|X|X|-|-|-|
 
 
-## health-checker
+## smart-agent_health-checker
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -808,7 +808,7 @@
 |Health-checker status|X|-|-|-|-|
 
 
-## http
+## smart-agent_http
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -821,14 +821,14 @@
 |TLS certificate|X|-|-|-|-|
 
 
-## kubernetes-apiserver
+## smart-agent_kubernetes-apiserver
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Kubernetes API server heartbeat|X|-|-|-|-|
 
 
-## kubernetes-common
+## smart-agent_kubernetes-common
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -850,7 +850,7 @@
 |Kubernetes statefulsets ready|X|-|-|-|-|
 
 
-## kubernetes-velero
+## smart-agent_kubernetes-velero
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -861,7 +861,7 @@
 |Kubernetes velero failed volume snapshot|-|X|-|-|-|
 
 
-## kubernetes-volumes
+## smart-agent_kubernetes-volumes
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -869,14 +869,14 @@
 |Kubernetes node volume inodes usage|X|X|-|-|-|
 
 
-## kubernetes-workloads-count
+## smart-agent_kubernetes-workloads-count
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Kubernetes workloads count|-|-|X|X|-|
 
 
-## mdadm
+## smart-agent_mdadm
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -884,7 +884,7 @@
 |Mdadm disk missing|X|X|-|-|-|
 
 
-## memcached
+## smart-agent_memcached
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -893,7 +893,7 @@
 |Memcached hit ratio|-|X|X|-|-|
 
 
-## mongodb
+## smart-agent_mongodb
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -906,7 +906,7 @@
 |MongoDB replication lag|X|X|-|-|-|
 
 
-## mysql
+## smart-agent_mysql
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -922,14 +922,14 @@
 |MySQL slave sql status|X|-|-|-|-|
 
 
-## nagios-status-check
+## smart-agent_nagios-status-check
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Nagios status check|X|X|-|X|-|
 
 
-## nginx-ingress
+## smart-agent_nginx-ingress
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -938,7 +938,7 @@
 |Ingress Nginx 4xx errors ratio|X|X|-|-|-|
 
 
-## nginx
+## smart-agent_nginx
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -946,7 +946,7 @@
 |Nginx dropped connections|X|X|-|-|-|
 
 
-## ntp
+## smart-agent_ntp
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -954,7 +954,7 @@
 |NTP offset|-|X|-|-|-|
 
 
-## php-fpm
+## smart-agent_php-fpm
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -962,7 +962,7 @@
 |PHP-FPM busy workers|X|X|-|-|-|
 
 
-## postgresql
+## smart-agent_postgresql
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -976,14 +976,14 @@
 |PostgreSQL replication state|X|-|-|-|-|
 
 
-## processes
+## smart-agent_processes
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Processes aliveness count|X|X|-|-|-|
 
 
-## rabbitmq-node
+## smart-agent_rabbitmq-node
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -994,7 +994,7 @@
 |RabbitMQ Node vm_memory usage|X|X|-|-|-|
 
 
-## rabbitmq-queue
+## smart-agent_rabbitmq-queue
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -1004,7 +1004,7 @@
 |RabbitMQ Queue consumer use|X|X|-|-|-|
 
 
-## redis
+## smart-agent_redis
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -1021,7 +1021,7 @@
 |Redis hitrate|X|X|-|-|-|
 
 
-## solr
+## smart-agent_solr
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -1030,7 +1030,7 @@
 |Apache Solr searcher warmup time|X|X|-|-|-|
 
 
-## supervisor
+## smart-agent_supervisor
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -1038,7 +1038,7 @@
 |Supervisor process|X|X|-|-|-|
 
 
-## system-common
+## smart-agent_system-common
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -1051,14 +1051,14 @@
 |System disk space running out|-|X|-|-|-|
 
 
-## systemd-services
+## smart-agent_systemd-services
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Systemd-services aliveness|X|-|-|-|-|
 
 
-## systemd-timers
+## smart-agent_systemd-timers
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -1067,7 +1067,7 @@
 |Systemd-timers last execution state|-|X|-|-|-|
 
 
-## tomcat
+## smart-agent_tomcat
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -1076,7 +1076,7 @@
 |Tomcat busy threads percentage|X|X|-|-|-|
 
 
-## varnish
+## smart-agent_varnish
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
@@ -1088,7 +1088,7 @@
 |Varnish memory usage|X|X|-|-|-|
 
 
-## zookeeper
+## smart-agent_zookeeper
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
