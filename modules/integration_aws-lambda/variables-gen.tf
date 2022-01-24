@@ -9,7 +9,7 @@ variable "pct_errors_notifications" {
 variable "pct_errors_aggregation_function" {
   description = "Aggregation function and group by for pct_errors detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".mean(by=['FunctionName'])"
 }
 
 variable "pct_errors_transformation_function" {
@@ -99,7 +99,7 @@ variable "throttles_notifications" {
 variable "throttles_aggregation_function" {
   description = "Aggregation function and group by for throttles detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".mean(by=['FunctionName'])"
 }
 
 variable "throttles_transformation_function" {
@@ -189,7 +189,7 @@ variable "invocations_notifications" {
 variable "invocations_aggregation_function" {
   description = "Aggregation function and group by for invocations detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".mean(by=['FunctionName'])"
 }
 
 variable "invocations_transformation_function" {

@@ -2,7 +2,7 @@ module: AWS Lambda
 name: invocations
 
 transformation: ".sum(over='1h')"
-aggregation: true
+aggregation: ".mean(by=['FunctionName'])"
 filtering: "filter('namespace', 'AWS/Lambda') and filter('stat', 'sum') and filter('Resource', '*')"
 disabled: true
 
