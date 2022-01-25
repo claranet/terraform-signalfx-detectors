@@ -9,7 +9,7 @@ disabled: true
 signals:
   signal:
     metric: Invocations
-    extrapolation: last_value
+    extrapolation: zero
     rollup: sum
 rules:
   major:

@@ -5,6 +5,14 @@ documentations:
     url: "https://docs.splunk.com/Observability/gdi/get-data-in/connect/aws/aws-metrics.html#aws-lambda"
 
 notes: |
-  * The error detector uses an extrapolation policy `latest`. The goal is to force the alert to remain until a new execution
-  of the same lambda function happens in success. Depending on the frequency at which the function executes, the alert
-  may take time to self resolve.
+  ### About `pct_errors` detector
+
+  * The detector uses a `latest` extrapolation to force the alert to remain until a new execution of the same lambda function
+  happens in success. Depending on the frequency at which the function executes, the alert may take time to self resolve.
+
+  ### About `invocations` detector
+
+  * The goal of this detector is to trigger an alert if a function did not execute at least the number of `invocations_threshold_major`
+  (once by default) on the timeframe defined by `invocations_transformation_function`. It could be useful to ensure that a regular
+  function has been run as expected like a cron based function. You should disable it for erratic or event based function (except
+  if you expect to see enough events on your timeframe)

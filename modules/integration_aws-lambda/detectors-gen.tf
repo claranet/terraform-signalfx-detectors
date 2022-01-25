@@ -96,7 +96,7 @@ resource "signalfx_detector" "invocations" {
 
   program_text = <<-EOF
     base_filtering = filter('namespace', 'AWS/Lambda') and filter('stat', 'sum') and filter('Resource', '*')
-    signal = data('Invocations', filter=base_filtering and ${module.filtering.signalflow}, rollup='sum', extrapolation='last_value')${var.invocations_aggregation_function}${var.invocations_transformation_function}.publish('signal')
+    signal = data('Invocations', filter=base_filtering and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.invocations_aggregation_function}${var.invocations_transformation_function}.publish('signal')
     detect(when(signal < ${var.invocations_threshold_major}, lasting=%{if var.invocations_lasting_duration_major == null}None%{else}'${var.invocations_lasting_duration_major}'%{endif}, at_least=${var.invocations_at_least_percentage_major})).publish('MAJOR')
 EOF
 
