@@ -2,7 +2,7 @@ module: AWS Redshift
 name: heartbeat
 
 transformation: false
-aggregation: ".mean(by=['ClusterIdentifier', 'NodeID'])"
+aggregation: ".mean(by=['ClusterIdentifier'])"
 filtering: "filter('namespace', 'AWS/Redshift')"
 
 signals:
