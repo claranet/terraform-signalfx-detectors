@@ -1,0 +1,24 @@
+module: AWS Redshift
+name: "CPU usage"
+
+transformation: true
+aggregation: true
+
+filtering: "filter('namespace', 'AWS/Redshift')"
+value_unit: "%"
+
+signals:
+  signal:
+    metric: CPUUtilization
+    filter: "filter('stat', 'mean') and filter('ClusterIdentifier', '*') and filter('NodeID', '*')"
+
+rules:
+  major:
+    threshold: 80
+    comparator: ">"
+    lasting_duration: "15m"
+  critical:
+    threshold: 90
+    comparator: ">"
+    lasting_duration: "15m"
+    dependency: major

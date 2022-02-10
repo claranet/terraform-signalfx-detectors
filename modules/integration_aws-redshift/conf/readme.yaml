@@ -1,0 +1,5 @@
+documentations:
+  - name: AWS metrics for Redshift
+    url: 'https://docs.splunk.com/Observability/gdi/get-data-in/connect/aws/aws-metrics.html#amazon-redshift'
+
+source_doc:

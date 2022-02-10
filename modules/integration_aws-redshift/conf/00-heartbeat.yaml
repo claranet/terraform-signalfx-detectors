@@ -1,0 +1,13 @@
+module: AWS Redshift
+name: heartbeat
+
+transformation: false
+aggregation: ".mean(by=['ClusterIdentifier', 'NodeID'])"
+filtering: "filter('namespace', 'AWS/Redshift')"
+
+signals:
+  signal:
+    metric: CPUUtilization
+    filter: "filter('stat', 'mean')"
+rules:
+  critical:
