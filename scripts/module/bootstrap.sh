@@ -12,6 +12,7 @@ if [[ $MODULE != smart-agent_* ]] &&
    [[ $MODULE != otel-collector_* ]] &&
    [[ $MODULE != prometheus-exporter_* ]] &&
    [[ $MODULE != integration_* ]] &&
+   [[ $MODULE != fame_* ]] &&
    [[ $MODULE != organization_* ]] &&
    [[ $MODULE != internal_* ]] ; then
     echo "Module name should start with known source as prefix like \"smart-agent_\""
