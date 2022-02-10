@@ -21,7 +21,7 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 
 ```hcl
 module "signalfx-detectors-integration-aws-redshift" {
-  source = "github.com/gbloquel/terraform-signalfx-detectors.git//modules/integration_aws-redshift?ref={revision}"
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/integration_aws-redshift?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications
