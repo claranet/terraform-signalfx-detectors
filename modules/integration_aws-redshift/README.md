@@ -103,4 +103,5 @@ Here is the list of required metrics for detectors in this module.
 
 * [Terraform SignalFx provider](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs)
 * [Terraform SignalFx detector](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector)
-* [AWS metrics for Redshift](https://docs.splunk.com/Observability/gdi/get-data-in/connect/aws/aws-metrics.html#amazon-redshift)
+* [AWS metrics redshift](https://docs.aws.amazon.com/redshift/latest/mgmt/metrics-listing.html)
+* [Splunk metrics for AWS Redshift](https://docs.splunk.com/Observability/gdi/get-data-in/connect/aws/aws-metrics.html#amazon-redshift)

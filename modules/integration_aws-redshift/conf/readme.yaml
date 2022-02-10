@@ -1,5 +1,7 @@
 documentations:
-  - name: AWS metrics for Redshift
+  - name: AWS metrics redshift
+    url: 'https://docs.aws.amazon.com/redshift/latest/mgmt/metrics-listing.html'
+  - name: Splunk metrics for AWS Redshift
     url: 'https://docs.splunk.com/Observability/gdi/get-data-in/connect/aws/aws-metrics.html#amazon-redshift'
 
 source_doc:
