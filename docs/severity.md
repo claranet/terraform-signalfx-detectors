@@ -21,6 +21,7 @@
 - [integration_aws-rds-aurora-mysql](#integration_aws-rds-aurora-mysql)
 - [integration_aws-rds-aurora-postgresql](#integration_aws-rds-aurora-postgresql)
 - [integration_aws-rds-common](#integration_aws-rds-common)
+- [integration_aws-redshift](#integration_aws-redshift)
 - [integration_aws-sqs](#integration_aws-sqs)
 - [integration_aws-vpn](#integration_aws-vpn)
 - [integration_azure-api-management-service](#integration_azure-api-management-service)
@@ -270,6 +271,15 @@
 |AWS RDS instance CPU|X|X|-|-|-|
 |AWS RDS instance free space|X|X|-|-|-|
 |AWS RDS replica lag|X|X|-|-|-|
+
+
+## integration_aws-redshift
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|AWS Redshift heartbeat|X|-|-|-|-|
+|AWS Redshift cpu usage|X|X|-|-|-|
+|AWS Redshift storage usage|X|X|-|-|-|
 
 
 ## integration_aws-sqs
