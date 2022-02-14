@@ -126,8 +126,8 @@ But we exclude it explicitly in related detector for safety to prevent any alert
 #### Load
 
 You have two choices to use load based detectors:
-  - either keep the `per_cpu_enabled` enabled (variable default value) __and__ define `perCPU: true` in the [load monitor](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/load.md) configuration (for Kubernetes, you can use `loadPerCPU` option from the Helm chart available from `1.2.0` version).
-  - or override the `per_cpu_enabled` to `false` __and__ keep the default configuration for the [load monitor](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/load.md) with `perCPU: false` or not defined
+  - either keep the `agent_per_cpu_enabled` enabled (variable default value) __and__ define `perCPU: true` in the [load monitor](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/load.md) configuration (for Kubernetes, you can use `loadPerCPU` option from the Helm chart available from `1.2.0` version).
+  - or override the `agent_per_cpu_enabled` to `false` __and__ keep the default configuration for the [load monitor](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/load.md) with `perCPU: false` or not defined
 
 In both cases, the goal is to get alerts based on the __ratio__ of load by dividing the original load per the number of CPU/cores which is the only way to get generic and relevant alerts for load.
 It mainly depends if you want to collect 2 metrics instead of 1 and if you want the load one to be raw or already averaged.
