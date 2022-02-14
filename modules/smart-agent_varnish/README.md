@@ -82,7 +82,7 @@ This module creates the following SignalFx detectors which could contain one or 
 |Varnish backend Failed|X|-|-|-|-|
 |Varnish threads number|X|-|-|-|-|
 |Varnish session dropped|X|-|-|-|-|
-|Varnish hit rate|-|X|X|-|-|
+|Varnish hit rate|-|-|-|X|X|
 |Varnish memory usage|X|X|-|-|-|
 
 ## How to collect required metrics?
