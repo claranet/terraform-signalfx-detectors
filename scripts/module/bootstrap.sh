@@ -33,7 +33,7 @@ for tf in common/module/*.tf; do
     dst_filename="common-${src_filename}"
     if [[ $src_filename == filters-* ]]; then
         source_name=$(basename ${src_filename#"filters-"} .tf)
-        if [[ $MODULE != $source_name* ]]; then
+        if [[ ${MODULE//[_]/-} != $source_name* ]]; then
             continue
         else
             dst_filename="common-filters.tf"
