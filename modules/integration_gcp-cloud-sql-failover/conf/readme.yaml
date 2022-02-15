@@ -16,7 +16,9 @@ notes: |
 
     environment   = var.environment
     notifications = [local.slack_notification]
-    filter_custom_includes = ["project_id:${var.project_id}"]
-    filter_custom_excludes = ["database_id:*-rr"]
+    # Given that the default policy exclude `-replica` we have to override id entirely
+    filtering_append = false
+    # We reuse `project_id` from the default policy but we change the read replica filter
+    filtering_custom = "filter('project_id', '${var.project_id}') and filter('database_id', '*-rr')"
   }
   ```

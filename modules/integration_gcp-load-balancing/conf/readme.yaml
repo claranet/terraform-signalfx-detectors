@@ -9,5 +9,5 @@ notes: |
   To avoid false alerts, you may filter out them by using `101` http response code:
 
   ```
-  filtering_custom = "not (filter('response_code', '101'))"
+  filtering_custom = "(not filter('response_code', '101'))"
   ```

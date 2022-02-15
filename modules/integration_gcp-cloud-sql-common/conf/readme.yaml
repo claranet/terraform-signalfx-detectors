@@ -22,7 +22,7 @@ notes: |
 
   It is recommended to decrease these thresholds for instances where this option is disabled (or unavailable for first generation).
 
-  To achieve that, this is possible to source twice this module with `filter_custom_includes` to filter only relevant databases for each scenario:
+  To achieve that, this is possible to source twice this module with `filtering_custom` to filter only relevant databases for each scenario:
 
   ```hcl
   module "signalfx-detectors-cloud-gcp-cloud-sql-common-manual-storage" {
@@ -30,7 +30,14 @@ notes: |
 
     environment   = var.environment
     notifications = [var.slack_notification]
-    filter_custom_includes = ["project_id:${var.project_id}", "database_id:*first-gen*"]
+
+    # We define prefix to show the difference with the detectors of the other module in the ui
+    prefixes         = ["1st-gen"]
+    # We keep default filtering policy here, we just want to append additional filter to it
+    filtering_append = true
+    # We define the additional filter to include first gen sql instances
+    filtering_custom = "filter('database_id', '*first-gen*')"
+    # Now we are sure detectors only apply on first gen we can lower thresholds
     disk_utilization_threshold_critical = 90
     disk_utilization_threshold_warning = 80
   }
@@ -40,8 +47,11 @@ notes: |
 
     environment   = var.environment
     notifications = [var.slack_notification]
-    filter_custom_includes = ["project_id:${var.project_id}"]
-    filter_custom_excludes = ["database_id:*first-gen*"]
+
+    # We keep default filtering policy here, we just want to append additional filter to it
+    filtering_append = true
+    # We define the additional filter to exclude first gen sql instances
+    filtering_custom = "(not filter('database_id', '*first-gen*'))"
   }
 
   ```
