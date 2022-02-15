@@ -1,3 +1,5 @@
 documentations:
   - name: Stackdriver metrics
     url: 'https://cloud.google.com/monitoring/api/metrics_gcp#gcp-pubsub'
+  - name: Splunk Observability metrics
+    url: 'https://docs.splunk.com/Observability/gdi/get-data-in/connect/gcp.html#google-cloud-pub-sub-metrics'
