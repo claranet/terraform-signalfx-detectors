@@ -89,14 +89,14 @@ value_unit:
 
 ## @param runbook_url - string - optional
 ## Define a default runbook_url for all rules of the detector, see:
-## https://docs.signalfx.com/en/latest/detect-alert/set-up-detectors.html#runbook
+## https://docs.splunk.com/Observability/alerts-detectors-notifications/create-detectors-for-alerts.html#runbook
 ## If not defined, an empty string will be used as variable to allow the
 ## use to set its custom one.
 runbook_url:
 
 ## @param tip - string - optional
 ## Define a default tip for all rules of the detector, see:
-## https://docs.signalfx.com/en/latest/detect-alert/set-up-detectors.html#tip
+## https://docs.splunk.com/Observability/alerts-detectors-notifications/create-detectors-for-alerts.html#tip
 ## If not defined, an empty string will be used as variable to allow the
 ## use to set its custom one.
 tip:
@@ -130,9 +130,9 @@ signals:
     metric:
 
     ## @param formula - string - optional
-    ## The signalflow formula which could use previous signals and
-    ## analytics functions and methods, see:
-    ## https://dev.splunk.com/observability/docs/signalflow/function_method_list
+    ## The signalflow formula which could use previous signals and analytics
+    ## functions (https://dev.splunk.com/observability/docs/signalflow/functions)
+    ## or methods (https://dev.splunk.com/observability/docs/signalflow/methods)
     #
     formula:
 
@@ -166,7 +166,7 @@ signals:
 #
 rules:
   ## @param {{severity}} - object - optional
-  ## The severity: https://docs.signalfx.com/en/latest/detect-alert/set-up-detectors.html#severity
+  ## The severity: https://docs.splunk.com/observability/alerts-detectors-notifications/create-detectors-for-alerts.html#severity
   ## Used as label to publish alerts depending on the detector type like "detect()"
   ## block for "threshold" detector type.
   #
