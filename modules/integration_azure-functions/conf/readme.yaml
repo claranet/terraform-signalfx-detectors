@@ -1,8 +1,6 @@
 documentations:
-  - name: Azure Monitor metrics
-    url: 'https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported'
   - name: SignalFx Azure Functions
-    url: 'https://docs.signalfx.com/en/latest/integrations/azure-functions.html'
+    url: 'https://github.com/signalfx/integrations/tree/master/azure-functions'
 
 source_doc: |
   ### Serverless wrapper

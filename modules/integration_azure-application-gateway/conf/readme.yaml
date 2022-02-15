@@ -1,11 +1,6 @@
 documentations:
   - name: Azure Monitor metrics
-    url: 'https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported'
-
-source_doc: >-
-  We are using metrics from the
-  [Microsoft.Network/applicationGateways](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported#microsoftnetworkapplicationgateways)
-  namespace.
+    url: 'https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported#microsoftnetworkapplicationgateways'
 
 notes: |
   ### Capacity Units

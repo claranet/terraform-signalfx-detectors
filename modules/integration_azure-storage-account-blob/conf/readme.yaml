@@ -1,9 +1,7 @@
 documentations:
   - name: Azure Monitor metrics
-    url: 'https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported'
-source_doc: >-
-  We are using metrics from the
-  [Microsoft.Storage/storageAccounts](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported#microsoftclassicstoragestorageaccountsblobservices) namespace.
+    url: 'https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported#microsoftstoragestorageaccountsblobservices'
+
 notes: |
   ### Detectors disabled by default
   The following detectors are disabled by default:
