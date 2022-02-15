@@ -1,6 +1,6 @@
 documentations:
-  - name: Stackdriver metrics
-    url: 'https://cloud.google.com/monitoring/api/metrics_gcp#gcp-cloudsql'
+  - name: NewRelic integration
+    url: 'https://github.com/signalfx/integrations/blob/master/newrelic/README.md'
 
 notes: |
   * The NewRelic integration from SignalFx still uses the deprecated [REST API
