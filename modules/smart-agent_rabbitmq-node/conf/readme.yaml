@@ -1,6 +1,6 @@
 documentations:
   - name: Smart Agent monitor
-    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-rabbitmq.html'
+    url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/collectd-rabbitmq.md'
   - name: RabbitMQ management plugin
     url: 'https://www.rabbitmq.com/management.html'
   - name: Collection script
@@ -21,7 +21,7 @@ source_doc: |
   * `gauge.node.sockets_total`
 
   You also have to enable `collectNodes` and `collectQueues` parameters from the
-  [collectd/rabbitmq](https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-rabbitmq.html)
+  [collectd/rabbitmq](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/collectd-rabbitmq.md)
   monitor configuration.
 
   ### Examples

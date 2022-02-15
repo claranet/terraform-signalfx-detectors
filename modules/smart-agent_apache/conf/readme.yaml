@@ -1,6 +1,6 @@
 documentations:
   - name: Smart Agent monitor
-    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-apache.html'
+    url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/collectd-apache.md'
   - name: Apache status module
     url: 'http://httpd.apache.org/docs/2.4/mod/mod_status.html'
   - name: Collectd plugin

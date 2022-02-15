@@ -1,8 +1,8 @@
 documentations:
   - name: Smart Agent monitor mysql
-    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-mysql.html'
+    url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/collectd-mysql.md'
   - name: Smart Agent monitor sql
-    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/sql.html'
+    url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/sql.md'
 
 source_doc: |
   Check the [integration
@@ -13,8 +13,8 @@ source_doc: |
 
   The detectors in this module are based on metrics reported by the following monitors:
 
-  * [collectd/mysql](https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-mysql.html)
-  * [sql](https://docs.signalfx.com/en/latest/integrations/agent/monitors/sql.html)
+  * [collectd/mysql](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/collectd-mysql.md)
+  * [sql](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/sql.md)
 
   The `collectd/mysql` requires to enable the following `extraMetrics`:
 

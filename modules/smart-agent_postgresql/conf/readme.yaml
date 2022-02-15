@@ -1,8 +1,8 @@
 documentations:
   - name: Smart Agent monitor postgresql
-    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/postgresql.html'
+    url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/postgresql.md'
   - name: Smart Agent monitor sql
-    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/sql.html'
+    url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/sql.md'
 
 source_doc: |
   Check the [integration
@@ -13,7 +13,7 @@ source_doc: |
 
   The detectors in this module are based on metrics reported by the following monitors:
 
-  * [postgresql](https://docs.signalfx.com/en/latest/integrations/agent/monitors/postgresql.html)
+  * [postgresql](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/postgresql.md)
 
   The `postgresql` requires to enable the following `extraMetrics`:
 
@@ -35,7 +35,7 @@ source_doc: |
 
   And you also have to [enable statement tracking](https://www.postgresql.org/docs/9.3/pgstatstatements.html#AEN160631).
   More information available on
-  [postgresl](https://docs.signalfx.com/en/latest/integrations/agent/monitors/postgresql.html#metrics-about-queries)
+  [postgresl](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/postgresql.md#metrics-about-queries)
   monitor documentation.
 
   ### Examples

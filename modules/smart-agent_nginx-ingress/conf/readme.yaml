@@ -1,6 +1,6 @@
 documentations:
   - name: Smart Agent monitor
-    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/prometheus-nginx-ingress.html'
+    url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/prometheus-nginx-ingress.md'
 
 source_doc: |
   ### Agent
@@ -14,10 +14,10 @@ source_doc: |
 
   The detectors in this module are based on metrics reported by the following monitors:
 
-  * [prometheus/nginx-ingress](https://docs.signalfx.com/en/latest/integrations/agent/monitors/prometheus-nginx-ingress.html)
+  * [prometheus/nginx-ingress](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/prometheus-nginx-ingress.md)
 
   This monitor is only available for agent `>= 5.5.5` but it is basically a wrapper around [prometheus exporter
-  monitor](https://docs.signalfx.com/en/latest/integrations/agent/monitors/prometheus-exporter.html) to filter important
+  monitor](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/prometheus-exporter.md) to filter important
   metrics while prometheus metrics are considered as custom metrics which could have an impact on SignalFx billing.
 
   You must configure it for every ingress deployments so this is almost sure you will need to use [service
@@ -34,7 +34,7 @@ source_doc: |
 
   Prometheus metrics from [Nginx Ingress Controller](https://github.com/kubernetes/ingress-nginx) are only available for
   version `>= 0.16`. For older versions you have to use
-  [prometheus/nginx-vts](https://docs.signalfx.com/en/latest/integrations/agent/monitors/prometheus-nginx-vts.html) to collect
+  [prometheus/nginx-vts](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/prometheus-nginx-vts.md) to collect
   metrics which will not be compatible with this module.
 
   Enable the following flags in the Nginx Ingress Controller chart:

@@ -2,11 +2,11 @@ documentations:
 
 
   - name: Smart Agent monitor kubernetes-cluster
-    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/kubernetes-cluster.html'
+    url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/kubernetes-cluster.md'
   - name: Smart Agent monitor kubelet-stats
-    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/kubelet-stats.html'
+    url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/kubelet-stats.md'
   - name: Smart Agent monitor kubelet-metrics
-    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/kubelet-metrics.html'
+    url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/kubelet-metrics.md'
 
 source_doc: |
   ### Agent
@@ -20,9 +20,9 @@ source_doc: |
 
   The detectors in this module are based on metrics reported by the following monitors:
 
-  * [kubelet-metrics](https://docs.signalfx.com/en/latest/integrations/agent/monitors/kubelet-metrics.html) for Kubernetes `>= 1.18`
-  * [kubelet-stats](https://docs.signalfx.com/en/latest/integrations/agent/monitors/kubelet-stats.html) for Kubernetes `< 1.18
-  * [kubernetes-cluster](https://docs.signalfx.com/en/latest/integrations/agent/monitors/kubernetes-cluster.html)
+  * [kubelet-metrics](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/kubelet-metrics.md) for Kubernetes `>= 1.18`
+  * [kubelet-stats](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/kubelet-stats.md) for Kubernetes `< 1.18
+  * [kubernetes-cluster](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/kubernetes-cluster.md)
 
   [Others](https://docs.signalfx.com/en/latest/integrations/kubernetes/k8s-monitors-observers.html#monitors-observers)
   exist to increase visibility or may be in future to enrich this modules or create new ones.

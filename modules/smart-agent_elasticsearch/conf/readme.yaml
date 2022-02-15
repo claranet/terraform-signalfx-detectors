@@ -1,6 +1,6 @@
 documentations:
   - name: Smart Agent monitor
-    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/elasticsearch.html'
+    url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/elasticsearch.md'
   - name: RabbitMQ management plugin
     url: 'https://www.rabbitmq.com/management.html'
   - name: Collection script
@@ -41,7 +41,7 @@ source_doc: |
   * `elasticsearch.indices.search.fetch-total`
 
   You also have to configure following parameters from the
-  [elasticsearch](https://docs.signalfx.com/en/latest/integrations/agent/monitors/elasticsearch.html)
+  [elasticsearch](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/elasticsearch.md)
   monitor configuration:
 
   * `enableEnhancedClusterHealthStats` to `true`

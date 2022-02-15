@@ -1,6 +1,6 @@
 documentations:
   - name: Smart Agent monitor
-    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-redis.html'
+    url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/collectd-redis.md'
   - name: Collection script
     url: 'https://github.com/signalfx/redis-collectd-plugin'
 

@@ -1,6 +1,6 @@
 documentations:
   - name: Smart Agent monitor
-    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-haproxy.html'
+    url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/collectd-haproxy.md'
   - name: HAproxy stats page
     url: 'https://www.haproxy.com/blog/exploring-the-haproxy-stats-page/'
   - name: Collectd plugin

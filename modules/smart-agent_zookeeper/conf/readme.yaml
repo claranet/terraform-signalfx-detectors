@@ -1,6 +1,6 @@
 documentations:
   - name: Smart Agent monitor
-    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-zookeeper.html'
+    url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/collectd-zookeeper.md'
   - name: Collection script
     url: 'https://github.com/signalfx/collectd-zookeeper'
 

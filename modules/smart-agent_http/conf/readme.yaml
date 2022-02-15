@@ -1,10 +1,10 @@
 documentations:
   - name: Smart Agent monitor
-    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/http.html'
+    url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/http.md'
 
 source_doc: |
   There is no SignalFx official integration for `http` but there is still a
-  [monitor](https://docs.signalfx.com/en/latest/integrations/agent/monitors/http.html) to use.
+  [monitor](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/http.md) to use.
 
   ### Monitors
 

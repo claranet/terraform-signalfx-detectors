@@ -2,7 +2,7 @@ documentations:
   - name: Kubernetes Workloads
     url: 'https://kubernetes.io/docs/concepts/workloads/'
   - name: Smart Agent monitor
-    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/kubernetes-cluster.html'
+    url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/kubernetes-cluster.md'
 source_doc: >-
   [Kubernetes Common](https://github.com/claranet/terraform-signalfx-detectors/tree/master/modules/smart-agent_kubernetes-common)
 notes: |

@@ -1,12 +1,12 @@
 documentations:
   - name: Smart Agent monitor
-    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/telegraf-varnish.html'
+    url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/telegraf-varnish.md'
   - name: Varnishstat command
     url: 'https://varnish-cache.org/docs/trunk/reference/varnishstat.html'
 
 source_doc: |
   There is no SignalFx official integration for `varnish` but there is still a
-  [monitor](https://docs.signalfx.com/en/latest/integrations/agent/monitors/telegraf-varnish.html) to use.
+  [monitor](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/telegraf-varnish.md) to use.
 
   ### Monitors
 

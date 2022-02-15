@@ -1,6 +1,6 @@
 documentations:
   - name: Smart Agent monitor
-    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/prometheus-velero.html'
+    url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/prometheus-velero.md'
 
 source_doc: |
   ### Agent
@@ -14,10 +14,10 @@ source_doc: |
 
   The detectors in this module are based on metrics reported by the following monitors:
 
-  * [prometheus/velero](https://docs.signalfx.com/en/latest/integrations/agent/monitors/prometheus-velero.html)
+  * [prometheus/velero](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/prometheus-velero.md)
 
   This monitor is only available for agent `>= 5.5.5` but it is basically a wrapper around [prometheus exporter
-  monitor](https://docs.signalfx.com/en/latest/integrations/agent/monitors/prometheus-exporter.html) to filter important
+  monitor](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/prometheus-exporter.md) to filter important
   metrics while prometheus metrics are considered as custom metrics which could have an impact on SignalFx billing.
 
   You must configure it for every velero deployments so this is almost sure you will need to use [service

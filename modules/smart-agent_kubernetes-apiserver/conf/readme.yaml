@@ -1,10 +1,10 @@
 documentations:
   - name: Smart Agent monitor
-    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/kubernetes-apiserver.html'
+    url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/kubernetes-apiserver.md'
 
 source_doc: |
   Follow the
-  [kubernetes-apiserver](https://docs.signalfx.com/en/latest/integrations/agent/monitors/kubernetes-apiserver.html)
+  [kubernetes-apiserver](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/kubernetes-apiserver.md)
   monitor configuration to collect metrics.
 
 notes: |

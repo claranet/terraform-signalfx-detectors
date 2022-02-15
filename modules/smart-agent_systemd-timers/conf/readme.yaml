@@ -1,6 +1,6 @@
 documentations:
   - name: Smart Agent monitor collectd/systemd
-    url: https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-systemd.html
+    url: https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/collectd-systemd.md
 
 source_doc: |
   This module checks Systemd services launched by Systemd timers. The difference with [smart-agent_systemd-services](https://github.com/claranet/terraform-signalfx-detectors/tree/master/modules/smart-agent_systemd-services) is that services launched by timers are not supposed to be always running, and instead can be stopped most of the time.

@@ -1,10 +1,10 @@
 documentations:
   - name: Smart Agent monitor
-    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-processes.html'
+    url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/collectd-processes.md'
 
 source_doc: |
   There is no SignalFx official integration for `processes` but there is still a
-  [monitor](https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-processes.html) to use.
+  [monitor](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/collectd-processes.md) to use.
 
 notes: |
   By default, only `critical` rule is enabled. This allows the detector to check if the service has, at least,
