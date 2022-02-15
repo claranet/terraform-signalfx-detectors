@@ -5,7 +5,6 @@ documentations:
     url: 'https://nagios-plugins.org/doc/guidelines.html#AEN78'
 
 source_doc: |
-
   ### Monitors
 
   This monitor is only available for agent `>= 5.7.1`. For prior versions, it is possible to use the

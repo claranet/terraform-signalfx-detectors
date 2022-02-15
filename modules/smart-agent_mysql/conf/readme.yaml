@@ -3,12 +3,12 @@ documentations:
     url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/collectd-mysql.md'
   - name: Smart Agent monitor sql
     url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/sql.md'
+  - name: Splunk Observability integration mysql
+    url: 'https://docs.splunk.com/Observability/gdi/mysql/mysql.html'
+  - name: Splunk Observability integration sql
+    url: 'https://docs.splunk.com/Observability/gdi/sql/sql.html'
 
 source_doc: |
-  Check the [integration
-  documentation](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.mysql.html)
-  in addition to the monitor one which it uses.
-
   ### Monitors
 
   The detectors in this module are based on metrics reported by the following monitors:
@@ -33,7 +33,7 @@ source_doc: |
   You have to configure your MySQL database to provide a user to collect metrics.
   You can use [this terraform module](https://github.com/claranet/terraform-signalfx-integrations/tree/master/database/mysql)
   or follow instruction in [integration
-  documentation](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.mysql.html#creating-a-mysql-user-for-collectd).
+  documentation](https://docs.splunk.com/Observability/gdi/mysql/mysql.html#creating-a-mysql-user-for-this-monitor).
 
   ### Suggested configuration
 

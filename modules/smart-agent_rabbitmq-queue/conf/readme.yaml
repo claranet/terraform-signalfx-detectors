@@ -1,16 +1,14 @@
 documentations:
   - name: Smart Agent monitor
     url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/collectd-rabbitmq.md'
+  - name: Splunk Observability integration
+    url: 'https://docs.splunk.com/Observability/gdi/rabbitmq/rabbitmq.html'
+  - name: Collectd script
+    url: 'https://github.com/signalfx/collectd-rabbitmq'
   - name: RabbitMQ management plugin
     url: 'https://www.rabbitmq.com/management.html'
-  - name: Collection script
-    url: 'https://github.com/signalfx/collectd-rabbitmq'
 
 source_doc: |
-  Check the [integration
-  documentation](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.rabbitmq.html)
-  in addition to the monitor one which it uses.
-
   ### Monitors
 
   You have to enable the following `extraMetrics` in your monitor configuration:

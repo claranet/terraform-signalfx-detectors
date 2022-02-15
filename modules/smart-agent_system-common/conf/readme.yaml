@@ -9,11 +9,12 @@ documentations:
     url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/filesystems.md'
   - name: Smart Agent monitor memory
     url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/memory.md'
+  - name: Splunk Observability integration cpu
+    url: 'https://docs.splunk.com/Observability/gdi/cpu/cpu.html'
+  - name: Splunk Observability integration load
+    url: 'https://docs.splunk.com/Observability/gdi/load/load.html'
 
 source_doc: |
-  There is no one official integration for system generic metrics but instead multiple monitors to fetch
-  all useful metrics from `cpu`, `load`, `filesystems` and `memory`.
-
   ### Monitors
 
   #### Inodes

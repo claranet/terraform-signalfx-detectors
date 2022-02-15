@@ -1,14 +1,12 @@
 documentations:
   - name: Smart Agent monitor
     url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/collectd-zookeeper.md'
+  - name: Splunk Observability integration
+    url: 'https://docs.splunk.com/Observability/gdi/zookeeper/zookeeper.html'
   - name: Collection script
     url: 'https://github.com/signalfx/collectd-zookeeper'
 
 source_doc: |
-  Check the [integration
-  documentation](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.zookeeper.html)
-  in addition to the monitor one which it uses.
-
   ### Monitors
 
   The `collectd/zookeeper` monitor requires to enable the following `extraMetrics`:

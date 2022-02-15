@@ -1,9 +1,7 @@
-detectors:
-  - Nginx dropped connections
-  - Nginx heartbeat
-
 documentations:
   - name: SignalFx agent monitor
-    url: 'https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.nginx.html'
+    url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/collectd-nginx.md'
+  - name: Splunk Observability integration
+    url: 'https://docs.splunk.com/Observability/gdi/nginx/nginx.html'
   - name: Nginx status module
     url: 'http://nginx.org/en/docs/http/ngx_http_status_module.html'

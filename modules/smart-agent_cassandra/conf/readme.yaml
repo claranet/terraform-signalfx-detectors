@@ -1,20 +1,16 @@
 documentations:
   - name: Smart Agent monitor
     url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/collectd-cassandra.md'
+  - name: Splunk Observability integration
+    url: 'https://docs.splunk.com/Observability/gdi/cassandra/cassandra.html'
   - name: Collectd plugin
     url: 'https://collectd.org/wiki/index.php/Plugin:GenericJMX'
 
 source_doc: |
-  Check the [integration
-  documentation](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.cassandra.html)
-  in addition to the monitor one which it uses.
-
   ### Agent
 
-  The agent requires to [Java
-  plugin](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.java.html)
-  for Collectd which is already installed in the [SignalFx Smart
-  Agent](https://github.com/signalfx/signalfx-agent/).
+  The agent requires the [Collectd Java plugin](https://collectd.org/wiki/index.php/Plugin:Java)
+  which should already be installed with the [SignalFx Smart Agent](https://github.com/signalfx/signalfx-agent/).
 
   ### Monitors
 

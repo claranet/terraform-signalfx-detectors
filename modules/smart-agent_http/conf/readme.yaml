@@ -3,9 +3,6 @@ documentations:
     url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/http.md'
 
 source_doc: |
-  There is no SignalFx official integration for `http` but there is still a
-  [monitor](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/http.md) to use.
-
   ### Monitors
 
   This monitor is only available from agent version `>= 5.2.0` but it has evolved since and we

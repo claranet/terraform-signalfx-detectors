@@ -1,10 +1,11 @@
 documentations:
-  - name: Kubernetes Workloads
-    url: 'https://kubernetes.io/docs/concepts/workloads/'
   - name: Smart Agent monitor
     url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/kubernetes-cluster.md'
-source_doc: >-
-  [Kubernetes Common](https://github.com/claranet/terraform-signalfx-detectors/tree/master/modules/smart-agent_kubernetes-common)
+  - name: Kubernetes Workloads
+    url: 'https://kubernetes.io/docs/concepts/workloads/'
+  - name: Splunk Observability integration
+    url: 'https://docs.splunk.com/Observability/gdi/kubernetes-cluster/kubernetes-cluster.html'
+
 notes: |
   ### Kubernetes Workloads Count
   This detector allows to set a custom limit on the total count of workloads configured on a Kubernetes cluster. This represents the sum of deployments, replicasets, statefulsets and daemonsets desired.

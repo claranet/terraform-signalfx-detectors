@@ -1,11 +1,12 @@
 documentations:
   - name: Smart Agent monitor
     url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/telegraf-dns.md'
+  - name: Splunk Observability integration
+    url: 'https://docs.splunk.com/Observability/gdi/dns/telegraf-dns.html'
+  - name: Telegraf plugin
+    url: 'https://github.com/influxdata/telegraf/tree/master/plugins/inputs/dns_query'
 
 source_doc: |
-  There is no SignalFx official integration for `dns` but there is still a
-  [monitor](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/telegraf-dns.md) to use.
-
   ### Monitors
 
   This monitor is only available from agent version `>= 5.2.1`.

@@ -1,12 +1,10 @@
 documentations:
   - name: Smart Agent monitor
     url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/docker-container-stats.md'
+  - name: Splunk Observability integration
+    url: 'https://docs.splunk.com/Observability/gdi/docker/docker.html'
 
 source_doc: |
-  Follow the
-  [docker-container-stats](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/docker-container-stats.md)
-  monitor configuration to collect metrics.
-
   It requires to enable the following `extraMetrics`:
 
   * `cpu.percent`
