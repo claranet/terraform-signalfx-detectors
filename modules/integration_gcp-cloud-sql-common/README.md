@@ -52,8 +52,8 @@ Note the following parameters:
   [tagging convention](https://github.com/claranet/terraform-signalfx-detectors/wiki/Tagging-convention) by default.
 
 * `notifications`: Use this parameter to define where alerts should be sent depending on their severity. It consists
-  of a Terraform [object](https://www.terraform.io/docs/configuration/types.html#object-) where each key represents an
-  available [detector rule severity](https://docs.signalfx.com/en/latest/detect-alert/set-up-detectors.html#severity)
+  of a Terraform [object](https://www.terraform.io/docs/configuration/types.html#object-) where each key represents an available
+  [detector rule severity](https://docs.splunk.com/observability/alerts-detectors-notifications/create-detectors-for-alerts.html#severity)
   and its value is a list of recipients. Every recipients must respect the [detector notification
   format](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector#notification-format).
   Check the [notification binding](https://github.com/claranet/terraform-signalfx-detectors/wiki/Notifications-binding)
@@ -88,10 +88,12 @@ This module creates the following SignalFx detectors which could contain one or 
 
 ## How to collect required metrics?
 
-This module uses metrics available from
-the [GCP integration](https://docs.signalfx.com/en/latest/integrations/google-cloud-platform.html) configurable
-with this Terraform [module](https://github.com/claranet/terraform-signalfx-integrations/tree/master/cloud/gcp).
+This module deploys detectors using metrics reported by the
+[GCP integration](https://docs.splunk.com/Observability/gdi/get-data-in/connect/gcp.html) configurable
+with [this Terraform module](https://github.com/claranet/terraform-signalfx-integrations/tree/master/cloud/gcp).
 
+
+Check the [Related documentation](#related-documentation) section for more detailed and specific information about this module dependencies.
 
 
 
@@ -127,7 +129,7 @@ The default behavior of this module assume this option is enabled while this is 
 
 It is recommended to decrease these thresholds for instances where this option is disabled (or unavailable for first generation).
 
-To achieve that, this is possible to source twice this module with `filter_custom_includes` to filter only relevant databases for each scenario:
+To achieve that, this is possible to source twice this module with `filtering_custom` to filter only relevant databases for each scenario:
 
 ```hcl
 module "signalfx-detectors-cloud-gcp-cloud-sql-common-manual-storage" {
@@ -135,7 +137,14 @@ module "signalfx-detectors-cloud-gcp-cloud-sql-common-manual-storage" {
 
   environment   = var.environment
   notifications = [var.slack_notification]
-  filter_custom_includes = ["project_id:${var.project_id}", "database_id:*first-gen*"]
+
+  # We define prefix to show the difference with the detectors of the other module in the ui
+  prefixes         = ["1st-gen"]
+  # We keep default filtering policy here, we just want to append additional filter to it
+  filtering_append = true
+  # We define the additional filter to include first gen sql instances
+  filtering_custom = "filter('database_id', '*first-gen*')"
+  # Now we are sure detectors only apply on first gen we can lower thresholds
   disk_utilization_threshold_critical = 90
   disk_utilization_threshold_warning = 80
 }
@@ -145,8 +154,11 @@ module "signalfx-detectors-cloud-gcp-cloud-sql-common-auto-storage" {
 
   environment   = var.environment
   notifications = [var.slack_notification]
-  filter_custom_includes = ["project_id:${var.project_id}"]
-  filter_custom_excludes = ["database_id:*first-gen*"]
+
+  # We keep default filtering policy here, we just want to append additional filter to it
+  filtering_append = true
+  # We define the additional filter to exclude first gen sql instances
+  filtering_custom = "(not filter('database_id', '*first-gen*'))"
 }
 
 ```
@@ -156,4 +168,5 @@ module "signalfx-detectors-cloud-gcp-cloud-sql-common-auto-storage" {
 
 * [Terraform SignalFx provider](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs)
 * [Terraform SignalFx detector](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector)
+* [Splunk Observability integrations](https://docs.splunk.com/Observability/gdi/get-data-in/integrations.html)
 * [Stackdriver metrics](https://cloud.google.com/monitoring/api/metrics_gcp#gcp-cloudsql)

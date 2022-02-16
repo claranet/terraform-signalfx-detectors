@@ -55,8 +55,8 @@ Note the following parameters:
   [tagging convention](https://github.com/claranet/terraform-signalfx-detectors/wiki/Tagging-convention) by default.
 
 * `notifications`: Use this parameter to define where alerts should be sent depending on their severity. It consists
-  of a Terraform [object](https://www.terraform.io/docs/configuration/types.html#object-) where each key represents an
-  available [detector rule severity](https://docs.signalfx.com/en/latest/detect-alert/set-up-detectors.html#severity)
+  of a Terraform [object](https://www.terraform.io/docs/configuration/types.html#object-) where each key represents an available
+  [detector rule severity](https://docs.splunk.com/observability/alerts-detectors-notifications/create-detectors-for-alerts.html#severity)
   and its value is a list of recipients. Every recipients must respect the [detector notification
   format](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector#notification-format).
   Check the [notification binding](https://github.com/claranet/terraform-signalfx-detectors/wiki/Notifications-binding)
@@ -101,17 +101,34 @@ This module creates the following SignalFx detectors which could contain one or 
 
 ## How to collect required metrics?
 
-This module uses metrics available from
-[monitors](https://docs.signalfx.com/en/latest/integrations/agent/monitors/_monitor-config.html)
-available in the [SignalFx Smart
-Agent](https://github.com/signalfx/signalfx-agent). Check the [Related documentation](#related-documentation) section for more
-information including the official documentation of this monitor.
+This module deploys detectors using metrics reported by the
+[SignalFx Smart Agent Monitors](https://github.com/signalfx/signalfx-agent#monitors).
 
+Even if the [Smart Agent is deprecated](https://github.com/signalfx/signalfx-agent/blob/main/docs/smartagent-deprecation-notice.md)
+it remains an efficient, lightweight and simple monitoring agent which still works fine.
+See the [official documentation](https://docs.splunk.com/Observability/gdi/smart-agent/smart-agent-resources.html) for more information
+about this agent.
+You might find the related following documentations useful:
+- the global level [agent configuration](https://github.com/signalfx/signalfx-agent/blob/main/docs/config-schema.md)
+- the [monitor level configuration](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitor-config.md)
+- the internal [agent configuration tips](https://github.com/claranet/terraform-signalfx-detectors/wiki/Guidance#agent-configuration).
+- the full list of [monitors available](https://github.com/signalfx/signalfx-agent/tree/main/docs/monitors) with their own specific documentation.
+
+In addition, all of these monitors are still available in the [Splunk Otel Collector](https://github.com/signalfx/splunk-otel-collector),
+the Splunk [distro of OpenTelemetry Collector](https://opentelemetry.io/docs/concepts/distributions/) which replaces SignalFx Smart Agent,
+thanks to the internal [Smart Agent Receiver](https://github.com/signalfx/splunk-otel-collector/tree/main/internal/receiver/smartagentreceiver).
+
+As a result:
+- any SignalFx Smart Agent monitor are compatible with the new agent OpenTelemetry Collector and related modules in this repository keep `smart-agent` as source name.
+- any OpenTelemetry receiver not based on an existing Smart Agent monitor is not available from old agent so related modules in this repository use `otel-collector` as source name.
+
+
+Check the [Related documentation](#related-documentation) section for more detailed and specific information about this module dependencies.
 
 ### Agent
 
 Here is the official [main
-documentation](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.kubernetes.html) for
+documentation](https://github.com/signalfx/integrations/blob/master/kubernetes/SMART_AGENT_MONITOR.md) for
 kubernetes including the `signalfx-agent` installation which must be installed as
 [daemonset](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) on your cluster.
 
@@ -119,12 +136,9 @@ kubernetes including the `signalfx-agent` installation which must be installed a
 
 The detectors in this module are based on metrics reported by the following monitors:
 
-* [kubelet-metrics](https://docs.signalfx.com/en/latest/integrations/agent/monitors/kubelet-metrics.html) for Kubernetes `>= 1.18`
-* [kubelet-stats](https://docs.signalfx.com/en/latest/integrations/agent/monitors/kubelet-stats.html) for Kubernetes `< 1.18
-* [kubernetes-cluster](https://docs.signalfx.com/en/latest/integrations/agent/monitors/kubernetes-cluster.html)
-
-[Others](https://docs.signalfx.com/en/latest/integrations/kubernetes/k8s-monitors-observers.html#monitors-observers)
-exist to increase visibility or may be in future to enrich this modules or create new ones.
+* [kubelet-metrics](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/kubelet-metrics.md) for Kubernetes `>= 1.18`
+* [kubelet-stats](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/kubelet-stats.md) for Kubernetes `< 1.18
+* [kubernetes-cluster](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/kubernetes-cluster.md)
 
 The `kubernetes-cluster` requires to enable the following `extraMetrics`:
 
@@ -243,8 +257,8 @@ __Note__: `clusterExtraMetrics` option is only available from the `1.7.1` versio
 
 
 To filter only required metrics for the detectors of this module, add the
-[datapointsToExclude](https://docs.signalfx.com/en/latest/integrations/agent/filtering.html) parameter to
-the corresponding monitor configuration:
+[datapointsToExclude](https://docs.splunk.com/observability/gdi/smart-agent/smart-agent-resources.html#filtering-data-using-the-smart-agent)
+parameter to the corresponding monitor configuration:
 
 ```yaml
     datapointsToExclude:
@@ -301,6 +315,8 @@ modules covering more data sources like `kubernetes-volumes` or use cases like `
 
 * [Terraform SignalFx provider](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs)
 * [Terraform SignalFx detector](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector)
-* [Smart Agent monitor kubernetes-cluster](https://docs.signalfx.com/en/latest/integrations/agent/monitors/kubernetes-cluster.html)
-* [Smart Agent monitor kubelet-stats](https://docs.signalfx.com/en/latest/integrations/agent/monitors/kubelet-stats.html)
-* [Smart Agent monitor kubelet-metrics](https://docs.signalfx.com/en/latest/integrations/agent/monitors/kubelet-metrics.html)
+* [Splunk Observability integrations](https://docs.splunk.com/Observability/gdi/get-data-in/integrations.html)
+* [Smart Agent monitor kubernetes-cluster](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/kubernetes-cluster.md)
+* [Smart Agent monitor kubelet-stats](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/kubelet-stats.md)
+* [Smart Agent monitor kubelet-metrics](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/kubelet-metrics.md)
+* [Splunk Observability integration](https://docs.splunk.com/Observability/gdi/kubernetes-cluster/kubernetes-cluster.html)
