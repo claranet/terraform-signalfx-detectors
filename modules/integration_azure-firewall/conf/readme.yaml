@@ -1,6 +1,6 @@
 documentations:
   - name: Azure Monitor Metrics
-    url: 'https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported#microsoftnetworkazurefirewalls'
+    url: 'https://docs.microsoft.com/en-us/azure/azure-monitor/essentials/metrics-supported#microsoftnetworkazurefirewalls'
   - name: Azure Guide
     url: 'https://docs.microsoft.com/en-us/azure/firewall/logs-and-metrics#metrics'
 

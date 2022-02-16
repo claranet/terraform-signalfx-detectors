@@ -1,5 +1,5 @@
 documentations:
   - name: Azure Monitor metrics
-    url: 'https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported#microsoftsqlserversdatabases'
+    url: 'https://docs.microsoft.com/en-us/azure/azure-monitor/essentials/metrics-supported#microsoftsqlserversdatabases'
   - name: Splunk Observability metrics
     url: 'https://docs.splunk.com/Observability/gdi/get-data-in/connect/azure/azure-metrics.html#azure-sql-databases-metrics'

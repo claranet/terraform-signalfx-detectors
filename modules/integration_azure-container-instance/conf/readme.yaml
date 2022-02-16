@@ -1,6 +1,6 @@
 documentations:
   - name: Azure Monitor metrics
-    url: 'https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported#microsoftcontainerinstancecontainergroups'
+    url: 'https://docs.microsoft.com/en-us/azure/azure-monitor/essentials/metrics-supported#microsoftcontainerinstancecontainergroups'
 
 notes: |
   Azure container instance provides the fastest and simplest way to run containers in Azure, you may encounter some false alerts due to short lived experiments.

@@ -1,6 +1,6 @@
 documentations:
   - name: Azure Monitor metrics
-    url: 'https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported#microsoftcomputevirtualmachinescalesets'
+    url: 'https://docs.microsoft.com/en-us/azure/azure-monitor/essentials/metrics-supported#microsoftcomputevirtualmachinescalesets'
 
 notes: |
   Not like the VirtualMachines module, we decided to not monitor CPU on ScaleSet because it's a non sense on something which should autoscale automatically.
