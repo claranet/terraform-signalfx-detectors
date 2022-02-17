@@ -1,7 +1,7 @@
 # Module specific
 
-variable "per_cpu_enabled" {
-  description = "Is perCPU option is enabled for the load monitor of the agent"
+variable "agent_per_cpu_enabled" {
+  description = "Is `perCPU` option is enabled for the load monitor in the agent configuration"
   type        = bool
   default     = true
 }

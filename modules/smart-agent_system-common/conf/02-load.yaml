@@ -8,7 +8,7 @@ signals:
   num_processors:
     metric: cpu.num_processors
   signal:
-    formula: '(${var.per_cpu_enabled ? "load" : "load/num_processors"})'
+    formula: '(${var.agent_per_cpu_enabled ? "load" : "load/num_processors"})'
 rules:
   critical:
     threshold: 2.5
