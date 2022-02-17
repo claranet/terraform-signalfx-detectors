@@ -5,7 +5,6 @@ resource "signalfx_detector" "disk_running_out" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
-
   program_text = <<-EOF
     from signalfx.detectors.countdown import countdown
     signal = data('disk.utilization', filter=${module.filtering.signalflow}).publish('signal')
