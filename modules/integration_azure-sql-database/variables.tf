@@ -2,6 +2,12 @@
 
 # Heartbeat detector
 
+variable "heartbeat_max_delay" {
+  description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = 900
+}
+
 variable "heartbeat_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -39,6 +45,12 @@ variable "heartbeat_aggregation_function" {
 }
 
 # cpu detector
+
+variable "cpu_max_delay" {
+  description = "Enforce max delay for cpu detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "cpu_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -108,6 +120,12 @@ variable "cpu_threshold_major" {
 
 # free_space detector
 
+variable "free_space_max_delay" {
+  description = "Enforce max delay for free_space detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "free_space_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -176,6 +194,12 @@ variable "free_space_threshold_major" {
 
 # dtu_consumption detector
 
+variable "dtu_consumption_max_delay" {
+  description = "Enforce max delay for dtu_consumption detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "dtu_consumption_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -243,6 +267,12 @@ variable "dtu_consumption_threshold_major" {
 }
 
 # deadlocks_count detector
+
+variable "deadlocks_count_max_delay" {
+  description = "Enforce max delay for deadlocks_count detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "deadlocks_count_tip" {
   description = "Suggested first course of action or any note useful for incident handling"

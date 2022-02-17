@@ -12,6 +12,12 @@ variable "heartbeat_aggregation_function" {
   default     = ""
 }
 
+variable "heartbeat_max_delay" {
+  description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = 900
+}
+
 variable "heartbeat_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -54,6 +60,12 @@ variable "memcached_max_conn_transformation_function" {
   description = "Transformation function for memcached_max_conn detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".max(over='5m')"
+}
+
+variable "memcached_max_conn_max_delay" {
+  description = "Enforce max delay for memcached_max_conn detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "memcached_max_conn_tip" {
@@ -116,6 +128,12 @@ variable "memcached_hit_ratio_transformation_function" {
   description = "Transformation function for memcached_hit_ratio detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
+}
+
+variable "memcached_hit_ratio_max_delay" {
+  description = "Enforce max delay for memcached_hit_ratio detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "memcached_hit_ratio_tip" {

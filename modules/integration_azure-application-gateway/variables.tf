@@ -2,6 +2,12 @@
 
 # Heartbeat detector
 
+variable "heartbeat_max_delay" {
+  description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = 900
+}
+
 variable "heartbeat_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -39,6 +45,12 @@ variable "heartbeat_aggregation_function" {
 }
 
 # Total_requests detector
+
+variable "total_requests_max_delay" {
+  description = "Enforce max delay for total_requests detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "total_requests_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -83,6 +95,12 @@ variable "total_requests_lasting_duration_critical" {
 }
 
 # backend_connect_time detector
+
+variable "backend_connect_time_max_delay" {
+  description = "Enforce max delay for backend_connect_time detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "backend_connect_time_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -152,6 +170,12 @@ variable "backend_connect_time_threshold_major" {
 
 # Failed_requests detector
 
+variable "failed_requests_max_delay" {
+  description = "Enforce max delay for failed_requests detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "failed_requests_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -219,6 +243,12 @@ variable "failed_requests_threshold_major" {
 }
 
 # Unhealthy_host_ratio detector
+
+variable "unhealthy_host_ratio_max_delay" {
+  description = "Enforce max delay for unhealthy_host_ratio detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "unhealthy_host_ratio_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -288,6 +318,12 @@ variable "unhealthy_host_ratio_threshold_major" {
 
 # Http_4xx_errors detector
 
+variable "http_4xx_errors_max_delay" {
+  description = "Enforce max delay for http_4xx_errors detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "http_4xx_errors_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -355,6 +391,12 @@ variable "http_4xx_errors_threshold_major" {
 }
 
 # Http_5xx_errors detector
+
+variable "http_5xx_errors_max_delay" {
+  description = "Enforce max delay for http_5xx_errors detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "http_5xx_errors_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -424,6 +466,12 @@ variable "http_5xx_errors_threshold_major" {
 
 # Backend_http_4xx_errors detector
 
+variable "backend_http_4xx_errors_max_delay" {
+  description = "Enforce max delay for backend_http_4xx_errors detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "backend_http_4xx_errors_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -491,6 +539,12 @@ variable "backend_http_4xx_errors_threshold_major" {
 }
 
 # Backend_http_5xx_errors detector
+
+variable "backend_http_5xx_errors_max_delay" {
+  description = "Enforce max delay for backend_http_5xx_errors detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "backend_http_5xx_errors_tip" {
   description = "Suggested first course of action or any note useful for incident handling"

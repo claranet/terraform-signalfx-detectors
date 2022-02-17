@@ -2,6 +2,12 @@
 
 # Heartbeat detector
 
+variable "heartbeat_max_delay" {
+  description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = 900
+}
+
 variable "heartbeat_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -39,6 +45,12 @@ variable "heartbeat_aggregation_function" {
 }
 
 # Active_connections detector
+
+variable "active_connections_max_delay" {
+  description = "Enforce max delay for active_connections detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "active_connections_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -89,6 +101,12 @@ variable "active_connections_threshold_critical" {
 }
 
 # User_errors detector
+
+variable "user_errors_max_delay" {
+  description = "Enforce max delay for user_errors detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "user_errors_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -157,6 +175,12 @@ variable "user_errors_threshold_major" {
 }
 
 # Server_errors detector
+
+variable "server_errors_max_delay" {
+  description = "Enforce max delay for server_errors detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "server_errors_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -242,6 +266,12 @@ variable "throttled_requests_transformation_function" {
   description = "Transformation function for throttled_requests detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".max(over='5m')"
+}
+
+variable "throttled_requests_max_delay" {
+  description = "Enforce max delay for throttled_requests detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "throttled_requests_tip" {

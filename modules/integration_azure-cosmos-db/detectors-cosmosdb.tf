@@ -5,8 +5,6 @@ resource "signalfx_detector" "heartbeat" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
-  max_delay = 900
-
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting
         base_filter = filter('resource_type', 'Microsoft.DocumentDB/databaseAccounts') and filter('primary_aggregation_type', 'true')
@@ -25,6 +23,8 @@ resource "signalfx_detector" "heartbeat" {
     parameterized_subject = var.message_subject == "" ? local.rule_subject_novalue : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.heartbeat_max_delay
 }
 
 resource "signalfx_detector" "db_4xx_requests" {
@@ -66,6 +66,8 @@ resource "signalfx_detector" "db_4xx_requests" {
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.db_4xx_requests_max_delay
 }
 
 resource "signalfx_detector" "db_5xx_requests" {
@@ -107,6 +109,8 @@ resource "signalfx_detector" "db_5xx_requests" {
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.db_5xx_requests_max_delay
 }
 
 resource "signalfx_detector" "scaling" {
@@ -148,6 +152,8 @@ resource "signalfx_detector" "scaling" {
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.scaling_max_delay
 }
 
 resource "signalfx_detector" "used_rus_capacity" {
@@ -187,4 +193,6 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.used_rus_capacity_max_delay
 }

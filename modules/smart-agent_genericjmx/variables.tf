@@ -2,6 +2,12 @@
 
 # memory_heap detector
 
+variable "memory_heap_max_delay" {
+  description = "Enforce max delay for memory_heap detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "memory_heap_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -63,6 +69,12 @@ variable "memory_heap_threshold_critical" {
 }
 
 # gc_old_gen detector
+
+variable "gc_old_gen_max_delay" {
+  description = "Enforce max delay for gc_old_gen detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "gc_old_gen_tip" {
   description = "Suggested first course of action or any note useful for incident handling"

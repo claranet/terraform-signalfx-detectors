@@ -2,6 +2,12 @@
 
 # Heartbeat detector
 
+variable "heartbeat_max_delay" {
+  description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = 900
+}
+
 variable "heartbeat_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -39,6 +45,12 @@ variable "heartbeat_aggregation_function" {
 }
 
 # Response_time detector
+
+variable "response_time_max_delay" {
+  description = "Enforce max delay for response_time detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "response_time_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -108,6 +120,12 @@ variable "response_time_threshold_major" {
 
 # Memory_usage_count detector
 
+variable "memory_usage_count_max_delay" {
+  description = "Enforce max delay for memory_usage_count detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "memory_usage_count_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -175,6 +193,12 @@ variable "memory_usage_count_threshold_major" {
 }
 
 # Http_5xx_errors_count detector
+
+variable "http_5xx_errors_count_max_delay" {
+  description = "Enforce max delay for http_5xx_errors_count detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "http_5xx_errors_count_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -244,6 +268,12 @@ variable "http_5xx_errors_count_threshold_major" {
 
 # http_4xx_errors_count detector
 
+variable "http_4xx_errors_count_max_delay" {
+  description = "Enforce max delay for http_4xx_errors_count detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "http_4xx_errors_count_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -311,6 +341,12 @@ variable "http_4xx_errors_count_threshold_major" {
 }
 
 # Http_success_status_rate detector
+
+variable "http_success_status_rate_max_delay" {
+  description = "Enforce max delay for http_success_status_rate detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "http_success_status_rate_tip" {
   description = "Suggested first course of action or any note useful for incident handling"

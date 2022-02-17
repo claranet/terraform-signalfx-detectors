@@ -14,6 +14,12 @@ variable "heartbeat_aggregation_function" {
   default     = ""
 }
 
+variable "heartbeat_max_delay" {
+  description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = 900
+}
+
 variable "heartbeat_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -39,6 +45,12 @@ variable "heartbeat_timeframe" {
 }
 
 # backend_failed detector
+
+variable "backend_failed_max_delay" {
+  description = "Enforce max delay for backend_failed detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "backend_failed_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -84,6 +96,12 @@ variable "backend_failed_threshold_critical" {
 
 # threads_number detector
 
+variable "threads_number_max_delay" {
+  description = "Enforce max delay for threads_number detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "threads_number_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -128,6 +146,12 @@ variable "threads_threshold_critical" {
 
 # session_dropped detector
 
+variable "session_dropped_max_delay" {
+  description = "Enforce max delay for session_dropped detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "session_dropped_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -171,6 +195,12 @@ variable "session_dropped_threshold_critical" {
 }
 
 # cache_hit_rate detector
+
+variable "cache_hit_rate_max_delay" {
+  description = "Enforce max delay for cache_hit_rate detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "cache_hit_rate_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -233,6 +263,12 @@ variable "cache_hit_rate_threshold_major" {
 }
 
 # memory_usage detector
+
+variable "memory_usage_max_delay" {
+  description = "Enforce max delay for memory_usage detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "memory_usage_tip" {
   description = "Suggested first course of action or any note useful for incident handling"

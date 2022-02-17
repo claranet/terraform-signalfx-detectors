@@ -20,6 +20,12 @@ variable "used_capacity_transformation_function" {
   default     = ".max(over='12h')"
 }
 
+variable "used_capacity_max_delay" {
+  description = "Enforce max delay for used_capacity detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "used_capacity_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string

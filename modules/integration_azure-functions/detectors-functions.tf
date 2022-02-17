@@ -5,8 +5,6 @@ resource "signalfx_detector" "heartbeat" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
-  max_delay = 900
-
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting
         base_filter = filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'true') and filter('primary_aggregation_type', 'true')
@@ -25,6 +23,8 @@ resource "signalfx_detector" "heartbeat" {
     parameterized_subject = var.message_subject == "" ? local.rule_subject_novalue : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.heartbeat_max_delay
 }
 
 resource "signalfx_detector" "http_5xx_errors_rate" {
@@ -66,6 +66,8 @@ resource "signalfx_detector" "http_5xx_errors_rate" {
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.http_5xx_errors_rate_max_delay
 }
 
 resource "signalfx_detector" "high_connections_count" {
@@ -105,6 +107,8 @@ resource "signalfx_detector" "high_connections_count" {
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.high_connections_count_max_delay
 }
 
 resource "signalfx_detector" "high_threads_count" {
@@ -144,4 +148,6 @@ resource "signalfx_detector" "high_threads_count" {
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.high_threads_count_max_delay
 }

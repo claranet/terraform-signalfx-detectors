@@ -2,6 +2,12 @@
 
 # api_result detector
 
+variable "api_result_max_delay" {
+  description = "Enforce max delay for api_result detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "api_result_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -69,6 +75,12 @@ variable "api_result_threshold_major" {
 }
 
 # api_latency detector
+
+variable "api_latency_max_delay" {
+  description = "Enforce max delay for api_latency detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "api_latency_tip" {
   description = "Suggested first course of action or any note useful for incident handling"

@@ -2,6 +2,12 @@
 
 # Heartbeat detector
 
+variable "heartbeat_max_delay" {
+  description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = 900
+}
+
 variable "heartbeat_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -39,6 +45,12 @@ variable "heartbeat_aggregation_function" {
 }
 
 # Evictions detector
+
+variable "evictions_max_delay" {
+  description = "Enforce max delay for evictions detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "evictions_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -102,6 +114,12 @@ variable "evictions_threshold_major" {
 
 # Max_connection detector
 
+variable "max_connection_max_delay" {
+  description = "Enforce max delay for max_connection detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "max_connection_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -152,6 +170,12 @@ variable "max_connection_threshold_critical" {
 
 # No_connection detector
 
+variable "no_connection_max_delay" {
+  description = "Enforce max delay for no_connection detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "no_connection_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -201,6 +225,12 @@ variable "no_connection_threshold_critical" {
 }
 
 # Swap detector
+
+variable "swap_max_delay" {
+  description = "Enforce max delay for swap detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "swap_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -264,6 +294,12 @@ variable "swap_threshold_major" {
 
 # Free_memory detector
 
+variable "free_memory_max_delay" {
+  description = "Enforce max delay for free_memory detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "free_memory_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -325,6 +361,12 @@ variable "free_memory_threshold_minor" {
 }
 
 # Evictions_growing detector
+
+variable "evictions_growing_max_delay" {
+  description = "Enforce max delay for evictions_growing detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "evictions_growing_tip" {
   description = "Suggested first course of action or any note useful for incident handling"

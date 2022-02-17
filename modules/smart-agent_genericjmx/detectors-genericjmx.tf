@@ -35,6 +35,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.memory_heap_max_delay
 }
 
 resource "signalfx_detector" "jmx_old_gen" {
@@ -74,5 +76,7 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.gc_old_gen_max_delay
 }
 

@@ -5,8 +5,6 @@ resource "signalfx_detector" "heartbeat" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
-  max_delay = 900
-
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting
         base_filter = filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'false') and filter('primary_aggregation_type', 'true')
@@ -25,6 +23,8 @@ resource "signalfx_detector" "heartbeat" {
     parameterized_subject = var.message_subject == "" ? local.rule_subject_novalue : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.heartbeat_max_delay
 }
 
 resource "signalfx_detector" "response_time" {
@@ -65,6 +65,7 @@ resource "signalfx_detector" "response_time" {
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
+  max_delay = var.response_time_max_delay
 }
 
 resource "signalfx_detector" "memory_usage_count" {
@@ -105,6 +106,7 @@ resource "signalfx_detector" "memory_usage_count" {
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
+  max_delay = var.memory_usage_count_max_delay
 }
 
 resource "signalfx_detector" "http_5xx_errors_count" {
@@ -147,6 +149,7 @@ resource "signalfx_detector" "http_5xx_errors_count" {
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
+  max_delay = var.http_5xx_errors_count_max_delay
 }
 
 resource "signalfx_detector" "http_4xx_errors_count" {
@@ -188,6 +191,8 @@ resource "signalfx_detector" "http_4xx_errors_count" {
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.http_4xx_errors_count_max_delay
 }
 
 resource "signalfx_detector" "http_success_status_rate" {
@@ -230,4 +235,6 @@ resource "signalfx_detector" "http_success_status_rate" {
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.http_success_status_rate_max_delay
 }

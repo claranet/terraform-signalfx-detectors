@@ -2,6 +2,12 @@
 
 # Heartbeat detector
 
+variable "heartbeat_max_delay" {
+  description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = 900
+}
+
 variable "heartbeat_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -39,6 +45,12 @@ variable "heartbeat_aggregation_function" {
 }
 
 # db_4xx_requests detector
+
+variable "db_4xx_requests_max_delay" {
+  description = "Enforce max delay for db_4xx_requests detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "db_4xx_requests_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -108,6 +120,12 @@ variable "db_4xx_requests_threshold_major" {
 
 # db_5xx_requests detector
 
+variable "db_5xx_requests_max_delay" {
+  description = "Enforce max delay for db_5xx_requests detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "db_5xx_requests_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -175,6 +193,12 @@ variable "db_5xx_requests_threshold_major" {
 }
 
 # Scaling detector
+
+variable "scaling_max_delay" {
+  description = "Enforce max delay for scaling detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "scaling_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -260,6 +284,12 @@ variable "used_rus_capacity_transformation_function" {
   description = "Transformation function for used_rus_capacity detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".max(over='15m')"
+}
+
+variable "used_rus_capacity_max_delay" {
+  description = "Enforce max delay for used_rus_capacity detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "used_rus_capacity_tip" {

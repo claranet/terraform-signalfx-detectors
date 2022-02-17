@@ -37,6 +37,8 @@ resource "signalfx_detector" "api_result" {
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.api_result_max_delay
 }
 
 resource "signalfx_detector" "api_latency" {
@@ -76,4 +78,6 @@ resource "signalfx_detector" "api_latency" {
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.api_latency_max_delay
 }

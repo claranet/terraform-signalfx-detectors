@@ -2,6 +2,12 @@
 
 # Heartbeat detector
 
+variable "heartbeat_max_delay" {
+  description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = 900
+}
+
 variable "heartbeat_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -39,6 +45,12 @@ variable "heartbeat_aggregation_function" {
 }
 
 # CPU_usage detector
+
+variable "cpu_usage_max_delay" {
+  description = "Enforce max delay for cpu_usage detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "cpu_usage_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -108,6 +120,12 @@ variable "cpu_usage_threshold_major" {
 
 # no_connection detector
 
+variable "no_connection_max_delay" {
+  description = "Enforce max delay for no_connection detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "no_connection_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -151,6 +169,12 @@ variable "no_connection_lasting_duration_critical" {
 }
 
 # storage_usage detectors
+
+variable "storage_usage_max_delay" {
+  description = "Enforce max delay for storage_usage detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "storage_usage_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -220,6 +244,12 @@ variable "storage_usage_threshold_major" {
 
 # io_consumption detector
 
+variable "io_consumption_max_delay" {
+  description = "Enforce max delay for io_consumption detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "io_consumption_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -288,6 +318,12 @@ variable "io_consumption_threshold_major" {
 
 # memory_usage detector
 
+variable "memory_usage_max_delay" {
+  description = "Enforce max delay for memory_usage detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "memory_usage_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -355,6 +391,12 @@ variable "memory_usage_threshold_major" {
 }
 
 # serverlog_storage_usage detectors
+
+variable "serverlog_storage_usage_max_delay" {
+  description = "Enforce max delay for serverlog_storage_usage detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "serverlog_storage_usage_tip" {
   description = "Suggested first course of action or any note useful for incident handling"

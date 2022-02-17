@@ -7,6 +7,12 @@ variable "gcp_project_id" {
 
 # Concurrent_queries detector
 
+variable "concurrent_queries_max_delay" {
+  description = "Enforce max delay for concurrent_queries detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "concurrent_queries_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -86,6 +92,12 @@ variable "concurrent_queries_clear_duration" {
 }
 
 # Execution_time detector
+
+variable "execution_time_max_delay" {
+  description = "Enforce max delay for execution_time detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "execution_time_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -167,6 +179,12 @@ variable "execution_time_clear_duration" {
 
 # Scanned_bytes detector
 
+variable "scanned_bytes_max_delay" {
+  description = "Enforce max delay for scanned_bytes detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "scanned_bytes_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -246,6 +264,12 @@ variable "scanned_bytes_clear_duration" {
 }
 
 # Scanned_bytes_billed detector
+
+variable "scanned_bytes_billed_max_delay" {
+  description = "Enforce max delay for scanned_bytes_billed detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "scanned_bytes_billed_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -327,6 +351,12 @@ variable "scanned_bytes_billed_clear_duration" {
 
 # Available_slots detector
 
+variable "available_slots_max_delay" {
+  description = "Enforce max delay for available_slots detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "available_slots_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -406,6 +436,12 @@ variable "available_slots_clear_duration" {
 }
 
 # Stored_bytes detector
+
+variable "stored_bytes_max_delay" {
+  description = "Enforce max delay for stored_bytes detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "stored_bytes_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -487,6 +523,12 @@ variable "stored_bytes_clear_duration" {
 
 # table_count detector
 
+variable "table_count_max_delay" {
+  description = "Enforce max delay for table_count detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "table_count_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -567,6 +609,12 @@ variable "table_count_clear_duration" {
 
 # uploaded_bytes detector
 
+variable "uploaded_bytes_max_delay" {
+  description = "Enforce max delay for uploaded_bytes detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "uploaded_bytes_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -646,6 +694,12 @@ variable "uploaded_bytes_clear_duration" {
 }
 
 # uploaded_bytes_billed detector
+
+variable "uploaded_bytes_billed_max_delay" {
+  description = "Enforce max delay for uploaded_bytes_billed detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "uploaded_bytes_billed_tip" {
   description = "Suggested first course of action or any note useful for incident handling"

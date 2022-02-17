@@ -38,6 +38,7 @@ EOF
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
+  max_delay = var.concurrent_queries_max_delay
 }
 
 resource "signalfx_detector" "execution_time" {
@@ -80,6 +81,7 @@ EOF
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
+  max_delay = var.execution_time_max_delay
 }
 
 resource "signalfx_detector" "scanned_bytes" {
@@ -122,6 +124,7 @@ EOF
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
+  max_delay = var.scanned_bytes_max_delay
 }
 
 resource "signalfx_detector" "scanned_bytes_billed" {
@@ -164,6 +167,7 @@ EOF
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
+  max_delay = var.scanned_bytes_billed_max_delay
 }
 
 resource "signalfx_detector" "available_slots" {
@@ -206,6 +210,7 @@ EOF
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
+  max_delay = var.available_slots_max_delay
 }
 
 resource "signalfx_detector" "stored_bytes" {
@@ -248,6 +253,7 @@ EOF
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
+  max_delay = var.stored_bytes_max_delay
 }
 
 resource "signalfx_detector" "table_count" {
@@ -290,6 +296,7 @@ EOF
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
+  max_delay = var.table_count_max_delay
 }
 
 resource "signalfx_detector" "uploaded_bytes" {
@@ -332,6 +339,7 @@ EOF
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
+  max_delay = var.uploaded_bytes_max_delay
 }
 
 resource "signalfx_detector" "uploaded_bytes_billed" {
@@ -374,4 +382,5 @@ EOF
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
+  max_delay = var.uploaded_bytes_billed_max_delay
 }

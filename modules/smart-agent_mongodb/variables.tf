@@ -12,6 +12,12 @@ variable "heartbeat_aggregation_function" {
   default     = ".mean(by=['cluster'])"
 }
 
+variable "heartbeat_max_delay" {
+  description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = 900
+}
+
 variable "heartbeat_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -56,6 +62,12 @@ variable "page_faults_transformation_function" {
   default     = ".mean(over='5m')"
 }
 
+variable "page_faults_max_delay" {
+  description = "Enforce max delay for page_faults detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "page_faults_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -98,6 +110,12 @@ variable "max_connections_transformation_function" {
   description = "Transformation function for max_connections detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='5m')"
+}
+
+variable "max_connections_max_delay" {
+  description = "Enforce max delay for max_connections detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "max_connections_tip" {
@@ -162,6 +180,12 @@ variable "asserts_transformation_function" {
   default     = ".max(over='30m')"
 }
 
+variable "asserts_max_delay" {
+  description = "Enforce max delay for asserts detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "asserts_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -204,6 +228,12 @@ variable "primary_transformation_function" {
   description = "Transformation function for primary detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='1m')"
+}
+
+variable "primary_max_delay" {
+  description = "Enforce max delay for primary detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "primary_tip" {
@@ -250,6 +280,12 @@ variable "secondary_transformation_function" {
   default     = ".min(over='5m')"
 }
 
+variable "secondary_max_delay" {
+  description = "Enforce max delay for secondary detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "secondary_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -292,6 +328,12 @@ variable "replication_lag_transformation_function" {
   description = "Transformation function for replication_lag detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='15m')"
+}
+
+variable "replication_lag_max_delay" {
+  description = "Enforce max delay for replication_lag detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "replication_lag_tip" {

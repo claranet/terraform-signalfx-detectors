@@ -2,6 +2,12 @@
 
 # Volume_space detector
 
+variable "volume_space_max_delay" {
+  description = "Enforce max delay for volume_space detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "volume_space_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -63,6 +69,12 @@ variable "volume_space_threshold_major" {
 }
 
 # Volume_inodes detector
+
+variable "volume_inodes_max_delay" {
+  description = "Enforce max delay for volume_inodes detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "volume_inodes_tip" {
   description = "Suggested first course of action or any note useful for incident handling"

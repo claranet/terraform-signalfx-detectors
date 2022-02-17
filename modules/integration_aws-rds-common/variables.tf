@@ -2,6 +2,12 @@
 
 # Heartbeat detector
 
+variable "heartbeat_max_delay" {
+  description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = 900
+}
+
 variable "heartbeat_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -39,6 +45,12 @@ variable "heartbeat_aggregation_function" {
 }
 
 # CPU_90_15min detector
+
+variable "cpu_90_15min_max_delay" {
+  description = "Enforce max delay for cpu_90_15min detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "cpu_90_15min_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -102,6 +114,12 @@ variable "cpu_90_15min_threshold_major" {
 
 # Free_space_low detector
 
+variable "free_space_low_max_delay" {
+  description = "Enforce max delay for free_space_low detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "free_space_low_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -163,6 +181,12 @@ variable "free_space_low_threshold_major" {
 }
 
 # Replica_lag detector
+
+variable "replica_lag_max_delay" {
+  description = "Enforce max delay for replica_lag detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "replica_lag_tip" {
   description = "Suggested first course of action or any note useful for incident handling"

@@ -21,6 +21,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.velero_scheduled_backup_missing_max_delay
 }
 
 resource "signalfx_detector" "velero_backup_failure" {
@@ -46,6 +48,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.velero_backup_failure_max_delay
 }
 
 resource "signalfx_detector" "velero_backup_partial_failure" {
@@ -71,6 +75,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.velero_backup_partial_failure_max_delay
 }
 
 resource "signalfx_detector" "velero_backup_deletion_failure" {
@@ -96,6 +102,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.velero_backup_deletion_failure_max_delay
 }
 
 resource "signalfx_detector" "velero_volume_snapshot_failure" {
@@ -121,5 +129,7 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.velero_volume_snapshot_failure_max_delay
 }
 

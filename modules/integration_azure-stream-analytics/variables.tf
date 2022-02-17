@@ -2,6 +2,12 @@
 
 # Heartbeat detector
 
+variable "heartbeat_max_delay" {
+  description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = 900
+}
+
 variable "heartbeat_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -39,6 +45,12 @@ variable "heartbeat_aggregation_function" {
 }
 
 # SU_utilization detector
+
+variable "su_utilization_max_delay" {
+  description = "Enforce max delay for su_utilization detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "su_utilization_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -108,6 +120,12 @@ variable "su_utilization_threshold_major" {
 
 # failed_function_requests detector
 
+variable "failed_function_requests_max_delay" {
+  description = "Enforce max delay for failed_function_requests detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "failed_function_requests_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -176,6 +194,12 @@ variable "failed_function_requests_threshold_major" {
 
 # Conversion_errors detector
 
+variable "conversion_errors_max_delay" {
+  description = "Enforce max delay for conversion_errors detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "conversion_errors_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -243,6 +267,12 @@ variable "conversion_errors_threshold_major" {
 }
 
 # Runtime_errors detector
+
+variable "runtime_errors_max_delay" {
+  description = "Enforce max delay for runtime_errors detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "runtime_errors_tip" {
   description = "Suggested first course of action or any note useful for incident handling"

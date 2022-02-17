@@ -2,6 +2,12 @@
 
 # Heartbeat detector
 
+variable "heartbeat_max_delay" {
+  description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = 900
+}
+
 variable "heartbeat_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -39,6 +45,12 @@ variable "heartbeat_aggregation_function" {
 }
 
 # Dns_query_time detector
+
+variable "dns_query_time_max_delay" {
+  description = "Enforce max delay for dns_query_time detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "dns_query_time_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -101,6 +113,12 @@ variable "dns_query_time_threshold_major" {
 }
 
 # Dns_result_code detector
+
+variable "dns_result_code_max_delay" {
+  description = "Enforce max delay for dns_result_code detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "dns_result_code_tip" {
   description = "Suggested first course of action or any note useful for incident handling"

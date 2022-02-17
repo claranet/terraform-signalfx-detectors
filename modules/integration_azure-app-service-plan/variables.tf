@@ -2,6 +2,12 @@
 
 # Heartbeat detector
 
+variable "heartbeat_max_delay" {
+  description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = 900
+}
+
 variable "heartbeat_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -39,6 +45,12 @@ variable "heartbeat_aggregation_function" {
 }
 
 # CPU_percentage detector
+
+variable "cpu_percentage_max_delay" {
+  description = "Enforce max delay for cpu_percentage detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "cpu_percentage_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -107,6 +119,12 @@ variable "cpu_percentage_threshold_major" {
 }
 
 # memory_percentage detector
+
+variable "memory_percentage_max_delay" {
+  description = "Enforce max delay for memory_percentage detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "memory_percentage_tip" {
   description = "Suggested first course of action or any note useful for incident handling"

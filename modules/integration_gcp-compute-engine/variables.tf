@@ -2,6 +2,12 @@
 
 # Heartbeat detector
 
+variable "heartbeat_max_delay" {
+  description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = 900
+}
+
 variable "heartbeat_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -39,6 +45,12 @@ variable "heartbeat_aggregation_function" {
 }
 
 # CPU_utilization detector
+
+variable "cpu_utilization_max_delay" {
+  description = "Enforce max delay for cpu_utilization detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "cpu_utilization_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -102,6 +114,12 @@ variable "cpu_utilization_threshold_major" {
 
 # Disk_throttled_bps detector
 
+variable "disk_throttled_bps_max_delay" {
+  description = "Enforce max delay for disk_throttled_bps detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "disk_throttled_bps_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -163,6 +181,12 @@ variable "disk_throttled_bps_threshold_major" {
 }
 
 # Disk_throttled_ops detector
+
+variable "disk_throttled_ops_max_delay" {
+  description = "Enforce max delay for disk_throttled_ops detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "disk_throttled_ops_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
