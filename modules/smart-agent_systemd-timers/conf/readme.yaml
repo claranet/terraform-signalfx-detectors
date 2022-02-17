@@ -1,9 +1,13 @@
 documentations:
-  - name: Smart Agent monitor collectd/systemd
-    url: https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-systemd.html
+  - name: Smart Agent monitor
+    url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/collectd-systemd.md'
+  - name: Collectd Script
+    url: 'https://github.com/signalfx/collectd-systemd'
 
 source_doc: |
-  This module checks Systemd services launched by Systemd timers. The difference with [smart-agent_systemd-services](https://github.com/claranet/terraform-signalfx-detectors/tree/master/modules/smart-agent_systemd-services) is that services launched by timers are not supposed to be always running, and instead can be stopped most of the time.
+  This module checks Systemd services launched by Systemd timers.
+  The difference with [smart-agent_systemd-services](https://github.com/claranet/terraform-signalfx-detectors/tree/master/modules/smart-agent_systemd-services)
+  is that services launched by timers are not supposed to be always running, and instead can be stopped most of the time.
 
   Detectors are designed to check that the job did not failed (enabled by default), the service have not been removed (disabled by default), and the job have been launched during the past day (disabled by default, you can override the default delay with the `execution_delay_lasting_duration_major` variable).
 

@@ -16,7 +16,7 @@
 ## How to use this module?
 
 This directory defines a [Terraform](https://www.terraform.io/)
-[module](https://www.terraform.io/docs/modules/usage.html) you can use in your
+[module](https://www.terraform.io/language/modules/syntax) you can use in your
 existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/Getting-started#stack) by adding a
 `module` configuration and setting its `source` parameter to URL of this folder:
 
@@ -33,7 +33,7 @@ Note the following parameters:
 
 * `source`: Use this parameter to specify the URL of the module. The double slash (`//`) is intentional  and required.
   Terraform uses it to specify subfolders within a Git repo (see [module
-  sources](https://www.terraform.io/docs/modules/sources.html)). The `ref` parameter specifies a specific Git tag in
+  sources](https://www.terraform.io/language/modules/sources)). The `ref` parameter specifies a specific Git tag in
   this repository. It is recommended to use the latest "pinned" version in place of `{revision}`. Avoid using a branch
   like `master` except for testing purpose. Note that every modules in this repository are available on the Terraform
   [registry](https://registry.terraform.io/modules/claranet/detectors/signalfx) and we recommend using it as source
@@ -49,8 +49,8 @@ Note the following parameters:
   [tagging convention](https://github.com/claranet/terraform-signalfx-detectors/wiki/Tagging-convention) by default.
 
 * `notifications`: Use this parameter to define where alerts should be sent depending on their severity. It consists
-  of a Terraform [object](https://www.terraform.io/docs/configuration/types.html#object-) where each key represents an
-  available [detector rule severity](https://docs.signalfx.com/en/latest/detect-alert/set-up-detectors.html#severity)
+  of a Terraform [object](https://www.terraform.io/language/expressions/type-constraints#object) where each key represents an available
+  [detector rule severity](https://docs.splunk.com/observability/alerts-detectors-notifications/create-detectors-for-alerts.html#severity)
   and its value is a list of recipients. Every recipients must respect the [detector notification
   format](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector#notification-format).
   Check the [notification binding](https://github.com/claranet/terraform-signalfx-detectors/wiki/Notifications-binding)
@@ -60,7 +60,7 @@ These 3 parameters alongs with all variables defined in [common-variables.tf](co
 [modules](../) in this repository. Other variables, specific to this module, are available in
 [variables.tf](variables.tf).
 In general, the default configuration "works" but all of these Terraform
-[variables](https://www.terraform.io/docs/configuration/variables.html) make it possible to
+[variables](https://www.terraform.io/language/values/variables) make it possible to
 customize the detectors behavior to better fit your needs.
 
 Most of them represent usual tips and rules detailled in the
@@ -82,9 +82,11 @@ This module creates the following SignalFx detectors which could contain one or 
 
 ## How to collect required metrics?
 
-This module uses metrics available from
-the [NewRelic integration](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.new.relic.html)
+This module deploys detectors using metrics reported by the
+[NewRelic integration](https://github.com/signalfx/integrations/blob/master/newrelic/README.md).
 
+
+Check the [Related documentation](#related-documentation) section for more detailed and specific information about this module dependencies.
 
 
 
@@ -100,7 +102,7 @@ Here is the list of required metrics for detectors in this module.
 ## Notes
 
 * The NewRelic integration from SignalFx still uses the deprecated [REST API
-v1](https://docs.newrelic.com/docs/apis/rest-api-v1-deprecated/new-relic-rest-api-v1).
+v1](https://docs.newrelic.com/docs/apis/rest-api-v1-deprecated/new-relic-rest-api-v1/working-new-relic-rest-api-v1-deprecated/).
 * It also generate too many metrics all considered as custom which could have a big
 impact in the SignalFx billing so you have to filter as much as possible to avoid that.
 * Sadly, the `errors_per_minute` filter is not available so the `errors` detector will
@@ -115,4 +117,5 @@ too many metrics
 
 * [Terraform SignalFx provider](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs)
 * [Terraform SignalFx detector](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector)
-* [Stackdriver metrics](https://cloud.google.com/monitoring/api/metrics_gcp#gcp-cloudsql)
+* [Splunk Observability integrations](https://docs.splunk.com/Observability/gdi/get-data-in/integrations.html)
+* [NewRelic integration](https://github.com/signalfx/integrations/blob/master/newrelic/README.md)

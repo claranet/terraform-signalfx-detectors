@@ -1,9 +1,8 @@
 documentations:
   - name: Smart Agent monitor
-    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/jmx.html'
+    url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/jmx.md'
 
 source_doc: |
-
   This module leverages the powerful `JMX` monitor to retrieve equivalent information
   from the output of [Cassandra
   Nodetool](https://cassandra.apache.org/doc/latest/tools/nodetool/nodetool.html) like

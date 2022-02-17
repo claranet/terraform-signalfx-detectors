@@ -1,9 +1,8 @@
 documentations:
   - name: CloudWatch metrics
+    url: 'https://docs.aws.amazon.com/efs/latest/ug/efs-metrics.html'
+  - name: CloudWatch guide
     url: 'https://docs.aws.amazon.com/efs/latest/ug/monitoring-cloudwatch.html'
-source_doc: >-
-  We are using metrics from the
-  [AWS/EFS](https://docs.aws.amazon.com/efs/latest/ug/efs-metrics.html) namespace
 notes: |
   ### About filtering
 

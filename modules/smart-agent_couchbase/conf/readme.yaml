@@ -1,5 +1,7 @@
 documentations:
   - name: Smart Agent monitor
-    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-couchbase.html'
-
-source_doc:
+    url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/collectd-couchbase.md'
+  - name: Splunk Observability integration
+    url: 'https://docs.splunk.com/Observability/gdi/couchbase/couchbase.html'
+  - name: Collectd Script
+    url: 'https://github.com/signalfx/collectd-couchbase'

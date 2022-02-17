@@ -18,7 +18,7 @@
 ## How to use this module?
 
 This directory defines a [Terraform](https://www.terraform.io/)
-[module](https://www.terraform.io/docs/modules/usage.html) you can use in your
+[module](https://www.terraform.io/language/modules/syntax) you can use in your
 existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/Getting-started#stack) by adding a
 `module` configuration and setting its `source` parameter to URL of this folder:
 
@@ -35,7 +35,7 @@ Note the following parameters:
 
 * `source`: Use this parameter to specify the URL of the module. The double slash (`//`) is intentional  and required.
   Terraform uses it to specify subfolders within a Git repo (see [module
-  sources](https://www.terraform.io/docs/modules/sources.html)). The `ref` parameter specifies a specific Git tag in
+  sources](https://www.terraform.io/language/modules/sources)). The `ref` parameter specifies a specific Git tag in
   this repository. It is recommended to use the latest "pinned" version in place of `{revision}`. Avoid using a branch
   like `master` except for testing purpose. Note that every modules in this repository are available on the Terraform
   [registry](https://registry.terraform.io/modules/claranet/detectors/signalfx) and we recommend using it as source
@@ -51,8 +51,8 @@ Note the following parameters:
   [tagging convention](https://github.com/claranet/terraform-signalfx-detectors/wiki/Tagging-convention) by default.
 
 * `notifications`: Use this parameter to define where alerts should be sent depending on their severity. It consists
-  of a Terraform [object](https://www.terraform.io/docs/configuration/types.html#object-) where each key represents an
-  available [detector rule severity](https://docs.signalfx.com/en/latest/detect-alert/set-up-detectors.html#severity)
+  of a Terraform [object](https://www.terraform.io/language/expressions/type-constraints#object) where each key represents an available
+  [detector rule severity](https://docs.splunk.com/observability/alerts-detectors-notifications/create-detectors-for-alerts.html#severity)
   and its value is a list of recipients. Every recipients must respect the [detector notification
   format](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector#notification-format).
   Check the [notification binding](https://github.com/claranet/terraform-signalfx-detectors/wiki/Notifications-binding)
@@ -62,7 +62,7 @@ These 3 parameters alongs with all variables defined in [common-variables.tf](co
 [modules](../) in this repository. Other variables, specific to this module, are available in
 [variables.tf](variables.tf).
 In general, the default configuration "works" but all of these Terraform
-[variables](https://www.terraform.io/docs/configuration/variables.html) make it possible to
+[variables](https://www.terraform.io/language/values/variables) make it possible to
 customize the detectors behavior to better fit your needs.
 
 Most of them represent usual tips and rules detailled in the
@@ -85,10 +85,12 @@ This module creates the following SignalFx detectors which could contain one or 
 
 ## How to collect required metrics?
 
-This module uses metrics available from
-the [GCP integration](https://docs.signalfx.com/en/latest/integrations/google-cloud-platform.html) configurable
-with this Terraform [module](https://github.com/claranet/terraform-signalfx-integrations/tree/master/cloud/gcp).
+This module deploys detectors using metrics reported by the
+[GCP integration](https://docs.splunk.com/Observability/gdi/get-data-in/connect/gcp.html) configurable
+with [this Terraform module](https://github.com/claranet/terraform-signalfx-integrations/tree/master/cloud/gcp).
 
+
+Check the [Related documentation](#related-documentation) section for more detailed and specific information about this module dependencies.
 
 
 
@@ -114,7 +116,7 @@ Here is the list of required metrics for detectors in this module.
 ### Metadata configuration for default filtering
 
 While SignalFx does not support `label` sync from GCE the default filtering policy relies on `metadata` instead.
-Therefore, if you keep the default filter (if you don't define `filter_custom_includes` or `filter_custom_excludes`) you **need** to add those metadata to your GCP computes instances :
+Therefore, if you keep the default filter (if you don't define `filtering_custom` variable) you **need** to add those metadata to your GCP computes instances :
 
 * sfx_env=true
 * sfx_monitored=true
@@ -129,7 +131,10 @@ For example:
 * via terraform, [at the instance level](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_instance#metadata)
 * via terraform, [at the project level](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_project_metadata)
 
-You also **need** to check if those metadata are in the metadata whitelist in your [SignalFx GCP integration](https://docs.signalfx.com/en/latest/integrations/google-cloud-platform.html#compute-engine-instance).
+You also **need** to check if those metadata are in the metadata `includeList` in your [SignalFx GCP
+integration](https://dev.splunk.com/observability/docs/integrations/gcp_integration_overview/#Optional-fields).
+You can configure this from [Claranet Terraform module for GCP
+integration](https://github.com/claranet/terraform-signalfx-integrations/tree/master/cloud/gcp#input_gcp_compute_metadata_whitelist).
 
 ### About disk detectors
 
@@ -145,4 +150,6 @@ Notice these detectors has a `device_name` dimension in addition to `instance_na
 
 * [Terraform SignalFx provider](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs)
 * [Terraform SignalFx detector](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector)
+* [Splunk Observability integrations](https://docs.splunk.com/Observability/gdi/get-data-in/integrations.html)
 * [Stackdriver metrics](https://cloud.google.com/monitoring/api/metrics_gcp#gcp-compute)
+* [Splunk Observability metrics](https://docs.splunk.com/Observability/gdi/get-data-in/connect/gcp.html#google-compute-engine-metrics)

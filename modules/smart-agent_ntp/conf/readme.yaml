@@ -1,11 +1,10 @@
 documentations:
   - name: Smart Agent monitor
-    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/ntp.html'
+    url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/ntp.md'
+  - name: Splunk Observability integration
+    url: 'https://docs.splunk.com/Observability/gdi/ntp/ntp.html'
 
 source_doc: |
-  There is no SignalFx official integration for `ntp` but there is still a
-  [monitor](https://docs.signalfx.com/en/latest/integrations/agent/monitors/ntp.html) to use.
-
   ### Monitors
 
   This monitor is only available from agent version `>= 5.1.5`.

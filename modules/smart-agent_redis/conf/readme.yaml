@@ -1,14 +1,12 @@
 documentations:
   - name: Smart Agent monitor
-    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-redis.html'
-  - name: Collection script
+    url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/collectd-redis.md'
+  - name: Splunk Observability integration
+    url: 'https://docs.splunk.com/Observability/gdi/redis/redis.html'
+  - name: Collectd script
     url: 'https://github.com/signalfx/redis-collectd-plugin'
 
 source_doc: |
-  Check the [integration
-  documentation](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.redis.html)
-  in addition to the monitor one which it uses.
-
   ### Monitors
 
   The `collectd/redis` monitor requires to enable the following `extraMetrics`:

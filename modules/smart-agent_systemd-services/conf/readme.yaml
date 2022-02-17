@@ -1,11 +1,11 @@
 documentations:
   - name: Smart Agent monitor
-    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-systemd.html'
+    url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/collectd-systemd.md'
+  - name: Collectd Script
+    url: 'https://github.com/signalfx/collectd-systemd'
 
 source_doc: |
   ### Monitor
-
-  The detector of this module is based on metrics reported by the [collectd/systemd](https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-systemd.html) monitor.
 
   For example, to monitor the `toto.service` and `titi.service` on your host, your SignalFX agent should look like this:
 

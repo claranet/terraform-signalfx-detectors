@@ -1,16 +1,10 @@
 documentations:
   - name: Smart Agent monitor
-    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/elasticsearch.html'
-  - name: RabbitMQ management plugin
-    url: 'https://www.rabbitmq.com/management.html'
-  - name: Collection script
-    url: 'https://github.com/signalfx/collectd-rabbitmq'
+    url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/elasticsearch.md'
+  - name: Splunk Observability integration
+    url: 'https://docs.splunk.com/Observability/gdi/elasticsearch/elasticsearch.html'
 
 source_doc: |
-  Check the [integration
-  documentation](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.elasticsearch.html)
-  in addition to the monitor one which it uses.
-
   ### Monitors
 
   You have to enable the following `extraMetrics` in your monitor configuration:
@@ -41,7 +35,7 @@ source_doc: |
   * `elasticsearch.indices.search.fetch-total`
 
   You also have to configure following parameters from the
-  [elasticsearch](https://docs.signalfx.com/en/latest/integrations/agent/monitors/elasticsearch.html)
+  [elasticsearch](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/elasticsearch.md)
   monitor configuration:
 
   * `enableEnhancedClusterHealthStats` to `true`

@@ -1,11 +1,10 @@
 documentations:
   - name: Azure Monitor metrics
-    url: 'https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported'
-source_doc: >-
-  We are using metrics from the
-  [Microsoft.DataFactory/factories](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported#microsoftdatafactoryfactories) namespace
+    url: 'https://docs.microsoft.com/en-us/azure/azure-monitor/essentials/metrics-supported#microsoftdatafactoryfactories'
+
 notes: |
   ### Available memory
+
   This metric doesn't have a max value. We must set a default value. The default threshold values are:
     * critical < 256MB
     * major > 256MB and < 512MB

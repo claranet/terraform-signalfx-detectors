@@ -1,13 +1,14 @@
 documentations:
   - name: Smart Agent monitor
-    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/telegraf-varnish.html'
+    url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/telegraf-varnish.md'
+  - name: Splunk Observability integration
+    url: 'https://docs.splunk.com/Observability/gdi/varnish/telegraf-varnish.html'
+  - name: Telegraf Plugin
+    url: 'https://github.com/influxdata/telegraf/tree/master/plugins/inputs/varnish'
   - name: Varnishstat command
     url: 'https://varnish-cache.org/docs/trunk/reference/varnishstat.html'
 
 source_doc: |
-  There is no SignalFx official integration for `varnish` but there is still a
-  [monitor](https://docs.signalfx.com/en/latest/integrations/agent/monitors/telegraf-varnish.html) to use.
-
   ### Monitors
 
   This monitor is only available from agent version `>= 5.5.0`

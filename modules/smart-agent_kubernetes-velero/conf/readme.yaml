@@ -1,27 +1,18 @@
 documentations:
   - name: Smart Agent monitor
-    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/prometheus-velero.html'
+    url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/prometheus-velero.md'
+  - name: Splunk Observability integration
+    url: 'https://docs.splunk.com/Observability/gdi/velero/prometheus-velero.html'
 
 source_doc: |
-  ### Agent
-
-  Here is the official [main
-  documentation](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.kubernetes.html) for
-  kubernetes including the `signalfx-agent` installation which must be installed as
-  [daemonset](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/) on your cluster.
-
   ### Monitors
 
-  The detectors in this module are based on metrics reported by the following monitors:
-
-  * [prometheus/velero](https://docs.signalfx.com/en/latest/integrations/agent/monitors/prometheus-velero.html)
-
   This monitor is only available for agent `>= 5.5.5` but it is basically a wrapper around [prometheus exporter
-  monitor](https://docs.signalfx.com/en/latest/integrations/agent/monitors/prometheus-exporter.html) to filter important
+  monitor](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/prometheus-exporter.md) to filter important
   metrics while prometheus metrics are considered as custom metrics which could have an impact on SignalFx billing.
 
   You must configure it for every velero deployments so this is almost sure you will need to use [service
-  discovery](https://docs.signalfx.com/en/latest/integrations/agent/auto-discovery.html) to do it dynamically.
+  discovery](https://github.com/signalfx/signalfx-agent/blob/main/docs/auto-discovery.md) to do it dynamically.
 
   Detectors in this module will at least require these metrics:
 
@@ -70,7 +61,7 @@ notes: |
           - '!velero_restore_success_total'
   ```
 
-  It uses whitelist [filtering](https://docs.signalfx.com/en/latest/integrations/agent/filtering.html)
+  It uses whitelist [filtering](https://github.com/signalfx/signalfx-agent/blob/main/docs/filtering.md)
   to keep only interesting metrics. The last one is not required by this module.
 
   You can replace `prometheus/velero` by `prometheus-exporter` to make this module works

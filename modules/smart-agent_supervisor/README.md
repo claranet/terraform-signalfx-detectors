@@ -17,7 +17,7 @@
 ## How to use this module?
 
 This directory defines a [Terraform](https://www.terraform.io/)
-[module](https://www.terraform.io/docs/modules/usage.html) you can use in your
+[module](https://www.terraform.io/language/modules/syntax) you can use in your
 existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/Getting-started#stack) by adding a
 `module` configuration and setting its `source` parameter to URL of this folder:
 
@@ -34,7 +34,7 @@ Note the following parameters:
 
 * `source`: Use this parameter to specify the URL of the module. The double slash (`//`) is intentional  and required.
   Terraform uses it to specify subfolders within a Git repo (see [module
-  sources](https://www.terraform.io/docs/modules/sources.html)). The `ref` parameter specifies a specific Git tag in
+  sources](https://www.terraform.io/language/modules/sources)). The `ref` parameter specifies a specific Git tag in
   this repository. It is recommended to use the latest "pinned" version in place of `{revision}`. Avoid using a branch
   like `master` except for testing purpose. Note that every modules in this repository are available on the Terraform
   [registry](https://registry.terraform.io/modules/claranet/detectors/signalfx) and we recommend using it as source
@@ -50,8 +50,8 @@ Note the following parameters:
   [tagging convention](https://github.com/claranet/terraform-signalfx-detectors/wiki/Tagging-convention) by default.
 
 * `notifications`: Use this parameter to define where alerts should be sent depending on their severity. It consists
-  of a Terraform [object](https://www.terraform.io/docs/configuration/types.html#object-) where each key represents an
-  available [detector rule severity](https://docs.signalfx.com/en/latest/detect-alert/set-up-detectors.html#severity)
+  of a Terraform [object](https://www.terraform.io/language/expressions/type-constraints#object) where each key represents an available
+  [detector rule severity](https://docs.splunk.com/observability/alerts-detectors-notifications/create-detectors-for-alerts.html#severity)
   and its value is a list of recipients. Every recipients must respect the [detector notification
   format](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector#notification-format).
   Check the [notification binding](https://github.com/claranet/terraform-signalfx-detectors/wiki/Notifications-binding)
@@ -61,7 +61,7 @@ These 3 parameters alongs with all variables defined in [common-variables.tf](co
 [modules](../) in this repository. Other variables, specific to this module, are available in
 [variables.tf](variables.tf).
 In general, the default configuration "works" but all of these Terraform
-[variables](https://www.terraform.io/docs/configuration/variables.html) make it possible to
+[variables](https://www.terraform.io/language/values/variables) make it possible to
 customize the detectors behavior to better fit your needs.
 
 Most of them represent usual tips and rules detailled in the
@@ -82,15 +82,29 @@ This module creates the following SignalFx detectors which could contain one or 
 
 ## How to collect required metrics?
 
-This module uses metrics available from
-[monitors](https://docs.signalfx.com/en/latest/integrations/agent/monitors/_monitor-config.html)
-available in the [SignalFx Smart
-Agent](https://github.com/signalfx/signalfx-agent). Check the [Related documentation](#related-documentation) section for more
-information including the official documentation of this monitor.
+This module deploys detectors using metrics reported by the
+[SignalFx Smart Agent Monitors](https://github.com/signalfx/signalfx-agent#monitors).
+
+Even if the [Smart Agent is deprecated](https://github.com/signalfx/signalfx-agent/blob/main/docs/smartagent-deprecation-notice.md)
+it remains an efficient, lightweight and simple monitoring agent which still works fine.
+See the [official documentation](https://docs.splunk.com/Observability/gdi/smart-agent/smart-agent-resources.html) for more information
+about this agent.
+You might find the related following documentations useful:
+- the global level [agent configuration](https://github.com/signalfx/signalfx-agent/blob/main/docs/config-schema.md)
+- the [monitor level configuration](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitor-config.md)
+- the internal [agent configuration tips](https://github.com/claranet/terraform-signalfx-detectors/wiki/Guidance#agent-configuration).
+- the full list of [monitors available](https://github.com/signalfx/signalfx-agent/tree/main/docs/monitors) with their own specific documentation.
+
+In addition, all of these monitors are still available in the [Splunk Otel Collector](https://github.com/signalfx/splunk-otel-collector),
+the Splunk [distro of OpenTelemetry Collector](https://opentelemetry.io/docs/concepts/distributions/) which replaces SignalFx Smart Agent,
+thanks to the internal [Smart Agent Receiver](https://github.com/signalfx/splunk-otel-collector/tree/main/internal/receiver/smartagentreceiver).
+
+As a result:
+- any SignalFx Smart Agent monitor are compatible with the new agent OpenTelemetry Collector and related modules in this repository keep `smart-agent` as source name.
+- any OpenTelemetry receiver not based on an existing Smart Agent monitor is not available from old agent so related modules in this repository use `otel-collector` as source name.
 
 
-There is no SignalFx official integration for `supervisor` but there is still a
-[monitor](https://docs.signalfx.com/en/latest/integrations/agent/monitors/supervisor.html) to use.
+Check the [Related documentation](#related-documentation) section for more detailed and specific information about this module dependencies.
 
 ### Monitors
 
@@ -111,8 +125,8 @@ port=localhost:9001
 
 
 To filter only required metrics for the detectors of this module, add the
-[datapointsToExclude](https://docs.signalfx.com/en/latest/integrations/agent/filtering.html) parameter to
-the corresponding monitor configuration:
+[datapointsToExclude](https://docs.splunk.com/observability/gdi/smart-agent/smart-agent-resources.html#filtering-data-using-the-smart-agent)
+parameter to the corresponding monitor configuration:
 
 ```yaml
     datapointsToExclude:
@@ -128,5 +142,7 @@ the corresponding monitor configuration:
 
 * [Terraform SignalFx provider](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs)
 * [Terraform SignalFx detector](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector)
-* [Smart Agent monitor](https://docs.signalfx.com/en/latest/integrations/agent/monitors/supervisor.html)
+* [Splunk Observability integrations](https://docs.splunk.com/Observability/gdi/get-data-in/integrations.html)
+* [Smart Agent monitor](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/supervisor.md)
+* [Splunk Observability integration](https://docs.splunk.com/Observability/gdi/supervisor/supervisor.html)
 * [Supervisor state definition](http://supervisord.org/subprocess.html#process-states)

@@ -1,3 +1,5 @@
 documentations:
   - name: CloudWatch metrics
-    url: 'https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Monitoring.html'
+    url: 'https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.AuroraMySQL.Monitoring.Metrics.html'
+  - name: CloudWatch guide
+    url: 'https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/MonitoringAurora.html'

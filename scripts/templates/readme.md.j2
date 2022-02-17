@@ -9,7 +9,7 @@
 ## How to use this module?
 
 This directory defines a [Terraform](https://www.terraform.io/)
-[module](https://www.terraform.io/docs/modules/usage.html) you can use in your
+[module](https://www.terraform.io/language/modules/syntax) you can use in your
 existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/Getting-started#stack) by adding a
 `module` configuration and setting its `source` parameter to URL of this folder:
 
@@ -21,7 +21,7 @@ Note the following parameters:
 
 * `source`: Use this parameter to specify the URL of the module. The double slash (`//`) is intentional  and required.
   Terraform uses it to specify subfolders within a Git repo (see [module
-  sources](https://www.terraform.io/docs/modules/sources.html)). The `ref` parameter specifies a specific Git tag in
+  sources](https://www.terraform.io/language/modules/sources)). The `ref` parameter specifies a specific Git tag in
   this repository. It is recommended to use the latest "pinned" version in place of `{revision}`. Avoid using a branch
   like `master` except for testing purpose. Note that every modules in this repository are available on the Terraform
   [registry](https://registry.terraform.io/modules/claranet/detectors/signalfx) and we recommend using it as source
@@ -37,8 +37,8 @@ Note the following parameters:
   [tagging convention](https://github.com/claranet/terraform-signalfx-detectors/wiki/Tagging-convention) by default.
 
 * `notifications`: Use this parameter to define where alerts should be sent depending on their severity. It consists
-  of a Terraform [object](https://www.terraform.io/docs/configuration/types.html#object-) where each key represents an
-  available [detector rule severity](https://docs.signalfx.com/en/latest/detect-alert/set-up-detectors.html#severity)
+  of a Terraform [object](https://www.terraform.io/language/expressions/type-constraints#object) where each key represents an available
+  [detector rule severity](https://docs.splunk.com/observability/alerts-detectors-notifications/create-detectors-for-alerts.html#severity)
   and its value is a list of recipients. Every recipients must respect the [detector notification
   format](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector#notification-format).
   Check the [notification binding](https://github.com/claranet/terraform-signalfx-detectors/wiki/Notifications-binding)
@@ -48,7 +48,7 @@ These 3 parameters alongs with all variables defined in [common-variables.tf](co
 [modules](../) in this repository. Other variables, specific to this module, are available in
 {% for var_file in var_files %}{% if var_files|length > 1 and not loop.first %} and {% endif %}[{{ var_file }}]({{ var_file }}){% endfor %}.
 In general, the default configuration "works" but all of these Terraform
-[variables](https://www.terraform.io/docs/configuration/variables.html) make it possible to
+[variables](https://www.terraform.io/language/values/variables) make it possible to
 customize the detectors behavior to better fit your needs.
 
 Most of them represent usual tips and rules detailled in the
@@ -66,43 +66,73 @@ This module creates the following SignalFx detectors which could contain one or 
 
 ## How to collect required metrics?
 
-This module uses metrics available from
+This module deploys detectors using metrics reported by the
 {% if source_type == 'smart-agent' -%}
-[monitors](https://docs.signalfx.com/en/latest/integrations/agent/monitors/_monitor-config.html)
-available in the [SignalFx Smart
-Agent](https://github.com/signalfx/signalfx-agent). Check the [Related documentation](#related-documentation) section for more
-information including the official documentation of this monitor.
+[SignalFx Smart Agent Monitors](https://github.com/signalfx/signalfx-agent#monitors).
+
+Even if the [Smart Agent is deprecated](https://github.com/signalfx/signalfx-agent/blob/main/docs/smartagent-deprecation-notice.md)
+it remains an efficient, lightweight and simple monitoring agent which still works fine.
+See the [official documentation](https://docs.splunk.com/Observability/gdi/smart-agent/smart-agent-resources.html) for more information
+about this agent.
+You might find the related following documentations useful:
+- the global level [agent configuration](https://github.com/signalfx/signalfx-agent/blob/main/docs/config-schema.md)
+- the [monitor level configuration](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitor-config.md)
+- the internal [agent configuration tips](https://github.com/claranet/terraform-signalfx-detectors/wiki/Guidance#agent-configuration).
+- the full list of [monitors available](https://github.com/signalfx/signalfx-agent/tree/main/docs/monitors) with their own specific documentation.
+
+In addition, all of these monitors are still available in the [Splunk Otel Collector](https://github.com/signalfx/splunk-otel-collector),
+the Splunk [distro of OpenTelemetry Collector](https://opentelemetry.io/docs/concepts/distributions/) which replaces SignalFx Smart Agent,
+thanks to the internal [Smart Agent Receiver](https://github.com/signalfx/splunk-otel-collector/tree/main/internal/receiver/smartagentreceiver).
+
+As a result:
+- any SignalFx Smart Agent monitor are compatible with the new agent OpenTelemetry Collector and related modules in this repository keep `smart-agent` as source name.
+- any OpenTelemetry receiver not based on an existing Smart Agent monitor is not available from old agent so related modules in this repository use `otel-collector` as source name.
 {% elif source_type == 'otel-collector' -%}
-the [receivers](https://github.com/open-telemetry/opentelemetry-collector/blob/master/receiver/README.md)
-in the [OpenTelemetry Collector](https://github.com/open-telemetry/opentelemetry-collector-contrib).
-It can be embedded in the software to monitor or it can be a binary to install and configure it separately.
+[Receivers](https://github.com/open-telemetry/opentelemetry-collector/blob/master/receiver/README.md) of the [OpenTelemetry
+Collector](https://opentelemetry.io/docs/collector/), a new vendor-agnostic agent which replaces the [SignalFx Smart
+Agent](https://github.com/signalfx/signalfx-agent/) in Splunk Observability (fka SignalFx).
+
+It is surely more powerful but therefore more complex so give a look to the [official documentation](https://opentelemetry.io/docs/collector/configuration/)
+to learn how to configure Otel Collector and your receivers properly.
+
+The full list of available receivers are distributed through different sources:
+- the [officially supported receivers](https://github.com/open-telemetry/opentelemetry-collector/tree/main/receiver) from the core repository
+- the [contributions based receivers](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/receiver) which represents
+a superset of the core repository.
+- the [splunk specific receivers](https://github.com/signalfx/splunk-otel-collector/tree/main/internal/receiver) from the Splunk distro of
+the OpenTelemetry Collector based on the contributions repository.
 {% elif source_type == 'prometheus-exporter' -%}
-the scraping of a server following the [OpenMetrics convention](https://openmetrics.io/) based on and compatible with [the Prometheus
+scraping of a server following the [OpenMetrics convention](https://openmetrics.io/) based on and compatible with [the Prometheus
 exposition format](https://github.com/prometheus/docs/blob/main/content/docs/instrumenting/exposition_formats.md#openmetrics-text-format).
-They are generally called "Prometheus Exporter" which can be fetched by both the [SignalFx Smart Agent](https://github.com/signalfx/signalfx-agent)
-thanks to its [prometheus exporter monitor](https://docs.signalfx.com/en/latest/integrations/agent/monitors/prometheus-exporter.html) and the
+
+They are generally called `Prometheus Exporters` which can be fetched by both the [SignalFx Smart Agent](https://github.com/signalfx/signalfx-agent)
+thanks to its [prometheus exporter monitor](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/prometheus-exporter.md) and the
 [OpenTelemetry Collector](https://github.com/signalfx/splunk-otel-collector) using its [prometheus
 receiver](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/receiver/prometheusreceiver) or its derivates.
+
+These exporters could be embedded directly in the tool you want to monitor (e.g. nginx ingress) or must be installed next to it as
+a separate program configured to connect, create metrics and expose them as server.
 {% elif source_type == 'fame' -%}
-the [Function for Azure Monitoring Extension](https://github.com/claranet/fame), an Azure Function App written in Python which allows to
-run Log Analytics queries and send result to Splunk Observability as metrics. More information available in the [dedicated
-readme](https://github.com/claranet/fame/blob/master/README.md).
+the [Function for Azure Monitoring Extension](https://github.com/claranet/fame), an Azure Function App written in Python by Claranet
+which allows to run Log Analytics queries and send result to Splunk Observability as metrics.
+
+More information available in the [dedicated readme](https://github.com/claranet/fame/blob/master/README.md).
 {% elif source_type == 'integration_aws' -%}
-the [AWS integration](https://docs.signalfx.com/en/latest/integrations/amazon-web-services.html) configurable
-with this Terraform [module](https://github.com/claranet/terraform-signalfx-integrations/tree/master/cloud/aws).
+[AWS integration](https://docs.splunk.com/Observability/gdi/get-data-in/connect/aws/aws.html) configurable
+with [this Terraform module](https://github.com/claranet/terraform-signalfx-integrations/tree/master/cloud/aws).
 {% elif source_type == 'integration_azure' -%}
-the [Azure integration](https://docs.signalfx.com/en/latest/integrations/azure-info.html) configurable
-with this Terraform [module](https://github.com/claranet/terraform-signalfx-integrations/tree/master/cloud/azure).
+[Azure integration](https://docs.splunk.com/Observability/gdi/get-data-in/connect/azure/azure.html) configurable
+with [this Terraform module](https://github.com/claranet/terraform-signalfx-integrations/tree/master/cloud/azure).
 {% elif source_type == 'integration_gcp' -%}
-the [GCP integration](https://docs.signalfx.com/en/latest/integrations/google-cloud-platform.html) configurable
-with this Terraform [module](https://github.com/claranet/terraform-signalfx-integrations/tree/master/cloud/gcp).
+[GCP integration](https://docs.splunk.com/Observability/gdi/get-data-in/connect/gcp.html) configurable
+with [this Terraform module](https://github.com/claranet/terraform-signalfx-integrations/tree/master/cloud/gcp).
 {% elif source_type == 'integration_newrelic' -%}
-the [NewRelic integration](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.new.relic.html)
+[NewRelic integration](https://github.com/signalfx/integrations/blob/master/newrelic/README.md).
 {% else -%}
-[SignalFx
-organization](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.signalfx.organization.metrics.html).
-There are always available and do not need any configuration to work.
+[Splunk Observability organization](https://docs.splunk.com/Observability/admin/org-metrics.html) always available out the box.
 {%- endif %}
+
+Check the [Related documentation](#related-documentation) section for more detailed and specific information about this module dependencies.
 
 {% if source_doc is defined and source_doc is not none -%}
 {{ source_doc }}
@@ -112,8 +142,8 @@ There are always available and do not need any configuration to work.
 
 {% if source_type == 'smart-agent' %}
 To filter only required metrics for the detectors of this module, add the
-[datapointsToExclude](https://docs.signalfx.com/en/latest/integrations/agent/filtering.html) parameter to
-the corresponding monitor configuration:
+[datapointsToExclude](https://docs.splunk.com/observability/gdi/smart-agent/smart-agent-resources.html#filtering-data-using-the-smart-agent)
+parameter to the corresponding monitor configuration:
 
 ```yaml
     datapointsToExclude:
@@ -149,6 +179,7 @@ Here is the list of required metrics for detectors in this module.
 
 * [Terraform SignalFx provider](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs)
 * [Terraform SignalFx detector](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector)
+* [Splunk Observability integrations](https://docs.splunk.com/Observability/gdi/get-data-in/integrations.html)
 {% if documentations is defined and documentations is not none -%}
 {% for documentation in documentations -%}
 * [{{ documentation.name}}]({{ documentation.url }})

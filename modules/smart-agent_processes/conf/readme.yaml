@@ -1,10 +1,10 @@
 documentations:
   - name: Smart Agent monitor
-    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-processes.html'
-
-source_doc: |
-  There is no SignalFx official integration for `processes` but there is still a
-  [monitor](https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-processes.html) to use.
+    url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/collectd-processes.md'
+  - name: Splunk Observability integration
+    url: 'https://docs.splunk.com/Observability/gdi/processes/processes.html'
+  - name: Collectd Plugin
+    url: 'https://collectd.org/wiki/index.php/Plugin:Processes'
 
 notes: |
   By default, only `critical` rule is enabled. This allows the detector to check if the service has, at least,

@@ -1,11 +1,10 @@
 documentations:
   - name: Smart Agent monitor
-    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/nagios.html'
+    url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/nagios.md'
   - name: Nagios checks guidelines
     url: 'https://nagios-plugins.org/doc/guidelines.html#AEN78'
 
 source_doc: |
-
   ### Monitors
 
   This monitor is only available for agent `>= 5.7.1`. For prior versions, it is possible to use the

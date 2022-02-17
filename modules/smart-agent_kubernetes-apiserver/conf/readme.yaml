@@ -1,11 +1,8 @@
 documentations:
   - name: Smart Agent monitor
-    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/kubernetes-apiserver.html'
-
-source_doc: |
-  Follow the
-  [kubernetes-apiserver](https://docs.signalfx.com/en/latest/integrations/agent/monitors/kubernetes-apiserver.html)
-  monitor configuration to collect metrics.
+    url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/kubernetes-apiserver.md'
+  - name: Splunk Observability integration
+    url: 'https://docs.splunk.com/Observability/gdi/kubernetes-apiserver/kubernetes-apiserver.html'
 
 notes: |
   For now this module only contains an heartbeat detector to check the health of the api server.

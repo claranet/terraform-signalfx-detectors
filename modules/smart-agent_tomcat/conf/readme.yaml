@@ -1,19 +1,16 @@
 documentations:
   - name: Smart Agent monitor
-    url: 'https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-tomcat.html'
+    url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/collectd-tomcat.md'
+  - name: Splunk Observability integration
+    url: 'https://docs.splunk.com/Observability/gdi/tomcat/tomcat.html'
   - name: Collectd plugin
     url: 'https://collectd.org/wiki/index.php/Plugin:GenericJMX'
 
 source_doc: |
-  There is no SignalFx official integration for `tomcat` but there is still a
-  [monitor](https://docs.signalfx.com/en/latest/integrations/agent/monitors/collectd-genericjmx.html) to use.
-
   ### Agent
 
-  The agent requires to [Java
-  plugin](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.java.html)
-  for Collectd which is already installed in the [SignalFx Smart
-  Agent](https://github.com/signalfx/signalfx-agent/).
+  The agent requires the [Collectd Java plugin](https://collectd.org/wiki/index.php/Plugin:Java)
+  which should already be installed with the [SignalFx Smart Agent](https://github.com/signalfx/signalfx-agent/).
 
   ### Monitors
 

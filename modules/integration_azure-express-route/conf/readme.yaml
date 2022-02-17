@@ -1,5 +1,5 @@
 documentations:
+  - name: Azure Monitor metrics
+    url: 'https://docs.microsoft.com/en-us/azure/azure-monitor/essentials/metrics-supported#microsoftnetworkexpressroutecircuits'
   - name: Verifying ExpressRoute connectivity
     url: https://docs.microsoft.com/en-us/azure/expressroute/expressroute-troubleshooting-expressroute-overview
-
-source_doc:
