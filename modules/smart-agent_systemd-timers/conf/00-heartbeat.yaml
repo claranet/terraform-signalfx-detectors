@@ -3,6 +3,7 @@ name: heartbeat
 
 transformation: false
 aggregation: true
+exclude_not_running_vm: true
 disabled: true
 
 signals:
