@@ -49,8 +49,8 @@ Note the following parameters:
   [tagging convention](https://github.com/claranet/terraform-signalfx-detectors/wiki/Tagging-convention) by default.
 
 * `notifications`: Use this parameter to define where alerts should be sent depending on their severity. It consists
-  of a Terraform [object](https://www.terraform.io/docs/configuration/types.html#object-) where each key represents an
-  available [detector rule severity](https://docs.signalfx.com/en/latest/detect-alert/set-up-detectors.html#severity)
+  of a Terraform [object](https://www.terraform.io/docs/configuration/types.html#object-) where each key represents an available
+  [detector rule severity](https://docs.splunk.com/observability/alerts-detectors-notifications/create-detectors-for-alerts.html#severity)
   and its value is a list of recipients. Every recipients must respect the [detector notification
   format](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector#notification-format).
   Check the [notification binding](https://github.com/claranet/terraform-signalfx-detectors/wiki/Notifications-binding)
@@ -82,9 +82,11 @@ This module creates the following SignalFx detectors which could contain one or 
 
 ## How to collect required metrics?
 
-This module uses metrics available from
-the [NewRelic integration](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.new.relic.html)
+This module deploys detectors using metrics reported by the
+[NewRelic integration](https://github.com/signalfx/integrations/blob/master/newrelic/README.md).
 
+
+Check the [Related documentation](#related-documentation) section for more detailed and specific information about this module dependencies.
 
 
 
@@ -100,7 +102,7 @@ Here is the list of required metrics for detectors in this module.
 ## Notes
 
 * The NewRelic integration from SignalFx still uses the deprecated [REST API
-v1](https://docs.newrelic.com/docs/apis/rest-api-v1-deprecated/new-relic-rest-api-v1).
+v1](https://docs.newrelic.com/docs/apis/rest-api-v1-deprecated/new-relic-rest-api-v1/working-new-relic-rest-api-v1-deprecated/).
 * It also generate too many metrics all considered as custom which could have a big
 impact in the SignalFx billing so you have to filter as much as possible to avoid that.
 * Sadly, the `errors_per_minute` filter is not available so the `errors` detector will
@@ -115,4 +117,5 @@ too many metrics
 
 * [Terraform SignalFx provider](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs)
 * [Terraform SignalFx detector](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector)
-* [Stackdriver metrics](https://cloud.google.com/monitoring/api/metrics_gcp#gcp-cloudsql)
+* [Splunk Observability integrations](https://docs.splunk.com/Observability/gdi/get-data-in/integrations.html)
+* [NewRelic integration](https://github.com/signalfx/integrations/blob/master/newrelic/README.md)
