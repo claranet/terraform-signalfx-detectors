@@ -18,6 +18,12 @@ variable "jvm_memory_pressure_transformation_function" {
   default     = ".min(over='15m')"
 }
 
+variable "jvm_memory_pressure_max_delay" {
+  description = "Enforce max delay for jvm_memory_pressure detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "jvm_memory_pressure_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string

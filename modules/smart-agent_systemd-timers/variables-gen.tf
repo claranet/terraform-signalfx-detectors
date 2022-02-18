@@ -12,6 +12,12 @@ variable "heartbeat_aggregation_function" {
   default     = ""
 }
 
+variable "heartbeat_max_delay" {
+  description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = 900
+}
+
 variable "heartbeat_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -54,6 +60,12 @@ variable "execution_delay_transformation_function" {
   description = "Transformation function for execution_delay detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
+}
+
+variable "execution_delay_max_delay" {
+  description = "Enforce max delay for execution_delay detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "execution_delay_tip" {
@@ -109,6 +121,12 @@ variable "last_execution_state_transformation_function" {
   description = "Transformation function for last_execution_state detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
+}
+
+variable "last_execution_state_max_delay" {
+  description = "Enforce max delay for last_execution_state detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "last_execution_state_tip" {

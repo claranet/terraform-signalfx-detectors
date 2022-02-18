@@ -18,6 +18,12 @@ variable "memory_used_transformation_function" {
   default     = ".min(over='15m')"
 }
 
+variable "memory_used_max_delay" {
+  description = "Enforce max delay for memory_used detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "memory_used_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -102,6 +108,12 @@ variable "out_of_memory_errors_transformation_function" {
   default     = ".min(over='15m')"
 }
 
+variable "out_of_memory_errors_max_delay" {
+  description = "Enforce max delay for out_of_memory_errors detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "out_of_memory_errors_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -155,6 +167,12 @@ variable "disk_write_queue_transformation_function" {
   description = "Transformation function for disk_write_queue detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='15m')"
+}
+
+variable "disk_write_queue_max_delay" {
+  description = "Enforce max delay for disk_write_queue detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "disk_write_queue_tip" {

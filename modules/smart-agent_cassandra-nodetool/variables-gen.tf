@@ -18,6 +18,12 @@ variable "node_status_transformation_function" {
   default     = ".min(over='10m')"
 }
 
+variable "node_status_max_delay" {
+  description = "Enforce max delay for node_status detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "node_status_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -100,6 +106,12 @@ variable "node_state_transformation_function" {
   description = "Transformation function for node_state detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='1h')"
+}
+
+variable "node_state_max_delay" {
+  description = "Enforce max delay for node_state detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "node_state_tip" {

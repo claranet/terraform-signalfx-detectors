@@ -18,6 +18,12 @@ variable "heartbeat_transformation_function" {
   default     = ""
 }
 
+variable "heartbeat_max_delay" {
+  description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = 900
+}
+
 variable "heartbeat_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -60,6 +66,12 @@ variable "status_transformation_function" {
   description = "Transformation function for status detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
+}
+
+variable "status_max_delay" {
+  description = "Enforce max delay for status detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "status_tip" {
@@ -115,6 +127,12 @@ variable "server_errors_transformation_function" {
   description = "Transformation function for server_errors detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
+}
+
+variable "server_errors_max_delay" {
+  description = "Enforce max delay for server_errors detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "server_errors_tip" {
@@ -199,6 +217,12 @@ variable "total_requests_transformation_function" {
   description = "Transformation function for total_requests detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
+}
+
+variable "total_requests_max_delay" {
+  description = "Enforce max delay for total_requests detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "total_requests_tip" {

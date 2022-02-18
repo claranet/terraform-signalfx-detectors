@@ -41,6 +41,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.memory_used_max_delay
 }
 
 resource "signalfx_detector" "out_of_memory_errors" {
@@ -66,6 +68,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.out_of_memory_errors_max_delay
 }
 
 resource "signalfx_detector" "disk_write_queue" {
@@ -104,5 +108,7 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.disk_write_queue_max_delay
 }
 

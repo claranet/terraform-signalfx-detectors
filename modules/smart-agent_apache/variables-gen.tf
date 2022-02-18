@@ -12,6 +12,12 @@ variable "heartbeat_aggregation_function" {
   default     = ""
 }
 
+variable "heartbeat_max_delay" {
+  description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = 900
+}
+
 variable "heartbeat_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -54,6 +60,12 @@ variable "busy_workers_transformation_function" {
   description = "Transformation function for busy_workers detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='10m')"
+}
+
+variable "busy_workers_max_delay" {
+  description = "Enforce max delay for busy_workers detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "busy_workers_tip" {

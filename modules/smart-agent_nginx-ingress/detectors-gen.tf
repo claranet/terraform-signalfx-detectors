@@ -39,6 +39,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.latency_max_delay
 }
 
 resource "signalfx_detector" "http_5xx" {
@@ -84,6 +86,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.http_5xx_max_delay
 }
 
 resource "signalfx_detector" "http_4xx" {
@@ -129,5 +133,7 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.http_4xx_max_delay
 }
 

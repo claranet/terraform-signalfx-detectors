@@ -18,6 +18,12 @@ variable "requests_error_rate_transformation_function" {
   default     = ".min(over='15m')"
 }
 
+variable "requests_error_rate_max_delay" {
+  description = "Enforce max delay for requests_error_rate detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "requests_error_rate_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -100,6 +106,12 @@ variable "latency_e2e_transformation_function" {
   description = "Transformation function for latency_e2e detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='15m')"
+}
+
+variable "latency_e2e_max_delay" {
+  description = "Enforce max delay for latency_e2e detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "latency_e2e_tip" {

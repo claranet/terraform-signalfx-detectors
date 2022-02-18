@@ -18,6 +18,12 @@ variable "heartbeat_transformation_function" {
   default     = ".mean(by=['cluster'])"
 }
 
+variable "heartbeat_max_delay" {
+  description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = 900
+}
+
 variable "heartbeat_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -60,6 +66,12 @@ variable "read_latency_99th_percentile_transformation_function" {
   description = "Transformation function for read_latency_99th_percentile detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
+}
+
+variable "read_latency_99th_percentile_max_delay" {
+  description = "Enforce max delay for read_latency_99th_percentile detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "read_latency_99th_percentile_tip" {
@@ -146,6 +158,12 @@ variable "write_latency_99th_percentile_transformation_function" {
   default     = ""
 }
 
+variable "write_latency_99th_percentile_max_delay" {
+  description = "Enforce max delay for write_latency_99th_percentile detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "write_latency_99th_percentile_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -228,6 +246,12 @@ variable "read_latency_real_time_transformation_function" {
   description = "Transformation function for read_latency_real_time detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
+}
+
+variable "read_latency_real_time_max_delay" {
+  description = "Enforce max delay for read_latency_real_time detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "read_latency_real_time_tip" {
@@ -314,6 +338,12 @@ variable "write_latency_real_time_transformation_function" {
   default     = ""
 }
 
+variable "write_latency_real_time_max_delay" {
+  description = "Enforce max delay for write_latency_real_time detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "write_latency_real_time_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -396,6 +426,12 @@ variable "transactional_read_latency_99th_percentile_transformation_function" {
   description = "Transformation function for transactional_read_latency_99th_percentile detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
+}
+
+variable "transactional_read_latency_99th_percentile_max_delay" {
+  description = "Enforce max delay for transactional_read_latency_99th_percentile detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "transactional_read_latency_99th_percentile_tip" {
@@ -482,6 +518,12 @@ variable "transactional_write_latency_99th_percentile_transformation_function" {
   default     = ""
 }
 
+variable "transactional_write_latency_99th_percentile_max_delay" {
+  description = "Enforce max delay for transactional_write_latency_99th_percentile detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "transactional_write_latency_99th_percentile_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -564,6 +606,12 @@ variable "transactional_read_latency_real_time_transformation_function" {
   description = "Transformation function for transactional_read_latency_real_time detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
+}
+
+variable "transactional_read_latency_real_time_max_delay" {
+  description = "Enforce max delay for transactional_read_latency_real_time detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "transactional_read_latency_real_time_tip" {
@@ -650,6 +698,12 @@ variable "transactional_write_latency_real_time_transformation_function" {
   default     = ""
 }
 
+variable "transactional_write_latency_real_time_max_delay" {
+  description = "Enforce max delay for transactional_write_latency_real_time detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "transactional_write_latency_real_time_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -732,6 +786,12 @@ variable "storage_exceptions_count_transformation_function" {
   description = "Transformation function for storage_exceptions_count detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".sum(over='5m')"
+}
+
+variable "storage_exceptions_count_max_delay" {
+  description = "Enforce max delay for storage_exceptions_count detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "storage_exceptions_count_tip" {

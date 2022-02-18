@@ -18,6 +18,12 @@ variable "heartbeat_transformation_function" {
   default     = ""
 }
 
+variable "heartbeat_max_delay" {
+  description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = 900
+}
+
 variable "heartbeat_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -60,6 +66,12 @@ variable "snat_port_utilization_transformation_function" {
   description = "Transformation function for snat_port_utilization detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
+}
+
+variable "snat_port_utilization_max_delay" {
+  description = "Enforce max delay for snat_port_utilization detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "snat_port_utilization_tip" {
@@ -144,6 +156,12 @@ variable "throughput_transformation_function" {
   description = "Transformation function for throughput detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
+}
+
+variable "throughput_max_delay" {
+  description = "Enforce max delay for throughput detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "throughput_tip" {
@@ -276,6 +294,12 @@ variable "health_state_transformation_function" {
   description = "Transformation function for health_state detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
+}
+
+variable "health_state_max_delay" {
+  description = "Enforce max delay for health_state detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "health_state_tip" {

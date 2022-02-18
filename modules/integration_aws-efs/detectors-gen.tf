@@ -41,6 +41,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.used_space_max_delay
 }
 
 resource "signalfx_detector" "io_limit" {
@@ -85,6 +87,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.io_limit_max_delay
 }
 
 resource "signalfx_detector" "read_throughput" {
@@ -131,6 +135,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.read_throughput_max_delay
 }
 
 resource "signalfx_detector" "write_throughput" {
@@ -177,6 +183,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.write_throughput_max_delay
 }
 
 resource "signalfx_detector" "percent_of_permitted_throughput" {
@@ -223,6 +231,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.percent_of_permitted_throughput_max_delay
 }
 
 resource "signalfx_detector" "burst_credit_balance" {
@@ -254,5 +264,7 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.burst_credit_balance_max_delay
 }
 

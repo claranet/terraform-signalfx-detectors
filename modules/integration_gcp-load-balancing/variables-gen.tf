@@ -18,6 +18,12 @@ variable "error_rate_5xx_transformation_function" {
   default     = ""
 }
 
+variable "error_rate_5xx_max_delay" {
+  description = "Enforce max delay for error_rate_5xx detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "error_rate_5xx_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -100,6 +106,12 @@ variable "error_rate_4xx_transformation_function" {
   description = "Transformation function for error_rate_4xx detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
+}
+
+variable "error_rate_4xx_max_delay" {
+  description = "Enforce max delay for error_rate_4xx detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "error_rate_4xx_tip" {
@@ -186,6 +198,12 @@ variable "backend_latency_service_transformation_function" {
   default     = ""
 }
 
+variable "backend_latency_service_max_delay" {
+  description = "Enforce max delay for backend_latency_service detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "backend_latency_service_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -270,6 +288,12 @@ variable "backend_latency_bucket_transformation_function" {
   default     = ""
 }
 
+variable "backend_latency_bucket_max_delay" {
+  description = "Enforce max delay for backend_latency_bucket detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "backend_latency_bucket_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -352,6 +376,12 @@ variable "request_count_transformation_function" {
   description = "Transformation function for request_count detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
+}
+
+variable "request_count_max_delay" {
+  description = "Enforce max delay for request_count detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "request_count_tip" {
