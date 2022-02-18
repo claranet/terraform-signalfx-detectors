@@ -18,6 +18,12 @@ variable "messages_ready_transformation_function" {
   default     = ""
 }
 
+variable "messages_ready_max_delay" {
+  description = "Enforce max delay for messages_ready detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "messages_ready_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -100,6 +106,12 @@ variable "messages_unacknowledged_transformation_function" {
   description = "Transformation function for messages_unacknowledged detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
+}
+
+variable "messages_unacknowledged_max_delay" {
+  description = "Enforce max delay for messages_unacknowledged detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "messages_unacknowledged_tip" {
@@ -186,6 +198,12 @@ variable "messages_ack_rate_transformation_function" {
   default     = ""
 }
 
+variable "messages_ack_rate_max_delay" {
+  description = "Enforce max delay for messages_ack_rate detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "messages_ack_rate_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -268,6 +286,12 @@ variable "consumer_use_transformation_function" {
   description = "Transformation function for consumer_use detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
+}
+
+variable "consumer_use_max_delay" {
+  description = "Enforce max delay for consumer_use detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "consumer_use_tip" {

@@ -42,6 +42,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.activity_error_rate_max_delay
 }
 
 resource "signalfx_detector" "pipeline_error_rate" {
@@ -88,6 +90,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.pipeline_error_rate_max_delay
 }
 
 resource "signalfx_detector" "trigger_error_rate" {
@@ -129,6 +133,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.trigger_error_rate_max_delay
 }
 
 resource "signalfx_detector" "available_memory" {
@@ -174,6 +180,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.available_memory_max_delay
 }
 
 resource "signalfx_detector" "cpu_percentage" {
@@ -218,5 +226,7 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.cpu_percentage_max_delay
 }
 

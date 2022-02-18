@@ -5,8 +5,6 @@ resource "signalfx_detector" "heartbeat" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
-  max_delay = 900
-
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
     signal = data('kubernetes.node_ready', filter=${local.not_running_vm_filters} and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
@@ -24,6 +22,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject_novalue : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.heartbeat_max_delay
 }
 
 resource "signalfx_detector" "hpa_capacity" {
@@ -51,6 +51,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.hpa_capacity_max_delay
 }
 
 resource "signalfx_detector" "node_ready" {
@@ -90,6 +92,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.node_ready_max_delay
 }
 
 resource "signalfx_detector" "pod_phase_status" {
@@ -142,6 +146,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.pod_phase_status_max_delay
 }
 
 resource "signalfx_detector" "terminated" {
@@ -168,6 +174,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.terminated_max_delay
 }
 
 resource "signalfx_detector" "oom_killed" {
@@ -195,6 +203,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.oom_killed_max_delay
 }
 
 resource "signalfx_detector" "deployment_crashloopbackoff" {
@@ -221,6 +231,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.deployment_crashloopbackoff_max_delay
 }
 
 resource "signalfx_detector" "daemonset_crashloopbackoff" {
@@ -247,6 +259,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.daemonset_crashloopbackoff_max_delay
 }
 
 resource "signalfx_detector" "job_failed" {
@@ -275,6 +289,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.job_failed_max_delay
 }
 
 resource "signalfx_detector" "daemonset_scheduled" {
@@ -302,6 +318,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.daemonset_scheduled_max_delay
 }
 
 resource "signalfx_detector" "daemonset_ready" {
@@ -329,6 +347,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.daemonset_ready_max_delay
 }
 
 resource "signalfx_detector" "daemonset_misscheduled" {
@@ -354,6 +374,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.daemonset_misscheduled_max_delay
 }
 
 resource "signalfx_detector" "deployment_available" {
@@ -381,6 +403,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.deployment_available_max_delay
 }
 
 resource "signalfx_detector" "replicaset_available" {
@@ -408,6 +432,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.replicaset_available_max_delay
 }
 
 resource "signalfx_detector" "replication_controller_available" {
@@ -435,6 +461,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.replication_controller_available_max_delay
 }
 
 resource "signalfx_detector" "statefulset_ready" {
@@ -462,5 +490,7 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.statefulset_ready_max_delay
 }
 

@@ -12,6 +12,12 @@ variable "heartbeat_aggregation_function" {
   default     = ".mean(by=['LoadBalancer'])"
 }
 
+variable "heartbeat_max_delay" {
+  description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = 900
+}
+
 variable "heartbeat_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -54,6 +60,12 @@ variable "latency_transformation_function" {
   description = "Transformation function for latency detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
+}
+
+variable "latency_max_delay" {
+  description = "Enforce max delay for latency detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "latency_tip" {
@@ -140,6 +152,12 @@ variable "alb_5xx_transformation_function" {
   default     = ""
 }
 
+variable "alb_5xx_max_delay" {
+  description = "Enforce max delay for alb_5xx detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "alb_5xx_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -222,6 +240,12 @@ variable "alb_4xx_transformation_function" {
   description = "Transformation function for alb_4xx detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
+}
+
+variable "alb_4xx_max_delay" {
+  description = "Enforce max delay for alb_4xx detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "alb_4xx_tip" {
@@ -308,6 +332,12 @@ variable "target_5xx_transformation_function" {
   default     = ""
 }
 
+variable "target_5xx_max_delay" {
+  description = "Enforce max delay for target_5xx detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "target_5xx_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -392,6 +422,12 @@ variable "target_4xx_transformation_function" {
   default     = ""
 }
 
+variable "target_4xx_max_delay" {
+  description = "Enforce max delay for target_4xx detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "target_4xx_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -474,6 +510,12 @@ variable "healthy_transformation_function" {
   description = "Transformation function for healthy detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
+}
+
+variable "healthy_max_delay" {
+  description = "Enforce max delay for healthy detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "healthy_tip" {

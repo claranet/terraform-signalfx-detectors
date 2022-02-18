@@ -18,6 +18,12 @@ variable "deadlettered_messages_transformation_function" {
   default     = ".min(over='5m')"
 }
 
+variable "deadlettered_messages_max_delay" {
+  description = "Enforce max delay for deadlettered_messages detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "deadlettered_messages_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string

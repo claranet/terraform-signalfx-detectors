@@ -18,6 +18,12 @@ variable "value_transformation_function" {
   default     = ""
 }
 
+variable "value_max_delay" {
+  description = "Enforce max delay for value detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "value_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -71,6 +77,12 @@ variable "status_transformation_function" {
   description = "Transformation function for status detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
+}
+
+variable "status_max_delay" {
+  description = "Enforce max delay for status detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "status_tip" {

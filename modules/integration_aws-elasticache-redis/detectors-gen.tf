@@ -42,6 +42,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.cache_hits_max_delay
 }
 
 resource "signalfx_detector" "cpu_high" {
@@ -86,6 +88,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.cpu_high_max_delay
 }
 
 resource "signalfx_detector" "replication_lag" {
@@ -130,6 +134,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.replication_lag_max_delay
 }
 
 resource "signalfx_detector" "commands" {
@@ -158,5 +164,7 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.commands_max_delay
 }
 

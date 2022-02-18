@@ -18,6 +18,12 @@ variable "cpu_transformation_function" {
   default     = ""
 }
 
+variable "cpu_max_delay" {
+  description = "Enforce max delay for cpu detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "cpu_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -100,6 +106,12 @@ variable "hit_ratio_transformation_function" {
   description = "Transformation function for hit_ratio detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
+}
+
+variable "hit_ratio_max_delay" {
+  description = "Enforce max delay for hit_ratio detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "hit_ratio_tip" {

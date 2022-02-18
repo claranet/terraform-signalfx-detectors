@@ -12,6 +12,12 @@ variable "heartbeat_aggregation_function" {
   default     = ""
 }
 
+variable "heartbeat_max_delay" {
+  description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = 900
+}
+
 variable "heartbeat_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -54,6 +60,12 @@ variable "http_code_matched_transformation_function" {
   description = "Transformation function for http_code_matched detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
+}
+
+variable "http_code_matched_max_delay" {
+  description = "Enforce max delay for http_code_matched detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "http_code_matched_tip" {
@@ -111,6 +123,12 @@ variable "http_regex_matched_transformation_function" {
   default     = ""
 }
 
+variable "http_regex_matched_max_delay" {
+  description = "Enforce max delay for http_regex_matched detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "http_regex_matched_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -164,6 +182,12 @@ variable "http_response_time_transformation_function" {
   description = "Transformation function for http_response_time detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
+}
+
+variable "http_response_time_max_delay" {
+  description = "Enforce max delay for http_response_time detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "http_response_time_tip" {
@@ -250,6 +274,12 @@ variable "http_content_length_transformation_function" {
   default     = ""
 }
 
+variable "http_content_length_max_delay" {
+  description = "Enforce max delay for http_content_length detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "http_content_length_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -303,6 +333,12 @@ variable "certificate_expiration_date_transformation_function" {
   description = "Transformation function for certificate_expiration_date detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
+}
+
+variable "certificate_expiration_date_max_delay" {
+  description = "Enforce max delay for certificate_expiration_date detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "certificate_expiration_date_tip" {
@@ -387,6 +423,12 @@ variable "invalid_tls_certificate_transformation_function" {
   description = "Transformation function for invalid_tls_certificate detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
+}
+
+variable "invalid_tls_certificate_max_delay" {
+  description = "Enforce max delay for invalid_tls_certificate detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "invalid_tls_certificate_tip" {

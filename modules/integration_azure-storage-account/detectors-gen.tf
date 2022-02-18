@@ -36,6 +36,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.count_max_delay
 }
 
 resource "signalfx_detector" "capacity" {
@@ -81,6 +83,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.capacity_max_delay
 }
 
 resource "signalfx_detector" "ingress" {
@@ -126,6 +130,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.ingress_max_delay
 }
 
 resource "signalfx_detector" "egress" {
@@ -171,6 +177,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.egress_max_delay
 }
 
 resource "signalfx_detector" "requests_rate" {
@@ -210,5 +218,7 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.requests_rate_max_delay
 }
 

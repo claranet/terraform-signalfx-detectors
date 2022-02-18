@@ -101,6 +101,12 @@ runbook_url:
 ## use to set its custom one.
 tip:
 
+## @param max_delay - number - optional
+## Define a default max_delay for this detector, see:
+## https://docs.splunk.com/Observability/alerts-detectors-notifications/detector-options.html#max-delay
+## If not defined, it will be set to null expect for heartbeat which enforce 900.
+max_delay:
+
 ## @param disabled - bool - optional
 ## Allows to disable all alerting rules defined in this detector
 ## Only works if set to `true`.

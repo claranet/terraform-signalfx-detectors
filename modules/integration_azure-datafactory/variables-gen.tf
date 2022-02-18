@@ -18,6 +18,12 @@ variable "activity_error_rate_transformation_function" {
   default     = ".min(over='5m')"
 }
 
+variable "activity_error_rate_max_delay" {
+  description = "Enforce max delay for activity_error_rate detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "activity_error_rate_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -100,6 +106,12 @@ variable "pipeline_error_rate_transformation_function" {
   description = "Transformation function for pipeline_error_rate detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='5m')"
+}
+
+variable "pipeline_error_rate_max_delay" {
+  description = "Enforce max delay for pipeline_error_rate detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "pipeline_error_rate_tip" {
@@ -186,6 +198,12 @@ variable "trigger_error_rate_transformation_function" {
   default     = ".min(over='5m')"
 }
 
+variable "trigger_error_rate_max_delay" {
+  description = "Enforce max delay for trigger_error_rate detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "trigger_error_rate_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -270,6 +288,12 @@ variable "available_memory_transformation_function" {
   default     = ".min(over='15m')"
 }
 
+variable "available_memory_max_delay" {
+  description = "Enforce max delay for available_memory detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "available_memory_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -352,6 +376,12 @@ variable "cpu_percentage_transformation_function" {
   description = "Transformation function for cpu_percentage detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='15m')"
+}
+
+variable "cpu_percentage_max_delay" {
+  description = "Enforce max delay for cpu_percentage detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "cpu_percentage_tip" {

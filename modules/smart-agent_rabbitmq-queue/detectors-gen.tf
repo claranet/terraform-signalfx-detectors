@@ -35,6 +35,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.messages_ready_max_delay
 }
 
 resource "signalfx_detector" "messages_unacknowledged" {
@@ -74,6 +76,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.messages_unacknowledged_max_delay
 }
 
 resource "signalfx_detector" "messages_ack_rate" {
@@ -114,6 +118,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.messages_ack_rate_max_delay
 }
 
 resource "signalfx_detector" "consumer_use" {
@@ -154,5 +160,7 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.consumer_use_max_delay
 }
 

@@ -18,6 +18,12 @@ variable "used_space_transformation_function" {
   default     = ".max(over='15m')"
 }
 
+variable "used_space_max_delay" {
+  description = "Enforce max delay for used_space detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "used_space_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -98,6 +104,12 @@ variable "io_limit_transformation_function" {
   description = "Transformation function for io_limit detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='30m')"
+}
+
+variable "io_limit_max_delay" {
+  description = "Enforce max delay for io_limit detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "io_limit_tip" {
@@ -186,6 +198,12 @@ variable "read_throughput_transformation_function" {
   default     = ".max(over='15m')"
 }
 
+variable "read_throughput_max_delay" {
+  description = "Enforce max delay for read_throughput detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "read_throughput_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -268,6 +286,12 @@ variable "write_throughput_transformation_function" {
   default     = ".max(over='15m')"
 }
 
+variable "write_throughput_max_delay" {
+  description = "Enforce max delay for write_throughput detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "write_throughput_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -348,6 +372,12 @@ variable "percent_of_permitted_throughput_transformation_function" {
   description = "Transformation function for percent_of_permitted_throughput detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='30m')"
+}
+
+variable "percent_of_permitted_throughput_max_delay" {
+  description = "Enforce max delay for percent_of_permitted_throughput detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "percent_of_permitted_throughput_tip" {
@@ -434,6 +464,12 @@ variable "burst_credit_balance_transformation_function" {
   description = "Transformation function for burst_credit_balance detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='5m')"
+}
+
+variable "burst_credit_balance_max_delay" {
+  description = "Enforce max delay for burst_credit_balance detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "burst_credit_balance_tip" {
