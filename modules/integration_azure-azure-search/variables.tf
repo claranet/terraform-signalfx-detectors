@@ -2,6 +2,12 @@
 
 # Search_latency detector
 
+variable "search_latency_max_delay" {
+  description = "Enforce max delay for search_latency detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "search_latency_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -69,6 +75,12 @@ variable "search_latency_threshold_major" {
 }
 
 # search_throttled_queries_rate detector
+
+variable "search_throttled_queries_rate_max_delay" {
+  description = "Enforce max delay for search_throttled_queries_rate detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "search_throttled_queries_rate_tip" {
   description = "Suggested first course of action or any note useful for incident handling"

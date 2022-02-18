@@ -2,6 +2,12 @@
 
 # Velero_scheduled_backup_missing detector
 
+variable "velero_scheduled_backup_missing_max_delay" {
+  description = "Enforce max delay for velero_scheduled_backup_missing detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "velero_scheduled_backup_missing_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -39,6 +45,12 @@ variable "velero_scheduled_backup_missing_transformation_function" {
 }
 
 # Velero_backup_failure detector
+
+variable "velero_backup_failure_max_delay" {
+  description = "Enforce max delay for velero_backup_failure detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "velero_backup_failure_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -78,6 +90,12 @@ variable "velero_backup_failure_transformation_function" {
 
 # Velero_backup_partial_failure detector
 
+variable "velero_backup_partial_failure_max_delay" {
+  description = "Enforce max delay for velero_backup_partial_failure detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "velero_backup_partial_failure_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -116,6 +134,12 @@ variable "velero_backup_partial_failure_transformation_function" {
 
 # Velero_backup_deletion_failure detector
 
+variable "velero_backup_deletion_failure_max_delay" {
+  description = "Enforce max delay for velero_backup_deletion_failure detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "velero_backup_deletion_failure_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -153,6 +177,12 @@ variable "velero_backup_deletion_failure_transformation_function" {
 }
 
 # Velero_volume_snapshot_failure detector
+
+variable "velero_volume_snapshot_failure_max_delay" {
+  description = "Enforce max delay for velero_volume_snapshot_failure detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "velero_volume_snapshot_failure_tip" {
   description = "Suggested first course of action or any note useful for incident handling"

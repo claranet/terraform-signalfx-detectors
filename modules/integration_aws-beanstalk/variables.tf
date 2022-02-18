@@ -2,6 +2,12 @@
 
 # Heartbeat detector
 
+variable "heartbeat_max_delay" {
+  description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = 900
+}
+
 variable "heartbeat_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -39,6 +45,12 @@ variable "heartbeat_aggregation_function" {
 }
 
 # Health detector
+
+variable "health_max_delay" {
+  description = "Enforce max delay for health detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "health_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -102,6 +114,12 @@ variable "health_threshold_major" {
 
 # Latency_p90 detector
 
+variable "latency_p90_max_delay" {
+  description = "Enforce max delay for latency_p90 detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "latency_p90_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -164,6 +182,12 @@ variable "latency_p90_threshold_major" {
 
 # app_5xx_error_rate detector
 
+variable "app_5xx_error_rate_max_delay" {
+  description = "Enforce max delay for app_5xx_error_rate detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "app_5xx_error_rate_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -225,6 +249,12 @@ variable "app_5xx_error_rate_threshold_major" {
 }
 
 # Root_filesystem_usage detector
+
+variable "root_filesystem_usage_max_delay" {
+  description = "Enforce max delay for root_filesystem_usage detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "root_filesystem_usage_tip" {
   description = "Suggested first course of action or any note useful for incident handling"

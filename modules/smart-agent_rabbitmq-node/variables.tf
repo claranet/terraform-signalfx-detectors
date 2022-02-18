@@ -2,6 +2,12 @@
 
 # Heartbeat detector
 
+variable "heartbeat_max_delay" {
+  description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = 900
+}
+
 variable "heartbeat_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -39,6 +45,12 @@ variable "heartbeat_aggregation_function" {
 }
 
 # file_descriptors detector
+
+variable "file_descriptors_max_delay" {
+  description = "Enforce max delay for file_descriptors detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "file_descriptors_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -102,6 +114,12 @@ variable "file_descriptors_threshold_major" {
 
 # processes detector
 
+variable "processes_max_delay" {
+  description = "Enforce max delay for processes detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "processes_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -164,6 +182,12 @@ variable "processes_threshold_major" {
 
 # sockets detector
 
+variable "sockets_max_delay" {
+  description = "Enforce max delay for sockets detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "sockets_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -225,6 +249,12 @@ variable "sockets_threshold_major" {
 }
 
 # vm_memory detector
+
+variable "vm_memory_max_delay" {
+  description = "Enforce max delay for vm_memory detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "vm_memory_tip" {
   description = "Suggested first course of action or any note useful for incident handling"

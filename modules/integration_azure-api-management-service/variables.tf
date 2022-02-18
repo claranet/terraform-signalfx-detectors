@@ -26,6 +26,12 @@ variable "heartbeat_aggregation_function" {
   default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
+variable "heartbeat_max_delay" {
+  description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = 900
+}
+
 variable "heartbeat_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -86,6 +92,12 @@ variable "capacity_threshold_major" {
   description = "Major threshold for capacity detector (in %)"
   type        = number
   default     = 90
+}
+
+variable "capacity_max_delay" {
+  description = "Enforce max delay for capacity detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "capacity_tip" {
@@ -150,6 +162,12 @@ variable "gateway_requests_duration_threshold_major" {
   default     = 1
 }
 
+variable "gateway_requests_duration_max_delay" {
+  description = "Enforce max delay for gateway_requests_duration detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "gateway_requests_duration_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -210,6 +228,12 @@ variable "backend_requests_duration_threshold_major" {
   description = "Major threshold for backend requests duration detector (in s)"
   type        = number
   default     = 1
+}
+
+variable "backend_requests_duration_max_delay" {
+  description = "Enforce max delay for backend_requests_duration detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "backend_requests_duration_tip" {

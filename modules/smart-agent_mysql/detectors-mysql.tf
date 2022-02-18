@@ -5,8 +5,6 @@ resource "signalfx_detector" "heartbeat" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
-  max_delay = 900
-
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
     signal = data('mysql_octets.rx', filter=filter('plugin', 'mysql') and ${local.not_running_vm_filters} and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
@@ -24,6 +22,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject_novalue : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.heartbeat_max_delay
 }
 
 resource "signalfx_detector" "mysql_connections" {
@@ -64,6 +64,8 @@ resource "signalfx_detector" "mysql_connections" {
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.connections_max_delay
 }
 
 resource "signalfx_detector" "mysql_slow" {
@@ -104,6 +106,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.slow_max_delay
 }
 
 resource "signalfx_detector" "mysql_pool_efficiency" {
@@ -144,6 +148,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.pool_efficiency_max_delay
 }
 
 resource "signalfx_detector" "mysql_pool_utilization" {
@@ -184,6 +190,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.pool_utilization_max_delay
 }
 
 resource "signalfx_detector" "mysql_threads_anomaly" {
@@ -210,6 +218,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.threads_anomaly_max_delay
 }
 
 resource "signalfx_detector" "mysql_questions_anomaly" {
@@ -236,6 +246,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.questions_anomaly_max_delay
 }
 
 resource "signalfx_detector" "mysql_replication_lag" {
@@ -274,6 +286,8 @@ resource "signalfx_detector" "mysql_replication_lag" {
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.replication_lag_max_delay
 }
 
 resource "signalfx_detector" "mysql_slave_sql_status" {
@@ -299,6 +313,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.slave_sql_status_max_delay
 }
 
 resource "signalfx_detector" "mysql_slave_io_status" {
@@ -324,5 +340,7 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.slave_io_status_max_delay
 }
 

@@ -5,8 +5,6 @@ resource "signalfx_detector" "heartbeat" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
-  max_delay = 900
-
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting
         base_filter = filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true')
@@ -25,6 +23,8 @@ resource "signalfx_detector" "heartbeat" {
     parameterized_subject = var.message_subject == "" ? local.rule_subject_novalue : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.heartbeat_max_delay
 }
 
 resource "signalfx_detector" "total_requests" {
@@ -52,6 +52,7 @@ resource "signalfx_detector" "total_requests" {
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
+  max_delay = var.total_requests_max_delay
 }
 
 resource "signalfx_detector" "backend_connect_time" {
@@ -91,6 +92,8 @@ resource "signalfx_detector" "backend_connect_time" {
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.backend_connect_time_max_delay
 }
 
 resource "signalfx_detector" "failed_requests" {
@@ -133,6 +136,8 @@ resource "signalfx_detector" "failed_requests" {
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.failed_requests_max_delay
 }
 
 resource "signalfx_detector" "unhealthy_host_ratio" {
@@ -174,6 +179,8 @@ resource "signalfx_detector" "unhealthy_host_ratio" {
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.unhealthy_host_ratio_max_delay
 }
 
 resource "signalfx_detector" "http_4xx_errors" {
@@ -215,6 +222,8 @@ resource "signalfx_detector" "http_4xx_errors" {
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.http_4xx_errors_max_delay
 }
 
 resource "signalfx_detector" "http_5xx_errors" {
@@ -256,6 +265,8 @@ resource "signalfx_detector" "http_5xx_errors" {
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.http_5xx_errors_max_delay
 }
 
 resource "signalfx_detector" "backend_http_4xx_errors" {
@@ -297,6 +308,8 @@ resource "signalfx_detector" "backend_http_4xx_errors" {
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.backend_http_4xx_errors_max_delay
 }
 
 resource "signalfx_detector" "backend_http_5xx_errors" {
@@ -338,4 +351,6 @@ resource "signalfx_detector" "backend_http_5xx_errors" {
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.backend_http_5xx_errors_max_delay
 }

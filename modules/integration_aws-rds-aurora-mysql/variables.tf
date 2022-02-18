@@ -2,6 +2,12 @@
 
 # Aurora_mysql_replica_lag detector
 
+variable "aurora_mysql_replica_lag_max_delay" {
+  description = "Enforce max delay for aurora_mysql_replica_lag detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "aurora_mysql_replica_lag_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string

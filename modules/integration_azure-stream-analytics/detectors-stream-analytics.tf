@@ -5,8 +5,6 @@ resource "signalfx_detector" "heartbeat" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
-  max_delay = 900
-
   program_text = <<-EOF
         from signalfx.detectors.not_reporting import not_reporting
         base_filter = filter('resource_type', 'Microsoft.StreamAnalytics/streamingjobs') and filter('primary_aggregation_type', 'true')
@@ -25,6 +23,8 @@ resource "signalfx_detector" "heartbeat" {
     parameterized_subject = var.message_subject == "" ? local.rule_subject_novalue : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.heartbeat_max_delay
 }
 
 resource "signalfx_detector" "su_utilization" {
@@ -64,6 +64,8 @@ resource "signalfx_detector" "su_utilization" {
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.su_utilization_max_delay
 }
 
 resource "signalfx_detector" "failed_function_requests" {
@@ -105,6 +107,8 @@ resource "signalfx_detector" "failed_function_requests" {
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.failed_function_requests_max_delay
 }
 
 resource "signalfx_detector" "conversion_errors" {
@@ -144,6 +148,8 @@ resource "signalfx_detector" "conversion_errors" {
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.conversion_errors_max_delay
 }
 
 resource "signalfx_detector" "runtime_errors" {
@@ -183,4 +189,6 @@ resource "signalfx_detector" "runtime_errors" {
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.runtime_errors_max_delay
 }

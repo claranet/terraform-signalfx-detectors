@@ -22,6 +22,8 @@ EOF
     parameterized_subject = coalesce(var.message_subject, "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}} > {{inputs.limit.value}}) on {{{dimensions}}}")
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.hosts_limit_max_delay
 }
 
 resource "signalfx_detector" "containers_limit" {
@@ -48,6 +50,8 @@ EOF
     parameterized_subject = coalesce(var.message_subject, "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}} > {{inputs.limit.value}}) on {{{dimensions}}}")
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.containers_limit_max_delay
 }
 
 resource "signalfx_detector" "custom_metrics_limit" {
@@ -74,6 +78,8 @@ EOF
     parameterized_subject = coalesce(var.message_subject, "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}} > {{inputs.limit.value}}) on {{{dimensions}}}")
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.custom_metrics_limit_max_delay
 }
 
 resource "signalfx_detector" "containers_ratio" {
@@ -101,6 +107,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.containers_ratio_max_delay
 }
 
 resource "signalfx_detector" "custom_metrics_ratio" {
@@ -128,5 +136,7 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.custom_metrics_ratio_max_delay
 }
 

@@ -2,6 +2,12 @@
 
 # Heartbeat detector
 
+variable "heartbeat_max_delay" {
+  description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = 900
+}
+
 variable "heartbeat_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -39,6 +45,12 @@ variable "heartbeat_aggregation_function" {
 }
 
 # dropped_connections detector
+
+variable "dropped_connections_max_delay" {
+  description = "Enforce max delay for dropped_connections detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "dropped_connections_tip" {
   description = "Suggested first course of action or any note useful for incident handling"

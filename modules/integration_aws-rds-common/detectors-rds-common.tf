@@ -5,8 +5,6 @@ resource "signalfx_detector" "heartbeat" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
-  max_delay = 900
-
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
     signal = data('CPUUtilization', filter=filter('stat', 'mean') and filter('namespace', 'AWS/RDS') and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
@@ -24,6 +22,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject_novalue : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.heartbeat_max_delay
 }
 
 resource "signalfx_detector" "cpu_90_15min" {
@@ -62,6 +62,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.cpu_90_15min_max_delay
 }
 
 resource "signalfx_detector" "free_space_low" {
@@ -106,6 +108,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.free_space_low_max_delay
 }
 
 resource "signalfx_detector" "replica_lag" {
@@ -144,5 +148,7 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.replica_lag_max_delay
 }
 

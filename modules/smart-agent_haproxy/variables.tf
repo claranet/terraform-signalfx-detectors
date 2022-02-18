@@ -2,6 +2,12 @@
 
 # Heartbeat detector
 
+variable "heartbeat_max_delay" {
+  description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = 900
+}
+
 variable "heartbeat_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -39,6 +45,12 @@ variable "heartbeat_aggregation_function" {
 }
 
 # Server_status detector
+
+variable "server_status_max_delay" {
+  description = "Enforce max delay for server_status detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "server_status_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -84,6 +96,12 @@ variable "server_status_transformation_function" {
 
 # Backend_status detector
 
+variable "backend_status_max_delay" {
+  description = "Enforce max delay for backend_status detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "backend_status_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -127,6 +145,12 @@ variable "backend_status_transformation_function" {
 }
 
 # Session_limit detector
+
+variable "session_limit_max_delay" {
+  description = "Enforce max delay for session_limit detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "session_limit_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -190,6 +214,12 @@ variable "session_limit_threshold_critical" {
 
 # Http_5xx_response detector
 
+variable "http_5xx_response_max_delay" {
+  description = "Enforce max delay for http_5xx_response detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "http_5xx_response_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -251,6 +281,12 @@ variable "http_5xx_response_threshold_critical" {
 }
 
 # Http_4xx_response detector
+
+variable "http_4xx_response_max_delay" {
+  description = "Enforce max delay for http_4xx_response detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "http_4xx_response_tip" {
   description = "Suggested first course of action or any note useful for incident handling"

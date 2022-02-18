@@ -5,8 +5,6 @@ resource "signalfx_detector" "heartbeat" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
-  max_delay = 900
-
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
     signal = data('gauge.node.uptime', filter=${local.not_running_vm_filters} and filter('plugin', 'rabbitmq') and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
@@ -24,6 +22,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject_novalue : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.heartbeat_max_delay
 }
 
 resource "signalfx_detector" "file_descriptors" {
@@ -64,6 +64,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.file_descriptors_max_delay
 }
 
 resource "signalfx_detector" "processes" {
@@ -104,6 +106,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.processes_max_delay
 }
 
 resource "signalfx_detector" "sockets" {
@@ -144,6 +148,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.sockets_max_delay
 }
 
 resource "signalfx_detector" "vm_memory" {
@@ -184,5 +190,7 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.vm_memory_max_delay
 }
 

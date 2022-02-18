@@ -14,6 +14,12 @@ variable "multiplier" {
 
 # hosts_limit detector
 
+variable "hosts_limit_max_delay" {
+  description = "Enforce max delay for hosts_limit detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "hosts_limit_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -47,6 +53,12 @@ variable "hosts_limit_transformation_function" {
 }
 
 # containers_limit detector
+
+variable "containers_limit_max_delay" {
+  description = "Enforce max delay for containers_limit detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "containers_limit_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -82,6 +94,12 @@ variable "containers_limit_transformation_function" {
 
 # custom_metrics_limit detector
 
+variable "custom_metrics_limit_max_delay" {
+  description = "Enforce max delay for custom_metrics_limit detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "custom_metrics_limit_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -115,6 +133,12 @@ variable "custom_metrics_limit_transformation_function" {
 }
 
 # containers_ratio detector
+
+variable "containers_ratio_max_delay" {
+  description = "Enforce max delay for containers_ratio detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "containers_ratio_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -158,6 +182,12 @@ variable "containers_ratio_threshold_major" {
 }
 
 # custom_metrics_ratio detector
+
+variable "custom_metrics_ratio_max_delay" {
+  description = "Enforce max delay for custom_metrics_ratio detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "custom_metrics_ratio_tip" {
   description = "Suggested first course of action or any note useful for incident handling"

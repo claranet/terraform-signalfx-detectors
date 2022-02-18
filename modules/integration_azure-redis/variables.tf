@@ -2,6 +2,12 @@
 
 # Heartbeat detector
 
+variable "heartbeat_max_delay" {
+  description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = 900
+}
+
 variable "heartbeat_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -39,6 +45,12 @@ variable "heartbeat_aggregation_function" {
 }
 
 # Evictedkeys detector
+
+variable "evictedkeys_max_delay" {
+  description = "Enforce max delay for evictedkeys detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "evictedkeys_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -108,6 +120,12 @@ variable "evictedkeys_threshold_major" {
 
 # percent_processor_time detector
 
+variable "percent_processor_time_max_delay" {
+  description = "Enforce max delay for percent_processor_time detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "percent_processor_time_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -175,6 +193,12 @@ variable "percent_processor_time_threshold_major" {
 }
 
 # load detector
+
+variable "load_max_delay" {
+  description = "Enforce max delay for load detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "load_tip" {
   description = "Suggested first course of action or any note useful for incident handling"

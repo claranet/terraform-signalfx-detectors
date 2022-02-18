@@ -5,8 +5,6 @@ resource "signalfx_detector" "heartbeat" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
-  max_delay = 900
-
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
     signal = data('bytes.used_memory', filter=filter('plugin', 'redis_info') and ${local.not_running_vm_filters} and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
@@ -24,6 +22,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject_novalue : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.heartbeat_max_delay
 }
 
 resource "signalfx_detector" "evicted_keys" {
@@ -62,6 +62,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.evicted_keys_max_delay
 }
 
 resource "signalfx_detector" "expirations" {
@@ -100,6 +102,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.expirations_max_delay
 }
 
 resource "signalfx_detector" "blocked_clients" {
@@ -140,6 +144,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.blocked_clients_max_delay
 }
 
 resource "signalfx_detector" "keyspace_full" {
@@ -165,6 +171,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.keyspace_full_max_delay
 }
 
 resource "signalfx_detector" "memory_used_max" {
@@ -205,6 +213,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.memory_used_max_max_delay
 }
 
 resource "signalfx_detector" "memory_used_total" {
@@ -245,6 +255,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.memory_used_total_max_delay
 }
 
 resource "signalfx_detector" "memory_frag_high" {
@@ -285,6 +297,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.memory_frag_high_max_delay
 }
 
 resource "signalfx_detector" "memory_frag_low" {
@@ -325,6 +339,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.memory_frag_low_max_delay
 }
 
 resource "signalfx_detector" "rejected_connections" {
@@ -363,6 +379,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.rejected_connections_max_delay
 }
 
 resource "signalfx_detector" "hitrate" {
@@ -403,5 +421,7 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.hitrate_max_delay
 }
 

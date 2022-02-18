@@ -2,6 +2,12 @@
 
 # Heartbeat detector
 
+variable "heartbeat_max_delay" {
+  description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = 900
+}
+
 variable "heartbeat_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -39,6 +45,12 @@ variable "heartbeat_aggregation_function" {
 }
 
 # zookeeper_health detector
+
+variable "zookeeper_health_max_delay" {
+  description = "Enforce max delay for zookeeper_health detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "zookeeper_health_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -83,6 +95,12 @@ variable "zookeeper_health_transformation_function" {
 }
 
 # zookeeper_latency detector
+
+variable "zookeeper_latency_max_delay" {
+  description = "Enforce max delay for zookeeper_latency detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "zookeeper_latency_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -145,6 +163,12 @@ variable "zookeeper_latency_threshold_major" {
 }
 
 # file_descriptors detector
+
+variable "file_descriptors_max_delay" {
+  description = "Enforce max delay for file_descriptors detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "file_descriptors_tip" {
   description = "Suggested first course of action or any note useful for incident handling"

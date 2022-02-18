@@ -2,6 +2,12 @@
 
 # Heartbeat detector
 
+variable "heartbeat_max_delay" {
+  description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = 900
+}
+
 variable "heartbeat_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -39,6 +45,12 @@ variable "heartbeat_aggregation_function" {
 }
 
 # Cluster_status detector
+
+variable "cluster_status_max_delay" {
+  description = "Enforce max delay for cluster_status detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "cluster_status_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -89,6 +101,12 @@ variable "cluster_status_transformation_function" {
 }
 
 # Cluster_initializing_shards detector
+
+variable "cluster_initializing_shards_max_delay" {
+  description = "Enforce max delay for cluster_initializing_shards detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "cluster_initializing_shards_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -152,6 +170,12 @@ variable "cluster_initializing_shards_threshold_major" {
 
 # Cluster_relocating_shards detector
 
+variable "cluster_relocating_shards_max_delay" {
+  description = "Enforce max delay for cluster_relocating_shards detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "cluster_relocating_shards_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -213,6 +237,12 @@ variable "cluster_relocating_shards_threshold_major" {
 }
 
 # Cluster_unassigned_shards detector
+
+variable "cluster_unassigned_shards_max_delay" {
+  description = "Enforce max delay for cluster_unassigned_shards detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "cluster_unassigned_shards_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -276,6 +306,12 @@ variable "cluster_unassigned_shards_threshold_major" {
 
 # pending_tasks detector
 
+variable "pending_tasks_max_delay" {
+  description = "Enforce max delay for pending_tasks detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "pending_tasks_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -337,6 +373,12 @@ variable "pending_tasks_threshold_major" {
 }
 
 # Jvm_heap_memory_usage detector
+
+variable "jvm_heap_memory_usage_max_delay" {
+  description = "Enforce max delay for jvm_heap_memory_usage detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "jvm_heap_memory_usage_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -400,6 +442,12 @@ variable "jvm_heap_memory_usage_threshold_major" {
 
 # cpu_usage detector
 
+variable "cpu_usage_max_delay" {
+  description = "Enforce max delay for cpu_usage detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "cpu_usage_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -461,6 +509,12 @@ variable "cpu_usage_threshold_major" {
 }
 
 # file_descriptors detector
+
+variable "file_descriptors_max_delay" {
+  description = "Enforce max delay for file_descriptors detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "file_descriptors_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -524,6 +578,12 @@ variable "file_descriptors_threshold_major" {
 
 # Jvm_memory_young_usage detector
 
+variable "jvm_memory_young_usage_max_delay" {
+  description = "Enforce max delay for jvm_memory_young_usage detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "jvm_memory_young_usage_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -585,6 +645,12 @@ variable "jvm_memory_young_usage_threshold_minor" {
 }
 
 # Jvm_memory_old_usage detector
+
+variable "jvm_memory_old_usage_max_delay" {
+  description = "Enforce max delay for jvm_memory_old_usage detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "jvm_memory_old_usage_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -648,6 +714,12 @@ variable "jvm_memory_old_usage_threshold_minor" {
 
 # Jvm_gc_old_collection_latency detector
 
+variable "jvm_gc_old_collection_latency_max_delay" {
+  description = "Enforce max delay for jvm_gc_old_collection_latency detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "jvm_gc_old_collection_latency_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -709,6 +781,12 @@ variable "jvm_gc_old_collection_latency_threshold_minor" {
 }
 
 # Jvm_gc_young_collection_latency detector
+
+variable "jvm_gc_young_collection_latency_max_delay" {
+  description = "Enforce max delay for jvm_gc_young_collection_latency detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "jvm_gc_young_collection_latency_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -772,6 +850,12 @@ variable "jvm_gc_young_collection_latency_threshold_minor" {
 
 # Indexing_latency detector
 
+variable "indexing_latency_max_delay" {
+  description = "Enforce max delay for indexing_latency detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "indexing_latency_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -833,6 +917,12 @@ variable "indexing_latency_threshold_minor" {
 }
 
 # Flush_latency detector
+
+variable "flush_latency_max_delay" {
+  description = "Enforce max delay for flush_latency detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "flush_latency_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -896,6 +986,12 @@ variable "flush_latency_threshold_minor" {
 
 # Search_latency detector
 
+variable "search_latency_max_delay" {
+  description = "Enforce max delay for search_latency detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "search_latency_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -957,6 +1053,12 @@ variable "search_latency_threshold_minor" {
 }
 
 # Fetch_latency detector
+
+variable "fetch_latency_max_delay" {
+  description = "Enforce max delay for fetch_latency detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "fetch_latency_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -1020,6 +1122,12 @@ variable "fetch_latency_threshold_minor" {
 
 # Field_data_evictions_change detector
 
+variable "field_data_evictions_change_max_delay" {
+  description = "Enforce max delay for field_data_evictions_change detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "field_data_evictions_change_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -1081,6 +1189,12 @@ variable "field_data_evictions_change_threshold_minor" {
 }
 
 # Task_time_in_queue_change detector
+
+variable "task_time_in_queue_change_max_delay" {
+  description = "Enforce max delay for task_time_in_queue_change detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "task_time_in_queue_change_tip" {
   description = "Suggested first course of action or any note useful for incident handling"

@@ -5,8 +5,6 @@ resource "signalfx_detector" "heartbeat" {
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
-  max_delay = 900
-
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
     signal = data('elasticsearch.cluster.number-of-nodes', filter=filter('plugin', 'elasticsearch') and ${local.not_running_vm_filters} and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
@@ -24,6 +22,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject_novalue : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.heartbeat_max_delay
 }
 
 resource "signalfx_detector" "cluster_status" {
@@ -62,6 +62,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.cluster_status_max_delay
 }
 
 resource "signalfx_detector" "cluster_initializing_shards" {
@@ -100,6 +102,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.cluster_initializing_shards_max_delay
 }
 
 resource "signalfx_detector" "cluster_relocating_shards" {
@@ -138,6 +142,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.cluster_relocating_shards_max_delay
 }
 
 resource "signalfx_detector" "cluster_unassigned_shards" {
@@ -176,6 +182,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.cluster_unassigned_shards_max_delay
 }
 
 resource "signalfx_detector" "pending_tasks" {
@@ -214,6 +222,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.pending_tasks_max_delay
 }
 
 resource "signalfx_detector" "cpu_usage" {
@@ -252,6 +262,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.cpu_usage_max_delay
 }
 
 resource "signalfx_detector" "file_descriptors" {
@@ -292,6 +304,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.file_descriptors_max_delay
 }
 
 resource "signalfx_detector" "jvm_heap_memory_usage" {
@@ -330,6 +344,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.jvm_heap_memory_usage_max_delay
 }
 
 resource "signalfx_detector" "jvm_memory_young_usage" {
@@ -370,6 +386,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.jvm_memory_young_usage_max_delay
 }
 
 resource "signalfx_detector" "jvm_memory_old_usage" {
@@ -410,6 +428,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.jvm_memory_old_usage_max_delay
 }
 
 resource "signalfx_detector" "jvm_gc_old_collection_latency" {
@@ -450,6 +470,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.jvm_gc_old_collection_latency_max_delay
 }
 
 resource "signalfx_detector" "jvm_gc_young_collection_latency" {
@@ -490,6 +512,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.jvm_gc_young_collection_latency_max_delay
 }
 
 resource "signalfx_detector" "indexing_latency" {
@@ -530,6 +554,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.indexing_latency_max_delay
 }
 
 resource "signalfx_detector" "flush_latency" {
@@ -570,6 +596,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.flush_latency_max_delay
 }
 
 resource "signalfx_detector" "search_latency" {
@@ -610,6 +638,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.search_latency_max_delay
 }
 
 resource "signalfx_detector" "fetch_latency" {
@@ -650,6 +680,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.fetch_latency_max_delay
 }
 
 resource "signalfx_detector" "field_data_evictions_change" {
@@ -688,6 +720,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.field_data_evictions_change_max_delay
 }
 
 resource "signalfx_detector" "task_time_in_queue_change" {
@@ -726,5 +760,7 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.task_time_in_queue_change_max_delay
 }
 

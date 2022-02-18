@@ -7,6 +7,12 @@ variable "gcp_project_id" {
 
 # Replication_lag detectors
 
+variable "replication_lag_max_delay" {
+  description = "Enforce max delay for replication_lag detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "replication_lag_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string

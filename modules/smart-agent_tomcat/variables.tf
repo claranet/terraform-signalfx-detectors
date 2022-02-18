@@ -12,6 +12,12 @@ variable "heartbeat_aggregation_function" {
   default     = ""
 }
 
+variable "heartbeat_max_delay" {
+  description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = 900
+}
+
 variable "heartbeat_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -54,6 +60,12 @@ variable "average_processing_time_transformation_function" {
   description = "Transformation function for average_processing_time detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='10m')"
+}
+
+variable "average_processing_time_max_delay" {
+  description = "Enforce max delay for average_processing_time detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "average_processing_time_tip" {
@@ -116,6 +128,12 @@ variable "busy_threads_percentage_transformation_function" {
   description = "Transformation function for busy_threads_percentage detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='5m')"
+}
+
+variable "busy_threads_percentage_max_delay" {
+  description = "Enforce max delay for busy_threads_percentage detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "busy_threads_percentage_tip" {

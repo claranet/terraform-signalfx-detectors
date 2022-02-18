@@ -35,6 +35,8 @@ resource "signalfx_detector" "search_latency" {
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.search_latency_max_delay
 }
 
 resource "signalfx_detector" "search_throttled_queries_rate" {
@@ -75,4 +77,5 @@ resource "signalfx_detector" "search_throttled_queries_rate" {
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
+  max_delay = var.search_throttled_queries_rate_max_delay
 }

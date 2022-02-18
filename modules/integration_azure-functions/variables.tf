@@ -2,6 +2,12 @@
 
 # Heartbeat detector
 
+variable "heartbeat_max_delay" {
+  description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = 900
+}
+
 variable "heartbeat_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -39,6 +45,12 @@ variable "heartbeat_aggregation_function" {
 }
 
 # http_5xx_errors_rate detector
+
+variable "http_5xx_errors_rate_max_delay" {
+  description = "Enforce max delay for http_5xx_errors_rate detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "http_5xx_errors_rate_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -108,6 +120,12 @@ variable "http_5xx_errors_rate_threshold_major" {
 
 # High_connections_count detector
 
+variable "high_connections_count_max_delay" {
+  description = "Enforce max delay for high_connections_count detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "high_connections_count_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -175,6 +193,12 @@ variable "high_connections_count_threshold_major" {
 }
 
 # High_threads_count detector
+
+variable "high_threads_count_max_delay" {
+  description = "Enforce max delay for high_threads_count detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "high_threads_count_tip" {
   description = "Suggested first course of action or any note useful for incident handling"

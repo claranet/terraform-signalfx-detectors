@@ -7,6 +7,12 @@ variable "gcp_project_id" {
 
 # sending_operations detector
 
+variable "sending_operations_max_delay" {
+  description = "Enforce max delay for sending_operations detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "sending_operations_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -50,6 +56,12 @@ variable "sending_operations_threshold_major" {
 }
 
 # Unavailable_sending_operations detector
+
+variable "unavailable_sending_operations_max_delay" {
+  description = "Enforce max delay for unavailable_sending_operations detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "unavailable_sending_operations_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -112,6 +124,12 @@ variable "unavailable_sending_operations_threshold_major" {
 }
 
 # Unavailable_sending_operations_ratio detector
+
+variable "unavailable_sending_operations_ratio_max_delay" {
+  description = "Enforce max delay for unavailable_sending_operations_ratio detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "unavailable_sending_operations_ratio_tip" {
   description = "Suggested first course of action or any note useful for incident handling"

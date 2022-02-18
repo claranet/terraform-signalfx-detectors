@@ -2,6 +2,12 @@
 
 # Heartbeat detector
 
+variable "heartbeat_max_delay" {
+  description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = 900
+}
+
 variable "heartbeat_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -39,6 +45,12 @@ variable "heartbeat_aggregation_function" {
 }
 
 # Evicted_keys detector
+
+variable "evicted_keys_max_delay" {
+  description = "Enforce max delay for evicted_keys detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "evicted_keys_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -102,6 +114,12 @@ variable "evicted_keys_threshold_major" {
 
 # Expirations detector
 
+variable "expirations_max_delay" {
+  description = "Enforce max delay for expirations detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "expirations_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -163,6 +181,12 @@ variable "expirations_threshold_major" {
 }
 
 # Blocked_clients detector
+
+variable "blocked_clients_max_delay" {
+  description = "Enforce max delay for blocked_clients detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "blocked_clients_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -226,6 +250,12 @@ variable "blocked_clients_threshold_warning" {
 
 # Keyspace_full detector
 
+variable "keyspace_full_max_delay" {
+  description = "Enforce max delay for keyspace_full detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "keyspace_full_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -263,6 +293,12 @@ variable "keyspace_full_transformation_function" {
 }
 
 # Memory_used_max detector
+
+variable "memory_used_max_max_delay" {
+  description = "Enforce max delay for memory_used_max detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "memory_used_max_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -326,6 +362,12 @@ variable "memory_used_max_threshold_major" {
 
 # Memory_used_total detector
 
+variable "memory_used_total_max_delay" {
+  description = "Enforce max delay for memory_used_total detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "memory_used_total_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -387,6 +429,12 @@ variable "memory_used_total_threshold_major" {
 }
 
 # Memory_frag_high detector
+
+variable "memory_frag_high_max_delay" {
+  description = "Enforce max delay for memory_frag_high detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "memory_frag_high_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -450,6 +498,12 @@ variable "memory_frag_high_threshold_major" {
 
 # Memory_frag_low detector
 
+variable "memory_frag_low_max_delay" {
+  description = "Enforce max delay for memory_frag_low detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "memory_frag_low_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -512,6 +566,12 @@ variable "memory_frag_low_threshold_major" {
 
 # rejected_connections detector
 
+variable "rejected_connections_max_delay" {
+  description = "Enforce max delay for rejected_connections detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "rejected_connections_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -573,6 +633,12 @@ variable "rejected_connections_threshold_major" {
 }
 
 # Hitrate detector
+
+variable "hitrate_max_delay" {
+  description = "Enforce max delay for hitrate detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "hitrate_tip" {
   description = "Suggested first course of action or any note useful for incident handling"

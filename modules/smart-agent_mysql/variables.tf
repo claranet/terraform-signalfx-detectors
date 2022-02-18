@@ -2,6 +2,12 @@
 
 # Heartbeat detector
 
+variable "heartbeat_max_delay" {
+  description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = 900
+}
+
 variable "heartbeat_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -39,6 +45,12 @@ variable "heartbeat_aggregation_function" {
 }
 
 # connection detector
+
+variable "connections_max_delay" {
+  description = "Enforce max delay for connections detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "connections_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -102,6 +114,12 @@ variable "connections_threshold_major" {
 
 # pool_efficiency detector
 
+variable "pool_efficiency_max_delay" {
+  description = "Enforce max delay for pool_efficiency detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "pool_efficiency_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -163,6 +181,12 @@ variable "pool_efficiency_threshold_warning" {
 }
 
 # pool_utilization detector
+
+variable "pool_utilization_max_delay" {
+  description = "Enforce max delay for pool_utilization detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "pool_utilization_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -226,6 +250,12 @@ variable "pool_utilization_threshold_warning" {
 
 # slow detector
 
+variable "slow_max_delay" {
+  description = "Enforce max delay for slow detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "slow_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -287,6 +317,12 @@ variable "slow_threshold_major" {
 }
 
 # threads_anomaly detector
+
+variable "threads_anomaly_max_delay" {
+  description = "Enforce max delay for threads_anomaly detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "threads_anomaly_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -362,6 +398,12 @@ variable "threads_anomaly_orientation" {
 
 # questions_anomaly detector
 
+variable "questions_anomaly_max_delay" {
+  description = "Enforce max delay for questions_anomaly detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "questions_anomaly_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -436,6 +478,12 @@ variable "questions_anomaly_orientation" {
 
 # replication_lag detector
 
+variable "replication_lag_max_delay" {
+  description = "Enforce max delay for replication_lag detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "replication_lag_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -498,6 +546,12 @@ variable "replication_lag_threshold_major" {
 
 # slave_sql_status detector
 
+variable "slave_sql_status_max_delay" {
+  description = "Enforce max delay for slave_sql_status detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "slave_sql_status_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -535,6 +589,12 @@ variable "slave_sql_status_transformation_function" {
 }
 
 # slave_io_status detector
+
+variable "slave_io_status_max_delay" {
+  description = "Enforce max delay for slave_io_status detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "slave_io_status_tip" {
   description = "Suggested first course of action or any note useful for incident handling"

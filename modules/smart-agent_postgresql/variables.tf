@@ -2,6 +2,12 @@
 
 # Heartbeat detector
 
+variable "heartbeat_max_delay" {
+  description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = 900
+}
+
 variable "heartbeat_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -39,6 +45,12 @@ variable "heartbeat_aggregation_function" {
 }
 
 # deadlocks detector
+
+variable "deadlocks_max_delay" {
+  description = "Enforce max delay for deadlocks detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "deadlocks_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -102,6 +114,12 @@ variable "deadlocks_threshold_major" {
 
 # hit_ratio detector
 
+variable "hit_ratio_max_delay" {
+  description = "Enforce max delay for hit_ratio detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "hit_ratio_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -163,6 +181,12 @@ variable "hit_ratio_threshold_minor" {
 }
 
 # rollbacks detector
+
+variable "rollbacks_max_delay" {
+  description = "Enforce max delay for rollbacks detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "rollbacks_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -226,6 +250,12 @@ variable "rollbacks_threshold_minor" {
 
 # conflicts detector
 
+variable "conflicts_max_delay" {
+  description = "Enforce max delay for conflicts detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "conflicts_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -287,6 +317,12 @@ variable "conflicts_threshold_major" {
 }
 
 # max_connections detector
+
+variable "max_connections_max_delay" {
+  description = "Enforce max delay for max_connections detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "max_connections_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -350,6 +386,12 @@ variable "max_connections_threshold_major" {
 
 # replication_lag detector
 
+variable "replication_lag_max_delay" {
+  description = "Enforce max delay for replication_lag detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "replication_lag_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -411,6 +453,12 @@ variable "replication_lag_threshold_major" {
 }
 
 # replication_state detector
+
+variable "replication_state_max_delay" {
+  description = "Enforce max delay for replication_state detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "replication_state_tip" {
   description = "Suggested first course of action or any note useful for incident handling"

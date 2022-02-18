@@ -2,6 +2,12 @@
 
 # Heartbeat detector
 
+variable "heartbeat_max_delay" {
+  description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = 900
+}
+
 variable "heartbeat_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -39,6 +45,12 @@ variable "heartbeat_aggregation_function" {
 }
 
 # error_rate detector
+
+variable "error_rate_max_delay" {
+  description = "Enforce max delay for error_rate detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "error_rate_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
@@ -101,6 +113,12 @@ variable "error_rate_threshold_major" {
 }
 
 # apdex detector
+
+variable "apdex_max_delay" {
+  description = "Enforce max delay for apdex detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
 
 variable "apdex_tip" {
   description = "Suggested first course of action or any note useful for incident handling"

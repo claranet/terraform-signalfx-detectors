@@ -22,6 +22,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.sending_operations_max_delay
 }
 
 resource "signalfx_detector" "unavailable_sending_operations" {
@@ -61,6 +63,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.unavailable_sending_operations_max_delay
 }
 
 resource "signalfx_detector" "unavailable_sending_operations_ratio" {
@@ -102,5 +106,7 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.unavailable_sending_operations_ratio_max_delay
 }
 
