@@ -8,6 +8,10 @@
 - [What are the available detectors in this module?](#what-are-the-available-detectors-in-this-module)
 - [How to collect required metrics?](#how-to-collect-required-metrics)
   - [Metrics](#metrics)
+- [Notes](#notes)
+  - [Lambda Metrics Lag](#lambda-metrics-lag)
+  - [About `pct_errors` detector](#about-pct_errors-detector)
+  - [About `invocations` detector](#about-invocations-detector)
 - [Related documentation](#related-documentation)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -100,6 +104,23 @@ Here is the list of required metrics for detectors in this module.
 * `Throttles`
 
 
+## Notes
+
+### Lambda Metrics Lag
+
+* All detectors have a `max_delay` of 600s to accomodate the lag that can occur when ingesting AWS Cloudwatch Metrics for the Lambda namespace.
+
+### About `pct_errors` detector
+
+* This detector uses a `latest` extrapolation to force the alert to remain until a new execution of the same lambda function
+happens in success. Depending on the frequency at which the function executes, the alert may take time to self resolve.
+
+### About `invocations` detector
+
+* The goal of this detector is to trigger an alert if a function did not execute at least the number of `invocations_threshold_major`
+(once by default) on the timeframe defined by `invocations_transformation_function`. It could be useful to ensure that a regular
+function has been run as expected like a cron based function. You should disable it for erratic or event based function (except
+if you expect to see enough events on your timeframe)
 
 
 ## Related documentation

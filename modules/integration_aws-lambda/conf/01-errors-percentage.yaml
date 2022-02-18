@@ -3,19 +3,20 @@ name: errors percentage
 id: pct_errors
 
 transformation: true
-aggregation: true
-filtering: "filter('namespace', 'AWS/Lambda') and filter('stat', 'mean') and filter('Resource', '*')"
+aggregation: ".mean(by=['FunctionName'])"
+filtering: "filter('namespace', 'AWS/Lambda') and filter('stat', 'sum') and filter('Resource', '*')"
 value_unit: "%"
+max_delay: 600
 
 signals:
   errors:
     metric: Errors
     extrapolation: last_value
-    rollup: average
+    rollup: sum
   invocations:
     metric: Invocations
     extrapolation: last_value
-    rollup: average
+    rollup: sum
   signal:
     formula: (errors/invocations).scale(100).fill(value=0)
 rules:

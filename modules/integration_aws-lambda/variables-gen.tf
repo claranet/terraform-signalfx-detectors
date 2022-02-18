@@ -9,7 +9,7 @@ variable "pct_errors_notifications" {
 variable "pct_errors_aggregation_function" {
   description = "Aggregation function and group by for pct_errors detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".mean(by=['FunctionName'])"
 }
 
 variable "pct_errors_transformation_function" {
@@ -21,7 +21,7 @@ variable "pct_errors_transformation_function" {
 variable "pct_errors_max_delay" {
   description = "Enforce max delay for pct_errors detector (use \"0\" or \"null\" for \"Auto\")"
   type        = number
-  default     = null
+  default     = 600
 }
 
 variable "pct_errors_tip" {
@@ -99,7 +99,7 @@ variable "throttles_notifications" {
 variable "throttles_aggregation_function" {
   description = "Aggregation function and group by for throttles detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".mean(by=['FunctionName'])"
 }
 
 variable "throttles_transformation_function" {
@@ -111,7 +111,7 @@ variable "throttles_transformation_function" {
 variable "throttles_max_delay" {
   description = "Enforce max delay for throttles detector (use \"0\" or \"null\" for \"Auto\")"
   type        = number
-  default     = null
+  default     = 600
 }
 
 variable "throttles_tip" {
@@ -189,7 +189,7 @@ variable "invocations_notifications" {
 variable "invocations_aggregation_function" {
   description = "Aggregation function and group by for invocations detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".mean(by=['FunctionName'])"
 }
 
 variable "invocations_transformation_function" {
@@ -201,7 +201,7 @@ variable "invocations_transformation_function" {
 variable "invocations_max_delay" {
   description = "Enforce max delay for invocations detector (use \"0\" or \"null\" for \"Auto\")"
   type        = number
-  default     = null
+  default     = 600
 }
 
 variable "invocations_tip" {
