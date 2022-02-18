@@ -5,6 +5,10 @@ documentations:
     url: "https://docs.splunk.com/Observability/gdi/get-data-in/connect/aws/aws-metrics.html#aws-lambda"
 
 notes: |
+  ### Lambda Metrics Lag
+
+  * All detectors have a `max_delay` of 600s to accomodate the lag that can occur when ingesting AWS Cloudwatch Metrics for the Lambda namespace.
+
   ### About `pct_errors` detector
 
   * This detector uses a `latest` extrapolation to force the alert to remain until a new execution of the same lambda function

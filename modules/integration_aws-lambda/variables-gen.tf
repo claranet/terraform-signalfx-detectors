@@ -21,7 +21,7 @@ variable "pct_errors_transformation_function" {
 variable "pct_errors_max_delay" {
   description = "Enforce max delay for pct_errors detector (use \"0\" or \"null\" for \"Auto\")"
   type        = number
-  default     = null
+  default     = 600
 }
 
 variable "pct_errors_tip" {
@@ -111,7 +111,7 @@ variable "throttles_transformation_function" {
 variable "throttles_max_delay" {
   description = "Enforce max delay for throttles detector (use \"0\" or \"null\" for \"Auto\")"
   type        = number
-  default     = null
+  default     = 600
 }
 
 variable "throttles_tip" {
@@ -201,7 +201,7 @@ variable "invocations_transformation_function" {
 variable "invocations_max_delay" {
   description = "Enforce max delay for invocations detector (use \"0\" or \"null\" for \"Auto\")"
   type        = number
-  default     = null
+  default     = 600
 }
 
 variable "invocations_tip" {

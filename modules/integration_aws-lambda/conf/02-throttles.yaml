@@ -5,6 +5,7 @@ id: throttles
 transformation: ".sum(over='1h')"
 aggregation: ".mean(by=['FunctionName'])"
 filtering: "filter('namespace', 'AWS/Lambda') and filter('stat', 'sum') and filter('Resource', '*')"
+max_delay: 600
 
 signals:
   signal:

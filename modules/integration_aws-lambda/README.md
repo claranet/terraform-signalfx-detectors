@@ -9,6 +9,7 @@
 - [How to collect required metrics?](#how-to-collect-required-metrics)
   - [Metrics](#metrics)
 - [Notes](#notes)
+  - [Lambda Metrics Lag](#lambda-metrics-lag)
   - [About `pct_errors` detector](#about-pct_errors-detector)
   - [About `invocations` detector](#about-invocations-detector)
 - [Related documentation](#related-documentation)
@@ -104,6 +105,10 @@ Here is the list of required metrics for detectors in this module.
 
 
 ## Notes
+
+### Lambda Metrics Lag
+
+* All detectors have a `max_delay` of 600s to accomodate the lag that can occur when ingesting AWS Cloudwatch Metrics for the Lambda namespace.
 
 ### About `pct_errors` detector
 
