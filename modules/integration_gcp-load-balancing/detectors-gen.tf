@@ -42,6 +42,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.error_rate_5xx_max_delay
 }
 
 resource "signalfx_detector" "error_rate_4xx" {
@@ -88,6 +90,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.error_rate_4xx_max_delay
 }
 
 resource "signalfx_detector" "backend_latency_service" {
@@ -132,6 +136,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.backend_latency_service_max_delay
 }
 
 resource "signalfx_detector" "backend_latency_bucket" {
@@ -176,6 +182,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.backend_latency_bucket_max_delay
 }
 
 resource "signalfx_detector" "request_count" {
@@ -215,5 +223,7 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.request_count_max_delay
 }
 

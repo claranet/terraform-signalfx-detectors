@@ -18,6 +18,12 @@ variable "disk_failed_transformation_function" {
   default     = ".min(over='1m')"
 }
 
+variable "disk_failed_max_delay" {
+  description = "Enforce max delay for disk_failed detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "disk_failed_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -100,6 +106,12 @@ variable "disk_missing_transformation_function" {
   description = "Transformation function for disk_missing detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='1m')"
+}
+
+variable "disk_missing_max_delay" {
+  description = "Enforce max delay for disk_missing detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "disk_missing_tip" {

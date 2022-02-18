@@ -18,6 +18,12 @@ variable "cache_hits_transformation_function" {
   default     = ""
 }
 
+variable "cache_hits_max_delay" {
+  description = "Enforce max delay for cache_hits detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "cache_hits_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -100,6 +106,12 @@ variable "cpu_high_transformation_function" {
   description = "Transformation function for cpu_high detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
+}
+
+variable "cpu_high_max_delay" {
+  description = "Enforce max delay for cpu_high detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "cpu_high_tip" {
@@ -186,6 +198,12 @@ variable "replication_lag_transformation_function" {
   default     = ""
 }
 
+variable "replication_lag_max_delay" {
+  description = "Enforce max delay for replication_lag detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "replication_lag_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -268,6 +286,12 @@ variable "commands_transformation_function" {
   description = "Transformation function for commands detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".sum(over='15m')"
+}
+
+variable "commands_max_delay" {
+  description = "Enforce max delay for commands detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "commands_tip" {

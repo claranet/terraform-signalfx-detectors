@@ -12,6 +12,12 @@ variable "heartbeat_aggregation_function" {
   default     = ".mean(by=['ClusterIdentifier'])"
 }
 
+variable "heartbeat_max_delay" {
+  description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = 900
+}
+
 variable "heartbeat_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -54,6 +60,12 @@ variable "cpu_usage_transformation_function" {
   description = "Transformation function for cpu_usage detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
+}
+
+variable "cpu_usage_max_delay" {
+  description = "Enforce max delay for cpu_usage detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "cpu_usage_tip" {
@@ -138,6 +150,12 @@ variable "storage_usage_transformation_function" {
   description = "Transformation function for storage_usage detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
+}
+
+variable "storage_usage_max_delay" {
+  description = "Enforce max delay for storage_usage detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "storage_usage_tip" {

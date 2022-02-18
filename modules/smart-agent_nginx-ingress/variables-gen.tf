@@ -18,6 +18,12 @@ variable "latency_transformation_function" {
   default     = ""
 }
 
+variable "latency_max_delay" {
+  description = "Enforce max delay for latency detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "latency_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -102,6 +108,12 @@ variable "http_5xx_transformation_function" {
   default     = ""
 }
 
+variable "http_5xx_max_delay" {
+  description = "Enforce max delay for http_5xx detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "http_5xx_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -184,6 +196,12 @@ variable "http_4xx_transformation_function" {
   description = "Transformation function for http_4xx detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
+}
+
+variable "http_4xx_max_delay" {
+  description = "Enforce max delay for http_4xx detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "http_4xx_tip" {

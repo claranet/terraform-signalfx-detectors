@@ -42,6 +42,8 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.requests_error_rate_max_delay
 }
 
 resource "signalfx_detector" "latency_e2e" {
@@ -87,5 +89,7 @@ EOF
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
+
+  max_delay = var.latency_e2e_max_delay
 }
 

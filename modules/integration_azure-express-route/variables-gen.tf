@@ -18,6 +18,12 @@ variable "heartbeat_transformation_function" {
   default     = ""
 }
 
+variable "heartbeat_max_delay" {
+  description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = 900
+}
+
 variable "heartbeat_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -60,6 +66,12 @@ variable "bgp_availability_transformation_function" {
   description = "Transformation function for bgp_availability detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
+}
+
+variable "bgp_availability_max_delay" {
+  description = "Enforce max delay for bgp_availability detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "bgp_availability_tip" {
@@ -167,6 +179,12 @@ variable "arp_availability_transformation_function" {
   description = "Transformation function for arp_availability detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
+}
+
+variable "arp_availability_max_delay" {
+  description = "Enforce max delay for arp_availability detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "arp_availability_tip" {

@@ -18,6 +18,12 @@ variable "workloads_count_transformation_function" {
   default     = ".min(over='30m')"
 }
 
+variable "workloads_count_max_delay" {
+  description = "Enforce max delay for workloads_count detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "workloads_count_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string

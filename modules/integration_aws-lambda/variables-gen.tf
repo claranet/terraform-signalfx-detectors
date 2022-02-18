@@ -18,6 +18,12 @@ variable "pct_errors_transformation_function" {
   default     = ""
 }
 
+variable "pct_errors_max_delay" {
+  description = "Enforce max delay for pct_errors detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "pct_errors_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -102,6 +108,12 @@ variable "throttles_transformation_function" {
   default     = ".sum(over='1h')"
 }
 
+variable "throttles_max_delay" {
+  description = "Enforce max delay for throttles detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "throttles_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -184,6 +196,12 @@ variable "invocations_transformation_function" {
   description = "Transformation function for invocations detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".sum(over='1h')"
+}
+
+variable "invocations_max_delay" {
+  description = "Enforce max delay for invocations detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "invocations_tip" {

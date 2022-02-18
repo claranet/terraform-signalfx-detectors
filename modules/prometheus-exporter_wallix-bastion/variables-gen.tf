@@ -18,6 +18,12 @@ variable "heartbeat_transformation_function" {
   default     = ""
 }
 
+variable "heartbeat_max_delay" {
+  description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = 900
+}
+
 variable "heartbeat_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -60,6 +66,12 @@ variable "status_transformation_function" {
   description = "Transformation function for status detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
+}
+
+variable "status_max_delay" {
+  description = "Enforce max delay for status detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "status_tip" {
@@ -115,6 +127,12 @@ variable "current_sessions_transformation_function" {
   description = "Transformation function for current_sessions detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='5m')"
+}
+
+variable "current_sessions_max_delay" {
+  description = "Enforce max delay for current_sessions detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "current_sessions_tip" {
@@ -201,6 +219,12 @@ variable "encryption_status_transformation_function" {
   default     = ""
 }
 
+variable "encryption_status_max_delay" {
+  description = "Enforce max delay for encryption_status detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "encryption_status_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -254,6 +278,12 @@ variable "license_transformation_function" {
   description = "Transformation function for license detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
+}
+
+variable "license_max_delay" {
+  description = "Enforce max delay for license detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "license_tip" {

@@ -12,6 +12,12 @@ variable "heartbeat_aggregation_function" {
   default     = ".mean(by=['kubernetes_cluster'])"
 }
 
+variable "heartbeat_max_delay" {
+  description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = 900
+}
+
 variable "heartbeat_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -54,6 +60,12 @@ variable "hpa_capacity_transformation_function" {
   description = "Transformation function for hpa_capacity detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
+}
+
+variable "hpa_capacity_max_delay" {
+  description = "Enforce max delay for hpa_capacity detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "hpa_capacity_tip" {
@@ -111,6 +123,12 @@ variable "node_ready_transformation_function" {
   description = "Transformation function for node_ready detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
+}
+
+variable "node_ready_max_delay" {
+  description = "Enforce max delay for node_ready detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "node_ready_tip" {
@@ -195,6 +213,12 @@ variable "pod_phase_status_transformation_function" {
   description = "Transformation function for pod_phase_status detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
+}
+
+variable "pod_phase_status_max_delay" {
+  description = "Enforce max delay for pod_phase_status detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "pod_phase_status_tip" {
@@ -304,6 +328,12 @@ variable "terminated_transformation_function" {
   default     = ""
 }
 
+variable "terminated_max_delay" {
+  description = "Enforce max delay for terminated detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "terminated_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -357,6 +387,12 @@ variable "oom_killed_transformation_function" {
   description = "Transformation function for oom_killed detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
+}
+
+variable "oom_killed_max_delay" {
+  description = "Enforce max delay for oom_killed detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "oom_killed_tip" {
@@ -414,6 +450,12 @@ variable "deployment_crashloopbackoff_transformation_function" {
   default     = ".sum(over='15m')"
 }
 
+variable "deployment_crashloopbackoff_max_delay" {
+  description = "Enforce max delay for deployment_crashloopbackoff detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "deployment_crashloopbackoff_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -467,6 +509,12 @@ variable "daemonset_crashloopbackoff_transformation_function" {
   description = "Transformation function for daemonset_crashloopbackoff detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".sum(over='15m')"
+}
+
+variable "daemonset_crashloopbackoff_max_delay" {
+  description = "Enforce max delay for daemonset_crashloopbackoff detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "daemonset_crashloopbackoff_tip" {
@@ -524,6 +572,12 @@ variable "job_failed_transformation_function" {
   default     = ""
 }
 
+variable "job_failed_max_delay" {
+  description = "Enforce max delay for job_failed detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "job_failed_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -577,6 +631,12 @@ variable "daemonset_scheduled_transformation_function" {
   description = "Transformation function for daemonset_scheduled detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
+}
+
+variable "daemonset_scheduled_max_delay" {
+  description = "Enforce max delay for daemonset_scheduled detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "daemonset_scheduled_tip" {
@@ -634,6 +694,12 @@ variable "daemonset_ready_transformation_function" {
   default     = ""
 }
 
+variable "daemonset_ready_max_delay" {
+  description = "Enforce max delay for daemonset_ready detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "daemonset_ready_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -687,6 +753,12 @@ variable "daemonset_misscheduled_transformation_function" {
   description = "Transformation function for daemonset_misscheduled detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
+}
+
+variable "daemonset_misscheduled_max_delay" {
+  description = "Enforce max delay for daemonset_misscheduled detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "daemonset_misscheduled_tip" {
@@ -744,6 +816,12 @@ variable "deployment_available_transformation_function" {
   default     = ""
 }
 
+variable "deployment_available_max_delay" {
+  description = "Enforce max delay for deployment_available detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "deployment_available_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -797,6 +875,12 @@ variable "replicaset_available_transformation_function" {
   description = "Transformation function for replicaset_available detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
+}
+
+variable "replicaset_available_max_delay" {
+  description = "Enforce max delay for replicaset_available detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "replicaset_available_tip" {
@@ -854,6 +938,12 @@ variable "replication_controller_available_transformation_function" {
   default     = ""
 }
 
+variable "replication_controller_available_max_delay" {
+  description = "Enforce max delay for replication_controller_available detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "replication_controller_available_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -907,6 +997,12 @@ variable "statefulset_ready_transformation_function" {
   description = "Transformation function for statefulset_ready detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
+}
+
+variable "statefulset_ready_max_delay" {
+  description = "Enforce max delay for statefulset_ready detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "statefulset_ready_tip" {

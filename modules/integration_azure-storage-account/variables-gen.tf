@@ -18,6 +18,12 @@ variable "count_transformation_function" {
   default     = ".min(over='1d')"
 }
 
+variable "count_max_delay" {
+  description = "Enforce max delay for count detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "count_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -100,6 +106,12 @@ variable "capacity_transformation_function" {
   description = "Transformation function for capacity detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='1d')"
+}
+
+variable "capacity_max_delay" {
+  description = "Enforce max delay for capacity detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "capacity_tip" {
@@ -186,6 +198,12 @@ variable "ingress_transformation_function" {
   default     = ".min(over='15m')"
 }
 
+variable "ingress_max_delay" {
+  description = "Enforce max delay for ingress detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "ingress_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -270,6 +288,12 @@ variable "egress_transformation_function" {
   default     = ".min(over='15m')"
 }
 
+variable "egress_max_delay" {
+  description = "Enforce max delay for egress detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "egress_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -352,6 +376,12 @@ variable "requests_rate_transformation_function" {
   description = "Transformation function for requests_rate detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='15m')"
+}
+
+variable "requests_rate_max_delay" {
+  description = "Enforce max delay for requests_rate detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "requests_rate_tip" {

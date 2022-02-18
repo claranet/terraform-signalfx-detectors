@@ -18,6 +18,12 @@ variable "heartbeat_transformation_function" {
   default     = ""
 }
 
+variable "heartbeat_max_delay" {
+  description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = 900
+}
+
 variable "heartbeat_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -60,6 +66,12 @@ variable "cpu_transformation_function" {
   description = "Transformation function for cpu detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
+}
+
+variable "cpu_max_delay" {
+  description = "Enforce max delay for cpu detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "cpu_tip" {
@@ -146,6 +158,12 @@ variable "storage_transformation_function" {
   default     = ""
 }
 
+variable "storage_max_delay" {
+  description = "Enforce max delay for storage detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "storage_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -228,6 +246,12 @@ variable "io_transformation_function" {
   description = "Transformation function for io detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
+}
+
+variable "io_max_delay" {
+  description = "Enforce max delay for io detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "io_tip" {
@@ -314,6 +338,12 @@ variable "memory_transformation_function" {
   default     = ""
 }
 
+variable "memory_max_delay" {
+  description = "Enforce max delay for memory detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "memory_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -396,6 +426,12 @@ variable "replication_lag_transformation_function" {
   description = "Transformation function for replication_lag detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
+}
+
+variable "replication_lag_max_delay" {
+  description = "Enforce max delay for replication_lag detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "replication_lag_tip" {
