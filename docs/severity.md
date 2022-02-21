@@ -929,7 +929,7 @@
 |MySQL running queries changed abruptly|X|-|-|-|-|
 |MySQL replication lag|X|X|-|-|-|
 |MySQL slave sql status|X|-|-|-|-|
-|MySQL slave sql status|X|-|-|-|-|
+|MySQL slave io status|X|-|-|-|-|
 
 
 ## smart-agent_nagios-status-check

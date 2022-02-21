@@ -318,7 +318,7 @@ EOF
 }
 
 resource "signalfx_detector" "mysql_slave_io_status" {
-  name = format("%s %s", local.detector_name_prefix, "MySQL slave sql status")
+  name = format("%s %s", local.detector_name_prefix, "MySQL slave io status")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
