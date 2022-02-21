@@ -88,7 +88,7 @@ This module creates the following SignalFx detectors which could contain one or 
 |MySQL running queries changed abruptly|X|-|-|-|-|
 |MySQL replication lag|X|X|-|-|-|
 |MySQL slave sql status|X|-|-|-|-|
-|MySQL slave sql status|X|-|-|-|-|
+|MySQL slave io status|X|-|-|-|-|
 
 ## How to collect required metrics?
 
