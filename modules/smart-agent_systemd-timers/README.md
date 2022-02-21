@@ -8,6 +8,7 @@
 - [What are the available detectors in this module?](#what-are-the-available-detectors-in-this-module)
 - [How to collect required metrics?](#how-to-collect-required-metrics)
   - [Examples](#examples)
+  - [Alternative](#alternative)
   - [Metrics](#metrics)
 - [Related documentation](#related-documentation)
 
@@ -110,6 +111,8 @@ This module checks Systemd services launched by Systemd timers.
 The difference with [smart-agent_systemd-services](https://github.com/claranet/terraform-signalfx-detectors/tree/master/modules/smart-agent_systemd-services)
 is that services launched by timers are not supposed to be always running, and instead can be stopped most of the time.
 
+**Beware:** by default signalfx agent check the service stat every 10s, if your timer/service run faster than 10s it's possible the agent will not detect the fact your service ran. And the "last execution state" detector will trigger an alert.
+
 Detectors are designed to check that the job did not failed (enabled by default), the service have not been removed (disabled by default), and the job have been launched during the past day (disabled by default, you can override the default delay with the `execution_delay_lasting_duration_major` variable).
 
 For instance, to enable all the optional detectors and be alerted if the service haven't been launched during the past week, you can use the following options:
@@ -140,6 +143,28 @@ You can configure the systemd collector in the agent the following way to report
       - gauge.active_state.active
       - gauge.active_state.activating
 ```
+
+### Alternative
+
+If you can't use this module (for example if your service run in less thin 10s).
+
+Maybe you can add a call to [/datapoint](https://dev.splunk.com/observability/reference/api/ingest_data/latest#endpoint-send-metrics) at the end of your service (the call have to be send when and only when the service ends without error).
+```
+curl -X POST "https://ingest.<realm>.signalfx.com/v2/datapoint" \
+   -H "Content-Type: application/json" \
+   -H "X-SF-Token: …" \
+   -d '{
+           "gauge": [
+               {
+                   "metric": "my_custom_metric",
+                   "value": 1,
+                   "dimensions": { … }
+               }
+           ]
+       }'
+```
+
+And create a heartbeat detector to ensure the custom datapoint is sent regularly.
 
 
 ### Metrics
