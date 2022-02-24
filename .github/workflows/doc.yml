@@ -100,7 +100,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Run PySpelling
-      uses: rojopolis/spellcheck-github-actions@0.22.0
+      uses: rojopolis/spellcheck-github-actions@0.22.1
 
   dead_links:
     needs: pre_job
