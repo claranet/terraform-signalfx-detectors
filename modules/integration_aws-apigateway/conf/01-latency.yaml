@@ -13,12 +13,12 @@ signals:
     rollup: average
 rules:
   critical:
-    threshold: 1000
+    threshold: 3000
     comparator: ">"
     lasting_duration: 10m
     lasting_at_least: 0.9
   major:
-    threshold: 3000
+    threshold: 1000
     comparator: ">"
     dependency: critical
     lasting_duration: 10m
