@@ -26,7 +26,7 @@ jobs:
       modules_readme: ${{ steps.changes.outputs.modules_readme }}
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         fetch-depth: 0
 
@@ -55,7 +55,7 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         fetch-depth: 0
 
@@ -80,7 +80,7 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         fetch-depth: 0
 
@@ -97,7 +97,7 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Run PySpelling
       uses: rojopolis/spellcheck-github-actions@0.22.0
@@ -109,7 +109,7 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Check dead links in Markdown
       uses: gaurav-nelson/github-action-markdown-link-check@v1
