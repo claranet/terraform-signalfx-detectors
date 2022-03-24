@@ -357,7 +357,7 @@ variable "pending_tasks_aggregation_function" {
 variable "pending_tasks_transformation_function" {
   description = "Transformation function for pending_tasks detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".mean(over='15m')"
+  default     = ".min(over='15m')"
 }
 
 variable "pending_tasks_threshold_critical" {
