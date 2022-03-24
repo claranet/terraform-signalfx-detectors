@@ -5,7 +5,7 @@ name: "Memory usage"
 transformation: true
 aggregation: ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 
-filtering: "filter('resource_type', 'Microsoft.DBforMariaDB/servers') and filter('primary_aggregation_type', 'true')"
+filtering: "filter('resource_type', 'Microsoft.DB*orMariaDB/servers') and filter('primary_aggregation_type', 'true')"
 value_unit: "%"
 
 signals:
