@@ -17,7 +17,7 @@ EOF
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.status_check_disabled_warning, var.status_check_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.status_check_notifications, "warning", []), var.notifications.warning)
+    notifications         = try(coalescelist(lookup(var.status_check_notifications, "warning", []), var.notifications.warning), null)
     runbook_url           = try(coalesce(var.status_check_runbook_url, var.runbook_url), "")
     tip                   = var.status_check_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -29,7 +29,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.status_check_disabled_critical, var.status_check_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.status_check_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.status_check_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.status_check_runbook_url, var.runbook_url), "")
     tip                   = var.status_check_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -41,7 +41,7 @@ EOF
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.status_check_disabled_major, var.status_check_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.status_check_notifications, "major", []), var.notifications.major)
+    notifications         = try(coalescelist(lookup(var.status_check_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.status_check_runbook_url, var.runbook_url), "")
     tip                   = var.status_check_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject

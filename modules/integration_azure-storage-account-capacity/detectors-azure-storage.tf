@@ -17,7 +17,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.used_capacity_disabled_critical, var.used_capacity_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.used_capacity_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.used_capacity_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.used_capacity_runbook_url, var.runbook_url), "")
     tip                   = var.used_capacity_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -29,7 +29,7 @@ EOF
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.used_capacity_disabled_major, var.used_capacity_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.used_capacity_notifications, "major", []), var.notifications.major)
+    notifications         = try(coalescelist(lookup(var.used_capacity_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.used_capacity_runbook_url, var.runbook_url), "")
     tip                   = var.used_capacity_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject

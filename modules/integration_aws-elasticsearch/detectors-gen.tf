@@ -22,7 +22,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.jvm_memory_pressure_disabled_critical, var.jvm_memory_pressure_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.jvm_memory_pressure_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.jvm_memory_pressure_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.jvm_memory_pressure_runbook_url, var.runbook_url), "")
     tip                   = var.jvm_memory_pressure_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -34,7 +34,7 @@ EOF
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.jvm_memory_pressure_disabled_major, var.jvm_memory_pressure_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.jvm_memory_pressure_notifications, "major", []), var.notifications.major)
+    notifications         = try(coalescelist(lookup(var.jvm_memory_pressure_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.jvm_memory_pressure_runbook_url, var.runbook_url), "")
     tip                   = var.jvm_memory_pressure_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject

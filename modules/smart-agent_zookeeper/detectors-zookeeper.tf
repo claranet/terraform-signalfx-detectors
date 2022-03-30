@@ -16,7 +16,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.heartbeat_runbook_url, var.runbook_url), "")
     tip                   = var.heartbeat_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject_novalue : var.message_subject
@@ -43,7 +43,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.zookeeper_health_disabled_critical, var.zookeeper_health_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.zookeeper_health_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.zookeeper_health_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.zookeeper_health_runbook_url, var.runbook_url), "")
     tip                   = var.zookeeper_health_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -71,7 +71,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.zookeeper_latency_disabled_critical, var.zookeeper_latency_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.zookeeper_latency_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.zookeeper_latency_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.zookeeper_latency_runbook_url, var.runbook_url), "")
     tip                   = var.zookeeper_latency_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -83,7 +83,7 @@ EOF
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.zookeeper_latency_disabled_major, var.zookeeper_latency_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.zookeeper_latency_notifications, "major", []), var.notifications.major)
+    notifications         = try(coalescelist(lookup(var.zookeeper_latency_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.zookeeper_latency_runbook_url, var.runbook_url), "")
     tip                   = var.zookeeper_latency_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -113,7 +113,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.file_descriptors_disabled_critical, var.file_descriptors_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.file_descriptors_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.file_descriptors_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.file_descriptors_runbook_url, var.runbook_url), "")
     tip                   = var.file_descriptors_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -125,7 +125,7 @@ EOF
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.file_descriptors_disabled_major, var.file_descriptors_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.file_descriptors_notifications, "major", []), var.notifications.major)
+    notifications         = try(coalescelist(lookup(var.file_descriptors_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.file_descriptors_runbook_url, var.runbook_url), "")
     tip                   = var.file_descriptors_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject

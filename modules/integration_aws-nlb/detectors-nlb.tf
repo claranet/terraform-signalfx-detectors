@@ -16,7 +16,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.heartbeat_runbook_url, var.runbook_url), "")
     tip                   = var.heartbeat_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject_novalue : var.message_subject
@@ -46,7 +46,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.no_healthy_instances_disabled_critical, var.no_healthy_instances_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.no_healthy_instances_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.no_healthy_instances_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.no_healthy_instances_runbook_url, var.runbook_url), "")
     tip                   = var.no_healthy_instances_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -58,7 +58,7 @@ EOF
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.no_healthy_instances_disabled_major, var.no_healthy_instances_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.no_healthy_instances_notifications, "major", []), var.notifications.major)
+    notifications         = try(coalescelist(lookup(var.no_healthy_instances_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.no_healthy_instances_runbook_url, var.runbook_url), "")
     tip                   = var.no_healthy_instances_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject

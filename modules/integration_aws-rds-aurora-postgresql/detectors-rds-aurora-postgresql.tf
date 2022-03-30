@@ -16,7 +16,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.aurora_postgresql_replica_lag_disabled_critical, var.aurora_postgresql_replica_lag_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.aurora_postgresql_replica_lag_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.aurora_postgresql_replica_lag_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.aurora_postgresql_replica_lag_runbook_url, var.runbook_url), "")
     tip                   = var.aurora_postgresql_replica_lag_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -28,7 +28,7 @@ EOF
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.aurora_postgresql_replica_lag_disabled_major, var.aurora_postgresql_replica_lag_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.aurora_postgresql_replica_lag_notifications, "major", []), var.notifications.major)
+    notifications         = try(coalescelist(lookup(var.aurora_postgresql_replica_lag_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.aurora_postgresql_replica_lag_runbook_url, var.runbook_url), "")
     tip                   = var.aurora_postgresql_replica_lag_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject

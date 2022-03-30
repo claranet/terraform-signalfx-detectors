@@ -16,7 +16,7 @@ EOF
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.capacity_units_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.capacity_units_notifications, "major", []), var.notifications.major)
+    notifications         = try(coalescelist(lookup(var.capacity_units_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.capacity_units_runbook_url, var.runbook_url), "")
     tip                   = var.capacity_units_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject

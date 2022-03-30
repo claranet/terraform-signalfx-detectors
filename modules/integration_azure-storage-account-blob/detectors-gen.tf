@@ -24,7 +24,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.requests_error_rate_disabled_critical, var.requests_error_rate_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.requests_error_rate_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.requests_error_rate_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.requests_error_rate_runbook_url, var.runbook_url), "")
     tip                   = var.requests_error_rate_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -36,7 +36,7 @@ EOF
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.requests_error_rate_disabled_major, var.requests_error_rate_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.requests_error_rate_notifications, "major", []), var.notifications.major)
+    notifications         = try(coalescelist(lookup(var.requests_error_rate_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.requests_error_rate_runbook_url, var.runbook_url), "")
     tip                   = var.requests_error_rate_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -71,7 +71,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.latency_e2e_disabled_critical, var.latency_e2e_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.latency_e2e_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.latency_e2e_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.latency_e2e_runbook_url, var.runbook_url), "")
     tip                   = var.latency_e2e_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -83,7 +83,7 @@ EOF
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.latency_e2e_disabled_major, var.latency_e2e_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.latency_e2e_notifications, "major", []), var.notifications.major)
+    notifications         = try(coalescelist(lookup(var.latency_e2e_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.latency_e2e_runbook_url, var.runbook_url), "")
     tip                   = var.latency_e2e_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject

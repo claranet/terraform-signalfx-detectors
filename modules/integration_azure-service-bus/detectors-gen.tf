@@ -17,7 +17,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.deadlettered_messages_disabled_critical, var.deadlettered_messages_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.deadlettered_messages_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.deadlettered_messages_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.deadlettered_messages_runbook_url, var.runbook_url), "")
     tip                   = var.deadlettered_messages_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -29,7 +29,7 @@ EOF
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.deadlettered_messages_disabled_major, var.deadlettered_messages_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.deadlettered_messages_notifications, "major", []), var.notifications.major)
+    notifications         = try(coalescelist(lookup(var.deadlettered_messages_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.deadlettered_messages_runbook_url, var.runbook_url), "")
     tip                   = var.deadlettered_messages_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject

@@ -16,7 +16,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.heartbeat_runbook_url, var.runbook_url), "")
     tip                   = var.heartbeat_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject_novalue : var.message_subject
@@ -43,7 +43,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.status_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.status_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.status_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.status_runbook_url, var.runbook_url), "")
     tip                   = var.status_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -71,7 +71,7 @@ EOF
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.current_sessions_disabled_major, var.current_sessions_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.current_sessions_notifications, "major", []), var.notifications.major)
+    notifications         = try(coalescelist(lookup(var.current_sessions_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.current_sessions_runbook_url, var.runbook_url), "")
     tip                   = var.current_sessions_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -83,7 +83,7 @@ EOF
     severity              = "Minor"
     detect_label          = "MINOR"
     disabled              = coalesce(var.current_sessions_disabled_minor, var.current_sessions_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.current_sessions_notifications, "minor", []), var.notifications.minor)
+    notifications         = try(coalescelist(lookup(var.current_sessions_notifications, "minor", []), var.notifications.minor), null)
     runbook_url           = try(coalesce(var.current_sessions_runbook_url, var.runbook_url), "")
     tip                   = var.current_sessions_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -111,7 +111,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.encryption_status_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.encryption_status_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.encryption_status_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.encryption_status_runbook_url, var.runbook_url), "")
     tip                   = var.encryption_status_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -138,7 +138,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.license_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.license_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.license_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.license_runbook_url, var.runbook_url), "")
     tip                   = var.license_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject

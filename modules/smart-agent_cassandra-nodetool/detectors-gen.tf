@@ -16,7 +16,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.node_status_disabled_critical, var.node_status_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.node_status_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.node_status_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.node_status_runbook_url, var.runbook_url), "")
     tip                   = var.node_status_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -28,7 +28,7 @@ EOF
     severity              = "Minor"
     detect_label          = "MINOR"
     disabled              = coalesce(var.node_status_disabled_minor, var.node_status_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.node_status_notifications, "minor", []), var.notifications.minor)
+    notifications         = try(coalescelist(lookup(var.node_status_notifications, "minor", []), var.notifications.minor), null)
     runbook_url           = try(coalesce(var.node_status_runbook_url, var.runbook_url), "")
     tip                   = var.node_status_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -55,7 +55,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.node_state_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.node_state_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.node_state_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.node_state_runbook_url, var.runbook_url), "")
     tip                   = var.node_state_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject

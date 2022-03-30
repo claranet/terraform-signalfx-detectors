@@ -16,7 +16,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.processes_disabled_critical, var.processes_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.processes_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.processes_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.processes_runbook_url, var.runbook_url), "")
     tip                   = var.processes_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -28,7 +28,7 @@ EOF
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.processes_disabled_major, var.processes_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.processes_notifications, "major", []), var.notifications.major)
+    notifications         = try(coalescelist(lookup(var.processes_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.processes_runbook_url, var.runbook_url), "")
     tip                   = var.processes_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject

@@ -21,7 +21,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.latency_disabled_critical, var.latency_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.latency_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.latency_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.latency_runbook_url, var.runbook_url), "")
     tip                   = var.latency_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -33,7 +33,7 @@ EOF
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.latency_disabled_major, var.latency_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.latency_notifications, "major", []), var.notifications.major)
+    notifications         = try(coalescelist(lookup(var.latency_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.latency_runbook_url, var.runbook_url), "")
     tip                   = var.latency_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -68,7 +68,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.http_5xx_disabled_critical, var.http_5xx_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.http_5xx_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.http_5xx_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.http_5xx_runbook_url, var.runbook_url), "")
     tip                   = var.http_5xx_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -80,7 +80,7 @@ EOF
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.http_5xx_disabled_major, var.http_5xx_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.http_5xx_notifications, "major", []), var.notifications.major)
+    notifications         = try(coalescelist(lookup(var.http_5xx_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.http_5xx_runbook_url, var.runbook_url), "")
     tip                   = var.http_5xx_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -115,7 +115,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.http_4xx_disabled_critical, var.http_4xx_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.http_4xx_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.http_4xx_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.http_4xx_runbook_url, var.runbook_url), "")
     tip                   = var.http_4xx_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -127,7 +127,7 @@ EOF
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.http_4xx_disabled_major, var.http_4xx_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.http_4xx_notifications, "major", []), var.notifications.major)
+    notifications         = try(coalescelist(lookup(var.http_4xx_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.http_4xx_runbook_url, var.runbook_url), "")
     tip                   = var.http_4xx_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject

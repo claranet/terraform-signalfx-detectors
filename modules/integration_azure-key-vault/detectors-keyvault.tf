@@ -19,7 +19,7 @@ resource "signalfx_detector" "api_result" {
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.api_result_disabled_critical, var.api_result_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.api_result_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.api_result_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.api_result_runbook_url, var.runbook_url), "")
     tip                   = var.api_result_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -31,7 +31,7 @@ resource "signalfx_detector" "api_result" {
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.api_result_disabled_major, var.api_result_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.api_result_notifications, "major", []), var.notifications.major)
+    notifications         = try(coalescelist(lookup(var.api_result_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.api_result_runbook_url, var.runbook_url), "")
     tip                   = var.api_result_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -60,7 +60,7 @@ resource "signalfx_detector" "api_latency" {
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.api_latency_disabled_critical, var.api_latency_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.api_latency_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.api_latency_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.api_latency_runbook_url, var.runbook_url), "")
     tip                   = var.api_latency_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -72,7 +72,7 @@ resource "signalfx_detector" "api_latency" {
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.api_latency_disabled_major, var.api_latency_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.api_latency_notifications, "major", []), var.notifications.major)
+    notifications         = try(coalescelist(lookup(var.api_latency_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.api_latency_runbook_url, var.runbook_url), "")
     tip                   = var.api_latency_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject

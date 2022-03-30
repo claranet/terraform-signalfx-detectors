@@ -16,7 +16,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.heartbeat_runbook_url, var.runbook_url), "")
     tip                   = var.heartbeat_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject_novalue : var.message_subject
@@ -44,7 +44,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.dns_query_time_disabled_critical, var.dns_query_time_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.dns_query_time_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.dns_query_time_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.dns_query_time_runbook_url, var.runbook_url), "")
     tip                   = var.dns_query_time_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -56,7 +56,7 @@ EOF
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.dns_query_time_disabled_major, var.dns_query_time_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.dns_query_time_notifications, "major", []), var.notifications.major)
+    notifications         = try(coalescelist(lookup(var.dns_query_time_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.dns_query_time_runbook_url, var.runbook_url), "")
     tip                   = var.dns_query_time_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -83,7 +83,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.dns_result_code_disabled_critical, var.dns_result_code_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.dns_result_code_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.dns_result_code_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.dns_result_code_runbook_url, var.runbook_url), "")
     tip                   = var.dns_result_code_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject

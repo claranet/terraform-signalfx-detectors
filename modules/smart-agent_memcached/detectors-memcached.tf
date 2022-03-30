@@ -16,7 +16,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.heartbeat_runbook_url, var.runbook_url), "")
     tip                   = var.heartbeat_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -44,7 +44,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.memcached_max_conn_disabled_critical, var.memcached_max_conn_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.memcached_max_conn_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.memcached_max_conn_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.memcached_max_conn_runbook_url, var.runbook_url), "")
     tip                   = var.memcached_max_conn_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -56,7 +56,7 @@ EOF
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.memcached_max_conn_disabled_major, var.memcached_max_conn_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.memcached_max_conn_notifications, "major", []), var.notifications.major)
+    notifications         = try(coalescelist(lookup(var.memcached_max_conn_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.memcached_max_conn_runbook_url, var.runbook_url), "")
     tip                   = var.memcached_max_conn_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -86,7 +86,7 @@ EOF
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.memcached_hit_ratio_disabled_major, var.memcached_hit_ratio_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.memcached_hit_ratio_notifications, "major", []), var.notifications.major)
+    notifications         = try(coalescelist(lookup(var.memcached_hit_ratio_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.memcached_hit_ratio_runbook_url, var.runbook_url), "")
     tip                   = var.memcached_hit_ratio_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -98,7 +98,7 @@ EOF
     severity              = "Minor"
     detect_label          = "MINOR"
     disabled              = coalesce(var.memcached_hit_ratio_disabled_minor, var.memcached_hit_ratio_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.memcached_hit_ratio_notifications, "minor", []), var.notifications.minor)
+    notifications         = try(coalescelist(lookup(var.memcached_hit_ratio_notifications, "minor", []), var.notifications.minor), null)
     runbook_url           = try(coalesce(var.memcached_hit_ratio_runbook_url, var.runbook_url), "")
     tip                   = var.memcached_hit_ratio_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
