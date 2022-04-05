@@ -92,7 +92,7 @@ EOF
     severity              = "{{ severity | capitalize }}"
     detect_label          = "{{ severity | replace('critical', 'crit') | replace ('warning', 'warn') | upper }}"
     disabled              = coalesce({% if rules | length > 1 %}var.{{ id }}_disabled_{{ severity }}, {% endif %}var.{{ id }}_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.{{ id }}_notifications, "{{ severity }}", []), var.notifications.{{ severity }})
+    notifications         = try(coalescelist(lookup(var.{{ id }}_notifications, "{{ severity }}", []), var.notifications.{{ severity }}), null)
     runbook_url           = try(coalesce(var.{{ id }}_runbook_url, var.runbook_url), "")
     tip                   = var.{{ id }}_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject{%- if type == 'heartbeat' -%}_novalue{% endif %} : var.message_subject

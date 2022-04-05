@@ -16,7 +16,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.disk_failed_disabled_critical, var.disk_failed_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.disk_failed_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.disk_failed_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.disk_failed_runbook_url, var.runbook_url), "")
     tip                   = var.disk_failed_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -28,7 +28,7 @@ EOF
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.disk_failed_disabled_major, var.disk_failed_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.disk_failed_notifications, "major", []), var.notifications.major)
+    notifications         = try(coalescelist(lookup(var.disk_failed_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.disk_failed_runbook_url, var.runbook_url), "")
     tip                   = var.disk_failed_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -56,7 +56,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.disk_missing_disabled_critical, var.disk_missing_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.disk_missing_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.disk_missing_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.disk_missing_runbook_url, var.runbook_url), "")
     tip                   = var.disk_missing_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -68,7 +68,7 @@ EOF
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.disk_missing_disabled_major, var.disk_missing_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.disk_missing_notifications, "major", []), var.notifications.major)
+    notifications         = try(coalescelist(lookup(var.disk_missing_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.disk_missing_runbook_url, var.runbook_url), "")
     tip                   = var.disk_missing_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject

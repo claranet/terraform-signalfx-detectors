@@ -23,7 +23,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.used_space_disabled_critical, var.used_space_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.used_space_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.used_space_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.used_space_runbook_url, var.runbook_url), "")
     tip                   = var.used_space_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -35,7 +35,7 @@ EOF
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.used_space_disabled_major, var.used_space_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.used_space_notifications, "major", []), var.notifications.major)
+    notifications         = try(coalescelist(lookup(var.used_space_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.used_space_runbook_url, var.runbook_url), "")
     tip                   = var.used_space_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -69,7 +69,7 @@ EOF
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.io_limit_disabled_major, var.io_limit_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.io_limit_notifications, "major", []), var.notifications.major)
+    notifications         = try(coalescelist(lookup(var.io_limit_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.io_limit_runbook_url, var.runbook_url), "")
     tip                   = var.io_limit_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -81,7 +81,7 @@ EOF
     severity              = "Minor"
     detect_label          = "MINOR"
     disabled              = coalesce(var.io_limit_disabled_minor, var.io_limit_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.io_limit_notifications, "minor", []), var.notifications.minor)
+    notifications         = try(coalescelist(lookup(var.io_limit_notifications, "minor", []), var.notifications.minor), null)
     runbook_url           = try(coalesce(var.io_limit_runbook_url, var.runbook_url), "")
     tip                   = var.io_limit_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -117,7 +117,7 @@ EOF
     severity              = "Minor"
     detect_label          = "MINOR"
     disabled              = coalesce(var.read_throughput_disabled_minor, var.read_throughput_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.read_throughput_notifications, "minor", []), var.notifications.minor)
+    notifications         = try(coalescelist(lookup(var.read_throughput_notifications, "minor", []), var.notifications.minor), null)
     runbook_url           = try(coalesce(var.read_throughput_runbook_url, var.runbook_url), "")
     tip                   = var.read_throughput_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -129,7 +129,7 @@ EOF
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.read_throughput_disabled_warning, var.read_throughput_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.read_throughput_notifications, "warning", []), var.notifications.warning)
+    notifications         = try(coalescelist(lookup(var.read_throughput_notifications, "warning", []), var.notifications.warning), null)
     runbook_url           = try(coalesce(var.read_throughput_runbook_url, var.runbook_url), "")
     tip                   = var.read_throughput_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -165,7 +165,7 @@ EOF
     severity              = "Minor"
     detect_label          = "MINOR"
     disabled              = coalesce(var.write_throughput_disabled_minor, var.write_throughput_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.write_throughput_notifications, "minor", []), var.notifications.minor)
+    notifications         = try(coalescelist(lookup(var.write_throughput_notifications, "minor", []), var.notifications.minor), null)
     runbook_url           = try(coalesce(var.write_throughput_runbook_url, var.runbook_url), "")
     tip                   = var.write_throughput_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -177,7 +177,7 @@ EOF
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.write_throughput_disabled_warning, var.write_throughput_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.write_throughput_notifications, "warning", []), var.notifications.warning)
+    notifications         = try(coalescelist(lookup(var.write_throughput_notifications, "warning", []), var.notifications.warning), null)
     runbook_url           = try(coalesce(var.write_throughput_runbook_url, var.runbook_url), "")
     tip                   = var.write_throughput_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -213,7 +213,7 @@ EOF
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.percent_of_permitted_throughput_disabled_major, var.percent_of_permitted_throughput_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.percent_of_permitted_throughput_notifications, "major", []), var.notifications.major)
+    notifications         = try(coalescelist(lookup(var.percent_of_permitted_throughput_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.percent_of_permitted_throughput_runbook_url, var.runbook_url), "")
     tip                   = var.percent_of_permitted_throughput_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -225,7 +225,7 @@ EOF
     severity              = "Minor"
     detect_label          = "MINOR"
     disabled              = coalesce(var.percent_of_permitted_throughput_disabled_minor, var.percent_of_permitted_throughput_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.percent_of_permitted_throughput_notifications, "minor", []), var.notifications.minor)
+    notifications         = try(coalescelist(lookup(var.percent_of_permitted_throughput_notifications, "minor", []), var.notifications.minor), null)
     runbook_url           = try(coalesce(var.percent_of_permitted_throughput_runbook_url, var.runbook_url), "")
     tip                   = var.percent_of_permitted_throughput_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -258,7 +258,7 @@ EOF
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.burst_credit_balance_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.burst_credit_balance_notifications, "major", []), var.notifications.major)
+    notifications         = try(coalescelist(lookup(var.burst_credit_balance_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.burst_credit_balance_runbook_url, var.runbook_url), "")
     tip                   = var.burst_credit_balance_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject

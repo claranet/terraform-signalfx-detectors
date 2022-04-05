@@ -16,7 +16,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.heartbeat_runbook_url, var.runbook_url), "")
     tip                   = var.heartbeat_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject_novalue : var.message_subject
@@ -49,7 +49,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.cpu_disabled_critical, var.cpu_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.cpu_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.cpu_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.cpu_runbook_url, var.runbook_url), "")
     tip                   = var.cpu_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -61,7 +61,7 @@ EOF
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.cpu_disabled_major, var.cpu_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.cpu_notifications, "major", []), var.notifications.major)
+    notifications         = try(coalescelist(lookup(var.cpu_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.cpu_runbook_url, var.runbook_url), "")
     tip                   = var.cpu_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -91,7 +91,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.load_disabled_critical, var.load_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.load_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.load_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.load_runbook_url, var.runbook_url), "")
     tip                   = var.load_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -103,7 +103,7 @@ EOF
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.load_disabled_major, var.load_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.load_notifications, "major", []), var.notifications.major)
+    notifications         = try(coalescelist(lookup(var.load_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.load_runbook_url, var.runbook_url), "")
     tip                   = var.load_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -136,7 +136,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.disk_space_disabled_critical, var.disk_space_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.disk_space_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.disk_space_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.disk_space_runbook_url, var.runbook_url), "")
     tip                   = var.disk_space_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -148,7 +148,7 @@ EOF
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.disk_space_disabled_major, var.disk_space_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.disk_space_notifications, "major", []), var.notifications.major)
+    notifications         = try(coalescelist(lookup(var.disk_space_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.disk_space_runbook_url, var.runbook_url), "")
     tip                   = var.disk_space_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -181,7 +181,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.disk_inodes_disabled_critical, var.disk_inodes_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.disk_inodes_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.disk_inodes_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.disk_inodes_runbook_url, var.runbook_url), "")
     tip                   = var.disk_inodes_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -193,7 +193,7 @@ EOF
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.disk_inodes_disabled_major, var.disk_inodes_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.disk_inodes_notifications, "major", []), var.notifications.major)
+    notifications         = try(coalescelist(lookup(var.disk_inodes_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.disk_inodes_runbook_url, var.runbook_url), "")
     tip                   = var.disk_inodes_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -226,7 +226,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.memory_disabled_critical, var.memory_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.memory_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.memory_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.memory_runbook_url, var.runbook_url), "")
     tip                   = var.memory_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -238,7 +238,7 @@ EOF
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.memory_disabled_major, var.memory_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.memory_notifications, "major", []), var.notifications.major)
+    notifications         = try(coalescelist(lookup(var.memory_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.memory_runbook_url, var.runbook_url), "")
     tip                   = var.memory_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject

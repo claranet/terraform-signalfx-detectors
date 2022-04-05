@@ -17,7 +17,7 @@ resource "signalfx_detector" "heartbeat" {
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.heartbeat_runbook_url, var.runbook_url), "")
     tip                   = var.heartbeat_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject_novalue : var.message_subject
@@ -46,7 +46,7 @@ resource "signalfx_detector" "cpu_usage" {
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.cpu_usage_disabled_critical, var.cpu_usage_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.cpu_usage_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.cpu_usage_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.cpu_usage_runbook_url, var.runbook_url), "")
     tip                   = var.cpu_usage_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -58,7 +58,7 @@ resource "signalfx_detector" "cpu_usage" {
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.cpu_usage_disabled_major, var.cpu_usage_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.cpu_usage_notifications, "major", []), var.notifications.major)
+    notifications         = try(coalescelist(lookup(var.cpu_usage_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.cpu_usage_runbook_url, var.runbook_url), "")
     tip                   = var.cpu_usage_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -85,7 +85,7 @@ resource "signalfx_detector" "no_connection" {
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.no_connection_disabled_critical, var.no_connection_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.no_connection_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.no_connection_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.no_connection_runbook_url, var.runbook_url), "")
     tip                   = var.no_connection_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -114,7 +114,7 @@ resource "signalfx_detector" "storage_usage" {
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.storage_usage_disabled_critical, var.storage_usage_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.storage_usage_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.storage_usage_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.storage_usage_runbook_url, var.runbook_url), "")
     tip                   = var.storage_usage_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -126,7 +126,7 @@ resource "signalfx_detector" "storage_usage" {
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.storage_usage_disabled_major, var.storage_usage_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.storage_usage_notifications, "major", []), var.notifications.major)
+    notifications         = try(coalescelist(lookup(var.storage_usage_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.storage_usage_runbook_url, var.runbook_url), "")
     tip                   = var.storage_usage_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -155,7 +155,7 @@ resource "signalfx_detector" "io_consumption" {
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.io_consumption_disabled_critical, var.io_consumption_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.io_consumption_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.io_consumption_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.io_consumption_runbook_url, var.runbook_url), "")
     tip                   = var.io_consumption_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -167,7 +167,7 @@ resource "signalfx_detector" "io_consumption" {
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.io_consumption_disabled_major, var.io_consumption_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.io_consumption_notifications, "major", []), var.notifications.major)
+    notifications         = try(coalescelist(lookup(var.io_consumption_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.io_consumption_runbook_url, var.runbook_url), "")
     tip                   = var.io_consumption_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -196,7 +196,7 @@ resource "signalfx_detector" "memory_usage" {
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.memory_usage_disabled_critical, var.memory_usage_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.memory_usage_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.memory_usage_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.memory_usage_runbook_url, var.runbook_url), "")
     tip                   = var.memory_usage_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -208,7 +208,7 @@ resource "signalfx_detector" "memory_usage" {
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.memory_usage_disabled_major, var.memory_usage_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.memory_usage_notifications, "major", []), var.notifications.major)
+    notifications         = try(coalescelist(lookup(var.memory_usage_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.memory_usage_runbook_url, var.runbook_url), "")
     tip                   = var.memory_usage_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -233,7 +233,7 @@ resource "signalfx_detector" "serverlog_storage_usage" {
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.serverlog_storage_usage_disabled_critical, var.serverlog_storage_usage_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.serverlog_storage_usage_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.serverlog_storage_usage_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.serverlog_storage_usage_runbook_url, var.runbook_url), "")
     tip                   = var.serverlog_storage_usage_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -245,7 +245,7 @@ resource "signalfx_detector" "serverlog_storage_usage" {
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.serverlog_storage_usage_disabled_major, var.serverlog_storage_usage_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.serverlog_storage_usage_notifications, "major", []), var.notifications.major)
+    notifications         = try(coalescelist(lookup(var.serverlog_storage_usage_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.serverlog_storage_usage_runbook_url, var.runbook_url), "")
     tip                   = var.serverlog_storage_usage_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject

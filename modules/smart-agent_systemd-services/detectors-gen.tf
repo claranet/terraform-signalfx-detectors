@@ -15,7 +15,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.aliveness_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.aliveness_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.aliveness_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.aliveness_runbook_url, var.runbook_url), "")
     tip                   = var.aliveness_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject

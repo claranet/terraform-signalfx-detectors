@@ -17,7 +17,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.heartbeat_runbook_url, var.runbook_url), "")
     tip                   = var.heartbeat_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject_novalue : var.message_subject
@@ -46,7 +46,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.snat_port_utilization_disabled_critical, var.snat_port_utilization_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.snat_port_utilization_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.snat_port_utilization_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.snat_port_utilization_runbook_url, var.runbook_url), "")
     tip                   = var.snat_port_utilization_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -58,7 +58,7 @@ EOF
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.snat_port_utilization_disabled_major, var.snat_port_utilization_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.snat_port_utilization_notifications, "major", []), var.notifications.major)
+    notifications         = try(coalescelist(lookup(var.snat_port_utilization_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.snat_port_utilization_runbook_url, var.runbook_url), "")
     tip                   = var.snat_port_utilization_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -90,7 +90,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.throughput_disabled_critical, var.throughput_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.throughput_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.throughput_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.throughput_runbook_url, var.runbook_url), "")
     tip                   = var.throughput_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -102,7 +102,7 @@ EOF
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.throughput_disabled_major, var.throughput_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.throughput_notifications, "major", []), var.notifications.major)
+    notifications         = try(coalescelist(lookup(var.throughput_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.throughput_runbook_url, var.runbook_url), "")
     tip                   = var.throughput_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -114,7 +114,7 @@ EOF
     severity              = "Minor"
     detect_label          = "MINOR"
     disabled              = coalesce(var.throughput_disabled_minor, var.throughput_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.throughput_notifications, "minor", []), var.notifications.minor)
+    notifications         = try(coalescelist(lookup(var.throughput_notifications, "minor", []), var.notifications.minor), null)
     runbook_url           = try(coalesce(var.throughput_runbook_url, var.runbook_url), "")
     tip                   = var.throughput_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -126,7 +126,7 @@ EOF
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.throughput_disabled_warning, var.throughput_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.throughput_notifications, "warning", []), var.notifications.warning)
+    notifications         = try(coalescelist(lookup(var.throughput_notifications, "warning", []), var.notifications.warning), null)
     runbook_url           = try(coalesce(var.throughput_runbook_url, var.runbook_url), "")
     tip                   = var.throughput_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -155,7 +155,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.health_state_disabled_critical, var.health_state_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.health_state_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.health_state_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.health_state_runbook_url, var.runbook_url), "")
     tip                   = var.health_state_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -167,7 +167,7 @@ EOF
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.health_state_disabled_major, var.health_state_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.health_state_notifications, "major", []), var.notifications.major)
+    notifications         = try(coalescelist(lookup(var.health_state_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.health_state_runbook_url, var.runbook_url), "")
     tip                   = var.health_state_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject

@@ -16,7 +16,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.heartbeat_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.heartbeat_runbook_url, var.runbook_url), "")
     tip                   = var.heartbeat_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject_novalue : var.message_subject
@@ -43,7 +43,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.vpn_status_disabled_critical, var.vpn_status_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.vpn_status_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.vpn_status_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.vpn_status_runbook_url, var.runbook_url), "")
     tip                   = var.vpn_status_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject

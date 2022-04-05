@@ -16,7 +16,7 @@ EOF
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.disk_running_out_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.disk_running_out_notifications, "major", []), var.notifications.major)
+    notifications         = try(coalescelist(lookup(var.disk_running_out_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.disk_running_out_runbook_url, var.runbook_url), "")
     tip                   = var.disk_running_out_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject_novalue : var.message_subject

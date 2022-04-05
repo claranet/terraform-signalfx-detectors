@@ -22,7 +22,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.cpu_disabled_critical, var.cpu_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.cpu_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.cpu_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.cpu_runbook_url, var.runbook_url), "")
     tip                   = var.cpu_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -34,7 +34,7 @@ EOF
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.cpu_disabled_major, var.cpu_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.cpu_notifications, "major", []), var.notifications.major)
+    notifications         = try(coalescelist(lookup(var.cpu_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.cpu_runbook_url, var.runbook_url), "")
     tip                   = var.cpu_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -70,7 +70,7 @@ EOF
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.hit_ratio_disabled_major, var.hit_ratio_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.hit_ratio_notifications, "major", []), var.notifications.major)
+    notifications         = try(coalescelist(lookup(var.hit_ratio_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.hit_ratio_runbook_url, var.runbook_url), "")
     tip                   = var.hit_ratio_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -82,7 +82,7 @@ EOF
     severity              = "Minor"
     detect_label          = "MINOR"
     disabled              = coalesce(var.hit_ratio_disabled_minor, var.hit_ratio_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.hit_ratio_notifications, "minor", []), var.notifications.minor)
+    notifications         = try(coalescelist(lookup(var.hit_ratio_notifications, "minor", []), var.notifications.minor), null)
     runbook_url           = try(coalesce(var.hit_ratio_runbook_url, var.runbook_url), "")
     tip                   = var.hit_ratio_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject

@@ -16,7 +16,7 @@ EOF
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.hosts_limit_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.hosts_limit_notifications, "major", []), var.notifications.major)
+    notifications         = try(coalescelist(lookup(var.hosts_limit_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.hosts_limit_runbook_url, var.runbook_url), "")
     tip                   = var.hosts_limit_tip
     parameterized_subject = coalesce(var.message_subject, "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}} > {{inputs.limit.value}}) on {{{dimensions}}}")
@@ -44,7 +44,7 @@ EOF
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.containers_limit_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.containers_limit_notifications, "major", []), var.notifications.major)
+    notifications         = try(coalescelist(lookup(var.containers_limit_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.containers_limit_runbook_url, var.runbook_url), "")
     tip                   = var.containers_limit_tip
     parameterized_subject = coalesce(var.message_subject, "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}} > {{inputs.limit.value}}) on {{{dimensions}}}")
@@ -72,7 +72,7 @@ EOF
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.custom_metrics_limit_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.custom_metrics_limit_notifications, "major", []), var.notifications.major)
+    notifications         = try(coalescelist(lookup(var.custom_metrics_limit_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.custom_metrics_limit_runbook_url, var.runbook_url), "")
     tip                   = var.custom_metrics_limit_tip
     parameterized_subject = coalesce(var.message_subject, "[{{ruleSeverity}}]{{{detectorName}}} {{{readableRule}}} ({{inputs.signal.value}} > {{inputs.limit.value}}) on {{{dimensions}}}")
@@ -101,7 +101,7 @@ EOF
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.containers_ratio_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.containers_ratio_notifications, "major", []), var.notifications.major)
+    notifications         = try(coalescelist(lookup(var.containers_ratio_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.containers_ratio_runbook_url, var.runbook_url), "")
     tip                   = var.containers_ratio_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -130,7 +130,7 @@ EOF
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.custom_metrics_ratio_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.custom_metrics_ratio_notifications, "major", []), var.notifications.major)
+    notifications         = try(coalescelist(lookup(var.custom_metrics_ratio_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.custom_metrics_ratio_runbook_url, var.runbook_url), "")
     tip                   = var.custom_metrics_ratio_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject

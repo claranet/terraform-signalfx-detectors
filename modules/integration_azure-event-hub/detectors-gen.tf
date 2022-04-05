@@ -25,7 +25,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.throttled_requests_disabled_critical, var.throttled_requests_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.throttled_requests_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.throttled_requests_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.throttled_requests_runbook_url, var.runbook_url), "")
     tip                   = var.throttled_requests_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -37,7 +37,7 @@ EOF
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.throttled_requests_disabled_major, var.throttled_requests_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.throttled_requests_notifications, "major", []), var.notifications.major)
+    notifications         = try(coalescelist(lookup(var.throttled_requests_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.throttled_requests_runbook_url, var.runbook_url), "")
     tip                   = var.throttled_requests_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -49,7 +49,7 @@ EOF
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.throttled_requests_disabled_warning, var.throttled_requests_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.throttled_requests_notifications, "warning", []), var.notifications.warning)
+    notifications         = try(coalescelist(lookup(var.throttled_requests_notifications, "warning", []), var.notifications.warning), null)
     runbook_url           = try(coalesce(var.throttled_requests_runbook_url, var.runbook_url), "")
     tip                   = var.throttled_requests_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject

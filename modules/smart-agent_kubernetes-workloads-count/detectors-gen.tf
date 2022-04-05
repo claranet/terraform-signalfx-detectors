@@ -27,7 +27,7 @@ EOF
     severity              = "Minor"
     detect_label          = "MINOR"
     disabled              = coalesce(var.workloads_count_disabled_minor, var.workloads_count_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.workloads_count_notifications, "minor", []), var.notifications.minor)
+    notifications         = try(coalescelist(lookup(var.workloads_count_notifications, "minor", []), var.notifications.minor), null)
     runbook_url           = try(coalesce(var.workloads_count_runbook_url, var.runbook_url), "")
     tip                   = var.workloads_count_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -39,7 +39,7 @@ EOF
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.workloads_count_disabled_warning, var.workloads_count_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.workloads_count_notifications, "warning", []), var.notifications.warning)
+    notifications         = try(coalescelist(lookup(var.workloads_count_notifications, "warning", []), var.notifications.warning), null)
     runbook_url           = try(coalesce(var.workloads_count_runbook_url, var.runbook_url), "")
     tip                   = var.workloads_count_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject

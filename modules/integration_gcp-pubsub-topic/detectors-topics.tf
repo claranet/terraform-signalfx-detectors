@@ -16,7 +16,7 @@ EOF
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.sending_operations_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.sending_operations_notifications, "major", []), var.notifications.major)
+    notifications         = try(coalescelist(lookup(var.sending_operations_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.sending_operations_runbook_url, var.runbook_url), "")
     tip                   = var.sending_operations_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -45,7 +45,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.unavailable_sending_operations_disabled_critical, var.unavailable_sending_operations_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.unavailable_sending_operations_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.unavailable_sending_operations_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.unavailable_sending_operations_runbook_url, var.runbook_url), "")
     tip                   = var.unavailable_sending_operations_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -57,7 +57,7 @@ EOF
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.unavailable_sending_operations_disabled_major, var.unavailable_sending_operations_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.unavailable_sending_operations_notifications, "major", []), var.notifications.major)
+    notifications         = try(coalescelist(lookup(var.unavailable_sending_operations_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.unavailable_sending_operations_runbook_url, var.runbook_url), "")
     tip                   = var.unavailable_sending_operations_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -88,7 +88,7 @@ EOF
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.unavailable_sending_operations_ratio_disabled_critical, var.unavailable_sending_operations_ratio_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.unavailable_sending_operations_ratio_notifications, "critical", []), var.notifications.critical)
+    notifications         = try(coalescelist(lookup(var.unavailable_sending_operations_ratio_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.unavailable_sending_operations_ratio_runbook_url, var.runbook_url), "")
     tip                   = var.unavailable_sending_operations_ratio_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -100,7 +100,7 @@ EOF
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.unavailable_sending_operations_ratio_disabled_major, var.unavailable_sending_operations_ratio_disabled, var.detectors_disabled)
-    notifications         = coalescelist(lookup(var.unavailable_sending_operations_ratio_notifications, "major", []), var.notifications.major)
+    notifications         = try(coalescelist(lookup(var.unavailable_sending_operations_ratio_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.unavailable_sending_operations_ratio_runbook_url, var.runbook_url), "")
     tip                   = var.unavailable_sending_operations_ratio_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
