@@ -57,7 +57,7 @@ Note the following parameters:
   Check the [notification binding](https://github.com/claranet/terraform-signalfx-detectors/wiki/Notifications-binding)
   documentation to understand the recommended role of each severity.
 
-These last 3 parameters alongs with all variables defined in [common-variables.tf](common-variables.tf) are common to all
+These 3 parameters alongs with all variables defined in [common-variables.tf](common-variables.tf) are common to all
 [modules](../) in this repository. Other variables, specific to this module, are available in
 [variables.tf](variables.tf).
 In general, the default configuration "works" but all of these Terraform
@@ -88,7 +88,6 @@ This module creates the following SignalFx detectors which could contain one or 
 |Redis memory fragmentation ratio (missing memory)|X|X|-|-|-|
 |Redis rejected connections (maxclient reached)|X|X|-|-|-|
 |Redis hitrate|X|X|-|-|-|
-
 
 ## How to collect required metrics?
 
