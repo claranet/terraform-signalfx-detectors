@@ -176,7 +176,7 @@ EOF
 }
 
 resource "signalfx_detector" "memory_used_max" {
-  count = var.from_otel ? 0 : 1
+  count = var.use_otel_receiver ? 0 : 1
   name  = format("%s %s", local.detector_name_prefix, "Redis memory used over max memory (if configured)")
 
   authorized_writer_teams = var.authorized_writer_teams
@@ -219,7 +219,7 @@ EOF
 }
 
 resource "signalfx_detector" "memory_used_total" {
-  count = var.from_otel ? 0 : 1
+  count = var.use_otel_receiver ? 0 : 1
   name  = format("%s %s", local.detector_name_prefix, "Redis memory used over total system memory")
 
   authorized_writer_teams = var.authorized_writer_teams

@@ -1,7 +1,7 @@
 # Module specific
 
-variable "from_otel" {
-  description = "Set to true when metrics are sent by otel collector instead of smart-agent"
+variable "use_otel_receiver" {
+  description = "Set to true when metrics are collected by redisreceiver from otel collector instead of collectd/redis monitor of smart agent."
   type        = bool
   default     = false
 }
