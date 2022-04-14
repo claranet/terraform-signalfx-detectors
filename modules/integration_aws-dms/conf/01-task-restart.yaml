@@ -1,0 +1,23 @@
+module: AWS DMS
+name: Task has restarted
+id: task_restart
+
+filtering: "filter('namespace', 'AWS/DMS')"
+transformation: false
+
+A: "A = data('RunCounter', filter('namespace', 'AWS/DMS') and filter('stat', 'upper')).publish(label='A')"
+
+signals:
+  runcounter_delta:
+    metric: RunCounter
+    filter: "filter('stat', 'upper')"
+    extrapolation: last_value
+    rollup: delta
+  signal:
+    formula: runcounter_delta
+rules:
+  critical:
+    threshold: 1
+    comparator: ">"
+    lasting_duration: 5m
+    lasting_at_least: 0.9

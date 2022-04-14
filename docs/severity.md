@@ -10,6 +10,7 @@
 - [integration_aws-alb](#integration_aws-alb)
 - [integration_aws-apigateway](#integration_aws-apigateway)
 - [integration_aws-beanstalk](#integration_aws-beanstalk)
+- [integration_aws-dms](#integration_aws-dms)
 - [integration_aws-ecs-cluster](#integration_aws-ecs-cluster)
 - [integration_aws-ecs-service](#integration_aws-ecs-service)
 - [integration_aws-efs](#integration_aws-efs)
@@ -165,6 +166,13 @@
 |AWS Beanstalk application latency p90|X|X|-|-|-|
 |AWS Beanstalk application 5xx error rate|X|X|-|-|-|
 |AWS Beanstalk instance root filesystem usage|X|X|-|-|-|
+
+
+## integration_aws-dms
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|AWS DMS task has restarted|X|-|-|-|-|
 
 
 ## integration_aws-ecs-cluster
