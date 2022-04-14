@@ -1,5 +1,11 @@
 # Module specific
 
+variable "from_otel" {
+  description = "Set to true when metrics are sent by otel collector instead of smart-agent"
+  type        = bool
+  default     = false
+}
+
 # Heartbeat detector
 
 variable "heartbeat_max_delay" {

@@ -7,7 +7,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    signal = data('bytes.used_memory', filter=filter('plugin', 'redis_info') and ${local.not_running_vm_filters} and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
+    signal = data('${local.memory_used_metric_name}', filter=${local.plugin_filter}${local.not_running_vm_filters} and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}', auto_resolve_after='${local.heartbeat_auto_resolve_after}').publish('CRIT')
 EOF
 
@@ -34,7 +34,7 @@ resource "signalfx_detector" "evicted_keys" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('counter.evicted_keys', filter=filter('plugin', 'redis_info') and ${module.filtering.signalflow}, rollup='delta').rateofchange()${var.evicted_keys_aggregation_function}${var.evicted_keys_transformation_function}.publish('signal')
+    signal = data('${local.evicted_keys_metric_name}', filter=${local.plugin_filter}${module.filtering.signalflow}, rollup='delta').rateofchange()${var.evicted_keys_aggregation_function}${var.evicted_keys_transformation_function}.publish('signal')
     detect(when(signal > ${var.evicted_keys_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.evicted_keys_threshold_major}) and (not when(signal > ${var.evicted_keys_threshold_critical}))).publish('MAJOR')
 EOF
@@ -74,7 +74,7 @@ resource "signalfx_detector" "expirations" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('counter.expired_keys', filter=filter('plugin', 'redis_info') and ${module.filtering.signalflow}, rollup='delta').rateofchange()${var.expirations_aggregation_function}${var.expirations_transformation_function}.publish('signal')
+    signal = data('${local.expired_keys_metric_name}', filter=${local.plugin_filter}${module.filtering.signalflow}, rollup='delta').rateofchange()${var.expirations_aggregation_function}${var.expirations_transformation_function}.publish('signal')
     detect(when(signal > ${var.expirations_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.expirations_threshold_major}) and (not when(signal > ${var.expirations_threshold_critical}))).publish('MAJOR')
 EOF
@@ -114,8 +114,8 @@ resource "signalfx_detector" "blocked_clients" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    A = data('gauge.blocked_clients', filter=filter('plugin', 'redis_info') and ${module.filtering.signalflow})${var.blocked_clients_aggregation_function}${var.blocked_clients_transformation_function}
-    B = data('gauge.connected_clients', filter=filter('plugin', 'redis_info') and ${module.filtering.signalflow})${var.blocked_clients_aggregation_function}${var.blocked_clients_transformation_function}
+    A = data('${local.blocked_clients_metric_name}', filter=${local.plugin_filter}${module.filtering.signalflow})${var.blocked_clients_aggregation_function}${var.blocked_clients_transformation_function}
+    B = data('${local.connected_clients_metric_name}', filter=${local.plugin_filter}${module.filtering.signalflow})${var.blocked_clients_aggregation_function}${var.blocked_clients_transformation_function}
     signal = (A/B).scale(100).publish('signal')
     detect(when(signal > ${var.blocked_clients_threshold_minor})).publish('MINOR')
     detect(when(signal > ${var.blocked_clients_threshold_warning}) and (not when(signal > ${var.blocked_clients_threshold_minor}))).publish('WARN')
@@ -156,7 +156,7 @@ resource "signalfx_detector" "keyspace_full" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('gauge.db0_keys', filter=filter('plugin', 'redis_info') and ${module.filtering.signalflow}).rateofchange().abs()${var.keyspace_full_aggregation_function}${var.keyspace_full_transformation_function}.publish('signal')
+    signal = data('${local.db_keys_metric_name}', filter=${local.plugin_filter}${module.filtering.signalflow}).rateofchange().abs()${var.keyspace_full_aggregation_function}${var.keyspace_full_transformation_function}.publish('signal')
     detect(when(signal == 0)).publish('MAJOR')
 EOF
 
@@ -176,15 +176,16 @@ EOF
 }
 
 resource "signalfx_detector" "memory_used_max" {
-  name = format("%s %s", local.detector_name_prefix, "Redis memory used over max memory (if configured)")
+  count = var.from_otel ? 0 : 1
+  name  = format("%s %s", local.detector_name_prefix, "Redis memory used over max memory (if configured)")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    A = data('bytes.used_memory', filter=filter('plugin', 'redis_info') and ${module.filtering.signalflow})${var.memory_used_max_aggregation_function}${var.memory_used_max_transformation_function}
-    B = data('bytes.maxmemory', filter=filter('plugin', 'redis_info') and ${module.filtering.signalflow})${var.memory_used_max_aggregation_function}${var.memory_used_max_transformation_function}
+    A = data('${local.memory_used_metric_name}', filter=${local.plugin_filter}${module.filtering.signalflow})${var.memory_used_max_aggregation_function}${var.memory_used_max_transformation_function}
+    B = data('bytes.maxmemory', filter=${local.plugin_filter}${module.filtering.signalflow})${var.memory_used_max_aggregation_function}${var.memory_used_max_transformation_function}
     signal = (A/B).scale(100).publish('signal')
     detect(when(signal > ${var.memory_used_max_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.memory_used_max_threshold_major}) and (not when(signal > ${var.memory_used_max_threshold_critical}))).publish('MAJOR')
@@ -218,15 +219,16 @@ EOF
 }
 
 resource "signalfx_detector" "memory_used_total" {
-  name = format("%s %s", local.detector_name_prefix, "Redis memory used over total system memory")
+  count = var.from_otel ? 0 : 1
+  name  = format("%s %s", local.detector_name_prefix, "Redis memory used over total system memory")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    A = data('bytes.used_memory', filter=filter('plugin', 'redis_info') and ${module.filtering.signalflow})${var.memory_used_total_aggregation_function}${var.memory_used_total_transformation_function}
-    B = data('bytes.total_system_memory', filter=filter('plugin', 'redis_info') and ${module.filtering.signalflow})${var.memory_used_total_aggregation_function}${var.memory_used_total_transformation_function}
+    A = data('${local.memory_used_metric_name}', filter=${local.plugin_filter}${module.filtering.signalflow})${var.memory_used_total_aggregation_function}${var.memory_used_total_transformation_function}
+    B = data('bytes.total_system_memory', filter=${local.plugin_filter}${module.filtering.signalflow})${var.memory_used_total_aggregation_function}${var.memory_used_total_transformation_function}
     signal = (A/B).scale(100).publish('signal')
     detect(when(signal > ${var.memory_used_total_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.memory_used_total_threshold_major}) and (not when(signal > ${var.memory_used_total_threshold_critical}))).publish('MAJOR')
@@ -267,8 +269,8 @@ resource "signalfx_detector" "memory_frag_high" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    A = data('bytes.used_memory_rss', filter=filter('plugin', 'redis_info') and ${module.filtering.signalflow}, rollup='average')${var.memory_frag_high_aggregation_function}${var.memory_frag_high_transformation_function}
-    B = data('bytes.used_memory', filter=filter('plugin', 'redis_info') and ${module.filtering.signalflow}, rollup='average')${var.memory_frag_high_aggregation_function}${var.memory_frag_high_transformation_function}
+    A = data('${local.memory_rss_metric_name}', filter=${local.plugin_filter}${module.filtering.signalflow}, rollup='average')${var.memory_frag_high_aggregation_function}${var.memory_frag_high_transformation_function}
+    B = data('${local.memory_used_metric_name}', filter=${local.plugin_filter}${module.filtering.signalflow}, rollup='average')${var.memory_frag_high_aggregation_function}${var.memory_frag_high_transformation_function}
     signal = (A/B).publish('signal')
     detect(when(signal > ${var.memory_frag_high_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.memory_frag_high_threshold_major}) and (not when(signal > ${var.memory_frag_high_threshold_critical}))).publish('MAJOR')
@@ -309,8 +311,8 @@ resource "signalfx_detector" "memory_frag_low" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    A = data('bytes.used_memory_rss', filter=filter('plugin', 'redis_info') and ${module.filtering.signalflow}, rollup='average')${var.memory_frag_low_aggregation_function}${var.memory_frag_low_transformation_function}
-    B = data('bytes.used_memory', filter=filter('plugin', 'redis_info') and ${module.filtering.signalflow}, rollup='average')${var.memory_frag_low_aggregation_function}${var.memory_frag_low_transformation_function}
+    A = data('${local.memory_rss_metric_name}', filter=${local.plugin_filter}${module.filtering.signalflow}, rollup='average')${var.memory_frag_low_aggregation_function}${var.memory_frag_low_transformation_function}
+    B = data('${local.memory_used_metric_name}', filter=${local.plugin_filter}${module.filtering.signalflow}, rollup='average')${var.memory_frag_low_aggregation_function}${var.memory_frag_low_transformation_function}
     signal = (A/B).publish('signal')
     detect(when(signal < ${var.memory_frag_low_threshold_critical})).publish('CRIT')
     detect(when(signal < ${var.memory_frag_low_threshold_major}) and (not when(signal < ${var.memory_frag_low_threshold_critical}))).publish('MAJOR')
@@ -351,7 +353,7 @@ resource "signalfx_detector" "rejected_connections" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('counter.rejected_connections', filter=filter('plugin', 'redis_info') and ${module.filtering.signalflow}, rollup='delta').${var.rejected_connections_aggregation_function}${var.rejected_connections_transformation_function}.publish('signal')
+    signal = data('${local.rejected_connections_metric_name}', filter=${local.plugin_filter}${module.filtering.signalflow}, rollup='delta').${var.rejected_connections_aggregation_function}${var.rejected_connections_transformation_function}.publish('signal')
     detect(when(signal > ${var.rejected_connections_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.rejected_connections_threshold_major}) and (not when(signal > ${var.rejected_connections_threshold_critical}))).publish('MAJOR')
 EOF
@@ -391,8 +393,8 @@ resource "signalfx_detector" "hitrate" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    A = data('derive.keyspace_hits', filter=filter('plugin', 'redis_info') and ${module.filtering.signalflow}, rollup='delta')${var.hitrate_aggregation_function}${var.hitrate_transformation_function}
-    B = data('derive.keyspace_misses', filter=filter('plugin', 'redis_info') and ${module.filtering.signalflow}, rollup='delta')${var.hitrate_aggregation_function}${var.hitrate_transformation_function}
+    A = data('${local.keyspace_hits_metric_name}', filter=${local.plugin_filter}${module.filtering.signalflow}, rollup='delta')${var.hitrate_aggregation_function}${var.hitrate_transformation_function}
+    B = data('${local.keyspace_misses_metric_name}', filter=${local.plugin_filter}${module.filtering.signalflow}, rollup='delta')${var.hitrate_aggregation_function}${var.hitrate_transformation_function}
     signal = (A / (A+B)).scale(100).publish('signal')
     detect(when(signal < ${var.hitrate_threshold_critical})).publish('CRIT')
     detect(when(signal < ${var.hitrate_threshold_major}) and (not when(signal < ${var.hitrate_threshold_critical}))).publish('MAJOR')
