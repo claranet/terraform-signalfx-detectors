@@ -32,7 +32,6 @@ module "signalfx-detectors-smart-agent-redis" {
 
 Note the following parameters:
 
-* `from_otel`: Set this to `true` if your metrics are sent by otel collector instead of smart-agent
 * `source`: Use this parameter to specify the URL of the module. The double slash (`//`) is intentional  and required.
   Terraform uses it to specify subfolders within a Git repo (see [module
   sources](https://www.terraform.io/language/modules/sources)). The `ref` parameter specifies a specific Git tag in
@@ -83,14 +82,13 @@ This module creates the following SignalFx detectors which could contain one or 
 |Redis expired keys rate of change|X|X|-|-|-|
 |Redis blocked client rate|-|-|X|X|-|
 |Redis keyspace seems full|-|X|-|-|-|
-|Redis memory used over max memory (if configured) ^*|X|X|-|-|-|
-|Redis memory used over total system memory ^*|X|X|-|-|-|
+|Redis memory used over max memory (if configured)|X|X|-|-|-|
+|Redis memory used over total system memory|X|X|-|-|-|
 |Redis memory fragmentation ratio (excessive fragmentation)|X|X|-|-|-|
 |Redis memory fragmentation ratio (missing memory)|X|X|-|-|-|
 |Redis rejected connections (maxclient reached)|X|X|-|-|-|
 |Redis hitrate|X|X|-|-|-|
 
-^* These detectors are not defined when `from_otel` is true.
 
 ## How to collect required metrics?
 

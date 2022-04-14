@@ -21,3 +21,8 @@ notes: |
   * The "keyspace full" detector uses number of keys from database index 0,
   it will not work for other databases (1-15 by default).
   This detector is disabled by default because it makes sens only when redis is used as cache.
+  * This module supports the `from_otel` variable in case you are monitoring Redis with otel collector.
+  If set to `true`, metrics name will be updated to match otel collector defaults.
+  The following detectors are not supported when `from_otel` is set to true:
+    * Redis memory used over max memory
+    * Redis memory used over total system memory  
