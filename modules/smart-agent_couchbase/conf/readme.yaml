@@ -5,3 +5,25 @@ documentations:
     url: 'https://docs.splunk.com/Observability/gdi/couchbase/couchbase.html'
   - name: Collectd Script
     url: 'https://github.com/signalfx/collectd-couchbase'
+
+notes: |
+  ### Example
+
+  ```yaml
+  - type: collectd/couchbase
+    host: 127.0.0.1
+    port: 8091
+    collectTarget: BUCKET
+    collectBucket: <bucket>
+    username: <user>
+    password: <password>
+    datapointsToExclude:
+    - metricNames:
+      - "*"
+      - "!gauge.bucket.op.disk_write_queue"
+      - "!gauge.bucket.op.ep_mem_high_wat"
+      - "!gauge.bucket.op.ep_oom_errors"
+      - "!gauge.bucket.op.mem_used"
+    extraMetrics:
+    - gauge.bucket.op.disk_write_queue
+  ```

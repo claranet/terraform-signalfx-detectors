@@ -8,6 +8,8 @@
 - [What are the available detectors in this module?](#what-are-the-available-detectors-in-this-module)
 - [How to collect required metrics?](#how-to-collect-required-metrics)
   - [Metrics](#metrics)
+- [Notes](#notes)
+  - [Example](#example)
 - [Related documentation](#related-documentation)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -75,6 +77,7 @@ This module creates the following SignalFx detectors which could contain one or 
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
+|Couchbase heartbeat|X|-|-|-|-|
 |Couchbase memory used|X|X|-|-|-|
 |Couchbase out of memory errors|X|-|-|-|-|
 |Couchbase disk write queue|X|X|-|-|-|
@@ -125,6 +128,28 @@ parameter to the corresponding monitor configuration:
 
 ```
 
+## Notes
+
+### Example
+
+```yaml
+- type: collectd/couchbase
+  host: 127.0.0.1
+  port: 8091
+  collectTarget: BUCKET
+  collectBucket: <bucket>
+  username: <user>
+  password: <password>
+  datapointsToExclude:
+  - metricNames:
+    - "*"
+    - "!gauge.bucket.op.disk_write_queue"
+    - "!gauge.bucket.op.ep_mem_high_wat"
+    - "!gauge.bucket.op.ep_oom_errors"
+    - "!gauge.bucket.op.mem_used"
+  extraMetrics:
+  - gauge.bucket.op.disk_write_queue
+```
 
 
 ## Related documentation
