@@ -741,6 +741,7 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
+|Couchbase heartbeat|X|-|-|-|-|
 |Couchbase memory used|X|X|-|-|-|
 |Couchbase out of memory errors|X|-|-|-|-|
 |Couchbase disk write queue|X|X|-|-|-|
