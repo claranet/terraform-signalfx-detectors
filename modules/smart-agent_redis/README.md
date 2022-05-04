@@ -139,16 +139,16 @@ parameter to the corresponding monitor configuration:
         - '*'
         - '!bytes.maxmemory'
         - '!bytes.total_system_memory'
-        - '!bytes.used_memory'
-        - '!bytes.used_memory_rss'
-        - '!counter.evicted_keys'
-        - '!counter.expired_keys'
-        - '!counter.rejected_connections'
-        - '!derive.keyspace_hits'
-        - '!derive.keyspace_misses'
-        - '!gauge.blocked_clients'
-        - '!gauge.connected_clients'
-        - '!gauge.db0_keys'
+        - '!${local.blocked_clients_metric_name}'
+        - '!${local.connected_clients_metric_name}'
+        - '!${local.db_keys_metric_name}'
+        - '!${local.evicted_keys_metric_name}'
+        - '!${local.expired_keys_metric_name}'
+        - '!${local.keyspace_hits_metric_name}'
+        - '!${local.keyspace_misses_metric_name}'
+        - '!${local.memory_rss_metric_name}'
+        - '!${local.memory_used_metric_name}'
+        - '!${local.rejected_connections_metric_name}'
 
 ```
 
@@ -157,6 +157,11 @@ parameter to the corresponding monitor configuration:
 * The "keyspace full" detector uses number of keys from database index 0,
 it will not work for other databases (1-15 by default).
 This detector is disabled by default because it makes sens only when redis is used as cache.
+* This module supports the `use_otel_receiver` variable in case you are monitoring Redis with otel collector.
+If set to `true`, metrics name will be updated to match otel collector defaults.
+The following detectors are not supported when `use_otel_receiver` is set to true:
+  * Redis memory used over max memory
+  * Redis memory used over total system memory
 
 
 ## Related documentation
