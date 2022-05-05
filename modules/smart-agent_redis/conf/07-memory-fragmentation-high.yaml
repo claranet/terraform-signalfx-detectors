@@ -1,0 +1,31 @@
+module: redis
+name: high memory fragmentation ratio
+runbook_url: "https://www.dynatrace.com/news/blog/introducing-redis-server-monitoring/#key-metrics"
+tip: restart redis to recover memory previously unusable due to fragmentation or enable the new active defragmentation feature available since redis 4
+
+filtering: >-
+  ${var.use_otel_receiver ? "" : "filter('plugin', 'redis_info') and "}
+filtering_suffix: ''
+
+signals:
+  A:
+    metric: '${var.use_otel_receiver ? "redis.memory.rss" : "bytes.used_memory_rss"}'
+    rollup: average
+  B:
+    metric: '${var.use_otel_receiver ? "redis.memory.used" : "bytes.used_memory"}'
+    rollup: average
+  signal:
+    formula: (A/B)
+
+rules:
+  critical:
+    threshold: 5
+    comparator: '>'
+    lasting_duration: 15m
+    lasting_at_least: 1
+  major:
+    threshold: 2
+    comparator: '>'
+    dependency: critical
+    lasting_duration: 15m
+    lasting_at_least: 1

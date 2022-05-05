@@ -7,8 +7,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    base_filtering = filter('namespace', 'AWS/Redshift')
-    signal = data('CPUUtilization', filter=base_filtering and filter('stat', 'mean') and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
+    signal = data('CPUUtilization', filter=filter('namespace', 'AWS/Redshift') and filter('stat', 'mean') and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}', auto_resolve_after='${local.heartbeat_auto_resolve_after}').publish('CRIT')
 EOF
 
@@ -40,8 +39,7 @@ resource "signalfx_detector" "cpu_usage" {
   }
 
   program_text = <<-EOF
-    base_filtering = filter('namespace', 'AWS/Redshift')
-    signal = data('CPUUtilization', filter=base_filtering and filter('stat', 'mean') and filter('ClusterIdentifier', '*') and filter('NodeID', '*') and ${module.filtering.signalflow})${var.cpu_usage_aggregation_function}${var.cpu_usage_transformation_function}.publish('signal')
+    signal = data('CPUUtilization', filter=filter('namespace', 'AWS/Redshift') and filter('stat', 'mean') and filter('ClusterIdentifier', '*') and filter('NodeID', '*') and ${module.filtering.signalflow})${var.cpu_usage_aggregation_function}${var.cpu_usage_transformation_function}.publish('signal')
     detect(when(signal > ${var.cpu_usage_threshold_major}, lasting=%{if var.cpu_usage_lasting_duration_major == null}None%{else}'${var.cpu_usage_lasting_duration_major}'%{endif}, at_least=${var.cpu_usage_at_least_percentage_major})).publish('MAJOR')
     detect(when(signal > ${var.cpu_usage_threshold_critical}, lasting=%{if var.cpu_usage_lasting_duration_critical == null}None%{else}'${var.cpu_usage_lasting_duration_critical}'%{endif}, at_least=${var.cpu_usage_at_least_percentage_critical}) and (not when(signal > ${var.cpu_usage_threshold_major}, lasting=%{if var.cpu_usage_lasting_duration_major == null}None%{else}'${var.cpu_usage_lasting_duration_major}'%{endif}, at_least=${var.cpu_usage_at_least_percentage_major}))).publish('CRIT')
 EOF
@@ -86,8 +84,7 @@ resource "signalfx_detector" "storage_usage" {
   }
 
   program_text = <<-EOF
-    base_filtering = filter('namespace', 'AWS/Redshift')
-    signal = data('PercentageDiskSpaceUsed', filter=base_filtering and filter('stat', 'mean') and filter('ClusterIdentifier', '*') and filter('NodeID', '*') and ${module.filtering.signalflow})${var.storage_usage_aggregation_function}${var.storage_usage_transformation_function}.publish('signal')
+    signal = data('PercentageDiskSpaceUsed', filter=filter('namespace', 'AWS/Redshift') and filter('stat', 'mean') and filter('ClusterIdentifier', '*') and filter('NodeID', '*') and ${module.filtering.signalflow})${var.storage_usage_aggregation_function}${var.storage_usage_transformation_function}.publish('signal')
     detect(when(signal > ${var.storage_usage_threshold_major}, lasting=%{if var.storage_usage_lasting_duration_major == null}None%{else}'${var.storage_usage_lasting_duration_major}'%{endif}, at_least=${var.storage_usage_at_least_percentage_major})).publish('MAJOR')
     detect(when(signal > ${var.storage_usage_threshold_critical}, lasting=%{if var.storage_usage_lasting_duration_critical == null}None%{else}'${var.storage_usage_lasting_duration_critical}'%{endif}, at_least=${var.storage_usage_at_least_percentage_critical}) and (not when(signal > ${var.storage_usage_threshold_major}, lasting=%{if var.storage_usage_lasting_duration_major == null}None%{else}'${var.storage_usage_lasting_duration_major}'%{endif}, at_least=${var.storage_usage_at_least_percentage_major}))).publish('CRIT')
 EOF

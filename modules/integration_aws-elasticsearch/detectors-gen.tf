@@ -11,8 +11,7 @@ resource "signalfx_detector" "jvm_memory_pressure" {
   }
 
   program_text = <<-EOF
-    base_filtering = filter('namespace', 'AWS/ES') and filter('stat', 'upper') and filter('NodeId', '*')
-    signal = data('JVMMemoryPressure', filter=base_filtering and ${module.filtering.signalflow})${var.jvm_memory_pressure_aggregation_function}${var.jvm_memory_pressure_transformation_function}.publish('signal')
+    signal = data('JVMMemoryPressure', filter=filter('namespace', 'AWS/ES') and filter('stat', 'upper') and filter('NodeId', '*') and ${module.filtering.signalflow})${var.jvm_memory_pressure_aggregation_function}${var.jvm_memory_pressure_transformation_function}.publish('signal')
     detect(when(signal > ${var.jvm_memory_pressure_threshold_critical}, lasting=%{if var.jvm_memory_pressure_lasting_duration_critical == null}None%{else}'${var.jvm_memory_pressure_lasting_duration_critical}'%{endif}, at_least=${var.jvm_memory_pressure_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal > ${var.jvm_memory_pressure_threshold_major}, lasting=%{if var.jvm_memory_pressure_lasting_duration_major == null}None%{else}'${var.jvm_memory_pressure_lasting_duration_major}'%{endif}, at_least=${var.jvm_memory_pressure_at_least_percentage_major}) and (not when(signal > ${var.jvm_memory_pressure_threshold_critical}, lasting=%{if var.jvm_memory_pressure_lasting_duration_critical == null}None%{else}'${var.jvm_memory_pressure_lasting_duration_critical}'%{endif}, at_least=${var.jvm_memory_pressure_at_least_percentage_critical}))).publish('MAJOR')
 EOF

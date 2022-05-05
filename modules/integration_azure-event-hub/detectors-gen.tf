@@ -11,9 +11,8 @@ resource "signalfx_detector" "throttled_requests" {
   }
 
   program_text = <<-EOF
-    base_filtering = filter('resource_type', 'Microsoft.EventHub/namespaces') and filter('primary_aggregation_type', 'true')
-    A = data('ThrottledRequests', filter=base_filtering and ${module.filtering.signalflow})${var.throttled_requests_aggregation_function}${var.throttled_requests_transformation_function}
-    B = data('IncomingRequests', filter=base_filtering and ${module.filtering.signalflow})${var.throttled_requests_aggregation_function}${var.throttled_requests_transformation_function}
+    A = data('ThrottledRequests', filter=filter('resource_type', 'Microsoft.EventHub/namespaces') and filter('primary_aggregation_type', 'true') and ${module.filtering.signalflow})${var.throttled_requests_aggregation_function}${var.throttled_requests_transformation_function}
+    B = data('IncomingRequests', filter=filter('resource_type', 'Microsoft.EventHub/namespaces') and filter('primary_aggregation_type', 'true') and ${module.filtering.signalflow})${var.throttled_requests_aggregation_function}${var.throttled_requests_transformation_function}
     signal = (A/B).scale(100).fill(0).publish('signal')
     detect(when(signal > ${var.throttled_requests_threshold_critical}, lasting=%{if var.throttled_requests_lasting_duration_critical == null}None%{else}'${var.throttled_requests_lasting_duration_critical}'%{endif}, at_least=${var.throttled_requests_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal > ${var.throttled_requests_threshold_major}, lasting=%{if var.throttled_requests_lasting_duration_major == null}None%{else}'${var.throttled_requests_lasting_duration_major}'%{endif}, at_least=${var.throttled_requests_at_least_percentage_major}) and (not when(signal > ${var.throttled_requests_threshold_critical}, lasting=%{if var.throttled_requests_lasting_duration_critical == null}None%{else}'${var.throttled_requests_lasting_duration_critical}'%{endif}, at_least=${var.throttled_requests_at_least_percentage_critical}))).publish('MAJOR')

@@ -1,0 +1,28 @@
+module: redis
+name: percentage memory used over max memory set
+tip: max memory needs to be set in redis server configuration or this detector will never raise alert
+
+condition: '!var.use_otel_receiver'
+
+filtering: "filter('plugin', 'redis_info')"
+
+value_unit: "%"
+
+signals:
+  A:
+    metric: bytes.used_memory
+  B:
+    metric: bytes.maxmemory
+  signal:
+    formula: (A/B).scale(100)
+
+rules:
+  critical:
+    threshold: 95
+    comparator: '>'
+    lasting_duration: 10m
+  major:
+    threshold: 85
+    comparator: '>'
+    dependency: critical
+    lasting_duration: 10m

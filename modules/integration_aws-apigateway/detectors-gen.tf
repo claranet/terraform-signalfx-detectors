@@ -11,8 +11,7 @@ resource "signalfx_detector" "latency" {
   }
 
   program_text = <<-EOF
-    base_filtering = filter('namespace', 'AWS/ApiGateway') and filter('stat', 'mean') and (not filter('Stage', '*')) and (not filter('Method', '*')) and (not filter('Resource', '*'))
-    signal = data('Latency', filter=base_filtering and ${module.filtering.signalflow}, rollup='average', extrapolation='zero')${var.latency_aggregation_function}${var.latency_transformation_function}.publish('signal')
+    signal = data('Latency', filter=filter('namespace', 'AWS/ApiGateway') and filter('stat', 'mean') and (not filter('Stage', '*')) and (not filter('Method', '*')) and (not filter('Resource', '*')) and ${module.filtering.signalflow}, rollup='average', extrapolation='zero')${var.latency_aggregation_function}${var.latency_transformation_function}.publish('signal')
     detect(when(signal > ${var.latency_threshold_critical}, lasting=%{if var.latency_lasting_duration_critical == null}None%{else}'${var.latency_lasting_duration_critical}'%{endif}, at_least=${var.latency_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal > ${var.latency_threshold_major}, lasting=%{if var.latency_lasting_duration_major == null}None%{else}'${var.latency_lasting_duration_major}'%{endif}, at_least=${var.latency_at_least_percentage_major}) and (not when(signal > ${var.latency_threshold_critical}, lasting=%{if var.latency_lasting_duration_critical == null}None%{else}'${var.latency_lasting_duration_critical}'%{endif}, at_least=${var.latency_at_least_percentage_critical}))).publish('MAJOR')
 EOF
@@ -57,9 +56,8 @@ resource "signalfx_detector" "http_5xx" {
   }
 
   program_text = <<-EOF
-    base_filtering = filter('namespace', 'AWS/ApiGateway') and filter('stat', 'sum') and (not filter('Stage', '*')) and (not filter('Method', '*')) and (not filter('Resource', '*'))
-    errors = data('${var.is_v2 ? "5xx" : "5XXError"}', filter=base_filtering and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.http_5xx_aggregation_function}${var.http_5xx_transformation_function}
-    requests = data('Count', filter=base_filtering and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.http_5xx_aggregation_function}${var.http_5xx_transformation_function}
+    errors = data('${var.is_v2 ? "5xx" : "5XXError"}', filter=filter('namespace', 'AWS/ApiGateway') and filter('stat', 'sum') and (not filter('Stage', '*')) and (not filter('Method', '*')) and (not filter('Resource', '*')) and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.http_5xx_aggregation_function}${var.http_5xx_transformation_function}
+    requests = data('Count', filter=filter('namespace', 'AWS/ApiGateway') and filter('stat', 'sum') and (not filter('Stage', '*')) and (not filter('Method', '*')) and (not filter('Resource', '*')) and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.http_5xx_aggregation_function}${var.http_5xx_transformation_function}
     signal = (errors/requests).scale(100).fill(value=0).publish('signal')
     detect(when(signal > ${var.http_5xx_threshold_critical}, lasting=%{if var.http_5xx_lasting_duration_critical == null}None%{else}'${var.http_5xx_lasting_duration_critical}'%{endif}, at_least=${var.http_5xx_at_least_percentage_critical}) and when(requests > ${var.minimum_traffic})).publish('CRIT')
     detect(when(signal > ${var.http_5xx_threshold_major}, lasting=%{if var.http_5xx_lasting_duration_major == null}None%{else}'${var.http_5xx_lasting_duration_major}'%{endif}, at_least=${var.http_5xx_at_least_percentage_major}) and when(requests > ${var.minimum_traffic}) and (not when(signal > ${var.http_5xx_threshold_critical}, lasting=%{if var.http_5xx_lasting_duration_critical == null}None%{else}'${var.http_5xx_lasting_duration_critical}'%{endif}, at_least=${var.http_5xx_at_least_percentage_critical}) and when(requests > ${var.minimum_traffic}))).publish('MAJOR')
@@ -105,9 +103,8 @@ resource "signalfx_detector" "http_4xx" {
   }
 
   program_text = <<-EOF
-    base_filtering = filter('namespace', 'AWS/ApiGateway') and filter('stat', 'sum') and (not filter('Stage', '*')) and (not filter('Method', '*')) and (not filter('Resource', '*'))
-    errors = data('${var.is_v2 ? "4xx" : "4XXError"}', filter=base_filtering and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.http_4xx_aggregation_function}${var.http_4xx_transformation_function}
-    requests = data('Count', filter=base_filtering and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.http_4xx_aggregation_function}${var.http_4xx_transformation_function}
+    errors = data('${var.is_v2 ? "4xx" : "4XXError"}', filter=filter('namespace', 'AWS/ApiGateway') and filter('stat', 'sum') and (not filter('Stage', '*')) and (not filter('Method', '*')) and (not filter('Resource', '*')) and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.http_4xx_aggregation_function}${var.http_4xx_transformation_function}
+    requests = data('Count', filter=filter('namespace', 'AWS/ApiGateway') and filter('stat', 'sum') and (not filter('Stage', '*')) and (not filter('Method', '*')) and (not filter('Resource', '*')) and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.http_4xx_aggregation_function}${var.http_4xx_transformation_function}
     signal = (errors/requests).scale(100).fill(value=0).publish('signal')
     detect(when(signal > ${var.http_4xx_threshold_critical}, lasting=%{if var.http_4xx_lasting_duration_critical == null}None%{else}'${var.http_4xx_lasting_duration_critical}'%{endif}, at_least=${var.http_4xx_at_least_percentage_critical}) and when(requests > ${var.minimum_traffic})).publish('CRIT')
     detect(when(signal > ${var.http_4xx_threshold_major}, lasting=%{if var.http_4xx_lasting_duration_major == null}None%{else}'${var.http_4xx_lasting_duration_major}'%{endif}, at_least=${var.http_4xx_at_least_percentage_major}) and when(requests > ${var.minimum_traffic}) and (not when(signal > ${var.http_4xx_threshold_critical}, lasting=%{if var.http_4xx_lasting_duration_critical == null}None%{else}'${var.http_4xx_lasting_duration_critical}'%{endif}, at_least=${var.http_4xx_at_least_percentage_critical}) and when(requests > ${var.minimum_traffic}))).publish('MAJOR')

@@ -7,8 +7,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    base_filtering = filter('resource_type', 'Microsoft.Network/azureFirewalls') and filter('primary_aggregation_type', 'true')
-    signal = data('FirewallHealth', filter=base_filtering and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}${var.heartbeat_transformation_function}.publish('signal')
+    signal = data('FirewallHealth', filter=filter('resource_type', 'Microsoft.Network/azureFirewalls') and filter('primary_aggregation_type', 'true') and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}${var.heartbeat_transformation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}', auto_resolve_after='${local.heartbeat_auto_resolve_after}').publish('CRIT')
 EOF
 
@@ -35,8 +34,7 @@ resource "signalfx_detector" "snat_port_utilization" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    base_filtering = filter('resource_type', 'Microsoft.Network/azureFirewalls') and filter('primary_aggregation_type', 'true')
-    signal = data('SNATPortUtilization', filter=base_filtering and ${module.filtering.signalflow}, rollup='max')${var.snat_port_utilization_aggregation_function}${var.snat_port_utilization_transformation_function}.publish('signal')
+    signal = data('SNATPortUtilization', filter=filter('resource_type', 'Microsoft.Network/azureFirewalls') and filter('primary_aggregation_type', 'true') and ${module.filtering.signalflow}, rollup='max')${var.snat_port_utilization_aggregation_function}${var.snat_port_utilization_transformation_function}.publish('signal')
     detect(when(signal > ${var.snat_port_utilization_threshold_critical}, lasting=%{if var.snat_port_utilization_lasting_duration_critical == null}None%{else}'${var.snat_port_utilization_lasting_duration_critical}'%{endif}, at_least=${var.snat_port_utilization_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal > ${var.snat_port_utilization_threshold_major}, lasting=%{if var.snat_port_utilization_lasting_duration_major == null}None%{else}'${var.snat_port_utilization_lasting_duration_major}'%{endif}, at_least=${var.snat_port_utilization_at_least_percentage_major}) and (not when(signal > ${var.snat_port_utilization_threshold_critical}, lasting=%{if var.snat_port_utilization_lasting_duration_critical == null}None%{else}'${var.snat_port_utilization_lasting_duration_critical}'%{endif}, at_least=${var.snat_port_utilization_at_least_percentage_critical}))).publish('MAJOR')
 EOF
@@ -76,8 +74,7 @@ resource "signalfx_detector" "throughput" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    base_filtering = filter('resource_type', 'Microsoft.Network/azureFirewalls') and filter('primary_aggregation_type', 'true')
-    throughput = data('Throughput', filter=base_filtering and ${module.filtering.signalflow})${var.throughput_aggregation_function}${var.throughput_transformation_function}
+    throughput = data('Throughput', filter=filter('resource_type', 'Microsoft.Network/azureFirewalls') and filter('primary_aggregation_type', 'true') and ${module.filtering.signalflow})${var.throughput_aggregation_function}${var.throughput_transformation_function}
     signal = throughput.scale(0.000000953674316).publish('signal')
     detect(when(signal >= ${var.throughput_threshold_critical}, lasting=%{if var.throughput_lasting_duration_critical == null}None%{else}'${var.throughput_lasting_duration_critical}'%{endif}, at_least=${var.throughput_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal >= ${var.throughput_threshold_major}, lasting=%{if var.throughput_lasting_duration_major == null}None%{else}'${var.throughput_lasting_duration_major}'%{endif}, at_least=${var.throughput_at_least_percentage_major}) and (not when(signal >= ${var.throughput_threshold_critical}, lasting=%{if var.throughput_lasting_duration_critical == null}None%{else}'${var.throughput_lasting_duration_critical}'%{endif}, at_least=${var.throughput_at_least_percentage_critical}))).publish('MAJOR')
@@ -144,8 +141,7 @@ resource "signalfx_detector" "health_state" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    base_filtering = filter('resource_type', 'Microsoft.Network/azureFirewalls') and filter('primary_aggregation_type', 'true')
-    signal = data('FirewallHealth', filter=base_filtering and ${module.filtering.signalflow})${var.health_state_aggregation_function}${var.health_state_transformation_function}.publish('signal')
+    signal = data('FirewallHealth', filter=filter('resource_type', 'Microsoft.Network/azureFirewalls') and filter('primary_aggregation_type', 'true') and ${module.filtering.signalflow})${var.health_state_aggregation_function}${var.health_state_transformation_function}.publish('signal')
     detect(when(signal < ${var.health_state_threshold_critical}, lasting=%{if var.health_state_lasting_duration_critical == null}None%{else}'${var.health_state_lasting_duration_critical}'%{endif}, at_least=${var.health_state_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal < ${var.health_state_threshold_major}, lasting=%{if var.health_state_lasting_duration_major == null}None%{else}'${var.health_state_lasting_duration_major}'%{endif}, at_least=${var.health_state_at_least_percentage_major}) and (not when(signal < ${var.health_state_threshold_critical}, lasting=%{if var.health_state_lasting_duration_critical == null}None%{else}'${var.health_state_lasting_duration_critical}'%{endif}, at_least=${var.health_state_at_least_percentage_critical}))).publish('MAJOR')
 EOF

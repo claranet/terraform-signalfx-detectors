@@ -1,0 +1,23 @@
+module: redis
+name: rejected connections
+tip: maxclient reached
+
+filtering: >-
+  ${var.use_otel_receiver ? "" : "filter('plugin', 'redis_info') and "}
+filtering_suffix: ''
+
+signals:
+  signal:
+    metric: '${var.use_otel_receiver ? "redis.connections.rejected" : "counter.rejected_connections"}'
+    rollup: delta
+
+transformation: ".sum(over='5m')"
+
+rules:
+  critical:
+    threshold: 5
+    comparator: '>'
+  major:
+    threshold: 0
+    comparator: '>'
+    dependency: critical

@@ -7,8 +7,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    base_filtering = filter('resource_type', 'Microsoft.Network/expressRouteCircuits') and filter('primary_aggregation_type', 'true')
-    signal = data('BgpAvailability', filter=base_filtering and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}${var.heartbeat_transformation_function}.publish('signal')
+    signal = data('BgpAvailability', filter=filter('resource_type', 'Microsoft.Network/expressRouteCircuits') and filter('primary_aggregation_type', 'true') and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}${var.heartbeat_transformation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}', auto_resolve_after='${local.heartbeat_auto_resolve_after}').publish('CRIT')
 EOF
 
@@ -35,8 +34,7 @@ resource "signalfx_detector" "bgp_availability" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    base_filtering = filter('resource_type', 'Microsoft.Network/expressRouteCircuits') and filter('primary_aggregation_type', 'true')
-    signal = data('BgpAvailability', filter=base_filtering and ${module.filtering.signalflow})${var.bgp_availability_aggregation_function}${var.bgp_availability_transformation_function}.publish('signal')
+    signal = data('BgpAvailability', filter=filter('resource_type', 'Microsoft.Network/expressRouteCircuits') and filter('primary_aggregation_type', 'true') and ${module.filtering.signalflow})${var.bgp_availability_aggregation_function}${var.bgp_availability_transformation_function}.publish('signal')
     detect(when(signal < ${var.bgp_availability_threshold_warning}, lasting=%{if var.bgp_availability_lasting_duration_warning == null}None%{else}'${var.bgp_availability_lasting_duration_warning}'%{endif}, at_least=${var.bgp_availability_at_least_percentage_warning})).publish('WARN')
     detect(when(signal < ${var.bgp_availability_threshold_major}, lasting=%{if var.bgp_availability_lasting_duration_major == null}None%{else}'${var.bgp_availability_lasting_duration_major}'%{endif}, at_least=${var.bgp_availability_at_least_percentage_major}) and (not when(signal < ${var.bgp_availability_threshold_warning}, lasting=%{if var.bgp_availability_lasting_duration_warning == null}None%{else}'${var.bgp_availability_lasting_duration_warning}'%{endif}, at_least=${var.bgp_availability_at_least_percentage_warning}))).publish('MAJOR')
     detect(when(signal < ${var.bgp_availability_threshold_critical}, lasting=%{if var.bgp_availability_lasting_duration_critical == null}None%{else}'${var.bgp_availability_lasting_duration_critical}'%{endif}, at_least=${var.bgp_availability_at_least_percentage_critical}) and (not when(signal < ${var.bgp_availability_threshold_major}, lasting=%{if var.bgp_availability_lasting_duration_major == null}None%{else}'${var.bgp_availability_lasting_duration_major}'%{endif}, at_least=${var.bgp_availability_at_least_percentage_major}))).publish('CRIT')
@@ -89,8 +87,7 @@ resource "signalfx_detector" "arp_availability" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    base_filtering = filter('resource_type', 'Microsoft.Network/expressRouteCircuits') and filter('primary_aggregation_type', 'true')
-    signal = data('ArpAvailability', filter=base_filtering and ${module.filtering.signalflow})${var.arp_availability_aggregation_function}${var.arp_availability_transformation_function}.publish('signal')
+    signal = data('ArpAvailability', filter=filter('resource_type', 'Microsoft.Network/expressRouteCircuits') and filter('primary_aggregation_type', 'true') and ${module.filtering.signalflow})${var.arp_availability_aggregation_function}${var.arp_availability_transformation_function}.publish('signal')
     detect(when(signal < ${var.arp_availability_threshold_warning}, lasting=%{if var.arp_availability_lasting_duration_warning == null}None%{else}'${var.arp_availability_lasting_duration_warning}'%{endif}, at_least=${var.arp_availability_at_least_percentage_warning})).publish('WARN')
     detect(when(signal < ${var.arp_availability_threshold_major}, lasting=%{if var.arp_availability_lasting_duration_major == null}None%{else}'${var.arp_availability_lasting_duration_major}'%{endif}, at_least=${var.arp_availability_at_least_percentage_major}) and (not when(signal < ${var.arp_availability_threshold_warning}, lasting=%{if var.arp_availability_lasting_duration_warning == null}None%{else}'${var.arp_availability_lasting_duration_warning}'%{endif}, at_least=${var.arp_availability_at_least_percentage_warning}))).publish('MAJOR')
     detect(when(signal < ${var.arp_availability_threshold_critical}, lasting=%{if var.arp_availability_lasting_duration_critical == null}None%{else}'${var.arp_availability_lasting_duration_critical}'%{endif}, at_least=${var.arp_availability_at_least_percentage_critical}) and (not when(signal < ${var.arp_availability_threshold_major}, lasting=%{if var.arp_availability_lasting_duration_major == null}None%{else}'${var.arp_availability_lasting_duration_major}'%{endif}, at_least=${var.arp_availability_at_least_percentage_major}))).publish('CRIT')

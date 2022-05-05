@@ -1,0 +1,26 @@
+module: redis
+name: evicted keys change rate
+
+filtering: >-
+  ${var.use_otel_receiver ? "" : "filter('plugin', 'redis_info') and "}
+filtering_suffix: ''
+
+signals:
+  A:
+    metric: '${var.use_otel_receiver ? "redis.keys.evicted" : "counter.evicted_keys"}'
+    rollup: delta
+  signal:
+    formula: A.rateofchange()
+
+rules:
+  critical:
+    threshold: 50
+    comparator: '>'
+    lasting_duration: 15m
+    lasting_at_least: 0.5
+  major:
+    threshold: 25
+    comparator: '>'
+    lasting_duration: 15m
+    lasting_at_least: 0.5
+    dependency: critical

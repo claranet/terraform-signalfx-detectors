@@ -6,8 +6,7 @@ resource "signalfx_detector" "messages_ready" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    base_filtering = filter('plugin', 'rabbitmq')
-    signal = data('gauge.queue.messages_ready', filter=base_filtering and ${module.filtering.signalflow})${var.messages_ready_aggregation_function}${var.messages_ready_transformation_function}.publish('signal')
+    signal = data('gauge.queue.messages_ready', filter=filter('plugin', 'rabbitmq') and ${module.filtering.signalflow})${var.messages_ready_aggregation_function}${var.messages_ready_transformation_function}.publish('signal')
     detect(when(signal > ${var.messages_ready_threshold_critical}, lasting=%{if var.messages_ready_lasting_duration_critical == null}None%{else}'${var.messages_ready_lasting_duration_critical}'%{endif}, at_least=${var.messages_ready_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal > ${var.messages_ready_threshold_major}, lasting=%{if var.messages_ready_lasting_duration_major == null}None%{else}'${var.messages_ready_lasting_duration_major}'%{endif}, at_least=${var.messages_ready_at_least_percentage_major}) and (not when(signal > ${var.messages_ready_threshold_critical}, lasting=%{if var.messages_ready_lasting_duration_critical == null}None%{else}'${var.messages_ready_lasting_duration_critical}'%{endif}, at_least=${var.messages_ready_at_least_percentage_critical}))).publish('MAJOR')
 EOF
@@ -47,8 +46,7 @@ resource "signalfx_detector" "messages_unacknowledged" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    base_filtering = filter('plugin', 'rabbitmq')
-    signal = data('gauge.queue.messages_unacknowledged', filter=base_filtering and ${module.filtering.signalflow})${var.messages_unacknowledged_aggregation_function}${var.messages_unacknowledged_transformation_function}.publish('signal')
+    signal = data('gauge.queue.messages_unacknowledged', filter=filter('plugin', 'rabbitmq') and ${module.filtering.signalflow})${var.messages_unacknowledged_aggregation_function}${var.messages_unacknowledged_transformation_function}.publish('signal')
     detect(when(signal > ${var.messages_unacknowledged_threshold_critical}, lasting=%{if var.messages_unacknowledged_lasting_duration_critical == null}None%{else}'${var.messages_unacknowledged_lasting_duration_critical}'%{endif}, at_least=${var.messages_unacknowledged_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal > ${var.messages_unacknowledged_threshold_major}, lasting=%{if var.messages_unacknowledged_lasting_duration_major == null}None%{else}'${var.messages_unacknowledged_lasting_duration_major}'%{endif}, at_least=${var.messages_unacknowledged_at_least_percentage_major}) and (not when(signal > ${var.messages_unacknowledged_threshold_critical}, lasting=%{if var.messages_unacknowledged_lasting_duration_critical == null}None%{else}'${var.messages_unacknowledged_lasting_duration_critical}'%{endif}, at_least=${var.messages_unacknowledged_at_least_percentage_critical}))).publish('MAJOR')
 EOF
@@ -88,9 +86,8 @@ resource "signalfx_detector" "messages_ack_rate" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    base_filtering = filter('plugin', 'rabbitmq')
-    msg = data('gauge.queue.messages', filter=base_filtering and ${module.filtering.signalflow})${var.messages_ack_rate_aggregation_function}${var.messages_ack_rate_transformation_function}
-    signal = data('counter.queue.message_stats.ack', filter=base_filtering and ${module.filtering.signalflow})${var.messages_ack_rate_aggregation_function}${var.messages_ack_rate_transformation_function}.publish('signal')
+    msg = data('gauge.queue.messages', filter=filter('plugin', 'rabbitmq') and ${module.filtering.signalflow})${var.messages_ack_rate_aggregation_function}${var.messages_ack_rate_transformation_function}
+    signal = data('counter.queue.message_stats.ack', filter=filter('plugin', 'rabbitmq') and ${module.filtering.signalflow})${var.messages_ack_rate_aggregation_function}${var.messages_ack_rate_transformation_function}.publish('signal')
     detect(when(signal <= ${var.messages_ack_rate_threshold_critical}, lasting=%{if var.messages_ack_rate_lasting_duration_critical == null}None%{else}'${var.messages_ack_rate_lasting_duration_critical}'%{endif}, at_least=${var.messages_ack_rate_at_least_percentage_critical}) and when(signal >= 0) and when(msg > 0)).publish('CRIT')
     detect(when(signal <= ${var.messages_ack_rate_threshold_major}, lasting=%{if var.messages_ack_rate_lasting_duration_major == null}None%{else}'${var.messages_ack_rate_lasting_duration_major}'%{endif}, at_least=${var.messages_ack_rate_at_least_percentage_major}) and when(signal >= 0) and when(msg > 0) and (not when(signal <= ${var.messages_ack_rate_threshold_critical}, lasting=%{if var.messages_ack_rate_lasting_duration_critical == null}None%{else}'${var.messages_ack_rate_lasting_duration_critical}'%{endif}, at_least=${var.messages_ack_rate_at_least_percentage_critical}) and when(signal >= 0) and when(msg > 0))).publish('MAJOR')
 EOF
@@ -130,9 +127,8 @@ resource "signalfx_detector" "consumer_use" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    base_filtering = filter('plugin', 'rabbitmq')
-    msg = data('gauge.queue.messages', filter=base_filtering and ${module.filtering.signalflow})${var.consumer_use_aggregation_function}${var.consumer_use_transformation_function}
-    signal = data('gauge.queue.consumer_use', filter=base_filtering and ${module.filtering.signalflow})${var.consumer_use_aggregation_function}${var.consumer_use_transformation_function}.publish('signal')
+    msg = data('gauge.queue.messages', filter=filter('plugin', 'rabbitmq') and ${module.filtering.signalflow})${var.consumer_use_aggregation_function}${var.consumer_use_transformation_function}
+    signal = data('gauge.queue.consumer_use', filter=filter('plugin', 'rabbitmq') and ${module.filtering.signalflow})${var.consumer_use_aggregation_function}${var.consumer_use_transformation_function}.publish('signal')
     detect(when(signal < ${var.consumer_use_threshold_critical}, lasting=%{if var.consumer_use_lasting_duration_critical == null}None%{else}'${var.consumer_use_lasting_duration_critical}'%{endif}, at_least=${var.consumer_use_at_least_percentage_critical}) and when(msg > 0)).publish('CRIT')
     detect(when(signal < ${var.consumer_use_threshold_major}, lasting=%{if var.consumer_use_lasting_duration_major == null}None%{else}'${var.consumer_use_lasting_duration_major}'%{endif}, at_least=${var.consumer_use_at_least_percentage_major}) and when(msg > 0) and (not when(signal < ${var.consumer_use_threshold_critical}, lasting=%{if var.consumer_use_lasting_duration_critical == null}None%{else}'${var.consumer_use_lasting_duration_critical}'%{endif}, at_least=${var.consumer_use_at_least_percentage_critical}) and when(msg > 0))).publish('MAJOR')
 EOF

@@ -6,8 +6,7 @@ resource "signalfx_detector" "capacity_units" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    base_filtering = filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true')
-    signal = data('CapacityUnits', filter=base_filtering and ${module.filtering.signalflow})${var.capacity_units_aggregation_function}${var.capacity_units_transformation_function}.publish('signal')
+    signal = data('CapacityUnits', filter=filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true') and ${module.filtering.signalflow})${var.capacity_units_aggregation_function}${var.capacity_units_transformation_function}.publish('signal')
     detect(when(signal > ${var.capacity_units_threshold_major}, lasting=%{if var.capacity_units_lasting_duration_major == null}None%{else}'${var.capacity_units_lasting_duration_major}'%{endif}, at_least=${var.capacity_units_at_least_percentage_major})).publish('MAJOR')
 EOF
 
