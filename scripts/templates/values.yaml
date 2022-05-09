@@ -82,7 +82,7 @@ filtering:
 ## @param filtering_suffix - string - optional - default: ' and '
 ## Determine the string to append at the end of the "filtering" param.
 #
-filtering_suffix: ' and '
+filtering_suffix:
 
 ## @param exclude_not_running_vm - bool - optional
 ## In addition to base filtering from signalflow variable we have preset
