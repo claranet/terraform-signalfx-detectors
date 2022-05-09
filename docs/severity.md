@@ -795,8 +795,9 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|JMX memory heap usage|X|X|-|-|-|
-|JMX GC old generation usage|X|X|-|-|-|
+|Genericjmx heartbeat|X|-|-|-|-|
+|Genericjmx memory heap|X|X|-|-|-|
+|Genericjmx gc old gen|X|X|-|-|-|
 
 
 ## smart-agent_haproxy
