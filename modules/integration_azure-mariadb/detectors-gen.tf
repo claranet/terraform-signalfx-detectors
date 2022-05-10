@@ -7,7 +7,8 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    signal = data('active_connections', filter=filter('resource_type', 'Microsoft.DB*orMariaDB/servers') and filter('primary_aggregation_type', 'true') and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}${var.heartbeat_transformation_function}.publish('signal')
+    base_filtering = filter('resource_type', 'Microsoft.DB*orMariaDB/servers') and filter('primary_aggregation_type', 'true')
+    signal = data('active_connections', filter=base_filtering and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}${var.heartbeat_transformation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}', auto_resolve_after='${local.heartbeat_auto_resolve_after}').publish('CRIT')
 EOF
 
@@ -39,7 +40,8 @@ resource "signalfx_detector" "cpu" {
   }
 
   program_text = <<-EOF
-    signal = data('cpu_percent', filter=filter('resource_type', 'Microsoft.DB*orMariaDB/servers') and filter('primary_aggregation_type', 'true') and ${module.filtering.signalflow})${var.cpu_aggregation_function}${var.cpu_transformation_function}.publish('signal')
+    base_filtering = filter('resource_type', 'Microsoft.DB*orMariaDB/servers') and filter('primary_aggregation_type', 'true')
+    signal = data('cpu_percent', filter=base_filtering and ${module.filtering.signalflow})${var.cpu_aggregation_function}${var.cpu_transformation_function}.publish('signal')
     detect(when(signal > ${var.cpu_threshold_major}, lasting=%{if var.cpu_lasting_duration_major == null}None%{else}'${var.cpu_lasting_duration_major}'%{endif}, at_least=${var.cpu_at_least_percentage_major})).publish('MAJOR')
     detect(when(signal > ${var.cpu_threshold_critical}, lasting=%{if var.cpu_lasting_duration_critical == null}None%{else}'${var.cpu_lasting_duration_critical}'%{endif}, at_least=${var.cpu_at_least_percentage_critical}) and (not when(signal > ${var.cpu_threshold_major}, lasting=%{if var.cpu_lasting_duration_major == null}None%{else}'${var.cpu_lasting_duration_major}'%{endif}, at_least=${var.cpu_at_least_percentage_major}))).publish('CRIT')
 EOF
@@ -84,7 +86,8 @@ resource "signalfx_detector" "storage" {
   }
 
   program_text = <<-EOF
-    signal = data('storage_percent', filter=filter('resource_type', 'Microsoft.DB*orMariaDB/servers') and filter('primary_aggregation_type', 'true') and ${module.filtering.signalflow})${var.storage_aggregation_function}${var.storage_transformation_function}.publish('signal')
+    base_filtering = filter('resource_type', 'Microsoft.DB*orMariaDB/servers') and filter('primary_aggregation_type', 'true')
+    signal = data('storage_percent', filter=base_filtering and ${module.filtering.signalflow})${var.storage_aggregation_function}${var.storage_transformation_function}.publish('signal')
     detect(when(signal > ${var.storage_threshold_major}, lasting=%{if var.storage_lasting_duration_major == null}None%{else}'${var.storage_lasting_duration_major}'%{endif}, at_least=${var.storage_at_least_percentage_major})).publish('MAJOR')
     detect(when(signal > ${var.storage_threshold_critical}, lasting=%{if var.storage_lasting_duration_critical == null}None%{else}'${var.storage_lasting_duration_critical}'%{endif}, at_least=${var.storage_at_least_percentage_critical}) and (not when(signal > ${var.storage_threshold_major}, lasting=%{if var.storage_lasting_duration_major == null}None%{else}'${var.storage_lasting_duration_major}'%{endif}, at_least=${var.storage_at_least_percentage_major}))).publish('CRIT')
 EOF
@@ -129,7 +132,8 @@ resource "signalfx_detector" "io" {
   }
 
   program_text = <<-EOF
-    signal = data('io_consumption_percent', filter=filter('resource_type', 'Microsoft.DB*orMariaDB/servers') and filter('primary_aggregation_type', 'true') and ${module.filtering.signalflow})${var.io_aggregation_function}${var.io_transformation_function}.publish('signal')
+    base_filtering = filter('resource_type', 'Microsoft.DB*orMariaDB/servers') and filter('primary_aggregation_type', 'true')
+    signal = data('io_consumption_percent', filter=base_filtering and ${module.filtering.signalflow})${var.io_aggregation_function}${var.io_transformation_function}.publish('signal')
     detect(when(signal > ${var.io_threshold_major}, lasting=%{if var.io_lasting_duration_major == null}None%{else}'${var.io_lasting_duration_major}'%{endif}, at_least=${var.io_at_least_percentage_major})).publish('MAJOR')
     detect(when(signal > ${var.io_threshold_critical}, lasting=%{if var.io_lasting_duration_critical == null}None%{else}'${var.io_lasting_duration_critical}'%{endif}, at_least=${var.io_at_least_percentage_critical}) and (not when(signal > ${var.io_threshold_major}, lasting=%{if var.io_lasting_duration_major == null}None%{else}'${var.io_lasting_duration_major}'%{endif}, at_least=${var.io_at_least_percentage_major}))).publish('CRIT')
 EOF
@@ -174,7 +178,8 @@ resource "signalfx_detector" "memory" {
   }
 
   program_text = <<-EOF
-    signal = data('memory_percent', filter=filter('resource_type', 'Microsoft.DB*orMariaDB/servers') and filter('primary_aggregation_type', 'true') and ${module.filtering.signalflow})${var.memory_aggregation_function}${var.memory_transformation_function}.publish('signal')
+    base_filtering = filter('resource_type', 'Microsoft.DB*orMariaDB/servers') and filter('primary_aggregation_type', 'true')
+    signal = data('memory_percent', filter=base_filtering and ${module.filtering.signalflow})${var.memory_aggregation_function}${var.memory_transformation_function}.publish('signal')
     detect(when(signal > ${var.memory_threshold_major}, lasting=%{if var.memory_lasting_duration_major == null}None%{else}'${var.memory_lasting_duration_major}'%{endif}, at_least=${var.memory_at_least_percentage_major})).publish('MAJOR')
     detect(when(signal > ${var.memory_threshold_critical}, lasting=%{if var.memory_lasting_duration_critical == null}None%{else}'${var.memory_lasting_duration_critical}'%{endif}, at_least=${var.memory_at_least_percentage_critical}) and (not when(signal > ${var.memory_threshold_major}, lasting=%{if var.memory_lasting_duration_major == null}None%{else}'${var.memory_lasting_duration_major}'%{endif}, at_least=${var.memory_at_least_percentage_major}))).publish('CRIT')
 EOF
@@ -219,7 +224,8 @@ resource "signalfx_detector" "replication_lag" {
   }
 
   program_text = <<-EOF
-    signal = data('seconds_behind_master', filter=filter('resource_type', 'Microsoft.DB*orMariaDB/servers') and filter('primary_aggregation_type', 'true') and ${module.filtering.signalflow})${var.replication_lag_aggregation_function}${var.replication_lag_transformation_function}.publish('signal')
+    base_filtering = filter('resource_type', 'Microsoft.DB*orMariaDB/servers') and filter('primary_aggregation_type', 'true')
+    signal = data('seconds_behind_master', filter=base_filtering and ${module.filtering.signalflow})${var.replication_lag_aggregation_function}${var.replication_lag_transformation_function}.publish('signal')
     detect(when(signal > ${var.replication_lag_threshold_major}, lasting=%{if var.replication_lag_lasting_duration_major == null}None%{else}'${var.replication_lag_lasting_duration_major}'%{endif}, at_least=${var.replication_lag_at_least_percentage_major})).publish('MAJOR')
     detect(when(signal > ${var.replication_lag_threshold_critical}, lasting=%{if var.replication_lag_lasting_duration_critical == null}None%{else}'${var.replication_lag_lasting_duration_critical}'%{endif}, at_least=${var.replication_lag_at_least_percentage_critical}) and (not when(signal > ${var.replication_lag_threshold_major}, lasting=%{if var.replication_lag_lasting_duration_major == null}None%{else}'${var.replication_lag_lasting_duration_major}'%{endif}, at_least=${var.replication_lag_at_least_percentage_major}))).publish('CRIT')
 EOF

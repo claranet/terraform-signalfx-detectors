@@ -7,7 +7,8 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    signal = data('HealthyHostCount', filter=filter('namespace', 'AWS/ELB') and filter('stat', 'mean') and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
+    base_filtering = filter('namespace', 'AWS/ELB')
+    signal = data('HealthyHostCount', filter=base_filtering and filter('stat', 'mean') and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}', auto_resolve_after='${local.heartbeat_auto_resolve_after}').publish('CRIT')
 EOF
 
@@ -39,7 +40,8 @@ resource "signalfx_detector" "backend_latency" {
   }
 
   program_text = <<-EOF
-    signal = data('Latency', filter=filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'mean') and (not filter('AvailabilityZone', '*')) and filter('LoadBalancerName', '*') and ${module.filtering.signalflow}, rollup='average', extrapolation='zero')${var.backend_latency_aggregation_function}${var.backend_latency_transformation_function}.publish('signal')
+    base_filtering = filter('namespace', 'AWS/ApplicationELB')
+    signal = data('Latency', filter=base_filtering and filter('stat', 'mean') and (not filter('AvailabilityZone', '*')) and filter('LoadBalancerName', '*') and ${module.filtering.signalflow}, rollup='average', extrapolation='zero')${var.backend_latency_aggregation_function}${var.backend_latency_transformation_function}.publish('signal')
     detect(when(signal > ${var.backend_latency_threshold_critical}, lasting=%{if var.backend_latency_lasting_duration_critical == null}None%{else}'${var.backend_latency_lasting_duration_critical}'%{endif}, at_least=${var.backend_latency_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal > ${var.backend_latency_threshold_major}, lasting=%{if var.backend_latency_lasting_duration_major == null}None%{else}'${var.backend_latency_lasting_duration_major}'%{endif}, at_least=${var.backend_latency_at_least_percentage_major}) and (not when(signal > ${var.backend_latency_threshold_critical}, lasting=%{if var.backend_latency_lasting_duration_critical == null}None%{else}'${var.backend_latency_lasting_duration_critical}'%{endif}, at_least=${var.backend_latency_at_least_percentage_critical}))).publish('MAJOR')
 EOF
@@ -84,8 +86,9 @@ resource "signalfx_detector" "elb_5xx" {
   }
 
   program_text = <<-EOF
-    errors = data('HTTPCode_ELB_5XX', filter=filter('namespace', 'AWS/ELB') and filter('stat', 'sum') and (not filter('AvailabilityZone', '*')) and filter('LoadBalancerName', '*') and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.elb_5xx_aggregation_function}${var.elb_5xx_transformation_function}
-    requests = data('RequestCount', filter=filter('namespace', 'AWS/ELB') and filter('stat', 'sum') and (not filter('AvailabilityZone', '*')) and filter('LoadBalancerName', '*') and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.elb_5xx_aggregation_function}${var.elb_5xx_transformation_function}
+    base_filtering = filter('namespace', 'AWS/ELB') and filter('stat', 'sum') and (not filter('AvailabilityZone', '*')) and filter('LoadBalancerName', '*')
+    errors = data('HTTPCode_ELB_5XX', filter=base_filtering and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.elb_5xx_aggregation_function}${var.elb_5xx_transformation_function}
+    requests = data('RequestCount', filter=base_filtering and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.elb_5xx_aggregation_function}${var.elb_5xx_transformation_function}
     signal = (errors/requests).scale(100).fill(value=0).publish('signal')
     detect(when(signal > ${var.elb_5xx_threshold_critical}, lasting=%{if var.elb_5xx_lasting_duration_critical == null}None%{else}'${var.elb_5xx_lasting_duration_critical}'%{endif}, at_least=${var.elb_5xx_at_least_percentage_critical}) and when(requests > ${var.minimum_traffic})).publish('CRIT')
     detect(when(signal > ${var.elb_5xx_threshold_major}, lasting=%{if var.elb_5xx_lasting_duration_major == null}None%{else}'${var.elb_5xx_lasting_duration_major}'%{endif}, at_least=${var.elb_5xx_at_least_percentage_major}) and when(requests > ${var.minimum_traffic}) and (not when(signal > ${var.elb_5xx_threshold_critical}, lasting=%{if var.elb_5xx_lasting_duration_critical == null}None%{else}'${var.elb_5xx_lasting_duration_critical}'%{endif}, at_least=${var.elb_5xx_at_least_percentage_critical}) and when(requests > ${var.minimum_traffic}))).publish('MAJOR')
@@ -131,8 +134,9 @@ resource "signalfx_detector" "elb_4xx" {
   }
 
   program_text = <<-EOF
-    errors = data('HTTPCode_ELB_4XX', filter=filter('namespace', 'AWS/ELB') and filter('stat', 'sum') and (not filter('AvailabilityZone', '*')) and filter('LoadBalancerName', '*') and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.elb_4xx_aggregation_function}${var.elb_4xx_transformation_function}
-    requests = data('RequestCount', filter=filter('namespace', 'AWS/ELB') and filter('stat', 'sum') and (not filter('AvailabilityZone', '*')) and filter('LoadBalancerName', '*') and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.elb_4xx_aggregation_function}${var.elb_4xx_transformation_function}
+    base_filtering = filter('namespace', 'AWS/ELB') and filter('stat', 'sum') and (not filter('AvailabilityZone', '*')) and filter('LoadBalancerName', '*')
+    errors = data('HTTPCode_ELB_4XX', filter=base_filtering and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.elb_4xx_aggregation_function}${var.elb_4xx_transformation_function}
+    requests = data('RequestCount', filter=base_filtering and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.elb_4xx_aggregation_function}${var.elb_4xx_transformation_function}
     signal = (errors/requests).scale(100).fill(value=0).publish('signal')
     detect(when(signal > ${var.elb_4xx_threshold_critical}, lasting=%{if var.elb_4xx_lasting_duration_critical == null}None%{else}'${var.elb_4xx_lasting_duration_critical}'%{endif}, at_least=${var.elb_4xx_at_least_percentage_critical}) and when(requests > ${var.minimum_traffic})).publish('CRIT')
     detect(when(signal > ${var.elb_4xx_threshold_major}, lasting=%{if var.elb_4xx_lasting_duration_major == null}None%{else}'${var.elb_4xx_lasting_duration_major}'%{endif}, at_least=${var.elb_4xx_at_least_percentage_major}) and when(requests > ${var.minimum_traffic}) and (not when(signal > ${var.elb_4xx_threshold_critical}, lasting=%{if var.elb_4xx_lasting_duration_critical == null}None%{else}'${var.elb_4xx_lasting_duration_critical}'%{endif}, at_least=${var.elb_4xx_at_least_percentage_critical}) and when(requests > ${var.minimum_traffic}))).publish('MAJOR')
@@ -178,8 +182,9 @@ resource "signalfx_detector" "backend_5xx" {
   }
 
   program_text = <<-EOF
-    errors = data('HTTPCode_Backend_5XX', filter=filter('namespace', 'AWS/ELB') and filter('stat', 'sum') and (not filter('AvailabilityZone', '*')) and filter('LoadBalancerName', '*') and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.backend_5xx_aggregation_function}${var.backend_5xx_transformation_function}
-    requests = data('RequestCount', filter=filter('namespace', 'AWS/ELB') and filter('stat', 'sum') and (not filter('AvailabilityZone', '*')) and filter('LoadBalancerName', '*') and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.backend_5xx_aggregation_function}${var.backend_5xx_transformation_function}
+    base_filtering = filter('namespace', 'AWS/ELB') and filter('stat', 'sum') and (not filter('AvailabilityZone', '*')) and filter('LoadBalancerName', '*')
+    errors = data('HTTPCode_Backend_5XX', filter=base_filtering and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.backend_5xx_aggregation_function}${var.backend_5xx_transformation_function}
+    requests = data('RequestCount', filter=base_filtering and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.backend_5xx_aggregation_function}${var.backend_5xx_transformation_function}
     signal = (errors/requests).scale(100).fill(value=0).publish('signal')
     detect(when(signal > ${var.backend_5xx_threshold_critical}, lasting=%{if var.backend_5xx_lasting_duration_critical == null}None%{else}'${var.backend_5xx_lasting_duration_critical}'%{endif}, at_least=${var.backend_5xx_at_least_percentage_critical}) and when(requests > ${var.minimum_traffic})).publish('CRIT')
     detect(when(signal > ${var.backend_5xx_threshold_major}, lasting=%{if var.backend_5xx_lasting_duration_major == null}None%{else}'${var.backend_5xx_lasting_duration_major}'%{endif}, at_least=${var.backend_5xx_at_least_percentage_major}) and when(requests > ${var.minimum_traffic}) and (not when(signal > ${var.backend_5xx_threshold_critical}, lasting=%{if var.backend_5xx_lasting_duration_critical == null}None%{else}'${var.backend_5xx_lasting_duration_critical}'%{endif}, at_least=${var.backend_5xx_at_least_percentage_critical}) and when(requests > ${var.minimum_traffic}))).publish('MAJOR')
@@ -225,8 +230,9 @@ resource "signalfx_detector" "backend_4xx" {
   }
 
   program_text = <<-EOF
-    errors = data('HTTPCode_Backend_4XX', filter=filter('namespace', 'AWS/ELB') and filter('stat', 'sum') and (not filter('AvailabilityZone', '*')) and filter('LoadBalancerName', '*') and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.backend_4xx_aggregation_function}${var.backend_4xx_transformation_function}
-    requests = data('RequestCount', filter=filter('namespace', 'AWS/ELB') and filter('stat', 'sum') and (not filter('AvailabilityZone', '*')) and filter('LoadBalancerName', '*') and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.backend_4xx_aggregation_function}${var.backend_4xx_transformation_function}
+    base_filtering = filter('namespace', 'AWS/ELB') and filter('stat', 'sum') and (not filter('AvailabilityZone', '*')) and filter('LoadBalancerName', '*')
+    errors = data('HTTPCode_Backend_4XX', filter=base_filtering and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.backend_4xx_aggregation_function}${var.backend_4xx_transformation_function}
+    requests = data('RequestCount', filter=base_filtering and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.backend_4xx_aggregation_function}${var.backend_4xx_transformation_function}
     signal = (errors/requests).scale(100).fill(value=0).publish('signal')
     detect(when(signal > ${var.backend_4xx_threshold_critical}, lasting=%{if var.backend_4xx_lasting_duration_critical == null}None%{else}'${var.backend_4xx_lasting_duration_critical}'%{endif}, at_least=${var.backend_4xx_at_least_percentage_critical}) and when(requests > ${var.minimum_traffic})).publish('CRIT')
     detect(when(signal > ${var.backend_4xx_threshold_major}, lasting=%{if var.backend_4xx_lasting_duration_major == null}None%{else}'${var.backend_4xx_lasting_duration_major}'%{endif}, at_least=${var.backend_4xx_at_least_percentage_major}) and when(requests > ${var.minimum_traffic}) and (not when(signal > ${var.backend_4xx_threshold_critical}, lasting=%{if var.backend_4xx_lasting_duration_critical == null}None%{else}'${var.backend_4xx_lasting_duration_critical}'%{endif}, at_least=${var.backend_4xx_at_least_percentage_critical}) and when(requests > ${var.minimum_traffic}))).publish('MAJOR')
@@ -272,8 +278,9 @@ resource "signalfx_detector" "healthy" {
   }
 
   program_text = <<-EOF
-    healthy = data('HealthyHostCount', filter=filter('namespace', 'AWS/ELB') and (not filter('AvailabilityZone', '*')) and filter('LoadBalancerName', '*') and filter('stat', 'lower') and ${module.filtering.signalflow})${var.healthy_aggregation_function}${var.healthy_transformation_function}
-    unhealthy = data('UnHealthyHostCount', filter=filter('namespace', 'AWS/ELB') and (not filter('AvailabilityZone', '*')) and filter('LoadBalancerName', '*') and filter('stat', 'upper') and ${module.filtering.signalflow})${var.healthy_aggregation_function}${var.healthy_transformation_function}
+    base_filtering = filter('namespace', 'AWS/ELB') and (not filter('AvailabilityZone', '*')) and filter('LoadBalancerName', '*')
+    healthy = data('HealthyHostCount', filter=base_filtering and filter('stat', 'lower') and ${module.filtering.signalflow})${var.healthy_aggregation_function}${var.healthy_transformation_function}
+    unhealthy = data('UnHealthyHostCount', filter=base_filtering and filter('stat', 'upper') and ${module.filtering.signalflow})${var.healthy_aggregation_function}${var.healthy_transformation_function}
     signal = (healthy / (healthy+unhealthy)).scale(100).publish('signal')
     detect(when(signal < ${var.healthy_threshold_critical}, lasting=%{if var.healthy_lasting_duration_critical == null}None%{else}'${var.healthy_lasting_duration_critical}'%{endif}, at_least=${var.healthy_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal < ${var.healthy_threshold_major}, lasting=%{if var.healthy_lasting_duration_major == null}None%{else}'${var.healthy_lasting_duration_major}'%{endif}, at_least=${var.healthy_at_least_percentage_major}) and (not when(signal < ${var.healthy_threshold_critical}, lasting=%{if var.healthy_lasting_duration_critical == null}None%{else}'${var.healthy_lasting_duration_critical}'%{endif}, at_least=${var.healthy_at_least_percentage_critical}))).publish('MAJOR')

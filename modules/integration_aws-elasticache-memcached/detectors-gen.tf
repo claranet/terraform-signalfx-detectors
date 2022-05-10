@@ -11,7 +11,8 @@ resource "signalfx_detector" "cpu" {
   }
 
   program_text = <<-EOF
-    signal = data('CPUUtilization', filter=filter('namespace', 'AWS/ElastiCache') and filter('CacheNodeId', '*') and filter('stat', 'mean') and ${module.filtering.signalflow})${var.cpu_aggregation_function}${var.cpu_transformation_function}.publish('signal')
+    base_filtering = filter('namespace', 'AWS/ElastiCache') and filter('CacheNodeId', '*') and filter('stat', 'mean')
+    signal = data('CPUUtilization', filter=base_filtering and ${module.filtering.signalflow})${var.cpu_aggregation_function}${var.cpu_transformation_function}.publish('signal')
     detect(when(signal > ${var.cpu_threshold_critical}, lasting=%{if var.cpu_lasting_duration_critical == null}None%{else}'${var.cpu_lasting_duration_critical}'%{endif}, at_least=${var.cpu_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal > ${var.cpu_threshold_major}, lasting=%{if var.cpu_lasting_duration_major == null}None%{else}'${var.cpu_lasting_duration_major}'%{endif}, at_least=${var.cpu_at_least_percentage_major}) and (not when(signal > ${var.cpu_threshold_critical}, lasting=%{if var.cpu_lasting_duration_critical == null}None%{else}'${var.cpu_lasting_duration_critical}'%{endif}, at_least=${var.cpu_at_least_percentage_critical}))).publish('MAJOR')
 EOF
@@ -56,8 +57,9 @@ resource "signalfx_detector" "hit_ratio" {
   }
 
   program_text = <<-EOF
-    hits = data('GetHits', filter=filter('namespace', 'AWS/ElastiCache') and filter('CacheNodeId', '*') and filter('stat', 'mean') and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.hit_ratio_aggregation_function}${var.hit_ratio_transformation_function}
-    misses = data('GetMisses', filter=filter('namespace', 'AWS/ElastiCache') and filter('CacheNodeId', '*') and filter('stat', 'mean') and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.hit_ratio_aggregation_function}${var.hit_ratio_transformation_function}
+    base_filtering = filter('namespace', 'AWS/ElastiCache') and filter('CacheNodeId', '*') and filter('stat', 'mean')
+    hits = data('GetHits', filter=base_filtering and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.hit_ratio_aggregation_function}${var.hit_ratio_transformation_function}
+    misses = data('GetMisses', filter=base_filtering and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.hit_ratio_aggregation_function}${var.hit_ratio_transformation_function}
     signal = (hits/(hits+misses)).scale(100).fill(value=0).publish('signal')
     detect(when(signal < ${var.hit_ratio_threshold_major}, lasting=%{if var.hit_ratio_lasting_duration_major == null}None%{else}'${var.hit_ratio_lasting_duration_major}'%{endif}, at_least=${var.hit_ratio_at_least_percentage_major})).publish('MAJOR')
     detect(when(signal < ${var.hit_ratio_threshold_minor}, lasting=%{if var.hit_ratio_lasting_duration_minor == null}None%{else}'${var.hit_ratio_lasting_duration_minor}'%{endif}, at_least=${var.hit_ratio_at_least_percentage_minor}) and (not when(signal < ${var.hit_ratio_threshold_major}, lasting=%{if var.hit_ratio_lasting_duration_major == null}None%{else}'${var.hit_ratio_lasting_duration_major}'%{endif}, at_least=${var.hit_ratio_at_least_percentage_major}))).publish('MINOR')

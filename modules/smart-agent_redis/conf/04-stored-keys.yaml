@@ -3,10 +3,6 @@ name: stored keys change rate
 tip: no change on keyspace over a long period can indicate it is full. if you don't use redis as cache but as queue broker or database so it can be normal to not see any activity depending on your application and you should disable this detector
 disable: true
 
-filtering: >-
-  ${var.use_otel_receiver ? "" : "filter('plugin', 'redis_info') and "}
-filtering_suffix: ''
-
 signals:
   A:
     metric: '${var.use_otel_receiver ? "redis.db.keys" : "gauge.db0_keys"}'

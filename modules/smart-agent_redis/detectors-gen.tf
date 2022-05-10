@@ -7,7 +7,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    signal = data('${var.use_otel_receiver ? "redis.memory.used" : "bytes.used_memory"}', filter=${local.not_running_vm_filters} and ${var.use_otel_receiver ? "" : "filter('plugin', 'redis_info') and "}${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
+    signal = data('${var.use_otel_receiver ? "redis.memory.used" : "bytes.used_memory"}', filter=${local.not_running_vm_filters} and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}', auto_resolve_after='${local.heartbeat_auto_resolve_after}').publish('CRIT')
 EOF
 
@@ -34,7 +34,7 @@ resource "signalfx_detector" "evicted_keys_change_rate" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    A = data('${var.use_otel_receiver ? "redis.keys.evicted" : "counter.evicted_keys"}', filter=${var.use_otel_receiver ? "" : "filter('plugin', 'redis_info') and "}${module.filtering.signalflow}, rollup='delta')${var.evicted_keys_change_rate_aggregation_function}${var.evicted_keys_change_rate_transformation_function}
+    A = data('${var.use_otel_receiver ? "redis.keys.evicted" : "counter.evicted_keys"}', filter=${module.filtering.signalflow}, rollup='delta')${var.evicted_keys_change_rate_aggregation_function}${var.evicted_keys_change_rate_transformation_function}
     signal = A.rateofchange().publish('signal')
     detect(when(signal > ${var.evicted_keys_change_rate_threshold_critical}, lasting=%{if var.evicted_keys_change_rate_lasting_duration_critical == null}None%{else}'${var.evicted_keys_change_rate_lasting_duration_critical}'%{endif}, at_least=${var.evicted_keys_change_rate_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal > ${var.evicted_keys_change_rate_threshold_major}, lasting=%{if var.evicted_keys_change_rate_lasting_duration_major == null}None%{else}'${var.evicted_keys_change_rate_lasting_duration_major}'%{endif}, at_least=${var.evicted_keys_change_rate_at_least_percentage_major}) and (not when(signal > ${var.evicted_keys_change_rate_threshold_critical}, lasting=%{if var.evicted_keys_change_rate_lasting_duration_critical == null}None%{else}'${var.evicted_keys_change_rate_lasting_duration_critical}'%{endif}, at_least=${var.evicted_keys_change_rate_at_least_percentage_critical}))).publish('MAJOR')
@@ -75,7 +75,7 @@ resource "signalfx_detector" "expired_keys_change_rate" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    A = data('${var.use_otel_receiver ? "redis.keys.expired" : "counter.expired_keys"}', filter=${var.use_otel_receiver ? "" : "filter('plugin', 'redis_info') and "}${module.filtering.signalflow}, rollup='delta')${var.expired_keys_change_rate_aggregation_function}${var.expired_keys_change_rate_transformation_function}
+    A = data('${var.use_otel_receiver ? "redis.keys.expired" : "counter.expired_keys"}', filter=${module.filtering.signalflow}, rollup='delta')${var.expired_keys_change_rate_aggregation_function}${var.expired_keys_change_rate_transformation_function}
     signal = A.rateofchange().publish('signal')
     detect(when(signal > ${var.expired_keys_change_rate_threshold_critical}, lasting=%{if var.expired_keys_change_rate_lasting_duration_critical == null}None%{else}'${var.expired_keys_change_rate_lasting_duration_critical}'%{endif}, at_least=${var.expired_keys_change_rate_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal > ${var.expired_keys_change_rate_threshold_major}, lasting=%{if var.expired_keys_change_rate_lasting_duration_major == null}None%{else}'${var.expired_keys_change_rate_lasting_duration_major}'%{endif}, at_least=${var.expired_keys_change_rate_at_least_percentage_major}) and (not when(signal > ${var.expired_keys_change_rate_threshold_critical}, lasting=%{if var.expired_keys_change_rate_lasting_duration_critical == null}None%{else}'${var.expired_keys_change_rate_lasting_duration_critical}'%{endif}, at_least=${var.expired_keys_change_rate_at_least_percentage_critical}))).publish('MAJOR')
@@ -121,8 +121,8 @@ resource "signalfx_detector" "blocked_over_connected_clients_ratio" {
   }
 
   program_text = <<-EOF
-    A = data('${var.use_otel_receiver ? "redis.client.blocked" : "gauge.blocked_clients"}', filter=${var.use_otel_receiver ? "" : "filter('plugin', 'redis_info') and "}${module.filtering.signalflow})${var.blocked_over_connected_clients_ratio_aggregation_function}${var.blocked_over_connected_clients_ratio_transformation_function}
-    B = data('${var.use_otel_receiver ? "redis.client.connected" : "gauge.connected_clients"}', filter=${var.use_otel_receiver ? "" : "filter('plugin', 'redis_info') and "}${module.filtering.signalflow})${var.blocked_over_connected_clients_ratio_aggregation_function}${var.blocked_over_connected_clients_ratio_transformation_function}
+    A = data('${var.use_otel_receiver ? "redis.client.blocked" : "gauge.blocked_clients"}', filter=${module.filtering.signalflow})${var.blocked_over_connected_clients_ratio_aggregation_function}${var.blocked_over_connected_clients_ratio_transformation_function}
+    B = data('${var.use_otel_receiver ? "redis.client.connected" : "gauge.connected_clients"}', filter=${module.filtering.signalflow})${var.blocked_over_connected_clients_ratio_aggregation_function}${var.blocked_over_connected_clients_ratio_transformation_function}
     signal = (A/B).scale(100).publish('signal')
     detect(when(signal > ${var.blocked_over_connected_clients_ratio_threshold_critical}, lasting=%{if var.blocked_over_connected_clients_ratio_lasting_duration_critical == null}None%{else}'${var.blocked_over_connected_clients_ratio_lasting_duration_critical}'%{endif}, at_least=${var.blocked_over_connected_clients_ratio_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal > ${var.blocked_over_connected_clients_ratio_threshold_major}, lasting=%{if var.blocked_over_connected_clients_ratio_lasting_duration_major == null}None%{else}'${var.blocked_over_connected_clients_ratio_lasting_duration_major}'%{endif}, at_least=${var.blocked_over_connected_clients_ratio_at_least_percentage_major}) and (not when(signal > ${var.blocked_over_connected_clients_ratio_threshold_critical}, lasting=%{if var.blocked_over_connected_clients_ratio_lasting_duration_critical == null}None%{else}'${var.blocked_over_connected_clients_ratio_lasting_duration_critical}'%{endif}, at_least=${var.blocked_over_connected_clients_ratio_at_least_percentage_critical}))).publish('MAJOR')
@@ -163,7 +163,7 @@ resource "signalfx_detector" "stored_keys_change_rate" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    A = data('${var.use_otel_receiver ? "redis.db.keys" : "gauge.db0_keys"}', filter=${var.use_otel_receiver ? "" : "filter('plugin', 'redis_info') and "}${module.filtering.signalflow})${var.stored_keys_change_rate_aggregation_function}${var.stored_keys_change_rate_transformation_function}
+    A = data('${var.use_otel_receiver ? "redis.db.keys" : "gauge.db0_keys"}', filter=${module.filtering.signalflow})${var.stored_keys_change_rate_aggregation_function}${var.stored_keys_change_rate_transformation_function}
     signal = A.rateofchange().abs().publish('signal')
     detect(when(signal == ${var.stored_keys_change_rate_threshold_major}, lasting=%{if var.stored_keys_change_rate_lasting_duration_major == null}None%{else}'${var.stored_keys_change_rate_lasting_duration_major}'%{endif}, at_least=${var.stored_keys_change_rate_at_least_percentage_major})).publish('MAJOR')
 EOF
@@ -198,8 +198,9 @@ resource "signalfx_detector" "percentage_memory_used_over_max_memory_set" {
   }
 
   program_text = <<-EOF
-    A = data('bytes.used_memory', filter=filter('plugin', 'redis_info') and ${module.filtering.signalflow})${var.percentage_memory_used_over_max_memory_set_aggregation_function}${var.percentage_memory_used_over_max_memory_set_transformation_function}
-    B = data('bytes.maxmemory', filter=filter('plugin', 'redis_info') and ${module.filtering.signalflow})${var.percentage_memory_used_over_max_memory_set_aggregation_function}${var.percentage_memory_used_over_max_memory_set_transformation_function}
+    base_filtering = filter('plugin', 'redis_info')
+    A = data('bytes.used_memory', filter=base_filtering and ${module.filtering.signalflow})${var.percentage_memory_used_over_max_memory_set_aggregation_function}${var.percentage_memory_used_over_max_memory_set_transformation_function}
+    B = data('bytes.maxmemory', filter=base_filtering and ${module.filtering.signalflow})${var.percentage_memory_used_over_max_memory_set_aggregation_function}${var.percentage_memory_used_over_max_memory_set_transformation_function}
     signal = (A/B).scale(100).publish('signal')
     detect(when(signal > ${var.percentage_memory_used_over_max_memory_set_threshold_critical}, lasting=%{if var.percentage_memory_used_over_max_memory_set_lasting_duration_critical == null}None%{else}'${var.percentage_memory_used_over_max_memory_set_lasting_duration_critical}'%{endif}, at_least=${var.percentage_memory_used_over_max_memory_set_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal > ${var.percentage_memory_used_over_max_memory_set_threshold_major}, lasting=%{if var.percentage_memory_used_over_max_memory_set_lasting_duration_major == null}None%{else}'${var.percentage_memory_used_over_max_memory_set_lasting_duration_major}'%{endif}, at_least=${var.percentage_memory_used_over_max_memory_set_at_least_percentage_major}) and (not when(signal > ${var.percentage_memory_used_over_max_memory_set_threshold_critical}, lasting=%{if var.percentage_memory_used_over_max_memory_set_lasting_duration_critical == null}None%{else}'${var.percentage_memory_used_over_max_memory_set_lasting_duration_critical}'%{endif}, at_least=${var.percentage_memory_used_over_max_memory_set_at_least_percentage_critical}))).publish('MAJOR')
@@ -247,8 +248,9 @@ resource "signalfx_detector" "percentage_memory_used_over_system_memory" {
   }
 
   program_text = <<-EOF
-    A = data('bytes.used_memory', filter=filter('plugin', 'redis_info') and ${module.filtering.signalflow})${var.percentage_memory_used_over_system_memory_aggregation_function}${var.percentage_memory_used_over_system_memory_transformation_function}
-    B = data('bytes.total_system_memory', filter=filter('plugin', 'redis_info') and ${module.filtering.signalflow})${var.percentage_memory_used_over_system_memory_aggregation_function}${var.percentage_memory_used_over_system_memory_transformation_function}
+    base_filtering = filter('plugin', 'redis_info')
+    A = data('bytes.used_memory', filter=base_filtering and ${module.filtering.signalflow})${var.percentage_memory_used_over_system_memory_aggregation_function}${var.percentage_memory_used_over_system_memory_transformation_function}
+    B = data('bytes.total_system_memory', filter=base_filtering and ${module.filtering.signalflow})${var.percentage_memory_used_over_system_memory_aggregation_function}${var.percentage_memory_used_over_system_memory_transformation_function}
     signal = (A/B).scale(100).publish('signal')
     detect(when(signal > ${var.percentage_memory_used_over_system_memory_threshold_critical}, lasting=%{if var.percentage_memory_used_over_system_memory_lasting_duration_critical == null}None%{else}'${var.percentage_memory_used_over_system_memory_lasting_duration_critical}'%{endif}, at_least=${var.percentage_memory_used_over_system_memory_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal > ${var.percentage_memory_used_over_system_memory_threshold_major}, lasting=%{if var.percentage_memory_used_over_system_memory_lasting_duration_major == null}None%{else}'${var.percentage_memory_used_over_system_memory_lasting_duration_major}'%{endif}, at_least=${var.percentage_memory_used_over_system_memory_at_least_percentage_major}) and (not when(signal > ${var.percentage_memory_used_over_system_memory_threshold_critical}, lasting=%{if var.percentage_memory_used_over_system_memory_lasting_duration_critical == null}None%{else}'${var.percentage_memory_used_over_system_memory_lasting_duration_critical}'%{endif}, at_least=${var.percentage_memory_used_over_system_memory_at_least_percentage_critical}))).publish('MAJOR')
@@ -289,8 +291,8 @@ resource "signalfx_detector" "high_memory_fragmentation_ratio" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    A = data('${var.use_otel_receiver ? "redis.memory.rss" : "bytes.used_memory_rss"}', filter=${var.use_otel_receiver ? "" : "filter('plugin', 'redis_info') and "}${module.filtering.signalflow}, rollup='average')${var.high_memory_fragmentation_ratio_aggregation_function}${var.high_memory_fragmentation_ratio_transformation_function}
-    B = data('${var.use_otel_receiver ? "redis.memory.used" : "bytes.used_memory"}', filter=${var.use_otel_receiver ? "" : "filter('plugin', 'redis_info') and "}${module.filtering.signalflow}, rollup='average')${var.high_memory_fragmentation_ratio_aggregation_function}${var.high_memory_fragmentation_ratio_transformation_function}
+    A = data('${var.use_otel_receiver ? "redis.memory.rss" : "bytes.used_memory_rss"}', filter=${module.filtering.signalflow}, rollup='average')${var.high_memory_fragmentation_ratio_aggregation_function}${var.high_memory_fragmentation_ratio_transformation_function}
+    B = data('${var.use_otel_receiver ? "redis.memory.used" : "bytes.used_memory"}', filter=${module.filtering.signalflow}, rollup='average')${var.high_memory_fragmentation_ratio_aggregation_function}${var.high_memory_fragmentation_ratio_transformation_function}
     signal = (A/B).publish('signal')
     detect(when(signal > ${var.high_memory_fragmentation_ratio_threshold_critical}, lasting=%{if var.high_memory_fragmentation_ratio_lasting_duration_critical == null}None%{else}'${var.high_memory_fragmentation_ratio_lasting_duration_critical}'%{endif}, at_least=${var.high_memory_fragmentation_ratio_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal > ${var.high_memory_fragmentation_ratio_threshold_major}, lasting=%{if var.high_memory_fragmentation_ratio_lasting_duration_major == null}None%{else}'${var.high_memory_fragmentation_ratio_lasting_duration_major}'%{endif}, at_least=${var.high_memory_fragmentation_ratio_at_least_percentage_major}) and (not when(signal > ${var.high_memory_fragmentation_ratio_threshold_critical}, lasting=%{if var.high_memory_fragmentation_ratio_lasting_duration_critical == null}None%{else}'${var.high_memory_fragmentation_ratio_lasting_duration_critical}'%{endif}, at_least=${var.high_memory_fragmentation_ratio_at_least_percentage_critical}))).publish('MAJOR')
@@ -331,8 +333,8 @@ resource "signalfx_detector" "low_memory_fragmentation_ratio" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    A = data('${var.use_otel_receiver ? "redis.memory.rss" : "bytes.used_memory_rss"}', filter=${var.use_otel_receiver ? "" : "filter('plugin', 'redis_info') and "}${module.filtering.signalflow}, rollup='average')${var.low_memory_fragmentation_ratio_aggregation_function}${var.low_memory_fragmentation_ratio_transformation_function}
-    B = data('${var.use_otel_receiver ? "redis.memory.used" : "bytes.used_memory"}', filter=${var.use_otel_receiver ? "" : "filter('plugin', 'redis_info') and "}${module.filtering.signalflow}, rollup='average')${var.low_memory_fragmentation_ratio_aggregation_function}${var.low_memory_fragmentation_ratio_transformation_function}
+    A = data('${var.use_otel_receiver ? "redis.memory.rss" : "bytes.used_memory_rss"}', filter=${module.filtering.signalflow}, rollup='average')${var.low_memory_fragmentation_ratio_aggregation_function}${var.low_memory_fragmentation_ratio_transformation_function}
+    B = data('${var.use_otel_receiver ? "redis.memory.used" : "bytes.used_memory"}', filter=${module.filtering.signalflow}, rollup='average')${var.low_memory_fragmentation_ratio_aggregation_function}${var.low_memory_fragmentation_ratio_transformation_function}
     signal = (A/B).publish('signal')
     detect(when(signal < ${var.low_memory_fragmentation_ratio_threshold_critical}, lasting=%{if var.low_memory_fragmentation_ratio_lasting_duration_critical == null}None%{else}'${var.low_memory_fragmentation_ratio_lasting_duration_critical}'%{endif}, at_least=${var.low_memory_fragmentation_ratio_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal < ${var.low_memory_fragmentation_ratio_threshold_major}, lasting=%{if var.low_memory_fragmentation_ratio_lasting_duration_major == null}None%{else}'${var.low_memory_fragmentation_ratio_lasting_duration_major}'%{endif}, at_least=${var.low_memory_fragmentation_ratio_at_least_percentage_major}) and (not when(signal < ${var.low_memory_fragmentation_ratio_threshold_critical}, lasting=%{if var.low_memory_fragmentation_ratio_lasting_duration_critical == null}None%{else}'${var.low_memory_fragmentation_ratio_lasting_duration_critical}'%{endif}, at_least=${var.low_memory_fragmentation_ratio_at_least_percentage_critical}))).publish('MAJOR')
@@ -373,7 +375,7 @@ resource "signalfx_detector" "rejected_connections" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('${var.use_otel_receiver ? "redis.connections.rejected" : "counter.rejected_connections"}', filter=${var.use_otel_receiver ? "" : "filter('plugin', 'redis_info') and "}${module.filtering.signalflow}, rollup='delta')${var.rejected_connections_aggregation_function}${var.rejected_connections_transformation_function}.publish('signal')
+    signal = data('${var.use_otel_receiver ? "redis.connections.rejected" : "counter.rejected_connections"}', filter=${module.filtering.signalflow}, rollup='delta')${var.rejected_connections_aggregation_function}${var.rejected_connections_transformation_function}.publish('signal')
     detect(when(signal > ${var.rejected_connections_threshold_critical}, lasting=%{if var.rejected_connections_lasting_duration_critical == null}None%{else}'${var.rejected_connections_lasting_duration_critical}'%{endif}, at_least=${var.rejected_connections_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal > ${var.rejected_connections_threshold_major}, lasting=%{if var.rejected_connections_lasting_duration_major == null}None%{else}'${var.rejected_connections_lasting_duration_major}'%{endif}, at_least=${var.rejected_connections_at_least_percentage_major}) and (not when(signal > ${var.rejected_connections_threshold_critical}, lasting=%{if var.rejected_connections_lasting_duration_critical == null}None%{else}'${var.rejected_connections_lasting_duration_critical}'%{endif}, at_least=${var.rejected_connections_at_least_percentage_critical}))).publish('MAJOR')
 EOF
@@ -418,8 +420,8 @@ resource "signalfx_detector" "hitrate" {
   }
 
   program_text = <<-EOF
-    A = data('${var.use_otel_receiver ? "redis.keyspace.hits" : "counter.keyspace_hits"}', filter=${var.use_otel_receiver ? "" : "filter('plugin', 'redis_info') and "}${module.filtering.signalflow}, rollup='delta')${var.hitrate_aggregation_function}${var.hitrate_transformation_function}
-    B = data('${var.use_otel_receiver ? "redis.keyspace.hits" : "counter.keyspace_hits"}', filter=${var.use_otel_receiver ? "" : "filter('plugin', 'redis_info') and "}${module.filtering.signalflow}, rollup='delta')${var.hitrate_aggregation_function}${var.hitrate_transformation_function}
+    A = data('${var.use_otel_receiver ? "redis.keyspace.hits" : "counter.keyspace_hits"}', filter=${module.filtering.signalflow}, rollup='delta')${var.hitrate_aggregation_function}${var.hitrate_transformation_function}
+    B = data('${var.use_otel_receiver ? "redis.keyspace.hits" : "counter.keyspace_hits"}', filter=${module.filtering.signalflow}, rollup='delta')${var.hitrate_aggregation_function}${var.hitrate_transformation_function}
     signal = (A/(A+B)).scale(100).publish('signal')
     detect(when(signal < ${var.hitrate_threshold_critical}, lasting=%{if var.hitrate_lasting_duration_critical == null}None%{else}'${var.hitrate_lasting_duration_critical}'%{endif}, at_least=${var.hitrate_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal < ${var.hitrate_threshold_major}, lasting=%{if var.hitrate_lasting_duration_major == null}None%{else}'${var.hitrate_lasting_duration_major}'%{endif}, at_least=${var.hitrate_at_least_percentage_major}) and (not when(signal < ${var.hitrate_threshold_critical}, lasting=%{if var.hitrate_lasting_duration_critical == null}None%{else}'${var.hitrate_lasting_duration_critical}'%{endif}, at_least=${var.hitrate_at_least_percentage_critical}))).publish('MAJOR')

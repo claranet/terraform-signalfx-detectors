@@ -1,10 +1,6 @@
 module: redis
 name: heartbeat
 
-filtering: >-
-  ${var.use_otel_receiver ? "" : "filter('plugin', 'redis_info') and "}
-filtering_suffix: ''
-
 transformation: false
 exclude_not_running_vm: true
 

@@ -3,10 +3,6 @@ name: low memory fragmentation ratio
 runbook_url: "https://www.dynatrace.com/news/blog/introducing-redis-server-monitoring/#key-metrics"
 tip: increase the memory available on the host or reduce the memory usage from your application
 
-filtering: >-
-  ${var.use_otel_receiver ? "" : "filter('plugin', 'redis_info') and "}
-filtering_suffix: ''
-
 signals:
   A:
     metric: '${var.use_otel_receiver ? "redis.memory.rss" : "bytes.used_memory_rss"}'

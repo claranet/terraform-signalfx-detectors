@@ -104,7 +104,8 @@ resource "signalfx_detector" "pod_phase_status" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('kubernetes.pod_phase', filter=(not filter('job', '*')) and (not filter('cronjob', '*')) and ${module.filtering.signalflow})${var.pod_phase_status_aggregation_function}${var.pod_phase_status_transformation_function}.publish('signal')
+    base_filtering = (not filter('job', '*')) and (not filter('cronjob', '*'))
+    signal = data('kubernetes.pod_phase', filter=base_filtering and ${module.filtering.signalflow})${var.pod_phase_status_aggregation_function}${var.pod_phase_status_transformation_function}.publish('signal')
     detect(when(signal < ${var.pod_phase_status_threshold_warning}, lasting=%{if var.pod_phase_status_lasting_duration_warning == null}None%{else}'${var.pod_phase_status_lasting_duration_warning}'%{endif}, at_least=${var.pod_phase_status_at_least_percentage_warning})).publish('WARN')
     detect(when(signal > ${var.pod_phase_status_threshold_minor}, lasting=%{if var.pod_phase_status_lasting_duration_minor == null}None%{else}'${var.pod_phase_status_lasting_duration_minor}'%{endif}, at_least=${var.pod_phase_status_at_least_percentage_minor})).publish('MINOR')
     detect(when(signal > ${var.pod_phase_status_threshold_major}, lasting=%{if var.pod_phase_status_lasting_duration_major == null}None%{else}'${var.pod_phase_status_lasting_duration_major}'%{endif}, at_least=${var.pod_phase_status_at_least_percentage_major}) and (not when(signal > ${var.pod_phase_status_threshold_minor}, lasting=%{if var.pod_phase_status_lasting_duration_minor == null}None%{else}'${var.pod_phase_status_lasting_duration_minor}'%{endif}, at_least=${var.pod_phase_status_at_least_percentage_minor}))).publish('MAJOR')
@@ -157,7 +158,8 @@ resource "signalfx_detector" "terminated" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('kubernetes.container_ready', filter=filter('container_status', 'terminated') and (not filter('container_status_reason', 'Completed')) and ${module.filtering.signalflow})${var.terminated_aggregation_function}${var.terminated_transformation_function}.publish('signal')
+    base_filtering = filter('container_status', 'terminated') and (not filter('container_status_reason', 'Completed'))
+    signal = data('kubernetes.container_ready', filter=base_filtering and ${module.filtering.signalflow})${var.terminated_aggregation_function}${var.terminated_transformation_function}.publish('signal')
     detect(when(signal > ${var.terminated_threshold_major}, lasting=%{if var.terminated_lasting_duration_major == null}None%{else}'${var.terminated_lasting_duration_major}'%{endif}, at_least=${var.terminated_at_least_percentage_major})).publish('MAJOR')
 EOF
 
@@ -184,7 +186,8 @@ resource "signalfx_detector" "oom_killed" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    killed = data('kubernetes.container_ready', filter=filter('container_status', 'terminated') and filter('container_status_reason', 'OOMKilled') and ${module.filtering.signalflow})${var.oom_killed_aggregation_function}${var.oom_killed_transformation_function}
+    base_filtering = filter('container_status', 'terminated') and filter('container_status_reason', 'OOMKilled')
+    killed = data('kubernetes.container_ready', filter=base_filtering and ${module.filtering.signalflow})${var.oom_killed_aggregation_function}${var.oom_killed_transformation_function}
     signal = (killed.count()).publish('signal')
     detect(when(signal > ${var.oom_killed_threshold_major}, lasting=%{if var.oom_killed_lasting_duration_major == null}None%{else}'${var.oom_killed_lasting_duration_major}'%{endif}, at_least=${var.oom_killed_at_least_percentage_major})).publish('MAJOR')
 EOF
@@ -212,7 +215,8 @@ resource "signalfx_detector" "deployment_crashloopbackoff" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('kubernetes.container_restart_count', filter=filter('container_status', 'waiting') and filter('deployment', '*') and filter('container_status_reason', 'CrashLoopBackOff') and ${module.filtering.signalflow}, extrapolation='zero')${var.deployment_crashloopbackoff_aggregation_function}${var.deployment_crashloopbackoff_transformation_function}.publish('signal')
+    base_filtering = filter('container_status', 'waiting') and filter('deployment', '*') and filter('container_status_reason', 'CrashLoopBackOff')
+    signal = data('kubernetes.container_restart_count', filter=base_filtering and ${module.filtering.signalflow}, extrapolation='zero')${var.deployment_crashloopbackoff_aggregation_function}${var.deployment_crashloopbackoff_transformation_function}.publish('signal')
     detect(when(signal > ${var.deployment_crashloopbackoff_threshold_major}, lasting=%{if var.deployment_crashloopbackoff_lasting_duration_major == null}None%{else}'${var.deployment_crashloopbackoff_lasting_duration_major}'%{endif}, at_least=${var.deployment_crashloopbackoff_at_least_percentage_major})).publish('MAJOR')
 EOF
 
@@ -239,7 +243,8 @@ resource "signalfx_detector" "daemonset_crashloopbackoff" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('kubernetes.container_restart_count', filter=filter('container_status', 'waiting') and filter('daemonSet', '*') and filter('container_status_reason', 'CrashLoopBackOff') and ${module.filtering.signalflow}, extrapolation='zero')${var.daemonset_crashloopbackoff_aggregation_function}${var.daemonset_crashloopbackoff_transformation_function}.publish('signal')
+    base_filtering = filter('container_status', 'waiting') and filter('daemonSet', '*') and filter('container_status_reason', 'CrashLoopBackOff')
+    signal = data('kubernetes.container_restart_count', filter=base_filtering and ${module.filtering.signalflow}, extrapolation='zero')${var.daemonset_crashloopbackoff_aggregation_function}${var.daemonset_crashloopbackoff_transformation_function}.publish('signal')
     detect(when(signal > ${var.daemonset_crashloopbackoff_threshold_major}, lasting=%{if var.daemonset_crashloopbackoff_lasting_duration_major == null}None%{else}'${var.daemonset_crashloopbackoff_lasting_duration_major}'%{endif}, at_least=${var.daemonset_crashloopbackoff_at_least_percentage_major})).publish('MAJOR')
 EOF
 

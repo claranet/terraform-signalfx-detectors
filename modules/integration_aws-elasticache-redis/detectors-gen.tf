@@ -11,8 +11,9 @@ resource "signalfx_detector" "cache_hits" {
   }
 
   program_text = <<-EOF
-    hits = data('CacheHits', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.cache_hits_aggregation_function}${var.cache_hits_transformation_function}
-    misses = data('CacheMisses', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.cache_hits_aggregation_function}${var.cache_hits_transformation_function}
+    base_filtering = filter('namespace', 'AWS/ElastiCache') and filter('stat', 'mean') and filter('CacheNodeId', '*')
+    hits = data('CacheHits', filter=base_filtering and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.cache_hits_aggregation_function}${var.cache_hits_transformation_function}
+    misses = data('CacheMisses', filter=base_filtering and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.cache_hits_aggregation_function}${var.cache_hits_transformation_function}
     signal = (hits/(hits+misses)).fill(value=1).scale(100).publish('signal')
     detect(when(signal < ${var.cache_hits_threshold_major}, lasting=%{if var.cache_hits_lasting_duration_major == null}None%{else}'${var.cache_hits_lasting_duration_major}'%{endif}, at_least=${var.cache_hits_at_least_percentage_major})).publish('MAJOR')
     detect(when(signal < ${var.cache_hits_threshold_minor}, lasting=%{if var.cache_hits_lasting_duration_minor == null}None%{else}'${var.cache_hits_lasting_duration_minor}'%{endif}, at_least=${var.cache_hits_at_least_percentage_minor}) and (not when(signal < ${var.cache_hits_threshold_major}, lasting=%{if var.cache_hits_lasting_duration_major == null}None%{else}'${var.cache_hits_lasting_duration_major}'%{endif}, at_least=${var.cache_hits_at_least_percentage_major}))).publish('MINOR')
@@ -58,7 +59,8 @@ resource "signalfx_detector" "cpu_high" {
   }
 
   program_text = <<-EOF
-    signal = data('EngineCPUUtilization', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'upper') and filter('CacheNodeId', '*') and ${module.filtering.signalflow})${var.cpu_high_aggregation_function}${var.cpu_high_transformation_function}.publish('signal')
+    base_filtering = filter('namespace', 'AWS/ElastiCache') and filter('stat', 'upper') and filter('CacheNodeId', '*')
+    signal = data('EngineCPUUtilization', filter=base_filtering and ${module.filtering.signalflow})${var.cpu_high_aggregation_function}${var.cpu_high_transformation_function}.publish('signal')
     detect(when(signal > ${var.cpu_high_threshold_critical}, lasting=%{if var.cpu_high_lasting_duration_critical == null}None%{else}'${var.cpu_high_lasting_duration_critical}'%{endif}, at_least=${var.cpu_high_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal > ${var.cpu_high_threshold_major}, lasting=%{if var.cpu_high_lasting_duration_major == null}None%{else}'${var.cpu_high_lasting_duration_major}'%{endif}, at_least=${var.cpu_high_at_least_percentage_major}) and (not when(signal > ${var.cpu_high_threshold_critical}, lasting=%{if var.cpu_high_lasting_duration_critical == null}None%{else}'${var.cpu_high_lasting_duration_critical}'%{endif}, at_least=${var.cpu_high_at_least_percentage_critical}))).publish('MAJOR')
 EOF
@@ -103,7 +105,8 @@ resource "signalfx_detector" "replication_lag" {
   }
 
   program_text = <<-EOF
-    signal = data('ReplicationLag', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'upper') and filter('CacheNodeId', '*') and ${module.filtering.signalflow})${var.replication_lag_aggregation_function}${var.replication_lag_transformation_function}.publish('signal')
+    base_filtering = filter('namespace', 'AWS/ElastiCache') and filter('stat', 'upper') and filter('CacheNodeId', '*')
+    signal = data('ReplicationLag', filter=base_filtering and ${module.filtering.signalflow})${var.replication_lag_aggregation_function}${var.replication_lag_transformation_function}.publish('signal')
     detect(when(signal > ${var.replication_lag_threshold_critical}, lasting=%{if var.replication_lag_lasting_duration_critical == null}None%{else}'${var.replication_lag_lasting_duration_critical}'%{endif}, at_least=${var.replication_lag_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal > ${var.replication_lag_threshold_major}, lasting=%{if var.replication_lag_lasting_duration_major == null}None%{else}'${var.replication_lag_lasting_duration_major}'%{endif}, at_least=${var.replication_lag_at_least_percentage_major}) and (not when(signal > ${var.replication_lag_threshold_critical}, lasting=%{if var.replication_lag_lasting_duration_critical == null}None%{else}'${var.replication_lag_lasting_duration_critical}'%{endif}, at_least=${var.replication_lag_at_least_percentage_critical}))).publish('MAJOR')
 EOF
@@ -143,8 +146,9 @@ resource "signalfx_detector" "commands" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    get = data('GetTypeCmds', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'lower') and filter('CacheNodeId', '*') and ${module.filtering.signalflow})${var.commands_aggregation_function}${var.commands_transformation_function}
-    set = data('SetTypeCmds', filter=filter('namespace', 'AWS/ElastiCache') and filter('stat', 'lower') and filter('CacheNodeId', '*') and ${module.filtering.signalflow})${var.commands_aggregation_function}${var.commands_transformation_function}
+    base_filtering = filter('namespace', 'AWS/ElastiCache') and filter('stat', 'lower') and filter('CacheNodeId', '*')
+    get = data('GetTypeCmds', filter=base_filtering and ${module.filtering.signalflow})${var.commands_aggregation_function}${var.commands_transformation_function}
+    set = data('SetTypeCmds', filter=base_filtering and ${module.filtering.signalflow})${var.commands_aggregation_function}${var.commands_transformation_function}
     signal = (get+set).publish('signal')
     detect(when(signal <= ${var.commands_threshold_major}, lasting=%{if var.commands_lasting_duration_major == null}None%{else}'${var.commands_lasting_duration_major}'%{endif}, at_least=${var.commands_at_least_percentage_major})).publish('MAJOR')
 EOF

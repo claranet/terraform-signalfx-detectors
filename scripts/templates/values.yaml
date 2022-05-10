@@ -79,10 +79,11 @@ transformation: true
 #filtering: "filter('primary_aggregation_type', 'true')"
 filtering:
 
-## @param filtering_suffix - string - optional - default: ' and '
-## Determine the string to append at the end of the "filtering" param.
+## @param filtering_operator - string - optional - default: 'and'
+## Determine the operator between the detector filtering (defined by the previous "filtering" variable)
+## and the module filtering (defined by the user).
 #
-filtering_suffix:
+filtering_operator:
 
 ## @param exclude_not_running_vm - bool - optional
 ## In addition to base filtering from signalflow variable we have preset

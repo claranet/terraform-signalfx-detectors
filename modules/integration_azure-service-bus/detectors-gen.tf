@@ -6,7 +6,8 @@ resource "signalfx_detector" "deadlettered_messages" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('DeadletteredMessages', filter=filter('resource_type', 'Microsoft.ServiceBus/namespaces') and filter('primary_aggregation_type', 'true') and ${module.filtering.signalflow})${var.deadlettered_messages_aggregation_function}${var.deadlettered_messages_transformation_function}.publish('signal')
+    base_filtering = filter('resource_type', 'Microsoft.ServiceBus/namespaces') and filter('primary_aggregation_type', 'true')
+    signal = data('DeadletteredMessages', filter=base_filtering and ${module.filtering.signalflow})${var.deadlettered_messages_aggregation_function}${var.deadlettered_messages_transformation_function}.publish('signal')
     detect(when(signal > ${var.deadlettered_messages_threshold_critical}, lasting=%{if var.deadlettered_messages_lasting_duration_critical == null}None%{else}'${var.deadlettered_messages_lasting_duration_critical}'%{endif}, at_least=${var.deadlettered_messages_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal > ${var.deadlettered_messages_threshold_major}, lasting=%{if var.deadlettered_messages_lasting_duration_major == null}None%{else}'${var.deadlettered_messages_lasting_duration_major}'%{endif}, at_least=${var.deadlettered_messages_at_least_percentage_major}) and (not when(signal > ${var.deadlettered_messages_threshold_critical}, lasting=%{if var.deadlettered_messages_lasting_duration_critical == null}None%{else}'${var.deadlettered_messages_lasting_duration_critical}'%{endif}, at_least=${var.deadlettered_messages_at_least_percentage_critical}))).publish('MAJOR')
 EOF

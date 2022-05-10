@@ -1,10 +1,6 @@
 module: redis
 name: evicted keys change rate
 
-filtering: >-
-  ${var.use_otel_receiver ? "" : "filter('plugin', 'redis_info') and "}
-filtering_suffix: ''
-
 signals:
   A:
     metric: '${var.use_otel_receiver ? "redis.keys.evicted" : "counter.evicted_keys"}'
