@@ -1,0 +1,22 @@
+module: genericjmx
+name: GC old gen
+
+transformation: ".min(over='5m')"
+value_unit: "%"
+#                                for G1 GC                                               for Serial GC
+filtering: (filter('plugin_instance', 'memory_pool-G1 Old Gen') or filter('plugin_instance', 'memory_pool-Tenured Gen'))
+signals:
+  A:
+    metric: jmx_memory.used
+  B:
+    metric: jmx_memory.max
+  signal:
+    formula: (A/B).scale(100)
+rules:
+  critical:
+    threshold: 90
+    comparator: ">"
+  major:
+    threshold: 80
+    comparator: ">"
+    dependency: critical
