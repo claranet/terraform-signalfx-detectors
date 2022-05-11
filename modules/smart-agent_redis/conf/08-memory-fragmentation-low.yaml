@@ -1,0 +1,27 @@
+module: redis
+name: low memory fragmentation ratio
+runbook_url: "https://www.dynatrace.com/news/blog/introducing-redis-server-monitoring/#key-metrics"
+tip: increase the memory available on the host or reduce the memory usage from your application
+
+signals:
+  A:
+    metric: '${var.use_otel_receiver ? "redis.memory.rss" : "bytes.used_memory_rss"}'
+    rollup: average
+  B:
+    metric: '${var.use_otel_receiver ? "redis.memory.used" : "bytes.used_memory"}'
+    rollup: average
+  signal:
+    formula: (A/B)
+
+rules:
+  critical:
+    threshold: 0.75
+    comparator: '<'
+    lasting_duration: 15m
+    lasting_at_least: 0.5
+  major:
+    threshold: 1
+    comparator: '<'
+    dependency: critical
+    lasting_duration: 15m
+    lasting_at_least: 0.5

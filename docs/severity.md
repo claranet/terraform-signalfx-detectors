@@ -1021,15 +1021,15 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Redis heartbeat|X|-|-|-|-|
-|Redis evicted keys rate of change|X|X|-|-|-|
-|Redis expired keys rate of change|X|X|-|-|-|
-|Redis blocked client rate|-|-|X|X|-|
-|Redis keyspace seems full|-|X|-|-|-|
-|Redis memory used over max memory (if configured)|X|X|-|-|-|
-|Redis memory used over total system memory|X|X|-|-|-|
-|Redis memory fragmentation ratio (excessive fragmentation)|X|X|-|-|-|
-|Redis memory fragmentation ratio (missing memory)|X|X|-|-|-|
-|Redis rejected connections (maxclient reached)|X|X|-|-|-|
+|Redis evicted keys change rate|X|X|-|-|-|
+|Redis expired keys change rate|X|X|-|-|-|
+|Redis blocked over connected clients ratio|X|X|-|-|-|
+|Redis stored keys change rate|-|X|-|-|-|
+|Redis percentage memory used over max memory set|X|X|-|-|-|
+|Redis percentage memory used over system memory|X|X|-|-|-|
+|Redis high memory fragmentation ratio|X|X|-|-|-|
+|Redis low memory fragmentation ratio|X|X|-|-|-|
+|Redis rejected connections|X|X|-|-|-|
 |Redis hitrate|X|X|-|-|-|
 
 

@@ -41,6 +41,11 @@ id:
 #
 name:
 
+## @param condition - string - optional
+## Terraform condition. If false the detector will not be created.
+#
+condition:
+
 ## @param aggregation - string/bool - optional - default: true
 ## Determine aggregation function added only to {{rules.severity}} with
 ## {{metric}} defined (not used for {{formula}}).
@@ -73,6 +78,12 @@ transformation: true
 #
 #filtering: "filter('primary_aggregation_type', 'true')"
 filtering:
+
+## @param filtering_operator - string - optional - default: 'and'
+## Determine the operator between the detector filtering (defined by the previous "filtering" variable)
+## and the module filtering (defined by the user).
+#
+filtering_operator:
 
 ## @param exclude_not_running_vm - bool - optional
 ## In addition to base filtering from signalflow variable we have preset

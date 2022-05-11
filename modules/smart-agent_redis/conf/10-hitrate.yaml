@@ -1,0 +1,25 @@
+module: redis
+name: hitrate
+
+value_unit: "%"
+
+signals:
+  A:
+    metric: '${var.use_otel_receiver ? "redis.keyspace.hits" : "counter.keyspace_hits"}'
+    rollup: delta
+  B:
+    metric: '${var.use_otel_receiver ? "redis.keyspace.hits" : "counter.keyspace_hits"}'
+    rollup: delta
+  signal:
+    formula: (A/(A+B)).scale(100)
+
+rules:
+  critical:
+    threshold: 10
+    comparator: '<'
+    lasting_duration: 5m
+  major:
+    threshold: 30
+    comparator: '<'
+    lasting_duration: 5m
+    dependency: critical

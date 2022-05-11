@@ -59,7 +59,7 @@ Note the following parameters:
 
 These 3 parameters alongs with all variables defined in [common-variables.tf](common-variables.tf) are common to all
 [modules](../) in this repository. Other variables, specific to this module, are available in
-[variables.tf](variables.tf).
+[variables.tf](variables.tf) and [variables-gen.tf](variables-gen.tf).
 In general, the default configuration "works" but all of these Terraform
 [variables](https://www.terraform.io/language/values/variables) make it possible to
 customize the detectors behavior to better fit your needs.
@@ -78,15 +78,15 @@ This module creates the following SignalFx detectors which could contain one or 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Redis heartbeat|X|-|-|-|-|
-|Redis evicted keys rate of change|X|X|-|-|-|
-|Redis expired keys rate of change|X|X|-|-|-|
-|Redis blocked client rate|-|-|X|X|-|
-|Redis keyspace seems full|-|X|-|-|-|
-|Redis memory used over max memory (if configured)|X|X|-|-|-|
-|Redis memory used over total system memory|X|X|-|-|-|
-|Redis memory fragmentation ratio (excessive fragmentation)|X|X|-|-|-|
-|Redis memory fragmentation ratio (missing memory)|X|X|-|-|-|
-|Redis rejected connections (maxclient reached)|X|X|-|-|-|
+|Redis evicted keys change rate|X|X|-|-|-|
+|Redis expired keys change rate|X|X|-|-|-|
+|Redis blocked over connected clients ratio|X|X|-|-|-|
+|Redis stored keys change rate|-|X|-|-|-|
+|Redis percentage memory used over max memory set|X|X|-|-|-|
+|Redis percentage memory used over system memory|X|X|-|-|-|
+|Redis high memory fragmentation ratio|X|X|-|-|-|
+|Redis low memory fragmentation ratio|X|X|-|-|-|
+|Redis rejected connections|X|X|-|-|-|
 |Redis hitrate|X|X|-|-|-|
 
 ## How to collect required metrics?
@@ -139,16 +139,16 @@ parameter to the corresponding monitor configuration:
         - '*'
         - '!bytes.maxmemory'
         - '!bytes.total_system_memory'
-        - '!${local.blocked_clients_metric_name}'
-        - '!${local.connected_clients_metric_name}'
-        - '!${local.db_keys_metric_name}'
-        - '!${local.evicted_keys_metric_name}'
-        - '!${local.expired_keys_metric_name}'
-        - '!${local.keyspace_hits_metric_name}'
-        - '!${local.keyspace_misses_metric_name}'
-        - '!${local.memory_rss_metric_name}'
-        - '!${local.memory_used_metric_name}'
-        - '!${local.rejected_connections_metric_name}'
+        - '!bytes.used_memory'
+        - '!${var.use_otel_receiver ? "redis.client.blocked" : "gauge.blocked_clients"}'
+        - '!${var.use_otel_receiver ? "redis.client.connected" : "gauge.connected_clients"}'
+        - '!${var.use_otel_receiver ? "redis.connections.rejected" : "counter.rejected_connections"}'
+        - '!${var.use_otel_receiver ? "redis.db.keys" : "gauge.db0_keys"}'
+        - '!${var.use_otel_receiver ? "redis.keys.evicted" : "counter.evicted_keys"}'
+        - '!${var.use_otel_receiver ? "redis.keys.expired" : "counter.expired_keys"}'
+        - '!${var.use_otel_receiver ? "redis.keyspace.hits" : "counter.keyspace_hits"}'
+        - '!${var.use_otel_receiver ? "redis.memory.rss" : "bytes.used_memory_rss"}'
+        - '!${var.use_otel_receiver ? "redis.memory.used" : "bytes.used_memory"}'
 
 ```
 
