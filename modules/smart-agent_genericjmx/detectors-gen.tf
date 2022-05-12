@@ -87,7 +87,7 @@ resource "signalfx_detector" "gc_old_gen" {
   }
 
   program_text = <<-EOF
-    base_filtering = (filter('plugin_instance', 'memory_pool-G1 Old Gen') or filter('plugin_instance', 'memory_pool-Tenured Gen'))
+    base_filtering = (filter('plugin_instance', 'memory_pool-G1 Old Gen') or filter('plugin_instance', 'memory_pool-Tenured Gen') or filter('plugin_instance', 'memory_pool-PS Old Gen') or filter('plugin_instance', 'memory_pool-CMS Old Gen'))
     A = data('jmx_memory.used', filter=base_filtering and ${module.filtering.signalflow})${var.gc_old_gen_aggregation_function}${var.gc_old_gen_transformation_function}
     B = data('jmx_memory.max', filter=base_filtering and ${module.filtering.signalflow})${var.gc_old_gen_aggregation_function}${var.gc_old_gen_transformation_function}
     signal = (A/B).scale(100).publish('signal')

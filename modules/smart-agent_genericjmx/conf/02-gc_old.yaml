@@ -3,8 +3,15 @@ name: GC old gen
 
 transformation: ".min(over='5m')"
 value_unit: "%"
-#                                for G1 GC                                               for Serial GC
-filtering: (filter('plugin_instance', 'memory_pool-G1 Old Gen') or filter('plugin_instance', 'memory_pool-Tenured Gen'))
+# G1 Old Gen  : for G1 GC (-XX:+UseG1GC)
+# Tenured Gen : for Serial GC (aka MarkSweepCompact) (-XX:+UseSerialGC)
+# PS Old Gen  : for Parallel Old GC (aka PS MarkSweep) (-XX:+UseParallelOldGC)
+# CMS Old Gen : for Concurrent Mark Sweep (CMS) GC (-XX:+UseConcMarkSweepGC)
+filtering: >-
+  (filter('plugin_instance', 'memory_pool-G1 Old Gen') or
+  filter('plugin_instance', 'memory_pool-Tenured Gen') or
+  filter('plugin_instance', 'memory_pool-PS Old Gen') or
+  filter('plugin_instance', 'memory_pool-CMS Old Gen'))
 signals:
   A:
     metric: jmx_memory.used
