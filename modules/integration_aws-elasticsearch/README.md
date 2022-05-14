@@ -102,7 +102,11 @@ Here is the list of required metrics for detectors in this module.
 * `CPUUtilization`
 * `FreeStorageSpace`
 * `JVMMemoryPressure`
+* `MasterCPUUtilization`
+* `MasterFreeStorageSpace`
 * `Nodes`
+* `WarmCPUUtilization`
+* `WarmFreeStorageSpace`
 
 
 

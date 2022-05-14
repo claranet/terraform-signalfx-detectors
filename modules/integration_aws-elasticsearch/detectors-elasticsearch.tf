@@ -80,10 +80,15 @@ resource "signalfx_detector" "free_space" {
   }
 
   program_text = <<-EOF
-    free = data('FreeStorageSpace', filter=filter('namespace', 'AWS/ES') and filter('stat', 'lower') and filter('NodeId', '*') and ${module.filtering.signalflow})${var.free_space_aggregation_function}${var.free_space_transformation_function}
-    signal = free.scale(0.001).publish('signal')
-    detect(when(signal < ${var.free_space_threshold_critical})).publish('CRIT')
-    detect(when(signal < ${var.free_space_threshold_major}) and (not when(signal < ${var.free_space_threshold_critical}))).publish('MAJOR')
+    data_node_free_storage   = data('FreeStorageSpace',       filter=filter('namespace', 'AWS/ES') and filter('stat', 'lower') and filter('NodeId', '*') and ${module.filtering.signalflow})${var.free_space_aggregation_function}${var.free_space_transformation_function}.scale(0.001).publish('data')
+    warm_node_free_storage   = data('WarmFreeStorageSpace',   filter=filter('namespace', 'AWS/ES') and filter('stat', 'lower') and filter('NodeId', '*') and ${module.filtering.signalflow})${var.free_space_aggregation_function}${var.free_space_transformation_function}.scale(0.001).publish('warm')
+    master_node_free_storage = data('MasterFreeStorageSpace', filter=filter('namespace', 'AWS/ES') and filter('stat', 'lower') and filter('NodeId', '*') and ${module.filtering.signalflow})${var.free_space_aggregation_function}${var.free_space_transformation_function}.scale(0.001).publish('master')
+    detect(when(data_node_free_storage   < ${var.free_space_threshold_critical})).publish('CRIT')
+    detect(when(warm_node_free_storage   < ${var.free_space_threshold_critical})).publish('CRIT')
+    detect(when(master_node_free_storage < ${var.free_space_threshold_critical})).publish('CRIT')
+    detect(when(data_node_free_storage   < ${var.free_space_threshold_major}) and (not when(data_node_free_storage   < ${var.free_space_threshold_critical}))).publish('MAJOR')
+    detect(when(warm_node_free_storage   < ${var.free_space_threshold_major}) and (not when(warm_node_free_storage   < ${var.free_space_threshold_critical}))).publish('MAJOR')
+    detect(when(master_node_free_storage < ${var.free_space_threshold_major}) and (not when(master_node_free_storage < ${var.free_space_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {
@@ -121,9 +126,15 @@ resource "signalfx_detector" "cpu_90_15min" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('CPUUtilization', filter=filter('namespace', 'AWS/ES') and filter('stat', 'upper') and filter('NodeId', '*') and ${module.filtering.signalflow})${var.cpu_90_15min_aggregation_function}${var.cpu_90_15min_transformation_function}.publish('signal')
-    detect(when(signal > ${var.cpu_90_15min_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.cpu_90_15min_threshold_major}) and (not when(signal > ${var.cpu_90_15min_threshold_critical}))).publish('MAJOR')
+    data_node_cpu   = data('CPUUtilization',       filter=filter('namespace', 'AWS/ES') and filter('stat', 'upper') and filter('NodeId', '*') and ${module.filtering.signalflow})${var.cpu_90_15min_aggregation_function}${var.cpu_90_15min_transformation_function}.publish('data')
+    warm_node_cpu   = data('WarmCPUUtilization',   filter=filter('namespace', 'AWS/ES') and filter('stat', 'upper') and filter('NodeId', '*') and ${module.filtering.signalflow})${var.cpu_90_15min_aggregation_function}${var.cpu_90_15min_transformation_function}.publish('warm')
+    master_node_cpu = data('MasterCPUUtilization', filter=filter('namespace', 'AWS/ES') and filter('stat', 'upper') and filter('NodeId', '*') and ${module.filtering.signalflow})${var.cpu_90_15min_aggregation_function}${var.cpu_90_15min_transformation_function}.publish('master')
+    detect(when(data_node_cpu   > ${var.cpu_90_15min_threshold_critical})).publish('CRIT')
+    detect(when(warm_node_cpu   > ${var.cpu_90_15min_threshold_critical})).publish('CRIT')
+    detect(when(master_node_cpu > ${var.cpu_90_15min_threshold_critical})).publish('CRIT')
+    detect(when(data_node_cpu   > ${var.cpu_90_15min_threshold_major}) and (not when(data_node_cpu   > ${var.cpu_90_15min_threshold_critical}))).publish('MAJOR')
+    detect(when(warm_node_cpu   > ${var.cpu_90_15min_threshold_major}) and (not when(warm_node_cpu   > ${var.cpu_90_15min_threshold_critical}))).publish('MAJOR')
+    detect(when(master_node_cpu > ${var.cpu_90_15min_threshold_major}) and (not when(master_node_cpu > ${var.cpu_90_15min_threshold_critical}))).publish('MAJOR')
 EOF
 
   rule {
@@ -152,4 +163,3 @@ EOF
 
   max_delay = var.cpu_90_15min_max_delay
 }
-
