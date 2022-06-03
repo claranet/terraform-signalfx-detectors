@@ -57,6 +57,7 @@
 - [integration_gcp-cloud-sql-mysql](#integration_gcp-cloud-sql-mysql)
 - [integration_gcp-compute-engine](#integration_gcp-compute-engine)
 - [integration_gcp-load-balancing](#integration_gcp-load-balancing)
+- [integration_gcp-memorystore-redis](#integration_gcp-memorystore-redis)
 - [integration_gcp-pubsub-subscription](#integration_gcp-pubsub-subscription)
 - [integration_gcp-pubsub-topic](#integration_gcp-pubsub-topic)
 - [integration_newrelic-apm](#integration_newrelic-apm)
@@ -634,6 +635,13 @@
 |GCP Load Balancer backend latency per service|X|X|-|-|-|
 |GCP Load Balancer backend latency per bucket|X|X|-|-|-|
 |GCP Load Balancer request count|-|-|X|X|-|
+
+
+## integration_gcp-memorystore-redis
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Gcp-memorystore-redis heartbeat|X|-|-|-|-|
 
 
 ## integration_gcp-pubsub-subscription
