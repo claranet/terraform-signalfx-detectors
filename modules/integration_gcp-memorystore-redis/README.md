@@ -96,7 +96,10 @@ Check the [Related documentation](#related-documentation) section for more detai
 
 Here is the list of required metrics for detectors in this module.
 
+* `clients/blocked`
+* `clients/connected`
 * `stats/cpu_utilization`
+* `stats/memory/system_memory_usage_ratio`
 
 
 
