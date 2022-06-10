@@ -72,3 +72,48 @@ EOF
 
   max_delay = var.blocked_over_connected_clients_ratio_max_delay
 }
+
+resource "signalfx_detector" "system_memory_usage_ratio" {
+  name = format("%s %s", local.detector_name_prefix, "Gcp-memorystore-redis system memory usage ratio")
+
+  authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
+
+  viz_options {
+    label        = "signal"
+    value_suffix = "%"
+  }
+
+  program_text = <<-EOF
+    signal = data('stats/memory/system_memory_usage_ratio', filter=${module.filtering.signalflow}, extrapolation='zero')${var.system_memory_usage_ratio_aggregation_function}${var.system_memory_usage_ratio_transformation_function}.publish('signal')
+    detect(when(signal > ${var.system_memory_usage_ratio_threshold_critical}, lasting=%{if var.system_memory_usage_ratio_lasting_duration_critical == null}None%{else}'${var.system_memory_usage_ratio_lasting_duration_critical}'%{endif}, at_least=${var.system_memory_usage_ratio_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal > ${var.system_memory_usage_ratio_threshold_major}, lasting=%{if var.system_memory_usage_ratio_lasting_duration_major == null}None%{else}'${var.system_memory_usage_ratio_lasting_duration_major}'%{endif}, at_least=${var.system_memory_usage_ratio_at_least_percentage_major}) and (not when(signal > ${var.system_memory_usage_ratio_threshold_critical}, lasting=%{if var.system_memory_usage_ratio_lasting_duration_critical == null}None%{else}'${var.system_memory_usage_ratio_lasting_duration_critical}'%{endif}, at_least=${var.system_memory_usage_ratio_at_least_percentage_critical}))).publish('MAJOR')
+EOF
+
+  rule {
+    description           = "is too high > ${var.system_memory_usage_ratio_threshold_critical}%"
+    severity              = "Critical"
+    detect_label          = "CRIT"
+    disabled              = coalesce(var.system_memory_usage_ratio_disabled_critical, var.system_memory_usage_ratio_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.system_memory_usage_ratio_notifications, "critical", []), var.notifications.critical), null)
+    runbook_url           = try(coalesce(var.system_memory_usage_ratio_runbook_url, var.runbook_url), "")
+    tip                   = var.system_memory_usage_ratio_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
+
+  rule {
+    description           = "is too high > ${var.system_memory_usage_ratio_threshold_major}%"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.system_memory_usage_ratio_disabled_major, var.system_memory_usage_ratio_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.system_memory_usage_ratio_notifications, "major", []), var.notifications.major), null)
+    runbook_url           = try(coalesce(var.system_memory_usage_ratio_runbook_url, var.runbook_url), "")
+    tip                   = var.system_memory_usage_ratio_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
+
+  max_delay = var.system_memory_usage_ratio_max_delay
+}
