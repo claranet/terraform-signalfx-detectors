@@ -77,6 +77,8 @@ This module creates the following SignalFx detectors which could contain one or 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Gcp-memorystore-redis heartbeat|X|-|-|-|-|
+|Gcp-memorystore-redis blocked over connected clients ratio|X|X|-|-|-|
+|Gcp-memorystore-redis system memory usage ratio|X|X|-|-|-|
 
 ## How to collect required metrics?
 
