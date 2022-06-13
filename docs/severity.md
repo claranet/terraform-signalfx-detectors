@@ -113,6 +113,7 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Azure VPN heartbeat|X|-|-|-|-|
+|Azure VPN successful ike events|X|X|-|-|-|
 
 
 ## integration_aws-alb

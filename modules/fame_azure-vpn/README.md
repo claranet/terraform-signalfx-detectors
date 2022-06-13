@@ -76,6 +76,7 @@ This module creates the following SignalFx detectors which could contain one or 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Azure VPN heartbeat|X|-|-|-|-|
+|Azure VPN successful ike events|X|X|-|-|-|
 
 ## How to collect required metrics?
 
@@ -105,3 +106,5 @@ Here is the list of required metrics for detectors in this module.
 * [Terraform SignalFx provider](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs)
 * [Terraform SignalFx detector](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector)
 * [Splunk Observability integrations](https://docs.splunk.com/Observability/gdi/get-data-in/integrations.html)
+* [FAME](https://github.com/claranet/terraform-azurerm-run-common/tree/master/modules/monitoring_function)
+* [run-common](https://github.com/claranet/terraform-azurerm-run-common)
