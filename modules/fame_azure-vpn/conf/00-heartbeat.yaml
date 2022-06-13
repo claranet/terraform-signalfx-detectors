@@ -1,0 +1,16 @@
+module: Azure VPN
+name: heartbeat
+
+transformation: true
+aggregation: true
+
+signals:
+  A:
+    metric: fame.azure.virtual_network_gateway.ike_event_success
+    extrapolation: 'zero'
+    rollup: 'sum'
+  signal:
+    formula: (A.sum().fill(0))
+
+rules:
+  critical:

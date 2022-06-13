@@ -4,6 +4,7 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 :link: **Contents**
 
+- [fame_azure-vpn](#fame_azure-vpn)
 - [integration_aws-alb](#integration_aws-alb)
 - [integration_aws-apigateway](#integration_aws-apigateway)
 - [integration_aws-beanstalk](#integration_aws-beanstalk)
@@ -106,6 +107,13 @@
 - [smart-agent_zookeeper](#smart-agent_zookeeper)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+## fame_azure-vpn
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Azure VPN heartbeat|X|-|-|-|-|
+
 
 ## integration_aws-alb
 

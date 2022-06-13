@@ -1,0 +1,22 @@
+module: Azure VPN
+name: Successful IKE Events
+
+transformation: true
+aggregation: true
+
+signals:
+  A:
+    metric: fame.azure.virtual_network_gateway.ike_event_success
+
+rules:
+  critical:
+    threshold: 0
+    comparator: "="
+    lasting_duration: '10m'
+  major:
+    threshold: 0
+    comparator: "="
+    lasting_duration: '5m'
+
+
+
