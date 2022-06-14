@@ -96,7 +96,6 @@ Check the [Related documentation](#related-documentation) section for more detai
 
 Here is the list of required metrics for detectors in this module.
 
-* `fame.azure.virtual_network_gateway.ike_event_success`
 * `fame.azure.virtual_network_gateway.total_flow_count`
 
 
