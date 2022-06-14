@@ -1,23 +1,21 @@
 module: Azure VPN
-name: Successful IKE Events
-id: ikesuccess
+name: Total Flow Count
+id: totalflowcount
 
 transformation: true
 aggregation: true
 
 signals:
   signal:
-    metric: fame.azure.virtual_network_gateway.ike_event_success
+    metric: fame.azure.virtual_network_gateway.total_flow_count
 
 rules:
   critical:
     threshold: 0
     comparator: "=="
-    lasting_duration: '10m'
+    lasting_duration: '20m'
   major:
     threshold: 0
     comparator: "=="
-    lasting_duration: '5m'
-
-
+    lasting_duration: '10m'
 

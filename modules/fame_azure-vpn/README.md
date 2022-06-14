@@ -76,7 +76,7 @@ This module creates the following SignalFx detectors which could contain one or 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Azure VPN heartbeat|X|-|-|-|-|
-|Azure VPN successful ike events|X|X|-|-|-|
+|Azure VPN total flow count|X|X|-|-|-|
 
 ## How to collect required metrics?
 
@@ -97,6 +97,7 @@ Check the [Related documentation](#related-documentation) section for more detai
 Here is the list of required metrics for detectors in this module.
 
 * `fame.azure.virtual_network_gateway.ike_event_success`
+* `fame.azure.virtual_network_gateway.total_flow_count`
 
 
 
