@@ -16,7 +16,9 @@ rules:
   critical:
     threshold: 20
     comparator: ">"
+    lasting_duration: null
   major:
     threshold: 10
     comparator: ">"
     dependency: critical
+    lasting_duration: null
