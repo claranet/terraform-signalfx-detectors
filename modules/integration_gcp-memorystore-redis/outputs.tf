@@ -1,11 +1,11 @@
-output "heartbeat" {
-  description = "Detector resource for heartbeat"
-  value       = signalfx_detector.heartbeat
-}
-
 output "blocked_over_connected_clients_ratio" {
   description = "Detector resource for blocked_over_connected_clients_ratio"
   value       = signalfx_detector.blocked_over_connected_clients_ratio
+}
+
+output "heartbeat" {
+  description = "Detector resource for heartbeat"
+  value       = signalfx_detector.heartbeat
 }
 
 output "system_memory_usage_ratio" {
