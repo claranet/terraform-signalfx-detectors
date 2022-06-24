@@ -644,6 +644,7 @@
 |Gcp-memorystore-redis heartbeat|X|-|-|-|-|
 |Gcp-memorystore-redis blocked over connected clients ratio|X|X|-|-|-|
 |Gcp-memorystore-redis system memory usage ratio|X|X|-|-|-|
+|Gcp-memorystore-redis memory usage ratio|X|X|-|-|-|
 
 
 ## integration_gcp-pubsub-subscription
