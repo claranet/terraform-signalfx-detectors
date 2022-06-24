@@ -222,7 +222,6 @@ variable "system_memory_usage_ratio_at_least_percentage_major" {
   type        = number
   default     = 1
 }
-
 # memory_usage_ratio detector
 
 variable "memory_usage_ratio_notifications" {
