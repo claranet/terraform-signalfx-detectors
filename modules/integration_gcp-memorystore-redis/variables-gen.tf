@@ -139,7 +139,6 @@ variable "blocked_over_connected_clients_ratio_at_least_percentage_major" {
   type        = number
   default     = 0.5
 }
-
 # system_memory_usage_ratio detector
 
 variable "system_memory_usage_ratio_notifications" {
