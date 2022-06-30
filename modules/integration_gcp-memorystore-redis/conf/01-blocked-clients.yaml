@@ -1,5 +1,5 @@
 ## Example
-module: gcp-memorystore-redis
+module: GCP MemoryStore Redis
 name: blocked over connected clients ratio
 
 value_unit: "%"
