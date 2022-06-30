@@ -7,7 +7,7 @@ transformation: ".min(over='1h')"
 
 signals:
   signal:
-    metric: stats/memory/system_memory_usage_ratio
+    metric: stats/memory/usage_ratio
     extrapolation: zero
 
 rules:

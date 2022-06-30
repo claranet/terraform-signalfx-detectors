@@ -101,6 +101,7 @@ Here is the list of required metrics for detectors in this module.
 * `clients/connected`
 * `stats/cpu_utilization`
 * `stats/memory/system_memory_usage_ratio`
+* `stats/memory/usage_ratio`
 
 
 

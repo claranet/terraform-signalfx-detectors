@@ -131,7 +131,7 @@ resource "signalfx_detector" "memory_usage_ratio" {
   }
 
   program_text = <<-EOF
-    signal = data('stats/memory/system_memory_usage_ratio', filter=${module.filtering.signalflow}, extrapolation='zero')${var.memory_usage_ratio_aggregation_function}${var.memory_usage_ratio_transformation_function}.publish('signal')
+    signal = data('stats/memory/usage_ratio', filter=${module.filtering.signalflow}, extrapolation='zero')${var.memory_usage_ratio_aggregation_function}${var.memory_usage_ratio_transformation_function}.publish('signal')
     detect(when(signal > ${var.memory_usage_ratio_threshold_critical}, lasting=%{if var.memory_usage_ratio_lasting_duration_critical == null}None%{else}'${var.memory_usage_ratio_lasting_duration_critical}'%{endif}, at_least=${var.memory_usage_ratio_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal > ${var.memory_usage_ratio_threshold_major}, lasting=%{if var.memory_usage_ratio_lasting_duration_major == null}None%{else}'${var.memory_usage_ratio_lasting_duration_major}'%{endif}, at_least=${var.memory_usage_ratio_at_least_percentage_major}) and (not when(signal > ${var.memory_usage_ratio_threshold_critical}, lasting=%{if var.memory_usage_ratio_lasting_duration_critical == null}None%{else}'${var.memory_usage_ratio_lasting_duration_critical}'%{endif}, at_least=${var.memory_usage_ratio_at_least_percentage_critical}))).publish('MAJOR')
 EOF
