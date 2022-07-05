@@ -65,7 +65,7 @@ variable "totalflowcount_aggregation_function" {
 variable "totalflowcount_transformation_function" {
   description = "Transformation function for totalflowcount detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ""
+  default     = ".max(over='5m')"
 }
 
 variable "totalflowcount_max_delay" {
@@ -92,18 +92,6 @@ variable "totalflowcount_disabled" {
   default     = null
 }
 
-variable "totalflowcount_disabled_critical" {
-  description = "Disable critical alerting rule for totalflowcount detector"
-  type        = bool
-  default     = null
-}
-
-variable "totalflowcount_disabled_major" {
-  description = "Disable major alerting rule for totalflowcount detector"
-  type        = bool
-  default     = null
-}
-
 variable "totalflowcount_threshold_critical" {
   description = "Critical threshold for totalflowcount detector"
   type        = number
@@ -113,27 +101,10 @@ variable "totalflowcount_threshold_critical" {
 variable "totalflowcount_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "20m"
-}
-
-variable "totalflowcount_at_least_percentage_critical" {
-  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
-  type        = number
-  default     = 1
-}
-variable "totalflowcount_threshold_major" {
-  description = "Major threshold for totalflowcount detector"
-  type        = number
-  default     = 0
-}
-
-variable "totalflowcount_lasting_duration_major" {
-  description = "Minimum duration that conditions must be true before raising alert"
-  type        = string
   default     = "10m"
 }
 
-variable "totalflowcount_at_least_percentage_major" {
+variable "totalflowcount_at_least_percentage_critical" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1

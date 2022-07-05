@@ -113,7 +113,7 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Azure VPN heartbeat|X|-|-|-|-|
-|Azure VPN total flow count|X|X|-|-|-|
+|Azure VPN total flow count|X|-|-|-|-|
 
 
 ## integration_aws-alb

@@ -2,7 +2,7 @@ module: Azure VPN
 name: Total Flow Count
 id: totalflowcount
 
-transformation: true
+transformation: ".max(over='5m')"
 aggregation: true
 
 signals:
@@ -13,9 +13,4 @@ rules:
   critical:
     threshold: 0
     comparator: "=="
-    lasting_duration: '20m'
-  major:
-    threshold: 0
-    comparator: "=="
     lasting_duration: '10m'
-
