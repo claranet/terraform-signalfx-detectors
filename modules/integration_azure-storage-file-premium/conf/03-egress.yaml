@@ -1,8 +1,6 @@
-# FIXME not working with azure_tag_sfx_monitored ¯\_(ツ)_/¯
 module: "Azure Storage Account File share"
 name: "egress"
-# TODO add a specific filter for premium file shares
-filtering: "filter('resource_type', 'Microsoft.Storage/storageAccounts/fileServices') and filter('primary_aggregation_type', 'true')"
+filtering: "filter('resource_type', 'Microsoft.Storage/storageAccounts/fileServices') and filter('primary_aggregation_type', 'true') and filter('azure_sa_sku', ' Premium_*')"
 aggregation: ".sum(by=['FileShare', 'azure_resource_id'])"
 transformation: ".min(over='15m')"
 value_unit: "%"
@@ -11,8 +9,8 @@ signals:
     metric: "Egress"
     rollup: rate
   size_quota:
-    metric: "FileShareCapacityQuota"
-    extrapolation: last_value
+    # Do not have tags dimension for filtering and use `renames` because of sfx buggy implementation
+    formula:  data('FileShareCapacityQuota', filter=base_filtering, extrapolation='last_value').dimensions(renames={'FileShare':'fileshare'}).sum(by=['FileShare', 'azure_resource_id']).min(over='15m')
   signal:
     formula:
       # Scale ingress to MiB & size to GiB

@@ -1,1 +1,23 @@
-../../integration_azure-storage-file-standard/conf/04-throttling.yaml
+module: "Azure Storage Account File share"
+name: "throttling"
+filtering: "filter('resource_type', 'Microsoft.Storage/storageAccounts/fileServices') and filter('primary_aggregation_type', 'true') and filter('azure_sa_sku', ' Premium_*')"
+aggregation: ".sum(by=['FileShare', 'azure_resource_id'])"
+transformation: ".min(over='15m')"
+value_unit: "%"
+signals:
+  throttling:
+    metric: "Transactions"
+    filter: "filter('ResponseType', 'SuccessWithThrottling', 'ClientThrottlingError')"
+    extrapolation: zero
+  transactions:
+    metric: "Transactions"
+  signal:
+    formula: "(throttling / transactions).fill(0).scale(100)"
+rules:
+  critical:
+    threshold: 15
+    comparator: ">"
+  major:
+    threshold: 0
+    comparator: ">"
+    dependency: critical

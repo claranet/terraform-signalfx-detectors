@@ -18,6 +18,12 @@ variable "capacity_transformation_function" {
   default     = ".min(over='1d')"
 }
 
+variable "capacity_max_delay" {
+  description = "Enforce max delay for capacity detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
 variable "capacity_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
@@ -49,17 +55,39 @@ variable "capacity_disabled_major" {
 }
 
 variable "capacity_threshold_critical" {
-  description = "Critical threshold for capacity detector in TiB"
+  description = "Critical threshold for capacity detector in %"
   type        = number
   default     = 95
 }
 
+variable "capacity_lasting_duration_critical" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "capacity_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
 variable "capacity_threshold_major" {
-  description = "Major threshold for capacity detector in TiB"
+  description = "Major threshold for capacity detector in %"
   type        = number
   default     = 90
 }
 
+variable "capacity_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "capacity_at_least_percentage_major" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
 # iops detector
 
 variable "iops_notifications" {
@@ -78,6 +106,12 @@ variable "iops_transformation_function" {
   description = "Transformation function for iops detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='15m')"
+}
+
+variable "iops_max_delay" {
+  description = "Enforce max delay for iops detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "iops_tip" {
@@ -111,17 +145,39 @@ variable "iops_disabled_major" {
 }
 
 variable "iops_threshold_critical" {
-  description = "Critical threshold for iops detector"
+  description = "Critical threshold for iops detector in %"
   type        = number
-  default     = 950
+  default     = 95
 }
 
+variable "iops_lasting_duration_critical" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "iops_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
 variable "iops_threshold_major" {
-  description = "Major threshold for iops detector"
+  description = "Major threshold for iops detector in %"
   type        = number
-  default     = 900
+  default     = 90
 }
 
+variable "iops_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "iops_at_least_percentage_major" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
 # throughput detector
 
 variable "throughput_notifications" {
@@ -140,6 +196,12 @@ variable "throughput_transformation_function" {
   description = "Transformation function for throughput detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='15m')"
+}
+
+variable "throughput_max_delay" {
+  description = "Enforce max delay for throughput detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "throughput_tip" {
@@ -173,17 +235,39 @@ variable "throughput_disabled_major" {
 }
 
 variable "throughput_threshold_critical" {
-  description = "Critical threshold for throughput detector in MiB/sec"
+  description = "Critical threshold for throughput detector in %"
   type        = number
-  default     = 58
+  default     = 95
 }
 
+variable "throughput_lasting_duration_critical" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "throughput_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
 variable "throughput_threshold_major" {
-  description = "Major threshold for throughput detector in MiB/sec"
+  description = "Major threshold for throughput detector in %"
   type        = number
-  default     = 55
+  default     = 90
 }
 
+variable "throughput_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "throughput_at_least_percentage_major" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
 # throttling detector
 
 variable "throttling_notifications" {
@@ -202,6 +286,12 @@ variable "throttling_transformation_function" {
   description = "Transformation function for throttling detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='15m')"
+}
+
+variable "throttling_max_delay" {
+  description = "Enforce max delay for throttling detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "throttling_tip" {
@@ -240,12 +330,34 @@ variable "throttling_threshold_critical" {
   default     = 15
 }
 
+variable "throttling_lasting_duration_critical" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "throttling_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
 variable "throttling_threshold_major" {
   description = "Major threshold for throttling detector in %"
   type        = number
   default     = 0
 }
 
+variable "throttling_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "throttling_at_least_percentage_major" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
 # no_snapshots detector
 
 variable "no_snapshots_notifications" {
@@ -254,16 +366,10 @@ variable "no_snapshots_notifications" {
   default     = {}
 }
 
-variable "no_snapshots_aggregation_function" {
-  description = "Aggregation function and group by for no_snapshots detector (i.e. \".mean(by=['host'])\")"
-  type        = string
-  default     = ".fill(None, duration='1d').sum(by=['fileshare', 'azure_resource_id'])"
-}
-
-variable "no_snapshots_transformation_function" {
-  description = "Transformation function for no_snapshots detector (i.e. \".mean(over='5m')\")"
-  type        = string
-  default     = ".max(over='1d')"
+variable "no_snapshots_max_delay" {
+  description = "Enforce max delay for no_snapshots detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "no_snapshots_tip" {
@@ -290,6 +396,17 @@ variable "no_snapshots_threshold_major" {
   default     = 1
 }
 
+variable "no_snapshots_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "no_snapshots_at_least_percentage_major" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
 # snapshots_limit detector
 
 variable "snapshots_limit_notifications" {
@@ -298,16 +415,10 @@ variable "snapshots_limit_notifications" {
   default     = {}
 }
 
-variable "snapshots_limit_aggregation_function" {
-  description = "Aggregation function and group by for snapshots_limit detector (i.e. \".mean(by=['host'])\")"
-  type        = string
-  default     = ".fill(None, duration='1d').sum(by=['fileshare', 'azure_resource_id'])"
-}
-
-variable "snapshots_limit_transformation_function" {
-  description = "Transformation function for snapshots_limit detector (i.e. \".mean(over='5m')\")"
-  type        = string
-  default     = ".min(over='1d')"
+variable "snapshots_limit_max_delay" {
+  description = "Enforce max delay for snapshots_limit detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
 }
 
 variable "snapshots_limit_tip" {
@@ -334,3 +445,14 @@ variable "snapshots_limit_threshold_major" {
   default     = 190
 }
 
+variable "snapshots_limit_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "snapshots_limit_at_least_percentage_major" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}

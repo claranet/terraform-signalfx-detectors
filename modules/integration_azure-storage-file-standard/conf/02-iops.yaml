@@ -1,19 +1,20 @@
-# FIXME not working with azure_tag_sfx_monitored ¯\_(ツ)_/¯
 module: "Azure Storage Account File share"
 name: "IOPS"
-# TODO add a specific filter for standard file shares
-filtering: "filter('resource_type', 'Microsoft.Storage/storageAccounts/fileServices') and filter('primary_aggregation_type', 'true')"
-aggregation: ".sum(by=['FileShare', 'azure_resource_id'])"  # TODO some lacking dimensions here
+filtering: "filter('resource_type', 'Microsoft.Storage/storageAccounts/fileServices') and filter('primary_aggregation_type', 'true') and not filter('azure_sa_sku', ' Premium_*')"
+aggregation: ".sum(by=['FileShare', 'azure_resource_id'])"
 transformation: ".min(over='15m')"
+value_unit: "%"
 signals:
-  signal:
+  transactions:
     metric: "Transactions"
     rollup: "rate"
+  signal:
+    formula: (transactions / 20000).scale(100)
 rules:
   critical:
-    threshold: 950
+    threshold: 95
     comparator: ">"
   major:
-    threshold: 900
+    threshold: 90
     comparator: ">"
     dependency: critical

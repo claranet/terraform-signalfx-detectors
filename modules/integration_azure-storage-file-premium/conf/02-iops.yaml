@@ -1,9 +1,7 @@
-# FIXME not working with azure_tag_sfx_monitored ¯\_(ツ)_/¯
 module: "Azure Storage Account File share"
 name: "IOPS"
-# TODO add a specific filter for premium file shares
-filtering: "filter('resource_type', 'Microsoft.Storage/storageAccounts/fileServices') and filter('primary_aggregation_type', 'true')"
-aggregation: ".sum(by=['FileShare', 'azure_resource_id'])"  # TODO some lacking dimensions here
+filtering: "filter('resource_type', 'Microsoft.Storage/storageAccounts/fileServices') and filter('primary_aggregation_type', 'true') and filter('azure_sa_sku', ' Premium_*')"
+aggregation: ".sum(by=['FileShare', 'azure_resource_id'])"
 transformation: ".min(over='15m')"
 value_unit: "%"
 signals:
@@ -11,8 +9,8 @@ signals:
     metric: "Transactions"
     rollup: "rate"
   limit:
-    metric: "FileShareProvisionedIOPS"
-    extrapolation: last_value
+    # Do not use have tags dimension for filtering and use rename because of sfx buggy implementation
+    formula:  data('FileShareProvisionedIOPS', filter=base_filtering, extrapolation='last_value').dimensions(renames={'FileShare':'fileshare'}).sum(by=['FileShare', 'azure_resource_id']).min(over='15m')
   signal:
     formula: (transactions / limit).scale(100)
 rules:

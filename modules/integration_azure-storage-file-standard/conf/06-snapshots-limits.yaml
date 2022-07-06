@@ -1,13 +1,12 @@
-# FIXME not working with azure_tag_sfx_monitored ¯\_(ツ)_/¯
 module: "Azure Storage Account File share"
 name: "snapshots limit"
-# TODO add a specific filter for standard file shares
-filtering: "filter('resource_type', 'Microsoft.Storage/storageAccounts/fileServices') and filter('primary_aggregation_type', 'true')"
-aggregation: ".fill(None, duration='1d').sum(by=['fileshare', 'azure_resource_id'])"  # TODO some lacking dimensions here
-transformation: ".min(over='1d')"
+filtering: "filter('resource_type', 'Microsoft.Storage/storageAccounts/fileServices') and filter('primary_aggregation_type', 'true') and not filter('azure_sa_sku', ' Premium_*')"
+aggregation: false
+transformation: false
 signals:
   signal:
-    metric: "FileShareSnapshotCount"
+    # Do not have tags dimension for filtering because of sfx buggy implementation
+    formula: data('FileShareSnapshotCount', filter=base_filtering ).fill(None, duration='1d').sum(by=['fileshare', 'azure_resource_id']).max(over='1d')
 rules:
   major:
     threshold: 190

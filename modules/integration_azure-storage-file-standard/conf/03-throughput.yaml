@@ -1,11 +1,9 @@
-# FIXME not working with azure_tag_sfx_monitored ¯\_(ツ)_/¯
 module: "Azure Storage Account File share"
 name: "throughput"
-# TODO add a specific filter for standard file shares
-filtering: "filter('resource_type', 'Microsoft.Storage/storageAccounts/fileServices') and filter('primary_aggregation_type', 'true')"
+filtering: "filter('resource_type', 'Microsoft.Storage/storageAccounts/fileServices') and filter('primary_aggregation_type', 'true') and not filter('azure_sa_sku', ' Premium_*')"
 aggregation: ".sum(by=['FileShare', 'azure_resource_id'])"
 transformation: ".min(over='15m')"
-value_unit: MiB/sec
+value_unit: "%"
 signals:
   ingress:
     metric: "Ingress"
@@ -15,12 +13,12 @@ signals:
     rollup: rate
   signal:
     formula:
-      (ingress + egress).scale(0.00000095367431640625) # Scale to MiB unit
+      ((ingress + egress).scale(0.00000095367431640625) / 300).scale(100) # Scale to MiB unit
 rules:
   critical:
-    threshold: 58
+    threshold: 95
     comparator: ">"
   major:
-    threshold: 55
+    threshold: 90
     comparator: ">"
     dependency: critical

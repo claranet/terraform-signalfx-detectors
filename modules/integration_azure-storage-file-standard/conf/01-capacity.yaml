@@ -1,17 +1,16 @@
 # FIXME not working with azure_tag_sfx_monitored ¯\_(ツ)_/¯
 module: "Azure Storage Account File share"
 name: "capacity"
-# TODO add a specific filter for standard file shares
-filtering: "filter('resource_type', 'Microsoft.Storage/storageAccounts/fileServices') and filter('primary_aggregation_type', 'true')"
+filtering: "filter('resource_type', 'Microsoft.Storage/storageAccounts/fileServices') and filter('primary_aggregation_type', 'true') and not filter('azure_sa_sku', ' Premium_*')"
 aggregation: ".fill(None, duration='1d').mean(by=['fileshare', 'azure_resource_id'])"
 transformation: ".min(over='1d')"
-value_unit: TiB
+value_unit: "%"
 signals:
   capacity:
     metric: "FileCapacity"
   signal:
     formula:
-      capacity.scale(0.0000000000009094947017729282) # Scale to TiB unit
+      (capacity.scale(0.0000000000009094947017729282) / 100).scale(100) # Scale to TiB unit
 rules:
   critical:
     threshold: 95
