@@ -23,3 +23,13 @@ output "jvm_memory_pressure" {
   value       = signalfx_detector.jvm_memory_pressure
 }
 
+output "master_cpu_90_15min" {
+  description = "Detector resource for master_cpu_90_15min"
+  value       = signalfx_detector.master_cpu_90_15min
+}
+
+output "ultrawarm_free_space" {
+  description = "Detector resource for ultrawarm_free_space"
+  value       = signalfx_detector.ultrawarm_free_space
+}
+

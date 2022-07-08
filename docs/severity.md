@@ -207,7 +207,9 @@
 |AWS ElasticSearch heartbeat|X|-|-|-|-|
 |AWS ElasticSearch cluster status|X|X|-|-|-|
 |AWS ElasticSearch cluster free storage space|X|X|-|-|-|
+|AWS ElasticSearch cluster UltraWarm free storage space|X|X|-|-|-|
 |AWS ElasticSearch cluster CPU|X|X|-|-|-|
+|AWS ElasticSearch cluster Master nodes CPU|X|X|-|-|-|
 |AWS Elasticsearch jvm memory pressure|X|X|-|-|-|
 
 
