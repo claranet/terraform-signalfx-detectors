@@ -272,6 +272,7 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
+|AWS RDS Common db load|X|X|-|-|-|
 |AWS RDS heartbeat|X|-|-|-|-|
 |AWS RDS instance CPU|X|X|-|-|-|
 |AWS RDS instance free space|X|X|-|-|-|

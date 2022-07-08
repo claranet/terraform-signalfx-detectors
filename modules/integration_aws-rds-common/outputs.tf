@@ -3,6 +3,11 @@ output "cpu_90_15min" {
   value       = signalfx_detector.cpu_90_15min
 }
 
+output "dbload" {
+  description = "Detector resource for dbload"
+  value       = signalfx_detector.dbload
+}
+
 output "free_space_low" {
   description = "Detector resource for free_space_low"
   value       = signalfx_detector.free_space_low
