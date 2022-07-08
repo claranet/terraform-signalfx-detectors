@@ -1,3 +1,10 @@
 documentations:
   - name: CloudWatch metrics
     url: 'https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-managedomains-cloudwatchmetrics.html'
+
+notes: |
+  ### 4xx HTTP response
+
+  By default this monitor is disabled because it can be triggered by bots scrapping the web, on public ES cluster (if possible, [install your cluster inside a VPC](https://docs.aws.amazon.com/opensearch-service/latest/developerguide/vpc.html) instead of using public cluster).
+
+  If this kind of scrapping isn't possible in your case (IP restrictions or VPC cluster) you may want to enable this detector to catch, for example, [HTTP 429 errors](https://aws.amazon.com/premiumsupport/knowledge-center/opensearch-resolve-429-error/).
