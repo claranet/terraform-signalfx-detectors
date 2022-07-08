@@ -211,6 +211,9 @@
 |AWS ElasticSearch cluster CPU|X|X|-|-|-|
 |AWS ElasticSearch cluster Master nodes CPU|X|X|-|-|-|
 |AWS Elasticsearch jvm memory pressure|X|X|-|-|-|
+|AWS Elasticsearch 4xx http response|X|X|-|-|-|
+|AWS Elasticsearch 5xx http response|X|X|-|-|-|
+|AWS Elasticsearch shard count|X|X|-|-|-|
 
 
 ## integration_aws-elb
