@@ -2,9 +2,6 @@ module: AWS Elasticsearch
 name: 4xx HTTP response
 id: fourxx_http_response
 
-# allow to catch HTTP 429 errors
-# https://aws.amazon.com/premiumsupport/knowledge-center/opensearch-resolve-429-error/
-# but can also
 # check readme.yaml
 disabled: true
 
