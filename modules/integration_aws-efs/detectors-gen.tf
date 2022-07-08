@@ -203,7 +203,7 @@ resource "signalfx_detector" "percent_of_permitted_throughput" {
     base_filtering = filter('namespace', 'AWS/EFS')
     metered = data('MeteredIOBytes', filter=base_filtering and filter('stat', 'sum') and ${module.filtering.signalflow})${var.percent_of_permitted_throughput_aggregation_function}${var.percent_of_permitted_throughput_transformation_function}
     permitted = data('PermittedThroughput', filter=base_filtering and filter('stat', 'sum') and ${module.filtering.signalflow})${var.percent_of_permitted_throughput_aggregation_function}${var.percent_of_permitted_throughput_transformation_function}
-    signal = (metered/permitted.scale(1024)).scale(100).publish('signal')
+    signal = (metered/permitted.scale(60)).scale(100).publish('signal')
     detect(when(signal > ${var.percent_of_permitted_throughput_threshold_major}, lasting=%{if var.percent_of_permitted_throughput_lasting_duration_major == null}None%{else}'${var.percent_of_permitted_throughput_lasting_duration_major}'%{endif}, at_least=${var.percent_of_permitted_throughput_at_least_percentage_major})).publish('MAJOR')
     detect(when(signal > ${var.percent_of_permitted_throughput_threshold_minor}, lasting=%{if var.percent_of_permitted_throughput_lasting_duration_minor == null}None%{else}'${var.percent_of_permitted_throughput_lasting_duration_minor}'%{endif}, at_least=${var.percent_of_permitted_throughput_at_least_percentage_minor}) and (not when(signal > ${var.percent_of_permitted_throughput_threshold_major}, lasting=%{if var.percent_of_permitted_throughput_lasting_duration_major == null}None%{else}'${var.percent_of_permitted_throughput_lasting_duration_major}'%{endif}, at_least=${var.percent_of_permitted_throughput_at_least_percentage_major}))).publish('MINOR')
 EOF
