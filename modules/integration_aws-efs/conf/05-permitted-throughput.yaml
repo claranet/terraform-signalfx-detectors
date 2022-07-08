@@ -12,8 +12,7 @@ signals:
     metric: "PermittedThroughput"
     filter: "filter('stat', 'sum')"
   signal:
-    formula:
-      (metered/permitted.scale(1024)).scale(100)
+    formula: (metered/permitted.scale(60)).scale(100)
 rules:
   major:
     comparator: ">"
