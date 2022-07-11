@@ -1,5 +1,5 @@
 ## Example
-module: GCP MemoryStore Redis
+module: GCP Memorystore Redis
 name: system memory usage ratio
 
 value_unit: "%"
