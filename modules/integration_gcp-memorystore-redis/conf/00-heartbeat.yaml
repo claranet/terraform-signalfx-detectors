@@ -1,5 +1,5 @@
 ## Example
-module: GCP MemoryStore Redis
+module: GCP Memorystore Redis
 name: heartbeat
 
 transformation: false
