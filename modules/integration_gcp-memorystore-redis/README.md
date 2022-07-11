@@ -76,10 +76,10 @@ This module creates the following SignalFx detectors which could contain one or 
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|GCP MemoryStore Redis heartbeat|X|-|-|-|-|
-|GCP MemoryStore Redis blocked over connected clients ratio|X|X|-|-|-|
-|GCP MemoryStore Redis system memory usage ratio|X|X|-|-|-|
-|GCP MemoryStore Redis memory usage ratio|X|X|-|-|-|
+|GCP Memorystore Redis heartbeat|X|-|-|-|-|
+|GCP Memorystore Redis blocked over connected clients ratio|X|X|-|-|-|
+|GCP Memorystore Redis system memory usage ratio|X|X|-|-|-|
+|GCP Memorystore Redis memory usage ratio|X|X|-|-|-|
 
 ## How to collect required metrics?
 
@@ -111,3 +111,5 @@ Here is the list of required metrics for detectors in this module.
 * [Terraform SignalFx provider](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs)
 * [Terraform SignalFx detector](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector)
 * [Splunk Observability integrations](https://docs.splunk.com/Observability/gdi/get-data-in/integrations.html)
+* [Stackdriver metrics for Memorystore for Redis](https://cloud.google.com/monitoring/api/metrics_gcp#gcp-redis)
+* [Splunk Observability metrics](https://docs.splunk.com/Observability/gdi/get-data-in/connect/gcp.html)

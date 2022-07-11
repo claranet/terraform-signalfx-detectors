@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name = format("%s %s", local.detector_name_prefix, "GCP MemoryStore Redis heartbeat")
+  name = format("%s %s", local.detector_name_prefix, "GCP Memorystore Redis heartbeat")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
@@ -27,7 +27,7 @@ EOF
 }
 
 resource "signalfx_detector" "blocked_over_connected_clients_ratio" {
-  name = format("%s %s", local.detector_name_prefix, "GCP MemoryStore Redis blocked over connected clients ratio")
+  name = format("%s %s", local.detector_name_prefix, "GCP Memorystore Redis blocked over connected clients ratio")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
@@ -74,7 +74,7 @@ EOF
 }
 
 resource "signalfx_detector" "system_memory_usage_ratio" {
-  name = format("%s %s", local.detector_name_prefix, "GCP MemoryStore Redis system memory usage ratio")
+  name = format("%s %s", local.detector_name_prefix, "GCP Memorystore Redis system memory usage ratio")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
@@ -119,7 +119,7 @@ EOF
 }
 
 resource "signalfx_detector" "memory_usage_ratio" {
-  name = format("%s %s", local.detector_name_prefix, "GCP MemoryStore Redis memory usage ratio")
+  name = format("%s %s", local.detector_name_prefix, "GCP Memorystore Redis memory usage ratio")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)

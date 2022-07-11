@@ -641,10 +641,10 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|GCP MemoryStore Redis heartbeat|X|-|-|-|-|
-|GCP MemoryStore Redis blocked over connected clients ratio|X|X|-|-|-|
-|GCP MemoryStore Redis system memory usage ratio|X|X|-|-|-|
-|GCP MemoryStore Redis memory usage ratio|X|X|-|-|-|
+|GCP Memorystore Redis heartbeat|X|-|-|-|-|
+|GCP Memorystore Redis blocked over connected clients ratio|X|X|-|-|-|
+|GCP Memorystore Redis system memory usage ratio|X|X|-|-|-|
+|GCP Memorystore Redis memory usage ratio|X|X|-|-|-|
 
 
 ## integration_gcp-pubsub-subscription
