@@ -1,0 +1,14 @@
+module: Azure Storage File backup
+name: success
+id: backup
+
+signals:
+  signal:
+    metric: fame.azure.backup.file_share
+    extrapolation: 'zero'
+
+rules:
+  critical:
+    threshold: 1
+    comparator: "<"
+    lasting_duration: '25h'

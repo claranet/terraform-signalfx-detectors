@@ -1,0 +1,7 @@
+documentations:
+  - name: FAME tool
+    url: https://github.com/claranet/terraform-azurerm-run-common/tree/master/modules/monitoring_function
+  - name: run-common Terraform module
+    url: https://registry.terraform.io/modules/claranet/run-common/azurerm/
+
+source_doc:

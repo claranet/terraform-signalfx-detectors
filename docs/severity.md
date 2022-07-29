@@ -4,6 +4,8 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 :link: **Contents**
 
+- [fame_azure-storage-file-backup](#fame_azure-storage-file-backup)
+- [fame_azure-vm-backup](#fame_azure-vm-backup)
 - [fame_azure-vpn](#fame_azure-vpn)
 - [integration_aws-alb](#integration_aws-alb)
 - [integration_aws-apigateway](#integration_aws-apigateway)
@@ -109,6 +111,20 @@
 - [smart-agent_zookeeper](#smart-agent_zookeeper)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+## fame_azure-storage-file-backup
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Azure Storage File backup success|X|-|-|-|-|
+
+
+## fame_azure-vm-backup
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Azure VM backup success|X|-|-|-|-|
+
 
 ## fame_azure-vpn
 
