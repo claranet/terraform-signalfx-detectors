@@ -138,21 +138,9 @@ resource "signalfx_detector" "alb_4xx" {
     errors = data('HTTPCode_ELB_4XX_Count', filter=base_filtering and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.alb_4xx_aggregation_function}${var.alb_4xx_transformation_function}
     requests = data('RequestCount', filter=base_filtering and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.alb_4xx_aggregation_function}${var.alb_4xx_transformation_function}
     signal = (errors/requests).scale(100).fill(value=0).publish('signal')
-    detect(when(signal > ${var.alb_4xx_threshold_critical}, lasting=%{if var.alb_4xx_lasting_duration_critical == null}None%{else}'${var.alb_4xx_lasting_duration_critical}'%{endif}, at_least=${var.alb_4xx_at_least_percentage_critical}) and when(requests > ${var.minimum_traffic})).publish('CRIT')
-    detect(when(signal > ${var.alb_4xx_threshold_major}, lasting=%{if var.alb_4xx_lasting_duration_major == null}None%{else}'${var.alb_4xx_lasting_duration_major}'%{endif}, at_least=${var.alb_4xx_at_least_percentage_major}) and when(requests > ${var.minimum_traffic}) and (not when(signal > ${var.alb_4xx_threshold_critical}, lasting=%{if var.alb_4xx_lasting_duration_critical == null}None%{else}'${var.alb_4xx_lasting_duration_critical}'%{endif}, at_least=${var.alb_4xx_at_least_percentage_critical}) and when(requests > ${var.minimum_traffic}))).publish('MAJOR')
+    detect(when(signal > ${var.alb_4xx_threshold_major}, lasting=%{if var.alb_4xx_lasting_duration_major == null}None%{else}'${var.alb_4xx_lasting_duration_major}'%{endif}, at_least=${var.alb_4xx_at_least_percentage_major}) and when(requests > ${var.minimum_traffic})).publish('MAJOR')
+    detect(when(signal > ${var.alb_4xx_threshold_minor}, lasting=%{if var.alb_4xx_lasting_duration_minor == null}None%{else}'${var.alb_4xx_lasting_duration_minor}'%{endif}, at_least=${var.alb_4xx_at_least_percentage_minor}) and when(requests > ${var.minimum_traffic}) and (not when(signal > ${var.alb_4xx_threshold_major}, lasting=%{if var.alb_4xx_lasting_duration_major == null}None%{else}'${var.alb_4xx_lasting_duration_major}'%{endif}, at_least=${var.alb_4xx_at_least_percentage_major}) and when(requests > ${var.minimum_traffic}))).publish('MINOR')
 EOF
-
-  rule {
-    description           = "is too high > ${var.alb_4xx_threshold_critical}%"
-    severity              = "Critical"
-    detect_label          = "CRIT"
-    disabled              = coalesce(var.alb_4xx_disabled_critical, var.alb_4xx_disabled, var.detectors_disabled)
-    notifications         = try(coalescelist(lookup(var.alb_4xx_notifications, "critical", []), var.notifications.critical), null)
-    runbook_url           = try(coalesce(var.alb_4xx_runbook_url, var.runbook_url), "")
-    tip                   = var.alb_4xx_tip
-    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
-    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
-  }
 
   rule {
     description           = "is too high > ${var.alb_4xx_threshold_major}%"
@@ -160,6 +148,18 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.alb_4xx_disabled_major, var.alb_4xx_disabled, var.detectors_disabled)
     notifications         = try(coalescelist(lookup(var.alb_4xx_notifications, "major", []), var.notifications.major), null)
+    runbook_url           = try(coalesce(var.alb_4xx_runbook_url, var.runbook_url), "")
+    tip                   = var.alb_4xx_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
+
+  rule {
+    description           = "is too high > ${var.alb_4xx_threshold_minor}%"
+    severity              = "Minor"
+    detect_label          = "MINOR"
+    disabled              = coalesce(var.alb_4xx_disabled_minor, var.alb_4xx_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.alb_4xx_notifications, "minor", []), var.notifications.minor), null)
     runbook_url           = try(coalesce(var.alb_4xx_runbook_url, var.runbook_url), "")
     tip                   = var.alb_4xx_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -234,21 +234,9 @@ resource "signalfx_detector" "target_4xx" {
     errors = data('HTTPCode_Target_4XX_Count', filter=base_filtering and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.target_4xx_aggregation_function}${var.target_4xx_transformation_function}
     requests = data('RequestCount', filter=base_filtering and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.target_4xx_aggregation_function}${var.target_4xx_transformation_function}
     signal = (errors/requests).scale(100).fill(value=0).publish('signal')
-    detect(when(signal > ${var.target_4xx_threshold_critical}, lasting=%{if var.target_4xx_lasting_duration_critical == null}None%{else}'${var.target_4xx_lasting_duration_critical}'%{endif}, at_least=${var.target_4xx_at_least_percentage_critical}) and when(requests > ${var.minimum_traffic})).publish('CRIT')
-    detect(when(signal > ${var.target_4xx_threshold_major}, lasting=%{if var.target_4xx_lasting_duration_major == null}None%{else}'${var.target_4xx_lasting_duration_major}'%{endif}, at_least=${var.target_4xx_at_least_percentage_major}) and when(requests > ${var.minimum_traffic}) and (not when(signal > ${var.target_4xx_threshold_critical}, lasting=%{if var.target_4xx_lasting_duration_critical == null}None%{else}'${var.target_4xx_lasting_duration_critical}'%{endif}, at_least=${var.target_4xx_at_least_percentage_critical}) and when(requests > ${var.minimum_traffic}))).publish('MAJOR')
+    detect(when(signal > ${var.target_4xx_threshold_major}, lasting=%{if var.target_4xx_lasting_duration_major == null}None%{else}'${var.target_4xx_lasting_duration_major}'%{endif}, at_least=${var.target_4xx_at_least_percentage_major}) and when(requests > ${var.minimum_traffic})).publish('MAJOR')
+    detect(when(signal > ${var.target_4xx_threshold_minor}, lasting=%{if var.target_4xx_lasting_duration_minor == null}None%{else}'${var.target_4xx_lasting_duration_minor}'%{endif}, at_least=${var.target_4xx_at_least_percentage_minor}) and when(requests > ${var.minimum_traffic}) and (not when(signal > ${var.target_4xx_threshold_major}, lasting=%{if var.target_4xx_lasting_duration_major == null}None%{else}'${var.target_4xx_lasting_duration_major}'%{endif}, at_least=${var.target_4xx_at_least_percentage_major}) and when(requests > ${var.minimum_traffic}))).publish('MINOR')
 EOF
-
-  rule {
-    description           = "is too high > ${var.target_4xx_threshold_critical}%"
-    severity              = "Critical"
-    detect_label          = "CRIT"
-    disabled              = coalesce(var.target_4xx_disabled_critical, var.target_4xx_disabled, var.detectors_disabled)
-    notifications         = try(coalescelist(lookup(var.target_4xx_notifications, "critical", []), var.notifications.critical), null)
-    runbook_url           = try(coalesce(var.target_4xx_runbook_url, var.runbook_url), "")
-    tip                   = var.target_4xx_tip
-    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
-    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
-  }
 
   rule {
     description           = "is too high > ${var.target_4xx_threshold_major}%"
@@ -256,6 +244,18 @@ EOF
     detect_label          = "MAJOR"
     disabled              = coalesce(var.target_4xx_disabled_major, var.target_4xx_disabled, var.detectors_disabled)
     notifications         = try(coalescelist(lookup(var.target_4xx_notifications, "major", []), var.notifications.major), null)
+    runbook_url           = try(coalesce(var.target_4xx_runbook_url, var.runbook_url), "")
+    tip                   = var.target_4xx_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
+
+  rule {
+    description           = "is too high > ${var.target_4xx_threshold_minor}%"
+    severity              = "Minor"
+    detect_label          = "MINOR"
+    disabled              = coalesce(var.target_4xx_disabled_minor, var.target_4xx_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.target_4xx_notifications, "minor", []), var.notifications.minor), null)
     runbook_url           = try(coalesce(var.target_4xx_runbook_url, var.runbook_url), "")
     tip                   = var.target_4xx_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject

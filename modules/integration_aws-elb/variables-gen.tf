@@ -266,48 +266,48 @@ variable "elb_4xx_disabled" {
   default     = null
 }
 
-variable "elb_4xx_disabled_critical" {
-  description = "Disable critical alerting rule for elb_4xx detector"
-  type        = bool
-  default     = null
-}
-
 variable "elb_4xx_disabled_major" {
   description = "Disable major alerting rule for elb_4xx detector"
   type        = bool
   default     = null
 }
 
-variable "elb_4xx_threshold_critical" {
-  description = "Critical threshold for elb_4xx detector in %"
-  type        = number
-  default     = 40
+variable "elb_4xx_disabled_minor" {
+  description = "Disable minor alerting rule for elb_4xx detector"
+  type        = bool
+  default     = null
 }
 
-variable "elb_4xx_lasting_duration_critical" {
-  description = "Minimum duration that conditions must be true before raising alert"
-  type        = string
-  default     = "5m"
-}
-
-variable "elb_4xx_at_least_percentage_critical" {
-  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
-  type        = number
-  default     = 0.9
-}
 variable "elb_4xx_threshold_major" {
   description = "Major threshold for elb_4xx detector in %"
   type        = number
-  default     = 20
+  default     = 95
 }
 
 variable "elb_4xx_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "5m"
+  default     = "15m"
 }
 
 variable "elb_4xx_at_least_percentage_major" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 0.9
+}
+variable "elb_4xx_threshold_minor" {
+  description = "Minor threshold for elb_4xx detector in %"
+  type        = number
+  default     = 90
+}
+
+variable "elb_4xx_lasting_duration_minor" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "15m"
+}
+
+variable "elb_4xx_at_least_percentage_minor" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 0.9
@@ -446,48 +446,48 @@ variable "backend_4xx_disabled" {
   default     = null
 }
 
-variable "backend_4xx_disabled_critical" {
-  description = "Disable critical alerting rule for backend_4xx detector"
-  type        = bool
-  default     = null
-}
-
 variable "backend_4xx_disabled_major" {
   description = "Disable major alerting rule for backend_4xx detector"
   type        = bool
   default     = null
 }
 
-variable "backend_4xx_threshold_critical" {
-  description = "Critical threshold for backend_4xx detector in %"
-  type        = number
-  default     = 40
+variable "backend_4xx_disabled_minor" {
+  description = "Disable minor alerting rule for backend_4xx detector"
+  type        = bool
+  default     = null
 }
 
-variable "backend_4xx_lasting_duration_critical" {
-  description = "Minimum duration that conditions must be true before raising alert"
-  type        = string
-  default     = "5m"
-}
-
-variable "backend_4xx_at_least_percentage_critical" {
-  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
-  type        = number
-  default     = 0.9
-}
 variable "backend_4xx_threshold_major" {
   description = "Major threshold for backend_4xx detector in %"
   type        = number
-  default     = 20
+  default     = 95
 }
 
 variable "backend_4xx_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "5m"
+  default     = "15m"
 }
 
 variable "backend_4xx_at_least_percentage_major" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 0.9
+}
+variable "backend_4xx_threshold_minor" {
+  description = "Minor threshold for backend_4xx detector in %"
+  type        = number
+  default     = 90
+}
+
+variable "backend_4xx_lasting_duration_minor" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "15m"
+}
+
+variable "backend_4xx_at_least_percentage_minor" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 0.9

@@ -78,9 +78,9 @@ This module creates the following SignalFx detectors which could contain one or 
 |AWS ALB heartbeat|X|-|-|-|-|
 |AWS ALB target response time|X|X|-|-|-|
 |AWS ALB 5xx error rate|X|X|-|-|-|
-|AWS ALB 4xx error rate|X|X|-|-|-|
+|AWS ALB 4xx error rate|-|X|X|-|-|
 |AWS ALB target 5xx error rate|X|X|-|-|-|
-|AWS ALB target 4xx error rate|X|X|-|-|-|
+|AWS ALB target 4xx error rate|-|X|X|-|-|
 |AWS ALB healthy instances percentage|X|X|-|-|-|
 
 ## How to collect required metrics?

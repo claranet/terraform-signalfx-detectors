@@ -20,16 +20,16 @@ signals:
   signal:
     formula: (errors/requests).scale(100).fill(value=0)
 rules:
-  critical:
-    threshold: 10
+  major:
+    threshold: 95
     comparator: ">"
-    lasting_duration: 5m
+    lasting_duration: 15m
     lasting_at_least: 0.9
     append_condition: and when(requests > ${var.minimum_traffic})
-  major:
-    threshold: 5
+  minor:
+    threshold: 90
     comparator: ">"
-    dependency: critical
-    lasting_duration: 5m
+    dependency: major
+    lasting_duration: 15m
     lasting_at_least: 0.9
     append_condition: and when(requests > ${var.minimum_traffic})

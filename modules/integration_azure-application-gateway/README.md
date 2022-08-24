@@ -83,7 +83,7 @@ This module creates the following SignalFx detectors which could contain one or 
 |Azure Application Gateway backend connect time|X|X|-|-|-|
 |Azure Application Gateway failed request rate|X|X|-|-|-|
 |Azure Application Gateway backend unhealthy host ratio|X|X|-|-|-|
-|Azure Application Gateway 4xx error rate|X|X|-|-|-|
+|Azure Application Gateway 4xx error rate|-|X|X|-|-|
 |Azure Application Gateway 5xx error rate|X|X|-|-|-|
 |Azure Application Gateway backend 4xx error rate|X|X|-|-|-|
 |Azure Application Gateway backend 5xx error rate|X|X|-|-|-|
