@@ -77,7 +77,7 @@ This module creates the following SignalFx detectors which could contain one or 
 |---|---|---|---|---|---|
 |AWS APIGateway latency|X|X|-|-|-|
 |AWS APIGateway http 5xx error rate|X|X|-|-|-|
-|AWS APIGateway http 4xx error rate|-|X|X|-|-|
+|AWS APIGateway http 4xx error rate|X|X|X|-|-|
 
 ## How to collect required metrics?
 

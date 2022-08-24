@@ -78,9 +78,9 @@ This module creates the following SignalFx detectors which could contain one or 
 |AWS ELB heartbeat|X|-|-|-|-|
 |AWS ELB backend latency|X|X|-|-|-|
 |AWS ELB 5xx error rate|X|X|-|-|-|
-|AWS ELB 4xx error rate|-|X|X|-|-|
+|AWS ELB 4xx error rate|X|X|X|-|-|
 |AWS ELB backend 5xx error rate|X|X|-|-|-|
-|AWS ELB backend 4xx error rate|-|X|X|-|-|
+|AWS ELB backend 4xx error rate|X|X|X|-|-|
 |AWS ELB healthy instances percentage|X|X|-|-|-|
 
 ## How to collect required metrics?

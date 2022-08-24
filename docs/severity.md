@@ -141,9 +141,9 @@
 |AWS ALB heartbeat|X|-|-|-|-|
 |AWS ALB target response time|X|X|-|-|-|
 |AWS ALB 5xx error rate|X|X|-|-|-|
-|AWS ALB 4xx error rate|-|X|X|-|-|
+|AWS ALB 4xx error rate|X|X|X|-|-|
 |AWS ALB target 5xx error rate|X|X|-|-|-|
-|AWS ALB target 4xx error rate|-|X|X|-|-|
+|AWS ALB target 4xx error rate|X|X|X|-|-|
 |AWS ALB healthy instances percentage|X|X|-|-|-|
 
 
@@ -153,7 +153,7 @@
 |---|---|---|---|---|---|
 |AWS APIGateway latency|X|X|-|-|-|
 |AWS APIGateway http 5xx error rate|X|X|-|-|-|
-|AWS APIGateway http 4xx error rate|-|X|X|-|-|
+|AWS APIGateway http 4xx error rate|X|X|X|-|-|
 
 
 ## integration_aws-beanstalk
@@ -251,9 +251,9 @@
 |AWS ELB heartbeat|X|-|-|-|-|
 |AWS ELB backend latency|X|X|-|-|-|
 |AWS ELB 5xx error rate|X|X|-|-|-|
-|AWS ELB 4xx error rate|-|X|X|-|-|
+|AWS ELB 4xx error rate|X|X|X|-|-|
 |AWS ELB backend 5xx error rate|X|X|-|-|-|
-|AWS ELB backend 4xx error rate|-|X|X|-|-|
+|AWS ELB backend 4xx error rate|X|X|X|-|-|
 |AWS ELB healthy instances percentage|X|X|-|-|-|
 
 
@@ -360,7 +360,7 @@
 |Azure App Service response time|X|X|-|-|-|
 |Azure App Service memory usage|X|X|-|-|-|
 |Azure App Service 5xx error rate|X|X|-|-|-|
-|Azure App Service 4xx error rate|-|X|X|-|-|
+|Azure App Service 4xx error rate|X|X|X|-|-|
 |Azure App Service successful response rate|X|X|-|-|-|
 
 
@@ -373,7 +373,7 @@
 |Azure Application Gateway backend connect time|X|X|-|-|-|
 |Azure Application Gateway failed request rate|X|X|-|-|-|
 |Azure Application Gateway backend unhealthy host ratio|X|X|-|-|-|
-|Azure Application Gateway 4xx error rate|-|X|X|-|-|
+|Azure Application Gateway 4xx error rate|X|X|X|-|-|
 |Azure Application Gateway 5xx error rate|X|X|-|-|-|
 |Azure Application Gateway backend 4xx error rate|X|X|-|-|-|
 |Azure Application Gateway backend 5xx error rate|X|X|-|-|-|
@@ -683,7 +683,7 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |GCP Load Balancer 5xx error rate|X|X|-|-|-|
-|GCP Load Balancer 4xx error rate|-|X|X|-|-|
+|GCP Load Balancer 4xx error rate|X|X|X|-|-|
 |GCP Load Balancer backend latency per service|X|X|-|-|-|
 |GCP Load Balancer backend latency per bucket|X|X|-|-|-|
 |GCP Load Balancer request count|-|-|X|X|-|
@@ -878,7 +878,7 @@
 |Haproxy backend status|X|-|-|-|-|
 |Haproxy session|X|X|-|-|-|
 |Haproxy 5xx response rate|X|X|-|-|-|
-|Haproxy 4xx response rate|-|X|X|-|-|
+|Haproxy 4xx response rate|X|X|X|-|-|
 
 
 ## smart-agent_health-checker
@@ -1016,7 +1016,7 @@
 |---|---|---|---|---|---|
 |Ingress Nginx latency|X|X|-|-|-|
 |Ingress Nginx 5xx errors ratio|X|X|-|-|-|
-|Ingress Nginx 4xx errors ratio|-|X|X|-|-|
+|Ingress Nginx 4xx errors ratio|X|X|X|-|-|
 
 
 ## smart-agent_nginx

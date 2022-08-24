@@ -342,6 +342,12 @@ variable "http_4xx_errors_disabled" {
   default     = null
 }
 
+variable "http_4xx_errors_disabled_critical" {
+  description = "Disable critical alerting rule for http_4xx_errors detector"
+  type        = bool
+  default     = true
+}
+
 variable "http_4xx_errors_disabled_major" {
   description = "Disable major alerting rule for http_4xx_errors detector"
   type        = bool
@@ -364,6 +370,18 @@ variable "http_4xx_errors_aggregation_function" {
   description = "Aggregation function and group by for http_4xx_errors detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+}
+
+variable "http_4xx_errors_lasting_duration_critical" {
+  description = "Evaluation window for http_4xx_errors detector (i.e. 5m, 20m, 1h, 1d)"
+  type        = string
+  default     = "15m"
+}
+
+variable "http_4xx_errors_threshold_critical" {
+  description = "Critical threshold for http_4xx_errors detector"
+  type        = number
+  default     = 99
 }
 
 variable "http_4xx_errors_lasting_duration_major" {

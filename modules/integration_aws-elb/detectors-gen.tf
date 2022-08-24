@@ -138,9 +138,22 @@ resource "signalfx_detector" "elb_4xx" {
     errors = data('HTTPCode_ELB_4XX', filter=base_filtering and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.elb_4xx_aggregation_function}${var.elb_4xx_transformation_function}
     requests = data('RequestCount', filter=base_filtering and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.elb_4xx_aggregation_function}${var.elb_4xx_transformation_function}
     signal = (errors/requests).scale(100).fill(value=0).publish('signal')
-    detect(when(signal > ${var.elb_4xx_threshold_major}, lasting=%{if var.elb_4xx_lasting_duration_major == null}None%{else}'${var.elb_4xx_lasting_duration_major}'%{endif}, at_least=${var.elb_4xx_at_least_percentage_major}) and when(requests > ${var.minimum_traffic})).publish('MAJOR')
+    detect(when(signal > ${var.elb_4xx_threshold_critical}, lasting=%{if var.elb_4xx_lasting_duration_critical == null}None%{else}'${var.elb_4xx_lasting_duration_critical}'%{endif}, at_least=${var.elb_4xx_at_least_percentage_critical}) and when(requests > ${var.minimum_traffic})).publish('CRIT')
+    detect(when(signal > ${var.elb_4xx_threshold_major}, lasting=%{if var.elb_4xx_lasting_duration_major == null}None%{else}'${var.elb_4xx_lasting_duration_major}'%{endif}, at_least=${var.elb_4xx_at_least_percentage_major}) and when(requests > ${var.minimum_traffic}) and (not when(signal > ${var.elb_4xx_threshold_critical}, lasting=%{if var.elb_4xx_lasting_duration_critical == null}None%{else}'${var.elb_4xx_lasting_duration_critical}'%{endif}, at_least=${var.elb_4xx_at_least_percentage_critical}) and when(requests > ${var.minimum_traffic}))).publish('MAJOR')
     detect(when(signal > ${var.elb_4xx_threshold_minor}, lasting=%{if var.elb_4xx_lasting_duration_minor == null}None%{else}'${var.elb_4xx_lasting_duration_minor}'%{endif}, at_least=${var.elb_4xx_at_least_percentage_minor}) and when(requests > ${var.minimum_traffic}) and (not when(signal > ${var.elb_4xx_threshold_major}, lasting=%{if var.elb_4xx_lasting_duration_major == null}None%{else}'${var.elb_4xx_lasting_duration_major}'%{endif}, at_least=${var.elb_4xx_at_least_percentage_major}) and when(requests > ${var.minimum_traffic}))).publish('MINOR')
 EOF
+
+  rule {
+    description           = "is too high > ${var.elb_4xx_threshold_critical}%"
+    severity              = "Critical"
+    detect_label          = "CRIT"
+    disabled              = coalesce(var.elb_4xx_disabled_critical, var.elb_4xx_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.elb_4xx_notifications, "critical", []), var.notifications.critical), null)
+    runbook_url           = try(coalesce(var.elb_4xx_runbook_url, var.runbook_url), "")
+    tip                   = var.elb_4xx_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
 
   rule {
     description           = "is too high > ${var.elb_4xx_threshold_major}%"
@@ -234,9 +247,22 @@ resource "signalfx_detector" "backend_4xx" {
     errors = data('HTTPCode_Backend_4XX', filter=base_filtering and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.backend_4xx_aggregation_function}${var.backend_4xx_transformation_function}
     requests = data('RequestCount', filter=base_filtering and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.backend_4xx_aggregation_function}${var.backend_4xx_transformation_function}
     signal = (errors/requests).scale(100).fill(value=0).publish('signal')
-    detect(when(signal > ${var.backend_4xx_threshold_major}, lasting=%{if var.backend_4xx_lasting_duration_major == null}None%{else}'${var.backend_4xx_lasting_duration_major}'%{endif}, at_least=${var.backend_4xx_at_least_percentage_major}) and when(requests > ${var.minimum_traffic})).publish('MAJOR')
+    detect(when(signal > ${var.backend_4xx_threshold_critical}, lasting=%{if var.backend_4xx_lasting_duration_critical == null}None%{else}'${var.backend_4xx_lasting_duration_critical}'%{endif}, at_least=${var.backend_4xx_at_least_percentage_critical}) and when(requests > ${var.minimum_traffic})).publish('CRIT')
+    detect(when(signal > ${var.backend_4xx_threshold_major}, lasting=%{if var.backend_4xx_lasting_duration_major == null}None%{else}'${var.backend_4xx_lasting_duration_major}'%{endif}, at_least=${var.backend_4xx_at_least_percentage_major}) and when(requests > ${var.minimum_traffic}) and (not when(signal > ${var.backend_4xx_threshold_critical}, lasting=%{if var.backend_4xx_lasting_duration_critical == null}None%{else}'${var.backend_4xx_lasting_duration_critical}'%{endif}, at_least=${var.backend_4xx_at_least_percentage_critical}) and when(requests > ${var.minimum_traffic}))).publish('MAJOR')
     detect(when(signal > ${var.backend_4xx_threshold_minor}, lasting=%{if var.backend_4xx_lasting_duration_minor == null}None%{else}'${var.backend_4xx_lasting_duration_minor}'%{endif}, at_least=${var.backend_4xx_at_least_percentage_minor}) and when(requests > ${var.minimum_traffic}) and (not when(signal > ${var.backend_4xx_threshold_major}, lasting=%{if var.backend_4xx_lasting_duration_major == null}None%{else}'${var.backend_4xx_lasting_duration_major}'%{endif}, at_least=${var.backend_4xx_at_least_percentage_major}) and when(requests > ${var.minimum_traffic}))).publish('MINOR')
 EOF
+
+  rule {
+    description           = "is too high > ${var.backend_4xx_threshold_critical}%"
+    severity              = "Critical"
+    detect_label          = "CRIT"
+    disabled              = coalesce(var.backend_4xx_disabled_critical, var.backend_4xx_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.backend_4xx_notifications, "critical", []), var.notifications.critical), null)
+    runbook_url           = try(coalesce(var.backend_4xx_runbook_url, var.runbook_url), "")
+    tip                   = var.backend_4xx_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
 
   rule {
     description           = "is too high > ${var.backend_4xx_threshold_major}%"

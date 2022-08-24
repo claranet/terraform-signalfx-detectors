@@ -318,6 +318,12 @@ variable "http_4xx_response_disabled_major" {
   default     = null
 }
 
+variable "http_4xx_response_disabled_critical" {
+  description = "Disable critical alerting rule for http_4xx_response detector"
+  type        = bool
+  default     = true
+}
+
 variable "http_4xx_response_notifications" {
   description = "Notification recipients list per severity overridden for http_4xx_response detector"
   type        = map(list(string))
@@ -348,3 +354,8 @@ variable "http_4xx_response_threshold_major" {
   default     = 95
 }
 
+variable "http_4xx_response_threshold_critical" {
+  description = "Critical threshold for http_4xx_response detector"
+  type        = number
+  default     = 99
+}

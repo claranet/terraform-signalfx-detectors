@@ -222,6 +222,12 @@ variable "http_4xx_disabled" {
   default     = null
 }
 
+variable "http_4xx_disabled_critical" {
+  description = "Disable critical alerting rule for http_4xx detector"
+  type        = bool
+  default     = true
+}
+
 variable "http_4xx_disabled_major" {
   description = "Disable major alerting rule for http_4xx detector"
   type        = bool
@@ -234,6 +240,23 @@ variable "http_4xx_disabled_minor" {
   default     = null
 }
 
+variable "http_4xx_threshold_critical" {
+  description = "Critical threshold for http_4xx detector in %"
+  type        = number
+  default     = 99
+}
+
+variable "http_4xx_lasting_duration_critical" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "15m"
+}
+
+variable "http_4xx_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 0.9
+}
 variable "http_4xx_threshold_major" {
   description = "Major threshold for http_4xx detector in %"
   type        = number

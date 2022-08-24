@@ -195,9 +195,22 @@ resource "signalfx_detector" "http_4xx_errors" {
         A = data('ResponseStatus', extrapolation='zero', filter=base_filter and filter('httpstatusgroup', '4xx') and ${module.filtering.signalflow})${var.http_4xx_errors_aggregation_function}
         B = data('ResponseStatus', extrapolation='zero', filter=base_filter and ${module.filtering.signalflow})${var.http_4xx_errors_aggregation_function}
         signal = (A/B).scale(100).fill(0).publish('signal')
-        detect(when(signal > threshold(${var.http_4xx_errors_threshold_major}), lasting="${var.http_4xx_errors_lasting_duration_major}")).publish('MAJOR')
+        detect(when(signal > threshold(${var.http_4xx_errors_threshold_critical}), lasting="${var.http_4xx_errors_lasting_duration_critical}")).publish('CRIT')
+        detect(when(signal > threshold(${var.http_4xx_errors_threshold_major}), lasting="${var.http_4xx_errors_lasting_duration_major}") and (not when(signal > ${var.http_4xx_errors_threshold_critical}, lasting="${var.http_4xx_errors_lasting_duration_critical}"))).publish('MAJOR')
         detect(when(signal > threshold(${var.http_4xx_errors_threshold_minor}), lasting="${var.http_4xx_errors_lasting_duration_minor}") and (not when(signal > ${var.http_4xx_errors_threshold_major}, lasting="${var.http_4xx_errors_lasting_duration_major}"))).publish('MINOR')
     EOF
+
+  rule {
+    description           = "is too high > ${var.http_4xx_errors_threshold_critical}%"
+    severity              = "Critical"
+    detect_label          = "CRIT"
+    disabled              = coalesce(var.http_4xx_errors_disabled_critical, var.http_4xx_errors_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.http_4xx_errors_notifications, "critical", []), var.notifications.critical), null)
+    runbook_url           = try(coalesce(var.http_4xx_errors_runbook_url, var.runbook_url), "")
+    tip                   = var.http_4xx_errors_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
 
   rule {
     description           = "is too high > ${var.http_4xx_errors_threshold_major}%"

@@ -81,7 +81,7 @@ This module creates the following SignalFx detectors which could contain one or 
 |---|---|---|---|---|---|
 |Ingress Nginx latency|X|X|-|-|-|
 |Ingress Nginx 5xx errors ratio|X|X|-|-|-|
-|Ingress Nginx 4xx errors ratio|-|X|X|-|-|
+|Ingress Nginx 4xx errors ratio|X|X|X|-|-|
 
 ## How to collect required metrics?
 

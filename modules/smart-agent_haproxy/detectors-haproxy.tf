@@ -175,9 +175,22 @@ resource "signalfx_detector" "http_4xx_response" {
     A = data('haproxy_response_4xx', filter=${module.filtering.signalflow}, rollup='delta')${var.http_4xx_response_aggregation_function}${var.http_4xx_response_transformation_function}
     B = data('haproxy_request_total', filter=${module.filtering.signalflow}, rollup='delta')${var.http_4xx_response_aggregation_function}${var.http_4xx_response_transformation_function}
     signal = (A/B).scale(100).publish('signal')
-    detect(when(signal > ${var.http_4xx_response_threshold_major})).publish('MAJOR')
+    detect(when(signal > ${var.http_4xx_response_threshold_critical})).publish('CRIT')
+    detect(when(signal > ${var.http_4xx_response_threshold_major}) and (not when(signal > ${var.http_4xx_response_threshold_critical}))).publish('MAJOR')
     detect(when(signal > ${var.http_4xx_response_threshold_minor}) and (not when(signal > ${var.http_4xx_response_threshold_major}))).publish('MINOR')
 EOF
+
+  rule {
+    description           = "is too high > ${var.http_4xx_response_threshold_critical}%"
+    severity              = "Critical"
+    detect_label          = "CRIT"
+    disabled              = coalesce(var.http_4xx_response_disabled_critical, var.http_4xx_response_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.http_4xx_response_notifications, "critical", []), var.notifications.critical), null)
+    runbook_url           = try(coalesce(var.http_4xx_response_runbook_url, var.runbook_url), "")
+    tip                   = var.http_4xx_response_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
 
   rule {
     description           = "is too high > ${var.http_4xx_response_threshold_major}%"
