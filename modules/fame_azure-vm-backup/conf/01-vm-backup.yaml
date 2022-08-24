@@ -1,6 +1,8 @@
 module: Azure VM backup
 name: success
-id: backup
+id: vm_backup
+transformation: true
+aggregation: true
 
 signals:
   signal:

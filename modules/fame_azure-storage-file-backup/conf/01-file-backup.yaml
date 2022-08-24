@@ -1,6 +1,8 @@
 module: Azure Storage File backup
 name: success
-id: backup
+id: file_backup
+transformation: true
+aggregation: true
 
 signals:
   signal:
