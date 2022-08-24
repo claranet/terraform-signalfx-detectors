@@ -1,0 +1,26 @@
+## Example
+module: GCP Memorystore Redis
+name: blocked over connected clients ratio
+
+value_unit: "%"
+
+signals:
+  A:
+    metric: "clients/blocked"
+  B:
+    metric: "clients/connected"
+  signal:
+    formula: (A/B).scale(100)
+
+rules:
+  critical:
+    threshold: 5
+    comparator: '>'
+    lasting_duration: 1h
+    lasting_at_least: 0.5
+  major:
+    threshold: 0
+    comparator: '>'
+    lasting_duration: 1h
+    lasting_at_least: 0.5
+    dependency: critical
