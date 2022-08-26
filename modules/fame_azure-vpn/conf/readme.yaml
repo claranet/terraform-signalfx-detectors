@@ -1,0 +1,7 @@
+documentations:
+  - name: FAME
+    url: https://github.com/claranet/terraform-azurerm-run-common/tree/master/modules/monitoring_function
+  - name: run-common
+    url: https://github.com/claranet/terraform-azurerm-run-common
+    
+source_doc:
