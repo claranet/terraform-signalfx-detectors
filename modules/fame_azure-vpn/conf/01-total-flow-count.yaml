@@ -1,0 +1,16 @@
+module: Azure VPN
+name: Total Flow Count
+id: totalflowcount
+
+transformation: ".max(over='5m')"
+aggregation: true
+
+signals:
+  signal:
+    metric: fame.azure.virtual_network_gateway.total_flow_count
+
+rules:
+  critical:
+    threshold: 0
+    comparator: "=="
+    lasting_duration: '10m'
