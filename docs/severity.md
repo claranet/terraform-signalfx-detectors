@@ -36,6 +36,8 @@
 - [integration_azure-event-hub](#integration_azure-event-hub)
 - [integration_azure-express-route](#integration_azure-express-route)
 - [integration_azure-firewall](#integration_azure-firewall)
+- [integration_azure-flexible-mysql](#integration_azure-flexible-mysql)
+- [integration_azure-flexible-postgresql](#integration_azure-flexible-postgresql)
 - [integration_azure-functions](#integration_azure-functions)
 - [integration_azure-key-vault](#integration_azure-key-vault)
 - [integration_azure-load-balancer](#integration_azure-load-balancer)
@@ -423,6 +425,31 @@
 |Azure firewall snat port utilization|X|X|-|-|-|
 |Azure firewall throughput|X|X|X|X|-|
 |Azure firewall health state|X|X|-|-|-|
+
+
+## integration_azure-flexible-mysql
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Azure MySQL heartbeat|X|-|-|-|-|
+|Azure MySQL cpu usage|X|X|-|-|-|
+|Azure MySQL storage usage|X|X|-|-|-|
+|Azure MySQL io consumption|X|X|-|-|-|
+|Azure MySQL memory usage|X|X|-|-|-|
+|Azure MySQL replication lag|X|X|-|-|-|
+
+
+## integration_azure-flexible-postgresql
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Azure PostgreSQL heartbeat|X|-|-|-|-|
+|Azure PostgreSQL CPU usage|X|X|-|-|-|
+|Azure PostgreSQL has no connection|X|-|-|-|-|
+|Azure PostgreSQL storage usage|X|X|-|-|-|
+|Azure PostgreSQL IO consumption|X|X|-|-|-|
+|Azure PostgreSQL memory usage |X|X|-|-|-|
+||X|X|-|-|-|
 
 
 ## integration_azure-functions
