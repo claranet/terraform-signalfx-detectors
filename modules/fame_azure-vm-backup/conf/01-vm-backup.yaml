@@ -5,12 +5,14 @@ transformation: true
 aggregation: true
 
 signals:
-  signal:
+  backup:
     metric: fame.azure.backup.vm
-    extrapolation: 'zero'
+    rollup: max
+  signal:
+    formula: backup.max(over='1d')
 
 rules:
   critical:
     threshold: 1
     comparator: "<"
-    lasting_duration: '25h'
+    lasting_duration: '1h'

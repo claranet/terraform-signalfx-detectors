@@ -6,7 +6,8 @@ resource "signalfx_detector" "file_backup" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('fame.azure.backup.file_share', filter=${module.filtering.signalflow}, extrapolation='zero')${var.file_backup_aggregation_function}${var.file_backup_transformation_function}.publish('signal')
+    backup = data('fame.azure.backup.file_share', filter=${module.filtering.signalflow}, rollup='max')${var.file_backup_aggregation_function}${var.file_backup_transformation_function}
+    signal = backup.max(over='1d').publish('signal')
     detect(when(signal < ${var.file_backup_threshold_critical}, lasting=%{if var.file_backup_lasting_duration_critical == null}None%{else}'${var.file_backup_lasting_duration_critical}'%{endif}, at_least=${var.file_backup_at_least_percentage_critical})).publish('CRIT')
 EOF
 

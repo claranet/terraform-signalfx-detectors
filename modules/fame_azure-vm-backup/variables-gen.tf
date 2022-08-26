@@ -51,7 +51,7 @@ variable "vm_backup_threshold_critical" {
 variable "vm_backup_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "25h"
+  default     = "1h"
 }
 
 variable "vm_backup_at_least_percentage_critical" {
