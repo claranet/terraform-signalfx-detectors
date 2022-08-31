@@ -14,12 +14,12 @@ signals:
     formula: (A/(A+B)).scale(100)
 
 rules:
-  critical:
+  major:
     threshold: 10
     comparator: '<'
     lasting_duration: 5m
-  major:
+  minor:
     threshold: 30
     comparator: '<'
     lasting_duration: 5m
-    dependency: critical
+    dependency: major

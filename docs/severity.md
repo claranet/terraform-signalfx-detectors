@@ -1099,7 +1099,7 @@
 |Redis high memory fragmentation ratio|X|X|-|-|-|
 |Redis low memory fragmentation ratio|X|X|-|-|-|
 |Redis rejected connections|X|X|-|-|-|
-|Redis hitrate|X|X|-|-|-|
+|Redis hitrate|-|X|X|-|-|
 
 
 ## smart-agent_solr
