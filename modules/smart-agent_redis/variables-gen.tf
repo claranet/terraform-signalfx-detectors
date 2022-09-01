@@ -877,6 +877,12 @@ variable "hitrate_disabled" {
   default     = null
 }
 
+variable "hitrate_disabled_critical" {
+  description = "Disable critical alerting rule for hitrate detector"
+  type        = bool
+  default     = true
+}
+
 variable "hitrate_disabled_major" {
   description = "Disable major alerting rule for hitrate detector"
   type        = bool
@@ -889,6 +895,23 @@ variable "hitrate_disabled_minor" {
   default     = null
 }
 
+variable "hitrate_threshold_critical" {
+  description = "Critical threshold for hitrate detector in %"
+  type        = number
+  default     = 0
+}
+
+variable "hitrate_lasting_duration_critical" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "5m"
+}
+
+variable "hitrate_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
 variable "hitrate_threshold_major" {
   description = "Major threshold for hitrate detector in %"
   type        = number

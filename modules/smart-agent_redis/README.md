@@ -87,7 +87,7 @@ This module creates the following SignalFx detectors which could contain one or 
 |Redis high memory fragmentation ratio|X|X|-|-|-|
 |Redis low memory fragmentation ratio|X|X|-|-|-|
 |Redis rejected connections|X|X|-|-|-|
-|Redis hitrate|-|X|X|-|-|
+|Redis hitrate|X|X|X|-|-|
 
 ## How to collect required metrics?
 
