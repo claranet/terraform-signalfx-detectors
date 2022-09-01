@@ -97,7 +97,6 @@ Check the [Related documentation](#related-documentation) section for more detai
 Here is the list of required metrics for detectors in this module.
 
 * `subscription/oldest_unacked_message_age`
-* `subscription/pull_request_count`
 * `subscription/push_request_latencies`
 
 
