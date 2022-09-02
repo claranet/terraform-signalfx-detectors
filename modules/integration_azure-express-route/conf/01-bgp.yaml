@@ -11,17 +11,17 @@ signals:
   signal:
     metric: "BgpAvailability"
 rules:
-  warning:
-    threshold: 100
+  critical:
+    threshold: 95
     comparator: "<"
     lasting_duration: '2m'
   major:
     threshold: 99
     comparator: "<"
     lasting_duration: '2m'
-    dependency: warning
-  critical:
-    threshold: 95
+    dependency: critical
+  warning:
+    threshold: 100
     comparator: "<"
     lasting_duration: '2m'
     dependency: major
