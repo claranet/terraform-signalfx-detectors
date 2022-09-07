@@ -1,0 +1,18 @@
+module: Azure VM backup
+name: success
+id: vm_backup
+transformation: true
+aggregation: true
+
+signals:
+  backup:
+    metric: fame.azure.backup.vm
+    rollup: max
+  signal:
+    formula: backup.max(over='1d')
+
+rules:
+  critical:
+    threshold: 1
+    comparator: "<"
+    lasting_duration: '1h'
