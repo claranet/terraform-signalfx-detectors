@@ -177,6 +177,7 @@ resource "signalfx_detector" "http_4xx_response" {
     signal = (A/B).scale(100).publish('signal')
     detect(when(signal > ${var.http_4xx_response_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.http_4xx_response_threshold_major}) and (not when(signal > ${var.http_4xx_response_threshold_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.http_4xx_response_threshold_minor}) and (not when(signal > ${var.http_4xx_response_threshold_major}))).publish('MINOR')
 EOF
 
   rule {
@@ -203,6 +204,17 @@ EOF
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
+  rule {
+    description           = "is too high > ${var.http_4xx_response_threshold_minor}%"
+    severity              = "Minor"
+    detect_label          = "MINOR"
+    disabled              = coalesce(var.http_4xx_response_disabled_minor, var.http_4xx_response_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.http_4xx_response_notifications, "minor", []), var.notifications.minor), null)
+    runbook_url           = try(coalesce(var.http_4xx_response_runbook_url, var.runbook_url), "")
+    tip                   = var.http_4xx_response_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
+
   max_delay = var.http_4xx_response_max_delay
 }
-

@@ -166,6 +166,7 @@ resource "signalfx_detector" "http_4xx_errors_count" {
         signal = (A/B).scale(100).fill(0).publish('signal')
         detect(when(signal > threshold(${var.http_4xx_errors_count_threshold_critical}), lasting="${var.http_4xx_errors_count_lasting_duration_critical}")).publish('CRIT')
         detect(when(signal > threshold(${var.http_4xx_errors_count_threshold_major}), lasting="${var.http_4xx_errors_count_lasting_duration_major}") and (not when(signal > ${var.http_4xx_errors_count_threshold_critical}, lasting="${var.http_4xx_errors_count_lasting_duration_critical}"))).publish('MAJOR')
+        detect(when(signal > threshold(${var.http_4xx_errors_count_threshold_minor}), lasting="${var.http_4xx_errors_count_lasting_duration_minor}") and (not when(signal > ${var.http_4xx_errors_count_threshold_major}, lasting="${var.http_4xx_errors_count_lasting_duration_major}"))).publish('MINOR')
     EOF
 
   rule {
@@ -186,6 +187,18 @@ resource "signalfx_detector" "http_4xx_errors_count" {
     detect_label          = "MAJOR"
     disabled              = coalesce(var.http_4xx_errors_count_disabled_major, var.http_4xx_errors_count_disabled, var.detectors_disabled)
     notifications         = try(coalescelist(lookup(var.http_4xx_errors_count_notifications, "major", []), var.notifications.major), null)
+    runbook_url           = try(coalesce(var.http_4xx_errors_count_runbook_url, var.runbook_url), "")
+    tip                   = var.http_4xx_errors_count_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
+
+  rule {
+    description           = "is too high > ${var.http_4xx_errors_count_threshold_minor}%"
+    severity              = "Minor"
+    detect_label          = "MINOR"
+    disabled              = coalesce(var.http_4xx_errors_count_disabled_minor, var.http_4xx_errors_count_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.http_4xx_errors_count_notifications, "minor", []), var.notifications.minor), null)
     runbook_url           = try(coalesce(var.http_4xx_errors_count_runbook_url, var.runbook_url), "")
     tip                   = var.http_4xx_errors_count_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject

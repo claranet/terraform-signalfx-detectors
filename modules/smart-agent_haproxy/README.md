@@ -81,7 +81,7 @@ This module creates the following SignalFx detectors which could contain one or 
 |Haproxy backend status|X|-|-|-|-|
 |Haproxy session|X|X|-|-|-|
 |Haproxy 5xx response rate|X|X|-|-|-|
-|Haproxy 4xx response rate|X|X|-|-|-|
+|Haproxy 4xx response rate|X|X|X|-|-|
 
 ## How to collect required metrics?
 

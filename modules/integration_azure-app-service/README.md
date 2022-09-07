@@ -79,7 +79,7 @@ This module creates the following SignalFx detectors which could contain one or 
 |Azure App Service response time|X|X|-|-|-|
 |Azure App Service memory usage|X|X|-|-|-|
 |Azure App Service 5xx error rate|X|X|-|-|-|
-|Azure App Service 4xx error rate|X|X|-|-|-|
+|Azure App Service 4xx error rate|X|X|X|-|-|
 |Azure App Service successful response rate|X|X|-|-|-|
 
 ## How to collect required metrics?

@@ -135,7 +135,7 @@ variable "error_rate_4xx_disabled" {
 variable "error_rate_4xx_disabled_critical" {
   description = "Disable critical alerting rule for error_rate_4xx detector"
   type        = bool
-  default     = null
+  default     = true
 }
 
 variable "error_rate_4xx_disabled_major" {
@@ -144,16 +144,22 @@ variable "error_rate_4xx_disabled_major" {
   default     = null
 }
 
+variable "error_rate_4xx_disabled_minor" {
+  description = "Disable minor alerting rule for error_rate_4xx detector"
+  type        = bool
+  default     = null
+}
+
 variable "error_rate_4xx_threshold_critical" {
   description = "Critical threshold for error_rate_4xx detector in %"
   type        = number
-  default     = 10
+  default     = 99
 }
 
 variable "error_rate_4xx_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "5m"
+  default     = "15m"
 }
 
 variable "error_rate_4xx_at_least_percentage_critical" {
@@ -164,16 +170,33 @@ variable "error_rate_4xx_at_least_percentage_critical" {
 variable "error_rate_4xx_threshold_major" {
   description = "Major threshold for error_rate_4xx detector in %"
   type        = number
-  default     = 5
+  default     = 95
 }
 
 variable "error_rate_4xx_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "5m"
+  default     = "15m"
 }
 
 variable "error_rate_4xx_at_least_percentage_major" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 0.9
+}
+variable "error_rate_4xx_threshold_minor" {
+  description = "Minor threshold for error_rate_4xx detector in %"
+  type        = number
+  default     = 90
+}
+
+variable "error_rate_4xx_lasting_duration_minor" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "15m"
+}
+
+variable "error_rate_4xx_at_least_percentage_minor" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 0.9

@@ -78,9 +78,9 @@ This module creates the following SignalFx detectors which could contain one or 
 |AWS ALB heartbeat|X|-|-|-|-|
 |AWS ALB target response time|X|X|-|-|-|
 |AWS ALB 5xx error rate|X|X|-|-|-|
-|AWS ALB 4xx error rate|X|X|-|-|-|
+|AWS ALB 4xx error rate|X|X|X|-|-|
 |AWS ALB target 5xx error rate|X|X|-|-|-|
-|AWS ALB target 4xx error rate|X|X|-|-|-|
+|AWS ALB target 4xx error rate|X|X|X|-|-|
 |AWS ALB healthy instances percentage|X|X|-|-|-|
 
 ## How to collect required metrics?
@@ -117,4 +117,4 @@ Here is the list of required metrics for detectors in this module.
 * [Terraform SignalFx detector](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector)
 * [Splunk Observability integrations](https://docs.splunk.com/Observability/gdi/get-data-in/integrations.html)
 * [CloudWatch metrics](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-cloudwatch-metrics.html)
-* [Splunk Observability metrics](https://docs.splunk.com/Observability/gdi/get-data-in/connect/aws/aws-metrics.html#aws-application-load-balancer-alb)
+* [Splunk Observability metadata](https://docs.splunk.com/Observability/infrastructure/monitor/aws-infra-metadata.html#cloudwatch-elb-metadata)
