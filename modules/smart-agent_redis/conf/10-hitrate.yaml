@@ -15,11 +15,17 @@ signals:
 
 rules:
   critical:
+    threshold: 0
+    comparator: '<'
+    lasting_duration: 5m
+    disabled: true
+  major:
     threshold: 10
     comparator: '<'
     lasting_duration: 5m
-  major:
+    dependency: critical
+  minor:
     threshold: 30
     comparator: '<'
     lasting_duration: 5m
-    dependency: critical
+    dependency: major
