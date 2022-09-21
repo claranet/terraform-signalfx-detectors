@@ -7,7 +7,7 @@ resource "signalfx_detector" "task_restart" {
 
   program_text = <<-EOF
     base_filtering = filter('namespace', 'AWS/DMS')
-    runcounter_delta = data('RunCounter', filter=base_filtering and filter('stat', 'upper') and ${module.filtering.signalflow}, rollup='delta', extrapolation='last_value')${var.task_restart_aggregation_function}
+    runcounter_delta = data('RunCounter', filter=base_filtering and filter('stat', 'upper') and ${module.filtering.signalflow}, rollup='delta', extrapolation='last_value')${var.task_restart_aggregation_function}${var.task_restart_transformation_function}
     signal = runcounter_delta.publish('signal')
     detect(when(signal > ${var.task_restart_threshold_critical}, lasting=%{if var.task_restart_lasting_duration_critical == null}None%{else}'${var.task_restart_lasting_duration_critical}'%{endif}, at_least=${var.task_restart_at_least_percentage_critical})).publish('CRIT')
 EOF

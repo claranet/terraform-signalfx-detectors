@@ -12,6 +12,12 @@ variable "task_restart_aggregation_function" {
   default     = ""
 }
 
+variable "task_restart_transformation_function" {
+  description = "Transformation function for task_restart detector (i.e. \".mean(over='5m')\")"
+  type        = string
+  default     = ".max(over='15m')"
+}
+
 variable "task_restart_max_delay" {
   description = "Enforce max delay for task_restart detector (use \"0\" or \"null\" for \"Auto\")"
   type        = number
@@ -45,7 +51,7 @@ variable "task_restart_threshold_critical" {
 variable "task_restart_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "5m"
+  default     = null
 }
 
 variable "task_restart_at_least_percentage_critical" {
