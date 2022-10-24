@@ -226,6 +226,7 @@
 |AWS ElastiCache redis cpu|X|X|-|-|-|
 |AWS ElastiCache redis replication lag|X|X|-|-|-|
 |AWS ElastiCache redis commands|-|X|-|-|-|
+|AWS ElastiCache redis network conntrack allowance exceeded|X|-|-|-|-|
 
 
 ## integration_aws-elasticsearch

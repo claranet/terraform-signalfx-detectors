@@ -329,3 +329,64 @@ variable "commands_at_least_percentage_major" {
   type        = number
   default     = 1
 }
+# network_conntrack_allowance_exceeded detector
+
+variable "network_conntrack_allowance_exceeded_notifications" {
+  description = "Notification recipients list per severity overridden for network_conntrack_allowance_exceeded detector"
+  type        = map(list(string))
+  default     = {}
+}
+
+variable "network_conntrack_allowance_exceeded_aggregation_function" {
+  description = "Aggregation function and group by for network_conntrack_allowance_exceeded detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ""
+}
+
+variable "network_conntrack_allowance_exceeded_transformation_function" {
+  description = "Transformation function for network_conntrack_allowance_exceeded detector (i.e. \".mean(over='5m')\")"
+  type        = string
+  default     = ""
+}
+
+variable "network_conntrack_allowance_exceeded_max_delay" {
+  description = "Enforce max delay for network_conntrack_allowance_exceeded detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
+variable "network_conntrack_allowance_exceeded_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "network_conntrack_allowance_exceeded_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
+variable "network_conntrack_allowance_exceeded_disabled" {
+  description = "Disable all alerting rules for network_conntrack_allowance_exceeded detector"
+  type        = bool
+  default     = null
+}
+
+variable "network_conntrack_allowance_exceeded_threshold_critical" {
+  description = "Critical threshold for network_conntrack_allowance_exceeded detector"
+  type        = number
+  default     = 0
+}
+
+variable "network_conntrack_allowance_exceeded_lasting_duration_critical" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "network_conntrack_allowance_exceeded_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}

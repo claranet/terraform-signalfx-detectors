@@ -1,0 +1,15 @@
+module: AWS ElastiCache redis
+name: Network conntrack allowance exceeded
+
+transformation: true
+aggregation: true
+filtering: "filter('namespace', 'AWS/ElastiCache') and filter('stat', 'upper') and filter('CacheNodeId', '*')"
+
+signals:
+  signal:
+    metric: NetworkConntrackAllowanceExceeded
+
+rules:
+  critical:
+    threshold: 0
+    comparator: ">"
