@@ -15,7 +15,7 @@ variable "latency_aggregation_function" {
 variable "latency_transformation_function" {
   description = "Transformation function for latency detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".min(over='15m')"
+  default     = ".max(over='15m')"
 }
 
 variable "latency_max_delay" {
@@ -57,7 +57,7 @@ variable "latency_disabled_major" {
 variable "latency_threshold_critical" {
   description = "Critical threshold for latency detector"
   type        = number
-  default     = 2000
+  default     = 1500
 }
 
 variable "latency_lasting_duration_critical" {
@@ -74,7 +74,7 @@ variable "latency_at_least_percentage_critical" {
 variable "latency_threshold_major" {
   description = "Major threshold for latency detector"
   type        = number
-  default     = 4000
+  default     = 3000
 }
 
 variable "latency_lasting_duration_major" {

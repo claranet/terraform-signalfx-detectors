@@ -2,16 +2,16 @@ module: Azure CDN
 name: latency
 filtering: "filter('resource_type', 'microsoft.cdn/profiles') and filter('primary_aggregation_type', 'true')"
 
-transformation: ".min(over='15m')"
+transformation: ".max(over='15m')"
 
 signals:
   signal:
     metric: "TotalLatency"
 rules:
   critical:
-    threshold: 2000
+    threshold: 1500
     comparator: ">"
   major:
-    threshold: 4000
+    threshold: 3000
     comparator: ">"
     dependency: critical
