@@ -32,6 +32,7 @@
 - [integration_azure-app-service](#integration_azure-app-service)
 - [integration_azure-application-gateway](#integration_azure-application-gateway)
 - [integration_azure-azure-search](#integration_azure-azure-search)
+- [integration_azure-cdn](#integration_azure-cdn)
 - [integration_azure-container-instance](#integration_azure-container-instance)
 - [integration_azure-cosmos-db](#integration_azure-cosmos-db)
 - [integration_azure-datafactory](#integration_azure-datafactory)
@@ -387,6 +388,13 @@
 |---|---|---|---|---|---|
 |Azure Search latency|X|X|-|-|-|
 |Azure Search throttled queries rate|X|X|-|-|-|
+
+
+## integration_azure-cdn
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Azure CDN latency|X|X|-|-|-|
 
 
 ## integration_azure-container-instance
