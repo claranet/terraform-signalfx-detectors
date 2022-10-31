@@ -55,9 +55,9 @@ variable "cdn_total_latency_disabled_major" {
 }
 
 variable "cdn_total_latency_threshold_critical" {
-  description = "Critical threshold for cdn_total_latency detector"
+  description = "Critical threshold for cdn_total_latency detector in ms"
   type        = number
-  default     = 1500
+  default     = 3000
 }
 
 variable "cdn_total_latency_lasting_duration_critical" {
@@ -72,9 +72,9 @@ variable "cdn_total_latency_at_least_percentage_critical" {
   default     = 1
 }
 variable "cdn_total_latency_threshold_major" {
-  description = "Major threshold for cdn_total_latency detector"
+  description = "Major threshold for cdn_total_latency detector in ms"
   type        = number
-  default     = 3000
+  default     = 1500
 }
 
 variable "cdn_total_latency_lasting_duration_major" {
