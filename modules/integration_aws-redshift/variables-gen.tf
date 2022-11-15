@@ -86,35 +86,18 @@ variable "cpu_usage_disabled" {
   default     = null
 }
 
-variable "cpu_usage_disabled_major" {
-  description = "Disable major alerting rule for cpu_usage detector"
-  type        = bool
-  default     = null
-}
-
 variable "cpu_usage_disabled_critical" {
   description = "Disable critical alerting rule for cpu_usage detector"
   type        = bool
   default     = null
 }
 
-variable "cpu_usage_threshold_major" {
-  description = "Major threshold for cpu_usage detector in %"
-  type        = number
-  default     = 80
+variable "cpu_usage_disabled_major" {
+  description = "Disable major alerting rule for cpu_usage detector"
+  type        = bool
+  default     = null
 }
 
-variable "cpu_usage_lasting_duration_major" {
-  description = "Minimum duration that conditions must be true before raising alert"
-  type        = string
-  default     = "15m"
-}
-
-variable "cpu_usage_at_least_percentage_major" {
-  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
-  type        = number
-  default     = 1
-}
 variable "cpu_usage_threshold_critical" {
   description = "Critical threshold for cpu_usage detector in %"
   type        = number
@@ -128,6 +111,23 @@ variable "cpu_usage_lasting_duration_critical" {
 }
 
 variable "cpu_usage_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
+variable "cpu_usage_threshold_major" {
+  description = "Major threshold for cpu_usage detector in %"
+  type        = number
+  default     = 80
+}
+
+variable "cpu_usage_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "15m"
+}
+
+variable "cpu_usage_at_least_percentage_major" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1
