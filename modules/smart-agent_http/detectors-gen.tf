@@ -90,7 +90,7 @@ resource "signalfx_detector" "http_response_time" {
   program_text = <<-EOF
     signal = data('http.response_time', filter=${module.filtering.signalflow}, rollup='max')${var.http_response_time_aggregation_function}${var.http_response_time_transformation_function}.publish('signal')
     detect(when(signal > ${var.http_response_time_threshold_critical}, lasting=%{if var.http_response_time_lasting_duration_critical == null}None%{else}'${var.http_response_time_lasting_duration_critical}'%{endif}, at_least=${var.http_response_time_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal > ${var.http_response_time_threshold_major}, lasting=%{if var.http_response_time_lasting_duration_major == null}None%{else}'${var.http_response_time_lasting_duration_major}'%{endif}, at_least=${var.http_response_time_at_least_percentage_major})).publish('MAJOR')
+    detect(when(signal > ${var.http_response_time_threshold_major}, lasting=%{if var.http_response_time_lasting_duration_major == null}None%{else}'${var.http_response_time_lasting_duration_major}'%{endif}, at_least=${var.http_response_time_at_least_percentage_major}) and (not when(signal > ${var.http_response_time_threshold_critical}, lasting=%{if var.http_response_time_lasting_duration_critical == null}None%{else}'${var.http_response_time_lasting_duration_critical}'%{endif}, at_least=${var.http_response_time_at_least_percentage_critical}))).publish('MAJOR')
 EOF
 
   rule {
