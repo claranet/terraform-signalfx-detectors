@@ -1,0 +1,26 @@
+module: active-directory
+name: Replication Errors
+id: replication_errors
+
+transformation: true
+aggregation: true
+
+signals:
+  A:
+    metric: windows_ad_replication_sync_requests_total
+    extrapolation: 'zero'
+  B:
+    metric: windows_ad_replication_sync_requests_success_total
+    extrapolation: 'zero'
+  signal:
+    formula: (A/B).scale(100).fill(0)
+rules:
+  critical:
+    threshold: 90
+    comparator: "<"
+    lasting_duration: "5m"
+  major:
+    threshold: 80
+    comparator: "<="
+    lasting_duration: "5m"
+    dependency: critical

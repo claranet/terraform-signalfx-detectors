@@ -1,0 +1,18 @@
+module: active-directory
+name: Active Directory services
+id: active_directory_services
+
+transformation: true
+aggregation: true
+
+filtering: "filter('state', 'running') and filter('name','kdc', 'adws', 'dfs', 'dfsr', 'dns', 'ismserv', 'lanmanserver', 'lanmanworkstation', 'netlogon', 'ntds', 'w32time')"
+
+signals:
+  signal:
+    metric: windows_service_state
+
+rules:
+  major:
+    threshold: 1
+    comparator: "<"
+    lasting_duration: "5m"
