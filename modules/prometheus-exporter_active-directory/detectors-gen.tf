@@ -34,8 +34,8 @@ resource "signalfx_detector" "replication_errors" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    A = data('windows_ad_replication_sync_requests_total', filter=${module.filtering.signalflow}, extrapolation='zero')${var.replication_errors_aggregation_function}${var.replication_errors_transformation_function}
-    B = data('windows_ad_replication_sync_requests_success_total', filter=${module.filtering.signalflow}, extrapolation='zero')${var.replication_errors_aggregation_function}${var.replication_errors_transformation_function}
+    A = data('windows_ad_replication_sync_requests_success_total', filter=${module.filtering.signalflow}, extrapolation='zero')${var.replication_errors_aggregation_function}${var.replication_errors_transformation_function}
+    B = data('windows_ad_replication_sync_requests_total', filter=${module.filtering.signalflow}, extrapolation='zero')${var.replication_errors_aggregation_function}${var.replication_errors_transformation_function}
     signal = (A/B).scale(100).fill(0).publish('signal')
     detect(when(signal < ${var.replication_errors_threshold_critical}, lasting=%{if var.replication_errors_lasting_duration_critical == null}None%{else}'${var.replication_errors_lasting_duration_critical}'%{endif}, at_least=${var.replication_errors_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal <= ${var.replication_errors_threshold_major}, lasting=%{if var.replication_errors_lasting_duration_major == null}None%{else}'${var.replication_errors_lasting_duration_major}'%{endif}, at_least=${var.replication_errors_at_least_percentage_major}) and (not when(signal < ${var.replication_errors_threshold_critical}, lasting=%{if var.replication_errors_lasting_duration_critical == null}None%{else}'${var.replication_errors_lasting_duration_critical}'%{endif}, at_least=${var.replication_errors_at_least_percentage_critical}))).publish('MAJOR')

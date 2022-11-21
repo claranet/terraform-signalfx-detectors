@@ -7,10 +7,10 @@ aggregation: true
 
 signals:
   A:
-    metric: windows_ad_replication_sync_requests_total
+    metric: windows_ad_replication_sync_requests_success_total
     extrapolation: 'zero'
   B:
-    metric: windows_ad_replication_sync_requests_success_total
+    metric: windows_ad_replication_sync_requests_total
     extrapolation: 'zero'
   signal:
     formula: (A/B).scale(100).fill(0)
