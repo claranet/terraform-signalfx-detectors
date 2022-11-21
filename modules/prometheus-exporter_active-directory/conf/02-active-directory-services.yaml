@@ -3,7 +3,7 @@ name: Active Directory services
 id: active_directory_services
 
 transformation: true
-aggregation: true
+aggregation: ".mean(by=['host.name'])"
 
 filtering: "filter('state', 'running') and filter('name','kdc', 'adws', 'dfs', 'dfsr', 'dns', 'ismserv', 'lanmanserver', 'lanmanworkstation', 'netlogon', 'ntds', 'w32time')"
 
@@ -12,7 +12,7 @@ signals:
     metric: windows_service_state
 
 rules:
-  major:
+  critical:
     threshold: 1
     comparator: "<"
     lasting_duration: "5m"

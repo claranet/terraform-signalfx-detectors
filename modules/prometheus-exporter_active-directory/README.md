@@ -77,7 +77,7 @@ This module creates the following SignalFx detectors which could contain one or 
 |---|---|---|---|---|---|
 |Active-directory heartbeat|X|-|-|-|-|
 |Active-directory replication errors|X|X|-|-|-|
-|Active-directory active directory services|-|X|-|-|-|
+|Active-directory active directory services|X|-|-|-|-|
 
 ## How to collect required metrics?
 

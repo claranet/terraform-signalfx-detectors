@@ -78,15 +78,15 @@ resource "signalfx_detector" "active_directory_services" {
   program_text = <<-EOF
     base_filtering = filter('state', 'running') and filter('name','kdc', 'adws', 'dfs', 'dfsr', 'dns', 'ismserv', 'lanmanserver', 'lanmanworkstation', 'netlogon', 'ntds', 'w32time')
     signal = data('windows_service_state', filter=base_filtering and ${module.filtering.signalflow})${var.active_directory_services_aggregation_function}${var.active_directory_services_transformation_function}.publish('signal')
-    detect(when(signal < ${var.active_directory_services_threshold_major}, lasting=%{if var.active_directory_services_lasting_duration_major == null}None%{else}'${var.active_directory_services_lasting_duration_major}'%{endif}, at_least=${var.active_directory_services_at_least_percentage_major})).publish('MAJOR')
+    detect(when(signal < ${var.active_directory_services_threshold_critical}, lasting=%{if var.active_directory_services_lasting_duration_critical == null}None%{else}'${var.active_directory_services_lasting_duration_critical}'%{endif}, at_least=${var.active_directory_services_at_least_percentage_critical})).publish('CRIT')
 EOF
 
   rule {
-    description           = "is too low < ${var.active_directory_services_threshold_major}"
-    severity              = "Major"
-    detect_label          = "MAJOR"
+    description           = "is too low < ${var.active_directory_services_threshold_critical}"
+    severity              = "Critical"
+    detect_label          = "CRIT"
     disabled              = coalesce(var.active_directory_services_disabled, var.detectors_disabled)
-    notifications         = try(coalescelist(lookup(var.active_directory_services_notifications, "major", []), var.notifications.major), null)
+    notifications         = try(coalescelist(lookup(var.active_directory_services_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.active_directory_services_runbook_url, var.runbook_url), "")
     tip                   = var.active_directory_services_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject

@@ -59,7 +59,7 @@ variable "replication_errors_notifications" {
 variable "replication_errors_aggregation_function" {
   description = "Aggregation function and group by for replication_errors detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".mean(by=['host.name'])"
 }
 
 variable "replication_errors_transformation_function" {
@@ -149,7 +149,7 @@ variable "active_directory_services_notifications" {
 variable "active_directory_services_aggregation_function" {
   description = "Aggregation function and group by for active_directory_services detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".mean(by=['host.name'])"
 }
 
 variable "active_directory_services_transformation_function" {
@@ -182,19 +182,19 @@ variable "active_directory_services_disabled" {
   default     = null
 }
 
-variable "active_directory_services_threshold_major" {
-  description = "Major threshold for active_directory_services detector"
+variable "active_directory_services_threshold_critical" {
+  description = "Critical threshold for active_directory_services detector"
   type        = number
   default     = 1
 }
 
-variable "active_directory_services_lasting_duration_major" {
+variable "active_directory_services_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
   default     = "5m"
 }
 
-variable "active_directory_services_at_least_percentage_major" {
+variable "active_directory_services_at_least_percentage_critical" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1

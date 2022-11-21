@@ -3,7 +3,7 @@ name: Replication Errors
 id: replication_errors
 
 transformation: true
-aggregation: true
+aggregation: ".mean(by=['host.name'])"
 
 signals:
   A:

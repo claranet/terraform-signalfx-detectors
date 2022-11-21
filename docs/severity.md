@@ -744,7 +744,7 @@
 |---|---|---|---|---|---|
 |Active-directory heartbeat|X|-|-|-|-|
 |Active-directory replication errors|X|X|-|-|-|
-|Active-directory active directory services|-|X|-|-|-|
+|Active-directory active directory services|X|-|-|-|-|
 
 
 ## prometheus-exporter_kong
