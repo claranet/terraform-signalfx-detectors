@@ -149,7 +149,7 @@ variable "active_directory_services_notifications" {
 variable "active_directory_services_aggregation_function" {
   description = "Aggregation function and group by for active_directory_services detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['host.name'])"
+  default     = ".mean(by=['host.name', 'name'])"
 }
 
 variable "active_directory_services_transformation_function" {

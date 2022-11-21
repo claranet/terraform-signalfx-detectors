@@ -3,7 +3,7 @@ name: Active Directory services
 id: active_directory_services
 
 transformation: true
-aggregation: ".mean(by=['host.name'])"
+aggregation: ".mean(by=['host.name', 'name'])"
 
 filtering: "filter('state', 'running') and filter('name','kdc', 'adws', 'dfs', 'dfsr', 'dns', 'ismserv', 'lanmanserver', 'lanmanworkstation', 'netlogon', 'ntds', 'w32time')"
 
