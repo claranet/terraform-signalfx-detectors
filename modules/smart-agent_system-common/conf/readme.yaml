@@ -9,6 +9,8 @@ documentations:
     url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/filesystems.md'
   - name: Smart Agent monitor memory
     url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/memory.md'
+  - name: Smart Agent monitor vmem
+    url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/vmem.md'
   - name: Splunk Observability integration cpu
     url: 'https://docs.splunk.com/Observability/gdi/cpu/cpu.html'
   - name: Splunk Observability integration load
