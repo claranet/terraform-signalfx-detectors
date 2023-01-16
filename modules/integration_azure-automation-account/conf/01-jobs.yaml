@@ -1,6 +1,6 @@
 ## Example
 module: Azure Automation Account
-name: jobs
+name: "failed jobs"
 
 transformation: ".count(over='1h')"
 aggregation: ".count(by=['runbook'])"
