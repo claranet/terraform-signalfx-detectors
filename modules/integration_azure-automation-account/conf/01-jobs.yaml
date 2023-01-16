@@ -11,10 +11,11 @@ signals:
   totaljob:
     metric: "TotalJob"
   signal:
-    formula: totaljob.count(by=['runbook'])
+    formula: totaljob.fill().count(by=['runbook'])
 rules:
   critical:
     threshold: 1
     comparator: ">="
+    lasting_duration: "1h"
 
 

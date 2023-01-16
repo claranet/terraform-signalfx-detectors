@@ -51,7 +51,7 @@ variable "jobs_threshold_critical" {
 variable "jobs_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "1h"
 }
 
 variable "jobs_at_least_percentage_critical" {
