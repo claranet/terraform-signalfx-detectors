@@ -75,7 +75,7 @@ This module creates the following SignalFx detectors which could contain one or 
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|Azure Automation Account jobs|X|-|-|-|-|
+|Azure Automation Account failed jobs|X|-|-|-|-|
 
 ## How to collect required metrics?
 
@@ -103,3 +103,4 @@ Here is the list of required metrics for detectors in this module.
 * [Terraform SignalFx provider](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs)
 * [Terraform SignalFx detector](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector)
 * [Splunk Observability integrations](https://docs.splunk.com/Observability/gdi/get-data-in/integrations.html)
+* [Azure Monitor](https://learn.microsoft.com/en-us/azure/azure-monitor/essentials/metrics-supported#microsoftautomationautomationaccounts)

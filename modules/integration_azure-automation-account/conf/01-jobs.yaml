@@ -10,10 +10,10 @@ filtering: "filter('resource_type', 'Microsoft.Automation/automationAccounts') a
 signals:
   success:
     metric: "TotalJob"
-    filtering: "filter('status', 'Completed')"
+    filter: "filter('status', 'Completed')"
   failed:
     metric: "TotalJob"
-    filtering: "filter('status', 'Failed')"
+    filter: "filter('status', 'Failed')"
   signal:
     formula: (failed - success).min(over='1h')
 rules:

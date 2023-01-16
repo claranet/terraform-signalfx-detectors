@@ -385,7 +385,7 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|Azure Automation Account jobs|X|-|-|-|-|
+|Azure Automation Account failed jobs|X|-|-|-|-|
 
 
 ## integration_azure-azure-search
