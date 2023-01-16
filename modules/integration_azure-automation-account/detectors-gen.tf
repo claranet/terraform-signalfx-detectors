@@ -6,9 +6,10 @@ resource "signalfx_detector" "jobs" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    base_filtering = filter('resource_type', 'Microsoft.Automation/automationAccounts') and filter('primary_aggregation_type', 'true') and filter('status', 'Failed')
-    totaljob = data('TotalJob', filter=base_filtering and ${module.filtering.signalflow})${var.jobs_aggregation_function}${var.jobs_transformation_function}
-    signal = totaljob.fill().count(by=['runbook']).publish('signal')
+    base_filtering = filter('resource_type', 'Microsoft.Automation/automationAccounts') and filter('primary_aggregation_type', 'true')
+    success = data('TotalJob', filter=base_filtering and ${module.filtering.signalflow})${var.jobs_aggregation_function}${var.jobs_transformation_function}
+    failed = data('TotalJob', filter=base_filtering and ${module.filtering.signalflow})${var.jobs_aggregation_function}${var.jobs_transformation_function}
+    signal = (failed - success).min(over='1h').publish('signal')
     detect(when(signal >= ${var.jobs_threshold_critical}, lasting=%{if var.jobs_lasting_duration_critical == null}None%{else}'${var.jobs_lasting_duration_critical}'%{endif}, at_least=${var.jobs_at_least_percentage_critical})).publish('CRIT')
 EOF
 

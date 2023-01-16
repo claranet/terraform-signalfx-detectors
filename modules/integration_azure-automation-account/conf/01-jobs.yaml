@@ -2,20 +2,23 @@
 module: Azure Automation Account
 name: jobs
 
-transformation: true
-aggregation: true
+transformation: ".count(over='1h')"
+aggregation: ".count(by=['runbook'])"
 
-filtering: "filter('resource_type', 'Microsoft.Automation/automationAccounts') and filter('primary_aggregation_type', 'true') and filter('status', 'Failed')"
+filtering: "filter('resource_type', 'Microsoft.Automation/automationAccounts') and filter('primary_aggregation_type', 'true')"
 
 signals:
-  totaljob:
+  success:
     metric: "TotalJob"
+    filtering: "filter('status', 'Completed')"
+  failed:
+    metric: "TotalJob"
+    filtering: "filter('status', 'Failed')"
   signal:
-    formula: totaljob.fill().count(by=['runbook'])
+    formula: (failed - success).min(over='1h')
 rules:
   critical:
     threshold: 1
     comparator: ">="
-    lasting_duration: "1h"
 
 

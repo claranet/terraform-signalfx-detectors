@@ -9,13 +9,13 @@ variable "jobs_notifications" {
 variable "jobs_aggregation_function" {
   description = "Aggregation function and group by for jobs detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".count(by=['runbook'])"
 }
 
 variable "jobs_transformation_function" {
   description = "Transformation function for jobs detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ""
+  default     = ".count(over='1h')"
 }
 
 variable "jobs_max_delay" {
@@ -51,7 +51,7 @@ variable "jobs_threshold_critical" {
 variable "jobs_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "1h"
+  default     = null
 }
 
 variable "jobs_at_least_percentage_critical" {
