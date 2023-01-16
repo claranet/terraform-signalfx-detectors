@@ -31,6 +31,7 @@
 - [integration_azure-app-service-plan](#integration_azure-app-service-plan)
 - [integration_azure-app-service](#integration_azure-app-service)
 - [integration_azure-application-gateway](#integration_azure-application-gateway)
+- [integration_azure-automation-account](#integration_azure-automation-account)
 - [integration_azure-azure-search](#integration_azure-azure-search)
 - [integration_azure-container-instance](#integration_azure-container-instance)
 - [integration_azure-cosmos-db](#integration_azure-cosmos-db)
@@ -378,6 +379,13 @@
 |Azure Application Gateway backend 4xx error rate|X|X|-|-|-|
 |Azure Application Gateway backend 5xx error rate|X|X|-|-|-|
 |Azure Application Gateway capacity units|-|X|-|-|-|
+
+
+## integration_azure-automation-account
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Azure Automation Account jobs|X|-|-|-|-|
 
 
 ## integration_azure-azure-search

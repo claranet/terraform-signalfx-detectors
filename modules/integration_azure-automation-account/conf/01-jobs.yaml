@@ -1,0 +1,20 @@
+## Example
+module: Azure Automation Account
+name: jobs
+
+transformation: true
+aggregation: true
+
+filtering: "filter('resource_type', 'Microsoft.Automation/automationAccounts') and filter('primary_aggregation_type', 'true') and filter('status', 'Failed')"
+
+signals:
+  totaljob:
+    metric: "TotalJob"
+  signal:
+    formula: totaljob.count(by=['runbook'])
+rules:
+  critical:
+    threshold: 1
+    comparator: ">="
+
+
