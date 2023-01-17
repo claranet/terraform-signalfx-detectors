@@ -2,8 +2,8 @@
 module: Azure Automation Account
 name: "failed jobs"
 
-transformation: ".count(over='1h')"
-aggregation: ".count(by=['runbook'])"
+transformation: ".max(over='1h')"
+aggregation: ".mean(by=['runbook'])"
 
 filtering: "filter('resource_type', 'Microsoft.Automation/automationAccounts') and filter('primary_aggregation_type', 'true')"
 
@@ -15,10 +15,8 @@ signals:
     metric: "TotalJob"
     filter: "filter('status', 'Failed')"
   signal:
-    formula: (failed - success).min(over='1h')
+    formula: (failed - success.scale(10)).min(over='1h')
 rules:
   critical:
-    threshold: 1
-    comparator: ">="
-
-
+    threshold: 0
+    comparator: ">"

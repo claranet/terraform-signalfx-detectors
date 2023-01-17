@@ -9,13 +9,13 @@ variable "failed_jobs_notifications" {
 variable "failed_jobs_aggregation_function" {
   description = "Aggregation function and group by for failed_jobs detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".count(by=['runbook'])"
+  default     = ".mean(by=['runbook'])"
 }
 
 variable "failed_jobs_transformation_function" {
   description = "Transformation function for failed_jobs detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".count(over='1h')"
+  default     = ".max(over='1h')"
 }
 
 variable "failed_jobs_max_delay" {
@@ -45,7 +45,7 @@ variable "failed_jobs_disabled" {
 variable "failed_jobs_threshold_critical" {
   description = "Critical threshold for failed_jobs detector"
   type        = number
-  default     = 1
+  default     = 0
 }
 
 variable "failed_jobs_lasting_duration_critical" {
