@@ -15,7 +15,7 @@ signals:
     metric: "TotalJob"
     filter: "filter('status', 'Failed')"
   signal:
-    formula: (failed - success.scale(10)).min(over='1h')
+    formula: (failed.fill(0) - success.fill(0).scale(2))
 rules:
   critical:
     threshold: 0
