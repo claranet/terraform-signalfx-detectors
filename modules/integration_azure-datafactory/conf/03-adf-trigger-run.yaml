@@ -5,9 +5,9 @@ aggregation: ".sum(by=['name', 'azure_resource_group_name', 'azure_region'])"
 transformation: ".min(over='5m')"
 signals:
   adf_trigger_succeeded_run:
-    metric: "triggerSucceededRuns"
+    metric: "TriggerSucceededRuns"
   adf_trigger_failed_run:
-    metric: "triggerFailedRuns"
+    metric: "TriggerFailedRuns"
   signal:
     formula:
       (adf_trigger_failed_run/(adf_trigger_succeeded_run+adf_trigger_failed_run)).scale(100).fill(0)
