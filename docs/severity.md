@@ -167,6 +167,8 @@
 |AWS Backup job expired|X|-|-|-|-|
 |AWS Backup copy jobs failed|X|-|-|-|-|
 |AWS Backup check|X|-|-|-|-|
+|AWS Backup recovery point partial|-|-|X|-|-|
+|AWS Backup recovery point expired|-|X|-|-|-|
 
 
 ## integration_aws-beanstalk

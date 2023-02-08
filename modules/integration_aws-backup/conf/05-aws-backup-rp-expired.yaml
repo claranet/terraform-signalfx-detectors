@@ -1,0 +1,22 @@
+module: AWS Backup
+name: recovery point expired
+id: backup_rp_expired
+
+transformation: ".min(over='1h')"
+aggregation: true
+filtering: "filter('namespace', 'AWS/Backup')"
+value_unit: "count"
+
+signals:
+  failed:
+    metric: NumberOfRecoveryPointsExpired
+    extrapolation: zero
+    rollup: sum
+  signal:
+    formula: failed
+rules:
+  major:
+    threshold: 0
+    comparator: ">"
+    lasting_duration: 2h
+    lasting_at_least: 0.9

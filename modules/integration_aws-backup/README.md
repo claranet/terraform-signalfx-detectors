@@ -79,6 +79,8 @@ This module creates the following SignalFx detectors which could contain one or 
 |AWS Backup job expired|X|-|-|-|-|
 |AWS Backup copy jobs failed|X|-|-|-|-|
 |AWS Backup check|X|-|-|-|-|
+|AWS Backup recovery point partial|-|-|X|-|-|
+|AWS Backup recovery point expired|-|X|-|-|-|
 
 ## How to collect required metrics?
 
@@ -101,6 +103,8 @@ Here is the list of required metrics for detectors in this module.
 * `NumberOfBackupJobsExpired`
 * `NumberOfBackupJobsFailed`
 * `NumberOfCopyJobsFailed`
+* `NumberOfRecoveryPointsExpired`
+* `NumberOfRecoveryPointsPartial`
 
 
 

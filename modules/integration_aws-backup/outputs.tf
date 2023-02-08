@@ -18,3 +18,13 @@ output "backup_job_expired" {
   value       = signalfx_detector.backup_job_expired
 }
 
+output "backup_rp_expired" {
+  description = "Detector resource for backup_rp_expired"
+  value       = signalfx_detector.backup_rp_expired
+}
+
+output "backup_rp_partial" {
+  description = "Detector resource for backup_rp_partial"
+  value       = signalfx_detector.backup_rp_partial
+}
+
