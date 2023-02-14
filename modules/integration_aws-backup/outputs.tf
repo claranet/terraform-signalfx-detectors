@@ -1,8 +1,3 @@
-output "backup" {
-  description = "Detector resource for backup"
-  value       = signalfx_detector.backup
-}
-
 output "backup_copy_jobs_failed" {
   description = "Detector resource for backup_copy_jobs_failed"
   value       = signalfx_detector.backup_copy_jobs_failed
@@ -26,5 +21,10 @@ output "backup_rp_expired" {
 output "backup_rp_partial" {
   description = "Detector resource for backup_rp_partial"
   value       = signalfx_detector.backup_rp_partial
+}
+
+output "backup_successful" {
+  description = "Detector resource for backup_successful"
+  value       = signalfx_detector.backup_successful
 }
 

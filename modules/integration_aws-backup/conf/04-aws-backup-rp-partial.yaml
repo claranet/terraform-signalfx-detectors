@@ -2,21 +2,15 @@ module: AWS Backup
 name: recovery point partial
 id: backup_rp_partial
 
-transformation: ".min(over='1h')"
+transformation: ".max(over='1d').fill(0)"
 aggregation: true
-filtering: "filter('namespace', 'AWS/Backup')"
-value_unit: "count"
+filtering: "filter('namespace', 'AWS/Backup') and filter('stat', 'sum')"
 
 signals:
-  failed:
-    metric: NumberOfRecoveryPointsPartial
-    extrapolation: zero
-    rollup: sum
   signal:
-    formula: failed
+    metric: NumberOfRecoveryPointsPartial
 rules:
   minor:
     threshold: 0
     comparator: ">"
-    lasting_duration: 2h
-    lasting_at_least: 0.9
+    lasting_duration: '1h'

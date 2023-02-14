@@ -1,23 +1,20 @@
 module: AWS Backup
-name: Check
-id: backup
+name: Check jobs completed successfully
+id: backup_successful
 
 transformation: ".min(over='23h')"
 aggregation: true
-filtering: "filter('namespace', 'AWS/Backup')"
-value_unit: "count"
+filtering: "filter('namespace', 'AWS/Backup') and filter('stat', 'sum')"
 
 signals:
   created:
     metric: NumberOfBackupJobsCreated
     extrapolation: zero
-    rollup: sum
   completed:
     metric: NumberOfBackupJobsCompleted
     extrapolation: zero
-    rollup: sum
   signal:
-    formula: created - completed
+    formula: (created-completed)
 rules:
   critical:
     threshold: 0

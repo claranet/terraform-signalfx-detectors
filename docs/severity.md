@@ -166,7 +166,7 @@
 |AWS Backup failed|X|-|-|-|-|
 |AWS Backup job expired|X|-|-|-|-|
 |AWS Backup copy jobs failed|X|-|-|-|-|
-|AWS Backup check|X|-|-|-|-|
+|AWS Backup check jobs completed successfully|X|-|-|-|-|
 |AWS Backup recovery point partial|-|-|X|-|-|
 |AWS Backup recovery point expired|-|X|-|-|-|
 
