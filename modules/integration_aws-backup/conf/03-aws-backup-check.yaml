@@ -1,5 +1,5 @@
 module: AWS Backup
-name: Check jobs completed successfully
+name: check jobs completed successfully
 id: backup_successful
 
 transformation: ".min(over='23h')"
