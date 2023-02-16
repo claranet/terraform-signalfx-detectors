@@ -1,0 +1,22 @@
+module: AWS AmazonMQ RabbitMQ
+name: messages unacknowledged
+
+transformation: true
+aggregation: true
+filtering: "filter('namespace', 'AWS/AmazonMQ') and filter('stat', 'upper')"
+disabled: true
+
+signals:
+  signal:
+    metric: MessageUnacknowledgedCount
+
+rules:
+  critical:
+    threshold: 15000
+    comparator: ">"
+    lasting_duration: 20m
+  major:
+    threshold: 10000
+    comparator: ">"
+    lasting_duration: 20m
+    dependency: critical

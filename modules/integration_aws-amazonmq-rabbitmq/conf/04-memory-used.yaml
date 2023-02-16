@@ -1,0 +1,26 @@
+module: AWS AmazonMQ RabbitMQ
+name: memory used
+
+transformation: true
+aggregation: true
+filtering: "filter('namespace', 'AWS/AmazonMQ') and filter('stat', 'upper')"
+value_unit: "%"
+
+signals:
+  A:
+    metric: RabbitMQMemUsed
+  B:
+    metric: RabbitMQMemLimit
+  signal:
+    formula: ((A / B).scale(100))
+
+rules:
+  critical:
+    threshold: 90
+    comparator: ">"
+    lasting_duration: 10m
+  major:
+    threshold: 80
+    comparator: ">"
+    lasting_duration: 10m
+    dependency: critical
