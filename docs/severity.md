@@ -8,6 +8,7 @@
 - [fame_azure-vm-backup](#fame_azure-vm-backup)
 - [fame_azure-vpn](#fame_azure-vpn)
 - [integration_aws-alb](#integration_aws-alb)
+- [integration_aws-amazonmq-rabbitmq](#integration_aws-amazonmq-rabbitmq)
 - [integration_aws-apigateway](#integration_aws-apigateway)
 - [integration_aws-backup](#integration_aws-backup)
 - [integration_aws-beanstalk](#integration_aws-beanstalk)
@@ -150,6 +151,17 @@
 |AWS ALB target 5xx error rate|X|X|-|-|-|
 |AWS ALB target 4xx error rate|X|X|X|-|-|
 |AWS ALB healthy instances percentage|X|X|-|-|-|
+
+
+## integration_aws-amazonmq-rabbitmq
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|AWS AmazonMQ RabbitMQ messages ready|X|X|-|-|-|
+|AWS AmazonMQ RabbitMQ messages unacknowledged|X|X|-|-|-|
+|AWS AmazonMQ RabbitMQ messages ack rate|X|X|-|-|-|
+|AWS AmazonMQ RabbitMQ memory used|X|X|-|-|-|
+|AWS AmazonMQ RabbitMQ disk free|X|X|-|-|-|
 
 
 ## integration_aws-apigateway
