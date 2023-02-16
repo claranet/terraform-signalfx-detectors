@@ -12,7 +12,7 @@ signals:
   B:
     metric: RabbitMQDiskFreeLimit
   signal:
-    formula: ((A / B)/1024**3)
+    formula: ((A - B)/1024**3)
 
 rules:
   critical:
