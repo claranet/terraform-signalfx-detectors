@@ -186,7 +186,7 @@ resource "signalfx_detector" "disk_free" {
     base_filtering = filter('namespace', 'AWS/AmazonMQ') and filter('stat', 'upper')
     A = data('RabbitMQDiskFree', filter=base_filtering and ${module.filtering.signalflow})${var.disk_free_aggregation_function}${var.disk_free_transformation_function}
     B = data('RabbitMQDiskFreeLimit', filter=base_filtering and ${module.filtering.signalflow})${var.disk_free_aggregation_function}${var.disk_free_transformation_function}
-    signal = ((A / B)/1024**3).publish('signal')
+    signal = ((A - B)/1024**3).publish('signal')
     detect(when(signal < ${var.disk_free_threshold_critical}, lasting=%{if var.disk_free_lasting_duration_critical == null}None%{else}'${var.disk_free_lasting_duration_critical}'%{endif}, at_least=${var.disk_free_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal < ${var.disk_free_threshold_major}, lasting=%{if var.disk_free_lasting_duration_major == null}None%{else}'${var.disk_free_lasting_duration_major}'%{endif}, at_least=${var.disk_free_at_least_percentage_major}) and (not when(signal < ${var.disk_free_threshold_critical}, lasting=%{if var.disk_free_lasting_duration_critical == null}None%{else}'${var.disk_free_lasting_duration_critical}'%{endif}, at_least=${var.disk_free_at_least_percentage_critical}))).publish('MAJOR')
 EOF
