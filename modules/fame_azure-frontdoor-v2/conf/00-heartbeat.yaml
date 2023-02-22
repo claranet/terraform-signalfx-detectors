@@ -1,0 +1,16 @@
+module: Azure FrontDoor v2
+name: heartbeat
+
+transformation: true
+aggregation: true
+
+signals:
+  A:
+    metric: fame.azure.frontdoor.probe_response_status
+    extrapolation: 'zero'
+    rollup: 'sum'
+  signal:
+    formula: (A.sum().fill(0))
+
+rules:
+  critical:

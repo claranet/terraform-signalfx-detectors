@@ -1,0 +1,28 @@
+module: Azure FrontDoor v2
+name: HTTP errors
+
+transformation: true
+aggregation: true
+
+signals:
+  A:
+    metric: fame.azure.frontdoor.response_status
+    extrapolation: 'zero'
+    rollup: 'sum'
+    filter: "filter('http_status_code', '5**') or filter('http_status_code', '4**')"
+  B:
+    metric: fame.azure.frontdoor.response_status
+    extrapolation: 'zero'
+    rollup: 'sum'
+  signal:
+    formula: (A.sum()/B.sum()).scale(100).fill(0)
+rules:
+  critical:
+    threshold: 50
+    comparator: ">="
+    lasting_duration: "5m"
+  major:
+    threshold: 25
+    comparator: ">="
+    lasting_duration: "5m"
+    dependency: critical

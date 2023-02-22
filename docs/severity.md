@@ -4,6 +4,7 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 :link: **Contents**
 
+- [fame_azure-frontdoor-v2](#fame_azure-frontdoor-v2)
 - [integration_aws-alb](#integration_aws-alb)
 - [integration_aws-apigateway](#integration_aws-apigateway)
 - [integration_aws-beanstalk](#integration_aws-beanstalk)
@@ -105,6 +106,17 @@
 - [smart-agent_zookeeper](#smart-agent_zookeeper)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+## fame_azure-frontdoor-v2
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Azure FrontDoor v2 heartbeat|X|-|-|-|-|
+|Azure FrontDoor v2 http errors|X|X|-|-|-|
+|Azure FrontDoor v2 probes errors|X|X|-|-|-|
+|Azure FrontDoor v2 cache hit rate|-|-|-|X|-|
+|Azure FrontDoor v2 waf actions|-|-|-|X|-|
+
 
 ## integration_aws-alb
 

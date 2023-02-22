@@ -1,0 +1,17 @@
+module: Azure FrontDoor v2
+name: cache hit rate
+
+transformation: true
+aggregation: true
+
+signals:
+  A:
+    metric: fame.azure.frontdoor.cache_hit_rate
+    extrapolation: 'last_value'
+  signal:
+    formula: A.fill(0).mean(by="endpoint")
+rules:
+  warning:
+    threshold: 60
+    comparator: "<="
+    lasting_duration: "5m"
