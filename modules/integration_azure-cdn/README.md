@@ -1,4 +1,4 @@
-# AZURE-DATAFACTORY SignalFx detectors
+# AZURE-CDN SignalFx detectors
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -8,8 +8,6 @@
 - [What are the available detectors in this module?](#what-are-the-available-detectors-in-this-module)
 - [How to collect required metrics?](#how-to-collect-required-metrics)
   - [Metrics](#metrics)
-- [Notes](#notes)
-  - [Available memory](#available-memory)
 - [Related documentation](#related-documentation)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -22,8 +20,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-integration-azure-datafactory" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/integration_azure-datafactory?ref={revision}"
+module "signalfx-detectors-integration-azure-cdn" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/integration_azure-cdn?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications
@@ -77,11 +75,7 @@ This module creates the following SignalFx detectors which could contain one or 
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|Azure DataFactory activity error rate|X|X|-|-|-|
-|Azure DataFactory pipeline error rate|X|X|-|-|-|
-|Azure DataFactory trigger error rate|X|X|-|-|-|
-|Azure DataFactory available memory|X|X|-|-|-|
-|Azure DataFactory cpu percentage|X|X|-|-|-|
+|Azure CDN latency|X|X|-|-|-|
 
 ## How to collect required metrics?
 
@@ -99,24 +93,9 @@ Check the [Related documentation](#related-documentation) section for more detai
 
 Here is the list of required metrics for detectors in this module.
 
-* `ActivityFailedRuns`
-* `ActivitySucceededRuns`
-* `IntegrationRuntimeAvailableMemory`
-* `IntegrationRuntimeCpuPercentage`
-* `PipelineFailedRuns`
-* `PipelineSucceededRuns`
-* `TriggerFailedRuns`
-* `TriggerSucceededRuns`
+* `TotalLatency`
 
 
-## Notes
-
-### Available memory
-
-This metric doesn't have a max value. We must set a default value. The default threshold values are:
-  * critical < 256MB
-  * major > 256MB and < 512MB
-If those values are not relevants, please feel free to set your own threshold.
 
 
 ## Related documentation
@@ -124,4 +103,3 @@ If those values are not relevants, please feel free to set your own threshold.
 * [Terraform SignalFx provider](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs)
 * [Terraform SignalFx detector](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector)
 * [Splunk Observability integrations](https://docs.splunk.com/Observability/gdi/get-data-in/integrations.html)
-* [Azure Monitor metrics](https://docs.microsoft.com/en-us/azure/azure-monitor/essentials/metrics-supported#microsoftdatafactoryfactories)
