@@ -1,0 +1,18 @@
+module: galera
+name: "replication paused ratio"
+transformation: true
+aggregation: true 
+disabled: true
+signals:
+  signal:
+    metric: "mysql_wsrep_flow_control_paused"
+rules:
+  major:
+    lasting_duration: 10m
+    threshold: 0.05
+    comparator: ">"
+  minor:
+    lasting_duration: 10m
+    threshold: 0
+    comparator: ">"
+    dependency: major
