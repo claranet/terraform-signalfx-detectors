@@ -105,8 +105,8 @@ Here is the list of required metrics for detectors in this module.
 * `IntegrationRuntimeCpuPercentage`
 * `PipelineFailedRuns`
 * `PipelineSucceededRuns`
-* `triggerFailedRuns`
-* `triggerSucceededRuns`
+* `TriggerFailedRuns`
+* `TriggerSucceededRuns`
 
 
 ## Notes
