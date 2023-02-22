@@ -12,13 +12,13 @@ signals:
   signal:
     metric: "seconds_behind_master"
 rules:
-  major:
-    threshold: 100
-    comparator: ">"
-    lasting_duration: '15m'
   critical:
     threshold: 200
     comparator: ">"
     lasting_duration: '15m'
-    dependency: major
+  major:
+    threshold: 100
+    comparator: ">"
+    lasting_duration: '15m'
+    dependency: critical
 ...
