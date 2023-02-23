@@ -171,7 +171,7 @@ parameter to the corresponding monitor configuration:
 
 To prepare the Mysql server allowing monitoring you can use [this terraform module](https://github.com/claranet/terraform-signalfx-integrations/tree/master/database/mysql).
 
-This module is usually used in addition with the [MySQL](../database/mysql) module.
+This module is usually used in addition with the [MySQL](../smart-agent_galera/) module.
 
 
 ## Related documentation
