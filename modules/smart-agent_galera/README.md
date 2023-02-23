@@ -161,9 +161,9 @@ parameter to the corresponding monitor configuration:
 
 ## Notes
 
-To prepare the Mysql server allowing monitoring you can use [this terraform module](https://github.com/claranet/terraform-signalfx-integrations/tree/master/database/mysql).
+To prepare the Mysql server you can use [this terraform module](https://github.com/claranet/terraform-signalfx-integrations/tree/master/database/mysql).
 
-This module is usually used in addition with the [MySQL](../database/mysql) module.
+This module is usually used in addition with the [MySQL](../smart-agent_mysql) module.
 
 
 ## Related documentation
@@ -174,3 +174,4 @@ This module is usually used in addition with the [MySQL](../database/mysql) modu
 * [Official SQL documentation](https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.mysql.html)
 * [Galera Status variables](https://galeracluster.com/library/documentation/galera-status-variables.html)
 * [Galera monitoring](https://galeracluster.com/library/documentation/monitoring-cluster.html)
+* [Galera node state](https://galeracluster.com/library/documentation/node-states.html#node-state-changes)
