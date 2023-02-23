@@ -2,6 +2,14 @@
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+:link: **Contents**
+
+- [How to use this module?](#how-to-use-this-module)
+- [What are the available detectors in this module?](#what-are-the-available-detectors-in-this-module)
+- [How to collect required metrics?](#how-to-collect-required-metrics)
+  - [Metrics](#metrics)
+- [Notes](#notes)
+- [Related documentation](#related-documentation)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -99,7 +107,7 @@ As a result:
 
 Check the [Related documentation](#related-documentation) section for more detailed and specific information about this module dependencies.
 
-This module is only based on the [sql](https://docs.signalfx.com/en/latest/integrations/agent/monitors/sql.html) monitor.
+This module is only based on the [sql](https://docs.splunk.com/Observability/gdi/sql/sql.html) monitor.
 
 Here is a full configuration example working with these detectors:
 
@@ -161,9 +169,9 @@ parameter to the corresponding monitor configuration:
 
 ## Notes
 
-To prepare the Mysql server you can use [this terraform module](https://github.com/claranet/terraform-signalfx-integrations/tree/master/database/mysql).
+To prepare the Mysql server allowing monitoring you can use [this terraform module](https://github.com/claranet/terraform-signalfx-integrations/tree/master/database/mysql).
 
-This module is usually used in addition with the [MySQL](../smart-agent_mysql) module.
+This module is usually used in addition with the [MySQL](../database/mysql) module.
 
 
 ## Related documentation

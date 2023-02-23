@@ -5,13 +5,15 @@ documentations:
     url: https://galeracluster.com/library/documentation/galera-status-variables.html
   - name: Galera monitoring
     url: https://galeracluster.com/library/documentation/monitoring-cluster.html
+  - name: Galera node state
+    url: https://galeracluster.com/library/documentation/node-states.html#node-state-changes
 notes: |
   To prepare the Mysql server allowing monitoring you can use [this terraform module](https://github.com/claranet/terraform-signalfx-integrations/tree/master/database/mysql).
 
   This module is usually used in addition with the [MySQL](../database/mysql) module.
 
 source_doc: |
-  This module is only based on the [sql](https://docs.signalfx.com/en/latest/integrations/agent/monitors/sql.html) monitor.
+  This module is only based on the [sql](https://docs.splunk.com/Observability/gdi/sql/sql.html) monitor.
   
   Here is a full configuration example working with these detectors:
   
