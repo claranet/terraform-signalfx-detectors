@@ -97,10 +97,10 @@ Check the [Related documentation](#related-documentation) section for more detai
 
 Here is the list of required metrics for detectors in this module.
 
-* `connection_successful`
 * `cpu_percent`
 * `deadlock`
 * `dtu_consumption_percent`
+* `sessions_count`
 * `storage_percent`
 
 
