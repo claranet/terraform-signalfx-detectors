@@ -69,6 +69,7 @@
 - [integration_gcp-pubsub-topic](#integration_gcp-pubsub-topic)
 - [integration_newrelic-apm](#integration_newrelic-apm)
 - [organization_usage](#organization_usage)
+- [otel-collector_kubernetes-common](#otel-collector_kubernetes-common)
 - [prometheus-exporter_active-directory](#prometheus-exporter_active-directory)
 - [prometheus-exporter_kong](#prometheus-exporter_kong)
 - [prometheus-exporter_oracledb](#prometheus-exporter_oracledb)
@@ -758,6 +759,28 @@
 |Organization usage custom metrics limit|-|X|-|-|-|
 |Organization usage containers ratio per host included|-|X|-|-|-|
 |Organization usage custom metrics ratio per host included|-|X|-|-|-|
+
+
+## otel-collector_kubernetes-common
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Kubernetes heartbeat|X|-|-|-|-|
+|Kubernetes hpa scale exceeded capacity|-|X|-|-|-|
+|Kubernetes node status|-|X|X|-|-|
+|Kubernetes pod phase status|-|X|X|X|-|
+|Kubernetes pod terminated abnormally|-|X|-|-|-|
+|Kubernetes container killed by oom|-|X|-|-|-|
+|Kubernetes deployment in crashloopbackoff|-|X|-|-|-|
+|Kubernetes daemonset in crashloopbackoff|-|X|-|-|-|
+|Kubernetes job from cronjob failed|-|X|-|-|-|
+|Kubernetes daemonsets scheduled|X|-|-|-|-|
+|Kubernetes daemonsets ready|X|-|-|-|-|
+|Kubernetes daemonsets misscheduled|X|-|-|-|-|
+|Kubernetes deployments available|X|-|-|-|-|
+|Kubernetes replicasets available|X|-|-|-|-|
+|Kubernetes replication controllers available|X|-|-|-|-|
+|Kubernetes statefulsets ready|X|-|-|-|-|
 
 
 ## prometheus-exporter_active-directory

@@ -1,0 +1,17 @@
+module: Kubernetes
+name: daemonset in CrashLoopBackOff
+id: daemonset_crashloopbackoff
+
+transformation: ".sum(over='15m')"
+aggregation: ".sum(by=['k8s.cluster.name', 'k8s.namespace.name', 'k8s.daemonset.name'])"
+filtering: "filter('container.status', 'waiting') and filter('k8s.daemonset.name', '*') and filter('container.status.reason', 'CrashLoopBackOff')"
+
+signals:
+  signal:
+    metric: k8s.container.restarts
+    extrapolation: zero
+
+rules:
+  major:
+    threshold: 0
+    comparator: ">"

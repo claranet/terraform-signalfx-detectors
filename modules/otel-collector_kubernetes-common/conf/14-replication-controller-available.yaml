@@ -1,0 +1,21 @@
+module: Kubernetes
+name: replication controllers available
+id: replication_controller_available
+
+transformation: true
+aggregation: true
+
+signals:
+  desired:
+    metric: k8s.replication_controller.desired
+  available:
+    metric: k8s.replication_controller.available
+  signal:
+    formula: (desired-available).fill(value=0)
+
+rules:
+  critical:
+    threshold: 0
+    comparator: "!="
+    lasting_duration: 5m
+    description: do not match desired value
