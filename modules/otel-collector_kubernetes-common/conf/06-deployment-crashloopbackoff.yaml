@@ -1,0 +1,17 @@
+module: Kubernetes
+name: deployment in CrashLoopBackOff
+id: deployment_crashloopbackoff
+
+transformation: ".sum(over='15m')"
+aggregation: ".sum(by=['k8s.cluster.name', 'k8s.namespace.name', 'k8s.deployment.name'])"
+filtering: "filter('container.status', 'waiting') and filter('k8s.deployment.name', '*') and filter('container.status.reason', 'CrashLoopBackOff')"
+
+signals:
+  signal:
+    metric: k8s.container.restarts
+    extrapolation: zero
+
+rules:
+  major:
+    threshold: 0
+    comparator: ">"

@@ -1,0 +1,17 @@
+module: Kubernetes
+name: pod terminated abnormally
+id: terminated
+
+transformation: true
+aggregation: ".sum(by=['k8s.cluster.name', 'k8s.namespace.name', 'k8s.pod.name'])"
+filtering: "filter('container.status', 'terminated') and (not filter('container.status.reason', 'Completed'))"
+
+signals:
+  signal:
+    metric: k8s.container.ready
+
+rules:
+  major:
+    threshold: 0
+    comparator: ">"
+    lasting_duration: 10m

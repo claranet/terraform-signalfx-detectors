@@ -1,0 +1,26 @@
+module: Kubernetes
+name: job from cronjob failed
+id: job_failed
+
+transformation: true
+aggregation: true
+
+signals:
+  completions:
+    metric: k8s.job.desired_successful_pods
+    extrapolation: zero
+  active:
+    metric: k8s.job.active_pods
+    extrapolation: zero
+  succeeded:
+    metric: k8s.job.successful_pods
+    extrapolation: zero
+    rollup: max
+  signal:
+    formula: (completions-active-succeeded)
+
+rules:
+  major:
+    threshold: 0
+    comparator: ">"
+    lasting_duration: 1m

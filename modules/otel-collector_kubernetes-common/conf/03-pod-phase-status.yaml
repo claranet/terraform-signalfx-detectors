@@ -1,0 +1,29 @@
+module: Kubernetes
+name: pod phase status
+id: pod_phase_status
+
+transformation: true
+aggregation: true
+filtering: "(not filter('k8s.job.name', '*')) and (not filter('cronk8s.job.name', '*'))"
+
+signals:
+  signal:
+    metric: k8s.pod.phase
+
+rules:
+  warning:
+    threshold: 2
+    comparator: "<"
+    lasting_duration: 30m
+    description: is pending for too long
+  minor:
+    threshold: 4
+    comparator: ">"
+    lasting_duration: 15m
+    description: is unknown
+  major:
+    threshold: 3
+    comparator: ">"
+    lasting_duration: 5m
+    description: is failed
+    dependency: minor
