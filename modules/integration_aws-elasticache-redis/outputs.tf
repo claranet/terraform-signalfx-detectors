@@ -13,6 +13,11 @@ output "cpu_high" {
   value       = signalfx_detector.cpu_high
 }
 
+output "network_conntrack_allowance_exceeded" {
+  description = "Detector resource for network_conntrack_allowance_exceeded"
+  value       = signalfx_detector.network_conntrack_allowance_exceeded
+}
+
 output "replication_lag" {
   description = "Detector resource for replication_lag"
   value       = signalfx_detector.replication_lag
