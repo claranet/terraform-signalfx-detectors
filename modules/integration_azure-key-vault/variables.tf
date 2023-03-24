@@ -127,23 +127,23 @@ variable "api_latency_aggregation_function" {
 variable "api_latency_lasting_duration_critical" {
   description = "Evaluation window for api_latency detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
-  default     = "5m"
+  default     = "1h"
 }
 
 variable "api_latency_threshold_critical" {
   description = "Critical threshold for api_latency detector"
   type        = number
-  default     = 100
+  default     = 500
 }
 
 variable "api_latency_lasting_duration_major" {
   description = "Evaluation window for api_latency detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
-  default     = "5m"
+  default     = "30m"
 }
 
 variable "api_latency_threshold_major" {
   description = "Major threshold for api_latency detector"
   type        = number
-  default     = 80
+  default     = 500
 }
