@@ -12,12 +12,12 @@ signals:
   signal:
     metric: "cpu_percent"
 rules:
-  major:
-    threshold: 80
-    comparator: ">"
-    lasting_duration: '15m'
   critical:
     threshold: 90
     comparator: ">"
     lasting_duration: '15m'
-    dependency: major
+  major:
+    threshold: 80
+    comparator: ">"
+    lasting_duration: '15m'
+    dependency: critical

@@ -32,6 +32,7 @@
 - [integration_azure-app-service](#integration_azure-app-service)
 - [integration_azure-application-gateway](#integration_azure-application-gateway)
 - [integration_azure-azure-search](#integration_azure-azure-search)
+- [integration_azure-cdn](#integration_azure-cdn)
 - [integration_azure-container-instance](#integration_azure-container-instance)
 - [integration_azure-cosmos-db](#integration_azure-cosmos-db)
 - [integration_azure-datafactory](#integration_azure-datafactory)
@@ -67,6 +68,7 @@
 - [integration_gcp-pubsub-topic](#integration_gcp-pubsub-topic)
 - [integration_newrelic-apm](#integration_newrelic-apm)
 - [organization_usage](#organization_usage)
+- [prometheus-exporter_active-directory](#prometheus-exporter_active-directory)
 - [prometheus-exporter_kong](#prometheus-exporter_kong)
 - [prometheus-exporter_oracledb](#prometheus-exporter_oracledb)
 - [prometheus-exporter_squid](#prometheus-exporter_squid)
@@ -387,6 +389,13 @@
 |---|---|---|---|---|---|
 |Azure Search latency|X|X|-|-|-|
 |Azure Search throttled queries rate|X|X|-|-|-|
+
+
+## integration_azure-cdn
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Azure CDN latency|X|X|-|-|-|
 
 
 ## integration_azure-container-instance
@@ -736,6 +745,15 @@
 |Organization usage custom metrics limit|-|X|-|-|-|
 |Organization usage containers ratio per host included|-|X|-|-|-|
 |Organization usage custom metrics ratio per host included|-|X|-|-|-|
+
+
+## prometheus-exporter_active-directory
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Active-directory heartbeat|X|-|-|-|-|
+|Active-directory replication errors|X|X|-|-|-|
+|Active-directory active directory services|X|-|-|-|-|
 
 
 ## prometheus-exporter_kong

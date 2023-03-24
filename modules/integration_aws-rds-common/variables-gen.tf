@@ -42,35 +42,18 @@ variable "dbload_disabled" {
   default     = null
 }
 
-variable "dbload_disabled_major" {
-  description = "Disable major alerting rule for dbload detector"
-  type        = bool
-  default     = null
-}
-
 variable "dbload_disabled_critical" {
   description = "Disable critical alerting rule for dbload detector"
   type        = bool
   default     = null
 }
 
-variable "dbload_threshold_major" {
-  description = "Major threshold for dbload detector in %"
-  type        = number
-  default     = 80
+variable "dbload_disabled_major" {
+  description = "Disable major alerting rule for dbload detector"
+  type        = bool
+  default     = null
 }
 
-variable "dbload_lasting_duration_major" {
-  description = "Minimum duration that conditions must be true before raising alert"
-  type        = string
-  default     = "5m"
-}
-
-variable "dbload_at_least_percentage_major" {
-  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
-  type        = number
-  default     = 1
-}
 variable "dbload_threshold_critical" {
   description = "Critical threshold for dbload detector in %"
   type        = number
@@ -84,6 +67,23 @@ variable "dbload_lasting_duration_critical" {
 }
 
 variable "dbload_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
+variable "dbload_threshold_major" {
+  description = "Major threshold for dbload detector in %"
+  type        = number
+  default     = 80
+}
+
+variable "dbload_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "5m"
+}
+
+variable "dbload_at_least_percentage_major" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1

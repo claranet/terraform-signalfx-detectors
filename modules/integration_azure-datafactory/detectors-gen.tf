@@ -103,8 +103,8 @@ resource "signalfx_detector" "trigger_error_rate" {
 
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.DataFactory/factories') and filter('primary_aggregation_type', 'true')
-    adf_trigger_succeeded_run = data('triggerSucceededRuns', filter=base_filtering and ${module.filtering.signalflow})${var.trigger_error_rate_aggregation_function}${var.trigger_error_rate_transformation_function}
-    adf_trigger_failed_run = data('triggerFailedRuns', filter=base_filtering and ${module.filtering.signalflow})${var.trigger_error_rate_aggregation_function}${var.trigger_error_rate_transformation_function}
+    adf_trigger_succeeded_run = data('TriggerSucceededRuns', filter=base_filtering and ${module.filtering.signalflow})${var.trigger_error_rate_aggregation_function}${var.trigger_error_rate_transformation_function}
+    adf_trigger_failed_run = data('TriggerFailedRuns', filter=base_filtering and ${module.filtering.signalflow})${var.trigger_error_rate_aggregation_function}${var.trigger_error_rate_transformation_function}
     signal = (adf_trigger_failed_run/(adf_trigger_succeeded_run+adf_trigger_failed_run)).scale(100).fill(0).publish('signal')
     detect(when(signal > ${var.trigger_error_rate_threshold_critical}, lasting=%{if var.trigger_error_rate_lasting_duration_critical == null}None%{else}'${var.trigger_error_rate_lasting_duration_critical}'%{endif}, at_least=${var.trigger_error_rate_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal > ${var.trigger_error_rate_threshold_major}, lasting=%{if var.trigger_error_rate_lasting_duration_major == null}None%{else}'${var.trigger_error_rate_lasting_duration_major}'%{endif}, at_least=${var.trigger_error_rate_at_least_percentage_major}) and (not when(signal > ${var.trigger_error_rate_threshold_critical}, lasting=%{if var.trigger_error_rate_lasting_duration_critical == null}None%{else}'${var.trigger_error_rate_lasting_duration_critical}'%{endif}, at_least=${var.trigger_error_rate_at_least_percentage_critical}))).publish('MAJOR')

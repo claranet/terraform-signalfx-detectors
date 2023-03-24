@@ -13,12 +13,12 @@ signals:
     filter: "filter('stat', 'mean') and filter('ClusterIdentifier', '*') and filter('NodeID', '*')"
 
 rules:
-  major:
-    threshold: 80
-    comparator: ">"
-    lasting_duration: "15m"
   critical:
     threshold: 90
     comparator: ">"
     lasting_duration: "15m"
-    dependency: major
+  major:
+    threshold: 80
+    comparator: ">"
+    lasting_duration: "15m"
+    dependency: critical

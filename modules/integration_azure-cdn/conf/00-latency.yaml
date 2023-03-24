@@ -1,0 +1,24 @@
+module: Azure CDN
+name: latency
+filtering: "filter('resource_type', 'microsoft.cdn/profiles') and filter('primary_aggregation_type', 'true')"
+id: cdn_total_latency
+value_unit: ms
+
+transformation: true
+aggregation: true
+
+signals:
+  signal:
+    metric: "TotalLatency"
+
+rules:
+  critical:
+    threshold: 3000
+    comparator: ">"
+    lasting_duration: 15m
+
+  major:
+    threshold: 1500
+    comparator: ">"
+    dependency: critical
+    lasting_duration: 15m

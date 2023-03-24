@@ -91,7 +91,7 @@ variable "server_status_aggregation_function" {
 variable "server_status_transformation_function" {
   description = "Transformation function for server status detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".min(over='5m')"
+  default     = ".max(over='5m')"
 }
 
 # Backend_status detector
@@ -141,7 +141,7 @@ variable "backend_status_aggregation_function" {
 variable "backend_status_transformation_function" {
   description = "Transformation function for backend status detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".min(over='5m')"
+  default     = ".max(over='5m')"
 }
 
 # Session_limit detector

@@ -6,8 +6,9 @@ resource "signalfx_detector" "volume_space" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    A = data('kubernetes.volume_available_bytes', filter=${module.filtering.signalflow} and (not filter('volume_type', 'configMap', 'secret')) and filter('volume_type', '*'))${var.volume_space_aggregation_function}${var.volume_space_transformation_function}
-    B = data('kubernetes.volume_capacity_bytes', filter=${module.filtering.signalflow} and (not filter('volume_type', 'configMap', 'secret')) and filter('volume_type', '*'))${var.volume_space_aggregation_function}${var.volume_space_transformation_function}
+    type_filter = (((not filter('volume_type', 'configMap', 'secret')) and filter('volume_type', '*')) or ((not filter('k8s.volume.type', 'configMap', 'secret')) and filter('k8s.volume.type', '*')))
+    A = data('kubernetes.volume_available_bytes', filter=${module.filtering.signalflow} and type_filter)${var.volume_space_aggregation_function}${var.volume_space_transformation_function}
+    B = data('kubernetes.volume_capacity_bytes', filter=${module.filtering.signalflow} and type_filter)${var.volume_space_aggregation_function}${var.volume_space_transformation_function}
     signal = ((B-A)/B).scale(100).publish('signal')
     detect(when(signal > ${var.volume_space_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.volume_space_threshold_major}) and (not when(signal > ${var.volume_space_threshold_critical}))).publish('MAJOR')
@@ -48,8 +49,9 @@ resource "signalfx_detector" "volume_inodes" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    A = data('kubernetes.volume_inodes_free', filter=${module.filtering.signalflow} and (not filter('volume_type', 'configMap', 'secret')) and filter('volume_type', '*'))${var.volume_inodes_aggregation_function}${var.volume_inodes_transformation_function}
-    B = data('kubernetes.volume_inodes', filter=${module.filtering.signalflow} and (not filter('volume_type', 'configMap', 'secret')) and filter('volume_type', '*'))${var.volume_inodes_aggregation_function}${var.volume_inodes_transformation_function}
+    type_filter = (((not filter('volume_type', 'configMap', 'secret')) and filter('volume_type', '*')) or ((not filter('k8s.volume.type', 'configMap', 'secret')) and filter('k8s.volume.type', '*')))
+    A = data('kubernetes.volume_inodes_free', filter=${module.filtering.signalflow} and type_filter)${var.volume_inodes_aggregation_function}${var.volume_inodes_transformation_function}
+    B = data('kubernetes.volume_inodes', filter=${module.filtering.signalflow} and type_filter)${var.volume_inodes_aggregation_function}${var.volume_inodes_transformation_function}
     signal = ((B-A)/B).scale(100).publish('signal')
     detect(when(signal > ${var.volume_inodes_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.volume_inodes_threshold_major}) and (not when(signal > ${var.volume_inodes_threshold_critical}))).publish('MAJOR')

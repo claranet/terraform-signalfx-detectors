@@ -11,12 +11,12 @@ signals:
   signal:
     metric: "DBLoad"
 rules:
-  major:
-    threshold: 80
-    comparator: ">"
-    lasting_duration: '5m'
   critical:
     threshold: 90
     comparator: ">"
     lasting_duration: '5m'
-    dependency: major
+  major:
+    threshold: 80
+    comparator: ">"
+    lasting_duration: '5m'
+    dependency: critical
