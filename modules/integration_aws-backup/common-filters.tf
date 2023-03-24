@@ -1,0 +1,3 @@
+locals {
+  filters = "filter('ResourceType', '*')"
+}

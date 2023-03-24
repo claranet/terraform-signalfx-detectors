@@ -1,0 +1,17 @@
+module: AWS Backup
+name: job expired
+id: backup_job_expired
+
+transformation: ".max(over='1d').fill(0)"
+aggregation: true
+filtering: "filter('namespace', 'AWS/Backup') and filter('stat', 'sum')"
+
+signals:
+  signal:
+    metric: NumberOfBackupJobsExpired
+    extrapolation: zero
+rules:
+  critical:
+    threshold: 0
+    comparator: ">"
+    lasting_duration: '1h'
