@@ -1,0 +1,15 @@
+---
+module: "Azure PostgreSQL flexible"
+name: heartbeat
+
+transformation: true
+aggregation: true
+
+filtering: "filter('resource_type', 'Microsoft.DB*orPostgreSQL/flexibleServers') and filter('primary_aggregation_type', 'true')"
+
+signals:
+  signal:
+    metric: "cpu_percent"
+rules:
+  critical:
+...
