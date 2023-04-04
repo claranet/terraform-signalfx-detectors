@@ -483,13 +483,13 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|Azure PostgreSQL heartbeat|X|-|-|-|-|
-|Azure PostgreSQL CPU usage|X|X|-|-|-|
-|Azure PostgreSQL has no connection|X|-|-|-|-|
-|Azure PostgreSQL storage usage|X|X|-|-|-|
-|Azure PostgreSQL IO consumption|X|X|-|-|-|
-|Azure PostgreSQL memory usage |X|X|-|-|-|
-||X|X|-|-|-|
+|Azure PostgreSQL flexible heartbeat|X|-|-|-|-|
+|Azure PostgreSQL flexible cpu usage|X|X|-|-|-|
+|Azure PostgreSQL flexible has no connection|X|-|-|-|-|
+|Azure PostgreSQL flexible storage usage|X|X|-|-|-|
+|Azure PostgreSQL flexible disk iops consumption|X|X|-|-|-|
+|Azure PostgreSQL flexible memory usage|X|X|-|-|-|
+|Azure PostgreSQL flexible replication lag|X|X|-|-|-|
 
 
 ## integration_azure-functions

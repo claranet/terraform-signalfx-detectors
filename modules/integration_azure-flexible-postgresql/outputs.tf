@@ -23,9 +23,9 @@ output "no_connection" {
   value       = signalfx_detector.no_connection
 }
 
-output "serverlog_storage_usage" {
-  description = "Detector resource for serverlog_storage_usage"
-  value       = signalfx_detector.serverlog_storage_usage
+output "replication_lag" {
+  description = "Detector resource for replication_lag"
+  value       = signalfx_detector.replication_lag
 }
 
 output "storage_usage" {

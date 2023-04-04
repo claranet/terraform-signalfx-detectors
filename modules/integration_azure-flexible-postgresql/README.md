@@ -57,7 +57,7 @@ Note the following parameters:
 
 These 3 parameters alongs with all variables defined in [common-variables.tf](common-variables.tf) are common to all
 [modules](../) in this repository. Other variables, specific to this module, are available in
-[variables.tf](variables.tf).
+[variables-gen.tf](variables-gen.tf).
 In general, the default configuration "works" but all of these Terraform
 [variables](https://www.terraform.io/language/values/variables) make it possible to
 customize the detectors behavior to better fit your needs.
@@ -75,13 +75,13 @@ This module creates the following SignalFx detectors which could contain one or 
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|Azure PostgreSQL heartbeat|X|-|-|-|-|
-|Azure PostgreSQL CPU usage|X|X|-|-|-|
-|Azure PostgreSQL has no connection|X|-|-|-|-|
-|Azure PostgreSQL storage usage|X|X|-|-|-|
-|Azure PostgreSQL IO consumption|X|X|-|-|-|
-|Azure PostgreSQL memory usage |X|X|-|-|-|
-||X|X|-|-|-|
+|Azure PostgreSQL flexible heartbeat|X|-|-|-|-|
+|Azure PostgreSQL flexible cpu usage|X|X|-|-|-|
+|Azure PostgreSQL flexible has no connection|X|-|-|-|-|
+|Azure PostgreSQL flexible storage usage|X|X|-|-|-|
+|Azure PostgreSQL flexible disk iops consumption|X|X|-|-|-|
+|Azure PostgreSQL flexible memory usage|X|X|-|-|-|
+|Azure PostgreSQL flexible replication lag|X|X|-|-|-|
 
 ## How to collect required metrics?
 
@@ -101,10 +101,9 @@ Here is the list of required metrics for detectors in this module.
 
 * `active_connections`
 * `cpu_percent`
-* `io_consumption_percent`
+* `disk_iops_consumed_percentage`
 * `memory_percent`
-* `network_bytes_ingress`
-* `serverlog_storage_percent`
+* `physical_replication_delay_in_seconds`
 * `storage_percent`
 
 
