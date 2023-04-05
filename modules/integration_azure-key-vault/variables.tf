@@ -100,6 +100,12 @@ variable "api_latency_disabled" {
   default     = null
 }
 
+variable "api_latency_disabled_minor" {
+  description = "Disable major alerting rule for api_latency detector"
+  type        = bool
+  default     = null
+}
+
 variable "api_latency_disabled_major" {
   description = "Disable major alerting rule for api_latency detector"
   type        = bool
