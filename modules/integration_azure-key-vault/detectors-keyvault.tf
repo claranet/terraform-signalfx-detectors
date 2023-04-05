@@ -51,16 +51,16 @@ resource "signalfx_detector" "api_latency" {
   program_text = <<-EOF
         base_filter = filter('resource_type', 'Microsoft.KeyVault/vaults') and filter('primary_aggregation_type', 'true')
         signal = data('ServiceApiLatency', extrapolation="zero", filter=base_filter and not filter('activityname', 'secretlist') and ${module.filtering.signalflow})${var.api_latency_aggregation_function}.publish('signal')
-        detect(when(signal > threshold(${var.api_latency_threshold_critical}), lasting="${var.api_latency_lasting_duration_critical}")).publish('CRIT')
-        detect(when(signal > threshold(${var.api_latency_threshold_major}), lasting="${var.api_latency_lasting_duration_major}") and (not when(signal > ${var.api_latency_threshold_critical}, lasting="${var.api_latency_lasting_duration_critical}"))).publish('MAJOR')
+        detect(when(signal > threshold(${var.api_latency_threshold_major}), lasting="${var.api_latency_lasting_duration_major}")).publish('MAJOR')
+        detect(when(signal > threshold(${var.api_latency_threshold_minor}), lasting="${var.api_latency_lasting_duration_minor}") and (not when(signal > ${var.api_latency_threshold_major}, lasting="${var.api_latency_lasting_duration_major}"))).publish('MINOR')
     EOF
 
   rule {
-    description           = "is too high > ${var.api_latency_threshold_critical}ms"
-    severity              = "Critical"
-    detect_label          = "CRIT"
+    description           = "is too high > ${var.api_latency_threshold_major}ms"
+    severity              = "Major"
+    detect_label          = "MAJOR"
     disabled              = coalesce(var.api_latency_disabled_critical, var.api_latency_disabled, var.detectors_disabled)
-    notifications         = try(coalescelist(lookup(var.api_latency_notifications, "critical", []), var.notifications.critical), null)
+    notifications         = try(coalescelist(lookup(var.api_latency_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.api_latency_runbook_url, var.runbook_url), "")
     tip                   = var.api_latency_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -68,11 +68,11 @@ resource "signalfx_detector" "api_latency" {
   }
 
   rule {
-    description           = "is too high > ${var.api_latency_threshold_major}ms"
-    severity              = "Major"
-    detect_label          = "MAJOR"
-    disabled              = coalesce(var.api_latency_disabled_major, var.api_latency_disabled, var.detectors_disabled)
-    notifications         = try(coalescelist(lookup(var.api_latency_notifications, "major", []), var.notifications.major), null)
+    description           = "is too high > ${var.api_latency_threshold_minor}ms"
+    severity              = "Minor"
+    detect_label          = "MINOR"
+    disabled              = coalesce(var.api_latency_disabled_minor, var.api_latency_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.api_latency_notifications, "minor", []), var.notifications.minor), null)
     runbook_url           = try(coalesce(var.api_latency_runbook_url, var.runbook_url), "")
     tip                   = var.api_latency_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
