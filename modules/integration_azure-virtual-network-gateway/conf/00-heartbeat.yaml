@@ -1,0 +1,14 @@
+## Example
+module: Azure Virtual Network Gateway
+name: heartbeat
+
+transformation: false
+aggregation: true
+
+filtering: "filter('resource_type', 'Microsoft.Network/virtualNetworkGateways') and filter('primary_aggregation_type', 'true')"
+
+signals:
+  signal:
+    metric: "TunnelTotalFlowCount"
+rules:
+  critical:

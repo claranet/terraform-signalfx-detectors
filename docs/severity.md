@@ -64,6 +64,7 @@
 - [integration_azure-stream-analytics](#integration_azure-stream-analytics)
 - [integration_azure-virtual-machine-scaleset](#integration_azure-virtual-machine-scaleset)
 - [integration_azure-virtual-machine](#integration_azure-virtual-machine)
+- [integration_azure-virtual-network-gateway](#integration_azure-virtual-network-gateway)
 - [integration_gcp-bigquery](#integration_gcp-bigquery)
 - [integration_gcp-cloud-sql-common](#integration_gcp-cloud-sql-common)
 - [integration_gcp-cloud-sql-failover](#integration_gcp-cloud-sql-failover)
@@ -709,6 +710,13 @@
 |Azure Virtual Machine heartbeat|X|-|-|-|-|
 |Azure Virtual Machine CPU usage|X|X|-|-|-|
 |Azure Virtual Machine remaining CPU credit|X|X|-|-|-|
+
+
+## integration_azure-virtual-network-gateway
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Azure Virtual Network Gateway heartbeat|X|-|-|-|-|
 
 
 ## integration_gcp-bigquery
