@@ -59,7 +59,7 @@ resource "signalfx_detector" "api_latency" {
     description           = "is too high > ${var.api_latency_threshold_major}ms"
     severity              = "Major"
     detect_label          = "MAJOR"
-    disabled              = coalesce(var.api_latency_disabled_critical, var.api_latency_disabled, var.detectors_disabled)
+    disabled              = coalesce(var.api_latency_disabled_major, var.api_latency_disabled, var.detectors_disabled)
     notifications         = try(coalescelist(lookup(var.api_latency_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.api_latency_runbook_url, var.runbook_url), "")
     tip                   = var.api_latency_tip
@@ -71,7 +71,7 @@ resource "signalfx_detector" "api_latency" {
     description           = "is too high > ${var.api_latency_threshold_minor}ms"
     severity              = "Minor"
     detect_label          = "MINOR"
-    disabled              = coalesce(var.api_latency_disabled_minor, var.api_latency_disabled, var.detectors_disabled)
+    disabled              = coalesce(var.api_latency_disabled, var.detectors_disabled)
     notifications         = try(coalescelist(lookup(var.api_latency_notifications, "minor", []), var.notifications.minor), null)
     runbook_url           = try(coalesce(var.api_latency_runbook_url, var.runbook_url), "")
     tip                   = var.api_latency_tip
