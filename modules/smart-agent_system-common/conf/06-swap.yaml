@@ -6,7 +6,7 @@ value_unit: "%"
 signals:
   signal:
     metric: system.paging.utilization
-    filter: "filter('state': 'used')"
+    filter: "filter('state', 'used')"
 rules:
   critical:
     threshold: 95

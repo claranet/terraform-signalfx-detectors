@@ -261,7 +261,7 @@ resource "signalfx_detector" "swap" {
   }
 
   program_text = <<-EOF
-    signal = data('system.paging.utilization', filter=filter('state': 'used') and ${module.filtering.signalflow})${var.swap_aggregation_function}${var.swap_transformation_function}.publish('signal')
+    signal = data('system.paging.utilization', filter=filter('state', 'used') and ${module.filtering.signalflow})${var.swap_aggregation_function}${var.swap_transformation_function}.publish('signal')
     detect(when(signal > ${var.swap_threshold_critical}, lasting=%{if var.swap_lasting_duration_critical == null}None%{else}'${var.swap_lasting_duration_critical}'%{endif}, at_least=${var.swap_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal > ${var.swap_threshold_major}, lasting=%{if var.swap_lasting_duration_major == null}None%{else}'${var.swap_lasting_duration_major}'%{endif}, at_least=${var.swap_at_least_percentage_major}) and (not when(signal > ${var.swap_threshold_critical}, lasting=%{if var.swap_lasting_duration_critical == null}None%{else}'${var.swap_lasting_duration_critical}'%{endif}, at_least=${var.swap_at_least_percentage_critical}))).publish('MAJOR')
 EOF
