@@ -1,0 +1,7 @@
+---
+documentations:
+  - name: Azure Monitor metrics
+    url: 'https://learn.microsoft.com/en-us/azure/azure-monitor/essentials/metrics-supported#microsoftrecoveryservicesvaults'
+  - name: Azure Backup monitoring
+    url: https://learn.microsoft.com/en-us/azure/backup/metrics-overview
+...
