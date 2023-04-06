@@ -1184,6 +1184,7 @@
 |System disk space utilization|X|X|-|-|-|
 |System disk inodes utilization|X|X|-|-|-|
 |System memory utilization|X|X|-|-|-|
+|System swap utilization|X|X|-|-|-|
 |System disk space running out|-|X|-|-|-|
 
 

@@ -1,0 +1,17 @@
+module: system
+name: "swap utilization"
+id: swap
+transformation: ".min(over='5m')"
+value_unit: "%"
+signals:
+  signal:
+    metric: system.paging.utilization
+    filter: "filter('state': 'used')"
+rules:
+  critical:
+    threshold: 95
+    comparator: ">"
+  major:
+    threshold: 90
+    comparator: ">"
+    dependency: critical
