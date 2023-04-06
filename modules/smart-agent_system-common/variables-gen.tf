@@ -551,7 +551,7 @@ variable "swap_disabled_major" {
 variable "swap_threshold_critical" {
   description = "Critical threshold for swap detector in %"
   type        = number
-  default     = 95
+  default     = 90
 }
 
 variable "swap_lasting_duration_critical" {
@@ -568,7 +568,7 @@ variable "swap_at_least_percentage_critical" {
 variable "swap_threshold_major" {
   description = "Major threshold for swap detector in %"
   type        = number
-  default     = 90
+  default     = 80
 }
 
 variable "swap_lasting_duration_major" {
