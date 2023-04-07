@@ -2,8 +2,8 @@
 module: "Azure Backup"
 name: "File Share"
 filtering: "filter('resource_type', 'Microsoft.RecoveryServices/vaults') and filter('primary_aggregation_type', 'true') and filter('datasourcetype', 'Microsoft.Storage/storageAccounts/fileServices/shares') and filter('healthstatus', 'Healthy')"
-aggregation: ".mean(by=['backupinstancename', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
-transformation: true
+aggregation: ".max(by=['backupinstancename', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+transformation: ".fill(0)"
 signals:
   signal:
     metric: "BackupHealthEvent"

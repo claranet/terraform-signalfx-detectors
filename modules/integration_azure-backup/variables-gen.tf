@@ -9,13 +9,13 @@ variable "vm_notifications" {
 variable "vm_aggregation_function" {
   description = "Aggregation function and group by for vm detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['backupinstancename', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".max(by=['backupinstancename', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
 variable "vm_transformation_function" {
   description = "Transformation function for vm detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ""
+  default     = ".fill(0)"
 }
 
 variable "vm_max_delay" {
@@ -99,13 +99,13 @@ variable "file_share_notifications" {
 variable "file_share_aggregation_function" {
   description = "Aggregation function and group by for file_share detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['backupinstancename', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".max(by=['backupinstancename', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
 variable "file_share_transformation_function" {
   description = "Transformation function for file_share detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ""
+  default     = ".fill(0)"
 }
 
 variable "file_share_max_delay" {
