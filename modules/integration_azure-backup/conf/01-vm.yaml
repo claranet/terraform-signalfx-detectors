@@ -1,0 +1,20 @@
+---
+module: "Azure Backup"
+name: "VM"
+filtering: "filter('resource_type', 'Microsoft.RecoveryServices/vaults') and filter('primary_aggregation_type', 'true') and filter('datasourcetype', 'Microsoft.Compute/virtualMachines') and filter('healthstatus', 'Healthy')"
+aggregation: ".max(by=['backupinstancename', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+transformation: ".fill(0)"
+signals:
+  signal:
+    metric: "BackupHealthEvent"
+rules:
+  critical:
+    threshold: 1
+    comparator: "<"
+    lasting_duration: '50h'
+  major:
+    threshold: 1
+    comparator: "<"
+    lasting_duration: '26h'
+    dependency: critical
+...
