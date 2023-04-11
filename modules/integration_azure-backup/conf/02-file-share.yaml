@@ -17,5 +17,4 @@ rules:
     threshold: 1
     comparator: "<"
     lasting_duration: '26h'
-    dependency: critical
 ...
