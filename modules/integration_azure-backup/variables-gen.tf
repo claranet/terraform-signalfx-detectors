@@ -21,7 +21,7 @@ variable "vm_transformation_function" {
 variable "vm_max_delay" {
   description = "Enforce max delay for vm detector (use \"0\" or \"null\" for \"Auto\")"
   type        = number
-  default     = null
+  default     = 900
 }
 
 variable "vm_tip" {
@@ -111,7 +111,7 @@ variable "file_share_transformation_function" {
 variable "file_share_max_delay" {
   description = "Enforce max delay for file_share detector (use \"0\" or \"null\" for \"Auto\")"
   type        = number
-  default     = null
+  default     = 900
 }
 
 variable "file_share_tip" {
