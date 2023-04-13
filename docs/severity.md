@@ -140,8 +140,13 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
+<<<<<<< HEAD
 |Azure Automation Update failed updates|X|-|-|-|-|
 >>>>>>> 4895211f (Azure Update Management monitoring with Fame)
+=======
+|Azure Automation Update failed updates|-|X|-|-|-|
+|Azure Automation Update missing updates|-|X|-|-|-|
+>>>>>>> 5eb7429e (Azure Update Management monitoring with Fame - missing updates)
 
 
 ## fame_azure-storage-file-backup
@@ -155,7 +160,8 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|Azure Update Center failed updates|X|-|-|-|-|
+|Azure Update Center failed updates|-|X|-|-|-|
+|Azure Update Center missing updates|-|X|-|-|-|
 
 
 ## fame_azure-vm-backup

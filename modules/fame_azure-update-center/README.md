@@ -75,7 +75,8 @@ This module creates the following SignalFx detectors which could contain one or 
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|Azure Update Center failed updates|X|-|-|-|-|
+|Azure Update Center failed updates|-|X|-|-|-|
+|Azure Update Center missing updates|-|X|-|-|-|
 
 ## How to collect required metrics?
 
@@ -95,6 +96,7 @@ Check the [Related documentation](#related-documentation) section for more detai
 
 Here is the list of required metrics for detectors in this module.
 
+* `fame.azure.update_center.missing_updates`
 * `fame.azure.update_center.updates_status`
 
 

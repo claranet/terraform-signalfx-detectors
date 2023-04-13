@@ -10,7 +10,7 @@ signals:
     filter: filter('status', 'failed')
 
 rules:
-  critical:
+  major:
     threshold: 0
     comparator: ">"
-    lasting_duration: '2h'
+    lasting_duration: '6h'
