@@ -63,7 +63,7 @@ variable "vm_threshold_critical" {
 variable "vm_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "50h"
+  default     = "60h"
 }
 
 variable "vm_at_least_percentage_critical" {
@@ -80,7 +80,7 @@ variable "vm_threshold_major" {
 variable "vm_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "26h"
+  default     = "36h"
 }
 
 variable "vm_at_least_percentage_major" {
@@ -153,7 +153,7 @@ variable "file_share_threshold_critical" {
 variable "file_share_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "50h"
+  default     = "60h"
 }
 
 variable "file_share_at_least_percentage_critical" {
@@ -170,7 +170,7 @@ variable "file_share_threshold_major" {
 variable "file_share_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "26h"
+  default     = "36h"
 }
 
 variable "file_share_at_least_percentage_major" {

@@ -12,9 +12,9 @@ rules:
   critical:
     threshold: 1
     comparator: "<"
-    lasting_duration: '50h'
+    lasting_duration: '60h'
   major:
     threshold: 1
     comparator: "<"
-    lasting_duration: '26h'
+    lasting_duration: '36h'
 ...
