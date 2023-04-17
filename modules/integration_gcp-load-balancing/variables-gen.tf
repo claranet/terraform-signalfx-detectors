@@ -212,7 +212,7 @@ variable "backend_latency_service_notifications" {
 variable "backend_latency_service_aggregation_function" {
   description = "Aggregation function and group by for backend_latency_service detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['forwarding_rule_name', 'backend_target_name'])"
+  default     = ".mean(by=['forwarding_rule_name', 'backend_target_name'])"
 }
 
 variable "backend_latency_service_transformation_function" {
@@ -302,7 +302,7 @@ variable "backend_latency_bucket_notifications" {
 variable "backend_latency_bucket_aggregation_function" {
   description = "Aggregation function and group by for backend_latency_bucket detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['forwarding_rule_name', 'backend_target_name'])"
+  default     = ".mean(by=['forwarding_rule_name', 'backend_target_name'])"
 }
 
 variable "backend_latency_bucket_transformation_function" {
