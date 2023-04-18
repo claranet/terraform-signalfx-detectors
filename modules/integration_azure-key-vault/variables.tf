@@ -100,8 +100,8 @@ variable "api_latency_disabled" {
   default     = null
 }
 
-variable "api_latency_disabled_critical" {
-  description = "Disable critical alerting rule for api_latency detector"
+variable "api_latency_disabled_minor" {
+  description = "Disable minor alerting rule for api_latency detector"
   type        = bool
   default     = null
 }
@@ -124,22 +124,22 @@ variable "api_latency_aggregation_function" {
   default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
-variable "api_latency_lasting_duration_critical" {
+variable "api_latency_lasting_duration_minor" {
   description = "Evaluation window for api_latency detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
-  default     = "1h"
-}
-
-variable "api_latency_threshold_critical" {
-  description = "Critical threshold for api_latency detector"
-  type        = number
-  default     = 500
+  default     = "30m"
 }
 
 variable "api_latency_lasting_duration_major" {
   description = "Evaluation window for api_latency detector (i.e. 5m, 20m, 1h, 1d)"
   type        = string
-  default     = "30m"
+  default     = "1h"
+}
+
+variable "api_latency_threshold_minor" {
+  description = "Minor threshold for api_latency detector"
+  type        = number
+  default     = 500
 }
 
 variable "api_latency_threshold_major" {
