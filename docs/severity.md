@@ -33,6 +33,7 @@
 - [integration_azure-app-service](#integration_azure-app-service)
 - [integration_azure-application-gateway](#integration_azure-application-gateway)
 - [integration_azure-azure-search](#integration_azure-azure-search)
+- [integration_azure-backup](#integration_azure-backup)
 - [integration_azure-cdn](#integration_azure-cdn)
 - [integration_azure-container-instance](#integration_azure-container-instance)
 - [integration_azure-cosmos-db](#integration_azure-cosmos-db)
@@ -403,6 +404,14 @@
 |---|---|---|---|---|---|
 |Azure Search latency|X|X|-|-|-|
 |Azure Search throttled queries rate|X|X|-|-|-|
+
+
+## integration_azure-backup
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Azure Backup vm|X|X|-|-|-|
+|Azure Backup file share|X|X|-|-|-|
 
 
 ## integration_azure-cdn
