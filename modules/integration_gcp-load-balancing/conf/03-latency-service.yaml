@@ -3,7 +3,7 @@ name: backend latency per service
 id: backend_latency_service
 
 transformation: true
-aggregation: ".sum(by=['forwarding_rule_name', 'backend_target_name'])"
+aggregation: ".mean(by=['forwarding_rule_name', 'backend_target_name'])"
 filtering: "filter('service', 'loadbalancing')"
 value_unit: "Millisecond"
 
