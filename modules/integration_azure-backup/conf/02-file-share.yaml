@@ -4,6 +4,7 @@ name: "File Share"
 filtering: "filter('resource_type', 'Microsoft.RecoveryServices/vaults') and filter('primary_aggregation_type', 'true') and filter('datasourcetype', 'Microsoft.Storage/storageAccounts/fileServices/shares') and filter('healthstatus', 'Healthy')"
 aggregation: ".max(by=['backupinstancename', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 transformation: ".fill(0)"
+max_delay: 900
 signals:
   signal:
     metric: "BackupHealthEvent"
@@ -12,10 +13,9 @@ rules:
   critical:
     threshold: 1
     comparator: "<"
-    lasting_duration: '50h'
+    lasting_duration: '60h'
   major:
     threshold: 1
     comparator: "<"
-    lasting_duration: '26h'
-    dependency: critical
+    lasting_duration: '36h'
 ...

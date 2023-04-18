@@ -76,7 +76,7 @@ This module creates the following SignalFx detectors which could contain one or 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Azure Key Vault API result rate|X|X|-|-|-|
-|Azure Key Vault API latency|X|X|-|-|-|
+|Azure Key Vault API latency|-|X|X|-|-|
 
 ## How to collect required metrics?
 
