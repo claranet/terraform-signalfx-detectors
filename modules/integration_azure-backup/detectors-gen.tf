@@ -9,7 +9,7 @@ resource "signalfx_detector" "vm" {
     base_filtering = filter('resource_type', 'Microsoft.RecoveryServices/vaults') and filter('primary_aggregation_type', 'true') and filter('datasourcetype', 'Microsoft.Compute/virtualMachines') and filter('healthstatus', 'Healthy')
     signal = data('BackupHealthEvent', filter=base_filtering and ${module.filtering.signalflow})${var.vm_aggregation_function}${var.vm_transformation_function}.publish('signal')
     detect(when(signal < ${var.vm_threshold_critical}, lasting=%{if var.vm_lasting_duration_critical == null}None%{else}'${var.vm_lasting_duration_critical}'%{endif}, at_least=${var.vm_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal < ${var.vm_threshold_major}, lasting=%{if var.vm_lasting_duration_major == null}None%{else}'${var.vm_lasting_duration_major}'%{endif}, at_least=${var.vm_at_least_percentage_major}) and (not when(signal < ${var.vm_threshold_critical}, lasting=%{if var.vm_lasting_duration_critical == null}None%{else}'${var.vm_lasting_duration_critical}'%{endif}, at_least=${var.vm_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal < ${var.vm_threshold_major}, lasting=%{if var.vm_lasting_duration_major == null}None%{else}'${var.vm_lasting_duration_major}'%{endif}, at_least=${var.vm_at_least_percentage_major})).publish('MAJOR')
 EOF
 
   rule {
@@ -50,7 +50,7 @@ resource "signalfx_detector" "file_share" {
     base_filtering = filter('resource_type', 'Microsoft.RecoveryServices/vaults') and filter('primary_aggregation_type', 'true') and filter('datasourcetype', 'Microsoft.Storage/storageAccounts/fileServices/shares') and filter('healthstatus', 'Healthy')
     signal = data('BackupHealthEvent', filter=base_filtering and ${module.filtering.signalflow}, extrapolation='zero')${var.file_share_aggregation_function}${var.file_share_transformation_function}.publish('signal')
     detect(when(signal < ${var.file_share_threshold_critical}, lasting=%{if var.file_share_lasting_duration_critical == null}None%{else}'${var.file_share_lasting_duration_critical}'%{endif}, at_least=${var.file_share_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal < ${var.file_share_threshold_major}, lasting=%{if var.file_share_lasting_duration_major == null}None%{else}'${var.file_share_lasting_duration_major}'%{endif}, at_least=${var.file_share_at_least_percentage_major}) and (not when(signal < ${var.file_share_threshold_critical}, lasting=%{if var.file_share_lasting_duration_critical == null}None%{else}'${var.file_share_lasting_duration_critical}'%{endif}, at_least=${var.file_share_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal < ${var.file_share_threshold_major}, lasting=%{if var.file_share_lasting_duration_major == null}None%{else}'${var.file_share_lasting_duration_major}'%{endif}, at_least=${var.file_share_at_least_percentage_major})).publish('MAJOR')
 EOF
 
   rule {
