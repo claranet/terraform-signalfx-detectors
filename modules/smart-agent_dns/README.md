@@ -135,5 +135,5 @@ parameter to the corresponding monitor configuration:
 * [Terraform SignalFx detector](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector)
 * [Splunk Observability integrations](https://docs.splunk.com/Observability/gdi/get-data-in/integrations.html)
 * [Smart Agent monitor](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/telegraf-dns.md)
-* [Splunk Observability integration](https://docs.splunk.com/Observability/gdi/dns/telegraf-dns.html)
+* [Splunk Observability integration](https://docs.splunk.com/Observability/gdi/monitors-network/dns.html)
 * [Telegraf plugin](https://github.com/influxdata/telegraf/tree/master/plugins/inputs/dns_query)

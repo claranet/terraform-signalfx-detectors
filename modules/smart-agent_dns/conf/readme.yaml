@@ -2,7 +2,7 @@ documentations:
   - name: Smart Agent monitor
     url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/telegraf-dns.md'
   - name: Splunk Observability integration
-    url: 'https://docs.splunk.com/Observability/gdi/dns/telegraf-dns.html'
+    url: 'https://docs.splunk.com/Observability/gdi/monitors-network/dns.html'
   - name: Telegraf plugin
     url: 'https://github.com/influxdata/telegraf/tree/master/plugins/inputs/dns_query'
 
