@@ -98,7 +98,7 @@ You might find the related following documentations useful:
 
 In addition, all of these monitors are still available in the [Splunk Otel Collector](https://github.com/signalfx/splunk-otel-collector),
 the Splunk [distro of OpenTelemetry Collector](https://opentelemetry.io/docs/concepts/distributions/) which replaces SignalFx Smart Agent,
-thanks to the internal [Smart Agent Receiver](https://github.com/signalfx/splunk-otel-collector/tree/main/internal/receiver/smartagentreceiver).
+thanks to the internal [Smart Agent Receiver](https://github.com/signalfx/splunk-otel-collector/tree/main/pkg/receiver/smartagentreceiver).
 
 As a result:
 - any SignalFx Smart Agent monitor are compatible with the new agent OpenTelemetry Collector and related modules in this repository keep `smart-agent` as source name.
@@ -111,7 +111,7 @@ This module checks Systemd services launched by Systemd timers.
 The difference with [smart-agent_systemd-services](https://github.com/claranet/terraform-signalfx-detectors/tree/master/modules/smart-agent_systemd-services)
 is that services launched by timers are not supposed to be always running, and instead can be stopped most of the time.
 
-**Beware:** by default signalfx agent check the service stat every 10s, if your timer/service run faster than 10s it's possible the agent will not detect the fact your service ran. And the "last execution state" detector will trigger an alert.
+**Beware:** by default signalfx agent check the service stat every 10s, if your timer/service run faster than 10s it's possible the agent will not detect the fact your service ran and "Systemd-timers execution delay" will trigger an alert (however "last execution state" detector will still detect if the last run of your service failed or not).
 
 Detectors are designed to check that the job did not failed (enabled by default), the service have not been removed (disabled by default), and the job have been launched during the past day (disabled by default, you can override the default delay with the `execution_delay_lasting_duration_major` variable).
 
