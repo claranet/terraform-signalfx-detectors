@@ -13,6 +13,8 @@ documentations:
     url: 'https://docs.splunk.com/Observability/gdi/cpu/cpu.html'
   - name: Splunk Observability integration load
     url: 'https://docs.splunk.com/Observability/gdi/load/load.html'
+  - name: Splunk Observability hostmetrics
+    url: 'https://docs.splunk.com/Observability/gdi/opentelemetry/components/host-metrics-receiver.html'
 
 source_doc: |
   ### Monitors
@@ -37,3 +39,27 @@ source_doc: |
   In both cases, the goal is to get alerts based on the __ratio__ of load by dividing the original load per the number of CPU/cores which is the only way to get generic and relevant alerts for load.
   It mainly depends if you want to collect 2 metrics instead of 1 and if you want the load one to be raw or already averaged.
 
+  ### Swap
+  
+  To activate the swap monitor, you need to add this parameters in otel-agent configuration
+  
+  * receivers configuration
+  
+  ```
+  receivers:
+    hostmetrics:
+      scrapers:
+        paging:
+          metrics:
+            system.paging.utilization:
+              enabled: true
+  ```
+  
+  * Exporters configuration
+  
+  ```
+  exporters:
+    signalfx:
+      include_metrics:
+        - metric_name: system.paging.utilization
+  ```

@@ -8,6 +8,7 @@
 - [What are the available detectors in this module?](#what-are-the-available-detectors-in-this-module)
 - [How to collect required metrics?](#how-to-collect-required-metrics)
   - [Monitors](#monitors)
+  - [Swap](#swap)
   - [Metrics](#metrics)
 - [Related documentation](#related-documentation)
 
@@ -82,6 +83,7 @@ This module creates the following SignalFx detectors which could contain one or 
 |System disk space utilization|X|X|-|-|-|
 |System disk inodes utilization|X|X|-|-|-|
 |System memory utilization|X|X|-|-|-|
+|System swap utilization|X|X|-|-|-|
 |System disk space running out|-|X|-|-|-|
 
 ## How to collect required metrics?
@@ -132,6 +134,30 @@ You have two choices to use load based detectors:
 In both cases, the goal is to get alerts based on the __ratio__ of load by dividing the original load per the number of CPU/cores which is the only way to get generic and relevant alerts for load.
 It mainly depends if you want to collect 2 metrics instead of 1 and if you want the load one to be raw or already averaged.
 
+### Swap
+
+To activate the swap monitor, you need to add this parameters in otel-agent configuration
+
+* receivers configuration
+
+```
+receivers:
+  hostmetrics:
+    scrapers:
+      paging:
+        metrics:
+          system.paging.utilization:
+            enabled: true
+```
+
+* Exporters configuration
+
+```
+exporters:
+  signalfx:
+    include_metrics:
+      - metric_name: system.paging.utilization
+```
 
 ### Metrics
 
@@ -150,6 +176,7 @@ parameter to the corresponding monitor configuration:
         - '!load.midterm'
         - '!memory.utilization'
         - '!percent_inodes.used'
+        - '!system.paging.utilization'
 
 ```
 
@@ -167,3 +194,4 @@ parameter to the corresponding monitor configuration:
 * [Smart Agent monitor memory](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/memory.md)
 * [Splunk Observability integration cpu](https://docs.splunk.com/Observability/gdi/cpu/cpu.html)
 * [Splunk Observability integration load](https://docs.splunk.com/Observability/gdi/load/load.html)
+* [Splunk Observability hostmetrics](https://docs.splunk.com/Observability/gdi/opentelemetry/components/host-metrics-receiver.html)
