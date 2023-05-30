@@ -33,3 +33,8 @@ output "memory" {
   value       = signalfx_detector.memory
 }
 
+output "swap_io" {
+  description = "Detector resource for swap_io"
+  value       = signalfx_detector.swap_io
+}
+

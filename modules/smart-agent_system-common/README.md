@@ -82,6 +82,7 @@ This module creates the following SignalFx detectors which could contain one or 
 |System disk space utilization|X|X|-|-|-|
 |System disk inodes utilization|X|X|-|-|-|
 |System memory utilization|X|X|-|-|-|
+|System swap in/out|X|X|-|-|-|
 |System disk space running out|-|X|-|-|-|
 
 ## How to collect required metrics?
@@ -150,6 +151,8 @@ parameter to the corresponding monitor configuration:
         - '!load.midterm'
         - '!memory.utilization'
         - '!percent_inodes.used'
+        - '!vmpage_io.swap.in'
+        - '!vmpage_io.swap.out'
 
 ```
 
@@ -165,5 +168,6 @@ parameter to the corresponding monitor configuration:
 * [Smart Agent monitor load](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/load.md)
 * [Smart Agent monitor filesystems](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/filesystems.md)
 * [Smart Agent monitor memory](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/memory.md)
+* [Smart Agent monitor vmem](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/vmem.md)
 * [Splunk Observability integration cpu](https://docs.splunk.com/Observability/gdi/cpu/cpu.html)
 * [Splunk Observability integration load](https://docs.splunk.com/Observability/gdi/load/load.html)

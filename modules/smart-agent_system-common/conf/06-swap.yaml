@@ -1,0 +1,29 @@
+module: system
+name: "swap in/out"
+tip: There not enough RAM on the host, either increase the RAM or decrease the memory pressure (by stopping or throttling some process)
+id: swap_io
+
+value_unit: "iops"
+disabled: true
+
+signals:
+  A:
+    metric: vmpage_io.swap.in
+    rollup: rate
+  B:
+    metric: vmpage_io.swap.out
+    rollup: rate
+  signal:
+    formula: (A+B)
+rules:
+  critical:
+    threshold: 400
+    comparator: ">"
+    lasting_duration: 10m
+    lasting_at_least: 0.5
+  major:
+    threshold: 200
+    comparator: ">"
+    dependency: critical
+    lasting_duration: 10m
+    lasting_at_least: 0.5
