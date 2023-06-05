@@ -3,7 +3,7 @@ module: Azure firewall
 name: heartbeat
 
 transformation: true
-aggregation: true
+aggregation: ".mean(by=['azure_resource_id'])"
 
 filtering: "filter('resource_type', 'Microsoft.Network/azureFirewalls') and filter('primary_aggregation_type', 'true')"
 
