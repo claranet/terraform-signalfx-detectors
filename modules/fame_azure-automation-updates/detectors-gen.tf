@@ -6,7 +6,7 @@ resource "signalfx_detector" "failed_updates" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('fame.azure.automation_update.updates_status', filter=filter('status', 'failed') and ${module.filtering.signalflow})${var.failed_updates_aggregation_function}${var.failed_updates_transformation_function}.publish('signal')
+    signal = data('fame.azure.automation_update.updates_status', filter=filter('status', 'failed') and ${module.filtering.signalflow}, extrapolation='zero')${var.failed_updates_aggregation_function}${var.failed_updates_transformation_function}.publish('signal')
     detect(when(signal > ${var.failed_updates_threshold_major}, lasting=%{if var.failed_updates_lasting_duration_major == null}None%{else}'${var.failed_updates_lasting_duration_major}'%{endif}, at_least=${var.failed_updates_at_least_percentage_major})).publish('MAJOR')
 EOF
 
@@ -33,7 +33,7 @@ resource "signalfx_detector" "missing_updates" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('fame.azure.automation_update.missing_updates', filter=filter('classification', 'security', 'critical') and ${module.filtering.signalflow})${var.missing_updates_aggregation_function}${var.missing_updates_transformation_function}.publish('signal')
+    signal = data('fame.azure.automation_update.missing_updates', filter=filter('classification', 'security', 'critical') and ${module.filtering.signalflow}, extrapolation='zero')${var.missing_updates_aggregation_function}${var.missing_updates_transformation_function}.publish('signal')
     detect(when(signal > ${var.missing_updates_threshold_major}, lasting=%{if var.missing_updates_lasting_duration_major == null}None%{else}'${var.missing_updates_lasting_duration_major}'%{endif}, at_least=${var.missing_updates_at_least_percentage_major})).publish('MAJOR')
 EOF
 

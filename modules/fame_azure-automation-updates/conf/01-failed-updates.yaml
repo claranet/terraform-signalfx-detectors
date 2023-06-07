@@ -8,6 +8,7 @@ signals:
   signal:
     metric: fame.azure.automation_update.updates_status
     filter: filter('status', 'failed')
+    extrapolation: zero
 
 rules:
   major:

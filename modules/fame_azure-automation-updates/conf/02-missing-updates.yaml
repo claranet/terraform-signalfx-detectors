@@ -8,6 +8,7 @@ signals:
   signal:
     metric: fame.azure.automation_update.missing_updates
     filter: filter('classification', 'security', 'critical')
+    extrapolation: zero
 
 rules:
   major:
