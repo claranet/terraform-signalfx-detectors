@@ -1,0 +1,36 @@
+module: AWS S3
+name: S3 Errors and Requests
+id: s3_5xxErrors
+
+transformation: true
+aggregation: true
+filtering: "filter('namespace', 'AWS/S3')"
+
+value_unit: "%"
+
+signals:
+  errors:
+    metric: '5xxErrors'
+    extrapolation: zero
+    rollup: sum
+  requests:
+    metric: 'AllRequests'
+    extrapolation: zero
+    rollup: sum
+  signal:
+    formula: (errors/requests).scale(100).fill(value=0)
+
+rules:
+  critical:
+    threshold: 10
+    comparator: ">"
+    lasting_duration: 5m
+    lasting_at_least: 0.9
+    append_condition: and when(requests > ${var.minimum_traffic})
+  major:
+    threshold: 5
+    comparator: ">"
+    dependency: critical
+    lasting_duration: 5m
+    lasting_at_least: 0.9
+    append_condition: and when(requests > ${var.minimum_traffic})

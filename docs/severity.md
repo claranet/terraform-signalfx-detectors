@@ -27,6 +27,7 @@
 - [integration_aws-rds-aurora-postgresql](#integration_aws-rds-aurora-postgresql)
 - [integration_aws-rds-common](#integration_aws-rds-common)
 - [integration_aws-redshift](#integration_aws-redshift)
+- [integration_aws-s3](#integration_aws-s3)
 - [integration_aws-sqs](#integration_aws-sqs)
 - [integration_aws-vpn](#integration_aws-vpn)
 - [integration_azure-api-management-service](#integration_azure-api-management-service)
@@ -344,6 +345,13 @@
 |AWS Redshift heartbeat|X|-|-|-|-|
 |AWS Redshift cpu usage|X|X|-|-|-|
 |AWS Redshift storage usage|X|X|-|-|-|
+
+
+## integration_aws-s3
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|AWS S3 s3 errors and requests|X|X|-|-|-|
 
 
 ## integration_aws-sqs
