@@ -1,0 +1,15 @@
+## Example
+module: aws-cwagent
+name: heartbeat
+
+transformation: false
+aggregation: true
+exclude_not_running_vm: true
+
+signals:
+  signal:
+    metric: mem_used_percent
+rules:
+  critical:
+    threshold: 0
+    comparator: "="

@@ -1,0 +1,18 @@
+## Example
+module: aws-cwagent
+name: "Utilisation CPU"
+id: cpu
+transformation: ".min(over='1h')"
+value_unit: "%"
+signals:
+  signal:
+    metric: CPUUtilization
+    extrapolation: zero
+rules:
+  critical:
+    threshold: 90
+    comparator: ">"
+  major:
+    threshold: 85
+    comparator: ">"
+    dependency: critical
