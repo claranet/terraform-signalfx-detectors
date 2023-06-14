@@ -6,7 +6,7 @@ transformation: ".min(over='1h')"
 value_unit: "%"
 signals:
   signal:
-    metric: CPUUtilization
+    metric: cpu_usage_active
     extrapolation: zero
 rules:
   critical:

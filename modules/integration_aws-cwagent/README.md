@@ -96,7 +96,7 @@ Check the [Related documentation](#related-documentation) section for more detai
 
 Here is the list of required metrics for detectors in this module.
 
-* `CPUUtilization`
+* `cpu_usage_active`
 * `disk_used_percent`
 * `mem_used_percent`
 
