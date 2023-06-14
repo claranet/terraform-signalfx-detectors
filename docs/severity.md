@@ -203,9 +203,9 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |AWS CWAgent heartbeat|X|-|-|-|-|
-|AWS CWAgent utilisation de la mémoire|X|X|-|-|-|
-|AWS CWAgent utilisation du disque|X|X|-|-|-|
-|AWS CWAgent utilisation cpu|X|X|-|-|-|
+|AWS CWAgent memory used|X|X|-|-|-|
+|AWS CWAgent disk used|X|X|-|-|-|
+|AWS CWAgent cpu usage active|X|X|-|-|-|
 
 
 ## integration_aws-ecs-cluster

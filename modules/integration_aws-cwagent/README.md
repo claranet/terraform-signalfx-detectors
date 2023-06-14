@@ -76,9 +76,9 @@ This module creates the following SignalFx detectors which could contain one or 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |AWS CWAgent heartbeat|X|-|-|-|-|
-|AWS CWAgent utilisation de la mémoire|X|X|-|-|-|
-|AWS CWAgent utilisation du disque|X|X|-|-|-|
-|AWS CWAgent utilisation cpu|X|X|-|-|-|
+|AWS CWAgent memory used|X|X|-|-|-|
+|AWS CWAgent disk used|X|X|-|-|-|
+|AWS CWAgent cpu usage active|X|X|-|-|-|
 
 ## How to collect required metrics?
 
@@ -108,3 +108,5 @@ Here is the list of required metrics for detectors in this module.
 * [Terraform SignalFx provider](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs)
 * [Terraform SignalFx detector](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector)
 * [Splunk Observability integrations](https://docs.splunk.com/Observability/gdi/get-data-in/integrations.html)
+* [CloudWatch metrics](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/metrics-collected-by-CloudWatch-agent.html)
+* [Splunk Observability metadata](https://docs.splunk.com/Observability/infrastructure/monitor/aws-infra-metadata.html#metadata-available-per-service)

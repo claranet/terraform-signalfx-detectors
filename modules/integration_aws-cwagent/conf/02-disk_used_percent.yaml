@@ -1,6 +1,6 @@
 ## Example
 module: AWS CWAgent
-name: "Utilisation du disque"
+name: "Disk Used"
 id: disk
 transformation: ".min(over='1h')"
 value_unit: "%"
