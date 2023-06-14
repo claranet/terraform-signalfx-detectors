@@ -75,10 +75,10 @@ This module creates the following SignalFx detectors which could contain one or 
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|Aws-cwagent heartbeat|X|-|-|-|-|
-|Aws-cwagent utilisation de la mémoire|X|X|-|-|-|
-|Aws-cwagent utilisation du disque|X|X|-|-|-|
-|Aws-cwagent utilisation cpu|X|X|-|-|-|
+|AWS CWAgent heartbeat|X|-|-|-|-|
+|AWS CWAgent utilisation de la mémoire|X|X|-|-|-|
+|AWS CWAgent utilisation du disque|X|X|-|-|-|
+|AWS CWAgent utilisation cpu|X|X|-|-|-|
 
 ## How to collect required metrics?
 

@@ -1,5 +1,5 @@
 ## Example
-module: aws-cwagent
+module: AWS CWAgent
 name: "Utilisation du disque"
 id: disk
 transformation: ".min(over='1h')"

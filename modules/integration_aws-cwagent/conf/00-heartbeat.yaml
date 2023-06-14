@@ -1,5 +1,5 @@
 ## Example
-module: aws-cwagent
+module: AWS CWAgent
 name: heartbeat
 
 transformation: false

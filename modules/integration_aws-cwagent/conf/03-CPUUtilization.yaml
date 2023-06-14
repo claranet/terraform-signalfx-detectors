@@ -1,5 +1,5 @@
 ## Example
-module: aws-cwagent
+module: AWS CWAgent
 name: "Utilisation CPU"
 id: cpu
 transformation: ".min(over='1h')"

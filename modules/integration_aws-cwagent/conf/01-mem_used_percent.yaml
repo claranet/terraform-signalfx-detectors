@@ -1,5 +1,5 @@
 ## Example
-module: aws-cwagent
+module: AWS CWAgent
 name: "Utilisation de la mémoire"
 id: mem
 transformation: ".min(over='1h')"

@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name = format("%s %s", local.detector_name_prefix, "Aws-cwagent heartbeat")
+  name = format("%s %s", local.detector_name_prefix, "AWS CWAgent heartbeat")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
@@ -27,7 +27,7 @@ EOF
 }
 
 resource "signalfx_detector" "mem" {
-  name = format("%s %s", local.detector_name_prefix, "Aws-cwagent utilisation de la mémoire")
+  name = format("%s %s", local.detector_name_prefix, "AWS CWAgent utilisation de la mémoire")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
@@ -72,7 +72,7 @@ EOF
 }
 
 resource "signalfx_detector" "disk" {
-  name = format("%s %s", local.detector_name_prefix, "Aws-cwagent utilisation du disque")
+  name = format("%s %s", local.detector_name_prefix, "AWS CWAgent utilisation du disque")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
@@ -117,7 +117,7 @@ EOF
 }
 
 resource "signalfx_detector" "cpu" {
-  name = format("%s %s", local.detector_name_prefix, "Aws-cwagent utilisation cpu")
+  name = format("%s %s", local.detector_name_prefix, "AWS CWAgent utilisation cpu")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
