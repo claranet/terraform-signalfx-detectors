@@ -868,6 +868,7 @@
 |Varnish thread number|X|-|-|-|-|
 |Varnish dropped sessions|X|-|-|-|-|
 |Varnish hit rate|-|X|X|-|-|
+|Varnish memory usage|X|X|-|-|-|
 
 
 ## prometheus-exporter_wallix-bastion

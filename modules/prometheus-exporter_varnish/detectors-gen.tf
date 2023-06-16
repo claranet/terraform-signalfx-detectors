@@ -154,3 +154,46 @@ EOF
   max_delay = var.hit_rate_max_delay
 }
 
+resource "signalfx_detector" "memory_usage" {
+  name = format("%s %s", local.detector_name_prefix, "Varnish memory usage")
+
+  authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
+
+  program_text = <<-EOF
+    base_filtering = filter('system.type', 'prometheus-exporter')
+    A = data('varnish_sma_g_bytes', filter=base_filtering and filter('type', 's0') and ${module.filtering.signalflow})${var.memory_usage_aggregation_function}${var.memory_usage_transformation_function}
+    B = data('varnish_sma_g_space', filter=base_filtering and filter('type', 's0') and ${module.filtering.signalflow})${var.memory_usage_aggregation_function}${var.memory_usage_transformation_function}
+    signal = (A / (A+B)).scale(100).fill(0).publish('signal')
+    detect(when(signal > ${var.memory_usage_threshold_critical}, lasting=%{if var.memory_usage_lasting_duration_critical == null}None%{else}'${var.memory_usage_lasting_duration_critical}'%{endif}, at_least=${var.memory_usage_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal > ${var.memory_usage_threshold_major}, lasting=%{if var.memory_usage_lasting_duration_major == null}None%{else}'${var.memory_usage_lasting_duration_major}'%{endif}, at_least=${var.memory_usage_at_least_percentage_major}) and (not when(signal > ${var.memory_usage_threshold_critical}, lasting=%{if var.memory_usage_lasting_duration_critical == null}None%{else}'${var.memory_usage_lasting_duration_critical}'%{endif}, at_least=${var.memory_usage_at_least_percentage_critical}))).publish('MAJOR')
+EOF
+
+  rule {
+    description           = "is too high > ${var.memory_usage_threshold_critical}"
+    severity              = "Critical"
+    detect_label          = "CRIT"
+    disabled              = coalesce(var.memory_usage_disabled_critical, var.memory_usage_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.memory_usage_notifications, "critical", []), var.notifications.critical), null)
+    runbook_url           = try(coalesce(var.memory_usage_runbook_url, var.runbook_url), "")
+    tip                   = var.memory_usage_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
+
+  rule {
+    description           = "is too high > ${var.memory_usage_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.memory_usage_disabled_major, var.memory_usage_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.memory_usage_notifications, "major", []), var.notifications.major), null)
+    runbook_url           = try(coalesce(var.memory_usage_runbook_url, var.runbook_url), "")
+    tip                   = var.memory_usage_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
+
+  max_delay = var.memory_usage_max_delay
+}
+
