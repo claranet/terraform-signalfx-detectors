@@ -164,3 +164,64 @@ variable "thread_number_at_least_percentage_critical" {
   type        = number
   default     = 1
 }
+# dropped_sessions detector
+
+variable "dropped_sessions_notifications" {
+  description = "Notification recipients list per severity overridden for dropped_sessions detector"
+  type        = map(list(string))
+  default     = {}
+}
+
+variable "dropped_sessions_aggregation_function" {
+  description = "Aggregation function and group by for dropped_sessions detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ""
+}
+
+variable "dropped_sessions_transformation_function" {
+  description = "Transformation function for dropped_sessions detector (i.e. \".mean(over='5m')\")"
+  type        = string
+  default     = ".min(over='5m')"
+}
+
+variable "dropped_sessions_max_delay" {
+  description = "Enforce max delay for dropped_sessions detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
+variable "dropped_sessions_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "dropped_sessions_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
+variable "dropped_sessions_disabled" {
+  description = "Disable all alerting rules for dropped_sessions detector"
+  type        = bool
+  default     = null
+}
+
+variable "dropped_sessions_threshold_critical" {
+  description = "Critical threshold for dropped_sessions detector"
+  type        = number
+  default     = 0
+}
+
+variable "dropped_sessions_lasting_duration_critical" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "dropped_sessions_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}

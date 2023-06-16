@@ -83,3 +83,31 @@ EOF
   max_delay = var.thread_number_max_delay
 }
 
+resource "signalfx_detector" "dropped_sessions" {
+  name = format("%s %s", local.detector_name_prefix, "Varnish dropped sessions")
+
+  authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
+
+  program_text = <<-EOF
+    base_filtering = filter('system.type', 'prometheus-exporter')
+    signal = data('varnish_main_sessions', filter=base_filtering and filter('type', 'dropped') and ${module.filtering.signalflow}, rollup='delta')${var.dropped_sessions_aggregation_function}${var.dropped_sessions_transformation_function}.publish('signal')
+    detect(when(signal > ${var.dropped_sessions_threshold_critical}, lasting=%{if var.dropped_sessions_lasting_duration_critical == null}None%{else}'${var.dropped_sessions_lasting_duration_critical}'%{endif}, at_least=${var.dropped_sessions_at_least_percentage_critical})).publish('CRIT')
+EOF
+
+  rule {
+    description           = "is too high > ${var.dropped_sessions_threshold_critical}"
+    severity              = "Critical"
+    detect_label          = "CRIT"
+    disabled              = coalesce(var.dropped_sessions_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.dropped_sessions_notifications, "critical", []), var.notifications.critical), null)
+    runbook_url           = try(coalesce(var.dropped_sessions_runbook_url, var.runbook_url), "")
+    tip                   = var.dropped_sessions_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
+
+  max_delay = var.dropped_sessions_max_delay
+}
+
