@@ -103,3 +103,64 @@ variable "backend_failed_at_least_percentage_critical" {
   type        = number
   default     = 1
 }
+# thread_number detector
+
+variable "thread_number_notifications" {
+  description = "Notification recipients list per severity overridden for thread_number detector"
+  type        = map(list(string))
+  default     = {}
+}
+
+variable "thread_number_aggregation_function" {
+  description = "Aggregation function and group by for thread_number detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ""
+}
+
+variable "thread_number_transformation_function" {
+  description = "Transformation function for thread_number detector (i.e. \".mean(over='5m')\")"
+  type        = string
+  default     = ".min(over='5m')"
+}
+
+variable "thread_number_max_delay" {
+  description = "Enforce max delay for thread_number detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
+variable "thread_number_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "thread_number_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
+variable "thread_number_disabled" {
+  description = "Disable all alerting rules for thread_number detector"
+  type        = bool
+  default     = null
+}
+
+variable "thread_number_threshold_critical" {
+  description = "Critical threshold for thread_number detector"
+  type        = number
+  default     = 1
+}
+
+variable "thread_number_lasting_duration_critical" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "thread_number_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
