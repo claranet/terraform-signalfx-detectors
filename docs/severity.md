@@ -864,6 +864,7 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Varnish heartbeat|X|-|-|-|-|
+|Varnish backend failed|X|-|-|-|-|
 
 
 ## prometheus-exporter_wallix-bastion

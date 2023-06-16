@@ -1,0 +1,16 @@
+module: varnish
+name: Backend Failed
+
+transformation: ".min(over='5m')"
+aggregation: true
+
+filtering: "filter('system.type', 'prometheus-exporter')"
+
+signals:
+  signal:
+    metric: varnish_backend_fail
+    rollup: delta
+rules:
+  critical:
+    threshold: 0
+    comparator: ">"
