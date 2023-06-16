@@ -78,6 +78,7 @@
 - [prometheus-exporter_kong](#prometheus-exporter_kong)
 - [prometheus-exporter_oracledb](#prometheus-exporter_oracledb)
 - [prometheus-exporter_squid](#prometheus-exporter_squid)
+- [prometheus-exporter_varnish](#prometheus-exporter_varnish)
 - [prometheus-exporter_wallix-bastion](#prometheus-exporter_wallix-bastion)
 - [smart-agent_apache](#smart-agent_apache)
 - [smart-agent_cassandra-nodetool](#smart-agent_cassandra-nodetool)
@@ -856,6 +857,13 @@
 |Squid status|X|-|-|-|-|
 |Squid server errors ratio|X|X|-|-|-|
 |Squid total amount of requests|X|-|-|-|-|
+
+
+## prometheus-exporter_varnish
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Varnish heartbeat|X|-|-|-|-|
 
 
 ## prometheus-exporter_wallix-bastion

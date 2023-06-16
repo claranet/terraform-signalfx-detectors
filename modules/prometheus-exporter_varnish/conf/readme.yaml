@@ -1,0 +1,25 @@
+documentations:
+  - name: Prometheus Exporter for Varnish
+    url: https://github.com/jonnenauha/prometheus_varnish_exporter
+
+source_doc:
+  The detectors of this module uses metrics from the [prometheus varnish exporter](https://github.com/jonnenauha/prometheus_varnish_exporter) plugin for Prometheus.
+
+  This exporter is not an official Prometheus exporter.
+
+  ### Examples
+
+  Sample OTEL Agent configuration snippet:
+
+  ```yaml
+  receivers:
+      smartagent/prometheus-exporter:
+        type: prometheus-exporter
+        host: localhost
+        port: 9131
+  service:
+      pipelines:
+          metrics:
+              receivers:
+              - smartagent/prometheus-exporter
+
