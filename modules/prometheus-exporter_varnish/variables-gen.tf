@@ -225,3 +225,93 @@ variable "dropped_sessions_at_least_percentage_critical" {
   type        = number
   default     = 1
 }
+# hit_rate detector
+
+variable "hit_rate_notifications" {
+  description = "Notification recipients list per severity overridden for hit_rate detector"
+  type        = map(list(string))
+  default     = {}
+}
+
+variable "hit_rate_aggregation_function" {
+  description = "Aggregation function and group by for hit_rate detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ""
+}
+
+variable "hit_rate_transformation_function" {
+  description = "Transformation function for hit_rate detector (i.e. \".mean(over='5m')\")"
+  type        = string
+  default     = ".min(over='5m')"
+}
+
+variable "hit_rate_max_delay" {
+  description = "Enforce max delay for hit_rate detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
+variable "hit_rate_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "hit_rate_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
+variable "hit_rate_disabled" {
+  description = "Disable all alerting rules for hit_rate detector"
+  type        = bool
+  default     = null
+}
+
+variable "hit_rate_disabled_minor" {
+  description = "Disable minor alerting rule for hit_rate detector"
+  type        = bool
+  default     = null
+}
+
+variable "hit_rate_disabled_major" {
+  description = "Disable major alerting rule for hit_rate detector"
+  type        = bool
+  default     = null
+}
+
+variable "hit_rate_threshold_minor" {
+  description = "Minor threshold for hit_rate detector"
+  type        = number
+  default     = 90
+}
+
+variable "hit_rate_lasting_duration_minor" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "5m"
+}
+
+variable "hit_rate_at_least_percentage_minor" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
+variable "hit_rate_threshold_major" {
+  description = "Major threshold for hit_rate detector"
+  type        = number
+  default     = 80
+}
+
+variable "hit_rate_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "5m"
+}
+
+variable "hit_rate_at_least_percentage_major" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}

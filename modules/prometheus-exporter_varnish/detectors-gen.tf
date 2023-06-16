@@ -111,3 +111,46 @@ EOF
   max_delay = var.dropped_sessions_max_delay
 }
 
+resource "signalfx_detector" "hit_rate" {
+  name = format("%s %s", local.detector_name_prefix, "Varnish hit rate")
+
+  authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
+
+  program_text = <<-EOF
+    base_filtering = filter('system.type', 'prometheus-exporter')
+    A = data('varnish_main_cache_hit', filter=base_filtering and ${module.filtering.signalflow})${var.hit_rate_aggregation_function}${var.hit_rate_transformation_function}
+    B = data('varnish_main_cache_miss', filter=base_filtering and ${module.filtering.signalflow})${var.hit_rate_aggregation_function}${var.hit_rate_transformation_function}
+    signal = (A/(A+B)).fill(0).scale(100).publish('signal')
+    detect(when(signal < ${var.hit_rate_threshold_minor}, lasting=%{if var.hit_rate_lasting_duration_minor == null}None%{else}'${var.hit_rate_lasting_duration_minor}'%{endif}, at_least=${var.hit_rate_at_least_percentage_minor})).publish('MINOR')
+    detect(when(signal <= ${var.hit_rate_threshold_major}, lasting=%{if var.hit_rate_lasting_duration_major == null}None%{else}'${var.hit_rate_lasting_duration_major}'%{endif}, at_least=${var.hit_rate_at_least_percentage_major}) and (not when(signal < ${var.hit_rate_threshold_minor}, lasting=%{if var.hit_rate_lasting_duration_minor == null}None%{else}'${var.hit_rate_lasting_duration_minor}'%{endif}, at_least=${var.hit_rate_at_least_percentage_minor}))).publish('MAJOR')
+EOF
+
+  rule {
+    description           = "is too low < ${var.hit_rate_threshold_minor}"
+    severity              = "Minor"
+    detect_label          = "MINOR"
+    disabled              = coalesce(var.hit_rate_disabled_minor, var.hit_rate_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.hit_rate_notifications, "minor", []), var.notifications.minor), null)
+    runbook_url           = try(coalesce(var.hit_rate_runbook_url, var.runbook_url), "")
+    tip                   = var.hit_rate_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
+
+  rule {
+    description           = "is too low <= ${var.hit_rate_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.hit_rate_disabled_major, var.hit_rate_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.hit_rate_notifications, "major", []), var.notifications.major), null)
+    runbook_url           = try(coalesce(var.hit_rate_runbook_url, var.runbook_url), "")
+    tip                   = var.hit_rate_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
+
+  max_delay = var.hit_rate_max_delay
+}
+

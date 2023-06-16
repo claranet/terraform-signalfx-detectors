@@ -865,6 +865,9 @@
 |---|---|---|---|---|---|
 |Varnish heartbeat|X|-|-|-|-|
 |Varnish backend failed|X|-|-|-|-|
+|Varnish thread number|X|-|-|-|-|
+|Varnish dropped sessions|X|-|-|-|-|
+|Varnish hit rate|-|X|X|-|-|
 
 
 ## prometheus-exporter_wallix-bastion
