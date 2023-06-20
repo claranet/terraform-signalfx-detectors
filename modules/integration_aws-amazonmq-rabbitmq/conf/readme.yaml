@@ -1,3 +1,4 @@
 documentations:
   - name: 'AWS documentation: Monitoring Amazon MQ brokers'
     url: 'https://docs.aws.amazon.com/amazon-mq/latest/developer-guide/security-logging-monitoring-cloudwatch.html#rabbitmq-logging-monitoring'
+
