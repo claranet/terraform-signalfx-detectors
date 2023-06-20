@@ -1,0 +1,21 @@
+module: AWS AmazonMQ RabbitMQ
+name: messages ready
+
+transformation: true
+aggregation: true
+filtering: "filter('namespace', 'AWS/AmazonMQ') and filter('stat', 'upper')"
+
+signals:
+  signal:
+    metric: MessageReadyCount
+
+rules:
+  critical:
+    threshold: 15000
+    comparator: ">"
+    lasting_duration: 20m
+  major:
+    threshold: 10000
+    comparator: ">"
+    lasting_duration: 20m
+    dependency: critical
