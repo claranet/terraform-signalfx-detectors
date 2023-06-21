@@ -1,0 +1,18 @@
+## Example
+module: AWS CWAgent
+name: "Disk Used"
+id: disk
+transformation: ".min(over='1h')"
+value_unit: "%"
+signals:
+  signal:
+    metric: disk_used_percent
+    extrapolation: zero
+rules:
+  critical:
+    threshold: 90
+    comparator: ">"
+  major:
+    threshold: 85
+    comparator: ">"
+    dependency: critical

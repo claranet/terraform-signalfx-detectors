@@ -4,6 +4,7 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 :link: **Contents**
 
+- [cwagent-ec2](#cwagent-ec2)
 - [fame_azure-storage-file-backup](#fame_azure-storage-file-backup)
 - [fame_azure-vm-backup](#fame_azure-vm-backup)
 - [fame_azure-vpn](#fame_azure-vpn)
@@ -118,6 +119,16 @@
 - [smart-agent_zookeeper](#smart-agent_zookeeper)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+## cwagent-ec2
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|AWS CWAgent heartbeat|X|-|-|-|-|
+|AWS CWAgent memory used|X|X|-|-|-|
+|AWS CWAgent disk used|X|X|-|-|-|
+|AWS CWAgent cpu usage active|X|X|-|-|-|
+
 
 ## fame_azure-storage-file-backup
 

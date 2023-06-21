@@ -1,0 +1,5 @@
+documentations:
+  - name: CloudWatch metrics
+    url: 'https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/metrics-collected-by-CloudWatch-agent.html'
+  - name: Splunk Observability metadata
+    url: 'https://docs.splunk.com/Observability/infrastructure/monitor/aws-infra-metadata.html#metadata-available-per-service'
