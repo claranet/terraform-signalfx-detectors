@@ -1,4 +1,4 @@
-# AWS-CWAGENT SignalFx detectors
+# CWAGENT-EC2 SignalFx detectors
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -20,8 +20,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-integration-aws-cwagent" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/integration_aws-cwagent?ref={revision}"
+module "signalfx-detectors-cwagent-ec2" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/cwagent-ec2?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications
@@ -83,9 +83,7 @@ This module creates the following SignalFx detectors which could contain one or 
 ## How to collect required metrics?
 
 This module deploys detectors using metrics reported by the
-[AWS integration](https://docs.splunk.com/Observability/gdi/get-data-in/connect/aws/aws.html) configurable
-with [this Terraform module](https://github.com/claranet/terraform-signalfx-integrations/tree/master/cloud/aws).
-
+[Splunk Observability organization](https://docs.splunk.com/Observability/admin/org-metrics.html) always available out the box.
 
 Check the [Related documentation](#related-documentation) section for more detailed and specific information about this module dependencies.
 

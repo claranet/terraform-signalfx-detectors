@@ -4,6 +4,7 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 :link: **Contents**
 
+- [cwagent-ec2](#cwagent-ec2)
 - [fame_azure-storage-file-backup](#fame_azure-storage-file-backup)
 - [fame_azure-vm-backup](#fame_azure-vm-backup)
 - [fame_azure-vpn](#fame_azure-vpn)
@@ -12,7 +13,6 @@
 - [integration_aws-apigateway](#integration_aws-apigateway)
 - [integration_aws-backup](#integration_aws-backup)
 - [integration_aws-beanstalk](#integration_aws-beanstalk)
-- [integration_aws-cwagent](#integration_aws-cwagent)
 - [integration_aws-ecs-cluster](#integration_aws-ecs-cluster)
 - [integration_aws-ecs-service](#integration_aws-ecs-service)
 - [integration_aws-efs](#integration_aws-efs)
@@ -120,6 +120,16 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
+## cwagent-ec2
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|AWS CWAgent heartbeat|X|-|-|-|-|
+|AWS CWAgent memory used|X|X|-|-|-|
+|AWS CWAgent disk used|X|X|-|-|-|
+|AWS CWAgent cpu usage active|X|X|-|-|-|
+
+
 ## fame_azure-storage-file-backup
 
 |Detector|Critical|Major|Minor|Warning|Info|
@@ -196,16 +206,6 @@
 |AWS Beanstalk application latency p90|X|X|-|-|-|
 |AWS Beanstalk application 5xx error rate|X|X|-|-|-|
 |AWS Beanstalk instance root filesystem usage|X|X|-|-|-|
-
-
-## integration_aws-cwagent
-
-|Detector|Critical|Major|Minor|Warning|Info|
-|---|---|---|---|---|---|
-|AWS CWAgent heartbeat|X|-|-|-|-|
-|AWS CWAgent memory used|X|X|-|-|-|
-|AWS CWAgent disk used|X|X|-|-|-|
-|AWS CWAgent cpu usage active|X|X|-|-|-|
 
 
 ## integration_aws-ecs-cluster
