@@ -7,6 +7,7 @@
 - [How to use this module?](#how-to-use-this-module)
 - [What are the available detectors in this module?](#what-are-the-available-detectors-in-this-module)
 - [How to collect required metrics?](#how-to-collect-required-metrics)
+  - [Examples](#examples)
   - [Metrics](#metrics)
 - [Related documentation](#related-documentation)
 
@@ -76,6 +77,11 @@ This module creates the following SignalFx detectors which could contain one or 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Varnish heartbeat|X|-|-|-|-|
+|Varnish backend failed|X|-|-|-|-|
+|Varnish thread number|X|-|-|-|-|
+|Varnish dropped sessions|X|-|-|-|-|
+|Varnish hit rate|-|X|X|-|-|
+|Varnish memory usage|X|X|-|-|-|
 
 ## How to collect required metrics?
 
@@ -94,6 +100,26 @@ a separate program configured to connect, create metrics and expose them as serv
 
 Check the [Related documentation](#related-documentation) section for more detailed and specific information about this module dependencies.
 
+The detectors of this module uses metrics from the [prometheus varnish exporter](https://github.com/jonnenauha/prometheus_varnish_exporter) plugin for Prometheus.
+
+This exporter is not an official Prometheus exporter.
+
+### Examples
+
+Sample OTEL Agent configuration snippet:
+
+```yaml
+receivers:
+    smartagent/prometheus-exporter:
+      type: prometheus-exporter
+      host: localhost
+      port: 9131
+service:
+    pipelines:
+        metrics:
+            receivers:
+            - smartagent/prometheus-exporter
+```
 
 
 ### Metrics
@@ -101,7 +127,13 @@ Check the [Related documentation](#related-documentation) section for more detai
 
 Here is the list of required metrics for detectors in this module.
 
+* `varnish_backend_fail`
+* `varnish_main_cache_hit`
+* `varnish_main_cache_miss`
+* `varnish_main_sessions`
 * `varnish_main_threads`
+* `varnish_sma_g_bytes`
+* `varnish_sma_g_space`
 
 
 
@@ -111,3 +143,4 @@ Here is the list of required metrics for detectors in this module.
 * [Terraform SignalFx provider](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs)
 * [Terraform SignalFx detector](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector)
 * [Splunk Observability integrations](https://docs.splunk.com/Observability/gdi/get-data-in/integrations.html)
+* [Prometheus Exporter for Varnish](https://github.com/jonnenauha/prometheus_varnish_exporter)
