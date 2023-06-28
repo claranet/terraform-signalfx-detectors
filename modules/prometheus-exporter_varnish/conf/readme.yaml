@@ -2,7 +2,7 @@ documentations:
   - name: Prometheus Exporter for Varnish
     url: https://github.com/jonnenauha/prometheus_varnish_exporter
 
-source_doc:
+source_doc: |
   The detectors of this module uses metrics from the [prometheus varnish exporter](https://github.com/jonnenauha/prometheus_varnish_exporter) plugin for Prometheus.
 
   This exporter is not an official Prometheus exporter.
@@ -22,4 +22,4 @@ source_doc:
           metrics:
               receivers:
               - smartagent/prometheus-exporter
-
+  ```
