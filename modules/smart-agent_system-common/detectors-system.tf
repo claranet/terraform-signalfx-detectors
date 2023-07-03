@@ -11,6 +11,11 @@ resource "signalfx_detector" "disk_running_out" {
     countdown.hours_left_stream_incr_detector(stream=signal, maximum_capacity=${var.disk_running_out_maximum_capacity}, lower_threshold=${var.disk_running_out_hours_till_full}, fire_lasting=lasting('${var.disk_running_out_fire_lasting_time}', ${var.disk_running_out_fire_lasting_time_percent}), clear_threshold=${var.disk_running_out_clear_hours_remaining}, clear_lasting=lasting('${var.disk_running_out_clear_lasting_time}', ${var.disk_running_out_clear_lasting_time_percent}), use_double_ewma=${var.disk_running_out_use_ewma}).publish('MAJOR')
 EOF
 
+  viz_options {
+    label      = "signal"
+    value_unit = "Gibibyte"
+  }
+
   rule {
     description           = "in ${var.disk_running_out_hours_till_full}"
     severity              = "Major"

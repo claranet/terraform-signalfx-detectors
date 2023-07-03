@@ -7,7 +7,7 @@ resource "signalfx_detector" "used_space" {
 
   viz_options {
     label      = "signal"
-    value_unit = "Gigibyte"
+    value_unit = "Gibibyte"
   }
 
   program_text = <<-EOF
@@ -19,7 +19,7 @@ resource "signalfx_detector" "used_space" {
 EOF
 
   rule {
-    description           = "is too high > ${var.used_space_threshold_critical}Gigibyte"
+    description           = "is too high > ${var.used_space_threshold_critical}Gibibyte"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.used_space_disabled_critical, var.used_space_disabled, var.detectors_disabled)
@@ -31,7 +31,7 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.used_space_threshold_major}Gigibyte"
+    description           = "is too high > ${var.used_space_threshold_major}Gibibyte"
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.used_space_disabled_major, var.used_space_disabled, var.detectors_disabled)
