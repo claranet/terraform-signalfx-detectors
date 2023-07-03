@@ -55,7 +55,7 @@ variable "used_space_disabled_major" {
 }
 
 variable "used_space_threshold_critical" {
-  description = "Critical threshold for used_space detector in Gigibyte"
+  description = "Critical threshold for used_space detector in Gibibyte"
   type        = number
 }
 
@@ -71,7 +71,7 @@ variable "used_space_at_least_percentage_critical" {
   default     = 1
 }
 variable "used_space_threshold_major" {
-  description = "Major threshold for used_space detector in Gigibyte"
+  description = "Major threshold for used_space detector in Gibibyte"
   type        = number
 }
 

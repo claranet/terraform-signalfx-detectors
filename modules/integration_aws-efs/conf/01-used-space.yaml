@@ -1,7 +1,7 @@
 module: "AWS EFS"
 name: "Used Space"
 filtering: "filter('namespace', 'AWS/EFS')"
-value_unit: "Gigibyte"
+value_unit: "Gibibyte"
 transformation: ".max(over='15m')"
 signals:
   used_space:

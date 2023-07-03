@@ -26,7 +26,7 @@ resource "signalfx_detector" "{{ id }}" {
     {%- if value_unit is defined %}
 
   viz_options {
-    {%- if value_unit in ['Bit', 'Kilobit', 'Megabit', 'Gigabit', 'Terabit', 'Petabit', 'Exabit', 'Zettabit', 'Yottabit', 'Byte', 'Kibibyte','Mebibyte', 'Gigibyte', 'Tebibyte', 'Pebibyte', 'Exbibyte', 'Zebibyte', 'Yobibyte', 'Nanosecond', 'Microsecond', 'Millisecond', 'Second','Minute', 'Hour', 'Day', 'Week'] %}
+    {%- if value_unit in ['Bit', 'Kilobit', 'Megabit', 'Gigabit', 'Terabit', 'Petabit', 'Exabit', 'Zettabit', 'Yottabit', 'Byte', 'Kibibyte','Mebibyte', 'Gibibyte', 'Tebibyte', 'Pebibyte', 'Exbibyte', 'Zebibyte', 'Yobibyte', 'Nanosecond', 'Microsecond', 'Millisecond', 'Second','Minute', 'Hour', 'Day', 'Week'] %}
     label      = "{{ key }}"
     value_unit = "{{ value_unit }}"
     {%- else %}

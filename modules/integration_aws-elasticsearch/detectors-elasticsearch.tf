@@ -76,7 +76,7 @@ resource "signalfx_detector" "free_space" {
 
   viz_options {
     label      = "signal"
-    value_unit = "Gigibyte"
+    value_unit = "Gibibyte"
   }
 
   program_text = <<-EOF
@@ -121,7 +121,7 @@ resource "signalfx_detector" "ultrawarm_free_space" {
 
   viz_options {
     label      = "signal"
-    value_unit = "Gigibyte"
+    value_unit = "Gibibyte"
   }
 
   program_text = <<-EOF
