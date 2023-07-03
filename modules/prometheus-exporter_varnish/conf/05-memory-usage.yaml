@@ -1,0 +1,27 @@
+module: varnish
+name: Memory Usage
+
+transformation: ".min(over='5m')"
+aggregation: true
+
+filtering: "filter('system.type', 'prometheus-exporter')"
+
+signals:
+  A:
+    metric: varnish_sma_g_bytes
+    filter: "filter('type', 's0')"
+  B:
+    metric: varnish_sma_g_space
+    filter: "filter('type', 's0')"
+  signal:
+    formula: (A / (A+B)).scale(100).fill(0)
+rules:
+  critical:
+    threshold: 90
+    comparator: ">"
+    lasting_duration: "5m"
+  major:
+    threshold: 80
+    comparator: ">"
+    lasting_duration: "5m"
+    dependency: critical

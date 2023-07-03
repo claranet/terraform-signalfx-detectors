@@ -1,0 +1,17 @@
+module: varnish
+name: Dropped Sessions
+
+transformation: ".min(over='5m')"
+aggregation: true
+
+filtering: "filter('system.type', 'prometheus-exporter')"
+
+signals:
+  signal:
+    metric: varnish_main_sessions
+    rollup: delta
+    filter: "filter('type', 'dropped')"
+rules:
+  critical:
+    threshold: 0
+    comparator: ">"

@@ -1,0 +1,14 @@
+module: varnish
+name: heartbeat
+
+transformation: false
+aggregation: true
+exclude_not_running_vm: true
+
+filtering: "filter('system.type', 'prometheus-exporter')"
+
+signals:
+  signal:
+    metric: "varnish_main_threads"
+rules:
+  critical:
