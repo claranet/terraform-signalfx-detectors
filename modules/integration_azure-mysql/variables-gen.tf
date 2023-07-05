@@ -362,35 +362,18 @@ variable "memory_disabled" {
   default     = null
 }
 
-variable "memory_disabled_major" {
-  description = "Disable major alerting rule for memory detector"
-  type        = bool
-  default     = null
-}
-
 variable "memory_disabled_critical" {
   description = "Disable critical alerting rule for memory detector"
   type        = bool
   default     = null
 }
 
-variable "memory_threshold_major" {
-  description = "Major threshold for memory detector in %"
-  type        = number
-  default     = 80
+variable "memory_disabled_major" {
+  description = "Disable major alerting rule for memory detector"
+  type        = bool
+  default     = null
 }
 
-variable "memory_lasting_duration_major" {
-  description = "Minimum duration that conditions must be true before raising alert"
-  type        = string
-  default     = "15m"
-}
-
-variable "memory_at_least_percentage_major" {
-  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
-  type        = number
-  default     = 1
-}
 variable "memory_threshold_critical" {
   description = "Critical threshold for memory detector in %"
   type        = number
@@ -404,6 +387,23 @@ variable "memory_lasting_duration_critical" {
 }
 
 variable "memory_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
+variable "memory_threshold_major" {
+  description = "Major threshold for memory detector in %"
+  type        = number
+  default     = 80
+}
+
+variable "memory_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "15m"
+}
+
+variable "memory_at_least_percentage_major" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1
