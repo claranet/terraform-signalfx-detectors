@@ -55,9 +55,9 @@ variable "dbload_disabled_major" {
 }
 
 variable "dbload_threshold_critical" {
-  description = "Critical threshold for dbload detector in %"
+  description = "Critical threshold for dbload detector"
   type        = number
-  default     = 90
+  default     = 16
 }
 
 variable "dbload_lasting_duration_critical" {
@@ -72,9 +72,9 @@ variable "dbload_at_least_percentage_critical" {
   default     = 1
 }
 variable "dbload_threshold_major" {
-  description = "Major threshold for dbload detector in %"
+  description = "Major threshold for dbload detector"
   type        = number
-  default     = 80
+  default     = 8
 }
 
 variable "dbload_lasting_duration_major" {
