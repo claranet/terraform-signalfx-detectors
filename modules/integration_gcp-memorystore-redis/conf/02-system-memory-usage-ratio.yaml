@@ -12,9 +12,9 @@ signals:
 
 rules:
   critical:
-    threshold: 90
+    threshold: 0.9
     comparator: ">"
   major:
-    threshold: 80
+    threshold: 0.8
     comparator: ">"
     dependency: critical
