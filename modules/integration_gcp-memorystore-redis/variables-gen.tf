@@ -281,7 +281,7 @@ variable "memory_usage_ratio_disabled_major" {
 variable "memory_usage_ratio_threshold_critical" {
   description = "Critical threshold for memory_usage_ratio detector in %"
   type        = number
-  default     = 90
+  default     = 0.9
 }
 
 variable "memory_usage_ratio_lasting_duration_critical" {
@@ -298,7 +298,7 @@ variable "memory_usage_ratio_at_least_percentage_critical" {
 variable "memory_usage_ratio_threshold_major" {
   description = "Major threshold for memory_usage_ratio detector in %"
   type        = number
-  default     = 80
+  default     = 0.8
 }
 
 variable "memory_usage_ratio_lasting_duration_major" {
