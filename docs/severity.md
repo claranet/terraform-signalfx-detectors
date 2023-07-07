@@ -4,11 +4,8 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 :link: **Contents**
 
-<<<<<<< HEAD
 - [cwagent-ec2](#cwagent-ec2)
-=======
 - [fame_azure-automation-updates](#fame_azure-automation-updates)
->>>>>>> 4895211f (Azure Update Management monitoring with Fame)
 - [fame_azure-storage-file-backup](#fame_azure-storage-file-backup)
 - [fame_azure-update-center](#fame_azure-update-center)
 - [fame_azure-vm-backup](#fame_azure-vm-backup)
@@ -126,7 +123,6 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-<<<<<<< HEAD
 ## cwagent-ec2
 
 |Detector|Critical|Major|Minor|Warning|Info|
@@ -135,18 +131,14 @@
 |AWS CWAgent memory used|X|X|-|-|-|
 |AWS CWAgent disk used|X|X|-|-|-|
 |AWS CWAgent cpu usage active|X|X|-|-|-|
-=======
+
+
 ## fame_azure-automation-updates
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-<<<<<<< HEAD
-|Azure Automation Update failed updates|X|-|-|-|-|
->>>>>>> 4895211f (Azure Update Management monitoring with Fame)
-=======
 |Azure Automation Update failed updates|-|X|-|-|-|
 |Azure Automation Update missing updates|-|X|-|-|-|
->>>>>>> 5eb7429e (Azure Update Management monitoring with Fame - missing updates)
 
 
 ## fame_azure-storage-file-backup
