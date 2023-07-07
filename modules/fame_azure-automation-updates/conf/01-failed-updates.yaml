@@ -1,0 +1,17 @@
+module: Azure Automation Update
+name: failed updates
+transformation: true
+aggregation: true
+
+max_delay: 900
+signals:
+  signal:
+    metric: fame.azure.automation_update.updates_status
+    filter: filter('status', 'failed')
+    extrapolation: zero
+
+rules:
+  major:
+    threshold: 0
+    comparator: ">"
+    lasting_duration: '6h'

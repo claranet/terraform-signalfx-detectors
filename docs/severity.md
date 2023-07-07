@@ -5,7 +5,9 @@
 :link: **Contents**
 
 - [cwagent-ec2](#cwagent-ec2)
+- [fame_azure-automation-updates](#fame_azure-automation-updates)
 - [fame_azure-storage-file-backup](#fame_azure-storage-file-backup)
+- [fame_azure-update-center](#fame_azure-update-center)
 - [fame_azure-vm-backup](#fame_azure-vm-backup)
 - [fame_azure-vpn](#fame_azure-vpn)
 - [integration_aws-alb](#integration_aws-alb)
@@ -131,11 +133,27 @@
 |AWS CWAgent cpu usage active|X|X|-|-|-|
 
 
+## fame_azure-automation-updates
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Azure Automation Update failed updates|-|X|-|-|-|
+|Azure Automation Update missing updates|-|X|-|-|-|
+
+
 ## fame_azure-storage-file-backup
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Azure Storage File backup success|X|-|-|-|-|
+
+
+## fame_azure-update-center
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Azure Update Center failed updates|-|X|-|-|-|
+|Azure Update Center missing updates|-|X|-|-|-|
 
 
 ## fame_azure-vm-backup
