@@ -8,13 +8,13 @@ output "heartbeat" {
   value       = signalfx_detector.heartbeat
 }
 
-output "memory_usage_ratio" {
-  description = "Detector resource for memory_usage_ratio"
-  value       = signalfx_detector.memory_usage_ratio
+output "memory_usage" {
+  description = "Detector resource for memory_usage"
+  value       = signalfx_detector.memory_usage
 }
 
-output "system_memory_usage_ratio" {
-  description = "Detector resource for system_memory_usage_ratio"
-  value       = signalfx_detector.system_memory_usage_ratio
+output "system_memory_usage" {
+  description = "Detector resource for system_memory_usage"
+  value       = signalfx_detector.system_memory_usage
 }
 
