@@ -86,8 +86,8 @@ resource "signalfx_detector" "system_memory_usage" {
   }
 
   program_text = <<-EOF
-    signal = data('stats/memory/system_memory_usage_ratio', filter=${module.filtering.signalflow}, extrapolation='zero')${var.system_memory_usage_aggregation_function}${var.system_memory_usage_transformation_function}
-    signal = scale(100).publish('signal')
+    A = data('stats/memory/system_memory_usage_ratio', filter=${module.filtering.signalflow}, extrapolation='zero')${var.system_memory_usage_aggregation_function}${var.system_memory_usage_transformation_function}
+    signal = A.scale(100).publish('signal')
     detect(when(signal > ${var.system_memory_usage_threshold_critical}, lasting=%{if var.system_memory_usage_lasting_duration_critical == null}None%{else}'${var.system_memory_usage_lasting_duration_critical}'%{endif}, at_least=${var.system_memory_usage_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal > ${var.system_memory_usage_threshold_major}, lasting=%{if var.system_memory_usage_lasting_duration_major == null}None%{else}'${var.system_memory_usage_lasting_duration_major}'%{endif}, at_least=${var.system_memory_usage_at_least_percentage_major}) and (not when(signal > ${var.system_memory_usage_threshold_critical}, lasting=%{if var.system_memory_usage_lasting_duration_critical == null}None%{else}'${var.system_memory_usage_lasting_duration_critical}'%{endif}, at_least=${var.system_memory_usage_at_least_percentage_critical}))).publish('MAJOR')
 EOF
@@ -132,8 +132,8 @@ resource "signalfx_detector" "memory_usage" {
   }
 
   program_text = <<-EOF
-    signal = data('stats/memory/usage_ratio', filter=${module.filtering.signalflow}, extrapolation='zero')${var.memory_usage_aggregation_function}${var.memory_usage_transformation_function}
-    signal = scale(100).publish('signal')
+    A = data('stats/memory/usage_ratio', filter=${module.filtering.signalflow}, extrapolation='zero')${var.memory_usage_aggregation_function}${var.memory_usage_transformation_function}
+    signal = A.scale(100).publish('signal')
     detect(when(signal > ${var.memory_usage_threshold_critical}, lasting=%{if var.memory_usage_lasting_duration_critical == null}None%{else}'${var.memory_usage_lasting_duration_critical}'%{endif}, at_least=${var.memory_usage_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal > ${var.memory_usage_threshold_major}, lasting=%{if var.memory_usage_lasting_duration_major == null}None%{else}'${var.memory_usage_lasting_duration_major}'%{endif}, at_least=${var.memory_usage_at_least_percentage_major}) and (not when(signal > ${var.memory_usage_threshold_critical}, lasting=%{if var.memory_usage_lasting_duration_critical == null}None%{else}'${var.memory_usage_lasting_duration_critical}'%{endif}, at_least=${var.memory_usage_at_least_percentage_critical}))).publish('MAJOR')
 EOF

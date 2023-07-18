@@ -6,10 +6,11 @@ value_unit: "%"
 transformation: ".min(over='30m')"
 
 signals:
-  signal:
+  A:
     metric: stats/memory/usage_ratio
     extrapolation: zero
-    formula: scale(100)
+  signal:
+    formula: A.scale(100)
 
 rules:
   critical:
