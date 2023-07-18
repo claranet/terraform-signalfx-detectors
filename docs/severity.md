@@ -778,8 +778,8 @@
 |---|---|---|---|---|---|
 |GCP Memorystore Redis heartbeat|X|-|-|-|-|
 |GCP Memorystore Redis blocked over connected clients ratio|X|X|-|-|-|
-|GCP Memorystore Redis system memory usage ratio|X|X|-|-|-|
-|GCP Memorystore Redis memory usage ratio|X|X|-|-|-|
+|GCP Memorystore Redis system memory usage|X|X|-|-|-|
+|GCP Memorystore Redis memory usage|X|X|-|-|-|
 
 
 ## integration_gcp-pubsub-subscription
