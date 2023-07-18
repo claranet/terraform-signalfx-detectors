@@ -73,8 +73,8 @@ EOF
   max_delay = var.blocked_over_connected_clients_ratio_max_delay
 }
 
-resource "signalfx_detector" "system_memory_usage_ratio" {
-  name = format("%s %s", local.detector_name_prefix, "GCP Memorystore Redis system memory usage ratio")
+resource "signalfx_detector" "system_memory_usage" {
+  name = format("%s %s", local.detector_name_prefix, "GCP Memorystore Redis system memory usage")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
@@ -86,40 +86,41 @@ resource "signalfx_detector" "system_memory_usage_ratio" {
   }
 
   program_text = <<-EOF
-    signal = data('stats/memory/system_memory_usage_ratio', filter=${module.filtering.signalflow}, extrapolation='zero')${var.system_memory_usage_ratio_aggregation_function}${var.system_memory_usage_ratio_transformation_function}.publish('signal')
-    detect(when(signal > ${var.system_memory_usage_ratio_threshold_critical}, lasting=%{if var.system_memory_usage_ratio_lasting_duration_critical == null}None%{else}'${var.system_memory_usage_ratio_lasting_duration_critical}'%{endif}, at_least=${var.system_memory_usage_ratio_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal > ${var.system_memory_usage_ratio_threshold_major}, lasting=%{if var.system_memory_usage_ratio_lasting_duration_major == null}None%{else}'${var.system_memory_usage_ratio_lasting_duration_major}'%{endif}, at_least=${var.system_memory_usage_ratio_at_least_percentage_major}) and (not when(signal > ${var.system_memory_usage_ratio_threshold_critical}, lasting=%{if var.system_memory_usage_ratio_lasting_duration_critical == null}None%{else}'${var.system_memory_usage_ratio_lasting_duration_critical}'%{endif}, at_least=${var.system_memory_usage_ratio_at_least_percentage_critical}))).publish('MAJOR')
+    signal = data('stats/memory/system_memory_usage_ratio', filter=${module.filtering.signalflow}, extrapolation='zero')${var.system_memory_usage_aggregation_function}${var.system_memory_usage_transformation_function}
+    signal = scale(100).publish('signal')
+    detect(when(signal > ${var.system_memory_usage_threshold_critical}, lasting=%{if var.system_memory_usage_lasting_duration_critical == null}None%{else}'${var.system_memory_usage_lasting_duration_critical}'%{endif}, at_least=${var.system_memory_usage_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal > ${var.system_memory_usage_threshold_major}, lasting=%{if var.system_memory_usage_lasting_duration_major == null}None%{else}'${var.system_memory_usage_lasting_duration_major}'%{endif}, at_least=${var.system_memory_usage_at_least_percentage_major}) and (not when(signal > ${var.system_memory_usage_threshold_critical}, lasting=%{if var.system_memory_usage_lasting_duration_critical == null}None%{else}'${var.system_memory_usage_lasting_duration_critical}'%{endif}, at_least=${var.system_memory_usage_at_least_percentage_critical}))).publish('MAJOR')
 EOF
 
   rule {
-    description           = "is too high > ${var.system_memory_usage_ratio_threshold_critical}%"
+    description           = "is too high > ${var.system_memory_usage_threshold_critical}%"
     severity              = "Critical"
     detect_label          = "CRIT"
-    disabled              = coalesce(var.system_memory_usage_ratio_disabled_critical, var.system_memory_usage_ratio_disabled, var.detectors_disabled)
-    notifications         = try(coalescelist(lookup(var.system_memory_usage_ratio_notifications, "critical", []), var.notifications.critical), null)
-    runbook_url           = try(coalesce(var.system_memory_usage_ratio_runbook_url, var.runbook_url), "")
-    tip                   = var.system_memory_usage_ratio_tip
+    disabled              = coalesce(var.system_memory_usage_disabled_critical, var.system_memory_usage_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.system_memory_usage_notifications, "critical", []), var.notifications.critical), null)
+    runbook_url           = try(coalesce(var.system_memory_usage_runbook_url, var.runbook_url), "")
+    tip                   = var.system_memory_usage_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
   rule {
-    description           = "is too high > ${var.system_memory_usage_ratio_threshold_major}%"
+    description           = "is too high > ${var.system_memory_usage_threshold_major}%"
     severity              = "Major"
     detect_label          = "MAJOR"
-    disabled              = coalesce(var.system_memory_usage_ratio_disabled_major, var.system_memory_usage_ratio_disabled, var.detectors_disabled)
-    notifications         = try(coalescelist(lookup(var.system_memory_usage_ratio_notifications, "major", []), var.notifications.major), null)
-    runbook_url           = try(coalesce(var.system_memory_usage_ratio_runbook_url, var.runbook_url), "")
-    tip                   = var.system_memory_usage_ratio_tip
+    disabled              = coalesce(var.system_memory_usage_disabled_major, var.system_memory_usage_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.system_memory_usage_notifications, "major", []), var.notifications.major), null)
+    runbook_url           = try(coalesce(var.system_memory_usage_runbook_url, var.runbook_url), "")
+    tip                   = var.system_memory_usage_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
-  max_delay = var.system_memory_usage_ratio_max_delay
+  max_delay = var.system_memory_usage_max_delay
 }
 
-resource "signalfx_detector" "memory_usage_ratio" {
-  name = format("%s %s", local.detector_name_prefix, "GCP Memorystore Redis memory usage ratio")
+resource "signalfx_detector" "memory_usage" {
+  name = format("%s %s", local.detector_name_prefix, "GCP Memorystore Redis memory usage")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
@@ -131,35 +132,36 @@ resource "signalfx_detector" "memory_usage_ratio" {
   }
 
   program_text = <<-EOF
-    signal = data('stats/memory/usage_ratio', filter=${module.filtering.signalflow}, extrapolation='zero')${var.memory_usage_ratio_aggregation_function}${var.memory_usage_ratio_transformation_function}.publish('signal')
-    detect(when(signal > ${var.memory_usage_ratio_threshold_critical}, lasting=%{if var.memory_usage_ratio_lasting_duration_critical == null}None%{else}'${var.memory_usage_ratio_lasting_duration_critical}'%{endif}, at_least=${var.memory_usage_ratio_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal > ${var.memory_usage_ratio_threshold_major}, lasting=%{if var.memory_usage_ratio_lasting_duration_major == null}None%{else}'${var.memory_usage_ratio_lasting_duration_major}'%{endif}, at_least=${var.memory_usage_ratio_at_least_percentage_major}) and (not when(signal > ${var.memory_usage_ratio_threshold_critical}, lasting=%{if var.memory_usage_ratio_lasting_duration_critical == null}None%{else}'${var.memory_usage_ratio_lasting_duration_critical}'%{endif}, at_least=${var.memory_usage_ratio_at_least_percentage_critical}))).publish('MAJOR')
+    signal = data('stats/memory/usage_ratio', filter=${module.filtering.signalflow}, extrapolation='zero')${var.memory_usage_aggregation_function}${var.memory_usage_transformation_function}
+    signal = scale(100).publish('signal')
+    detect(when(signal > ${var.memory_usage_threshold_critical}, lasting=%{if var.memory_usage_lasting_duration_critical == null}None%{else}'${var.memory_usage_lasting_duration_critical}'%{endif}, at_least=${var.memory_usage_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal > ${var.memory_usage_threshold_major}, lasting=%{if var.memory_usage_lasting_duration_major == null}None%{else}'${var.memory_usage_lasting_duration_major}'%{endif}, at_least=${var.memory_usage_at_least_percentage_major}) and (not when(signal > ${var.memory_usage_threshold_critical}, lasting=%{if var.memory_usage_lasting_duration_critical == null}None%{else}'${var.memory_usage_lasting_duration_critical}'%{endif}, at_least=${var.memory_usage_at_least_percentage_critical}))).publish('MAJOR')
 EOF
 
   rule {
-    description           = "is too high > ${var.memory_usage_ratio_threshold_critical}%"
+    description           = "is too high > ${var.memory_usage_threshold_critical}%"
     severity              = "Critical"
     detect_label          = "CRIT"
-    disabled              = coalesce(var.memory_usage_ratio_disabled_critical, var.memory_usage_ratio_disabled, var.detectors_disabled)
-    notifications         = try(coalescelist(lookup(var.memory_usage_ratio_notifications, "critical", []), var.notifications.critical), null)
-    runbook_url           = try(coalesce(var.memory_usage_ratio_runbook_url, var.runbook_url), "")
-    tip                   = var.memory_usage_ratio_tip
+    disabled              = coalesce(var.memory_usage_disabled_critical, var.memory_usage_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.memory_usage_notifications, "critical", []), var.notifications.critical), null)
+    runbook_url           = try(coalesce(var.memory_usage_runbook_url, var.runbook_url), "")
+    tip                   = var.memory_usage_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
   rule {
-    description           = "is too high > ${var.memory_usage_ratio_threshold_major}%"
+    description           = "is too high > ${var.memory_usage_threshold_major}%"
     severity              = "Major"
     detect_label          = "MAJOR"
-    disabled              = coalesce(var.memory_usage_ratio_disabled_major, var.memory_usage_ratio_disabled, var.detectors_disabled)
-    notifications         = try(coalescelist(lookup(var.memory_usage_ratio_notifications, "major", []), var.notifications.major), null)
-    runbook_url           = try(coalesce(var.memory_usage_ratio_runbook_url, var.runbook_url), "")
-    tip                   = var.memory_usage_ratio_tip
+    disabled              = coalesce(var.memory_usage_disabled_major, var.memory_usage_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.memory_usage_notifications, "major", []), var.notifications.major), null)
+    runbook_url           = try(coalesce(var.memory_usage_runbook_url, var.runbook_url), "")
+    tip                   = var.memory_usage_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
-  max_delay = var.memory_usage_ratio_max_delay
+  max_delay = var.memory_usage_max_delay
 }
 
