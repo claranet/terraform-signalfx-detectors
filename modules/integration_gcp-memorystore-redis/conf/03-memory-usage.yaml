@@ -1,0 +1,21 @@
+## Example
+module: GCP Memorystore Redis
+name: memory usage
+
+value_unit: "%"
+transformation: ".min(over='30m')"
+
+signals:
+  signal:
+    metric: stats/memory/usage_ratio
+    extrapolation: zero
+    formula: scale(100)
+
+rules:
+  critical:
+    threshold: 95
+    comparator: ">"
+  major:
+    threshold: 85
+    comparator: ">"
+    dependency: critical
