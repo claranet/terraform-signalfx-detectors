@@ -4,19 +4,18 @@ name: "DB Load"
 
 transformation: true
 aggregation: true
-filtering: "filter('namespace', 'AWS/RDS')"
-value_unit: "%"
+filtering: "filter('namespace', 'AWS/RDS') and filter('stat', 'mean')"
 
 signals:
   signal:
     metric: "DBLoad"
 rules:
   critical:
-    threshold: 90
+    threshold: 16
     comparator: ">"
     lasting_duration: '5m'
   major:
-    threshold: 80
+    threshold: 8
     comparator: ">"
     lasting_duration: '5m'
     dependency: critical
