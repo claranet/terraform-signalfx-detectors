@@ -1253,6 +1253,7 @@
 |System cpu utilization|X|X|-|-|-|
 |System load 5m ratio|X|X|-|-|-|
 |System disk space utilization|X|X|-|-|-|
+|System filesystem inodes utilization|X|X|-|-|-|
 |System disk inodes utilization|X|X|-|-|-|
 |System memory utilization|X|X|-|-|-|
 |System swap in/out|X|X|-|-|-|

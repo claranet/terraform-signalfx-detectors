@@ -18,6 +18,11 @@ output "disk_space" {
   value       = signalfx_detector.disk_space
 }
 
+output "filesystem_inodes" {
+  description = "Detector resource for filesystem_inodes"
+  value       = signalfx_detector.filesystem_inodes
+}
+
 output "heartbeat" {
   description = "Detector resource for heartbeat"
   value       = signalfx_detector.heartbeat
