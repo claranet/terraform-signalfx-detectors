@@ -80,6 +80,7 @@ This module creates the following SignalFx detectors which could contain one or 
 |System cpu utilization|X|X|-|-|-|
 |System load 5m ratio|X|X|-|-|-|
 |System disk space utilization|X|X|-|-|-|
+|System filesystem inodes utilization|X|X|-|-|-|
 |System disk inodes utilization|X|X|-|-|-|
 |System memory utilization|X|X|-|-|-|
 |System swap in/out|X|X|-|-|-|
@@ -153,6 +154,7 @@ parameter to the corresponding monitor configuration:
         - '!percent_inodes.used'
         - '!vmpage_io.swap.in'
         - '!vmpage_io.swap.out'
+        - '!system.filesystem.inodes.usage'
 
 ```
 
