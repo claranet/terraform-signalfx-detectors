@@ -236,7 +236,7 @@ resource "signalfx_detector" "replication_lag" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('postgres_replication_lag', filter=${module.filtering.signalflow}, rollup='average')${var.replication_lag_aggregation_function}${var.replication_lag_transformation_function}.publish('signal')
+    signal = data('postgres_replication_lag', filter=${module.filtering.signalflow} and filter('replication_role', 'standby'), rollup='average')${var.replication_lag_aggregation_function}${var.replication_lag_transformation_function}.publish('signal')
     detect(when(signal > ${var.replication_lag_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.replication_lag_threshold_major}) and (not when(signal > ${var.replication_lag_threshold_critical}))).publish('MAJOR')
 EOF
