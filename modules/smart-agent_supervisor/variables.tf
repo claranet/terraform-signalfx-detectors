@@ -91,7 +91,7 @@ variable "process_state_notifications" {
 variable "process_state_aggregation_function" {
   description = "Aggregation function and group by for process state detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".max(over='10m'"
+  default     = ".max(over='15m'"
 }
 
 variable "process_state_transformation_function" {
