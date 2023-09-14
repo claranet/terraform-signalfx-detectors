@@ -36,7 +36,7 @@ resource "signalfx_detector" "process_state" {
   program_text = <<-EOF
     signal = data('supervisor.state', filter=${module.filtering.signalflow})${var.process_state_aggregation_function}${var.process_state_transformation_function}.publish('signal')
     detect(when(signal > ${var.process_state_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.process_state_threshold_major})).publish('MAJOR')
+    detect(when(signal < ${var.process_state_threshold_major})).publish('MAJOR')
 EOF
 
   rule {
