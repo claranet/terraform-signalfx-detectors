@@ -16,7 +16,7 @@ source_doc: |
   * `elasticsearch.cluster.status`
   * `elasticsearch.cluster.task-max-wait-time`
   * `elasticsearch.jvm.gc.old-time`
-  * `elasticsearch.jvm.gc.count`
+  * `elasticsearch.jvm.gc.old-count`
   * `elasticsearch.jvm.mem.heap-used-percent`
   * `elasticsearch.jvm.mem.pools.old.used_in_bytes`
   * `elasticsearch.jvm.mem.pools.old.max_in_bytes`
@@ -67,7 +67,7 @@ source_doc: |
         - elasticsearch.cluster.status
         - elasticsearch.cluster.task-max-wait-time
         - elasticsearch.jvm.gc.old-time
-        - elasticsearch.jvm.gc.count
+        - elasticsearch.jvm.gc.old-count
         - elasticsearch.jvm.mem.heap-used-percent
         - elasticsearch.jvm.mem.pools.old.used_in_bytes
         - elasticsearch.jvm.mem.pools.old.max_in_bytes
