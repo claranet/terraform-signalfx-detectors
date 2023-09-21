@@ -420,8 +420,8 @@ resource "signalfx_detector" "hitrate" {
   }
 
   program_text = <<-EOF
-    A = data('${var.use_otel_receiver ? "redis.keyspace.hits" : "counter.keyspace_hits"}', filter=${module.filtering.signalflow}, rollup='delta')${var.hitrate_aggregation_function}${var.hitrate_transformation_function}
-    B = data('${var.use_otel_receiver ? "redis.keyspace.hits" : "counter.keyspace_hits"}', filter=${module.filtering.signalflow}, rollup='delta')${var.hitrate_aggregation_function}${var.hitrate_transformation_function}
+    A = data('${var.use_otel_receiver ? "redis.keyspace.hits" : "derive.keyspace_hits"}', filter=${module.filtering.signalflow}, rollup='delta')${var.hitrate_aggregation_function}${var.hitrate_transformation_function}
+    B = data('${var.use_otel_receiver ? "redis.keyspace.hits" : "derive.keyspace_hits"}', filter=${module.filtering.signalflow}, rollup='delta')${var.hitrate_aggregation_function}${var.hitrate_transformation_function}
     signal = (A/(A+B)).scale(100).publish('signal')
     detect(when(signal < ${var.hitrate_threshold_critical}, lasting=%{if var.hitrate_lasting_duration_critical == null}None%{else}'${var.hitrate_lasting_duration_critical}'%{endif}, at_least=${var.hitrate_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal < ${var.hitrate_threshold_major}, lasting=%{if var.hitrate_lasting_duration_major == null}None%{else}'${var.hitrate_lasting_duration_major}'%{endif}, at_least=${var.hitrate_at_least_percentage_major}) and (not when(signal < ${var.hitrate_threshold_critical}, lasting=%{if var.hitrate_lasting_duration_critical == null}None%{else}'${var.hitrate_lasting_duration_critical}'%{endif}, at_least=${var.hitrate_at_least_percentage_critical}))).publish('MAJOR')
