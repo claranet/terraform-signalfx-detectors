@@ -1,0 +1,15 @@
+module: docker-state
+name: State Health Status
+
+transformation: ".min(over='5m')"
+aggregation: true
+
+filtering: "filter('service.name', 'docker-state-exporter') and filter('status', 'unhealthy')"
+
+signals:
+  signal:
+    metric: container_state_health_status
+rules:
+  critical:
+    threshold: 0
+    comparator: ">"
