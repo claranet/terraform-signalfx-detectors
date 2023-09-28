@@ -1,0 +1,25 @@
+documentations:
+  - name: CloudWatch metrics
+    url: 'https://docs.aws.amazon.com/fr_fr/fsx/latest/WindowsGuide/fsx-windows-metrics.html'
+  - name: CloudWatch guide
+    url: 'https://docs.aws.amazon.com/fr_fr/fsx/latest/WindowsGuide/monitoring-cloudwatch.html'
+notes: |
+  ### About filtering
+  #
+
+  Unlike other AWS services, the tags defined by user on FSx are not fetched by SignalFx AWS
+  integration as dimensions. This is why we cannot filter on [the aws tagging
+  convention](https://github.com/claranet/terraform-signalfx-detectors/wiki/Tagging-convention#aws).
+
+  Instead, we use the dimension `FileSystemId` as default filtering policy which allow you to
+  specify an FSx to monitor from `fsx_id` variable. In this case, you could have to leverage [multiple
+  instances](https://github.com/claranet/terraform-signalfx-detectors/wiki/Guidance#Multiple-instances)
+  of this module to monitor different FSx providing different value for this `fsx_id`. Else, its
+  default value `*` will monitor all FSx.
+
+  ### About `Percent write throughput` and `Percent read throughput` detectors
+
+  These detectors are disabled by default but they can be useful to monitor
+  the part of each type (read/write) usage over the total usage in specific context.
+  Threshold for these detectors must be set based on customer's context.
+  See CloudWatch to determine values.
