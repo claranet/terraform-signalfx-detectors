@@ -11,7 +11,6 @@
   - [Notes](#notes)
     - [About filtering](#about-filtering)
 - [](#)
-    - [About `Percent write throughput` and `Percent read throughput` detectors](#about-percent-write-throughput-and-percent-read-throughput-detectors)
   - [Related documentation](#related-documentation)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -123,18 +122,19 @@ Unlike other AWS services, the tags defined by user on FSx are not fetched by Si
 integration as dimensions. This is why we cannot filter on [the aws tagging
 convention](https://github.com/claranet/terraform-signalfx-detectors/wiki/Tagging-convention#aws).
 
-Instead, we use the dimension `FileSystemId` as default filtering policy which allow you to
-specify an FSx to monitor from `fsx_id` variable. In this case, you could have to leverage [multiple
+Instead, we use the other dimensions:
+
+* `FileSystemId` as filtering policy which allow you to specify an FSx to monitor 
+from `fsx_id` variable. In this case, you could have to leverage [multiple
 instances](https://github.com/claranet/terraform-signalfx-detectors/wiki/Guidance#Multiple-instances)
 of this module to monitor different FSx providing different value for this `fsx_id`. Else, its
 default value `*` will monitor all FSx.
 
-### About `Percent write throughput` and `Percent read throughput` detectors
+* `aws_account_id` as filtering policy which allow you to specify the FSx's owner to monitor 
+from `aws_account_id` variable.
 
-These detectors are disabled by default but they can be useful to monitor
-the part of each type (read/write) usage over the total usage in specific context.
-Threshold for these detectors must be set based on customer's context.
-See CloudWatch to determine values.
+* `aws_region` as filtering policy which allow you to specify the FSx's region to monitor 
+from `aws_region` variable.
 
 
 ## Related documentation
@@ -142,5 +142,5 @@ See CloudWatch to determine values.
 * [Terraform SignalFx provider](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs)
 * [Terraform SignalFx detector](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector)
 * [Splunk Observability integrations](https://docs.splunk.com/Observability/gdi/get-data-in/integrations.html)
-* [CloudWatch metrics](https://docs.aws.amazon.com/fr_fr/fsx/latest/WindowsGuide/fsx-windows-metrics.html)
+* [CloudWatch metrics](https://docs.aws.amazon.com/fsx/latest/WindowsGuide/fsx-windows-metrics.html)
 * [CloudWatch guide](https://docs.aws.amazon.com/fr_fr/fsx/latest/WindowsGuide/monitoring-cloudwatch.html)
