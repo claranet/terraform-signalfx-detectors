@@ -40,8 +40,8 @@ resource "signalfx_detector" "free_space" {
 
   program_text = <<-EOF
     base_filtering = filter('namespace', 'AWS/FSx')
-    used_space = data('FreeStorageCapacity', filter=base_filtering and filter('stat', 'mean') and ${module.filtering.signalflow})${var.free_space_aggregation_function}${var.free_space_transformation_function}
-    signal = used_space.scale(1/1024**3).publish('signal')
+    free_space = data('FreeStorageCapacity', filter=base_filtering and filter('stat', 'mean') and ${module.filtering.signalflow})${var.free_space_aggregation_function}${var.free_space_transformation_function}
+    signal = free_space.scale(1/1024**3).publish('signal')
     detect(when(signal < ${var.free_space_threshold_critical}, lasting=%{if var.free_space_lasting_duration_critical == null}None%{else}'${var.free_space_lasting_duration_critical}'%{endif}, at_least=${var.free_space_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal < ${var.free_space_threshold_major}, lasting=%{if var.free_space_lasting_duration_major == null}None%{else}'${var.free_space_lasting_duration_major}'%{endif}, at_least=${var.free_space_at_least_percentage_major}) and (not when(signal < ${var.free_space_threshold_critical}, lasting=%{if var.free_space_lasting_duration_critical == null}None%{else}'${var.free_space_lasting_duration_critical}'%{endif}, at_least=${var.free_space_at_least_percentage_critical}))).publish('MAJOR')
 EOF

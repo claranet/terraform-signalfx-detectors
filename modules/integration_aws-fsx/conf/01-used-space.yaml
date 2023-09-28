@@ -4,15 +4,17 @@ filtering: "filter('namespace', 'AWS/FSx')"
 value_unit: "Gibibyte"
 transformation: ".max(over='15m')"
 signals:
-  used_space:
+  free_space:
     metric: "FreeStorageCapacity"
     filter: "filter('stat', 'mean')"
   signal:
     formula:
-      used_space.scale(1/1024**3)
+      free_space.scale(1/1024**3)
 rules:
   critical:
     comparator: "<"
+    threshold: 10
   major:
     comparator: "<"
     dependency: critical
+    threshold: 20

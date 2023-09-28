@@ -24,12 +24,10 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 
 ```hcl
 module "signalfx-detectors-integration-aws-fsx" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/integration_aws-fsx?ref={revision}"
+  source = "github.com/hlepesant/terraform-signalfx-detectors.git//modules/integration_aws-fsx?ref={revision}"
 
-  environment                   = var.environment
-  notifications                 = local.notifications
-  free_space_threshold_critical = 20
-  free_space_threshold_major    = 10
+  environment   = var.environment
+  notifications = local.notifications
 }
 ```
 
@@ -143,4 +141,4 @@ from `aws_region` variable.
 * [Terraform SignalFx detector](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector)
 * [Splunk Observability integrations](https://docs.splunk.com/Observability/gdi/get-data-in/integrations.html)
 * [CloudWatch metrics](https://docs.aws.amazon.com/fsx/latest/WindowsGuide/fsx-windows-metrics.html)
-* [CloudWatch guide](https://docs.aws.amazon.com/fr_fr/fsx/latest/WindowsGuide/monitoring-cloudwatch.html)
+* [Amazon FSx for Lustre CloudWatch guide](https://docs.aws.amazon.com/fsx/latest/WindowsGuide/monitoring-cloudwatch.html)
