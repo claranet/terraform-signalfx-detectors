@@ -26,8 +26,10 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 module "signalfx-detectors-integration-aws-fsx" {
   source = "github.com/hlepesant/terraform-signalfx-detectors.git//modules/integration_aws-fsx?ref={revision}"
 
-  environment   = var.environment
-  notifications = local.notifications
+  environment                   = var.environment
+  notifications                 = local.notifications
+  free_space_threshold_critical = 42
+  free_space_threshold_major    = 42
 }
 ```
 
