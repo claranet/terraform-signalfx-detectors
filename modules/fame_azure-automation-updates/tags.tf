@@ -1,4 +1,4 @@
 locals {
-  tags = ["fame", "azure-storage-file-backup"]
+  tags = ["fame", "azure-automation-updates"]
 }
 

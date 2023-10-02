@@ -77,6 +77,7 @@
 - [organization_usage](#organization_usage)
 - [otel-collector_kubernetes-common](#otel-collector_kubernetes-common)
 - [prometheus-exporter_active-directory](#prometheus-exporter_active-directory)
+- [prometheus-exporter_docker-state](#prometheus-exporter_docker-state)
 - [prometheus-exporter_kong](#prometheus-exporter_kong)
 - [prometheus-exporter_oracledb](#prometheus-exporter_oracledb)
 - [prometheus-exporter_squid](#prometheus-exporter_squid)
@@ -849,6 +850,16 @@
 |Active-directory heartbeat|X|-|-|-|-|
 |Active-directory replication errors|X|X|-|-|-|
 |Active-directory active directory services|X|-|-|-|-|
+
+
+## prometheus-exporter_docker-state
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Docker-state heartbeat|X|-|-|-|-|
+|Docker-state state health status|X|-|-|-|-|
+|Docker-state state status|X|-|-|-|-|
+|Docker-state state oom killed|X|-|-|-|-|
 
 
 ## prometheus-exporter_kong
