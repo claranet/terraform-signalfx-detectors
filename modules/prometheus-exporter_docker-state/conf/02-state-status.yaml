@@ -1,0 +1,15 @@
+module: docker-state
+name: State Status
+
+transformation: ".min(over='5m')"
+aggregation: true
+
+filtering: "filter('service.name', 'docker-state-exporter') and not filter('status', 'running')"
+
+signals:
+  signal:
+    metric: container_state_status
+rules:
+  critical:
+    threshold: 0
+    comparator: ">"
