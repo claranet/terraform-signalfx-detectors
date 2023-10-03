@@ -566,8 +566,8 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|Azure Key Vault API result rate|X|X|-|-|-|
-|Azure Key Vault API latency|-|X|X|-|-|
+|Azure Key Vault api result rate|X|X|-|-|-|
+|Azure Key Vault api latency|-|X|X|-|-|
 
 
 ## integration_azure-load-balancer

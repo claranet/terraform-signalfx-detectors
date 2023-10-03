@@ -1,0 +1,28 @@
+---
+module: "Azure Key Vault"
+name: "API result rate"
+filtering: "filter('resource_type', 'Microsoft.KeyVault/vaults') and filter('primary_aggregation_type', 'true')"
+aggregation: ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+transformation: true
+value_unit: "%"
+signals:
+  api_success:
+    metric: ServiceApiResult
+    extrapolation: zero
+    filter: filter('statuscode', '200')
+  api_all:
+    metric: ServiceApiResult
+    extrapolation: zero
+  signal:
+    formula: (api_success/api_all).scale(100).fill(100)
+rules:
+  critical:
+    threshold: 10
+    comparator: "<"
+    lasting_duration: '5m'
+  major:
+    threshold: 30
+    comparator: "<"
+    lasting_duration: '5m'
+    dependency: critical
+...
