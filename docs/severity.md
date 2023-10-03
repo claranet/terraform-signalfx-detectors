@@ -417,8 +417,8 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Azure App Service Plan heartbeat|X|-|-|-|-|
-|Azure App Service Plan CPU percentage|X|X|-|-|-|
-|Azure App Service Plan memory percentage|X|X|-|-|-|
+|Azure App Service Plan cpu|X|X|-|-|-|
+|Azure App Service Plan memory|X|X|-|-|-|
 
 
 ## integration_azure-app-service
@@ -427,10 +427,9 @@
 |---|---|---|---|---|---|
 |Azure App Service heartbeat|X|-|-|-|-|
 |Azure App Service response time|X|X|-|-|-|
-|Azure App Service memory usage|X|X|-|-|-|
-|Azure App Service 5xx error rate|X|X|-|-|-|
-|Azure App Service 4xx error rate|X|X|X|-|-|
-|Azure App Service successful response rate|X|X|-|-|-|
+|Azure App Service http 5xx error rate|-|X|X|-|-|
+|Azure App Service http 4xx error rate|-|X|X|-|-|
+|Azure App Service http success status rate|-|X|X|-|-|
 
 
 ## integration_azure-application-gateway

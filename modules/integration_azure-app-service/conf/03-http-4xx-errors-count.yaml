@@ -1,0 +1,26 @@
+---
+module: "Azure App Service"
+name: "http 4xx error rate"
+filtering: "filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'false') and filter('primary_aggregation_type', 'true')"
+aggregation: ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+value_unit: "%"
+signals:
+  http4xx:
+    metric: Http4xx
+    extrapolation: zero
+  requests:
+    metric: requests
+    extrapolation: zero
+  signal:
+    formula: (http4xx/requests).scale(100).fill(0)
+rules:
+  major:
+    threshold: 99
+    comparator: ">"
+    lasting_duration: '15m'
+  minor:
+    threshold: 95
+    comparator: ">"
+    lasting_duration: '15m'
+    dependency: major
+...
