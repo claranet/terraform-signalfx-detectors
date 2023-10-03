@@ -1,0 +1,15 @@
+---
+module: "Azure API Management Service"
+name: heartbeat
+
+transformation: true
+aggregation: true
+
+filtering: "filter('resource_type', 'Microsoft.ApiManagement/service') and filter('primary_aggregation_type', 'true')"
+
+signals:
+  signal:
+    metric: "NetworkConnectivity"
+rules:
+  critical:
+...
