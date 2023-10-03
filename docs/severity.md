@@ -641,10 +641,10 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Azure SQL Database heartbeat|X|-|-|-|-|
-|Azure Sql Database CPU|X|X|-|-|-|
-|Azure SQL Database disk usage|X|X|-|-|-|
-|Azure SQL Database DTU consumption|X|X|-|-|-|
+|Azure SQL Database cpu|X|X|-|-|-|
+|Azure SQL Database storage usage|X|X|-|-|-|
 |Azure SQL Database deadlocks count|X|-|-|-|-|
+|Azure SQL Database dtu consumption|X|X|-|-|-|
 
 
 ## integration_azure-sql-elastic-pool
