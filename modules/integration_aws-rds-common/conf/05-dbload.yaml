@@ -1,0 +1,21 @@
+module: AWS RDS Common
+id: dbload
+name: "DB Load"
+
+transformation: true
+aggregation: true
+filtering: "filter('namespace', 'AWS/RDS') and filter('stat', 'mean')"
+
+signals:
+  signal:
+    metric: "DBLoad"
+rules:
+  critical:
+    threshold: 16
+    comparator: ">"
+    lasting_duration: '5m'
+  major:
+    threshold: 8
+    comparator: ">"
+    lasting_duration: '5m'
+    dependency: critical

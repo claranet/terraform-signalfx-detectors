@@ -76,12 +76,11 @@ resource "signalfx_detector" "free_space" {
 
   viz_options {
     label      = "signal"
-    value_unit = "Gigibyte"
+    value_unit = "Gibibyte"
   }
 
   program_text = <<-EOF
-    free = data('FreeStorageSpace', filter=filter('namespace', 'AWS/ES') and filter('stat', 'lower') and filter('NodeId', '*') and ${module.filtering.signalflow})${var.free_space_aggregation_function}${var.free_space_transformation_function}
-    signal = free.scale(0.001).publish('signal')
+    signal = data('FreeStorageSpace',       filter=filter('namespace', 'AWS/ES') and filter('stat', 'lower') and filter('NodeId', '*') and ${module.filtering.signalflow})${var.free_space_aggregation_function}${var.free_space_transformation_function}.scale(0.001).publish('signal')
     detect(when(signal < ${var.free_space_threshold_critical})).publish('CRIT')
     detect(when(signal < ${var.free_space_threshold_major}) and (not when(signal < ${var.free_space_threshold_critical}))).publish('MAJOR')
 EOF
@@ -113,6 +112,51 @@ EOF
   max_delay = var.free_space_max_delay
 }
 
+resource "signalfx_detector" "ultrawarm_free_space" {
+  name = format("%s %s", local.detector_name_prefix, "AWS ElasticSearch cluster UltraWarm free storage space")
+
+  authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
+
+  viz_options {
+    label      = "signal"
+    value_unit = "Gibibyte"
+  }
+
+  program_text = <<-EOF
+    signal = data('WarmFreeStorageSpace',   filter=filter('namespace', 'AWS/ES') and filter('stat', 'lower') and filter('NodeId', '*') and ${module.filtering.signalflow})${var.ultrawarm_free_space_aggregation_function}${var.ultrawarm_free_space_transformation_function}.scale(0.001).publish('signal')
+    detect(when(signal < ${var.ultrawarm_free_space_threshold_critical})).publish('CRIT')
+    detect(when(signal < ${var.ultrawarm_free_space_threshold_major}) and (not when(signal < ${var.ultrawarm_free_space_threshold_critical}))).publish('MAJOR')
+EOF
+
+  rule {
+    description           = "is too low < ${var.ultrawarm_free_space_threshold_critical}"
+    severity              = "Critical"
+    detect_label          = "CRIT"
+    disabled              = coalesce(var.ultrawarm_free_space_disabled_critical, var.ultrawarm_free_space_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.ultrawarm_free_space_notifications, "critical", []), var.notifications.critical), null)
+    runbook_url           = try(coalesce(var.ultrawarm_free_space_runbook_url, var.runbook_url), "")
+    tip                   = var.ultrawarm_free_space_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
+
+  rule {
+    description           = "is too low < ${var.ultrawarm_free_space_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.ultrawarm_free_space_disabled_major, var.ultrawarm_free_space_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.ultrawarm_free_space_notifications, "major", []), var.notifications.major), null)
+    runbook_url           = try(coalesce(var.ultrawarm_free_space_runbook_url, var.runbook_url), "")
+    tip                   = var.ultrawarm_free_space_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
+
+  max_delay = var.ultrawarm_free_space_max_delay
+}
+
 resource "signalfx_detector" "cpu_90_15min" {
   name = format("%s %s", local.detector_name_prefix, "AWS ElasticSearch cluster CPU")
 
@@ -121,7 +165,9 @@ resource "signalfx_detector" "cpu_90_15min" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('CPUUtilization', filter=filter('namespace', 'AWS/ES') and filter('stat', 'upper') and filter('NodeId', '*') and ${module.filtering.signalflow})${var.cpu_90_15min_aggregation_function}${var.cpu_90_15min_transformation_function}.publish('signal')
+    data_node_cpu   = data('CPUUtilization',       filter=filter('namespace', 'AWS/ES') and filter('stat', 'upper') and filter('NodeId', '*') and ${module.filtering.signalflow})${var.cpu_90_15min_aggregation_function}${var.cpu_90_15min_transformation_function}
+    warm_node_cpu   = data('WarmCPUUtilization',   filter=filter('namespace', 'AWS/ES') and filter('stat', 'upper') and filter('NodeId', '*') and ${module.filtering.signalflow})${var.cpu_90_15min_aggregation_function}${var.cpu_90_15min_transformation_function}
+    signal = union(data_node_cpu, warm_node_cpu).publish('signal')
     detect(when(signal > ${var.cpu_90_15min_threshold_critical})).publish('CRIT')
     detect(when(signal > ${var.cpu_90_15min_threshold_major}) and (not when(signal > ${var.cpu_90_15min_threshold_critical}))).publish('MAJOR')
 EOF
@@ -153,3 +199,42 @@ EOF
   max_delay = var.cpu_90_15min_max_delay
 }
 
+resource "signalfx_detector" "master_cpu_90_15min" {
+  name = format("%s %s", local.detector_name_prefix, "AWS ElasticSearch cluster Master nodes CPU")
+
+  authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
+
+  program_text = <<-EOF
+    signal = data('MasterCPUUtilization', filter=filter('namespace', 'AWS/ES') and filter('stat', 'upper') and filter('NodeId', '*') and ${module.filtering.signalflow})${var.master_cpu_90_15min_aggregation_function}${var.master_cpu_90_15min_transformation_function}.publish('signal')
+    detect(when(signal > ${var.master_cpu_90_15min_threshold_critical})).publish('CRIT')
+    detect(when(signal > ${var.master_cpu_90_15min_threshold_major}) and (not when(signal > ${var.master_cpu_90_15min_threshold_critical}))).publish('MAJOR')
+EOF
+
+  rule {
+    description           = "is too high > ${var.master_cpu_90_15min_threshold_critical}"
+    severity              = "Critical"
+    detect_label          = "CRIT"
+    disabled              = coalesce(var.master_cpu_90_15min_disabled_critical, var.master_cpu_90_15min_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.master_cpu_90_15min_notifications, "critical", []), var.notifications.critical), null)
+    runbook_url           = try(coalesce(var.master_cpu_90_15min_runbook_url, var.runbook_url), "")
+    tip                   = var.master_cpu_90_15min_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
+
+  rule {
+    description           = "is too high > ${var.master_cpu_90_15min_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.master_cpu_90_15min_disabled_major, var.master_cpu_90_15min_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.master_cpu_90_15min_notifications, "major", []), var.notifications.major), null)
+    runbook_url           = try(coalesce(var.master_cpu_90_15min_runbook_url, var.runbook_url), "")
+    tip                   = var.master_cpu_90_15min_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
+
+  max_delay = var.master_cpu_90_15min_max_delay
+}

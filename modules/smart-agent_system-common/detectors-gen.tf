@@ -126,7 +126,7 @@ resource "signalfx_detector" "disk_space" {
   }
 
   program_text = <<-EOF
-    signal = data('disk.utilization', filter=(not filter('fs_type', 'squashfs')) and ${module.filtering.signalflow})${var.disk_space_aggregation_function}${var.disk_space_transformation_function}.publish('signal')
+    signal = data('disk.utilization', filter=(not filter('fs_type', 'squashfs') and not filter('type', 'squashfs')) and ${module.filtering.signalflow})${var.disk_space_aggregation_function}${var.disk_space_transformation_function}.publish('signal')
     detect(when(signal > ${var.disk_space_threshold_critical}, lasting=%{if var.disk_space_lasting_duration_critical == null}None%{else}'${var.disk_space_lasting_duration_critical}'%{endif}, at_least=${var.disk_space_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal > ${var.disk_space_threshold_major}, lasting=%{if var.disk_space_lasting_duration_major == null}None%{else}'${var.disk_space_lasting_duration_major}'%{endif}, at_least=${var.disk_space_at_least_percentage_major}) and (not when(signal > ${var.disk_space_threshold_critical}, lasting=%{if var.disk_space_lasting_duration_critical == null}None%{else}'${var.disk_space_lasting_duration_critical}'%{endif}, at_least=${var.disk_space_at_least_percentage_critical}))).publish('MAJOR')
 EOF
@@ -156,6 +156,53 @@ EOF
   }
 
   max_delay = var.disk_space_max_delay
+}
+
+resource "signalfx_detector" "filesystem_inodes" {
+  name = format("%s %s", local.detector_name_prefix, "System filesystem inodes utilization")
+
+  authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
+
+  viz_options {
+    label        = "signal"
+    value_suffix = "%"
+  }
+
+  program_text = <<-EOF
+    used = data('system.filesystem.inodes.usage', filter=filter('state', 'used') and ${module.filtering.signalflow})${var.filesystem_inodes_aggregation_function}${var.filesystem_inodes_transformation_function}
+    free = data('system.filesystem.inodes.usage', filter=filter('state', 'free') and ${module.filtering.signalflow})${var.filesystem_inodes_aggregation_function}${var.filesystem_inodes_transformation_function}
+    signal = (used / (used + free) * 100).publish('signal')
+    detect(when(signal > ${var.filesystem_inodes_threshold_critical}, lasting=%{if var.filesystem_inodes_lasting_duration_critical == null}None%{else}'${var.filesystem_inodes_lasting_duration_critical}'%{endif}, at_least=${var.filesystem_inodes_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal > ${var.filesystem_inodes_threshold_major}, lasting=%{if var.filesystem_inodes_lasting_duration_major == null}None%{else}'${var.filesystem_inodes_lasting_duration_major}'%{endif}, at_least=${var.filesystem_inodes_at_least_percentage_major}) and (not when(signal > ${var.filesystem_inodes_threshold_critical}, lasting=%{if var.filesystem_inodes_lasting_duration_critical == null}None%{else}'${var.filesystem_inodes_lasting_duration_critical}'%{endif}, at_least=${var.filesystem_inodes_at_least_percentage_critical}))).publish('MAJOR')
+EOF
+
+  rule {
+    description           = "is too high > ${var.filesystem_inodes_threshold_critical}%"
+    severity              = "Critical"
+    detect_label          = "CRIT"
+    disabled              = coalesce(var.filesystem_inodes_disabled_critical, var.filesystem_inodes_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.filesystem_inodes_notifications, "critical", []), var.notifications.critical), null)
+    runbook_url           = try(coalesce(var.filesystem_inodes_runbook_url, var.runbook_url), "")
+    tip                   = var.filesystem_inodes_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
+
+  rule {
+    description           = "is too high > ${var.filesystem_inodes_threshold_major}%"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.filesystem_inodes_disabled_major, var.filesystem_inodes_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.filesystem_inodes_notifications, "major", []), var.notifications.major), null)
+    runbook_url           = try(coalesce(var.filesystem_inodes_runbook_url, var.runbook_url), "")
+    tip                   = var.filesystem_inodes_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
+
+  max_delay = var.filesystem_inodes_max_delay
 }
 
 resource "signalfx_detector" "disk_inodes" {
@@ -246,5 +293,52 @@ EOF
   }
 
   max_delay = var.memory_max_delay
+}
+
+resource "signalfx_detector" "swap_io" {
+  name = format("%s %s", local.detector_name_prefix, "System swap in/out")
+
+  authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
+
+  viz_options {
+    label        = "signal"
+    value_suffix = "iops"
+  }
+
+  program_text = <<-EOF
+    A = data('vmpage_io.swap.in', filter=${module.filtering.signalflow}, rollup='rate')${var.swap_io_aggregation_function}${var.swap_io_transformation_function}
+    B = data('vmpage_io.swap.out', filter=${module.filtering.signalflow}, rollup='rate')${var.swap_io_aggregation_function}${var.swap_io_transformation_function}
+    signal = (A+B).publish('signal')
+    detect(when(signal > ${var.swap_io_threshold_critical}, lasting=%{if var.swap_io_lasting_duration_critical == null}None%{else}'${var.swap_io_lasting_duration_critical}'%{endif}, at_least=${var.swap_io_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal > ${var.swap_io_threshold_major}, lasting=%{if var.swap_io_lasting_duration_major == null}None%{else}'${var.swap_io_lasting_duration_major}'%{endif}, at_least=${var.swap_io_at_least_percentage_major}) and (not when(signal > ${var.swap_io_threshold_critical}, lasting=%{if var.swap_io_lasting_duration_critical == null}None%{else}'${var.swap_io_lasting_duration_critical}'%{endif}, at_least=${var.swap_io_at_least_percentage_critical}))).publish('MAJOR')
+EOF
+
+  rule {
+    description           = "is too high > ${var.swap_io_threshold_critical}iops"
+    severity              = "Critical"
+    detect_label          = "CRIT"
+    disabled              = coalesce(var.swap_io_disabled_critical, var.swap_io_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.swap_io_notifications, "critical", []), var.notifications.critical), null)
+    runbook_url           = try(coalesce(var.swap_io_runbook_url, var.runbook_url), "")
+    tip                   = var.swap_io_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
+
+  rule {
+    description           = "is too high > ${var.swap_io_threshold_major}iops"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.swap_io_disabled_major, var.swap_io_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.swap_io_notifications, "major", []), var.notifications.major), null)
+    runbook_url           = try(coalesce(var.swap_io_runbook_url, var.runbook_url), "")
+    tip                   = var.swap_io_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
+
+  max_delay = var.swap_io_max_delay
 }
 

@@ -1,0 +1,25 @@
+module: varnish
+name: Hit Rate
+
+transformation: ".min(over='5m')"
+aggregation: true
+
+filtering: "filter('system.type', 'prometheus-exporter')"
+
+signals:
+  A:
+    metric: varnish_main_cache_hit
+  B:
+    metric: varnish_main_cache_miss
+  signal:
+    formula: (A/(A+B)).fill(0).scale(100)
+rules:
+  minor:
+    threshold: 90
+    comparator: "<"
+    lasting_duration: "5m"
+  major:
+    threshold: 80
+    comparator: "<="
+    lasting_duration: "5m"
+    dependency: minor

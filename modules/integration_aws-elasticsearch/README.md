@@ -8,6 +8,8 @@
 - [What are the available detectors in this module?](#what-are-the-available-detectors-in-this-module)
 - [How to collect required metrics?](#how-to-collect-required-metrics)
   - [Metrics](#metrics)
+- [Notes](#notes)
+  - [4xx HTTP response](#4xx-http-response)
 - [Related documentation](#related-documentation)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -78,8 +80,13 @@ This module creates the following SignalFx detectors which could contain one or 
 |AWS ElasticSearch heartbeat|X|-|-|-|-|
 |AWS ElasticSearch cluster status|X|X|-|-|-|
 |AWS ElasticSearch cluster free storage space|X|X|-|-|-|
+|AWS ElasticSearch cluster UltraWarm free storage space|X|X|-|-|-|
 |AWS ElasticSearch cluster CPU|X|X|-|-|-|
+|AWS ElasticSearch cluster Master nodes CPU|X|X|-|-|-|
 |AWS Elasticsearch jvm memory pressure|X|X|-|-|-|
+|AWS Elasticsearch 4xx http response|X|X|-|-|-|
+|AWS Elasticsearch 5xx http response|X|X|-|-|-|
+|AWS Elasticsearch shard count|X|X|-|-|-|
 
 ## How to collect required metrics?
 
@@ -97,14 +104,29 @@ Check the [Related documentation](#related-documentation) section for more detai
 
 Here is the list of required metrics for detectors in this module.
 
+* `2xx`
+* `4xx`
+* `5xx`
 * `ClusterStatus.red`
 * `ClusterStatus.yellow`
 * `CPUUtilization`
 * `FreeStorageSpace`
 * `JVMMemoryPressure`
+* `MasterCPUUtilization`
 * `Nodes`
+* `OpenSearchRequests`
+* `ShardCount`
+* `WarmCPUUtilization`
+* `WarmFreeStorageSpace`
 
 
+## Notes
+
+### 4xx HTTP response
+
+By default this monitor is disabled because it can be triggered by bots scrapping the web, on public ES cluster (if possible, [install your cluster inside a VPC](https://docs.aws.amazon.com/opensearch-service/latest/developerguide/vpc.html) instead of using public cluster).
+
+If this kind of scrapping isn't possible in your case (IP restrictions or VPC cluster) you may want to enable this detector to catch, for example, [HTTP 429 errors](https://aws.amazon.com/premiumsupport/knowledge-center/opensearch-resolve-429-error/).
 
 
 ## Related documentation

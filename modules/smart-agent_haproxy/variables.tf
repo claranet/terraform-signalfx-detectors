@@ -91,7 +91,7 @@ variable "server_status_aggregation_function" {
 variable "server_status_transformation_function" {
   description = "Transformation function for server status detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".min(over='5m')"
+  default     = ".max(over='5m')"
 }
 
 # Backend_status detector
@@ -141,7 +141,7 @@ variable "backend_status_aggregation_function" {
 variable "backend_status_transformation_function" {
   description = "Transformation function for backend status detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".min(over='5m')"
+  default     = ".max(over='5m')"
 }
 
 # Session_limit detector
@@ -306,6 +306,12 @@ variable "http_4xx_response_disabled" {
   default     = null
 }
 
+variable "http_4xx_response_disabled_minor" {
+  description = "Disable minor alerting rule for http_4xx_response detector"
+  type        = bool
+  default     = null
+}
+
 variable "http_4xx_response_disabled_major" {
   description = "Disable major alerting rule for http_4xx_response detector"
   type        = bool
@@ -315,7 +321,7 @@ variable "http_4xx_response_disabled_major" {
 variable "http_4xx_response_disabled_critical" {
   description = "Disable critical alerting rule for http_4xx_response detector"
   type        = bool
-  default     = null
+  default     = true
 }
 
 variable "http_4xx_response_notifications" {
@@ -333,18 +339,23 @@ variable "http_4xx_response_aggregation_function" {
 variable "http_4xx_response_transformation_function" {
   description = "Transformation function for http_4xx_response detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".min(over='10m')"
+  default     = ".min(over='15m')"
+}
+
+variable "http_4xx_response_threshold_minor" {
+  description = "Minor threshold for http_4xx_response detector"
+  type        = number
+  default     = 90
 }
 
 variable "http_4xx_response_threshold_major" {
-  description = "Critical threshold for http_4xx_response detector"
+  description = "Major threshold for http_4xx_response detector"
   type        = number
-  default     = 50
+  default     = 95
 }
 
 variable "http_4xx_response_threshold_critical" {
   description = "Critical threshold for http_4xx_response detector"
   type        = number
-  default     = 80
+  default     = 99
 }
-

@@ -1,0 +1,24 @@
+---
+module: Azure MySQL
+name: "replication lag"
+
+transformation: true
+aggregation: ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+
+filtering: "filter('resource_type', 'Microsoft.DBforMySQL/flexibleServers') and filter('primary_aggregation_type', 'true')"
+value_unit: "Second"
+
+signals:
+  signal:
+    metric: "seconds_behind_master"
+rules:
+  critical:
+    threshold: 200
+    comparator: ">"
+    lasting_duration: '15m'
+  major:
+    threshold: 100
+    comparator: ">"
+    lasting_duration: '15m'
+    dependency: critical
+...

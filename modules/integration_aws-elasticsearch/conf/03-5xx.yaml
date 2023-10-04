@@ -1,0 +1,30 @@
+module: AWS Elasticsearch
+name: 5xx HTTP response
+id: fivexx_http_response
+
+aggregation: true
+filtering: "filter('namespace', 'AWS/ES') and filter('stat', 'sum')"
+tip: "In addition to the runbook, have a look at https://aws.amazon.com/premiumsupport/knowledge-center/opensearch-5xx-errors/"
+runbook_url: "https://docs.aws.amazon.com/opensearch-service/latest/developerguide/managedomains-cloudwatchmetrics.html"
+value_unit: "%"
+
+signals:
+  A:
+    metric: 5xx
+  B:
+    metric: OpenSearchRequests
+  signal:
+    formula: (A/B*100)
+
+rules:
+  critical:
+    threshold: 10
+    comparator: ">"
+    lasting_duration: "5m"
+    lasting_at_least: 0.9
+  major:
+    threshold: 5
+    comparator: ">"
+    dependency: critical
+    lasting_duration: "5m"
+    lasting_at_least: 0.9

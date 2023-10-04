@@ -79,7 +79,7 @@ This module creates the following SignalFx detectors which could contain one or 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |GCP Load Balancer 5xx error rate|X|X|-|-|-|
-|GCP Load Balancer 4xx error rate|X|X|-|-|-|
+|GCP Load Balancer 4xx error rate|X|X|X|-|-|
 |GCP Load Balancer backend latency per service|X|X|-|-|-|
 |GCP Load Balancer backend latency per bucket|X|X|-|-|-|
 |GCP Load Balancer request count|-|-|X|X|-|

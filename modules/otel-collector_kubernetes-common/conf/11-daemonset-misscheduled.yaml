@@ -1,0 +1,16 @@
+module: Kubernetes
+name: daemonsets misscheduled
+id: daemonset_misscheduled
+
+transformation: true
+aggregation: true
+
+signals:
+  signal:
+    metric: k8s.daemonset.misscheduled_nodes
+
+rules:
+  critical:
+    threshold: 0
+    comparator: ">"
+    lasting_duration: 5m

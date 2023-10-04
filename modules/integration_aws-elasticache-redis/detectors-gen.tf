@@ -168,3 +168,31 @@ EOF
   max_delay = var.commands_max_delay
 }
 
+resource "signalfx_detector" "network_conntrack_allowance_exceeded" {
+  name = format("%s %s", local.detector_name_prefix, "AWS ElastiCache redis network conntrack allowance exceeded")
+
+  authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
+
+  program_text = <<-EOF
+    base_filtering = filter('namespace', 'AWS/ElastiCache') and filter('stat', 'upper') and filter('CacheNodeId', '*')
+    signal = data('NetworkConntrackAllowanceExceeded', filter=base_filtering and ${module.filtering.signalflow})${var.network_conntrack_allowance_exceeded_aggregation_function}${var.network_conntrack_allowance_exceeded_transformation_function}.publish('signal')
+    detect(when(signal > ${var.network_conntrack_allowance_exceeded_threshold_critical}, lasting=%{if var.network_conntrack_allowance_exceeded_lasting_duration_critical == null}None%{else}'${var.network_conntrack_allowance_exceeded_lasting_duration_critical}'%{endif}, at_least=${var.network_conntrack_allowance_exceeded_at_least_percentage_critical})).publish('CRIT')
+EOF
+
+  rule {
+    description           = "is too high > ${var.network_conntrack_allowance_exceeded_threshold_critical}"
+    severity              = "Critical"
+    detect_label          = "CRIT"
+    disabled              = coalesce(var.network_conntrack_allowance_exceeded_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.network_conntrack_allowance_exceeded_notifications, "critical", []), var.notifications.critical), null)
+    runbook_url           = try(coalesce(var.network_conntrack_allowance_exceeded_runbook_url, var.runbook_url), "")
+    tip                   = var.network_conntrack_allowance_exceeded_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
+
+  max_delay = var.network_conntrack_allowance_exceeded_max_delay
+}
+

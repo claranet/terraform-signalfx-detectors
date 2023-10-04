@@ -35,7 +35,7 @@ module "filter-tags" {
   source = "github.com/claranet/terraform-signalfx-detectors.git//common/filter-tags?ref={revision}"
 
   filter_defaults        = "filter('env', '${var.environment}') and filter('sfx_monitored', 'true')"
-  filter_custom_includes = ["signalfx:dimensions", "to:match]
+  filter_custom_includes = ["signalfx:dimensions", "to:match"]
   filter_custom_excludes = ["another:to", "not:match"]
 }
 

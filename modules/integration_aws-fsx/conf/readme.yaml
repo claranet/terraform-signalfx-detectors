@@ -1,0 +1,26 @@
+documentations:
+  - name: CloudWatch metrics
+    url: 'https://docs.aws.amazon.com/fsx/latest/WindowsGuide/fsx-windows-metrics.html'
+  - name: Amazon FSx for Lustre CloudWatch guide
+    url: 'https://docs.aws.amazon.com/fsx/latest/WindowsGuide/monitoring-cloudwatch.html'
+notes: |
+  ### About filtering
+  #
+
+  Unlike other AWS services, the tags defined by user on FSx are not fetched by SignalFx AWS
+  integration as dimensions. This is why we cannot filter on [the aws tagging
+  convention](https://github.com/claranet/terraform-signalfx-detectors/wiki/Tagging-convention#aws).
+
+  Instead, we use the other dimensions:
+
+  * `FileSystemId` as filtering policy which allow you to specify an FSx to monitor 
+  from `fsx_id` variable. In this case, you could have to leverage [multiple
+  instances](https://github.com/claranet/terraform-signalfx-detectors/wiki/Guidance#Multiple-instances)
+  of this module to monitor different FSx providing different value for this `fsx_id`. Else, its
+  default value `*` will monitor all FSx.
+
+  * `aws_account_id` as filtering policy which allow you to specify the FSx's owner to monitor 
+  from `aws_account_id` variable.
+
+  * `aws_region` as filtering policy which allow you to specify the FSx's region to monitor 
+  from `aws_region` variable.

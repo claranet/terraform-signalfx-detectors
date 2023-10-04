@@ -81,7 +81,7 @@ This module creates the following SignalFx detectors which could contain one or 
 |Haproxy backend status|X|-|-|-|-|
 |Haproxy session|X|X|-|-|-|
 |Haproxy 5xx response rate|X|X|-|-|-|
-|Haproxy 4xx response rate|X|X|-|-|-|
+|Haproxy 4xx response rate|X|X|X|-|-|
 
 ## How to collect required metrics?
 
@@ -100,7 +100,7 @@ You might find the related following documentations useful:
 
 In addition, all of these monitors are still available in the [Splunk Otel Collector](https://github.com/signalfx/splunk-otel-collector),
 the Splunk [distro of OpenTelemetry Collector](https://opentelemetry.io/docs/concepts/distributions/) which replaces SignalFx Smart Agent,
-thanks to the internal [Smart Agent Receiver](https://github.com/signalfx/splunk-otel-collector/tree/main/internal/receiver/smartagentreceiver).
+thanks to the internal [Smart Agent Receiver](https://github.com/signalfx/splunk-otel-collector/tree/main/pkg/receiver/smartagentreceiver).
 
 As a result:
 - any SignalFx Smart Agent monitor are compatible with the new agent OpenTelemetry Collector and related modules in this repository keep `smart-agent` as source name.

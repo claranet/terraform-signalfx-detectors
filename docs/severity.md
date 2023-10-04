@@ -4,8 +4,16 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 :link: **Contents**
 
+- [cwagent-ec2](#cwagent-ec2)
+- [fame_azure-automation-updates](#fame_azure-automation-updates)
+- [fame_azure-storage-file-backup](#fame_azure-storage-file-backup)
+- [fame_azure-update-center](#fame_azure-update-center)
+- [fame_azure-vm-backup](#fame_azure-vm-backup)
+- [fame_azure-vpn](#fame_azure-vpn)
 - [integration_aws-alb](#integration_aws-alb)
+- [integration_aws-amazonmq-rabbitmq](#integration_aws-amazonmq-rabbitmq)
 - [integration_aws-apigateway](#integration_aws-apigateway)
+- [integration_aws-backup](#integration_aws-backup)
 - [integration_aws-beanstalk](#integration_aws-beanstalk)
 - [integration_aws-ecs-cluster](#integration_aws-ecs-cluster)
 - [integration_aws-ecs-service](#integration_aws-ecs-service)
@@ -15,6 +23,7 @@
 - [integration_aws-elasticache-redis](#integration_aws-elasticache-redis)
 - [integration_aws-elasticsearch](#integration_aws-elasticsearch)
 - [integration_aws-elb](#integration_aws-elb)
+- [integration_aws-fsx](#integration_aws-fsx)
 - [integration_aws-kinesis-firehose](#integration_aws-kinesis-firehose)
 - [integration_aws-lambda](#integration_aws-lambda)
 - [integration_aws-nlb](#integration_aws-nlb)
@@ -22,6 +31,7 @@
 - [integration_aws-rds-aurora-postgresql](#integration_aws-rds-aurora-postgresql)
 - [integration_aws-rds-common](#integration_aws-rds-common)
 - [integration_aws-redshift](#integration_aws-redshift)
+- [integration_aws-s3](#integration_aws-s3)
 - [integration_aws-sqs](#integration_aws-sqs)
 - [integration_aws-vpn](#integration_aws-vpn)
 - [integration_azure-api-management-service](#integration_azure-api-management-service)
@@ -29,12 +39,16 @@
 - [integration_azure-app-service](#integration_azure-app-service)
 - [integration_azure-application-gateway](#integration_azure-application-gateway)
 - [integration_azure-azure-search](#integration_azure-azure-search)
+- [integration_azure-backup](#integration_azure-backup)
+- [integration_azure-cdn](#integration_azure-cdn)
 - [integration_azure-container-instance](#integration_azure-container-instance)
 - [integration_azure-cosmos-db](#integration_azure-cosmos-db)
 - [integration_azure-datafactory](#integration_azure-datafactory)
 - [integration_azure-event-hub](#integration_azure-event-hub)
 - [integration_azure-express-route](#integration_azure-express-route)
 - [integration_azure-firewall](#integration_azure-firewall)
+- [integration_azure-flexible-mysql](#integration_azure-flexible-mysql)
+- [integration_azure-flexible-postgresql](#integration_azure-flexible-postgresql)
 - [integration_azure-functions](#integration_azure-functions)
 - [integration_azure-key-vault](#integration_azure-key-vault)
 - [integration_azure-load-balancer](#integration_azure-load-balancer)
@@ -57,13 +71,17 @@
 - [integration_gcp-cloud-sql-mysql](#integration_gcp-cloud-sql-mysql)
 - [integration_gcp-compute-engine](#integration_gcp-compute-engine)
 - [integration_gcp-load-balancing](#integration_gcp-load-balancing)
+- [integration_gcp-memorystore-redis](#integration_gcp-memorystore-redis)
 - [integration_gcp-pubsub-subscription](#integration_gcp-pubsub-subscription)
 - [integration_gcp-pubsub-topic](#integration_gcp-pubsub-topic)
 - [integration_newrelic-apm](#integration_newrelic-apm)
 - [organization_usage](#organization_usage)
+- [otel-collector_kubernetes-common](#otel-collector_kubernetes-common)
+- [prometheus-exporter_active-directory](#prometheus-exporter_active-directory)
 - [prometheus-exporter_kong](#prometheus-exporter_kong)
 - [prometheus-exporter_oracledb](#prometheus-exporter_oracledb)
 - [prometheus-exporter_squid](#prometheus-exporter_squid)
+- [prometheus-exporter_varnish](#prometheus-exporter_varnish)
 - [prometheus-exporter_wallix-bastion](#prometheus-exporter_wallix-bastion)
 - [smart-agent_apache](#smart-agent_apache)
 - [smart-agent_cassandra-nodetool](#smart-agent_cassandra-nodetool)
@@ -106,6 +124,54 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
+## cwagent-ec2
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|AWS CWAgent heartbeat|X|-|-|-|-|
+|AWS CWAgent memory used|X|X|-|-|-|
+|AWS CWAgent disk used|X|X|-|-|-|
+|AWS CWAgent cpu usage active|X|X|-|-|-|
+
+
+## fame_azure-automation-updates
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Azure Automation Update failed updates|-|X|-|-|-|
+|Azure Automation Update missing updates|-|X|-|-|-|
+
+
+## fame_azure-storage-file-backup
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Azure Storage File backup success|X|-|-|-|-|
+
+
+## fame_azure-update-center
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Azure Update Center failed updates|-|X|-|-|-|
+|Azure Update Center missing updates|-|X|-|-|-|
+
+
+## fame_azure-vm-backup
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Azure VM backup success|X|-|-|-|-|
+
+
+## fame_azure-vpn
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Azure VPN heartbeat|X|-|-|-|-|
+|Azure VPN total flow count|X|-|-|-|-|
+
+
 ## integration_aws-alb
 
 |Detector|Critical|Major|Minor|Warning|Info|
@@ -113,10 +179,21 @@
 |AWS ALB heartbeat|X|-|-|-|-|
 |AWS ALB target response time|X|X|-|-|-|
 |AWS ALB 5xx error rate|X|X|-|-|-|
-|AWS ALB 4xx error rate|X|X|-|-|-|
+|AWS ALB 4xx error rate|X|X|X|-|-|
 |AWS ALB target 5xx error rate|X|X|-|-|-|
-|AWS ALB target 4xx error rate|X|X|-|-|-|
+|AWS ALB target 4xx error rate|X|X|X|-|-|
 |AWS ALB healthy instances percentage|X|X|-|-|-|
+
+
+## integration_aws-amazonmq-rabbitmq
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|AWS AmazonMQ RabbitMQ messages ready|X|X|-|-|-|
+|AWS AmazonMQ RabbitMQ messages unacknowledged|X|X|-|-|-|
+|AWS AmazonMQ RabbitMQ messages ack rate|X|X|-|-|-|
+|AWS AmazonMQ RabbitMQ memory used|X|X|-|-|-|
+|AWS AmazonMQ RabbitMQ disk free|X|X|-|-|-|
 
 
 ## integration_aws-apigateway
@@ -125,7 +202,19 @@
 |---|---|---|---|---|---|
 |AWS APIGateway latency|X|X|-|-|-|
 |AWS APIGateway http 5xx error rate|X|X|-|-|-|
-|AWS APIGateway http 4xx error rate|X|X|-|-|-|
+|AWS APIGateway http 4xx error rate|X|X|X|-|-|
+
+
+## integration_aws-backup
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|AWS Backup failed|X|-|-|-|-|
+|AWS Backup job expired|X|-|-|-|-|
+|AWS Backup copy jobs failed|X|-|-|-|-|
+|AWS Backup check jobs completed successfully|X|-|-|-|-|
+|AWS Backup recovery point partial|-|-|X|-|-|
+|AWS Backup recovery point expired|-|X|-|-|-|
 
 
 ## integration_aws-beanstalk
@@ -198,6 +287,7 @@
 |AWS ElastiCache redis cpu|X|X|-|-|-|
 |AWS ElastiCache redis replication lag|X|X|-|-|-|
 |AWS ElastiCache redis commands|-|X|-|-|-|
+|AWS ElastiCache redis network conntrack allowance exceeded|X|-|-|-|-|
 
 
 ## integration_aws-elasticsearch
@@ -207,8 +297,13 @@
 |AWS ElasticSearch heartbeat|X|-|-|-|-|
 |AWS ElasticSearch cluster status|X|X|-|-|-|
 |AWS ElasticSearch cluster free storage space|X|X|-|-|-|
+|AWS ElasticSearch cluster UltraWarm free storage space|X|X|-|-|-|
 |AWS ElasticSearch cluster CPU|X|X|-|-|-|
+|AWS ElasticSearch cluster Master nodes CPU|X|X|-|-|-|
 |AWS Elasticsearch jvm memory pressure|X|X|-|-|-|
+|AWS Elasticsearch 4xx http response|X|X|-|-|-|
+|AWS Elasticsearch 5xx http response|X|X|-|-|-|
+|AWS Elasticsearch shard count|X|X|-|-|-|
 
 
 ## integration_aws-elb
@@ -218,10 +313,23 @@
 |AWS ELB heartbeat|X|-|-|-|-|
 |AWS ELB backend latency|X|X|-|-|-|
 |AWS ELB 5xx error rate|X|X|-|-|-|
-|AWS ELB 4xx error rate|X|X|-|-|-|
+|AWS ELB 4xx error rate|X|X|X|-|-|
 |AWS ELB backend 5xx error rate|X|X|-|-|-|
-|AWS ELB backend 4xx error rate|X|X|-|-|-|
+|AWS ELB backend 4xx error rate|X|X|X|-|-|
 |AWS ELB healthy instances percentage|X|X|-|-|-|
+
+
+## integration_aws-fsx
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|AWS FSx heartbeat|X|-|-|-|-|
+|AWS FSx free space|X|X|-|-|-|
+|AWS FSx cpu utilization|X|X|-|-|-|
+|AWS FSx memory utilization|X|X|-|-|-|
+|AWS FSx network throughput utilization|X|X|-|-|-|
+|AWS FSx file server disk throughput utilization|X|X|-|-|-|
+|AWS FSx storage capacity utilization|X|X|-|-|-|
 
 
 ## integration_aws-kinesis-firehose
@@ -267,6 +375,7 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
+|AWS RDS Common db load|X|X|-|-|-|
 |AWS RDS heartbeat|X|-|-|-|-|
 |AWS RDS instance CPU|X|X|-|-|-|
 |AWS RDS instance free space|X|X|-|-|-|
@@ -280,6 +389,13 @@
 |AWS Redshift heartbeat|X|-|-|-|-|
 |AWS Redshift cpu usage|X|X|-|-|-|
 |AWS Redshift storage usage|X|X|-|-|-|
+
+
+## integration_aws-s3
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|AWS S3 s3 errors and requests|X|X|-|-|-|
 
 
 ## integration_aws-sqs
@@ -326,7 +442,7 @@
 |Azure App Service response time|X|X|-|-|-|
 |Azure App Service memory usage|X|X|-|-|-|
 |Azure App Service 5xx error rate|X|X|-|-|-|
-|Azure App Service 4xx error rate|X|X|-|-|-|
+|Azure App Service 4xx error rate|X|X|X|-|-|
 |Azure App Service successful response rate|X|X|-|-|-|
 
 
@@ -339,7 +455,7 @@
 |Azure Application Gateway backend connect time|X|X|-|-|-|
 |Azure Application Gateway failed request rate|X|X|-|-|-|
 |Azure Application Gateway backend unhealthy host ratio|X|X|-|-|-|
-|Azure Application Gateway 4xx error rate|X|X|-|-|-|
+|Azure Application Gateway 4xx error rate|X|X|X|-|-|
 |Azure Application Gateway 5xx error rate|X|X|-|-|-|
 |Azure Application Gateway backend 4xx error rate|X|X|-|-|-|
 |Azure Application Gateway backend 5xx error rate|X|X|-|-|-|
@@ -352,6 +468,21 @@
 |---|---|---|---|---|---|
 |Azure Search latency|X|X|-|-|-|
 |Azure Search throttled queries rate|X|X|-|-|-|
+
+
+## integration_azure-backup
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Azure Backup vm|X|X|-|-|-|
+|Azure Backup file share|X|X|-|-|-|
+
+
+## integration_azure-cdn
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Azure CDN latency|X|X|-|-|-|
 
 
 ## integration_azure-container-instance
@@ -409,6 +540,31 @@
 |Azure firewall health state|X|X|-|-|-|
 
 
+## integration_azure-flexible-mysql
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Azure MySQL heartbeat|X|-|-|-|-|
+|Azure MySQL cpu usage|X|X|-|-|-|
+|Azure MySQL storage usage|X|X|-|-|-|
+|Azure MySQL io consumption|X|X|-|-|-|
+|Azure MySQL memory usage|X|X|-|-|-|
+|Azure MySQL replication lag|X|X|-|-|-|
+
+
+## integration_azure-flexible-postgresql
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Azure PostgreSQL flexible heartbeat|X|-|-|-|-|
+|Azure PostgreSQL flexible cpu usage|X|X|-|-|-|
+|Azure PostgreSQL flexible has no connection|X|-|-|-|-|
+|Azure PostgreSQL flexible storage usage|X|X|-|-|-|
+|Azure PostgreSQL flexible disk iops consumption|X|X|-|-|-|
+|Azure PostgreSQL flexible memory usage|X|X|-|-|-|
+|Azure PostgreSQL flexible replication lag|X|X|-|-|-|
+
+
 ## integration_azure-functions
 
 |Detector|Critical|Major|Minor|Warning|Info|
@@ -425,7 +581,7 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Azure Key Vault API result rate|X|X|-|-|-|
-|Azure Key Vault API latency|X|X|-|-|-|
+|Azure Key Vault API latency|-|X|X|-|-|
 
 
 ## integration_azure-load-balancer
@@ -624,10 +780,20 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |GCP Load Balancer 5xx error rate|X|X|-|-|-|
-|GCP Load Balancer 4xx error rate|X|X|-|-|-|
+|GCP Load Balancer 4xx error rate|X|X|X|-|-|
 |GCP Load Balancer backend latency per service|X|X|-|-|-|
 |GCP Load Balancer backend latency per bucket|X|X|-|-|-|
 |GCP Load Balancer request count|-|-|X|X|-|
+
+
+## integration_gcp-memorystore-redis
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|GCP Memorystore Redis heartbeat|X|-|-|-|-|
+|GCP Memorystore Redis blocked over connected clients ratio|X|X|-|-|-|
+|GCP Memorystore Redis system memory usage|X|X|-|-|-|
+|GCP Memorystore Redis memory usage|X|X|-|-|-|
 
 
 ## integration_gcp-pubsub-subscription
@@ -668,6 +834,37 @@
 |Organization usage custom metrics ratio per host included|-|X|-|-|-|
 
 
+## otel-collector_kubernetes-common
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Kubernetes heartbeat|X|-|-|-|-|
+|Kubernetes hpa scale exceeded capacity|-|X|-|-|-|
+|Kubernetes node status|-|X|X|-|-|
+|Kubernetes pod phase status|-|X|X|X|-|
+|Kubernetes pod terminated abnormally|-|X|-|-|-|
+|Kubernetes container killed by oom|-|X|-|-|-|
+|Kubernetes deployment in crashloopbackoff|-|X|-|-|-|
+|Kubernetes daemonset in crashloopbackoff|-|X|-|-|-|
+|Kubernetes job from cronjob failed|-|X|-|-|-|
+|Kubernetes daemonsets scheduled|X|-|-|-|-|
+|Kubernetes daemonsets ready|X|-|-|-|-|
+|Kubernetes daemonsets misscheduled|X|-|-|-|-|
+|Kubernetes deployments available|X|-|-|-|-|
+|Kubernetes replicasets available|X|-|-|-|-|
+|Kubernetes replication controllers available|X|-|-|-|-|
+|Kubernetes statefulsets ready|X|-|-|-|-|
+
+
+## prometheus-exporter_active-directory
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Active-directory heartbeat|X|-|-|-|-|
+|Active-directory replication errors|X|X|-|-|-|
+|Active-directory active directory services|X|-|-|-|-|
+
+
 ## prometheus-exporter_kong
 
 |Detector|Critical|Major|Minor|Warning|Info|
@@ -692,6 +889,18 @@
 |Squid status|X|-|-|-|-|
 |Squid server errors ratio|X|X|-|-|-|
 |Squid total amount of requests|X|-|-|-|-|
+
+
+## prometheus-exporter_varnish
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Varnish heartbeat|X|-|-|-|-|
+|Varnish backend failed|X|-|-|-|-|
+|Varnish thread number|X|-|-|-|-|
+|Varnish dropped sessions|X|-|-|-|-|
+|Varnish hit rate|-|X|X|-|-|
+|Varnish memory usage|X|X|-|-|-|
 
 
 ## prometheus-exporter_wallix-bastion
@@ -809,7 +1018,7 @@
 |Haproxy backend status|X|-|-|-|-|
 |Haproxy session|X|X|-|-|-|
 |Haproxy 5xx response rate|X|X|-|-|-|
-|Haproxy 4xx response rate|X|X|-|-|-|
+|Haproxy 4xx response rate|X|X|X|-|-|
 
 
 ## smart-agent_health-checker
@@ -947,7 +1156,7 @@
 |---|---|---|---|---|---|
 |Ingress Nginx latency|X|X|-|-|-|
 |Ingress Nginx 5xx errors ratio|X|X|-|-|-|
-|Ingress Nginx 4xx errors ratio|X|X|-|-|-|
+|Ingress Nginx 4xx errors ratio|X|X|X|-|-|
 
 
 ## smart-agent_nginx
@@ -1030,7 +1239,7 @@
 |Redis high memory fragmentation ratio|X|X|-|-|-|
 |Redis low memory fragmentation ratio|X|X|-|-|-|
 |Redis rejected connections|X|X|-|-|-|
-|Redis hitrate|X|X|-|-|-|
+|Redis hitrate|X|X|X|-|-|
 
 
 ## smart-agent_solr
@@ -1058,8 +1267,10 @@
 |System cpu utilization|X|X|-|-|-|
 |System load 5m ratio|X|X|-|-|-|
 |System disk space utilization|X|X|-|-|-|
+|System filesystem inodes utilization|X|X|-|-|-|
 |System disk inodes utilization|X|X|-|-|-|
 |System memory utilization|X|X|-|-|-|
+|System swap in/out|X|X|-|-|-|
 |System disk space running out|-|X|-|-|-|
 
 

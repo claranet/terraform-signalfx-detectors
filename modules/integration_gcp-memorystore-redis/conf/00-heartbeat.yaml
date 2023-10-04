@@ -1,0 +1,12 @@
+## Example
+module: GCP Memorystore Redis
+name: heartbeat
+
+transformation: false
+aggregation: true
+
+signals:
+  signal:
+    metric: "stats/cpu_utilization"
+rules:
+  critical:

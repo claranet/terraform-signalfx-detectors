@@ -1,0 +1,25 @@
+module: AWS Elasticsearch
+name: Shard Count
+
+aggregation: true
+filtering: "filter('namespace', 'AWS/ES') and filter('stat', 'upper') and filter('NodeId', '*')"
+tip: "Have a look at https://docs.aws.amazon.com/opensearch-service/latest/developerguide/sizing-domains.html#bp-sharding"
+
+signals:
+  A:
+    metric: ShardCount
+  signal:
+    formula: "A.sum(by=['NodeId'])"
+
+# by default cluster.max_shards_per_node is set at 1000
+# https://docs.aws.amazon.com/opensearch-service/latest/developerguide/sizing-domains.html#bp-sharding
+rules:
+  critical:
+    threshold: 900
+    comparator: ">"
+    lasting_duration: "5m"
+  major:
+    threshold: 800
+    comparator: ">"
+    dependency: critical
+    lasting_duration: "5m"

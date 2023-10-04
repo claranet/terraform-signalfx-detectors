@@ -1,0 +1,12 @@
+module: Kubernetes
+name: heartbeat
+
+transformation: false
+aggregation: ".mean(by=['k8s.cluster.name'])"
+exclude_not_running_vm: true
+
+signals:
+  signal:
+    metric: k8s.node.condition_ready
+rules:
+  critical:

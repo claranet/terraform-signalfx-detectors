@@ -1,0 +1,30 @@
+module: AWS AmazonMQ RabbitMQ
+name: messages ack rate
+
+transformation: true
+aggregation: true
+filtering: "filter('namespace', 'AWS/AmazonMQ') and filter('stat', 'upper')"
+disabled: true
+
+signals:
+  msg:
+    metric: MessageCount
+  signal:
+    metric: AckRate
+
+rules:
+  critical:
+    threshold: 0.016666666666666666
+    comparator: "<="
+    lasting_duration: 10m
+    lasting_at_least: 0.9
+    append_condition: and when(signal >= 0) and when(msg > 0)
+    description: is to low and there are ready or unack messages
+  major:
+    threshold: 0.03333333333333333
+    comparator: "<="
+    dependency: critical
+    lasting_duration: 10m
+    lasting_at_least: 0.9
+    append_condition: and when(signal >= 0) and when(msg > 0)
+    description: is to low and there are ready or unack messages

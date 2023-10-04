@@ -92,8 +92,8 @@ variable "bgp_availability_disabled" {
   default     = null
 }
 
-variable "bgp_availability_disabled_warning" {
-  description = "Disable warning alerting rule for bgp_availability detector"
+variable "bgp_availability_disabled_critical" {
+  description = "Disable critical alerting rule for bgp_availability detector"
   type        = bool
   default     = null
 }
@@ -104,25 +104,25 @@ variable "bgp_availability_disabled_major" {
   default     = null
 }
 
-variable "bgp_availability_disabled_critical" {
-  description = "Disable critical alerting rule for bgp_availability detector"
+variable "bgp_availability_disabled_warning" {
+  description = "Disable warning alerting rule for bgp_availability detector"
   type        = bool
   default     = null
 }
 
-variable "bgp_availability_threshold_warning" {
-  description = "Warning threshold for bgp_availability detector"
+variable "bgp_availability_threshold_critical" {
+  description = "Critical threshold for bgp_availability detector"
   type        = number
-  default     = 100
+  default     = 95
 }
 
-variable "bgp_availability_lasting_duration_warning" {
+variable "bgp_availability_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
   default     = "2m"
 }
 
-variable "bgp_availability_at_least_percentage_warning" {
+variable "bgp_availability_at_least_percentage_critical" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1
@@ -144,19 +144,19 @@ variable "bgp_availability_at_least_percentage_major" {
   type        = number
   default     = 1
 }
-variable "bgp_availability_threshold_critical" {
-  description = "Critical threshold for bgp_availability detector"
+variable "bgp_availability_threshold_warning" {
+  description = "Warning threshold for bgp_availability detector"
   type        = number
-  default     = 95
+  default     = 100
 }
 
-variable "bgp_availability_lasting_duration_critical" {
+variable "bgp_availability_lasting_duration_warning" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
   default     = "2m"
 }
 
-variable "bgp_availability_at_least_percentage_critical" {
+variable "bgp_availability_at_least_percentage_warning" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1
@@ -205,8 +205,8 @@ variable "arp_availability_disabled" {
   default     = null
 }
 
-variable "arp_availability_disabled_warning" {
-  description = "Disable warning alerting rule for arp_availability detector"
+variable "arp_availability_disabled_critical" {
+  description = "Disable critical alerting rule for arp_availability detector"
   type        = bool
   default     = null
 }
@@ -217,25 +217,25 @@ variable "arp_availability_disabled_major" {
   default     = null
 }
 
-variable "arp_availability_disabled_critical" {
-  description = "Disable critical alerting rule for arp_availability detector"
+variable "arp_availability_disabled_warning" {
+  description = "Disable warning alerting rule for arp_availability detector"
   type        = bool
   default     = null
 }
 
-variable "arp_availability_threshold_warning" {
-  description = "Warning threshold for arp_availability detector"
+variable "arp_availability_threshold_critical" {
+  description = "Critical threshold for arp_availability detector"
   type        = number
-  default     = 100
+  default     = 95
 }
 
-variable "arp_availability_lasting_duration_warning" {
+variable "arp_availability_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
   default     = "2m"
 }
 
-variable "arp_availability_at_least_percentage_warning" {
+variable "arp_availability_at_least_percentage_critical" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1
@@ -257,19 +257,19 @@ variable "arp_availability_at_least_percentage_major" {
   type        = number
   default     = 1
 }
-variable "arp_availability_threshold_critical" {
-  description = "Critical threshold for arp_availability detector"
+variable "arp_availability_threshold_warning" {
+  description = "Warning threshold for arp_availability detector"
   type        = number
-  default     = 95
+  default     = 100
 }
 
-variable "arp_availability_lasting_duration_critical" {
+variable "arp_availability_lasting_duration_warning" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
   default     = "2m"
 }
 
-variable "arp_availability_at_least_percentage_critical" {
+variable "arp_availability_at_least_percentage_warning" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1

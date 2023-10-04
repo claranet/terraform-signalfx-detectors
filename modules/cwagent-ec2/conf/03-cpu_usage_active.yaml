@@ -1,0 +1,18 @@
+## Example
+module: AWS CWAgent
+name: "CPU Usage Active"
+id: cpu
+transformation: ".min(over='1h')"
+value_unit: "%"
+signals:
+  signal:
+    metric: cpu_usage_active
+    extrapolation: zero
+rules:
+  critical:
+    threshold: 90
+    comparator: ">"
+  major:
+    threshold: 85
+    comparator: ">"
+    dependency: critical

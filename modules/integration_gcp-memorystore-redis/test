@@ -1,0 +1,4 @@
+METRIC_NAME="stats/cpu_utilization"
+SOURCE_TYPE="integration"
+MODULE_NAME="gcp-memorystore-redis"
+MODULE_DIR="${SOURCE_TYPE}_${MODULE_NAME}"

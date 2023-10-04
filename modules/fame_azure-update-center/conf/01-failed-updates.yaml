@@ -1,0 +1,17 @@
+module: Azure Update Center
+name: failed updates
+transformation: true
+aggregation: true
+
+max_delay: 900
+signals:
+  signal:
+    metric: fame.azure.update_center.updates_status
+    filter: filter('status', 'failed')
+    extrapolation: zero
+
+rules:
+  major:
+    threshold: 0
+    comparator: ">"
+    lasting_duration: '6h'

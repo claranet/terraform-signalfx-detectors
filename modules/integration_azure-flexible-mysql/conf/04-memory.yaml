@@ -1,0 +1,25 @@
+---
+module: Azure MySQL
+id: memory
+name: "Memory usage"
+
+transformation: true
+aggregation: ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+
+filtering: "filter('resource_type', 'Microsoft.DBforMySQL/flexibleServers') and filter('primary_aggregation_type', 'true')"
+value_unit: "%"
+
+signals:
+  signal:
+    metric: "memory_percent"
+rules:
+  critical:
+    threshold: 90
+    comparator: ">"
+    lasting_duration: '15m'
+  major:
+    threshold: 80
+    comparator: ">"
+    lasting_duration: '15m'
+    dependency: critical
+...

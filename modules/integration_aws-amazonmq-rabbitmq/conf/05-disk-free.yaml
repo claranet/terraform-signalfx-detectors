@@ -1,0 +1,26 @@
+module: AWS AmazonMQ RabbitMQ
+name: disk free
+
+transformation: true
+aggregation: true
+filtering: "filter('namespace', 'AWS/AmazonMQ') and filter('stat', 'upper')"
+value_unit: "GiB"
+
+signals:
+  A:
+    metric: RabbitMQDiskFree
+  B:
+    metric: RabbitMQDiskFreeLimit
+  signal:
+    formula: ((A - B)/1024**3)
+
+rules:
+  critical:
+    threshold: 0.5
+    comparator: "<"
+    lasting_duration: 10m
+  major:
+    threshold: 1
+    comparator: "<"
+    lasting_duration: 10m
+    dependency: critical

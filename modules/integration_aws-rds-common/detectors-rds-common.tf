@@ -75,12 +75,12 @@ resource "signalfx_detector" "free_space_low" {
 
   viz_options {
     label      = "signal"
-    value_unit = "Gigibyte"
+    value_unit = "Gibibyte"
   }
 
   program_text = <<-EOF
     free = data('FreeStorageSpace', filter=filter('namespace', 'AWS/RDS') and filter('stat', 'mean') and filter('DBInstanceIdentifier', '*') and ${module.filtering.signalflow})${var.free_space_low_aggregation_function}${var.free_space_low_transformation_function}
-    signal = free.scale(1/1024**3).publish('signal') # Bytes to Gigibytes
+    signal = free.scale(1/1024**3).publish('signal') # Bytes to Gibibytes
     detect(when(signal < ${var.free_space_low_threshold_critical})).publish('CRIT')
     detect(when(signal < ${var.free_space_low_threshold_major}) and (not when(signal < ${var.free_space_low_threshold_critical}))).publish('MAJOR')
 EOF

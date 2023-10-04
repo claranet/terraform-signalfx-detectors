@@ -33,9 +33,9 @@ variable "heartbeat_notifications" {
 }
 
 variable "heartbeat_timeframe" {
-  description = "Timeframe for heartbeat detector (i.e. \"10m\")"
+  description = "Timeframe for heartbeat detector (i.e. \"20m\")"
   type        = string
-  default     = "10m"
+  default     = "20m"
 }
 
 variable "heartbeat_aggregation_function" {

@@ -1,0 +1,17 @@
+module: "AWS FSx"
+name: "Network Throughput Utilization"
+filtering: "filter('namespace', 'AWS/FSx')"
+value_unit: "%"
+transformation: ".max(over='15m')"
+signals:
+  signal:
+    metric: "NetworkThroughputUtilization"
+    filter: "filter('stat', 'mean')"
+rules:
+  major:
+    comparator: ">"
+    threshold: 60
+  critical:
+    comparator: ">"
+    threshold: 80
+    dependency: major

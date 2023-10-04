@@ -80,8 +80,10 @@ This module creates the following SignalFx detectors which could contain one or 
 |System cpu utilization|X|X|-|-|-|
 |System load 5m ratio|X|X|-|-|-|
 |System disk space utilization|X|X|-|-|-|
+|System filesystem inodes utilization|X|X|-|-|-|
 |System disk inodes utilization|X|X|-|-|-|
 |System memory utilization|X|X|-|-|-|
+|System swap in/out|X|X|-|-|-|
 |System disk space running out|-|X|-|-|-|
 
 ## How to collect required metrics?
@@ -101,7 +103,7 @@ You might find the related following documentations useful:
 
 In addition, all of these monitors are still available in the [Splunk Otel Collector](https://github.com/signalfx/splunk-otel-collector),
 the Splunk [distro of OpenTelemetry Collector](https://opentelemetry.io/docs/concepts/distributions/) which replaces SignalFx Smart Agent,
-thanks to the internal [Smart Agent Receiver](https://github.com/signalfx/splunk-otel-collector/tree/main/internal/receiver/smartagentreceiver).
+thanks to the internal [Smart Agent Receiver](https://github.com/signalfx/splunk-otel-collector/tree/main/pkg/receiver/smartagentreceiver).
 
 As a result:
 - any SignalFx Smart Agent monitor are compatible with the new agent OpenTelemetry Collector and related modules in this repository keep `smart-agent` as source name.
@@ -150,6 +152,9 @@ parameter to the corresponding monitor configuration:
         - '!load.midterm'
         - '!memory.utilization'
         - '!percent_inodes.used'
+        - '!vmpage_io.swap.in'
+        - '!vmpage_io.swap.out'
+        - '!system.filesystem.inodes.usage'
 
 ```
 
@@ -165,5 +170,6 @@ parameter to the corresponding monitor configuration:
 * [Smart Agent monitor load](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/load.md)
 * [Smart Agent monitor filesystems](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/filesystems.md)
 * [Smart Agent monitor memory](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/memory.md)
+* [Smart Agent monitor vmem](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/vmem.md)
 * [Splunk Observability integration cpu](https://docs.splunk.com/Observability/gdi/cpu/cpu.html)
 * [Splunk Observability integration load](https://docs.splunk.com/Observability/gdi/load/load.html)

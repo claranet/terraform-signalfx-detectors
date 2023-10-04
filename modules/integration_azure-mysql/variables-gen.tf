@@ -92,35 +92,18 @@ variable "cpu_disabled" {
   default     = null
 }
 
-variable "cpu_disabled_major" {
-  description = "Disable major alerting rule for cpu detector"
-  type        = bool
-  default     = null
-}
-
 variable "cpu_disabled_critical" {
   description = "Disable critical alerting rule for cpu detector"
   type        = bool
   default     = null
 }
 
-variable "cpu_threshold_major" {
-  description = "Major threshold for cpu detector in %"
-  type        = number
-  default     = 80
+variable "cpu_disabled_major" {
+  description = "Disable major alerting rule for cpu detector"
+  type        = bool
+  default     = null
 }
 
-variable "cpu_lasting_duration_major" {
-  description = "Minimum duration that conditions must be true before raising alert"
-  type        = string
-  default     = "15m"
-}
-
-variable "cpu_at_least_percentage_major" {
-  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
-  type        = number
-  default     = 1
-}
 variable "cpu_threshold_critical" {
   description = "Critical threshold for cpu detector in %"
   type        = number
@@ -134,6 +117,23 @@ variable "cpu_lasting_duration_critical" {
 }
 
 variable "cpu_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
+variable "cpu_threshold_major" {
+  description = "Major threshold for cpu detector in %"
+  type        = number
+  default     = 80
+}
+
+variable "cpu_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "15m"
+}
+
+variable "cpu_at_least_percentage_major" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1
@@ -272,35 +272,18 @@ variable "io_disabled" {
   default     = null
 }
 
-variable "io_disabled_major" {
-  description = "Disable major alerting rule for io detector"
-  type        = bool
-  default     = null
-}
-
 variable "io_disabled_critical" {
   description = "Disable critical alerting rule for io detector"
   type        = bool
   default     = null
 }
 
-variable "io_threshold_major" {
-  description = "Major threshold for io detector in %"
-  type        = number
-  default     = 80
+variable "io_disabled_major" {
+  description = "Disable major alerting rule for io detector"
+  type        = bool
+  default     = null
 }
 
-variable "io_lasting_duration_major" {
-  description = "Minimum duration that conditions must be true before raising alert"
-  type        = string
-  default     = "15m"
-}
-
-variable "io_at_least_percentage_major" {
-  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
-  type        = number
-  default     = 1
-}
 variable "io_threshold_critical" {
   description = "Critical threshold for io detector in %"
   type        = number
@@ -314,6 +297,23 @@ variable "io_lasting_duration_critical" {
 }
 
 variable "io_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
+variable "io_threshold_major" {
+  description = "Major threshold for io detector in %"
+  type        = number
+  default     = 80
+}
+
+variable "io_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "15m"
+}
+
+variable "io_at_least_percentage_major" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1
@@ -362,35 +362,18 @@ variable "memory_disabled" {
   default     = null
 }
 
-variable "memory_disabled_major" {
-  description = "Disable major alerting rule for memory detector"
-  type        = bool
-  default     = null
-}
-
 variable "memory_disabled_critical" {
   description = "Disable critical alerting rule for memory detector"
   type        = bool
   default     = null
 }
 
-variable "memory_threshold_major" {
-  description = "Major threshold for memory detector in %"
-  type        = number
-  default     = 80
+variable "memory_disabled_major" {
+  description = "Disable major alerting rule for memory detector"
+  type        = bool
+  default     = null
 }
 
-variable "memory_lasting_duration_major" {
-  description = "Minimum duration that conditions must be true before raising alert"
-  type        = string
-  default     = "15m"
-}
-
-variable "memory_at_least_percentage_major" {
-  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
-  type        = number
-  default     = 1
-}
 variable "memory_threshold_critical" {
   description = "Critical threshold for memory detector in %"
   type        = number
@@ -404,6 +387,23 @@ variable "memory_lasting_duration_critical" {
 }
 
 variable "memory_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
+variable "memory_threshold_major" {
+  description = "Major threshold for memory detector in %"
+  type        = number
+  default     = 80
+}
+
+variable "memory_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "15m"
+}
+
+variable "memory_at_least_percentage_major" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1
@@ -452,35 +452,18 @@ variable "replication_lag_disabled" {
   default     = null
 }
 
-variable "replication_lag_disabled_major" {
-  description = "Disable major alerting rule for replication_lag detector"
-  type        = bool
-  default     = null
-}
-
 variable "replication_lag_disabled_critical" {
   description = "Disable critical alerting rule for replication_lag detector"
   type        = bool
   default     = null
 }
 
-variable "replication_lag_threshold_major" {
-  description = "Major threshold for replication_lag detector in Second"
-  type        = number
-  default     = 100
+variable "replication_lag_disabled_major" {
+  description = "Disable major alerting rule for replication_lag detector"
+  type        = bool
+  default     = null
 }
 
-variable "replication_lag_lasting_duration_major" {
-  description = "Minimum duration that conditions must be true before raising alert"
-  type        = string
-  default     = "15m"
-}
-
-variable "replication_lag_at_least_percentage_major" {
-  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
-  type        = number
-  default     = 1
-}
 variable "replication_lag_threshold_critical" {
   description = "Critical threshold for replication_lag detector in Second"
   type        = number
@@ -494,6 +477,23 @@ variable "replication_lag_lasting_duration_critical" {
 }
 
 variable "replication_lag_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
+variable "replication_lag_threshold_major" {
+  description = "Major threshold for replication_lag detector in Second"
+  type        = number
+  default     = 100
+}
+
+variable "replication_lag_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "15m"
+}
+
+variable "replication_lag_at_least_percentage_major" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1

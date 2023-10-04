@@ -1,0 +1,16 @@
+module: AWS Backup
+name: failed
+id: backup_failed
+
+transformation: ".max(over='1d').fill(0)"
+aggregation: true
+filtering: "filter('namespace', 'AWS/Backup') and filter('stat', 'sum')"
+
+signals:
+  signal:
+    metric: NumberOfBackupJobsFailed
+rules:
+  critical:
+    threshold: 0
+    comparator: ">"
+    lasting_duration: '1h'

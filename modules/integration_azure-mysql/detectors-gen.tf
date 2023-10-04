@@ -42,21 +42,9 @@ resource "signalfx_detector" "cpu" {
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.DBforMySQL/servers') and filter('primary_aggregation_type', 'true')
     signal = data('cpu_percent', filter=base_filtering and ${module.filtering.signalflow})${var.cpu_aggregation_function}${var.cpu_transformation_function}.publish('signal')
-    detect(when(signal > ${var.cpu_threshold_major}, lasting=%{if var.cpu_lasting_duration_major == null}None%{else}'${var.cpu_lasting_duration_major}'%{endif}, at_least=${var.cpu_at_least_percentage_major})).publish('MAJOR')
-    detect(when(signal > ${var.cpu_threshold_critical}, lasting=%{if var.cpu_lasting_duration_critical == null}None%{else}'${var.cpu_lasting_duration_critical}'%{endif}, at_least=${var.cpu_at_least_percentage_critical}) and (not when(signal > ${var.cpu_threshold_major}, lasting=%{if var.cpu_lasting_duration_major == null}None%{else}'${var.cpu_lasting_duration_major}'%{endif}, at_least=${var.cpu_at_least_percentage_major}))).publish('CRIT')
+    detect(when(signal > ${var.cpu_threshold_critical}, lasting=%{if var.cpu_lasting_duration_critical == null}None%{else}'${var.cpu_lasting_duration_critical}'%{endif}, at_least=${var.cpu_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal > ${var.cpu_threshold_major}, lasting=%{if var.cpu_lasting_duration_major == null}None%{else}'${var.cpu_lasting_duration_major}'%{endif}, at_least=${var.cpu_at_least_percentage_major}) and (not when(signal > ${var.cpu_threshold_critical}, lasting=%{if var.cpu_lasting_duration_critical == null}None%{else}'${var.cpu_lasting_duration_critical}'%{endif}, at_least=${var.cpu_at_least_percentage_critical}))).publish('MAJOR')
 EOF
-
-  rule {
-    description           = "is too high > ${var.cpu_threshold_major}%"
-    severity              = "Major"
-    detect_label          = "MAJOR"
-    disabled              = coalesce(var.cpu_disabled_major, var.cpu_disabled, var.detectors_disabled)
-    notifications         = try(coalescelist(lookup(var.cpu_notifications, "major", []), var.notifications.major), null)
-    runbook_url           = try(coalesce(var.cpu_runbook_url, var.runbook_url), "")
-    tip                   = var.cpu_tip
-    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
-    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
-  }
 
   rule {
     description           = "is too high > ${var.cpu_threshold_critical}%"
@@ -64,6 +52,18 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.cpu_disabled_critical, var.cpu_disabled, var.detectors_disabled)
     notifications         = try(coalescelist(lookup(var.cpu_notifications, "critical", []), var.notifications.critical), null)
+    runbook_url           = try(coalesce(var.cpu_runbook_url, var.runbook_url), "")
+    tip                   = var.cpu_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
+
+  rule {
+    description           = "is too high > ${var.cpu_threshold_major}%"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.cpu_disabled_major, var.cpu_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.cpu_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.cpu_runbook_url, var.runbook_url), "")
     tip                   = var.cpu_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -134,21 +134,9 @@ resource "signalfx_detector" "io" {
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.DBforMySQL/servers') and filter('primary_aggregation_type', 'true')
     signal = data('io_consumption_percent', filter=base_filtering and ${module.filtering.signalflow})${var.io_aggregation_function}${var.io_transformation_function}.publish('signal')
-    detect(when(signal > ${var.io_threshold_major}, lasting=%{if var.io_lasting_duration_major == null}None%{else}'${var.io_lasting_duration_major}'%{endif}, at_least=${var.io_at_least_percentage_major})).publish('MAJOR')
-    detect(when(signal > ${var.io_threshold_critical}, lasting=%{if var.io_lasting_duration_critical == null}None%{else}'${var.io_lasting_duration_critical}'%{endif}, at_least=${var.io_at_least_percentage_critical}) and (not when(signal > ${var.io_threshold_major}, lasting=%{if var.io_lasting_duration_major == null}None%{else}'${var.io_lasting_duration_major}'%{endif}, at_least=${var.io_at_least_percentage_major}))).publish('CRIT')
+    detect(when(signal > ${var.io_threshold_critical}, lasting=%{if var.io_lasting_duration_critical == null}None%{else}'${var.io_lasting_duration_critical}'%{endif}, at_least=${var.io_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal > ${var.io_threshold_major}, lasting=%{if var.io_lasting_duration_major == null}None%{else}'${var.io_lasting_duration_major}'%{endif}, at_least=${var.io_at_least_percentage_major}) and (not when(signal > ${var.io_threshold_critical}, lasting=%{if var.io_lasting_duration_critical == null}None%{else}'${var.io_lasting_duration_critical}'%{endif}, at_least=${var.io_at_least_percentage_critical}))).publish('MAJOR')
 EOF
-
-  rule {
-    description           = "is too high > ${var.io_threshold_major}%"
-    severity              = "Major"
-    detect_label          = "MAJOR"
-    disabled              = coalesce(var.io_disabled_major, var.io_disabled, var.detectors_disabled)
-    notifications         = try(coalescelist(lookup(var.io_notifications, "major", []), var.notifications.major), null)
-    runbook_url           = try(coalesce(var.io_runbook_url, var.runbook_url), "")
-    tip                   = var.io_tip
-    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
-    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
-  }
 
   rule {
     description           = "is too high > ${var.io_threshold_critical}%"
@@ -156,6 +144,18 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.io_disabled_critical, var.io_disabled, var.detectors_disabled)
     notifications         = try(coalescelist(lookup(var.io_notifications, "critical", []), var.notifications.critical), null)
+    runbook_url           = try(coalesce(var.io_runbook_url, var.runbook_url), "")
+    tip                   = var.io_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
+
+  rule {
+    description           = "is too high > ${var.io_threshold_major}%"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.io_disabled_major, var.io_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.io_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.io_runbook_url, var.runbook_url), "")
     tip                   = var.io_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -180,21 +180,9 @@ resource "signalfx_detector" "memory" {
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.DBforMySQL/servers') and filter('primary_aggregation_type', 'true')
     signal = data('memory_percent', filter=base_filtering and ${module.filtering.signalflow})${var.memory_aggregation_function}${var.memory_transformation_function}.publish('signal')
-    detect(when(signal > ${var.memory_threshold_major}, lasting=%{if var.memory_lasting_duration_major == null}None%{else}'${var.memory_lasting_duration_major}'%{endif}, at_least=${var.memory_at_least_percentage_major})).publish('MAJOR')
-    detect(when(signal > ${var.memory_threshold_critical}, lasting=%{if var.memory_lasting_duration_critical == null}None%{else}'${var.memory_lasting_duration_critical}'%{endif}, at_least=${var.memory_at_least_percentage_critical}) and (not when(signal > ${var.memory_threshold_major}, lasting=%{if var.memory_lasting_duration_major == null}None%{else}'${var.memory_lasting_duration_major}'%{endif}, at_least=${var.memory_at_least_percentage_major}))).publish('CRIT')
+    detect(when(signal > ${var.memory_threshold_critical}, lasting=%{if var.memory_lasting_duration_critical == null}None%{else}'${var.memory_lasting_duration_critical}'%{endif}, at_least=${var.memory_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal > ${var.memory_threshold_major}, lasting=%{if var.memory_lasting_duration_major == null}None%{else}'${var.memory_lasting_duration_major}'%{endif}, at_least=${var.memory_at_least_percentage_major}) and (not when(signal > ${var.memory_threshold_critical}, lasting=%{if var.memory_lasting_duration_critical == null}None%{else}'${var.memory_lasting_duration_critical}'%{endif}, at_least=${var.memory_at_least_percentage_critical}))).publish('MAJOR')
 EOF
-
-  rule {
-    description           = "is too high > ${var.memory_threshold_major}%"
-    severity              = "Major"
-    detect_label          = "MAJOR"
-    disabled              = coalesce(var.memory_disabled_major, var.memory_disabled, var.detectors_disabled)
-    notifications         = try(coalescelist(lookup(var.memory_notifications, "major", []), var.notifications.major), null)
-    runbook_url           = try(coalesce(var.memory_runbook_url, var.runbook_url), "")
-    tip                   = var.memory_tip
-    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
-    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
-  }
 
   rule {
     description           = "is too high > ${var.memory_threshold_critical}%"
@@ -202,6 +190,18 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.memory_disabled_critical, var.memory_disabled, var.detectors_disabled)
     notifications         = try(coalescelist(lookup(var.memory_notifications, "critical", []), var.notifications.critical), null)
+    runbook_url           = try(coalesce(var.memory_runbook_url, var.runbook_url), "")
+    tip                   = var.memory_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
+
+  rule {
+    description           = "is too high > ${var.memory_threshold_major}%"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.memory_disabled_major, var.memory_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.memory_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.memory_runbook_url, var.runbook_url), "")
     tip                   = var.memory_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -226,21 +226,9 @@ resource "signalfx_detector" "replication_lag" {
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.DBforMySQL/servers') and filter('primary_aggregation_type', 'true')
     signal = data('seconds_behind_master', filter=base_filtering and ${module.filtering.signalflow})${var.replication_lag_aggregation_function}${var.replication_lag_transformation_function}.publish('signal')
-    detect(when(signal > ${var.replication_lag_threshold_major}, lasting=%{if var.replication_lag_lasting_duration_major == null}None%{else}'${var.replication_lag_lasting_duration_major}'%{endif}, at_least=${var.replication_lag_at_least_percentage_major})).publish('MAJOR')
-    detect(when(signal > ${var.replication_lag_threshold_critical}, lasting=%{if var.replication_lag_lasting_duration_critical == null}None%{else}'${var.replication_lag_lasting_duration_critical}'%{endif}, at_least=${var.replication_lag_at_least_percentage_critical}) and (not when(signal > ${var.replication_lag_threshold_major}, lasting=%{if var.replication_lag_lasting_duration_major == null}None%{else}'${var.replication_lag_lasting_duration_major}'%{endif}, at_least=${var.replication_lag_at_least_percentage_major}))).publish('CRIT')
+    detect(when(signal > ${var.replication_lag_threshold_critical}, lasting=%{if var.replication_lag_lasting_duration_critical == null}None%{else}'${var.replication_lag_lasting_duration_critical}'%{endif}, at_least=${var.replication_lag_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal > ${var.replication_lag_threshold_major}, lasting=%{if var.replication_lag_lasting_duration_major == null}None%{else}'${var.replication_lag_lasting_duration_major}'%{endif}, at_least=${var.replication_lag_at_least_percentage_major}) and (not when(signal > ${var.replication_lag_threshold_critical}, lasting=%{if var.replication_lag_lasting_duration_critical == null}None%{else}'${var.replication_lag_lasting_duration_critical}'%{endif}, at_least=${var.replication_lag_at_least_percentage_critical}))).publish('MAJOR')
 EOF
-
-  rule {
-    description           = "is too high > ${var.replication_lag_threshold_major}Second"
-    severity              = "Major"
-    detect_label          = "MAJOR"
-    disabled              = coalesce(var.replication_lag_disabled_major, var.replication_lag_disabled, var.detectors_disabled)
-    notifications         = try(coalescelist(lookup(var.replication_lag_notifications, "major", []), var.notifications.major), null)
-    runbook_url           = try(coalesce(var.replication_lag_runbook_url, var.runbook_url), "")
-    tip                   = var.replication_lag_tip
-    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
-    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
-  }
 
   rule {
     description           = "is too high > ${var.replication_lag_threshold_critical}Second"
@@ -248,6 +236,18 @@ EOF
     detect_label          = "CRIT"
     disabled              = coalesce(var.replication_lag_disabled_critical, var.replication_lag_disabled, var.detectors_disabled)
     notifications         = try(coalescelist(lookup(var.replication_lag_notifications, "critical", []), var.notifications.critical), null)
+    runbook_url           = try(coalesce(var.replication_lag_runbook_url, var.runbook_url), "")
+    tip                   = var.replication_lag_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
+
+  rule {
+    description           = "is too high > ${var.replication_lag_threshold_major}Second"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.replication_lag_disabled_major, var.replication_lag_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.replication_lag_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.replication_lag_runbook_url, var.runbook_url), "")
     tip                   = var.replication_lag_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject

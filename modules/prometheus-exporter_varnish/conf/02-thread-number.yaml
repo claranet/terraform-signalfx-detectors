@@ -1,0 +1,15 @@
+module: varnish
+name: Thread number
+
+transformation: ".min(over='5m')"
+aggregation: true
+
+filtering: "filter('system.type', 'prometheus-exporter')"
+
+signals:
+  signal:
+    metric: varnish_main_threads
+rules:
+  critical:
+    threshold: 1
+    comparator: "<"
