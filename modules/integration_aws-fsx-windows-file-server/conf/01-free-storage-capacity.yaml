@@ -14,8 +14,8 @@ signals:
 rules:
   critical:
     comparator: "<"
-    # threshold: 10
+    threshold: 10
   major:
     comparator: "<"
     dependency: critical
-    # threshold: 20
+    threshold: 20

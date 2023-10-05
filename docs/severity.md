@@ -23,7 +23,7 @@
 - [integration_aws-elasticache-redis](#integration_aws-elasticache-redis)
 - [integration_aws-elasticsearch](#integration_aws-elasticsearch)
 - [integration_aws-elb](#integration_aws-elb)
-- [integration_aws-fsx](#integration_aws-fsx)
+- [integration_aws-fsx-windows-file-server](#integration_aws-fsx-windows-file-server)
 - [integration_aws-kinesis-firehose](#integration_aws-kinesis-firehose)
 - [integration_aws-lambda](#integration_aws-lambda)
 - [integration_aws-nlb](#integration_aws-nlb)
@@ -319,7 +319,7 @@
 |AWS ELB healthy instances percentage|X|X|-|-|-|
 
 
-## integration_aws-fsx
+## integration_aws-fsx-windows-file-server
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
