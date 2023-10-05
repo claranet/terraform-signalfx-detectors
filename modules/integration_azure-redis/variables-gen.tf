@@ -9,7 +9,7 @@ variable "heartbeat_notifications" {
 variable "heartbeat_aggregation_function" {
   description = "Aggregation function and group by for heartbeat detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".mean(by=['shardid', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
 variable "heartbeat_transformation_function" {

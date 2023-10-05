@@ -3,7 +3,7 @@ module: "Azure Redis"
 name: heartbeat
 
 transformation: true
-aggregation: ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+aggregation: ".mean(by=['shardid', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 
 filtering: "filter('resource_type', 'Microsoft.Cache/Redis') and filter('primary_aggregation_type', 'true')"
 
