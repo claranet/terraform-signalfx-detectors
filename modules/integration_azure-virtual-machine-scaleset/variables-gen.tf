@@ -1,6 +1,22 @@
-# Module specific
+# heartbeat detector
 
-# Heartbeat detector
+variable "heartbeat_notifications" {
+  description = "Notification recipients list per severity overridden for heartbeat detector"
+  type        = map(list(string))
+  default     = {}
+}
+
+variable "heartbeat_aggregation_function" {
+  description = "Aggregation function and group by for heartbeat detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+}
+
+variable "heartbeat_transformation_function" {
+  description = "Transformation function for heartbeat detector (i.e. \".mean(over='5m')\")"
+  type        = string
+  default     = ""
+}
 
 variable "heartbeat_max_delay" {
   description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
@@ -26,20 +42,9 @@ variable "heartbeat_disabled" {
   default     = null
 }
 
-variable "heartbeat_notifications" {
-  description = "Notification recipients list per severity overridden for heartbeat detector"
-  type        = map(list(string))
-  default     = {}
-}
-
 variable "heartbeat_timeframe" {
   description = "Timeframe for heartbeat detector (i.e. \"10m\")"
   type        = string
   default     = "10m"
 }
 
-variable "heartbeat_aggregation_function" {
-  description = "Aggregation function and group by for heartbeat detector (i.e. \".mean(by=['host'])\")"
-  type        = string
-  default     = ".mean(by=['azure_resource_id'])"
-}
