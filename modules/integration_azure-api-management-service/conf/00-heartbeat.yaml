@@ -3,7 +3,7 @@ module: "Azure API Management Service"
 name: heartbeat
 
 transformation: true
-aggregation: true
+aggregation: ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 
 filtering: "filter('resource_type', 'Microsoft.ApiManagement/service') and filter('primary_aggregation_type', 'true')"
 
