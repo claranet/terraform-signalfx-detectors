@@ -101,6 +101,7 @@ variable "free_space_disabled_major" {
 variable "free_space_threshold_critical" {
   description = "Critical threshold for free_space detector in Gibibyte"
   type        = number
+  default     = 10
 }
 
 variable "free_space_lasting_duration_critical" {
@@ -117,6 +118,7 @@ variable "free_space_at_least_percentage_critical" {
 variable "free_space_threshold_major" {
   description = "Major threshold for free_space detector in Gibibyte"
   type        = number
+  default     = 20
 }
 
 variable "free_space_lasting_duration_major" {

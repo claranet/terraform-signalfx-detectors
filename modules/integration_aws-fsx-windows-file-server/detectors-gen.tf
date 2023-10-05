@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name = format("%s %s", local.detector_name_prefix, "AWS FSx heartbeat")
+  name = format("%s %s", local.detector_name_prefix, "AWS FSx for Windows File Server heartbeat")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
@@ -27,7 +27,7 @@ EOF
 }
 
 resource "signalfx_detector" "free_space" {
-  name = format("%s %s", local.detector_name_prefix, "AWS FSx free space")
+  name = format("%s %s", local.detector_name_prefix, "AWS FSx for Windows File Server free space")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
@@ -74,7 +74,7 @@ EOF
 }
 
 resource "signalfx_detector" "cpu_utilization" {
-  name = format("%s %s", local.detector_name_prefix, "AWS FSx cpu utilization")
+  name = format("%s %s", local.detector_name_prefix, "AWS FSx for Windows File Server cpu utilization")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
@@ -120,7 +120,7 @@ EOF
 }
 
 resource "signalfx_detector" "memory_utilization" {
-  name = format("%s %s", local.detector_name_prefix, "AWS FSx memory utilization")
+  name = format("%s %s", local.detector_name_prefix, "AWS FSx for Windows File Server memory utilization")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
@@ -166,7 +166,7 @@ EOF
 }
 
 resource "signalfx_detector" "network_throughput_utilization" {
-  name = format("%s %s", local.detector_name_prefix, "AWS FSx network throughput utilization")
+  name = format("%s %s", local.detector_name_prefix, "AWS FSx for Windows File Server network throughput utilization")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
@@ -212,7 +212,7 @@ EOF
 }
 
 resource "signalfx_detector" "file_server_disk_throughput_utilization" {
-  name = format("%s %s", local.detector_name_prefix, "AWS FSx file server disk throughput utilization")
+  name = format("%s %s", local.detector_name_prefix, "AWS FSx for Windows File Server file server disk throughput utilization")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
@@ -258,7 +258,7 @@ EOF
 }
 
 resource "signalfx_detector" "storage_capacity_utilization" {
-  name = format("%s %s", local.detector_name_prefix, "AWS FSx storage capacity utilization")
+  name = format("%s %s", local.detector_name_prefix, "AWS FSx for Windows File Server storage capacity utilization")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)

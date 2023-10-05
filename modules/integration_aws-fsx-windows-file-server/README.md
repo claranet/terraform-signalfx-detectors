@@ -26,10 +26,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 module "signalfx-detectors-integration-aws-fsx-windows-file-server" {
   source = "github.com/claranet/terraform-signalfx-detectors.git//modules/integration_aws-fsx-windows-file-server?ref={revision}"
 
-  environment                   = var.environment
-  notifications                 = local.notifications
-  free_space_threshold_critical = 42
-  free_space_threshold_major    = 42
+  environment   = var.environment
+  notifications = local.notifications
 }
 ```
 
@@ -80,13 +78,13 @@ This module creates the following SignalFx detectors which could contain one or 
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|AWS FSx heartbeat|X|-|-|-|-|
-|AWS FSx free space|X|X|-|-|-|
-|AWS FSx cpu utilization|X|X|-|-|-|
-|AWS FSx memory utilization|X|X|-|-|-|
-|AWS FSx network throughput utilization|X|X|-|-|-|
-|AWS FSx file server disk throughput utilization|X|X|-|-|-|
-|AWS FSx storage capacity utilization|X|X|-|-|-|
+|AWS FSx for Windows File Server heartbeat|X|-|-|-|-|
+|AWS FSx for Windows File Server free space|X|X|-|-|-|
+|AWS FSx for Windows File Server cpu utilization|X|X|-|-|-|
+|AWS FSx for Windows File Server memory utilization|X|X|-|-|-|
+|AWS FSx for Windows File Server network throughput utilization|X|X|-|-|-|
+|AWS FSx for Windows File Server file server disk throughput utilization|X|X|-|-|-|
+|AWS FSx for Windows File Server storage capacity utilization|X|X|-|-|-|
 
 ## How to collect required metrics?
 
@@ -143,4 +141,4 @@ from `aws_region` variable.
 * [Terraform SignalFx detector](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector)
 * [Splunk Observability integrations](https://docs.splunk.com/Observability/gdi/get-data-in/integrations.html)
 * [CloudWatch metrics](https://docs.aws.amazon.com/fsx/latest/WindowsGuide/fsx-windows-metrics.html)
-* [Amazon FSx for Lustre CloudWatch guide](https://docs.aws.amazon.com/fsx/latest/WindowsGuide/monitoring-cloudwatch.html)
+* [Amazon FSx for Windows File Server CloudWatch guide](https://docs.aws.amazon.com/fsx/latest/WindowsGuide/monitoring-cloudwatch.html)
