@@ -1,4 +1,4 @@
-# AWS FSx for windows file server SignalFx detectors
+# AWS FSx for Windows File Server SignalFx detectors
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
