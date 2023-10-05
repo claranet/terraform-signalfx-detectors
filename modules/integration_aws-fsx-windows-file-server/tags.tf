@@ -1,4 +1,4 @@
 locals {
-  tags = ["integration", "aws-fsx"]
+  tags = ["integration", "aws-fsx-windows"]
 }
 
