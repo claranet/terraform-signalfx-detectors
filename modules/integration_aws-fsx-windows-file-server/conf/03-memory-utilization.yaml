@@ -1,4 +1,4 @@
-module: "AWS FSx"
+module: "AWS FSx for Windows File Server"
 name: "Memory Utilization"
 filtering: "filter('namespace', 'AWS/FSx')"
 value_unit: "%"

@@ -1,7 +1,7 @@
 documentations:
   - name: CloudWatch metrics
     url: 'https://docs.aws.amazon.com/fsx/latest/WindowsGuide/fsx-windows-metrics.html'
-  - name: Amazon FSx for Lustre CloudWatch guide
+  - name: Amazon FSx for Windows File Server CloudWatch guide
     url: 'https://docs.aws.amazon.com/fsx/latest/WindowsGuide/monitoring-cloudwatch.html'
 notes: |
   ### About filtering

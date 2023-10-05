@@ -1,4 +1,4 @@
-module: "AWS FSx"
+module: "AWS FSx for Windows File Server"
 name: heartbeat
 
 transformation: false

@@ -1,4 +1,4 @@
-# AWS-FSX SignalFx detectors
+# AWS FSx for windows file server SignalFx detectors
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -23,8 +23,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-integration-aws-fsx" {
-  source = "github.com/hlepesant/terraform-signalfx-detectors.git//modules/integration_aws-fsx?ref={revision}"
+module "signalfx-detectors-integration-aws-fsx-windows-file-server" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/integration_aws-fsx-windows-file-server?ref={revision}"
 
   environment                   = var.environment
   notifications                 = local.notifications
