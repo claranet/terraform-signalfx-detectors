@@ -483,10 +483,10 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Azure Cosmos DB heartbeat|X|-|-|-|-|
-|Azure Cosmos DB 4xx request rate|X|X|-|-|-|
-|Azure Cosmos DB 5xx error rate|X|X|-|-|-|
-|Azure Cosmos DB scaling errors rate|X|X|-|-|-|
-|Azure Cosmos DB used RUs capacity|X|X|-|-|-|
+|Azure Cosmos DB database 4xx request rate|X|X|-|-|-|
+|Azure Cosmos DB database 5xx request rate|X|X|-|-|-|
+|Azure Cosmos DB scaling|X|X|-|-|-|
+|Azure Cosmos DB request units consumption|X|X|-|-|-|
 
 
 ## integration_azure-datafactory

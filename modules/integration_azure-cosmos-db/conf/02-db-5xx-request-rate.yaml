@@ -1,0 +1,28 @@
+---
+module: "Azure Cosmos DB"
+name: "database 5xx request rate"
+filtering: "filter('resource_type', 'Microsoft.DocumentDB/databaseAccounts') and filter('primary_aggregation_type', 'true')"
+aggregation: ".sum(by=['databasename', 'collectionname', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+value_unit: "%"
+transformation: true
+signals:
+  db_5xx_requests:
+    metric: "TotalRequests"
+    extrapolation: "zero"
+    filter: "filter('statuscode', '5*')"
+  total:
+    metric: "TotalRequests"
+    extrapolation: "zero"
+  signal:
+    formula: "(db_5xx_requests/total).scale(100).fill(100)"
+rules:
+  critical:
+    threshold: 80
+    comparator: ">"
+    lasting_duration: '5m'
+  major:
+    threshold: 50
+    comparator: ">"
+    lasting_duration: '5m'
+    dependency: critical
+...
