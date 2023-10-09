@@ -574,7 +574,7 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|Azure Load balancer heartbeat|X|-|-|-|-|
+|Azure Load Balancer heartbeat|X|-|-|-|-|
 
 
 ## integration_azure-mariadb
