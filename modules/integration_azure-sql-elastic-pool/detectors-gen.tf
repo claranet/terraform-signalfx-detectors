@@ -74,7 +74,7 @@ EOF
 }
 
 resource "signalfx_detector" "storage_usage" {
-  name = format("%s %s", local.detector_name_prefix, "Azure SQL Database storage usage")
+  name = format("%s %s", local.detector_name_prefix, "Azure SQL Elastic Pool storage usage")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
@@ -86,7 +86,7 @@ resource "signalfx_detector" "storage_usage" {
   }
 
   program_text = <<-EOF
-    base_filtering = filter('resource_type', 'Microsoft.Sql/servers/databases') and filter('primary_aggregation_type', 'true')
+    base_filtering = filter('resource_type', 'Microsoft.Sql/servers/elasticpools') and filter('primary_aggregation_type', 'true')
     signal = data('storage_percent', filter=base_filtering and ${module.filtering.signalflow})${var.storage_usage_aggregation_function}${var.storage_usage_transformation_function}.publish('signal')
     detect(when(signal > ${var.storage_usage_threshold_critical}, lasting=%{if var.storage_usage_lasting_duration_critical == null}None%{else}'${var.storage_usage_lasting_duration_critical}'%{endif}, at_least=${var.storage_usage_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal > ${var.storage_usage_threshold_major}, lasting=%{if var.storage_usage_lasting_duration_major == null}None%{else}'${var.storage_usage_lasting_duration_major}'%{endif}, at_least=${var.storage_usage_at_least_percentage_major}) and (not when(signal > ${var.storage_usage_threshold_critical}, lasting=%{if var.storage_usage_lasting_duration_critical == null}None%{else}'${var.storage_usage_lasting_duration_critical}'%{endif}, at_least=${var.storage_usage_at_least_percentage_critical}))).publish('MAJOR')
@@ -120,7 +120,7 @@ EOF
 }
 
 resource "signalfx_detector" "dtu_consumption" {
-  name = format("%s %s", local.detector_name_prefix, "Azure SQL Database dtu consumption")
+  name = format("%s %s", local.detector_name_prefix, "Azure SQL Elastic Pool dtu consumption")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
@@ -132,7 +132,7 @@ resource "signalfx_detector" "dtu_consumption" {
   }
 
   program_text = <<-EOF
-    base_filtering = filter('resource_type', 'Microsoft.Sql/servers/databases') and filter('primary_aggregation_type', 'true')
+    base_filtering = filter('resource_type', 'Microsoft.Sql/servers/elasticpools') and filter('primary_aggregation_type', 'true')
     signal = data('dtu_consumption_percent', filter=base_filtering and ${module.filtering.signalflow})${var.dtu_consumption_aggregation_function}${var.dtu_consumption_transformation_function}.publish('signal')
     detect(when(signal > ${var.dtu_consumption_threshold_critical}, lasting=%{if var.dtu_consumption_lasting_duration_critical == null}None%{else}'${var.dtu_consumption_lasting_duration_critical}'%{endif}, at_least=${var.dtu_consumption_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal > ${var.dtu_consumption_threshold_major}, lasting=%{if var.dtu_consumption_lasting_duration_major == null}None%{else}'${var.dtu_consumption_lasting_duration_major}'%{endif}, at_least=${var.dtu_consumption_at_least_percentage_major}) and (not when(signal > ${var.dtu_consumption_threshold_critical}, lasting=%{if var.dtu_consumption_lasting_duration_critical == null}None%{else}'${var.dtu_consumption_lasting_duration_critical}'%{endif}, at_least=${var.dtu_consumption_at_least_percentage_critical}))).publish('MAJOR')

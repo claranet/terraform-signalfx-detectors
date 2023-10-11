@@ -77,8 +77,8 @@ This module creates the following SignalFx detectors which could contain one or 
 |---|---|---|---|---|---|
 |Azure SQL Elastic Pool heartbeat|X|-|-|-|-|
 |Azure SQL Elastic Pool cpu|X|X|-|-|-|
-|Azure SQL Database storage usage|X|X|-|-|-|
-|Azure SQL Database dtu consumption|X|X|-|-|-|
+|Azure SQL Elastic Pool storage usage|X|X|-|-|-|
+|Azure SQL Elastic Pool dtu consumption|X|X|-|-|-|
 
 ## How to collect required metrics?
 
