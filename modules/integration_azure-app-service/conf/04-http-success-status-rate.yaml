@@ -12,7 +12,7 @@ signals:
     metric: Http3xx
     extrapolation: zero
   requests:
-    metric: requests
+    metric: Requests
     extrapolation: zero
   signal:
     formula: ((http2xx+http3xx)/requests).scale(100).fill(100)
