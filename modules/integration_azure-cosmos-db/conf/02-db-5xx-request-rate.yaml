@@ -14,7 +14,7 @@ signals:
     metric: "TotalRequests"
     extrapolation: "zero"
   signal:
-    formula: "(db_5xx_requests/total).scale(100).fill(100)"
+    formula: "(db_5xx_requests/total).scale(100).fill(0)"
 rules:
   critical:
     threshold: 80

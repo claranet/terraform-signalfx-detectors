@@ -43,7 +43,7 @@ resource "signalfx_detector" "database_4xx_request_rate" {
     base_filtering = filter('resource_type', 'Microsoft.DocumentDB/databaseAccounts') and filter('primary_aggregation_type', 'true')
     db_4xx_requests = data('TotalRequests', filter=base_filtering and filter('statuscode', '4*') and ${module.filtering.signalflow}, extrapolation='zero')${var.database_4xx_request_rate_aggregation_function}${var.database_4xx_request_rate_transformation_function}
     total = data('TotalRequests', filter=base_filtering and ${module.filtering.signalflow}, extrapolation='zero')${var.database_4xx_request_rate_aggregation_function}${var.database_4xx_request_rate_transformation_function}
-    signal = (db_4xx_requests/total).scale(100).fill(100).publish('signal')
+    signal = (db_4xx_requests/total).scale(100).fill(0).publish('signal')
     detect(when(signal > ${var.database_4xx_request_rate_threshold_critical}, lasting=%{if var.database_4xx_request_rate_lasting_duration_critical == null}None%{else}'${var.database_4xx_request_rate_lasting_duration_critical}'%{endif}, at_least=${var.database_4xx_request_rate_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal > ${var.database_4xx_request_rate_threshold_major}, lasting=%{if var.database_4xx_request_rate_lasting_duration_major == null}None%{else}'${var.database_4xx_request_rate_lasting_duration_major}'%{endif}, at_least=${var.database_4xx_request_rate_at_least_percentage_major}) and (not when(signal > ${var.database_4xx_request_rate_threshold_critical}, lasting=%{if var.database_4xx_request_rate_lasting_duration_critical == null}None%{else}'${var.database_4xx_request_rate_lasting_duration_critical}'%{endif}, at_least=${var.database_4xx_request_rate_at_least_percentage_critical}))).publish('MAJOR')
 EOF
@@ -91,7 +91,7 @@ resource "signalfx_detector" "database_5xx_request_rate" {
     base_filtering = filter('resource_type', 'Microsoft.DocumentDB/databaseAccounts') and filter('primary_aggregation_type', 'true')
     db_5xx_requests = data('TotalRequests', filter=base_filtering and filter('statuscode', '5*') and ${module.filtering.signalflow}, extrapolation='zero')${var.database_5xx_request_rate_aggregation_function}${var.database_5xx_request_rate_transformation_function}
     total = data('TotalRequests', filter=base_filtering and ${module.filtering.signalflow}, extrapolation='zero')${var.database_5xx_request_rate_aggregation_function}${var.database_5xx_request_rate_transformation_function}
-    signal = (db_5xx_requests/total).scale(100).fill(100).publish('signal')
+    signal = (db_5xx_requests/total).scale(100).fill(0).publish('signal')
     detect(when(signal > ${var.database_5xx_request_rate_threshold_critical}, lasting=%{if var.database_5xx_request_rate_lasting_duration_critical == null}None%{else}'${var.database_5xx_request_rate_lasting_duration_critical}'%{endif}, at_least=${var.database_5xx_request_rate_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal > ${var.database_5xx_request_rate_threshold_major}, lasting=%{if var.database_5xx_request_rate_lasting_duration_major == null}None%{else}'${var.database_5xx_request_rate_lasting_duration_major}'%{endif}, at_least=${var.database_5xx_request_rate_at_least_percentage_major}) and (not when(signal > ${var.database_5xx_request_rate_threshold_critical}, lasting=%{if var.database_5xx_request_rate_lasting_duration_critical == null}None%{else}'${var.database_5xx_request_rate_lasting_duration_critical}'%{endif}, at_least=${var.database_5xx_request_rate_at_least_percentage_critical}))).publish('MAJOR')
 EOF
@@ -139,7 +139,7 @@ resource "signalfx_detector" "scaling" {
     base_filtering = filter('resource_type', 'Microsoft.DocumentDB/databaseAccounts') and filter('primary_aggregation_type', 'true')
     throttled = data('TotalRequests', filter=base_filtering and filter('statuscode', '429') and ${module.filtering.signalflow}, extrapolation='zero')${var.scaling_aggregation_function}${var.scaling_transformation_function}
     total = data('TotalRequests', filter=base_filtering and ${module.filtering.signalflow}, extrapolation='zero')${var.scaling_aggregation_function}${var.scaling_transformation_function}
-    signal = (throttled/total).scale(100).fill(100).publish('signal')
+    signal = (throttled/total).scale(100).fill(0).publish('signal')
     detect(when(signal > ${var.scaling_threshold_critical}, lasting=%{if var.scaling_lasting_duration_critical == null}None%{else}'${var.scaling_lasting_duration_critical}'%{endif}, at_least=${var.scaling_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal > ${var.scaling_threshold_major}, lasting=%{if var.scaling_lasting_duration_major == null}None%{else}'${var.scaling_lasting_duration_major}'%{endif}, at_least=${var.scaling_at_least_percentage_major}) and (not when(signal > ${var.scaling_threshold_critical}, lasting=%{if var.scaling_lasting_duration_critical == null}None%{else}'${var.scaling_lasting_duration_critical}'%{endif}, at_least=${var.scaling_at_least_percentage_critical}))).publish('MAJOR')
 EOF

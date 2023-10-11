@@ -14,7 +14,7 @@ signals:
     metric: "TotalRequests"
     extrapolation: "zero"
   signal:
-    formula: "(throttled/total).scale(100).fill(100)"
+    formula: "(throttled/total).scale(100).fill(0)"
 rules:
   critical:
     threshold: 10
