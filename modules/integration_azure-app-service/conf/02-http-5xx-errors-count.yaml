@@ -9,7 +9,7 @@ signals:
     metric: Http5xx
     extrapolation: zero
   requests:
-    metric: requests
+    metric: Requests
     extrapolation: zero
   signal:
     formula: (http5xx/requests).scale(100).fill(0)

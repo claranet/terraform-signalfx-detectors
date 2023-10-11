@@ -103,7 +103,7 @@ Here is the list of required metrics for detectors in this module.
 * `Http4xx`
 * `Http5xx`
 * `HttpResponseTime`
-* `requests`
+* `Requests`
 
 
 
