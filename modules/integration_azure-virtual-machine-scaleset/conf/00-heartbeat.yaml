@@ -1,0 +1,15 @@
+---
+module: "Azure Virtual Machine ScaleSet"
+name: heartbeat
+
+transformation: true
+aggregation: ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+
+filtering: "filter('resource_type', 'Microsoft.Compute/virtualMachineScaleSets') and filter('primary_aggregation_type', 'true')"
+
+signals:
+  signal:
+    metric: "Percentage CPU"
+rules:
+  critical:
+...

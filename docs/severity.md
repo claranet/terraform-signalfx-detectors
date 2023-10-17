@@ -706,8 +706,8 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Azure Virtual Machine heartbeat|X|-|-|-|-|
-|Azure Virtual Machine CPU usage|X|X|-|-|-|
-|Azure Virtual Machine remaining CPU credit|X|X|-|-|-|
+|Azure Virtual Machine cpu|X|X|-|-|-|
+|Azure Virtual Machine remaining cpu credit|X|X|-|-|-|
 
 
 ## integration_gcp-bigquery
