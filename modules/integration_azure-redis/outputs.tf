@@ -1,6 +1,6 @@
-output "evictedkeys" {
-  description = "Detector resource for evictedkeys"
-  value       = signalfx_detector.evictedkeys
+output "evicted_keys" {
+  description = "Detector resource for evicted_keys"
+  value       = signalfx_detector.evicted_keys
 }
 
 output "heartbeat" {
@@ -13,8 +13,8 @@ output "load" {
   value       = signalfx_detector.load
 }
 
-output "percent_processor_time" {
-  description = "Detector resource for percent_processor_time"
-  value       = signalfx_detector.percent_processor_time
+output "processor_time" {
+  description = "Detector resource for processor_time"
+  value       = signalfx_detector.processor_time
 }
 

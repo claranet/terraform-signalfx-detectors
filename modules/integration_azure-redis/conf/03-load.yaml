@@ -1,0 +1,21 @@
+---
+module: "Azure Redis"
+name: "load"
+filtering: "filter('resource_type', 'Microsoft.Cache/Redis') and filter('primary_aggregation_type', 'true')"
+aggregation: ".mean(by=['shardid', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+value_unit: "%"
+transformation: true
+signals:
+  signal:
+    metric: "serverLoad"
+rules:
+  critical:
+    threshold: 90
+    comparator: ">"
+    lasting_duration: '5m'
+  major:
+    threshold: 70
+    comparator: ">"
+    lasting_duration: '5m'
+    dependency: critical
+...
