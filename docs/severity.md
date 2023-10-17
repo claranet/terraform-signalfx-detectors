@@ -406,10 +406,10 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|Azure API Management Service Heartbeat|X|-|-|-|-|
-|Azure API Management Service Capacity|X|X|-|-|-|
-|Azure API Management Service Duration of gateway request|X|X|-|-|-|
-|Azure API Management Service Duration of backend request|X|X|-|-|-|
+|Azure API Management Service heartbeat|X|-|-|-|-|
+|Azure API Management Service capacity|X|X|-|-|-|
+|Azure API Management Service duration of gateway request|X|X|-|-|-|
+|Azure API Management Service duration of backend request|X|X|-|-|-|
 
 
 ## integration_azure-app-service-plan
