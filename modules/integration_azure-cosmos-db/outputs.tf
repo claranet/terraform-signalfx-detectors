@@ -1,11 +1,11 @@
-output "db_4xx_requests" {
-  description = "Detector resource for db_4xx_requests"
-  value       = signalfx_detector.db_4xx_requests
+output "database_4xx_request_rate" {
+  description = "Detector resource for database_4xx_request_rate"
+  value       = signalfx_detector.database_4xx_request_rate
 }
 
-output "db_5xx_requests" {
-  description = "Detector resource for db_5xx_requests"
-  value       = signalfx_detector.db_5xx_requests
+output "database_5xx_request_rate" {
+  description = "Detector resource for database_5xx_request_rate"
+  value       = signalfx_detector.database_5xx_request_rate
 }
 
 output "heartbeat" {
@@ -13,13 +13,13 @@ output "heartbeat" {
   value       = signalfx_detector.heartbeat
 }
 
+output "request_units_consumption" {
+  description = "Detector resource for request_units_consumption"
+  value       = signalfx_detector.request_units_consumption
+}
+
 output "scaling" {
   description = "Detector resource for scaling"
   value       = signalfx_detector.scaling
-}
-
-output "used_rus_capacity" {
-  description = "Detector resource for used_rus_capacity"
-  value       = signalfx_detector.used_rus_capacity
 }
 
