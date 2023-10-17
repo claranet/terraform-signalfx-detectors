@@ -606,12 +606,12 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Azure PostgreSQL heartbeat|X|-|-|-|-|
-|Azure PostgreSQL CPU usage|X|X|-|-|-|
-|Azure PostgreSQL has no connection|X|-|-|-|-|
+|Azure PostgreSQL cpu usage|X|X|-|-|-|
+|Azure PostgreSQL active connections|X|-|-|-|-|
 |Azure PostgreSQL storage usage|X|X|-|-|-|
-|Azure PostgreSQL IO consumption|X|X|-|-|-|
-|Azure PostgreSQL memory usage |X|X|-|-|-|
-||X|X|-|-|-|
+|Azure PostgreSQL io consumption|X|X|-|-|-|
+|Azure PostgreSQL memory usage|X|X|-|-|-|
+|Azure PostgreSQL serverlog storage usage|X|X|-|-|-|
 
 
 ## integration_azure-redis

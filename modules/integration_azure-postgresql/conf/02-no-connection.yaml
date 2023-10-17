@@ -1,0 +1,16 @@
+---
+module: "Azure PostgreSQL"
+name: "active connections"
+filtering: "filter('resource_type', 'Microsoft.DB*orPostgreSQL/servers') and filter('primary_aggregation_type', 'true')"
+aggregation: ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+transformation: true
+signals:
+  signal:
+    metric: "active_connections"
+    extrapolation: zero
+rules:
+  critical:
+    threshold: 1
+    comparator: "<"
+    lasting_duration: '5m'
+...

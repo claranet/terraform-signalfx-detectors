@@ -1,3 +1,8 @@
+output "active_connections" {
+  description = "Detector resource for active_connections"
+  value       = signalfx_detector.active_connections
+}
+
 output "cpu_usage" {
   description = "Detector resource for cpu_usage"
   value       = signalfx_detector.cpu_usage
@@ -16,11 +21,6 @@ output "io_consumption" {
 output "memory_usage" {
   description = "Detector resource for memory_usage"
   value       = signalfx_detector.memory_usage
-}
-
-output "no_connection" {
-  description = "Detector resource for no_connection"
-  value       = signalfx_detector.no_connection
 }
 
 output "serverlog_storage_usage" {
