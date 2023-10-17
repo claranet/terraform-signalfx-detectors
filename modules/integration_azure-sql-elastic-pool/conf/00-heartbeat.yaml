@@ -1,0 +1,15 @@
+---
+module: "Azure SQL Elastic Pool"
+name: heartbeat
+
+transformation: true
+aggregation: ".mean(by=['databaseresourceid'])"
+
+filtering: "filter('resource_type', 'Microsoft.Sql/servers/elasticpools') and filter('primary_aggregation_type', 'true')"
+
+signals:
+  signal:
+    metric: "cpu_percent"
+rules:
+  critical:
+...
