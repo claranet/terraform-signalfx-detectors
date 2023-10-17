@@ -1,0 +1,21 @@
+---
+module: "Azure App Service"
+name: "response time"
+filtering: "filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'false') and filter('primary_aggregation_type', 'true')"
+aggregation: ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+value_unit: "s"
+transformation: ".fill(value=None)"
+signals:
+  signal:
+    metric: "HttpResponseTime"
+rules:
+  critical:
+    threshold: 10
+    comparator: ">"
+    lasting_duration: '5m'
+  major:
+    threshold: 5
+    comparator: ">"
+    lasting_duration: '5m'
+    dependency: critical
+...

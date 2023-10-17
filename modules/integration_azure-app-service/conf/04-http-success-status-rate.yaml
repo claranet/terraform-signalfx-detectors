@@ -1,0 +1,29 @@
+---
+module: "Azure App Service"
+name: "http success status rate"
+filtering: "filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'false') and filter('primary_aggregation_type', 'true')"
+aggregation: ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+value_unit: "%"
+signals:
+  http2xx:
+    metric: Http2xx
+    extrapolation: zero
+  http3xx:
+    metric: Http3xx
+    extrapolation: zero
+  requests:
+    metric: Requests
+    extrapolation: zero
+  signal:
+    formula: ((http2xx+http3xx)/requests).scale(100).fill(100)
+rules:
+  major:
+    threshold: 10
+    comparator: "<"
+    lasting_duration: '5m'
+  minor:
+    threshold: 30
+    comparator: "<"
+    lasting_duration: '5m'
+    dependency: major
+...
