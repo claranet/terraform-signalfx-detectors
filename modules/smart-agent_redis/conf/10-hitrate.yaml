@@ -8,7 +8,7 @@ signals:
     metric: '${var.use_otel_receiver ? "redis.keyspace.hits" : "derive.keyspace_hits"}'
     rollup: delta
   B:
-    metric: '${var.use_otel_receiver ? "redis.keyspace.hits" : "derive.keyspace_hits"}'
+    metric: '${var.use_otel_receiver ? "redis.keyspace.misses" : "derive.keyspace_misses"}'
     rollup: delta
   signal:
     formula: (A/(A+B)).scale(100)
