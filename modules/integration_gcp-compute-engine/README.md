@@ -86,7 +86,7 @@ This module creates the following SignalFx detectors which could contain one or 
 ## How to collect required metrics?
 
 This module deploys detectors using metrics reported by the
-[GCP integration](https://docs.splunk.com/Observability/gdi/get-data-in/connect/gcp.html) configurable
+[GCP integration](https://docs.splunk.com/observability/en/gdi/get-data-in/connect/gcp/gcp-metrics.html) configurable
 with [this Terraform module](https://github.com/claranet/terraform-signalfx-integrations/tree/master/cloud/gcp).
 
 
@@ -152,4 +152,4 @@ Notice these detectors has a `device_name` dimension in addition to `instance_na
 * [Terraform SignalFx detector](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector)
 * [Splunk Observability integrations](https://docs.splunk.com/Observability/gdi/get-data-in/integrations.html)
 * [Stackdriver metrics](https://cloud.google.com/monitoring/api/metrics_gcp#gcp-compute)
-* [Splunk Observability metrics](https://docs.splunk.com/Observability/gdi/get-data-in/connect/gcp.html#google-compute-engine-metrics)
+* [Splunk Observability metrics](https://docs.splunk.com/observability/en/gdi/get-data-in/connect/gcp/gcp.html#google-compute-engine-metrics)

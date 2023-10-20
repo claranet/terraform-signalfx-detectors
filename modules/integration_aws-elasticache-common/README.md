@@ -115,4 +115,4 @@ Here is the list of required metrics for detectors in this module.
 * [Splunk Observability integrations](https://docs.splunk.com/Observability/gdi/get-data-in/integrations.html)
 * [CloudWatch host-level metrics for Memcached](https://docs.aws.amazon.com/AmazonElastiCache/latest/mem-ug/CacheMetrics.HostLevel.html)
 * [Cloudwatch host-level metrics for Redis](https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/CacheMetrics.HostLevel.html)
-* [Splunk Observability metrics](https://docs.splunk.com/Observability/gdi/get-data-in/connect/aws/aws-metrics.html#amazon-elasticache)
+* [Splunk Observability metrics](https://docs.splunk.com/observability/en/gdi/get-data-in/integrations.html#amazon-elasticache)

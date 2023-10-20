@@ -81,7 +81,7 @@ This module creates the following SignalFx detectors which could contain one or 
 ## How to collect required metrics?
 
 This module deploys detectors using metrics reported by the
-[GCP integration](https://docs.splunk.com/Observability/gdi/get-data-in/connect/gcp.html) configurable
+[GCP integration](https://docs.splunk.com/observability/en/gdi/get-data-in/connect/gcp/gcp-metrics.html) configurable
 with [this Terraform module](https://github.com/claranet/terraform-signalfx-integrations/tree/master/cloud/gcp).
 
 

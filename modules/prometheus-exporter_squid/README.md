@@ -104,7 +104,7 @@ Check its documentation to install and configure it appropriately with your Squi
 ### Examples
 
 Here is a sample configuration fragment for the [OpenTelemetry Collector](https://opentelemetry.io/docs/collector/) agent using
-the [prometheusexec receiver](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/receiver/prometheusexecreceiver).
+the prometheusexec receiver ([deprecated](https://github.com/open-telemetry/opentelemetry-collector-contrib/pull/24740)).
 
 ```yaml
 receivers:

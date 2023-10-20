@@ -112,4 +112,4 @@ Here is the list of required metrics for detectors in this module.
 * [Splunk Observability integrations](https://docs.splunk.com/Observability/gdi/get-data-in/integrations.html)
 * [CloudWatch metrics](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-metrics.html)
 * [CloudWatch guide](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/MonitoringOverview.html)
-* [Splunk Observability metrics](https://docs.splunk.com/Observability/gdi/get-data-in/connect/aws/aws-metrics.html#amazon-rds)
+* [Splunk Observability metrics](https://docs.splunk.com/observability/en/gdi/get-data-in/integrations.html#amazon-rds)

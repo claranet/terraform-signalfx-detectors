@@ -255,4 +255,4 @@ parameter to the corresponding monitor configuration:
 * [Terraform SignalFx detector](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector)
 * [Splunk Observability integrations](https://docs.splunk.com/Observability/gdi/get-data-in/integrations.html)
 * [Smart Agent monitor](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/elasticsearch.md)
-* [Splunk Observability integration](https://docs.splunk.com/Observability/gdi/elasticsearch/elasticsearch.html)
+* [Splunk Observability integration](https://docs.splunk.com/observability/en/gdi/monitors-hosts/elasticsearch.html)

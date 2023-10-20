@@ -112,4 +112,4 @@ Basic customer's case seems to report values between 0 and 5% in a nominal situa
 * [Terraform SignalFx detector](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector)
 * [Splunk Observability integrations](https://docs.splunk.com/Observability/gdi/get-data-in/integrations.html)
 * [Azure Monitor metrics](https://docs.microsoft.com/en-us/azure/azure-monitor/essentials/metrics-supported#microsofteventhubclusters)
-* [Splunk Observability metrics](https://docs.splunk.com/Observability/gdi/get-data-in/connect/azure/azure-metrics.html#azure-event-hubs-metrics)
+* [Splunk Observability metrics](https://docs.splunk.com/observability/en/gdi/get-data-in/connect/azure/azure-metrics.html#azure-event-hubs-metrics)

@@ -171,5 +171,5 @@ parameter to the corresponding monitor configuration:
 * [Smart Agent monitor filesystems](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/filesystems.md)
 * [Smart Agent monitor memory](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/memory.md)
 * [Smart Agent monitor vmem](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/vmem.md)
-* [Splunk Observability integration cpu](https://docs.splunk.com/Observability/gdi/cpu/cpu.html)
-* [Splunk Observability integration load](https://docs.splunk.com/Observability/gdi/load/load.html)
+* [Splunk Observability integration cpu](https://docs.splunk.com/observability/en/gdi/monitors-hosts/cpu.html)
+* [Splunk Observability integration load](https://docs.splunk.com/observability/en/gdi/monitors-hosts/host-processload.html)

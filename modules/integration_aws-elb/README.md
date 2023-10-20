@@ -117,4 +117,4 @@ Here is the list of required metrics for detectors in this module.
 * [Terraform SignalFx detector](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector)
 * [Splunk Observability integrations](https://docs.splunk.com/Observability/gdi/get-data-in/integrations.html)
 * [CloudWatch metrics](https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-cloudwatch-metrics.html)
-* [Splunk Observability metadata](https://docs.splunk.com/Observability/infrastructure/monitor/aws-infra-metadata.html#cloudwatch-elb-metadata)
+* [Splunk Observability metadata](https://docs.splunk.com/observability/en/infrastructure/monitor/aws-infra-metadata.html#cloudwatch-elb-metadata)

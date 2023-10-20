@@ -112,4 +112,4 @@ Here is the list of required metrics for detectors in this module.
 * [Terraform SignalFx detector](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector)
 * [Splunk Observability integrations](https://docs.splunk.com/Observability/gdi/get-data-in/integrations.html)
 * [Azure Monitor metrics](https://learn.microsoft.com/en-us/azure/azure-monitor/reference/supported-metrics/microsoft-sql-servers-databases-metrics)
-* [Splunk Observability metrics](https://docs.splunk.com/Observability/gdi/get-data-in/connect/azure/azure-metrics.html#azure-sql-databases-metrics)
+* [Splunk Observability metrics](https://docs.splunk.com/observability/en/gdi/get-data-in/connect/azure/azure-metrics.html#azure-sql-databases-metrics)
