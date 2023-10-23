@@ -1,16 +1,16 @@
-output "backend_requests_duration" {
-  description = "Detector resource for backend_requests_duration"
-  value       = signalfx_detector.backend_requests_duration
-}
-
 output "capacity" {
   description = "Detector resource for capacity"
   value       = signalfx_detector.capacity
 }
 
-output "gateway_requests_duration" {
-  description = "Detector resource for gateway_requests_duration"
-  value       = signalfx_detector.gateway_requests_duration
+output "duration_of_backend_request" {
+  description = "Detector resource for duration_of_backend_request"
+  value       = signalfx_detector.duration_of_backend_request
+}
+
+output "duration_of_gateway_request" {
+  description = "Detector resource for duration_of_gateway_request"
+  value       = signalfx_detector.duration_of_gateway_request
 }
 
 output "heartbeat" {

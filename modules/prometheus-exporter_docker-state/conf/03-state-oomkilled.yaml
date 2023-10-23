@@ -1,0 +1,15 @@
+module: docker-state
+name: State OOM Killed
+
+transformation: ".min(over='5m')"
+aggregation: true
+
+filtering: "filter('service.name', 'docker-state-exporter')"
+
+signals:
+  signal:
+    metric: container_state_oomkilled
+rules:
+  critical:
+    threshold: 0
+    comparator: ">"

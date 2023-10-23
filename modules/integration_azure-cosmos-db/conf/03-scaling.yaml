@@ -1,0 +1,28 @@
+---
+module: "Azure Cosmos DB"
+name: "scaling"
+filtering: "filter('resource_type', 'Microsoft.DocumentDB/databaseAccounts') and filter('primary_aggregation_type', 'true')"
+aggregation: ".sum(by=['databasename', 'collectionname', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+value_unit: "%"
+transformation: true
+signals:
+  throttled:
+    metric: "TotalRequests"
+    extrapolation: "zero"
+    filter: "filter('statuscode', '429')"
+  total:
+    metric: "TotalRequests"
+    extrapolation: "zero"
+  signal:
+    formula: "(throttled/total).scale(100).fill(0)"
+rules:
+  critical:
+    threshold: 10
+    comparator: ">"
+    lasting_duration: '5m'
+  major:
+    threshold: 5
+    comparator: ">"
+    lasting_duration: '5m'
+    dependency: critical
+...

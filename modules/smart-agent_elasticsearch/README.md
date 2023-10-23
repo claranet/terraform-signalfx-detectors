@@ -134,7 +134,7 @@ You have to enable the following `extraMetrics` in your monitor configuration:
 * `elasticsearch.cluster.status`
 * `elasticsearch.cluster.task-max-wait-time`
 * `elasticsearch.jvm.gc.old-time`
-* `elasticsearch.jvm.gc.count`
+* `elasticsearch.jvm.gc.old-count`
 * `elasticsearch.jvm.mem.heap-used-percent`
 * `elasticsearch.jvm.mem.pools.old.used_in_bytes`
 * `elasticsearch.jvm.mem.pools.old.max_in_bytes`
@@ -185,7 +185,7 @@ node or if the master and data are the same node.
       - elasticsearch.cluster.status
       - elasticsearch.cluster.task-max-wait-time
       - elasticsearch.jvm.gc.old-time
-      - elasticsearch.jvm.gc.count
+      - elasticsearch.jvm.gc.old-count
       - elasticsearch.jvm.mem.heap-used-percent
       - elasticsearch.jvm.mem.pools.old.used_in_bytes
       - elasticsearch.jvm.mem.pools.old.max_in_bytes

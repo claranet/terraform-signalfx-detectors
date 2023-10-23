@@ -42,7 +42,7 @@ jobs:
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v2
       with:
-        terraform_version: 1.0.1
+        terraform_version: 1.5.7
         terraform_wrapper: false
 
     - name: Generate tmp module using example configs preset and import it into example stack

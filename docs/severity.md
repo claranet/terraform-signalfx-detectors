@@ -78,6 +78,7 @@
 - [organization_usage](#organization_usage)
 - [otel-collector_kubernetes-common](#otel-collector_kubernetes-common)
 - [prometheus-exporter_active-directory](#prometheus-exporter_active-directory)
+- [prometheus-exporter_docker-state](#prometheus-exporter_docker-state)
 - [prometheus-exporter_kong](#prometheus-exporter_kong)
 - [prometheus-exporter_oracledb](#prometheus-exporter_oracledb)
 - [prometheus-exporter_squid](#prometheus-exporter_squid)
@@ -419,10 +420,10 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|Azure API Management Service Heartbeat|X|-|-|-|-|
-|Azure API Management Service Capacity|X|X|-|-|-|
-|Azure API Management Service Duration of gateway request|X|X|-|-|-|
-|Azure API Management Service Duration of backend request|X|X|-|-|-|
+|Azure API Management Service heartbeat|X|-|-|-|-|
+|Azure API Management Service capacity|X|X|-|-|-|
+|Azure API Management Service duration of gateway request|X|X|-|-|-|
+|Azure API Management Service duration of backend request|X|X|-|-|-|
 
 
 ## integration_azure-app-service-plan
@@ -430,8 +431,8 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Azure App Service Plan heartbeat|X|-|-|-|-|
-|Azure App Service Plan CPU percentage|X|X|-|-|-|
-|Azure App Service Plan memory percentage|X|X|-|-|-|
+|Azure App Service Plan cpu|X|X|-|-|-|
+|Azure App Service Plan memory|X|X|-|-|-|
 
 
 ## integration_azure-app-service
@@ -440,10 +441,9 @@
 |---|---|---|---|---|---|
 |Azure App Service heartbeat|X|-|-|-|-|
 |Azure App Service response time|X|X|-|-|-|
-|Azure App Service memory usage|X|X|-|-|-|
-|Azure App Service 5xx error rate|X|X|-|-|-|
-|Azure App Service 4xx error rate|X|X|X|-|-|
-|Azure App Service successful response rate|X|X|-|-|-|
+|Azure App Service http 5xx error rate|-|X|X|-|-|
+|Azure App Service http 4xx error rate|-|X|X|-|-|
+|Azure App Service http success status rate|-|X|X|-|-|
 
 
 ## integration_azure-application-gateway
@@ -497,10 +497,10 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Azure Cosmos DB heartbeat|X|-|-|-|-|
-|Azure Cosmos DB 4xx request rate|X|X|-|-|-|
-|Azure Cosmos DB 5xx error rate|X|X|-|-|-|
-|Azure Cosmos DB scaling errors rate|X|X|-|-|-|
-|Azure Cosmos DB used RUs capacity|X|X|-|-|-|
+|Azure Cosmos DB database 4xx request rate|X|X|-|-|-|
+|Azure Cosmos DB database 5xx request rate|X|X|-|-|-|
+|Azure Cosmos DB scaling|X|X|-|-|-|
+|Azure Cosmos DB request units consumption|X|X|-|-|-|
 
 
 ## integration_azure-datafactory
@@ -580,15 +580,15 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|Azure Key Vault API result rate|X|X|-|-|-|
-|Azure Key Vault API latency|-|X|X|-|-|
+|Azure Key Vault api result rate|X|X|-|-|-|
+|Azure Key Vault api latency|-|X|X|-|-|
 
 
 ## integration_azure-load-balancer
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|Azure Load balancer heartbeat|X|-|-|-|-|
+|Azure Load Balancer heartbeat|X|-|-|-|-|
 
 
 ## integration_azure-mariadb
@@ -620,12 +620,12 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Azure PostgreSQL heartbeat|X|-|-|-|-|
-|Azure PostgreSQL CPU usage|X|X|-|-|-|
-|Azure PostgreSQL has no connection|X|-|-|-|-|
+|Azure PostgreSQL cpu usage|X|X|-|-|-|
+|Azure PostgreSQL active connections|X|-|-|-|-|
 |Azure PostgreSQL storage usage|X|X|-|-|-|
-|Azure PostgreSQL IO consumption|X|X|-|-|-|
-|Azure PostgreSQL memory usage |X|X|-|-|-|
-||X|X|-|-|-|
+|Azure PostgreSQL io consumption|X|X|-|-|-|
+|Azure PostgreSQL memory usage|X|X|-|-|-|
+|Azure PostgreSQL serverlog storage usage|X|X|-|-|-|
 
 
 ## integration_azure-redis
@@ -655,10 +655,10 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Azure SQL Database heartbeat|X|-|-|-|-|
-|Azure Sql Database CPU|X|X|-|-|-|
-|Azure SQL Database disk usage|X|X|-|-|-|
-|Azure SQL Database DTU consumption|X|X|-|-|-|
+|Azure SQL Database cpu|X|X|-|-|-|
+|Azure SQL Database storage usage|X|X|-|-|-|
 |Azure SQL Database deadlocks count|X|-|-|-|-|
+|Azure SQL Database dtu consumption|X|X|-|-|-|
 
 
 ## integration_azure-sql-elastic-pool
@@ -666,9 +666,9 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Azure SQL Elastic Pool heartbeat|X|-|-|-|-|
-|Azure SQL Elastic Pool CPU|X|X|-|-|-|
-|Azure SQL Elastic Pool disk usage|X|X|-|-|-|
-|Azure SQL Elastic Pool DTU consumption|X|X|-|-|-|
+|Azure SQL Elastic Pool cpu|X|X|-|-|-|
+|Azure SQL Elastic Pool storage usage|X|X|-|-|-|
+|Azure SQL Elastic Pool dtu consumption|X|X|-|-|-|
 
 
 ## integration_azure-storage-account-blob
@@ -720,8 +720,8 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Azure Virtual Machine heartbeat|X|-|-|-|-|
-|Azure Virtual Machine CPU usage|X|X|-|-|-|
-|Azure Virtual Machine remaining CPU credit|X|X|-|-|-|
+|Azure Virtual Machine cpu|X|X|-|-|-|
+|Azure Virtual Machine remaining cpu credit|X|X|-|-|-|
 
 
 ## integration_gcp-bigquery
@@ -863,6 +863,16 @@
 |Active-directory heartbeat|X|-|-|-|-|
 |Active-directory replication errors|X|X|-|-|-|
 |Active-directory active directory services|X|-|-|-|-|
+
+
+## prometheus-exporter_docker-state
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Docker-state heartbeat|X|-|-|-|-|
+|Docker-state state health status|X|-|-|-|-|
+|Docker-state state status|X|-|-|-|-|
+|Docker-state state oom killed|X|-|-|-|-|
 
 
 ## prometheus-exporter_kong
