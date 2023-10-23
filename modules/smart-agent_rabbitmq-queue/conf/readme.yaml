@@ -33,6 +33,7 @@ source_doc: |
         - gauge.queue.messages_unacknowledged
         - counter.queue.message_stats.ack
         - gauge.queue.consumer_utilisation
+        - gauge.queue.messages
   ```
 
 notes: |
