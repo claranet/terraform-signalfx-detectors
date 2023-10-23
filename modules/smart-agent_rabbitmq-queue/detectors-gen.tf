@@ -132,7 +132,7 @@ resource "signalfx_detector" "consumer_use" {
   program_text = <<-EOF
     base_filtering = filter('plugin', 'rabbitmq')
     msg = data('gauge.queue.messages', filter=base_filtering and ${module.filtering.signalflow})${var.consumer_use_aggregation_function}${var.consumer_use_transformation_function}
-    signal = data('gauge.queue.consumer_use', filter=base_filtering and ${module.filtering.signalflow})${var.consumer_use_aggregation_function}${var.consumer_use_transformation_function}.publish('signal')
+    signal = data('gauge.queue.consumer_utilisation', filter=base_filtering and ${module.filtering.signalflow})${var.consumer_use_aggregation_function}${var.consumer_use_transformation_function}.publish('signal')
     detect(when(signal < ${var.consumer_use_threshold_critical}, lasting=%{if var.consumer_use_lasting_duration_critical == null}None%{else}'${var.consumer_use_lasting_duration_critical}'%{endif}, at_least=${var.consumer_use_at_least_percentage_critical}) and when(msg > 0)).publish('CRIT')
     detect(when(signal < ${var.consumer_use_threshold_major}, lasting=%{if var.consumer_use_lasting_duration_major == null}None%{else}'${var.consumer_use_lasting_duration_major}'%{endif}, at_least=${var.consumer_use_at_least_percentage_major}) and when(msg > 0) and (not when(signal < ${var.consumer_use_threshold_critical}, lasting=%{if var.consumer_use_lasting_duration_critical == null}None%{else}'${var.consumer_use_lasting_duration_critical}'%{endif}, at_least=${var.consumer_use_at_least_percentage_critical}) and when(msg > 0))).publish('MAJOR')
 EOF
