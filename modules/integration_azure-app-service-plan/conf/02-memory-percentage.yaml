@@ -1,0 +1,21 @@
+---
+module: "Azure App Service Plan"
+name: "Memory"
+filtering: "filter('resource_type', 'Microsoft.Web/serverFarms') and filter('primary_aggregation_type', 'true')"
+aggregation: ".min(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+transformation: true
+value_unit: "%"
+signals:
+  signal:
+    metric: "MemoryPercentage"
+rules:
+  critical:
+    threshold: 90
+    comparator: ">"
+    lasting_duration: '5m'
+  major:
+    threshold: 80
+    comparator: ">"
+    lasting_duration: '5m'
+    dependency: critical
+...

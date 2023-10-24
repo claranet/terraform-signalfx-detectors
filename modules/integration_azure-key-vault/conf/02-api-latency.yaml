@@ -1,0 +1,23 @@
+---
+module: "Azure Key Vault"
+name: "API latency"
+filtering: "filter('resource_type', 'Microsoft.KeyVault/vaults') and filter('primary_aggregation_type', 'true')"
+aggregation: ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+transformation: true
+value_unit: "ms"
+signals:
+  signal:
+    metric: ServiceApiLatency
+    extrapolation: zero
+    filter: not filter('activityname', 'secretlist')
+rules:
+  major:
+    threshold: 500
+    comparator: ">"
+    lasting_duration: '1h'
+  minor:
+    threshold: 500
+    comparator: ">"
+    lasting_duration: '30m'
+    dependency: major
+...

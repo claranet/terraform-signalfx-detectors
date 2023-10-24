@@ -1,0 +1,21 @@
+---
+module: "Azure Search"
+name: "throttled queries rate"
+filtering: "filter('resource_type', 'Microsoft.Search/searchServices') and filter('primary_aggregation_type', 'true')"
+aggregation: ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+value_unit: "%"
+transformation: true
+signals:
+  signal:
+    metric: "ThrottledSearchQueriesPercentage"
+rules:
+  critical:
+    threshold: 50
+    comparator: ">"
+    lasting_duration: '5m'
+  major:
+    threshold: 20
+    comparator: ">"
+    lasting_duration: '5m'
+    dependency: critical
+...

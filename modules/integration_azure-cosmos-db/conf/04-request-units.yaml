@@ -1,0 +1,21 @@
+---
+module: "Azure Cosmos DB"
+name: "request units consumption"
+filtering: "filter('resource_type', 'Microsoft.DocumentDB/databaseAccounts') and filter('primary_aggregation_type', 'true')"
+aggregation: ".mean(by=['collectionname', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+value_unit: "%"
+transformation: true
+signals:
+  signal:
+    metric: "NormalizedruConsumption"
+rules:
+  critical:
+    threshold: 90
+    comparator: ">"
+    lasting_duration: '15m'
+  major:
+    threshold: 80
+    comparator: ">"
+    lasting_duration: '15m'
+    dependency: critical
+...
