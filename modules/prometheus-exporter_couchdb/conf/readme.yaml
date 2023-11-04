@@ -1,3 +1,4 @@
 documentations:
 
 source_doc:
+ - [Configuration of Prometheus Endpoint](https://docs.couchdb.org/en/stable/config/misc.html#configuration-of-prometheus-endpoint)
