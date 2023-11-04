@@ -7,6 +7,7 @@
 - [How to use this module?](#how-to-use-this-module)
 - [What are the available detectors in this module?](#what-are-the-available-detectors-in-this-module)
 - [How to collect required metrics?](#how-to-collect-required-metrics)
+  - [Examples](#examples)
   - [Metrics](#metrics)
 - [Related documentation](#related-documentation)
 
@@ -21,7 +22,7 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 
 ```hcl
 module "signalfx-detectors-prometheus-exporter-couchdb" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/prometheus-exporter_couchdb?ref={revision}"
+  source = "github.com/hlepesant/terraform-signalfx-detectors.git//modules/prometheus-exporter_couchdb?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications
@@ -99,6 +100,35 @@ a separate program configured to connect, create metrics and expose them as serv
 
 Check the [Related documentation](#related-documentation) section for more detailed and specific information about this module dependencies.
 
+The detectors of this module uses metrics from the [embedded Couchdb exporter](https://docs.couchdb.org/en/stable/config/misc.html#configuration-of-prometheus-endpoint) for Prometheus.
+
+### Examples
+
+Sample OTEL Agent configuration.
+
+```yaml
+---
+receivers:
+  prometheus:
+    config:
+      scrape_configs:
+        - job_name: "couchdb-prometheus"
+          scrape_interval: 60s
+          metrics_path: "/_node/_local/_prometheus"
+          basic_auth:
+            username: "{{ couchdb_admin_username }}"
+            password: "{{ couchdb_admin_password }}"
+          static_configs:
+            - targets: ["{{ inventory_hostname }}:5984"]
+              labels:
+                environment: "{{ splunk_otel_collector_env }}"
+service:
+  pipelines:
+    metrics:
+      receivers:
+        - prometheus
+...
+```
 
 
 ### Metrics
@@ -124,3 +154,4 @@ Here is the list of required metrics for detectors in this module.
 * [Terraform SignalFx provider](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs)
 * [Terraform SignalFx detector](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector)
 * [Splunk Observability integrations](https://docs.splunk.com/Observability/gdi/get-data-in/integrations.html)
+* [Configuration of Prometheus Endpoint in CouchDB](https://docs.couchdb.org/en/stable/config/misc.html#configuration-of-prometheus-endpoint)
