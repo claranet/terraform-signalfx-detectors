@@ -674,3 +674,88 @@ variable "swap_io_at_least_percentage_major" {
   type        = number
   default     = 0.5
 }
+# disk_space_running_out detector
+
+variable "disk_space_running_out_notifications" {
+  description = "Notification recipients list per severity overridden for disk_space_running_out detector"
+  type        = map(list(string))
+  default     = {}
+}
+
+variable "disk_space_running_out_aggregation_function" {
+  description = "Aggregation function and group by for disk_space_running_out detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ""
+}
+
+variable "disk_space_running_out_transformation_function" {
+  description = "Transformation function for disk_space_running_out detector (i.e. \".mean(over='5m')\")"
+  type        = string
+  default     = ""
+}
+
+variable "disk_space_running_out_max_delay" {
+  description = "Enforce max delay for disk_space_running_out detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
+variable "disk_space_running_out_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "disk_space_running_out_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
+variable "disk_space_running_out_disabled" {
+  description = "Disable all alerting rules for disk_space_running_out detector"
+  type        = bool
+  default     = true
+}
+
+variable "disk_space_running_out_maximum_capacity" {
+  description = "Alert when the signal reaches this value"
+  type        = number
+  default     = 95
+}
+variable "disk_space_running_out_lower_threshold" {
+  description = "Trigger Threshold, expressed as number of hours remaining"
+  type        = number
+  default     = 72
+}
+variable "disk_space_running_out_fire_lasting_time" {
+  description = "Trigger Duration, how long the signal must meet the threshold conditions before an alert is triggered"
+  type        = string
+  default     = "30m"
+}
+variable "disk_space_running_out_fire_lasting_time_percent" {
+  description = "Trigger Duration, how long the signal must meet the threshold conditions before an alert is triggered, percent"
+  type        = number
+  default     = 0.9
+}
+variable "disk_space_running_out_clear_hours_remaining" {
+  description = "Clear Threshold, expressed as number of hours remaining"
+  type        = number
+  default     = 96
+}
+variable "disk_space_running_out_clear_lasting_time" {
+  description = "Trigger Duration, how long the signal must meet the clear conditions before an alert is resolved"
+  type        = string
+  default     = "30m"
+}
+variable "disk_space_running_out_clear_lasting_time_percent" {
+  description = "Trigger Duration, how long the signal must meet the clear conditions before an alert is resolved, percent"
+  type        = number
+  default     = 0.9
+}
+variable "disk_space_running_out_use_ewma" {
+  description = "Use Double EWMA. If True, use double exponentially weighted moving average to forecast; if False, use linear extrapolation."
+  type        = string
+  default     = "False"
+}
+    

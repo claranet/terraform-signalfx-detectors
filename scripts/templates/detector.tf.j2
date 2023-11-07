@@ -5,6 +5,8 @@
 {% endif -%}
 {%- if name | lower == 'heartbeat' -%}
   {%- set type = 'heartbeat' -%}
+{%- elif countdown is defined and countdown | lower == 'true' -%}
+  {%- set type = 'countdown' -%}
 {%- else -%}
   {%- set type = 'threshold' -%}
 {%- endif -%}
@@ -41,6 +43,8 @@ resource "signalfx_detector" "{{ id }}" {
   program_text = <<-EOF
     {%- if type == 'heartbeat' %}
     from signalfx.detectors.not_reporting import not_reporting
+    {%- elif type == 'countdown' %}
+    from signalfx.detectors.countdown import countdown
     {%- endif %}
     {%- if filtering is defined and filtering %}
     {{ filtering_variable }} = {{ filtering }}
@@ -69,6 +73,12 @@ resource "signalfx_detector" "{{ id }}" {
     not_reporting.detector(stream={{ key }}, resource_identifier=None, duration='${var.heartbeat_timeframe}', auto_resolve_after='${local.heartbeat_auto_resolve_after}')
           {%- endif -%}
         {%- endfor -%}
+      {%- elif type == 'countdown' -%}
+        {%- for key, signal in signals.items() -%}
+          {%- if loop.last %}
+    countdown.hours_left_stream_incr_detector(stream={{ key }}, maximum_capacity=${var.{{ id }}_maximum_capacity}, lower_threshold=${var.{{ id }}_lower_threshold}, fire_lasting=lasting('${var.{{ id }}_fire_lasting_time}', ${var.{{ id }}_fire_lasting_time_percent}), clear_threshold=${var.{{ id }}_clear_hours_remaining}, clear_lasting=lasting('${var.{{ id }}_clear_lasting_time}', ${var.{{ id }}_clear_lasting_time_percent}), use_double_ewma=${var.{{ id }}_use_ewma})
+          {%- endif -%}
+        {%- endfor -%}
       {%- else %}
     detect({{ macro_when(severity, rule) }} {%- if 'dependency' in rule %} and (not {{ macro_when(rule.dependency, rules[rule.dependency]) }}) {%- endif -%} )
       {%- endif -%}
@@ -81,6 +91,8 @@ EOF
   rule {
     {%- if type == 'heartbeat' %}
     description           = "has not reported in ${var.heartbeat_timeframe}"
+    {%- elif type == 'countdown' %}
+    description           = "in ${var.{{ id }}_lower_threshold}"
     {%- else %}
       {%- if rule.description is defined and rule.description is string %}
         {%- set compare_string = rule.description %}

@@ -1,0 +1,20 @@
+module: system
+name: "disk space running out"
+disabled: true
+
+countdown: true
+
+signals:
+  signal:
+    metric: disk.utilization
+
+rules:
+  major:
+    maximum_capacity: 95
+    lower_threshold: 72
+    fire_lasting_time: "30m"
+    fire_lasting_time_percent: 0.9
+    clear_hours_remaining: 96
+    clear_lasting_time: "30m"
+    clear_lasting_time_percent: 0.9
+    out_use_ewma: "False"

@@ -8,14 +8,14 @@ output "disk_inodes" {
   value       = signalfx_detector.disk_inodes
 }
 
-output "disk_running_out" {
-  description = "Detector resource for disk_running_out"
-  value       = signalfx_detector.disk_running_out
-}
-
 output "disk_space" {
   description = "Detector resource for disk_space"
   value       = signalfx_detector.disk_space
+}
+
+output "disk_space_running_out" {
+  description = "Detector resource for disk_space_running_out"
+  value       = signalfx_detector.disk_space_running_out
 }
 
 output "filesystem_inodes" {

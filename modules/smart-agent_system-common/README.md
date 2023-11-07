@@ -152,9 +152,9 @@ parameter to the corresponding monitor configuration:
         - '!load.midterm'
         - '!memory.utilization'
         - '!percent_inodes.used'
+        - '!system.filesystem.inodes.usage'
         - '!vmpage_io.swap.in'
         - '!vmpage_io.swap.out'
-        - '!system.filesystem.inodes.usage'
 
 ```
 

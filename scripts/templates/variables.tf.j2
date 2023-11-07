@@ -5,6 +5,8 @@
 {% endif -%}
 {%- if name | lower == 'heartbeat' -%}
   {%- set type = 'heartbeat' -%}
+{%- elif countdown is defined and countdown | lower == 'true' -%}
+  {%- set type = 'countdown' -%}
 {%- else -%}
   {%- set type = 'threshold' -%}
 {%- endif -%}
@@ -80,6 +82,51 @@ variable "{{ id }}_timeframe" {
   type        = string
   default     = "10m"
 }
+
+{% elif type == 'countdown' -%}
+
+  {% for key, rule in rules.items() -%}
+variable "{{ id }}_maximum_capacity" {
+  description = "Alert when the signal reaches this value"
+  type        = number
+  default     = {{ rule.maximum_capacity | default(null) }}
+}
+variable "{{ id }}_lower_threshold" {
+  description = "Trigger Threshold, expressed as number of hours remaining"
+  type        = number
+  default     = {{ rule.lower_threshold | default(72) }}
+}
+variable "{{ id }}_fire_lasting_time" {
+  description = "Trigger Duration, how long the signal must meet the threshold conditions before an alert is triggered"
+  type        = string
+  default     = "{{ rule.fire_lasting_time | default("6m") }}"
+}
+variable "{{ id }}_fire_lasting_time_percent" {
+  description = "Trigger Duration, how long the signal must meet the threshold conditions before an alert is triggered, percent"
+  type        = number
+  default     = {{ rule.fire_lasting_time_percent | default(0.9) }}
+}
+variable "{{ id }}_clear_hours_remaining" {
+  description = "Clear Threshold, expressed as number of hours remaining"
+  type        = number
+  default     = {{ rule.clear_hours_remaining | default(72) }}
+}
+variable "{{ id }}_clear_lasting_time" {
+  description = "Trigger Duration, how long the signal must meet the clear conditions before an alert is resolved"
+  type        = string
+  default     = "{{ rule.clear_lasting_time | default("6m") }}"
+}
+variable "{{ id }}_clear_lasting_time_percent" {
+  description = "Trigger Duration, how long the signal must meet the clear conditions before an alert is resolved, percent"
+  type        = number
+  default     = {{ rule.clear_lasting_time_percent | default(0.9) }}
+}
+variable "{{ id }}_use_ewma" {
+  description = "Use Double EWMA. If True, use double exponentially weighted moving average to forecast; if False, use linear extrapolation."
+  type        = string
+  default     = "{{ rule.use_ewma | default("False") }}"
+}
+    {% endfor -%}
 
 {% else -%}
   {% for key, rule in rules.items() -%}
