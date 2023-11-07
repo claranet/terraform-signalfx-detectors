@@ -12,7 +12,7 @@ documentations:
   - name: Smart Agent monitor vmem
     url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/vmem.md'
   - name: Splunk Observability integration cpu
-    url: 'https://docs.splunk.com/Observability/gdi/cpu/cpu.html'
+    url: 'https://docs.splunk.com/observability/en/gdi/monitors-hosts/cpu.html'
   - name: Splunk Observability integration load
     url: 'https://docs.splunk.com/Observability/gdi/load/load.html'
 
