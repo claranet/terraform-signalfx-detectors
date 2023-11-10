@@ -1,6 +1,6 @@
-output "cpu_90_15min" {
-  description = "Detector resource for cpu_90_15min"
-  value       = signalfx_detector.cpu_90_15min
+output "cpu_usage" {
+  description = "Detector resource for cpu_usage"
+  value       = signalfx_detector.cpu_usage
 }
 
 output "dbload" {
@@ -8,9 +8,9 @@ output "dbload" {
   value       = signalfx_detector.dbload
 }
 
-output "free_space_low" {
-  description = "Detector resource for free_space_low"
-  value       = signalfx_detector.free_space_low
+output "free_space" {
+  description = "Detector resource for free_space"
+  value       = signalfx_detector.free_space
 }
 
 output "heartbeat" {

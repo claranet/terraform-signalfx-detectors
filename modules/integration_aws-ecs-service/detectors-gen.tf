@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name = format("%s %s", local.detector_name_prefix, "AWS ECS heartbeat")
+  name = format("%s %s", local.detector_name_prefix, "AWS ECS Service heartbeat")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
@@ -7,7 +7,8 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    signal = data('CPUReservation', filter=filter('namespace', 'AWS/ECS') and filter('stat', 'mean') and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
+    base_filtering = filter('namespace', 'AWS/ECS')
+    signal = data('CPUUtilization', filter=base_filtering and filter('stat', 'mean') and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}', auto_resolve_after='${local.heartbeat_auto_resolve_after}').publish('CRIT')
 EOF
 
@@ -27,20 +28,26 @@ EOF
 }
 
 resource "signalfx_detector" "cpu_utilization" {
-  name = format("%s %s", local.detector_name_prefix, "AWS ECS cluster CPU utilization")
+  name = format("%s %s", local.detector_name_prefix, "AWS ECS Service cpu utilization")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
+  viz_options {
+    label        = "signal"
+    value_suffix = "%"
+  }
+
   program_text = <<-EOF
-    signal = data('CPUUtilization', filter=filter('namespace', 'AWS/ECS') and filter('stat', 'mean') and not filter('ServiceName', '*') and ${module.filtering.signalflow}).mean(by=['ClusterName'])${var.cpu_utilization_aggregation_function}${var.cpu_utilization_transformation_function}.publish('signal')
-    detect(when(signal > ${var.cpu_utilization_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.cpu_utilization_threshold_major}) and (not when(signal > ${var.cpu_utilization_threshold_critical}))).publish('MAJOR')
+    base_filtering = filter('namespace', 'AWS/ECS')
+    signal = data('CPUUtilization', filter=base_filtering and filter('stat', 'mean') and filter('ServiceName', '*') and ${module.filtering.signalflow})${var.cpu_utilization_aggregation_function}${var.cpu_utilization_transformation_function}.publish('signal')
+    detect(when(signal > ${var.cpu_utilization_threshold_critical}, lasting=%{if var.cpu_utilization_lasting_duration_critical == null}None%{else}'${var.cpu_utilization_lasting_duration_critical}'%{endif}, at_least=${var.cpu_utilization_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal > ${var.cpu_utilization_threshold_major}, lasting=%{if var.cpu_utilization_lasting_duration_major == null}None%{else}'${var.cpu_utilization_lasting_duration_major}'%{endif}, at_least=${var.cpu_utilization_at_least_percentage_major}) and (not when(signal > ${var.cpu_utilization_threshold_critical}, lasting=%{if var.cpu_utilization_lasting_duration_critical == null}None%{else}'${var.cpu_utilization_lasting_duration_critical}'%{endif}, at_least=${var.cpu_utilization_at_least_percentage_critical}))).publish('MAJOR')
 EOF
 
   rule {
-    description           = "is too high > ${var.cpu_utilization_threshold_critical}"
+    description           = "is too high > ${var.cpu_utilization_threshold_critical}%"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.cpu_utilization_disabled_critical, var.cpu_utilization_disabled, var.detectors_disabled)
@@ -52,7 +59,7 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.cpu_utilization_threshold_major}"
+    description           = "is too high > ${var.cpu_utilization_threshold_major}%"
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.cpu_utilization_disabled_major, var.cpu_utilization_disabled, var.detectors_disabled)
@@ -67,20 +74,26 @@ EOF
 }
 
 resource "signalfx_detector" "memory_utilization" {
-  name = format("%s %s", local.detector_name_prefix, "AWS ECS cluster memory utilization")
+  name = format("%s %s", local.detector_name_prefix, "AWS ECS Service memory utilization")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
+  viz_options {
+    label        = "signal"
+    value_suffix = "%"
+  }
+
   program_text = <<-EOF
-    signal = data('MemoryUtilization', filter=filter('namespace', 'AWS/ECS') and filter('stat', 'mean') and not filter('ServiceName', '*') and ${module.filtering.signalflow}).mean(by=['ClusterName'])${var.memory_utilization_aggregation_function}${var.memory_utilization_transformation_function}.publish('signal')
-    detect(when(signal > ${var.memory_utilization_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.memory_utilization_threshold_major}) and (not when(signal > ${var.memory_utilization_threshold_critical}))).publish('MAJOR')
+    base_filtering = filter('namespace', 'AWS/ECS')
+    signal = data('MemoryUtilization', filter=base_filtering and filter('stat', 'mean') and filter('ServiceName', '*') and ${module.filtering.signalflow})${var.memory_utilization_aggregation_function}${var.memory_utilization_transformation_function}.publish('signal')
+    detect(when(signal > ${var.memory_utilization_threshold_critical}, lasting=%{if var.memory_utilization_lasting_duration_critical == null}None%{else}'${var.memory_utilization_lasting_duration_critical}'%{endif}, at_least=${var.memory_utilization_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal > ${var.memory_utilization_threshold_major}, lasting=%{if var.memory_utilization_lasting_duration_major == null}None%{else}'${var.memory_utilization_lasting_duration_major}'%{endif}, at_least=${var.memory_utilization_at_least_percentage_major}) and (not when(signal > ${var.memory_utilization_threshold_critical}, lasting=%{if var.memory_utilization_lasting_duration_critical == null}None%{else}'${var.memory_utilization_lasting_duration_critical}'%{endif}, at_least=${var.memory_utilization_at_least_percentage_critical}))).publish('MAJOR')
 EOF
 
   rule {
-    description           = "is too high > ${var.memory_utilization_threshold_critical}"
+    description           = "is too high > ${var.memory_utilization_threshold_critical}%"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.memory_utilization_disabled_critical, var.memory_utilization_disabled, var.detectors_disabled)
@@ -92,7 +105,7 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.memory_utilization_threshold_major}"
+    description           = "is too high > ${var.memory_utilization_threshold_major}%"
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.memory_utilization_disabled_major, var.memory_utilization_disabled, var.detectors_disabled)
