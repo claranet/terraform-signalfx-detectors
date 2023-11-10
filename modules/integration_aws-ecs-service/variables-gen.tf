@@ -1,6 +1,16 @@
-# Module specific
+# heartbeat detector
 
-# Heartbeat detector
+variable "heartbeat_notifications" {
+  description = "Notification recipients list per severity overridden for heartbeat detector"
+  type        = map(list(string))
+  default     = {}
+}
+
+variable "heartbeat_aggregation_function" {
+  description = "Aggregation function and group by for heartbeat detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ".mean(by=['ServiceName'])"
+}
 
 variable "heartbeat_max_delay" {
   description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
@@ -26,25 +36,31 @@ variable "heartbeat_disabled" {
   default     = null
 }
 
-variable "heartbeat_notifications" {
-  description = "Notification recipients list per severity overridden for heartbeat detector"
-  type        = map(list(string))
-  default     = {}
-}
-
 variable "heartbeat_timeframe" {
   description = "Timeframe for heartbeat detector (i.e. \"10m\")"
   type        = string
   default     = "10m"
 }
 
-variable "heartbeat_aggregation_function" {
-  description = "Aggregation function and group by for heartbeat detector (i.e. \".mean(by=['host'])\")"
-  type        = string
-  default     = ""
+# cpu_utilization detector
+
+variable "cpu_utilization_notifications" {
+  description = "Notification recipients list per severity overridden for cpu_utilization detector"
+  type        = map(list(string))
+  default     = {}
 }
 
-# CPU_utilization detector
+variable "cpu_utilization_aggregation_function" {
+  description = "Aggregation function and group by for cpu_utilization detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ".mean(by=['ServiceName'])"
+}
+
+variable "cpu_utilization_transformation_function" {
+  description = "Transformation function for cpu_utilization detector (i.e. \".mean(over='5m')\")"
+  type        = string
+  default     = ".min(over='5m')"
+}
 
 variable "cpu_utilization_max_delay" {
   description = "Enforce max delay for cpu_utilization detector (use \"0\" or \"null\" for \"Auto\")"
@@ -82,47 +98,59 @@ variable "cpu_utilization_disabled_major" {
   default     = null
 }
 
-variable "cpu_utilization_notifications" {
-  description = "Notification recipients list per severity overridden for cpu_utilization detector"
-  type        = map(list(string))
-  default     = {}
-}
-
-variable "cpu_utilization_aggregation_function" {
-  description = "Aggregation function and group by for cpu_utilization detector (i.e. \".mean(by=['host'])\")"
-  type        = string
-  default     = ""
-}
-
-variable "cpu_utilization_transformation_function" {
-  description = "Transformation function for cpu_utilization detector (i.e. \".mean(over='5m')\")"
-  type        = string
-  default     = ""
-}
-
 variable "cpu_utilization_threshold_critical" {
-  description = "Critical threshold for cpu_utilization detector"
+  description = "Critical threshold for cpu_utilization detector in %"
   type        = number
   default     = 90
 }
 
 variable "cpu_utilization_lasting_duration_critical" {
-  type    = string
-  default = "30m"
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
 }
 
+variable "cpu_utilization_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
 variable "cpu_utilization_threshold_major" {
-  description = "Major threshold for cpu_utilization detector"
+  description = "Major threshold for cpu_utilization detector in %"
   type        = number
   default     = 80
 }
 
 variable "cpu_utilization_lasting_duration_major" {
-  type    = string
-  default = "5m"
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
 }
 
-# Memory_utilization detector
+variable "cpu_utilization_at_least_percentage_major" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
+# memory_utilization detector
+
+variable "memory_utilization_notifications" {
+  description = "Notification recipients list per severity overridden for memory_utilization detector"
+  type        = map(list(string))
+  default     = {}
+}
+
+variable "memory_utilization_aggregation_function" {
+  description = "Aggregation function and group by for memory_utilization detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ".mean(by=['ServiceName'])"
+}
+
+variable "memory_utilization_transformation_function" {
+  description = "Transformation function for memory_utilization detector (i.e. \".mean(over='5m')\")"
+  type        = string
+  default     = ".min(over='5m')"
+}
 
 variable "memory_utilization_max_delay" {
   description = "Enforce max delay for memory_utilization detector (use \"0\" or \"null\" for \"Auto\")"
@@ -160,42 +188,37 @@ variable "memory_utilization_disabled_major" {
   default     = null
 }
 
-variable "memory_utilization_notifications" {
-  description = "Notification recipients list per severity overridden for memory_utilization detector"
-  type        = map(list(string))
-  default     = {}
-}
-
-variable "memory_utilization_aggregation_function" {
-  description = "Aggregation function and group by for memory_utilization detector (i.e. \".mean(by=['host'])\")"
-  type        = string
-  default     = ""
-}
-
-variable "memory_utilization_transformation_function" {
-  description = "Transformation function for memory_utilization detector (i.e. \".mean(over='5m')\")"
-  type        = string
-  default     = ""
-}
-
 variable "memory_utilization_threshold_critical" {
-  description = "Critical threshold for memory_utilization detector"
+  description = "Critical threshold for memory_utilization detector in %"
   type        = number
   default     = 90
 }
 
 variable "memory_utilization_lasting_duration_critical" {
-  type    = string
-  default = "30m"
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
 }
 
+variable "memory_utilization_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
 variable "memory_utilization_threshold_major" {
-  description = "Major threshold for memory_utilization detector"
+  description = "Major threshold for memory_utilization detector in %"
   type        = number
   default     = 85
 }
 
 variable "memory_utilization_lasting_duration_major" {
-  type    = string
-  default = "5m"
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "memory_utilization_at_least_percentage_major" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
 }

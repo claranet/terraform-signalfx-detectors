@@ -1,0 +1,22 @@
+module: AWS ECS Service
+name: "Memory utilization"
+
+transformation: ".min(over='5m')"
+aggregation: ".mean(by=['ServiceName'])"
+
+filtering: "filter('namespace', 'AWS/ECS')"
+value_unit: "%"
+
+signals:
+  signal:
+    metric: MemoryUtilization
+    filter: "filter('stat', 'mean') and filter('ServiceName', '*')"
+
+rules:
+  critical:
+    threshold: 90
+    comparator: ">"
+  major:
+    threshold: 85
+    comparator: ">"
+    dependency: critical

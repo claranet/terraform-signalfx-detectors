@@ -1,0 +1,13 @@
+module: AWS ECS Cluster
+name: heartbeat
+
+transformation: false
+aggregation: ".mean(by=['ClusterName'])"
+filtering: "filter('namespace', 'AWS/ECS')"
+
+signals:
+  signal:
+    metric: CPUReservation
+    filter: "filter('stat', 'mean')"
+rules:
+  critical:
