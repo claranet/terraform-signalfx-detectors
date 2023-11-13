@@ -3,7 +3,7 @@ name: backend latency
 
 transformation: true
 aggregation: true
-filtering: "filter('namespace', 'AWS/ApplicationELB')"
+filtering: "filter('namespace', 'AWS/ELB')"
 value_unit: "Second"
 
 signals:
