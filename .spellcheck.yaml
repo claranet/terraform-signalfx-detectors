@@ -14,6 +14,7 @@ matrix:
   sources:
   - '*.md'
   - 'docs/**/*.md|!docs/severity.md'
-  - 'scripts/**/*.md'
   - 'examples/**/*.md'
+  - 'scripts/**/*.md'
+  - 'scripts/**/*.md.j2'
   default_encoding: utf-8
