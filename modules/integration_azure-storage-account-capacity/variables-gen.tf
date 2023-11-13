@@ -1,5 +1,3 @@
-# Module specific
-
 # used_capacity detector
 
 variable "used_capacity_notifications" {
@@ -57,11 +55,34 @@ variable "used_capacity_disabled_major" {
 }
 
 variable "used_capacity_threshold_critical" {
-  description = "Critical threshold for used_capacity detector (in GB)"
+  description = "Critical threshold for used_capacity detector in Gibibyte"
   type        = number
 }
 
-variable "used_capacity_threshold_major" {
-  description = "Major threshold for used_capacity detector (in GB)"
+variable "used_capacity_lasting_duration_critical" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "used_capacity_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
+  default     = 1
+}
+variable "used_capacity_threshold_major" {
+  description = "Major threshold for used_capacity detector in Gibibyte"
+  type        = number
+}
+
+variable "used_capacity_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "used_capacity_at_least_percentage_major" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
 }

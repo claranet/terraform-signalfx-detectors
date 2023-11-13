@@ -1,0 +1,19 @@
+module: "Azure Storage Account capacity"
+name: "used capacity"
+filtering: "filter('resource_type', 'Microsoft.Storage/storageAccounts') and filter('primary_aggregation_type', 'true')"
+aggregation: ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+transformation: ".max(over='12h')"
+value_unit: "Gibibyte"
+signals:
+  capacity:
+    metric: "UsedCapacity"
+  signal:
+    formula:
+      capacity.scale(1/1024**3) # Scale to GiB unit
+rules:
+  critical:
+    comparator: ">"
+  major:
+    comparator: ">"
+    dependency: critical
+
