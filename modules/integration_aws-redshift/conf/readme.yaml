@@ -2,6 +2,6 @@ documentations:
   - name: CloudWatch metrics
     url: 'https://docs.aws.amazon.com/redshift/latest/mgmt/metrics-listing.html'
   - name: Splunk Observability metrics
-    url: 'https://docs.splunk.com/Observability/gdi/get-data-in/connect/aws/aws-metrics.html#amazon-redshift'
+    url: 'https://docs.splunk.com/observability/en/gdi/get-data-in/integrations.html#amazon-redshift'
 
 source_doc:
