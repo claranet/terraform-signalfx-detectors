@@ -133,6 +133,7 @@ monitors:
       - gauge.queue.messages_unacknowledged
       - counter.queue.message_stats.ack
       - gauge.queue.consumer_utilisation
+      - gauge.queue.messages
 ```
 
 
@@ -148,7 +149,7 @@ parameter to the corresponding monitor configuration:
       - metricNames:
         - '*'
         - '!counter.queue.message_stats.ack'
-        - '!gauge.queue.consumer_use'
+        - '!gauge.queue.consumer_utilisation'
         - '!gauge.queue.messages'
         - '!gauge.queue.messages_ready'
         - '!gauge.queue.messages_unacknowledged'

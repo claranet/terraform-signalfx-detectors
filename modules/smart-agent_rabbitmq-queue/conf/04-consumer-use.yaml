@@ -10,7 +10,7 @@ signals:
   msg:
     metric: gauge.queue.messages
   signal:
-    metric: gauge.queue.consumer_use
+    metric: gauge.queue.consumer_utilisation
 
 rules:
   critical:
