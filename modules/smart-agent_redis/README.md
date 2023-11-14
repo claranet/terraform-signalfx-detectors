@@ -57,14 +57,14 @@ Note the following parameters:
   Check the [notification binding](https://github.com/claranet/terraform-signalfx-detectors/wiki/Notifications-binding)
   documentation to understand the recommended role of each severity.
 
-These 3 parameters alongs with all variables defined in [common-variables.tf](common-variables.tf) are common to all
+These 3 parameters along with all variables defined in [common-variables.tf](common-variables.tf) are common to all
 [modules](../) in this repository. Other variables, specific to this module, are available in
 [variables.tf](variables.tf) and [variables-gen.tf](variables-gen.tf).
 In general, the default configuration "works" but all of these Terraform
 [variables](https://www.terraform.io/language/values/variables) make it possible to
 customize the detectors behavior to better fit your needs.
 
-Most of them represent usual tips and rules detailled in the
+Most of them represent usual tips and rules detailed in the
 [guidance](https://github.com/claranet/terraform-signalfx-detectors/wiki/Guidance) documentation and listed in the
 common [variables](https://github.com/claranet/terraform-signalfx-detectors/wiki/Variables) dedicated documentation.
 
@@ -146,7 +146,7 @@ parameter to the corresponding monitor configuration:
         - '!${var.use_otel_receiver ? "redis.db.keys" : "gauge.db0_keys"}'
         - '!${var.use_otel_receiver ? "redis.keys.evicted" : "counter.evicted_keys"}'
         - '!${var.use_otel_receiver ? "redis.keys.expired" : "counter.expired_keys"}'
-        - '!${var.use_otel_receiver ? "redis.keyspace.hits" : "counter.keyspace_hits"}'
+        - '!${var.use_otel_receiver ? "redis.keyspace.hits" : "derive.keyspace_hits"}'
         - '!${var.use_otel_receiver ? "redis.memory.rss" : "bytes.used_memory_rss"}'
         - '!${var.use_otel_receiver ? "redis.memory.used" : "bytes.used_memory"}'
 

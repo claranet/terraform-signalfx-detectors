@@ -8,7 +8,7 @@ MODULE="${TARGET##*modules/}"
 [[ $(git remote get-url --push origin) =~ github.com(/|:)([^ /]*) ]] && GITHUB_USER=${BASH_REMATCH[2]} || GITHUB_USER=claranet
 
 module_vars=$(cat common/modules-args.txt)
-exclude_vars="[$(echo "$module_vars" | sed 's/^[[:space:]]*\([a-zA-z0-9_]*\)[[:space:]]*=.*$/"\1"/' | sed ':a;N;$!ba;s/\n/, /g')]"
+exclude_vars="[$(echo "$module_vars" | sed 's/^[[:space:]]*\([a-zA-Z0-9_]*\)[[:space:]]*=.*$/"\1"/' | sed ':a;N;$!ba;s/\n/, /g')]"
 env_vars=$(terraform-config-inspect common/module --json | jq -cr '.variables[] | select(.required) | .name')
 
 vars_rendering=""

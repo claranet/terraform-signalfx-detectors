@@ -1,0 +1,25 @@
+---
+module: "Azure Virtual Machine"
+name: "remaining CPU credit"
+filtering: "filter('resource_type', 'Microsoft.Compute/virtualMachines') and filter('primary_aggregation_type', 'true') and (not filter('azure_power_state', 'PowerState/stopping', 'PowerState/stopped', 'PowerState/deallocating', 'PowerState/deallocated'))"
+aggregation: ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+value_unit: "%"
+transformation: true
+signals:
+  remaining:
+    metric: "CPU Credits Remaining"
+  consumed:
+    metric: "CPU Credits Consumed"
+  signal:
+    formula: (remaining/(remaining+consumed)).scale(100).fill(100)
+rules:
+  critical:
+    threshold: 15
+    comparator: "<"
+    lasting_duration: '5m'
+  major:
+    threshold: 30
+    comparator: "<"
+    lasting_duration: '5m'
+    dependency: critical
+...

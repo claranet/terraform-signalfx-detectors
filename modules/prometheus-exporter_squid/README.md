@@ -56,14 +56,14 @@ Note the following parameters:
   Check the [notification binding](https://github.com/claranet/terraform-signalfx-detectors/wiki/Notifications-binding)
   documentation to understand the recommended role of each severity.
 
-These 3 parameters alongs with all variables defined in [common-variables.tf](common-variables.tf) are common to all
+These 3 parameters along with all variables defined in [common-variables.tf](common-variables.tf) are common to all
 [modules](../) in this repository. Other variables, specific to this module, are available in
 [variables-gen.tf](variables-gen.tf).
 In general, the default configuration "works" but all of these Terraform
 [variables](https://www.terraform.io/language/values/variables) make it possible to
 customize the detectors behavior to better fit your needs.
 
-Most of them represent usual tips and rules detailled in the
+Most of them represent usual tips and rules detailed in the
 [guidance](https://github.com/claranet/terraform-signalfx-detectors/wiki/Guidance) documentation and listed in the
 common [variables](https://github.com/claranet/terraform-signalfx-detectors/wiki/Variables) dedicated documentation.
 
@@ -90,7 +90,7 @@ exposition format](https://github.com/prometheus/docs/blob/main/content/docs/ins
 They are generally called `Prometheus Exporters` which can be fetched by both the [SignalFx Smart Agent](https://github.com/signalfx/signalfx-agent)
 thanks to its [prometheus exporter monitor](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/prometheus-exporter.md) and the
 [OpenTelemetry Collector](https://github.com/signalfx/splunk-otel-collector) using its [prometheus
-receiver](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/receiver/prometheusreceiver) or its derivates.
+receiver](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/receiver/prometheusreceiver) or its derivatives.
 
 These exporters could be embedded directly in the tool you want to monitor (e.g. nginx ingress) or must be installed next to it as
 a separate program configured to connect, create metrics and expose them as server.
@@ -104,7 +104,7 @@ Check its documentation to install and configure it appropriately with your Squi
 ### Examples
 
 Here is a sample configuration fragment for the [OpenTelemetry Collector](https://opentelemetry.io/docs/collector/) agent using
-the [prometheusexec receiver](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/receiver/prometheusexecreceiver).
+the prometheusexec receiver ([deprecated](https://github.com/open-telemetry/opentelemetry-collector-contrib/pull/24740)).
 
 ```yaml
 receivers:

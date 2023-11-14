@@ -55,14 +55,14 @@ Note the following parameters:
   Check the [notification binding](https://github.com/claranet/terraform-signalfx-detectors/wiki/Notifications-binding)
   documentation to understand the recommended role of each severity.
 
-These 3 parameters alongs with all variables defined in [common-variables.tf](common-variables.tf) are common to all
+These 3 parameters along with all variables defined in [common-variables.tf](common-variables.tf) are common to all
 [modules](../) in this repository. Other variables, specific to this module, are available in
-[variables.tf](variables.tf).
+[variables-gen.tf](variables-gen.tf).
 In general, the default configuration "works" but all of these Terraform
 [variables](https://www.terraform.io/language/values/variables) make it possible to
 customize the detectors behavior to better fit your needs.
 
-Most of them represent usual tips and rules detailled in the
+Most of them represent usual tips and rules detailed in the
 [guidance](https://github.com/claranet/terraform-signalfx-detectors/wiki/Guidance) documentation and listed in the
 common [variables](https://github.com/claranet/terraform-signalfx-detectors/wiki/Variables) dedicated documentation.
 
@@ -76,12 +76,12 @@ This module creates the following SignalFx detectors which could contain one or 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Azure PostgreSQL heartbeat|X|-|-|-|-|
-|Azure PostgreSQL CPU usage|X|X|-|-|-|
-|Azure PostgreSQL has no connection|X|-|-|-|-|
+|Azure PostgreSQL cpu usage|X|X|-|-|-|
+|Azure PostgreSQL active connections|X|-|-|-|-|
 |Azure PostgreSQL storage usage|X|X|-|-|-|
-|Azure PostgreSQL IO consumption|X|X|-|-|-|
-|Azure PostgreSQL memory usage |X|X|-|-|-|
-||X|X|-|-|-|
+|Azure PostgreSQL io consumption|X|X|-|-|-|
+|Azure PostgreSQL memory usage|X|X|-|-|-|
+|Azure PostgreSQL serverlog storage usage|X|X|-|-|-|
 
 ## How to collect required metrics?
 
@@ -115,4 +115,4 @@ Here is the list of required metrics for detectors in this module.
 * [Terraform SignalFx provider](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs)
 * [Terraform SignalFx detector](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector)
 * [Splunk Observability integrations](https://docs.splunk.com/Observability/gdi/get-data-in/integrations.html)
-* [Azure Monitor metrics](https://docs.microsoft.com/en-us/azure/azure-monitor/essentials/metrics-supported#microsoftdbforpostgresqlservers)
+* [Azure Monitor metrics](https://learn.microsoft.com/en-us/azure/azure-monitor/reference/supported-metrics/microsoft-dbforpostgresql-servers-metrics)

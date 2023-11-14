@@ -1,0 +1,15 @@
+---
+module: "Azure SQL Database"
+name: heartbeat
+
+transformation: true
+aggregation: ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+
+filtering: "filter('resource_type', 'Microsoft.Sql/servers/databases') and filter('primary_aggregation_type', 'true')"
+
+signals:
+  signal:
+    metric: "sessions_count"
+rules:
+  critical:
+...

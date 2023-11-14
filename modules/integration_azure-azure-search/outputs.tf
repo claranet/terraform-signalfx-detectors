@@ -1,10 +1,10 @@
-output "search_latency" {
-  description = "Detector resource for search_latency"
-  value       = signalfx_detector.search_latency
+output "latency" {
+  description = "Detector resource for latency"
+  value       = signalfx_detector.latency
 }
 
-output "search_throttled_queries_rate" {
-  description = "Detector resource for search_throttled_queries_rate"
-  value       = signalfx_detector.search_throttled_queries_rate
+output "throttled_queries_rate" {
+  description = "Detector resource for throttled_queries_rate"
+  value       = signalfx_detector.throttled_queries_rate
 }
 
