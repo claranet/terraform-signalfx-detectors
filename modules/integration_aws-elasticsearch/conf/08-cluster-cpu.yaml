@@ -1,6 +1,5 @@
 module: AWS Elasticsearch
-id: "cluster_cpu"
-name: "CPU utilization"
+name: "Cluster CPU"
 
 transformation: ".min(over='45m')"
 aggregation: ""

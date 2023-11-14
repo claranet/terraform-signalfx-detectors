@@ -272,94 +272,48 @@ variable "fivexx_http_response_disabled" {
   default     = null
 }
 
-variable "fivexx_http_response_disabled_opensearch_critical" {
-  description = "Disable opensearch_critical alerting rule for fivexx_http_response detector"
+variable "fivexx_http_response_disabled_critical" {
+  description = "Disable critical alerting rule for fivexx_http_response detector"
   type        = bool
   default     = null
 }
 
-variable "fivexx_http_response_disabled_opensearch_major" {
-  description = "Disable opensearch_major alerting rule for fivexx_http_response detector"
+variable "fivexx_http_response_disabled_major" {
+  description = "Disable major alerting rule for fivexx_http_response detector"
   type        = bool
   default     = null
 }
 
-variable "fivexx_http_response_disabled_elasticsearch_critical" {
-  description = "Disable elasticsearch_critical alerting rule for fivexx_http_response detector"
-  type        = bool
-  default     = null
-}
-
-variable "fivexx_http_response_disabled_elasticsearch_major" {
-  description = "Disable elasticsearch_major alerting rule for fivexx_http_response detector"
-  type        = bool
-  default     = null
-}
-
-variable "fivexx_http_response_threshold_opensearch_critical" {
-  description = "Opensearch_critical threshold for fivexx_http_response detector in %"
+variable "fivexx_http_response_threshold_critical" {
+  description = "Critical threshold for fivexx_http_response detector in %"
   type        = number
   default     = 10
 }
 
-variable "fivexx_http_response_lasting_duration_opensearch_critical" {
+variable "fivexx_http_response_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
   default     = "5m"
 }
 
-variable "fivexx_http_response_at_least_percentage_opensearch_critical" {
+variable "fivexx_http_response_at_least_percentage_critical" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 0.9
 }
-variable "fivexx_http_response_threshold_opensearch_major" {
-  description = "Opensearch_major threshold for fivexx_http_response detector in %"
+variable "fivexx_http_response_threshold_major" {
+  description = "Major threshold for fivexx_http_response detector in %"
   type        = number
   default     = 5
 }
 
-variable "fivexx_http_response_lasting_duration_opensearch_major" {
+variable "fivexx_http_response_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
   default     = "5m"
 }
 
-variable "fivexx_http_response_at_least_percentage_opensearch_major" {
-  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
-  type        = number
-  default     = 0.9
-}
-variable "fivexx_http_response_threshold_elasticsearch_critical" {
-  description = "Elasticsearch_critical threshold for fivexx_http_response detector in %"
-  type        = number
-  default     = 10
-}
-
-variable "fivexx_http_response_lasting_duration_elasticsearch_critical" {
-  description = "Minimum duration that conditions must be true before raising alert"
-  type        = string
-  default     = "5m"
-}
-
-variable "fivexx_http_response_at_least_percentage_elasticsearch_critical" {
-  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
-  type        = number
-  default     = 0.9
-}
-variable "fivexx_http_response_threshold_elasticsearch_major" {
-  description = "Elasticsearch_major threshold for fivexx_http_response detector in %"
-  type        = number
-  default     = 5
-}
-
-variable "fivexx_http_response_lasting_duration_elasticsearch_major" {
-  description = "Minimum duration that conditions must be true before raising alert"
-  type        = string
-  default     = "5m"
-}
-
-variable "fivexx_http_response_at_least_percentage_elasticsearch_major" {
+variable "fivexx_http_response_at_least_percentage_major" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 0.9
@@ -851,7 +805,7 @@ variable "master_cpu_disabled_critical" {
 variable "master_cpu_threshold_major" {
   description = "Major threshold for master_cpu detector"
   type        = number
-  default     = 60
+  default     = 50
 }
 
 variable "master_cpu_lasting_duration_major" {

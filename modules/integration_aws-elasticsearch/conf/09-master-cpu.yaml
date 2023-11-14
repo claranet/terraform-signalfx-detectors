@@ -12,7 +12,7 @@ signals:
 
 rules:
   major:
-    threshold: 60
+    threshold: 50
     comparator: ">"
     dependency: critical
   critical:

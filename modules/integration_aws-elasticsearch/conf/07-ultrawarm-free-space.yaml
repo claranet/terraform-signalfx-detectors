@@ -1,6 +1,5 @@
 module: AWS Elasticsearch
-id: "ultrawarm_free_space"
-name: "UltraWarm free storage space"
+name: "Ultrawarm Free space"
 
 transformation: ".scale(0.001)"
 aggregation: ""
