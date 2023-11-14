@@ -1,0 +1,24 @@
+module: AWS Elasticsearch
+name: "Cluster CPU"
+
+transformation: ".min(over='45m')"
+aggregation: ""
+filtering: "filter('namespace', 'AWS/ES') and filter('stat', 'upper') and filter('NodeId', '*')"
+
+signals:
+  data_node_cpu:
+    metric: CPUUtilization
+  warm_node_cpu:
+    metric: WarmCPUUtilization
+  signal:
+    formula: union(data_node_cpu, warm_node_cpu)
+
+
+rules:
+  major:
+    threshold: 80
+    comparator: ">"
+    dependency: critical
+  critical:
+    threshold: 90
+    comparator: ">"
