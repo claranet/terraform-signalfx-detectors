@@ -114,7 +114,6 @@ Here is the list of required metrics for detectors in this module.
 * `JVMMemoryPressure`
 * `MasterCPUUtilization`
 * `Nodes`
-* `OpenSearchRequests`
 * `ShardCount`
 * `WarmCPUUtilization`
 * `WarmFreeStorageSpace`

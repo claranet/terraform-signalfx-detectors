@@ -107,8 +107,8 @@ resource "signalfx_detector" "fivexx_http_response" {
   program_text = <<-EOF
     base_filtering = filter('namespace', 'AWS/ES') and filter('stat', 'sum')
     A = data('5xx', filter=base_filtering and ${module.filtering.signalflow})${var.fivexx_http_response_aggregation_function}${var.fivexx_http_response_transformation_function}
-    B = data('OpenSearchRequests', filter=base_filtering and ${module.filtering.signalflow})${var.fivexx_http_response_aggregation_function}${var.fivexx_http_response_transformation_function}
-    signal = (A/B*100).publish('signal')
+    B = data('2xx', filter=base_filtering and ${module.filtering.signalflow})${var.fivexx_http_response_aggregation_function}${var.fivexx_http_response_transformation_function}
+    signal = (A/(A+B)*100).publish('signal')
     detect(when(signal > ${var.fivexx_http_response_threshold_critical}, lasting=%{if var.fivexx_http_response_lasting_duration_critical == null}None%{else}'${var.fivexx_http_response_lasting_duration_critical}'%{endif}, at_least=${var.fivexx_http_response_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal > ${var.fivexx_http_response_threshold_major}, lasting=%{if var.fivexx_http_response_lasting_duration_major == null}None%{else}'${var.fivexx_http_response_lasting_duration_major}'%{endif}, at_least=${var.fivexx_http_response_at_least_percentage_major}) and (not when(signal > ${var.fivexx_http_response_threshold_critical}, lasting=%{if var.fivexx_http_response_lasting_duration_critical == null}None%{else}'${var.fivexx_http_response_lasting_duration_critical}'%{endif}, at_least=${var.fivexx_http_response_at_least_percentage_critical}))).publish('MAJOR')
 EOF

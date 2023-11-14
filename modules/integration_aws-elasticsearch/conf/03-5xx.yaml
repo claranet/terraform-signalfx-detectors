@@ -12,9 +12,9 @@ signals:
   A:
     metric: 5xx
   B:
-    metric: OpenSearchRequests
+    metric: 2xx
   signal:
-    formula: (A/B*100)
+    formula: (A/(A+B)*100)
 
 rules:
   critical:
