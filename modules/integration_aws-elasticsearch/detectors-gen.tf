@@ -129,25 +129,29 @@ resource "signalfx_detector" "fivexx_http_response" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   viz_options {
-    label        = "signal"
+    label        = "elastic_search_signal"
     value_suffix = "%"
   }
 
   program_text = <<-EOF
     base_filtering = filter('namespace', 'AWS/ES') and filter('stat', 'sum')
-    A = data('5xx', filter=base_filtering and ${module.filtering.signalflow})${var.fivexx_http_response_aggregation_function}${var.fivexx_http_response_transformation_function}
-    B = data('OpenSearchRequests', filter=base_filtering and ${module.filtering.signalflow})${var.fivexx_http_response_aggregation_function}${var.fivexx_http_response_transformation_function}
-    signal = (A/B*100).publish('signal')
-    detect(when(signal > ${var.fivexx_http_response_threshold_critical}, lasting=%{if var.fivexx_http_response_lasting_duration_critical == null}None%{else}'${var.fivexx_http_response_lasting_duration_critical}'%{endif}, at_least=${var.fivexx_http_response_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal > ${var.fivexx_http_response_threshold_major}, lasting=%{if var.fivexx_http_response_lasting_duration_major == null}None%{else}'${var.fivexx_http_response_lasting_duration_major}'%{endif}, at_least=${var.fivexx_http_response_at_least_percentage_major}) and (not when(signal > ${var.fivexx_http_response_threshold_critical}, lasting=%{if var.fivexx_http_response_lasting_duration_critical == null}None%{else}'${var.fivexx_http_response_lasting_duration_critical}'%{endif}, at_least=${var.fivexx_http_response_at_least_percentage_critical}))).publish('MAJOR')
+    error_stream = data('5xx', filter=base_filtering and ${module.filtering.signalflow})${var.fivexx_http_response_aggregation_function}${var.fivexx_http_response_transformation_function}
+    open_search_stream = data('OpenSearchRequests', filter=base_filtering and ${module.filtering.signalflow})${var.fivexx_http_response_aggregation_function}${var.fivexx_http_response_transformation_function}
+    elastic_search_stream = data('ElasticsearchRequests', filter=base_filtering and ${module.filtering.signalflow})${var.fivexx_http_response_aggregation_function}${var.fivexx_http_response_transformation_function}
+    open_search_signal = (error_stream/open_search_stream*100).publish('open_search_signal')
+    elastic_search_signal = (error_stream/elastic_search_stream*100).publish('elastic_search_signal')
+    detect(when( open_search_signal > ${var.fivexx_http_response_threshold_critical_open_search}, lasting=%{if var.fivexx_http_response_lasting_duration_critical_open_search == null}None%{else}'${var.fivexx_http_response_lasting_duration_critical_open_search}'%{endif}, at_least=${var.fivexx_http_response_at_least_percentage_critical_open_search})).publish('CRIT_OPEN_SEARCH')
+    detect(when( open_search_signal > ${var.fivexx_http_response_threshold_major_open_search}, lasting=%{if var.fivexx_http_response_lasting_duration_major_open_search == null}None%{else}'${var.fivexx_http_response_lasting_duration_major_open_search}'%{endif}, at_least=${var.fivexx_http_response_at_least_percentage_major_open_search}) and (not when( open_search_signal > ${var.fivexx_http_response_threshold_critical_open_search}, lasting=%{if var.fivexx_http_response_lasting_duration_critical_open_search == null}None%{else}'${var.fivexx_http_response_lasting_duration_critical_open_search}'%{endif}, at_least=${var.fivexx_http_response_at_least_percentage_critical_open_search}))).publish('MAJOR_OPEN_SEARCH')
+    detect(when( elastic_search_signal > ${var.fivexx_http_response_threshold_critical_elastic_search}, lasting=%{if var.fivexx_http_response_lasting_duration_critical_elastic_search == null}None%{else}'${var.fivexx_http_response_lasting_duration_critical_elastic_search}'%{endif}, at_least=${var.fivexx_http_response_at_least_percentage_critical_elastic_search})).publish('CRIT_ELASTIC_SEARCH')
+    detect(when( elastic_search_signal > ${var.fivexx_http_response_threshold_major_elastic_search}, lasting=%{if var.fivexx_http_response_lasting_duration_major_elastic_search == null}None%{else}'${var.fivexx_http_response_lasting_duration_major_elastic_search}'%{endif}, at_least=${var.fivexx_http_response_at_least_percentage_major_elastic_search}) and (not when( elastic_search_signal > ${var.fivexx_http_response_threshold_critical_elastic_search}, lasting=%{if var.fivexx_http_response_lasting_duration_critical_elastic_search == null}None%{else}'${var.fivexx_http_response_lasting_duration_critical_elastic_search}'%{endif}, at_least=${var.fivexx_http_response_at_least_percentage_critical_elastic_search}))).publish('MAJOR_ELASTIC_SEARCH')
 EOF
 
   rule {
-    description           = "is too high > ${var.fivexx_http_response_threshold_critical}%"
+    description           = "is too high > ${var.fivexx_http_response_threshold_critical_open_search}%"
     severity              = "Critical"
-    detect_label          = "CRIT"
-    disabled              = coalesce(var.fivexx_http_response_disabled_critical, var.fivexx_http_response_disabled, var.detectors_disabled)
-    notifications         = try(coalescelist(lookup(var.fivexx_http_response_notifications, "critical", []), var.notifications.critical), null)
+    detect_label          = "CRIT_OPEN_SEARCH"
+    disabled              = coalesce(var.fivexx_http_response_disabled_critical_open_search, var.fivexx_http_response_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.fivexx_http_response_notifications, "critical_open_search", []), var.notifications.critical_open_search), null)
     runbook_url           = try(coalesce(var.fivexx_http_response_runbook_url, var.runbook_url), "")
     tip                   = var.fivexx_http_response_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -155,11 +159,35 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.fivexx_http_response_threshold_major}%"
+    description           = "is too high > ${var.fivexx_http_response_threshold_major_open_search}%"
     severity              = "Major"
-    detect_label          = "MAJOR"
-    disabled              = coalesce(var.fivexx_http_response_disabled_major, var.fivexx_http_response_disabled, var.detectors_disabled)
-    notifications         = try(coalescelist(lookup(var.fivexx_http_response_notifications, "major", []), var.notifications.major), null)
+    detect_label          = "MAJOR_OPEN_SEARCH"
+    disabled              = coalesce(var.fivexx_http_response_disabled_major_open_search, var.fivexx_http_response_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.fivexx_http_response_notifications, "major_open_search", []), var.notifications.major_open_search), null)
+    runbook_url           = try(coalesce(var.fivexx_http_response_runbook_url, var.runbook_url), "")
+    tip                   = var.fivexx_http_response_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
+
+  rule {
+    description           = "is too high > ${var.fivexx_http_response_threshold_critical_elastic_search}%"
+    severity              = "Critical"
+    detect_label          = "CRIT_ELASTIC_SEARCH"
+    disabled              = coalesce(var.fivexx_http_response_disabled_critical_elastic_search, var.fivexx_http_response_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.fivexx_http_response_notifications, "critical_elastic_search", []), var.notifications.critical_elastic_search), null)
+    runbook_url           = try(coalesce(var.fivexx_http_response_runbook_url, var.runbook_url), "")
+    tip                   = var.fivexx_http_response_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
+
+  rule {
+    description           = "is too high > ${var.fivexx_http_response_threshold_major_elastic_search}%"
+    severity              = "Major"
+    detect_label          = "MAJOR_ELASTIC_SEARCH"
+    disabled              = coalesce(var.fivexx_http_response_disabled_major_elastic_search, var.fivexx_http_response_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.fivexx_http_response_notifications, "major_elastic_search", []), var.notifications.major_elastic_search), null)
     runbook_url           = try(coalesce(var.fivexx_http_response_runbook_url, var.runbook_url), "")
     tip                   = var.fivexx_http_response_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject

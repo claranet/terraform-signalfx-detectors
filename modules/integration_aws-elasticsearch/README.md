@@ -110,6 +110,7 @@ Here is the list of required metrics for detectors in this module.
 * `ClusterStatus.red`
 * `ClusterStatus.yellow`
 * `CPUUtilization`
+* `ElasticsearchRequests`
 * `FreeStorageSpace`
 * `JVMMemoryPressure`
 * `MasterCPUUtilization`

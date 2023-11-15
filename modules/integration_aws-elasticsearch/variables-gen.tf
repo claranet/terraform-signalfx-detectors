@@ -272,48 +272,94 @@ variable "fivexx_http_response_disabled" {
   default     = null
 }
 
-variable "fivexx_http_response_disabled_critical" {
-  description = "Disable critical alerting rule for fivexx_http_response detector"
+variable "fivexx_http_response_disabled_critical_open_search" {
+  description = "Disable critical_open_search alerting rule for fivexx_http_response detector"
   type        = bool
   default     = null
 }
 
-variable "fivexx_http_response_disabled_major" {
-  description = "Disable major alerting rule for fivexx_http_response detector"
+variable "fivexx_http_response_disabled_major_open_search" {
+  description = "Disable major_open_search alerting rule for fivexx_http_response detector"
   type        = bool
   default     = null
 }
 
-variable "fivexx_http_response_threshold_critical" {
-  description = "Critical threshold for fivexx_http_response detector in %"
+variable "fivexx_http_response_disabled_critical_elastic_search" {
+  description = "Disable critical_elastic_search alerting rule for fivexx_http_response detector"
+  type        = bool
+  default     = null
+}
+
+variable "fivexx_http_response_disabled_major_elastic_search" {
+  description = "Disable major_elastic_search alerting rule for fivexx_http_response detector"
+  type        = bool
+  default     = null
+}
+
+variable "fivexx_http_response_threshold_critical_open_search" {
+  description = "Critical_open_search threshold for fivexx_http_response detector in %"
   type        = number
   default     = 10
 }
 
-variable "fivexx_http_response_lasting_duration_critical" {
+variable "fivexx_http_response_lasting_duration_critical_open_search" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
   default     = "5m"
 }
 
-variable "fivexx_http_response_at_least_percentage_critical" {
+variable "fivexx_http_response_at_least_percentage_critical_open_search" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 0.9
 }
-variable "fivexx_http_response_threshold_major" {
-  description = "Major threshold for fivexx_http_response detector in %"
+variable "fivexx_http_response_threshold_major_open_search" {
+  description = "Major_open_search threshold for fivexx_http_response detector in %"
   type        = number
   default     = 5
 }
 
-variable "fivexx_http_response_lasting_duration_major" {
+variable "fivexx_http_response_lasting_duration_major_open_search" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
   default     = "5m"
 }
 
-variable "fivexx_http_response_at_least_percentage_major" {
+variable "fivexx_http_response_at_least_percentage_major_open_search" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 0.9
+}
+variable "fivexx_http_response_threshold_critical_elastic_search" {
+  description = "Critical_elastic_search threshold for fivexx_http_response detector in %"
+  type        = number
+  default     = 10
+}
+
+variable "fivexx_http_response_lasting_duration_critical_elastic_search" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "5m"
+}
+
+variable "fivexx_http_response_at_least_percentage_critical_elastic_search" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 0.9
+}
+variable "fivexx_http_response_threshold_major_elastic_search" {
+  description = "Major_elastic_search threshold for fivexx_http_response detector in %"
+  type        = number
+  default     = 5
+}
+
+variable "fivexx_http_response_lasting_duration_major_elastic_search" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "5m"
+}
+
+variable "fivexx_http_response_at_least_percentage_major_elastic_search" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 0.9

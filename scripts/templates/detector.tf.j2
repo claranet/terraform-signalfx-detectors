@@ -93,7 +93,7 @@ EOF
       {%- endif %}
     description           = "{{ compare_string }} {{ rule.comparator }} ${var.{{ id }}_threshold_{{ severity }}}{{ value_unit | default("") }}"
     {%- endif %}
-    severity              = "{{ severity | capitalize }}"
+    severity              = "{{ (rule.severity if rule.severity is string else severity) | capitalize }}"
     detect_label          = "{{ severity | replace('critical', 'crit') | replace ('warning', 'warn') | upper }}"
     disabled              = coalesce({% if rules | length > 1 %}var.{{ id }}_disabled_{{ severity }}, {% endif %}var.{{ id }}_disabled, var.detectors_disabled)
     notifications         = try(coalescelist(lookup(var.{{ id }}_notifications, "{{ severity }}", []), var.notifications.{{ severity }}), null)

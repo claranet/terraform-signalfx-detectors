@@ -1,0 +1,21 @@
+module: AWS ElastiCache
+name: "Free memory"
+
+transformation: ".rateofchange().mean(over='15m')"
+aggregation: true
+
+filtering: "filter('namespace', 'AWS/ElastiCache')"
+
+signals:
+  signal:
+    metric: "FreeableMemory"
+    filter: "filter('stat', 'lower') and filter('CacheNodeId', '*')"
+
+rules:
+  minor:
+    threshold: -50
+    comparator: "<"
+    dependency: major
+  major:
+    threshold: -70
+    comparator: "<"

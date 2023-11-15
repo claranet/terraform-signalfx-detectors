@@ -57,7 +57,7 @@ Note the following parameters:
 
 These 3 parameters alongs with all variables defined in [common-variables.tf](common-variables.tf) are common to all
 [modules](../) in this repository. Other variables, specific to this module, are available in
-[variables.tf](variables.tf).
+[variables-gen.tf](variables-gen.tf).
 In general, the default configuration "works" but all of these Terraform
 [variables](https://www.terraform.io/language/values/variables) make it possible to
 customize the detectors behavior to better fit your needs.
@@ -77,11 +77,11 @@ This module creates the following SignalFx detectors which could contain one or 
 |---|---|---|---|---|---|
 |AWS ElastiCache heartbeat|X|-|-|-|-|
 |AWS ElastiCache evictions|X|X|-|-|-|
-|AWS ElastiCache connections over max allowed|X|-|-|-|-|
-|AWS ElastiCache current connections|X|-|-|-|-|
+|AWS ElastiCache max connection|X|-|-|-|-|
+|AWS ElastiCache no connection|X|-|-|-|-|
 |AWS ElastiCache swap|X|X|-|-|-|
-|AWS ElastiCache freeable memory|-|X|X|-|-|
-|AWS ElastiCache evictions changing rate grows|X|X|-|-|-|
+|AWS ElastiCache free memory|-|X|X|-|-|
+|AWS ElastiCache evictions growing|X|X|-|-|-|
 
 ## How to collect required metrics?
 
