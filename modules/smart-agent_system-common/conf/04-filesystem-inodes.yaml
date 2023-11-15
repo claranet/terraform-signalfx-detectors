@@ -6,10 +6,10 @@ value_unit: "%"
 signals:
   used:
     metric: system.filesystem.inodes.usage
-    filter: filter('state', 'used')
+    filter: "(filter('state', 'used') and not filter('type', 'squashfs'))"
   free:
     metric: system.filesystem.inodes.usage
-    filter: filter('state', 'free')
+    filter: "(filter('state', 'free') and not filter('type', 'squashfs'))"
   signal:
     formula: (used / (used + free) * 100)
 rules:
