@@ -1,0 +1,17 @@
+module: AWS ElastiCache
+name: "Max connection"
+
+transformation: ".max(over='5m')"
+aggregation: true
+
+filtering: "filter('namespace', 'AWS/ElastiCache')"
+
+signals:
+  signal:
+    metric: "CurrConnections"
+    filter: "filter('stat', 'upper') and filter('CacheNodeId', '*')"
+
+rules:
+  critical:
+    threshold: 64999
+    comparator: ">"

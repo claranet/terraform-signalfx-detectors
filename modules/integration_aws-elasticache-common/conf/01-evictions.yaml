@@ -1,0 +1,21 @@
+module: AWS ElastiCache
+name: "Evictions"
+
+transformation: ".sum(over='15m')"
+aggregation: true
+
+filtering: "filter('namespace', 'AWS/ElastiCache')"
+
+signals:
+  signal:
+    metric: "Evictions"
+    filter: "filter('stat', 'mean') and filter('CacheNodeId', '*')"
+
+rules:
+  major:
+    threshold: 0
+    comparator: ">"
+    dependency: critical
+  critical:
+    threshold: 30
+    comparator: ">"
