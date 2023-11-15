@@ -59,7 +59,7 @@ variable "cpu_aggregation_function" {
 variable "cpu_transformation_function" {
   description = "Transformation function for cpu detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".min(over='1h')"
+  default     = ""
 }
 
 variable "cpu_max_delay" {
