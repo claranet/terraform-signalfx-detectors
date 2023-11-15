@@ -83,8 +83,8 @@ This module creates the following SignalFx detectors which could contain one or 
 |AWS Elasticsearch 5xx http response|X|X|-|-|-|
 |AWS Elasticsearch shard count|X|X|-|-|-|
 |AWS Elasticsearch cluster status|X|X|-|-|-|
-|AWS Elasticsearch free space|X|X|-|-|-|
-|AWS Elasticsearch ultrawarm free space|X|X|-|-|-|
+|AWS Elasticsearch free storage space|X|X|-|-|-|
+|AWS Elasticsearch ultrawarm free storage space|X|X|-|-|-|
 |AWS Elasticsearch cluster cpu|X|X|-|-|-|
 |AWS Elasticsearch master cpu|X|X|-|-|-|
 

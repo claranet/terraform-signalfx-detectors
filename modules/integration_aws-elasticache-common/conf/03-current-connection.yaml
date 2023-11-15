@@ -1,5 +1,6 @@
 module: AWS ElastiCache
-name: "No connection"
+id: "no_connection"
+name: "Current connections"
 
 transformation: ".min(over='5m')"
 aggregation: true

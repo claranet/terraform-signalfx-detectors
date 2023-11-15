@@ -69,7 +69,7 @@ EOF
 }
 
 resource "signalfx_detector" "max_connection" {
-  name = format("%s %s", local.detector_name_prefix, "AWS ElastiCache max connection")
+  name = format("%s %s", local.detector_name_prefix, "AWS ElastiCache connections over max allowed")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
@@ -97,7 +97,7 @@ EOF
 }
 
 resource "signalfx_detector" "no_connection" {
-  name = format("%s %s", local.detector_name_prefix, "AWS ElastiCache no connection")
+  name = format("%s %s", local.detector_name_prefix, "AWS ElastiCache current connections")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
@@ -166,7 +166,7 @@ EOF
 }
 
 resource "signalfx_detector" "free_memory" {
-  name = format("%s %s", local.detector_name_prefix, "AWS ElastiCache free memory")
+  name = format("%s %s", local.detector_name_prefix, "AWS ElastiCache freeable memory")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
@@ -207,7 +207,7 @@ EOF
 }
 
 resource "signalfx_detector" "evictions_growing" {
-  name = format("%s %s", local.detector_name_prefix, "AWS ElastiCache evictions growing")
+  name = format("%s %s", local.detector_name_prefix, "AWS ElastiCache evictions changing rate grows")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)

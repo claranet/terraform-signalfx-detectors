@@ -1,5 +1,6 @@
 module: AWS ElastiCache
-name: "Max connection"
+id: "max_connection"
+name: "Connections over max allowed"
 
 transformation: ".max(over='5m')"
 aggregation: true

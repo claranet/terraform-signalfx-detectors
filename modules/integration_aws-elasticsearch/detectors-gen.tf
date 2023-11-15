@@ -282,7 +282,7 @@ EOF
 }
 
 resource "signalfx_detector" "free_space" {
-  name = format("%s %s", local.detector_name_prefix, "AWS Elasticsearch free space")
+  name = format("%s %s", local.detector_name_prefix, "AWS Elasticsearch free storage space")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
@@ -328,7 +328,7 @@ EOF
 }
 
 resource "signalfx_detector" "ultrawarm_free_space" {
-  name = format("%s %s", local.detector_name_prefix, "AWS Elasticsearch ultrawarm free space")
+  name = format("%s %s", local.detector_name_prefix, "AWS Elasticsearch ultrawarm free storage space")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)

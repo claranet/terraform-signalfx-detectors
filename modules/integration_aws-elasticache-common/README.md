@@ -77,11 +77,11 @@ This module creates the following SignalFx detectors which could contain one or 
 |---|---|---|---|---|---|
 |AWS ElastiCache heartbeat|X|-|-|-|-|
 |AWS ElastiCache evictions|X|X|-|-|-|
-|AWS ElastiCache max connection|X|-|-|-|-|
-|AWS ElastiCache no connection|X|-|-|-|-|
+|AWS ElastiCache connections over max allowed|X|-|-|-|-|
+|AWS ElastiCache current connections|X|-|-|-|-|
 |AWS ElastiCache swap|X|X|-|-|-|
-|AWS ElastiCache free memory|-|X|X|-|-|
-|AWS ElastiCache evictions growing|X|X|-|-|-|
+|AWS ElastiCache freeable memory|-|X|X|-|-|
+|AWS ElastiCache evictions changing rate grows|X|X|-|-|-|
 
 ## How to collect required metrics?
 

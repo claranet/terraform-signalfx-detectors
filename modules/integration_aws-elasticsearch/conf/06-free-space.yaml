@@ -1,5 +1,6 @@
 module: AWS Elasticsearch
-name: "Free space"
+id: "free_space"
+name: "Free storage space"
 
 transformation: ".scale(0.001)"
 aggregation: ""
