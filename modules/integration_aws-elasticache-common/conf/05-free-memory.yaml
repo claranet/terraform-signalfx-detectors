@@ -1,6 +1,5 @@
 module: AWS ElastiCache
-id: "free_memory"
-name: "Freeable memory"
+name: "Free memory"
 
 transformation: ".rateofchange().mean(over='15m')"
 aggregation: true

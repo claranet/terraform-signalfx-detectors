@@ -1,6 +1,5 @@
 module: AWS ElastiCache
-id: "evictions_growing"
-name: "Evictions changing rate grows"
+name: "Evictions growing"
 
 transformation: ".mean(over='5m').rateofchange().scale(100)"
 aggregation: true
