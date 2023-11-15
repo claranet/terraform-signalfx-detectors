@@ -1,0 +1,19 @@
+module: AWS Elasticsearch
+name: "Master CPU"
+
+transformation: ".min(over='20m')"
+aggregation: ""
+filtering: "filter('namespace', 'AWS/ES') and filter('stat', 'upper') and filter('NodeId', '*')"
+
+signals:
+  signal:
+    metric: MasterCPUUtilization
+
+rules:
+  major:
+    threshold: 50
+    comparator: ">"
+    dependency: critical
+  critical:
+    threshold: 70
+    comparator: ">"

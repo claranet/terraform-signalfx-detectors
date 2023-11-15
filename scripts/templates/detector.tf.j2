@@ -55,12 +55,12 @@ resource "signalfx_detector" "{{ id }}" {
       {%- if 'formula' in signal %}
     {{ key }} = {{ signal.formula }}
       {%- endif -%}
-      {%- if loop.last -%}
+      {%- if loop.last or ('publish' in signal and signal.publish) -%}
     .publish('{{ key }}')
       {%- endif %}
     {%- endfor %}
     {%- macro macro_when(severity, rule) -%}
-          when(signal {{ rule.comparator }} ${var.{{ id }}_threshold_{{ severity }}}, lasting=%{if var.{{ id }}_lasting_duration_{{ severity }} == null}None%{else}'${var.{{ id }}_lasting_duration_{{ severity }}}'%{endif}, at_least=${var.{{ id }}_at_least_percentage_{{ severity }}}){% if rule.append_condition is string %} {{ rule.append_condition }}{% endif %}
+          when({{ rule.signal if rule.signal is string else 'signal' }} {{ rule.comparator }} ${var.{{ id }}_threshold_{{ severity }}}, lasting=%{if var.{{ id }}_lasting_duration_{{ severity }} == null}None%{else}'${var.{{ id }}_lasting_duration_{{ severity }}}'%{endif}, at_least=${var.{{ id }}_at_least_percentage_{{ severity }}}){% if rule.append_condition is string %} {{ rule.append_condition }}{% endif %}
     {%- endmacro -%}
     {%- for severity, rule in rules.items() %}
       {%- if type == 'heartbeat' -%}
@@ -93,7 +93,7 @@ EOF
       {%- endif %}
     description           = "{{ compare_string }} {{ rule.comparator }} ${var.{{ id }}_threshold_{{ severity }}}{{ value_unit | default("") }}"
     {%- endif %}
-    severity              = "{{ severity | capitalize }}"
+    severity              = "{{ (rule.severity if rule.severity is string else severity) | capitalize }}"
     detect_label          = "{{ severity | replace('critical', 'crit') | replace ('warning', 'warn') | upper }}"
     disabled              = coalesce({% if rules | length > 1 %}var.{{ id }}_disabled_{{ severity }}, {% endif %}var.{{ id }}_disabled, var.detectors_disabled)
     notifications         = try(coalescelist(lookup(var.{{ id }}_notifications, "{{ severity }}", []), var.notifications.{{ severity }}), null)
