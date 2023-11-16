@@ -1,5 +1,9 @@
 #!/bin/bash
 set -ue -o pipefail
+
+# Ensure same sort behavior if run outside the container
+export LC_COLLATE=C
+
 if ! [ -v FILTER ]; then
     FILTER="*"
 fi
