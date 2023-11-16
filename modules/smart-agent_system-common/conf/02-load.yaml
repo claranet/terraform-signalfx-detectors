@@ -1,7 +1,6 @@
 module: system
 name: "load 5m ratio"
 id: load
-transformation: ".min(over='30m')"
 signals:
   load:
     metric: load.midterm
@@ -13,7 +12,9 @@ rules:
   critical:
     threshold: 2.5
     comparator: ">"
+    lasting_duration: "30m"
   major:
     threshold: 2
     comparator: ">"
+    lasting_duration: "30m"
     dependency: critical
