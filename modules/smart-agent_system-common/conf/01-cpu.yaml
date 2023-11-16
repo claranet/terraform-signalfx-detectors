@@ -2,7 +2,6 @@ module: system
 
 name: "cpu utilization"
 id: cpu
-transformation: ""
 value_unit: "%"
 signals:
   signal:

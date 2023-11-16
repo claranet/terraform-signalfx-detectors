@@ -56,6 +56,12 @@ variable "cpu_aggregation_function" {
   default     = ""
 }
 
+variable "cpu_transformation_function" {
+  description = "Transformation function for cpu detector (i.e. \".mean(over='5m')\")"
+  type        = string
+  default     = ""
+}
+
 variable "cpu_max_delay" {
   description = "Enforce max delay for cpu detector (use \"0\" or \"null\" for \"Auto\")"
   type        = number
