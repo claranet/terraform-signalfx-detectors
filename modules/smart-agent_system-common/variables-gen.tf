@@ -59,7 +59,7 @@ variable "cpu_aggregation_function" {
 variable "cpu_transformation_function" {
   description = "Transformation function for cpu detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".min(over='1h')"
+  default     = ""
 }
 
 variable "cpu_max_delay" {
@@ -107,7 +107,7 @@ variable "cpu_threshold_critical" {
 variable "cpu_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "1h"
 }
 
 variable "cpu_at_least_percentage_critical" {
@@ -124,7 +124,7 @@ variable "cpu_threshold_major" {
 variable "cpu_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "1h"
 }
 
 variable "cpu_at_least_percentage_major" {
