@@ -113,7 +113,7 @@ variable "cpu_lasting_duration_critical" {
 variable "cpu_at_least_percentage_critical" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
-  default     = null
+  default     = 1
 }
 variable "cpu_threshold_major" {
   description = "Major threshold for cpu detector in %"
@@ -130,7 +130,7 @@ variable "cpu_lasting_duration_major" {
 variable "cpu_at_least_percentage_major" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
-  default     = null
+  default     = 1
 }
 # load detector
 
