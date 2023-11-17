@@ -10,6 +10,7 @@
   - [Metrics](#metrics)
 - [Notes](#notes)
   - [4xx HTTP response](#4xx-http-response)
+  - [OpenSearch vs ElasticSearch](#opensearch-vs-elasticsearch)
 - [Related documentation](#related-documentation)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -85,8 +86,8 @@ This module creates the following SignalFx detectors which could contain one or 
 |AWS Elasticsearch cluster status|X|X|-|-|-|
 |AWS Elasticsearch free storage space|X|X|-|-|-|
 |AWS Elasticsearch ultrawarm free storage space|X|X|-|-|-|
-|AWS Elasticsearch cluster cpu|X|X|-|-|-|
-|AWS Elasticsearch master cpu|X|X|-|-|-|
+|AWS Elasticsearch cpu utilization|X|X|-|-|-|
+|AWS Elasticsearch master cpu utilization|X|X|-|-|-|
 
 ## How to collect required metrics?
 
@@ -128,6 +129,10 @@ Here is the list of required metrics for detectors in this module.
 By default this monitor is disabled because it can be triggered by bots scrapping the web, on public ES cluster (if possible, [install your cluster inside a VPC](https://docs.aws.amazon.com/opensearch-service/latest/developerguide/vpc.html) instead of using public cluster).
 
 If this kind of scrapping isn't possible in your case (IP restrictions or VPC cluster) you may want to enable this detector to catch, for example, [HTTP 429 errors](https://aws.amazon.com/premiumsupport/knowledge-center/opensearch-resolve-429-error/).
+
+### OpenSearch vs ElasticSearch
+
+The detector '5xx HTTP response' supports both [OpenSearch and ElasticSearch](https://docs.aws.amazon.com/opensearch-service/latest/developerguide/managedomains-cloudwatchmetrics.html#managedomains-cloudwatchmetrics-cluster-metrics:~:text=OpenSearchRequests), two signals (and 2x2 alerting rules) are provided for each case.
 
 
 ## Related documentation

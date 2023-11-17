@@ -266,7 +266,7 @@
 |AWS ElastiCache evictions|X|X|-|-|-|
 |AWS ElastiCache connections over max allowed|X|-|-|-|-|
 |AWS ElastiCache current connections|X|-|-|-|-|
-|AWS ElastiCache swap|X|X|-|-|-|
+|AWS ElastiCache swap usage|X|X|-|-|-|
 |AWS ElastiCache freeable memory|-|X|X|-|-|
 |AWS ElastiCache evictions changing rate grows|X|X|-|-|-|
 
@@ -302,8 +302,8 @@
 |AWS Elasticsearch cluster status|X|X|-|-|-|
 |AWS Elasticsearch free storage space|X|X|-|-|-|
 |AWS Elasticsearch ultrawarm free storage space|X|X|-|-|-|
-|AWS Elasticsearch cluster cpu|X|X|-|-|-|
-|AWS Elasticsearch master cpu|X|X|-|-|-|
+|AWS Elasticsearch cpu utilization|X|X|-|-|-|
+|AWS Elasticsearch master cpu utilization|X|X|-|-|-|
 
 
 ## integration_aws-elb

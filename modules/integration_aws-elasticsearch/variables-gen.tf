@@ -272,94 +272,94 @@ variable "fivexx_http_response_disabled" {
   default     = null
 }
 
-variable "fivexx_http_response_disabled_critical_open_search" {
-  description = "Disable critical_open_search alerting rule for fivexx_http_response detector"
+variable "fivexx_http_response_disabled_opensearch_critical" {
+  description = "Disable opensearch_critical alerting rule for fivexx_http_response detector"
   type        = bool
   default     = null
 }
 
-variable "fivexx_http_response_disabled_major_open_search" {
-  description = "Disable major_open_search alerting rule for fivexx_http_response detector"
+variable "fivexx_http_response_disabled_opensearch_major" {
+  description = "Disable opensearch_major alerting rule for fivexx_http_response detector"
   type        = bool
   default     = null
 }
 
-variable "fivexx_http_response_disabled_critical_elastic_search" {
-  description = "Disable critical_elastic_search alerting rule for fivexx_http_response detector"
+variable "fivexx_http_response_disabled_elasticsearch_critical" {
+  description = "Disable elasticsearch_critical alerting rule for fivexx_http_response detector"
   type        = bool
   default     = null
 }
 
-variable "fivexx_http_response_disabled_major_elastic_search" {
-  description = "Disable major_elastic_search alerting rule for fivexx_http_response detector"
+variable "fivexx_http_response_disabled_elasticsearch_major" {
+  description = "Disable elasticsearch_major alerting rule for fivexx_http_response detector"
   type        = bool
   default     = null
 }
 
-variable "fivexx_http_response_threshold_critical_open_search" {
-  description = "Critical_open_search threshold for fivexx_http_response detector in %"
+variable "fivexx_http_response_threshold_opensearch_critical" {
+  description = "Opensearch_critical threshold for fivexx_http_response detector in %"
   type        = number
   default     = 10
 }
 
-variable "fivexx_http_response_lasting_duration_critical_open_search" {
+variable "fivexx_http_response_lasting_duration_opensearch_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
   default     = "5m"
 }
 
-variable "fivexx_http_response_at_least_percentage_critical_open_search" {
+variable "fivexx_http_response_at_least_percentage_opensearch_critical" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 0.9
 }
-variable "fivexx_http_response_threshold_major_open_search" {
-  description = "Major_open_search threshold for fivexx_http_response detector in %"
+variable "fivexx_http_response_threshold_opensearch_major" {
+  description = "Opensearch_major threshold for fivexx_http_response detector in %"
   type        = number
   default     = 5
 }
 
-variable "fivexx_http_response_lasting_duration_major_open_search" {
+variable "fivexx_http_response_lasting_duration_opensearch_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
   default     = "5m"
 }
 
-variable "fivexx_http_response_at_least_percentage_major_open_search" {
+variable "fivexx_http_response_at_least_percentage_opensearch_major" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 0.9
 }
-variable "fivexx_http_response_threshold_critical_elastic_search" {
-  description = "Critical_elastic_search threshold for fivexx_http_response detector in %"
+variable "fivexx_http_response_threshold_elasticsearch_critical" {
+  description = "Elasticsearch_critical threshold for fivexx_http_response detector in %"
   type        = number
   default     = 10
 }
 
-variable "fivexx_http_response_lasting_duration_critical_elastic_search" {
+variable "fivexx_http_response_lasting_duration_elasticsearch_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
   default     = "5m"
 }
 
-variable "fivexx_http_response_at_least_percentage_critical_elastic_search" {
+variable "fivexx_http_response_at_least_percentage_elasticsearch_critical" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 0.9
 }
-variable "fivexx_http_response_threshold_major_elastic_search" {
-  description = "Major_elastic_search threshold for fivexx_http_response detector in %"
+variable "fivexx_http_response_threshold_elasticsearch_major" {
+  description = "Elasticsearch_major threshold for fivexx_http_response detector in %"
   type        = number
   default     = 5
 }
 
-variable "fivexx_http_response_lasting_duration_major_elastic_search" {
+variable "fivexx_http_response_lasting_duration_elasticsearch_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
   default     = "5m"
 }
 
-variable "fivexx_http_response_at_least_percentage_major_elastic_search" {
+variable "fivexx_http_response_at_least_percentage_elasticsearch_major" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 0.9
@@ -851,7 +851,7 @@ variable "master_cpu_disabled_critical" {
 variable "master_cpu_threshold_major" {
   description = "Major threshold for master_cpu detector"
   type        = number
-  default     = 50
+  default     = 60
 }
 
 variable "master_cpu_lasting_duration_major" {

@@ -11,45 +11,45 @@ value_unit: "%"
 signals:
   error_stream:
     metric: 5xx
-  open_search_stream:
+  opensearch_stream:
     metric: OpenSearchRequests
-  elastic_search_stream:
+  elasticsearch_stream:
     metric: ElasticsearchRequests
-  open_search_signal:
-    formula: (error_stream/open_search_stream*100)
+  opensearch_signal:
+    formula: (error_stream/opensearch_stream*100)
     publish: true
-  elastic_search_signal:
-    formula: (error_stream/elastic_search_stream*100)
+  elasticsearch_signal:
+    formula: (error_stream/elasticsearch_stream*100)
     publish: true
 
 rules:
-  critical_open_search:
+  opensearch_critical:
     threshold: 10
     comparator: ">"
     lasting_duration: "5m"
     lasting_at_least: 0.9
-    signal: open_search_signal
+    signal: opensearch_signal
     severity: critical
-  major_open_search:
+  opensearch_major:
     threshold: 5
     comparator: ">"
-    dependency: critical_open_search
+    dependency: opensearch_critical
     lasting_duration: "5m"
     lasting_at_least: 0.9
-    signal: open_search_signal
+    signal: opensearch_signal
     severity: major
-  critical_elastic_search:
+  elasticsearch_critical:
     threshold: 10
     comparator: ">"
     lasting_duration: "5m"
     lasting_at_least: 0.9
-    signal: elastic_search_signal
+    signal: elasticsearch_signal
     severity: critical
-  major_elastic_search:
+  elasticsearch_major:
     threshold: 5
     comparator: ">"
-    dependency: critical_elastic_search
+    dependency: elasticsearch_critical
     lasting_duration: "5m"
     lasting_at_least: 0.9
-    signal: elastic_search_signal
+    signal: elasticsearch_signal
     severity: major

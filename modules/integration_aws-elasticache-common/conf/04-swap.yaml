@@ -1,5 +1,6 @@
 module: AWS ElastiCache
-name: "Swap"
+id: "swap"
+name: "Swap usage"
 
 transformation: ".min(over='5m')"
 aggregation: true

@@ -79,7 +79,7 @@ This module creates the following SignalFx detectors which could contain one or 
 |AWS ElastiCache evictions|X|X|-|-|-|
 |AWS ElastiCache connections over max allowed|X|-|-|-|-|
 |AWS ElastiCache current connections|X|-|-|-|-|
-|AWS ElastiCache swap|X|X|-|-|-|
+|AWS ElastiCache swap usage|X|X|-|-|-|
 |AWS ElastiCache freeable memory|-|X|X|-|-|
 |AWS ElastiCache evictions changing rate grows|X|X|-|-|-|
 

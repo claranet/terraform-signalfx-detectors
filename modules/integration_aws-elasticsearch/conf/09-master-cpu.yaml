@@ -1,5 +1,6 @@
 module: AWS Elasticsearch
-name: "Master CPU"
+id: "master_cpu"
+name: "Master CPU utilization"
 
 transformation: ".min(over='20m')"
 aggregation: ""
@@ -11,7 +12,7 @@ signals:
 
 rules:
   major:
-    threshold: 50
+    threshold: 60
     comparator: ">"
     dependency: critical
   critical:

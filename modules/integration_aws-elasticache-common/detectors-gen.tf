@@ -125,7 +125,7 @@ EOF
 }
 
 resource "signalfx_detector" "swap" {
-  name = format("%s %s", local.detector_name_prefix, "AWS ElastiCache swap")
+  name = format("%s %s", local.detector_name_prefix, "AWS ElastiCache swap usage")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
