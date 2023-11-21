@@ -266,7 +266,7 @@
 |AWS ElastiCache evictions|X|X|-|-|-|
 |AWS ElastiCache connections over max allowed|X|-|-|-|-|
 |AWS ElastiCache current connections|X|-|-|-|-|
-|AWS ElastiCache swap|X|X|-|-|-|
+|AWS ElastiCache swap usage|X|X|-|-|-|
 |AWS ElastiCache freeable memory|-|X|X|-|-|
 |AWS ElastiCache evictions changing rate grows|X|X|-|-|-|
 
@@ -294,16 +294,16 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|AWS ElasticSearch heartbeat|X|-|-|-|-|
-|AWS ElasticSearch cluster status|X|X|-|-|-|
-|AWS ElasticSearch cluster free storage space|X|X|-|-|-|
-|AWS ElasticSearch cluster UltraWarm free storage space|X|X|-|-|-|
-|AWS ElasticSearch cluster CPU|X|X|-|-|-|
-|AWS ElasticSearch cluster Master nodes CPU|X|X|-|-|-|
+|AWS Elasticsearch heartbeat|X|-|-|-|-|
 |AWS Elasticsearch jvm memory pressure|X|X|-|-|-|
 |AWS Elasticsearch 4xx http response|X|X|-|-|-|
 |AWS Elasticsearch 5xx http response|X|X|-|-|-|
 |AWS Elasticsearch shard count|X|X|-|-|-|
+|AWS Elasticsearch cluster status|X|X|-|-|-|
+|AWS Elasticsearch free storage space|X|X|-|-|-|
+|AWS Elasticsearch ultrawarm free storage space|X|X|-|-|-|
+|AWS Elasticsearch cpu utilization|X|X|-|-|-|
+|AWS Elasticsearch master cpu utilization|X|X|-|-|-|
 
 
 ## integration_aws-elb

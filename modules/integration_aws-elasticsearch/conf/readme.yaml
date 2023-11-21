@@ -8,3 +8,7 @@ notes: |
   By default this monitor is disabled because it can be triggered by bots scrapping the web, on public ES cluster (if possible, [install your cluster inside a VPC](https://docs.aws.amazon.com/opensearch-service/latest/developerguide/vpc.html) instead of using public cluster).
 
   If this kind of scrapping isn't possible in your case (IP restrictions or VPC cluster) you may want to enable this detector to catch, for example, [HTTP 429 errors](https://aws.amazon.com/premiumsupport/knowledge-center/opensearch-resolve-429-error/).
+
+  ### OpenSearch vs ElasticSearch
+
+  The detector '5xx HTTP response' supports both [OpenSearch and ElasticSearch](https://docs.aws.amazon.com/opensearch-service/latest/developerguide/managedomains-cloudwatchmetrics.html#managedomains-cloudwatchmetrics-cluster-metrics:~:text=OpenSearchRequests), two signals (and 2x2 alerting rules) are provided for each case.

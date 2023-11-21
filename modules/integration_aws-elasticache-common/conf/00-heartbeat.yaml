@@ -1,0 +1,12 @@
+module: AWS ElastiCache
+name: heartbeat
+
+transformation: false
+aggregation: ".mean(by=['CacheClusterId'])"
+filtering: "filter('stat', 'mean') and filter('namespace', 'AWS/ElastiCache')"
+
+signals:
+  signal:
+    metric: CPUUtilization
+rules:
+  critical:

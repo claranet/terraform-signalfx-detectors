@@ -1,0 +1,25 @@
+module: AWS Elasticsearch
+name: Cluster status
+
+aggregation: ".min(over='15m')"
+filtering: "filter('namespace', 'AWS/ES') and filter('stat', 'upper')"
+
+signals:
+  red:
+    metric: ClusterStatus.red
+    publish: true
+  yellow:
+    metric: ClusterStatus.yellow
+    publish: true
+
+rules:
+  critical:
+    threshold: 1
+    comparator: ">="
+    description: "is red"
+    signal: red
+  major:
+    threshold: 1
+    comparator: ">="
+    description: "is yellow"
+    signal: yellow
