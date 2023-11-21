@@ -1,6 +1,6 @@
-output "cpu_90_15min" {
-  description = "Detector resource for cpu_90_15min"
-  value       = signalfx_detector.cpu_90_15min
+output "cpu_usage" {
+  description = "Detector resource for cpu_usage"
+  value       = signalfx_detector.cpu_usage
 }
 
 output "dbload" {

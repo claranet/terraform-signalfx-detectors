@@ -362,11 +362,11 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
+|AWS RDS Common heartbeat|X|-|-|-|-|
+|AWS RDS Common instance cpu|X|X|-|-|-|
+|AWS RDS Common instance free space|X|X|-|-|-|
+|AWS RDS Common replica lag|X|X|-|-|-|
 |AWS RDS Common db load|X|X|-|-|-|
-|AWS RDS heartbeat|X|-|-|-|-|
-|AWS RDS instance CPU|X|X|-|-|-|
-|AWS RDS instance free space|X|X|-|-|-|
-|AWS RDS replica lag|X|X|-|-|-|
 
 
 ## integration_aws-redshift
