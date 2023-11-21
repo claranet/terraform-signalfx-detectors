@@ -2,4 +2,4 @@ documentations:
   - name: CloudWatch metrics
     url: 'https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-metrics-and-dimensions.html'
   - name: Splunk Observability metadata
-    url: 'https://docs.splunk.com/Observability/infrastructure/monitor/aws-infra-metadata.html#amazon-api-gateway-metadata'
+    url: 'https://docs.splunk.com/observability/en/infrastructure/monitor/aws-infra-metadata.html#amazon-api-gateway-metadata'

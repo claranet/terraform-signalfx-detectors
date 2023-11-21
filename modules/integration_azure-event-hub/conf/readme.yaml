@@ -2,7 +2,7 @@ documentations:
   - name: Azure Monitor metrics
     url: 'https://docs.microsoft.com/en-us/azure/azure-monitor/essentials/metrics-supported#microsofteventhubclusters'
   - name: Splunk Observability metrics
-    url: 'https://docs.splunk.com/Observability/gdi/get-data-in/connect/azure/azure-metrics.html#azure-event-hubs-metrics'
+    url: 'https://docs.splunk.com/observability/en/gdi/get-data-in/connect/azure/azure-metrics.html#azure-event-hubs-metrics'
 
 notes: |
   ### About `throttled_requests` detector

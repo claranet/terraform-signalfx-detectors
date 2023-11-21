@@ -2,7 +2,7 @@ documentations:
   - name: Smart Agent monitor
     url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/docker-container-stats.md'
   - name: Splunk Observability integration
-    url: 'https://docs.splunk.com/Observability/gdi/docker/docker.html'
+    url: 'https://docs.splunk.com/observability/en/gdi/monitors-hosts/docker.html'
 
 source_doc: |
   It requires to enable the following `extraMetrics`:
