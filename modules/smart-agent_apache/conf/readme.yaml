@@ -2,7 +2,7 @@ documentations:
   - name: Smart Agent monitor
     url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/collectd-apache.md'
   - name: Splunk Observability integration
-    url: 'https://docs.splunk.com/Observability/gdi/apache/apache.html'
+    url: 'https://docs.splunk.com/observability/en/gdi/monitors-hosts/apache-httpserver.html'
   - name: Collectd plugin
     url: 'https://collectd.org/wiki/index.php/Plugin:Apache'
   - name: Apache status module
