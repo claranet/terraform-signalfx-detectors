@@ -1,0 +1,13 @@
+module: AWS Elasticsearch
+name: heartbeat
+
+transformation: false
+aggregation: ".mean(by=['DomainName'])"
+filtering: "filter('namespace', 'AWS/ES')"
+
+signals:
+  signal:
+    metric: Nodes
+    filter: "filter('stat', 'mean')"
+rules:
+  critical:
