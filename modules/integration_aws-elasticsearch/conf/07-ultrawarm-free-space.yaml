@@ -1,0 +1,22 @@
+module: AWS Elasticsearch
+id: "ultrawarm_free_space"
+name: "UltraWarm free storage space"
+
+transformation: ".scale(0.001)"
+aggregation: ""
+
+filtering: "filter('namespace', 'AWS/ES')"
+value_unit: "Gibibyte"
+
+signals:
+  signal:
+    metric: "WarmFreeStorageSpace"
+    filter: "filter('stat', 'lower') and filter('NodeId', '*')"
+rules:
+  major:
+    threshold: 15
+    comparator: "<"
+    dependency: critical
+  critical:
+    threshold: 10
+    comparator: "<"

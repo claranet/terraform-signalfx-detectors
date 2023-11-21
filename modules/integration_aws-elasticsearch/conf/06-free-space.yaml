@@ -1,0 +1,22 @@
+module: AWS Elasticsearch
+id: "free_space"
+name: "Free storage space"
+
+transformation: ".scale(0.001)"
+aggregation: ""
+
+filtering: "filter('namespace', 'AWS/ES')"
+value_unit: "Gibibyte"
+
+signals:
+  signal:
+    metric: "FreeStorageSpace"
+    filter: "filter('stat', 'lower') and filter('NodeId', '*')"
+rules:
+  major:
+    threshold: 40
+    comparator: "<"
+    dependency: critical
+  critical:
+    threshold: 20
+    comparator: "<"
