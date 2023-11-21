@@ -57,7 +57,7 @@ Note the following parameters:
 
 These 3 parameters along with all variables defined in [common-variables.tf](common-variables.tf) are common to all
 [modules](../) in this repository. Other variables, specific to this module, are available in
-[variables.tf](variables.tf).
+[variables-gen.tf](variables-gen.tf).
 In general, the default configuration "works" but all of these Terraform
 [variables](https://www.terraform.io/language/values/variables) make it possible to
 customize the detectors behavior to better fit your needs.
@@ -75,9 +75,9 @@ This module creates the following SignalFx detectors which could contain one or 
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|AWS ECS heartbeat|X|-|-|-|-|
-|AWS ECS cluster CPU utilization|X|X|-|-|-|
-|AWS ECS cluster memory utilization|X|X|-|-|-|
+|AWS ECS Cluster heartbeat|X|-|-|-|-|
+|AWS ECS Cluster cpu utilization|X|X|-|-|-|
+|AWS ECS Cluster memory utilization|X|X|-|-|-|
 
 ## How to collect required metrics?
 
@@ -108,4 +108,4 @@ Here is the list of required metrics for detectors in this module.
 * [Terraform SignalFx detector](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector)
 * [Splunk Observability integrations](https://docs.splunk.com/Observability/gdi/get-data-in/integrations.html)
 * [CloudWatch metrics](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/cloudwatch-metrics.html)
-* [Splunk Observability metrics](https://docs.splunk.com/observability/en/gdi/get-data-in/integrations.html#aws-ecs)
+* [Splunk Observability metrics](https://docs.splunk.com/Observability/gdi/get-data-in/connect/aws/aws-metrics.html#aws-ecs)
