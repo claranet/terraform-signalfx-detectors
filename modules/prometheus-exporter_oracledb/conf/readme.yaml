@@ -9,7 +9,7 @@ source_doc: |
   ### Examples
 
   Here is a sample configuration fragment for the [OpenTelemetry Collector](https://opentelemetry.io/docs/collector/) agent using
-  the [prometheusexec receiver](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/receiver/prometheusexecreceiver).
+  the prometheusexec receiver ([deprecated](https://github.com/open-telemetry/opentelemetry-collector-contrib/pull/24740)).
   
   In this example we have an oracle instance which is running in Multitenant mode, means that we have one Container Database and one pluggable database. 
   

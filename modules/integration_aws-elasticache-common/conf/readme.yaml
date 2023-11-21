@@ -4,4 +4,4 @@ documentations:
   - name: Cloudwatch host-level metrics for Redis
     url: 'https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/CacheMetrics.HostLevel.html'
   - name: Splunk Observability metrics
-    url: 'https://docs.splunk.com/Observability/gdi/get-data-in/connect/aws/aws-metrics.html#amazon-elasticache'
+    url: 'https://docs.splunk.com/observability/en/gdi/get-data-in/integrations.html#amazon-elasticache'

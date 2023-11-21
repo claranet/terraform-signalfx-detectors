@@ -40,7 +40,7 @@ resource "signalfx_detector" "backend_latency" {
   }
 
   program_text = <<-EOF
-    base_filtering = filter('namespace', 'AWS/ApplicationELB')
+    base_filtering = filter('namespace', 'AWS/ELB')
     signal = data('Latency', filter=base_filtering and filter('stat', 'mean') and (not filter('AvailabilityZone', '*')) and filter('LoadBalancerName', '*') and ${module.filtering.signalflow}, rollup='average', extrapolation='zero')${var.backend_latency_aggregation_function}${var.backend_latency_transformation_function}.publish('signal')
     detect(when(signal > ${var.backend_latency_threshold_critical}, lasting=%{if var.backend_latency_lasting_duration_critical == null}None%{else}'${var.backend_latency_lasting_duration_critical}'%{endif}, at_least=${var.backend_latency_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal > ${var.backend_latency_threshold_major}, lasting=%{if var.backend_latency_lasting_duration_major == null}None%{else}'${var.backend_latency_lasting_duration_major}'%{endif}, at_least=${var.backend_latency_at_least_percentage_major}) and (not when(signal > ${var.backend_latency_threshold_critical}, lasting=%{if var.backend_latency_lasting_duration_critical == null}None%{else}'${var.backend_latency_lasting_duration_critical}'%{endif}, at_least=${var.backend_latency_at_least_percentage_critical}))).publish('MAJOR')

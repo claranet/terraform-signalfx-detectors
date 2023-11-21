@@ -10,6 +10,7 @@
   - [Metrics](#metrics)
 - [Notes](#notes)
   - [4xx HTTP response](#4xx-http-response)
+  - [OpenSearch vs ElasticSearch](#opensearch-vs-elasticsearch)
 - [Related documentation](#related-documentation)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -57,14 +58,14 @@ Note the following parameters:
   Check the [notification binding](https://github.com/claranet/terraform-signalfx-detectors/wiki/Notifications-binding)
   documentation to understand the recommended role of each severity.
 
-These 3 parameters alongs with all variables defined in [common-variables.tf](common-variables.tf) are common to all
+These 3 parameters along with all variables defined in [common-variables.tf](common-variables.tf) are common to all
 [modules](../) in this repository. Other variables, specific to this module, are available in
-[variables.tf](variables.tf) and [variables-gen.tf](variables-gen.tf).
+[variables-gen.tf](variables-gen.tf).
 In general, the default configuration "works" but all of these Terraform
 [variables](https://www.terraform.io/language/values/variables) make it possible to
 customize the detectors behavior to better fit your needs.
 
-Most of them represent usual tips and rules detailled in the
+Most of them represent usual tips and rules detailed in the
 [guidance](https://github.com/claranet/terraform-signalfx-detectors/wiki/Guidance) documentation and listed in the
 common [variables](https://github.com/claranet/terraform-signalfx-detectors/wiki/Variables) dedicated documentation.
 
@@ -77,16 +78,16 @@ This module creates the following SignalFx detectors which could contain one or 
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|AWS ElasticSearch heartbeat|X|-|-|-|-|
-|AWS ElasticSearch cluster status|X|X|-|-|-|
-|AWS ElasticSearch cluster free storage space|X|X|-|-|-|
-|AWS ElasticSearch cluster UltraWarm free storage space|X|X|-|-|-|
-|AWS ElasticSearch cluster CPU|X|X|-|-|-|
-|AWS ElasticSearch cluster Master nodes CPU|X|X|-|-|-|
+|AWS Elasticsearch heartbeat|X|-|-|-|-|
 |AWS Elasticsearch jvm memory pressure|X|X|-|-|-|
 |AWS Elasticsearch 4xx http response|X|X|-|-|-|
 |AWS Elasticsearch 5xx http response|X|X|-|-|-|
 |AWS Elasticsearch shard count|X|X|-|-|-|
+|AWS Elasticsearch cluster status|X|X|-|-|-|
+|AWS Elasticsearch free storage space|X|X|-|-|-|
+|AWS Elasticsearch ultrawarm free storage space|X|X|-|-|-|
+|AWS Elasticsearch cpu utilization|X|X|-|-|-|
+|AWS Elasticsearch master cpu utilization|X|X|-|-|-|
 
 ## How to collect required metrics?
 
@@ -110,6 +111,7 @@ Here is the list of required metrics for detectors in this module.
 * `ClusterStatus.red`
 * `ClusterStatus.yellow`
 * `CPUUtilization`
+* `ElasticsearchRequests`
 * `FreeStorageSpace`
 * `JVMMemoryPressure`
 * `MasterCPUUtilization`
@@ -127,6 +129,10 @@ Here is the list of required metrics for detectors in this module.
 By default this monitor is disabled because it can be triggered by bots scrapping the web, on public ES cluster (if possible, [install your cluster inside a VPC](https://docs.aws.amazon.com/opensearch-service/latest/developerguide/vpc.html) instead of using public cluster).
 
 If this kind of scrapping isn't possible in your case (IP restrictions or VPC cluster) you may want to enable this detector to catch, for example, [HTTP 429 errors](https://aws.amazon.com/premiumsupport/knowledge-center/opensearch-resolve-429-error/).
+
+### OpenSearch vs ElasticSearch
+
+The detector '5xx HTTP response' supports both [OpenSearch and ElasticSearch](https://docs.aws.amazon.com/opensearch-service/latest/developerguide/managedomains-cloudwatchmetrics.html#managedomains-cloudwatchmetrics-cluster-metrics:~:text=OpenSearchRequests), two signals (and 2x2 alerting rules) are provided for each case.
 
 
 ## Related documentation
