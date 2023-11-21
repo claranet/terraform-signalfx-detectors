@@ -88,8 +88,8 @@ resource "signalfx_detector" "storage" {
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.DBforMySQL/servers') and filter('primary_aggregation_type', 'true')
     signal = data('storage_percent', filter=base_filtering and ${module.filtering.signalflow})${var.storage_aggregation_function}${var.storage_transformation_function}.publish('signal')
-    detect(when(signal > ${var.storage_threshold_major}, lasting=%{if var.storage_lasting_duration_major == null}None%{else}'${var.storage_lasting_duration_major}'%{endif}, at_least=${var.storage_at_least_percentage_major})).publish('MAJOR')
-    detect(when(signal > ${var.storage_threshold_critical}, lasting=%{if var.storage_lasting_duration_critical == null}None%{else}'${var.storage_lasting_duration_critical}'%{endif}, at_least=${var.storage_at_least_percentage_critical}) and (not when(signal > ${var.storage_threshold_major}, lasting=%{if var.storage_lasting_duration_major == null}None%{else}'${var.storage_lasting_duration_major}'%{endif}, at_least=${var.storage_at_least_percentage_major}))).publish('CRIT')
+    detect(when(signal > ${var.storage_threshold_major}, lasting=%{if var.storage_lasting_duration_major == null}None%{else}'${var.storage_lasting_duration_major}'%{endif}, at_least=${var.storage_at_least_percentage_major}) and (not when(signal > ${var.storage_threshold_critical}, lasting=%{if var.storage_lasting_duration_critical == null}None%{else}'${var.storage_lasting_duration_critical}'%{endif}, at_least=${var.storage_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.storage_threshold_critical}, lasting=%{if var.storage_lasting_duration_critical == null}None%{else}'${var.storage_lasting_duration_critical}'%{endif}, at_least=${var.storage_at_least_percentage_critical})).publish('CRIT')
 EOF
 
   rule {

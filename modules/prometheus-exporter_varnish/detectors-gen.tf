@@ -123,8 +123,8 @@ resource "signalfx_detector" "hit_rate" {
     A = data('varnish_main_cache_hit', filter=base_filtering and ${module.filtering.signalflow})${var.hit_rate_aggregation_function}${var.hit_rate_transformation_function}
     B = data('varnish_main_cache_miss', filter=base_filtering and ${module.filtering.signalflow})${var.hit_rate_aggregation_function}${var.hit_rate_transformation_function}
     signal = (A/(A+B)).fill(0).scale(100).publish('signal')
-    detect(when(signal < ${var.hit_rate_threshold_minor}, lasting=%{if var.hit_rate_lasting_duration_minor == null}None%{else}'${var.hit_rate_lasting_duration_minor}'%{endif}, at_least=${var.hit_rate_at_least_percentage_minor})).publish('MINOR')
-    detect(when(signal <= ${var.hit_rate_threshold_major}, lasting=%{if var.hit_rate_lasting_duration_major == null}None%{else}'${var.hit_rate_lasting_duration_major}'%{endif}, at_least=${var.hit_rate_at_least_percentage_major}) and (not when(signal < ${var.hit_rate_threshold_minor}, lasting=%{if var.hit_rate_lasting_duration_minor == null}None%{else}'${var.hit_rate_lasting_duration_minor}'%{endif}, at_least=${var.hit_rate_at_least_percentage_minor}))).publish('MAJOR')
+    detect(when(signal < ${var.hit_rate_threshold_minor}, lasting=%{if var.hit_rate_lasting_duration_minor == null}None%{else}'${var.hit_rate_lasting_duration_minor}'%{endif}, at_least=${var.hit_rate_at_least_percentage_minor}) and (not when(signal <= ${var.hit_rate_threshold_major}, lasting=%{if var.hit_rate_lasting_duration_major == null}None%{else}'${var.hit_rate_lasting_duration_major}'%{endif}, at_least=${var.hit_rate_at_least_percentage_major}))).publish('MINOR')
+    detect(when(signal <= ${var.hit_rate_threshold_major}, lasting=%{if var.hit_rate_lasting_duration_major == null}None%{else}'${var.hit_rate_lasting_duration_major}'%{endif}, at_least=${var.hit_rate_at_least_percentage_major})).publish('MAJOR')
 EOF
 
   rule {

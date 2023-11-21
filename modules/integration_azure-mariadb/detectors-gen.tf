@@ -42,8 +42,8 @@ resource "signalfx_detector" "cpu" {
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.DB*orMariaDB/servers') and filter('primary_aggregation_type', 'true')
     signal = data('cpu_percent', filter=base_filtering and ${module.filtering.signalflow})${var.cpu_aggregation_function}${var.cpu_transformation_function}.publish('signal')
-    detect(when(signal > ${var.cpu_threshold_major}, lasting=%{if var.cpu_lasting_duration_major == null}None%{else}'${var.cpu_lasting_duration_major}'%{endif}, at_least=${var.cpu_at_least_percentage_major})).publish('MAJOR')
-    detect(when(signal > ${var.cpu_threshold_critical}, lasting=%{if var.cpu_lasting_duration_critical == null}None%{else}'${var.cpu_lasting_duration_critical}'%{endif}, at_least=${var.cpu_at_least_percentage_critical}) and (not when(signal > ${var.cpu_threshold_major}, lasting=%{if var.cpu_lasting_duration_major == null}None%{else}'${var.cpu_lasting_duration_major}'%{endif}, at_least=${var.cpu_at_least_percentage_major}))).publish('CRIT')
+    detect(when(signal > ${var.cpu_threshold_major}, lasting=%{if var.cpu_lasting_duration_major == null}None%{else}'${var.cpu_lasting_duration_major}'%{endif}, at_least=${var.cpu_at_least_percentage_major}) and (not when(signal > ${var.cpu_threshold_critical}, lasting=%{if var.cpu_lasting_duration_critical == null}None%{else}'${var.cpu_lasting_duration_critical}'%{endif}, at_least=${var.cpu_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.cpu_threshold_critical}, lasting=%{if var.cpu_lasting_duration_critical == null}None%{else}'${var.cpu_lasting_duration_critical}'%{endif}, at_least=${var.cpu_at_least_percentage_critical})).publish('CRIT')
 EOF
 
   rule {
@@ -134,8 +134,8 @@ resource "signalfx_detector" "io" {
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.DB*orMariaDB/servers') and filter('primary_aggregation_type', 'true')
     signal = data('io_consumption_percent', filter=base_filtering and ${module.filtering.signalflow})${var.io_aggregation_function}${var.io_transformation_function}.publish('signal')
-    detect(when(signal > ${var.io_threshold_major}, lasting=%{if var.io_lasting_duration_major == null}None%{else}'${var.io_lasting_duration_major}'%{endif}, at_least=${var.io_at_least_percentage_major})).publish('MAJOR')
-    detect(when(signal > ${var.io_threshold_critical}, lasting=%{if var.io_lasting_duration_critical == null}None%{else}'${var.io_lasting_duration_critical}'%{endif}, at_least=${var.io_at_least_percentage_critical}) and (not when(signal > ${var.io_threshold_major}, lasting=%{if var.io_lasting_duration_major == null}None%{else}'${var.io_lasting_duration_major}'%{endif}, at_least=${var.io_at_least_percentage_major}))).publish('CRIT')
+    detect(when(signal > ${var.io_threshold_major}, lasting=%{if var.io_lasting_duration_major == null}None%{else}'${var.io_lasting_duration_major}'%{endif}, at_least=${var.io_at_least_percentage_major}) and (not when(signal > ${var.io_threshold_critical}, lasting=%{if var.io_lasting_duration_critical == null}None%{else}'${var.io_lasting_duration_critical}'%{endif}, at_least=${var.io_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.io_threshold_critical}, lasting=%{if var.io_lasting_duration_critical == null}None%{else}'${var.io_lasting_duration_critical}'%{endif}, at_least=${var.io_at_least_percentage_critical})).publish('CRIT')
 EOF
 
   rule {
@@ -226,8 +226,8 @@ resource "signalfx_detector" "replication_lag" {
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.DB*orMariaDB/servers') and filter('primary_aggregation_type', 'true')
     signal = data('seconds_behind_master', filter=base_filtering and ${module.filtering.signalflow})${var.replication_lag_aggregation_function}${var.replication_lag_transformation_function}.publish('signal')
-    detect(when(signal > ${var.replication_lag_threshold_major}, lasting=%{if var.replication_lag_lasting_duration_major == null}None%{else}'${var.replication_lag_lasting_duration_major}'%{endif}, at_least=${var.replication_lag_at_least_percentage_major})).publish('MAJOR')
-    detect(when(signal > ${var.replication_lag_threshold_critical}, lasting=%{if var.replication_lag_lasting_duration_critical == null}None%{else}'${var.replication_lag_lasting_duration_critical}'%{endif}, at_least=${var.replication_lag_at_least_percentage_critical}) and (not when(signal > ${var.replication_lag_threshold_major}, lasting=%{if var.replication_lag_lasting_duration_major == null}None%{else}'${var.replication_lag_lasting_duration_major}'%{endif}, at_least=${var.replication_lag_at_least_percentage_major}))).publish('CRIT')
+    detect(when(signal > ${var.replication_lag_threshold_major}, lasting=%{if var.replication_lag_lasting_duration_major == null}None%{else}'${var.replication_lag_lasting_duration_major}'%{endif}, at_least=${var.replication_lag_at_least_percentage_major}) and (not when(signal > ${var.replication_lag_threshold_critical}, lasting=%{if var.replication_lag_lasting_duration_critical == null}None%{else}'${var.replication_lag_lasting_duration_critical}'%{endif}, at_least=${var.replication_lag_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.replication_lag_threshold_critical}, lasting=%{if var.replication_lag_lasting_duration_critical == null}None%{else}'${var.replication_lag_lasting_duration_critical}'%{endif}, at_least=${var.replication_lag_at_least_percentage_critical})).publish('CRIT')
 EOF
 
   rule {

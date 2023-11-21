@@ -88,8 +88,8 @@ resource "signalfx_detector" "storage_usage" {
   program_text = <<-EOF
     base_filtering = filter('namespace', 'AWS/Redshift')
     signal = data('PercentageDiskSpaceUsed', filter=base_filtering and filter('stat', 'mean') and filter('ClusterIdentifier', '*') and filter('NodeID', '*') and ${module.filtering.signalflow})${var.storage_usage_aggregation_function}${var.storage_usage_transformation_function}.publish('signal')
-    detect(when(signal > ${var.storage_usage_threshold_major}, lasting=%{if var.storage_usage_lasting_duration_major == null}None%{else}'${var.storage_usage_lasting_duration_major}'%{endif}, at_least=${var.storage_usage_at_least_percentage_major})).publish('MAJOR')
-    detect(when(signal > ${var.storage_usage_threshold_critical}, lasting=%{if var.storage_usage_lasting_duration_critical == null}None%{else}'${var.storage_usage_lasting_duration_critical}'%{endif}, at_least=${var.storage_usage_at_least_percentage_critical}) and (not when(signal > ${var.storage_usage_threshold_major}, lasting=%{if var.storage_usage_lasting_duration_major == null}None%{else}'${var.storage_usage_lasting_duration_major}'%{endif}, at_least=${var.storage_usage_at_least_percentage_major}))).publish('CRIT')
+    detect(when(signal > ${var.storage_usage_threshold_major}, lasting=%{if var.storage_usage_lasting_duration_major == null}None%{else}'${var.storage_usage_lasting_duration_major}'%{endif}, at_least=${var.storage_usage_at_least_percentage_major}) and (not when(signal > ${var.storage_usage_threshold_critical}, lasting=%{if var.storage_usage_lasting_duration_critical == null}None%{else}'${var.storage_usage_lasting_duration_critical}'%{endif}, at_least=${var.storage_usage_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.storage_usage_threshold_critical}, lasting=%{if var.storage_usage_lasting_duration_critical == null}None%{else}'${var.storage_usage_lasting_duration_critical}'%{endif}, at_least=${var.storage_usage_at_least_percentage_critical})).publish('CRIT')
 EOF
 
   rule {
