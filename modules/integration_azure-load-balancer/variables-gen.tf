@@ -113,7 +113,7 @@ variable "backend_unhealthy_host_ratio_threshold_critical" {
 variable "backend_unhealthy_host_ratio_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "15m"
+  default     = "10m"
 }
 
 variable "backend_unhealthy_host_ratio_at_least_percentage_critical" {
@@ -130,7 +130,7 @@ variable "backend_unhealthy_host_ratio_threshold_major" {
 variable "backend_unhealthy_host_ratio_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "15m"
+  default     = "10m"
 }
 
 variable "backend_unhealthy_host_ratio_at_least_percentage_major" {
