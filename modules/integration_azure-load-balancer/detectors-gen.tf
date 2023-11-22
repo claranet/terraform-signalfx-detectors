@@ -27,8 +27,8 @@ EOF
   max_delay = var.heartbeat_max_delay
 }
 
-resource "signalfx_detector" "healthprobe" {
-  name = format("%s %s", local.detector_name_prefix, "Azure Load Balancer healthprobe")
+resource "signalfx_detector" "backend_unhealthy_host_ratio" {
+  name = format("%s %s", local.detector_name_prefix, "Azure Load Balancer backend unhealthy host ratio")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
@@ -41,34 +41,35 @@ resource "signalfx_detector" "healthprobe" {
 
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.Network/loadBalancers') and filter('primary_aggregation_type', 'true')
-    signal = data('DipAvailability', filter=base_filtering and ${module.filtering.signalflow})${var.healthprobe_aggregation_function}${var.healthprobe_transformation_function}.publish('signal')
-    detect(when(signal < ${var.healthprobe_threshold_critical}, lasting=%{if var.healthprobe_lasting_duration_critical == null}None%{else}'${var.healthprobe_lasting_duration_critical}'%{endif}, at_least=${var.healthprobe_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal < ${var.healthprobe_threshold_major}, lasting=%{if var.healthprobe_lasting_duration_major == null}None%{else}'${var.healthprobe_lasting_duration_major}'%{endif}, at_least=${var.healthprobe_at_least_percentage_major}) and (not when(signal < ${var.healthprobe_threshold_critical}, lasting=%{if var.healthprobe_lasting_duration_critical == null}None%{else}'${var.healthprobe_lasting_duration_critical}'%{endif}, at_least=${var.healthprobe_at_least_percentage_critical}))).publish('MAJOR')
+    signal = data('DipAvailability', filter=base_filtering and ${module.filtering.signalflow})${var.backend_unhealthy_host_ratio_aggregation_function}${var.backend_unhealthy_host_ratio_transformation_function}.publish('signal')
+    detect(when(signal < ${var.backend_unhealthy_host_ratio_threshold_critical}, lasting=%{if var.backend_unhealthy_host_ratio_lasting_duration_critical == null}None%{else}'${var.backend_unhealthy_host_ratio_lasting_duration_critical}'%{endif}, at_least=${var.backend_unhealthy_host_ratio_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal < ${var.backend_unhealthy_host_ratio_threshold_major}, lasting=%{if var.backend_unhealthy_host_ratio_lasting_duration_major == null}None%{else}'${var.backend_unhealthy_host_ratio_lasting_duration_major}'%{endif}, at_least=${var.backend_unhealthy_host_ratio_at_least_percentage_major}) and (not when(signal < ${var.backend_unhealthy_host_ratio_threshold_critical}, lasting=%{if var.backend_unhealthy_host_ratio_lasting_duration_critical == null}None%{else}'${var.backend_unhealthy_host_ratio_lasting_duration_critical}'%{endif}, at_least=${var.backend_unhealthy_host_ratio_at_least_percentage_critical}))).publish('MAJOR')
 EOF
 
   rule {
-    description           = "is too low < ${var.healthprobe_threshold_critical}%"
+    description           = "is too low < ${var.backend_unhealthy_host_ratio_threshold_critical}%"
     severity              = "Critical"
     detect_label          = "CRIT"
-    disabled              = coalesce(var.healthprobe_disabled_critical, var.healthprobe_disabled, var.detectors_disabled)
-    notifications         = try(coalescelist(lookup(var.healthprobe_notifications, "critical", []), var.notifications.critical), null)
-    runbook_url           = try(coalesce(var.healthprobe_runbook_url, var.runbook_url), "")
-    tip                   = var.healthprobe_tip
+    disabled              = coalesce(var.backend_unhealthy_host_ratio_disabled_critical, var.backend_unhealthy_host_ratio_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.backend_unhealthy_host_ratio_notifications, "critical", []), var.notifications.critical), null)
+    runbook_url           = try(coalesce(var.backend_unhealthy_host_ratio_runbook_url, var.runbook_url), "")
+    tip                   = var.backend_unhealthy_host_ratio_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
   rule {
-    description           = "is too low < ${var.healthprobe_threshold_major}%"
+    description           = "is too low < ${var.backend_unhealthy_host_ratio_threshold_major}%"
     severity              = "Major"
     detect_label          = "MAJOR"
-    disabled              = coalesce(var.healthprobe_disabled_major, var.healthprobe_disabled, var.detectors_disabled)
-    notifications         = try(coalescelist(lookup(var.healthprobe_notifications, "major", []), var.notifications.major), null)
-    runbook_url           = try(coalesce(var.healthprobe_runbook_url, var.runbook_url), "")
-    tip                   = var.healthprobe_tip
+    disabled              = coalesce(var.backend_unhealthy_host_ratio_disabled_major, var.backend_unhealthy_host_ratio_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.backend_unhealthy_host_ratio_notifications, "major", []), var.notifications.major), null)
+    runbook_url           = try(coalesce(var.backend_unhealthy_host_ratio_runbook_url, var.runbook_url), "")
+    tip                   = var.backend_unhealthy_host_ratio_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
-  max_delay = var.healthprobe_max_delay
+  max_delay = var.backend_unhealthy_host_ratio_max_delay
 }
+
