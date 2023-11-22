@@ -64,6 +64,30 @@ variable "cpu_90_15min_runbook_url" {
   default     = ""
 }
 
+variable "cpu_90_15_lasting_duration_critical" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "15m"
+}
+
+variable "cpu_90_15_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "10m"
+}
+
+variable "cpu_90_15_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
+
+variable "cpu_90_15_at_least_percentage_major" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
+
 variable "cpu_90_15min_disabled" {
   description = "Disable all alerting rules for cpu_90_15min detector"
   type        = bool
