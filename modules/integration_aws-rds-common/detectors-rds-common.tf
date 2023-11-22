@@ -35,10 +35,8 @@ resource "signalfx_detector" "cpu_90_15min" {
 
   program_text = <<-EOF
     signal = data('CPUUtilization', filter=filter('namespace', 'AWS/RDS') and filter('stat', 'mean') and filter('DBInstanceIdentifier', '*') and ${module.filtering.signalflow})${var.cpu_90_15min_aggregation_function}${var.cpu_90_15min_transformation_function}.publish('signal')
-    detect(when(signal > ${var.cpu_90_15min_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.cpu_90_15min_threshold_major}) and (not when(signal > ${var.cpu_90_15min_threshold_critical}))).publish('MAJOR')
-detect(when(signal > ${var.cpu_90_15min_threshold_critical}, lasting=%{if var.cpu_90_15_lasting_duration_critical == null}None%{else}'${var.cpu_90_15_lasting_duration_critical}'%{endif}, at_least=${var.cpu_90_15_at_least_percentage_critical})).publish('CRIT')
-detect(when(signal > ${var.cpu_90_15min_threshold_major}, lasting=%{if var.cpu_90_15_lasting_duration_major == null}None%{else}'${var.cpu_90_15_lasting_duration_major}'%{endif}, at_least=${var.cpu_90_15_at_least_percentage_major}) and (not when(signal > ${var.cpu_90_15min_threshold_critical}, lasting=%{if var.cpu_90_15_lasting_duration_critical == null}None%{else}'${var.cpu_90_15_lasting_duration_critical}'%{endif}, at_least=${var.cpu_90_15_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.cpu_90_15min_threshold_critical}, lasting=%{if var.cpu_90_15_lasting_duration_critical == null}None%{else}'${var.cpu_90_15_lasting_duration_critical}'%{endif}, at_least=${var.cpu_90_15_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal > ${var.cpu_90_15min_threshold_major}, lasting=%{if var.cpu_90_15_lasting_duration_major == null}None%{else}'${var.cpu_90_15_lasting_duration_major}'%{endif}, at_least=${var.cpu_90_15_at_least_percentage_major}) and (not when(signal > ${var.cpu_90_15min_threshold_critical}, lasting=%{if var.cpu_90_15_lasting_duration_critical == null}None%{else}'${var.cpu_90_15_lasting_duration_critical}'%{endif}, at_least=${var.cpu_90_15_at_least_percentage_critical}))).publish('MAJOR')
 EOF
 
   rule {
