@@ -1,3 +1,47 @@
+# heartbeat detector
+
+variable "heartbeat_notifications" {
+  description = "Notification recipients list per severity overridden for heartbeat detector"
+  type        = map(list(string))
+  default     = {}
+}
+
+variable "heartbeat_aggregation_function" {
+  description = "Aggregation function and group by for heartbeat detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ".mean(by=['DomainName'])"
+}
+
+variable "heartbeat_max_delay" {
+  description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = 900
+}
+
+variable "heartbeat_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "heartbeat_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
+variable "heartbeat_disabled" {
+  description = "Disable all alerting rules for heartbeat detector"
+  type        = bool
+  default     = null
+}
+
+variable "heartbeat_timeframe" {
+  description = "Timeframe for heartbeat detector (i.e. \"10m\")"
+  type        = string
+  default     = "10m"
+}
+
 # jvm_memory_pressure detector
 
 variable "jvm_memory_pressure_notifications" {
@@ -228,48 +272,94 @@ variable "fivexx_http_response_disabled" {
   default     = null
 }
 
-variable "fivexx_http_response_disabled_critical" {
-  description = "Disable critical alerting rule for fivexx_http_response detector"
+variable "fivexx_http_response_disabled_opensearch_critical" {
+  description = "Disable opensearch_critical alerting rule for fivexx_http_response detector"
   type        = bool
   default     = null
 }
 
-variable "fivexx_http_response_disabled_major" {
-  description = "Disable major alerting rule for fivexx_http_response detector"
+variable "fivexx_http_response_disabled_opensearch_major" {
+  description = "Disable opensearch_major alerting rule for fivexx_http_response detector"
   type        = bool
   default     = null
 }
 
-variable "fivexx_http_response_threshold_critical" {
-  description = "Critical threshold for fivexx_http_response detector in %"
+variable "fivexx_http_response_disabled_elasticsearch_critical" {
+  description = "Disable elasticsearch_critical alerting rule for fivexx_http_response detector"
+  type        = bool
+  default     = null
+}
+
+variable "fivexx_http_response_disabled_elasticsearch_major" {
+  description = "Disable elasticsearch_major alerting rule for fivexx_http_response detector"
+  type        = bool
+  default     = null
+}
+
+variable "fivexx_http_response_threshold_opensearch_critical" {
+  description = "Opensearch_critical threshold for fivexx_http_response detector in %"
   type        = number
   default     = 10
 }
 
-variable "fivexx_http_response_lasting_duration_critical" {
+variable "fivexx_http_response_lasting_duration_opensearch_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
   default     = "5m"
 }
 
-variable "fivexx_http_response_at_least_percentage_critical" {
+variable "fivexx_http_response_at_least_percentage_opensearch_critical" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 0.9
 }
-variable "fivexx_http_response_threshold_major" {
-  description = "Major threshold for fivexx_http_response detector in %"
+variable "fivexx_http_response_threshold_opensearch_major" {
+  description = "Opensearch_major threshold for fivexx_http_response detector in %"
   type        = number
   default     = 5
 }
 
-variable "fivexx_http_response_lasting_duration_major" {
+variable "fivexx_http_response_lasting_duration_opensearch_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
   default     = "5m"
 }
 
-variable "fivexx_http_response_at_least_percentage_major" {
+variable "fivexx_http_response_at_least_percentage_opensearch_major" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 0.9
+}
+variable "fivexx_http_response_threshold_elasticsearch_critical" {
+  description = "Elasticsearch_critical threshold for fivexx_http_response detector in %"
+  type        = number
+  default     = 10
+}
+
+variable "fivexx_http_response_lasting_duration_elasticsearch_critical" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "5m"
+}
+
+variable "fivexx_http_response_at_least_percentage_elasticsearch_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 0.9
+}
+variable "fivexx_http_response_threshold_elasticsearch_major" {
+  description = "Elasticsearch_major threshold for fivexx_http_response detector in %"
+  type        = number
+  default     = 5
+}
+
+variable "fivexx_http_response_lasting_duration_elasticsearch_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "5m"
+}
+
+variable "fivexx_http_response_at_least_percentage_elasticsearch_major" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 0.9
@@ -362,6 +452,432 @@ variable "shard_count_lasting_duration_major" {
 }
 
 variable "shard_count_at_least_percentage_major" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
+# cluster_status detector
+
+variable "cluster_status_notifications" {
+  description = "Notification recipients list per severity overridden for cluster_status detector"
+  type        = map(list(string))
+  default     = {}
+}
+
+variable "cluster_status_aggregation_function" {
+  description = "Aggregation function and group by for cluster_status detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ".min(over='15m')"
+}
+
+variable "cluster_status_transformation_function" {
+  description = "Transformation function for cluster_status detector (i.e. \".mean(over='5m')\")"
+  type        = string
+  default     = ""
+}
+
+variable "cluster_status_max_delay" {
+  description = "Enforce max delay for cluster_status detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
+variable "cluster_status_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "cluster_status_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
+variable "cluster_status_disabled" {
+  description = "Disable all alerting rules for cluster_status detector"
+  type        = bool
+  default     = null
+}
+
+variable "cluster_status_disabled_critical" {
+  description = "Disable critical alerting rule for cluster_status detector"
+  type        = bool
+  default     = null
+}
+
+variable "cluster_status_disabled_major" {
+  description = "Disable major alerting rule for cluster_status detector"
+  type        = bool
+  default     = null
+}
+
+variable "cluster_status_threshold_critical" {
+  description = "Critical threshold for cluster_status detector"
+  type        = number
+  default     = 1
+}
+
+variable "cluster_status_lasting_duration_critical" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "cluster_status_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
+variable "cluster_status_threshold_major" {
+  description = "Major threshold for cluster_status detector"
+  type        = number
+  default     = 1
+}
+
+variable "cluster_status_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "cluster_status_at_least_percentage_major" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
+# free_space detector
+
+variable "free_space_notifications" {
+  description = "Notification recipients list per severity overridden for free_space detector"
+  type        = map(list(string))
+  default     = {}
+}
+
+variable "free_space_transformation_function" {
+  description = "Transformation function for free_space detector (i.e. \".mean(over='5m')\")"
+  type        = string
+  default     = ".scale(0.001)"
+}
+
+variable "free_space_max_delay" {
+  description = "Enforce max delay for free_space detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
+variable "free_space_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "free_space_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
+variable "free_space_disabled" {
+  description = "Disable all alerting rules for free_space detector"
+  type        = bool
+  default     = null
+}
+
+variable "free_space_disabled_major" {
+  description = "Disable major alerting rule for free_space detector"
+  type        = bool
+  default     = null
+}
+
+variable "free_space_disabled_critical" {
+  description = "Disable critical alerting rule for free_space detector"
+  type        = bool
+  default     = null
+}
+
+variable "free_space_threshold_major" {
+  description = "Major threshold for free_space detector in Gibibyte"
+  type        = number
+  default     = 40
+}
+
+variable "free_space_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "free_space_at_least_percentage_major" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
+variable "free_space_threshold_critical" {
+  description = "Critical threshold for free_space detector in Gibibyte"
+  type        = number
+  default     = 20
+}
+
+variable "free_space_lasting_duration_critical" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "free_space_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
+# ultrawarm_free_space detector
+
+variable "ultrawarm_free_space_notifications" {
+  description = "Notification recipients list per severity overridden for ultrawarm_free_space detector"
+  type        = map(list(string))
+  default     = {}
+}
+
+variable "ultrawarm_free_space_transformation_function" {
+  description = "Transformation function for ultrawarm_free_space detector (i.e. \".mean(over='5m')\")"
+  type        = string
+  default     = ".scale(0.001)"
+}
+
+variable "ultrawarm_free_space_max_delay" {
+  description = "Enforce max delay for ultrawarm_free_space detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
+variable "ultrawarm_free_space_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "ultrawarm_free_space_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
+variable "ultrawarm_free_space_disabled" {
+  description = "Disable all alerting rules for ultrawarm_free_space detector"
+  type        = bool
+  default     = null
+}
+
+variable "ultrawarm_free_space_disabled_major" {
+  description = "Disable major alerting rule for ultrawarm_free_space detector"
+  type        = bool
+  default     = null
+}
+
+variable "ultrawarm_free_space_disabled_critical" {
+  description = "Disable critical alerting rule for ultrawarm_free_space detector"
+  type        = bool
+  default     = null
+}
+
+variable "ultrawarm_free_space_threshold_major" {
+  description = "Major threshold for ultrawarm_free_space detector in Gibibyte"
+  type        = number
+  default     = 15
+}
+
+variable "ultrawarm_free_space_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "ultrawarm_free_space_at_least_percentage_major" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
+variable "ultrawarm_free_space_threshold_critical" {
+  description = "Critical threshold for ultrawarm_free_space detector in Gibibyte"
+  type        = number
+  default     = 10
+}
+
+variable "ultrawarm_free_space_lasting_duration_critical" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "ultrawarm_free_space_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
+# cluster_cpu detector
+
+variable "cluster_cpu_notifications" {
+  description = "Notification recipients list per severity overridden for cluster_cpu detector"
+  type        = map(list(string))
+  default     = {}
+}
+
+variable "cluster_cpu_transformation_function" {
+  description = "Transformation function for cluster_cpu detector (i.e. \".mean(over='5m')\")"
+  type        = string
+  default     = ".min(over='45m')"
+}
+
+variable "cluster_cpu_max_delay" {
+  description = "Enforce max delay for cluster_cpu detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
+variable "cluster_cpu_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "cluster_cpu_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
+variable "cluster_cpu_disabled" {
+  description = "Disable all alerting rules for cluster_cpu detector"
+  type        = bool
+  default     = null
+}
+
+variable "cluster_cpu_disabled_major" {
+  description = "Disable major alerting rule for cluster_cpu detector"
+  type        = bool
+  default     = null
+}
+
+variable "cluster_cpu_disabled_critical" {
+  description = "Disable critical alerting rule for cluster_cpu detector"
+  type        = bool
+  default     = null
+}
+
+variable "cluster_cpu_threshold_major" {
+  description = "Major threshold for cluster_cpu detector"
+  type        = number
+  default     = 80
+}
+
+variable "cluster_cpu_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "cluster_cpu_at_least_percentage_major" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
+variable "cluster_cpu_threshold_critical" {
+  description = "Critical threshold for cluster_cpu detector"
+  type        = number
+  default     = 90
+}
+
+variable "cluster_cpu_lasting_duration_critical" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "cluster_cpu_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
+# master_cpu detector
+
+variable "master_cpu_notifications" {
+  description = "Notification recipients list per severity overridden for master_cpu detector"
+  type        = map(list(string))
+  default     = {}
+}
+
+variable "master_cpu_transformation_function" {
+  description = "Transformation function for master_cpu detector (i.e. \".mean(over='5m')\")"
+  type        = string
+  default     = ".min(over='20m')"
+}
+
+variable "master_cpu_max_delay" {
+  description = "Enforce max delay for master_cpu detector (use \"0\" or \"null\" for \"Auto\")"
+  type        = number
+  default     = null
+}
+
+variable "master_cpu_tip" {
+  description = "Suggested first course of action or any note useful for incident handling"
+  type        = string
+  default     = ""
+}
+
+variable "master_cpu_runbook_url" {
+  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
+  type        = string
+  default     = ""
+}
+
+variable "master_cpu_disabled" {
+  description = "Disable all alerting rules for master_cpu detector"
+  type        = bool
+  default     = null
+}
+
+variable "master_cpu_disabled_major" {
+  description = "Disable major alerting rule for master_cpu detector"
+  type        = bool
+  default     = null
+}
+
+variable "master_cpu_disabled_critical" {
+  description = "Disable critical alerting rule for master_cpu detector"
+  type        = bool
+  default     = null
+}
+
+variable "master_cpu_threshold_major" {
+  description = "Major threshold for master_cpu detector"
+  type        = number
+  default     = 60
+}
+
+variable "master_cpu_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "master_cpu_at_least_percentage_major" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
+variable "master_cpu_threshold_critical" {
+  description = "Critical threshold for master_cpu detector"
+  type        = number
+  default     = 70
+}
+
+variable "master_cpu_lasting_duration_critical" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "master_cpu_at_least_percentage_critical" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1
