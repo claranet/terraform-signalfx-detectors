@@ -1,24 +1,24 @@
 module: Azure CDN
-name: latency
+name: origin health
 filtering: "filter('resource_type', 'Microsoft.Cdn/profiles') and filter('primary_aggregation_type', 'true')"
-id: cdn_total_latency
-value_unit: ms
+id: cdn_origin_health
+value_unit: "%"
 
 transformation: true
 aggregation: true
 
 signals:
   signal:
-    metric: "TotalLatency"
+    metric: "OriginHealthPercentage"
 
 rules:
   critical:
-    threshold: 3000
-    comparator: ">"
-    lasting_duration: 15m
+    threshold: 1
+    comparator: "<"
+    lasting_duration: 5m
 
   major:
-    threshold: 1500
-    comparator: ">"
+    threshold: 100
+    comparator: "<"
     dependency: critical
-    lasting_duration: 15m
+    lasting_duration: 10m

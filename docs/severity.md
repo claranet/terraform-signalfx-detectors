@@ -469,6 +469,7 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Azure CDN latency|X|X|-|-|-|
+|Azure CDN origin health|X|X|-|-|-|
 
 
 ## integration_azure-container-instance
