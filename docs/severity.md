@@ -116,6 +116,7 @@
 - [smart-agent_solr](#smart-agent_solr)
 - [smart-agent_supervisor](#smart-agent_supervisor)
 - [smart-agent_system-common](#smart-agent_system-common)
+- [smart-agent_system-diskio](#smart-agent_system-diskio)
 - [smart-agent_systemd-services](#smart-agent_systemd-services)
 - [smart-agent_systemd-timers](#smart-agent_systemd-timers)
 - [smart-agent_tomcat](#smart-agent_tomcat)
@@ -1268,6 +1269,14 @@
 |System memory utilization|X|X|-|-|-|
 |System swap in/out|X|X|-|-|-|
 |System disk space running out|-|X|-|-|-|
+
+
+## smart-agent_system-diskio
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|System disk io usage|X|X|-|-|-|
+|System disk weighted io usage|X|X|-|-|-|
 
 
 ## smart-agent_systemd-services

@@ -1,0 +1,19 @@
+module: system
+name: "Disk weighted IO usage"
+id: disk_weightediotime
+value_unit: "%"
+signals:
+  usage:
+    metric: system.disk.weighted_io_time
+    rollup: rate
+    transformation: "scale(100)"
+rules:
+  critical:
+    threshold: 95
+    comparator: ">"
+    lasting_duration: "30m"
+  major:
+    threshold: 70
+    comparator: ">"
+    lasting_duration: "30m"
+    dependency: critical
