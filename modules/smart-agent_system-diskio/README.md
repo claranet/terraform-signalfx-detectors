@@ -79,10 +79,16 @@ This module creates the following SignalFx detectors which could contain one or 
 |System disk io usage|X|-|-|-|-|
 |System disk weighted io usage|X|-|-|-|-|
 
+System disk weighted io usage detector is disabled by default. It may be useful in some specific cases where system disk io usage detector show usage above 100% because of multi-queued IOs due to device or driver, please enable it only if you understand what it implies. See [Linux kernel documentation](https://docs.kernel.org/admin-guide/iostats.html).
+
 ## How to collect required metrics?
 
 This module deploys detectors using metrics reported by the
 [SignalFx Smart Agent Monitors](https://github.com/signalfx/signalfx-agent#monitors).
+
+You must explicitely enable those metrics:
+- system.disk.io_time
+- system.disk.weighted_io_time
 
 Even if the [Smart Agent is deprecated](https://github.com/signalfx/signalfx-agent/blob/main/docs/smartagent-deprecation-notice.md)
 it remains an efficient, lightweight and simple monitoring agent which still works fine.
@@ -103,30 +109,6 @@ As a result:
 - any OpenTelemetry receiver not based on an existing Smart Agent monitor is not available from old agent so related modules in this repository use `otel-collector` as source name.
 
 
-Check the [Related documentation](#related-documentation) section for more detailed and specific information about this module dependencies.
-
-### Monitors
-
-#### Inodes
-
-To use inodes based detectors you must enable the `inodes` group in `extraGroups` parameter of the `filesystems` monitor configuration
-
-Inodes metrics areonly available for `Linux`).
-
-#### Space
-
-You can exclude squashfs filesystems from the collect using `fsTypes: ["!squashfs"]` parameter in the agent configuration.
-But we exclude it explicitly in related detector for safety to prevent any alert on this filesystem type.
-
-#### Load
-
-You have two choices to use load based detectors:
-  - either keep the `agent_per_cpu_enabled` enabled (variable default value) __and__ define `perCPU: true` in the [load monitor](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/load.md) configuration (for Kubernetes, you can use `loadPerCPU` option from the Helm chart available from `1.2.0` version).
-  - or override the `agent_per_cpu_enabled` to `false` __and__ keep the default configuration for the [load monitor](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/load.md) with `perCPU: false` or not defined
-
-In both cases, the goal is to get alerts based on the __ratio__ of load by dividing the original load per the number of CPU/cores which is the only way to get generic and relevant alerts for load.
-It mainly depends if you want to collect 2 metrics instead of 1 and if you want the load one to be raw or already averaged.
-
 
 ### Metrics
 
@@ -143,19 +125,3 @@ parameter to the corresponding monitor configuration:
         - '!system.disk.weighted_io_time'
 
 ```
-
-
-
-## Related documentation
-
-* [Terraform SignalFx provider](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs)
-* [Terraform SignalFx detector](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector)
-* [Splunk Observability integrations](https://docs.splunk.com/Observability/gdi/get-data-in/integrations.html)
-* [Smart Agent monitor host-metadata](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/host-metadata.md)
-* [Smart Agent monitor cpu](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/cpu.md)
-* [Smart Agent monitor load](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/load.md)
-* [Smart Agent monitor filesystems](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/filesystems.md)
-* [Smart Agent monitor memory](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/memory.md)
-* [Smart Agent monitor vmem](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/vmem.md)
-* [Splunk Observability integration cpu](https://docs.splunk.com/observability/en/gdi/monitors-hosts/cpu.html)
-* [Splunk Observability integration load](https://docs.splunk.com/observability/en/gdi/monitors-hosts/host-processload.html)
