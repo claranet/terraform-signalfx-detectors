@@ -1275,8 +1275,8 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|System disk io usage|X|X|-|-|-|
-|System disk weighted io usage|X|X|-|-|-|
+|System disk io usage|X|-|-|-|-|
+|System disk weighted io usage|X|-|-|-|-|
 
 
 ## smart-agent_systemd-services

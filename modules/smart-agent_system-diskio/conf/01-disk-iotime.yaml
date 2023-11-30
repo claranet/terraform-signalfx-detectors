@@ -1,9 +1,9 @@
 module: system
 name: "Disk IO usage"
-id: disk_iotime
+id: disk_io_usage
 value_unit: "%"
 signals:
-  usage:
+  signal:
     metric: system.disk.io_time
     rollup: rate
     transformation: "scale(100)"
@@ -12,8 +12,8 @@ rules:
     threshold: 95
     comparator: ">"
     lasting_duration: "30m"
-  major:
-    threshold: 70
-    comparator: ">"
-    lasting_duration: "30m"
-    dependency: critical
+#  major:
+#    threshold: 70
+#    comparator: ">"
+#    lasting_duration: "30m"
+#    dependency: critical
