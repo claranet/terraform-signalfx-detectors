@@ -1,5 +1,10 @@
 # disk_io_usage detector
 
+variable "disk_io_usage_enabled" {
+  description = "Enable monitor"
+  default     = true
+}
+
 variable "disk_io_usage_notifications" {
   description = "Notification recipients list per severity overridden for disk_io_usage detector"
   type        = map(list(string))
@@ -15,7 +20,7 @@ variable "disk_io_usage_aggregation_function" {
 variable "disk_io_usage_transformation_function" {
   description = "Transformation function for disk_io_usage detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ""
+  default     = ".scale(100)"
 }
 
 variable "disk_io_usage_max_delay" {
@@ -59,7 +64,12 @@ variable "disk_io_usage_at_least_percentage_critical" {
   type        = number
   default     = 1
 }
+
 # disk_weighted_io_usage detector
+variable "disk_weighted_io_usage_enabled" {
+  description = "Enable monitor"
+  default     = false
+}
 
 variable "disk_weighted_io_usage_notifications" {
   description = "Notification recipients list per severity overridden for disk_weighted_io_usage detector"
@@ -76,7 +86,7 @@ variable "disk_weighted_io_usage_aggregation_function" {
 variable "disk_weighted_io_usage_transformation_function" {
   description = "Transformation function for disk_weighted_io_usage detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ""
+  default     = ".scale(100)"
 }
 
 variable "disk_weighted_io_usage_max_delay" {

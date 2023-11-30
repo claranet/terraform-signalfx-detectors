@@ -1,4 +1,5 @@
 resource "signalfx_detector" "disk_io_usage" {
+  count = var.disk_io_usage_enabled ? 1 : 0
   name = format("%s %s", local.detector_name_prefix, "System disk io usage")
 
   authorized_writer_teams = var.authorized_writer_teams
@@ -31,6 +32,7 @@ EOF
 }
 
 resource "signalfx_detector" "disk_weighted_io_usage" {
+  count = var.disk_weighted_io_usage_enabled ? 1 : 0
   name = format("%s %s", local.detector_name_prefix, "System disk weighted io usage")
 
   authorized_writer_teams = var.authorized_writer_teams
