@@ -9,7 +9,7 @@ signals:
     transformation: "scale(100)"
 rules:
   critical:
-    threshold: 95
+    threshold: 90
     comparator: ">"
     lasting_duration: "30m"
 #  major:
