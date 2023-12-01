@@ -95,7 +95,7 @@ Here is the list of required metrics for detectors in this module.
 
 ### About Healthprobe detector
 
-Healthprobe detector is only available for loadbalances with a standard SKU. See [documentation](https://learn.microsoft.com/en-us/azure/load-balancer/skus).
+Healthprobe detector is only available for loadbalancer with a standard SKU. See [documentation](https://learn.microsoft.com/en-us/azure/load-balancer/skus).
 
 ## Related documentation
 
