@@ -2,13 +2,6 @@
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-:link: **Contents**
-
-- [How to use this module?](#how-to-use-this-module)
-- [What are the available detectors in this module?](#what-are-the-available-detectors-in-this-module)
-- [How to collect required metrics?](#how-to-collect-required-metrics)
-  - [Metrics](#metrics)
-- [Related documentation](#related-documentation)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -76,6 +69,7 @@ This module creates the following SignalFx detectors which could contain one or 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Azure Load Balancer heartbeat|X|-|-|-|-|
+|Azure Load Balancer backend unhealthy host ratio|X|X|-|-|-|
 
 ## How to collect required metrics?
 
@@ -94,9 +88,14 @@ Check the [Related documentation](#related-documentation) section for more detai
 Here is the list of required metrics for detectors in this module.
 
 * `ByteCount`
+* `DipAvailability`
 
 
+## Notes
 
+### About Healthprobe detector
+
+Healthprobe detector is only available for loadbalances with a standard SKU. See [documentation](https://learn.microsoft.com/en-us/azure/load-balancer/skus).
 
 ## Related documentation
 
