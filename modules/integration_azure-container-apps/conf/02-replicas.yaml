@@ -1,0 +1,16 @@
+module: Azure Container Apps
+name: replicas
+filtering: "filter('resource_type', 'Microsoft.App/containerApps') and filter('aggregation_type', 'count')"
+
+transformation: true
+aggregation: false
+
+signals:
+  signal:
+    metric: "Replicas"
+
+rules:
+  info:
+    threshold: 5
+    comparator: ">"
+    lasting_duration: 15m

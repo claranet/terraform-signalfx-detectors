@@ -1,0 +1,16 @@
+module: Azure Container Apps
+name: restarts
+filtering: "filter('resource_type', 'Microsoft.App/containerApps')"
+
+transformation: ".sum(over='15m')"
+aggregation: ".sum(by=['podname'])"
+
+signals:
+  signal:
+    metric: "RestartCount"
+
+rules:
+  warning:
+    threshold: 15
+    comparator: ">"
+    lasting_duration: 10m
