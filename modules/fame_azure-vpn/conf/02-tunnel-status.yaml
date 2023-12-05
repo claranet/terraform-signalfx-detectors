@@ -1,0 +1,16 @@
+module: Azure VPN
+name: IPSEC Tunnel Status
+id: tunnelstatus
+
+transformation: ".fill()"
+aggregation: ".mean(by=['ResourceGroup', 'Resource', 'remoteIP_s'])"
+
+signals:
+  signal:
+    metric: fame.azure.virtual_network_gateway.tunnel_status
+
+rules:
+  critical:
+    threshold: 0
+    comparator: "=="
+    lasting_duration: '20m'
