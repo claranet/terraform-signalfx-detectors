@@ -120,7 +120,7 @@ variable "tunnelstatus_notifications" {
 variable "tunnelstatus_aggregation_function" {
   description = "Aggregation function and group by for tunnelstatus detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['ResourceGroup', 'Resource', 'remoteIP_s'])"
+  default     = ".mean(by=['azure_resource_group', 'azure_resource_name', 'remote_ip'])"
 }
 
 variable "tunnelstatus_transformation_function" {

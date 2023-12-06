@@ -3,7 +3,7 @@ name: IPSEC Tunnel Status
 id: tunnelstatus
 
 transformation: ".fill()"
-aggregation: ".mean(by=['ResourceGroup', 'Resource', 'remoteIP_s'])"
+aggregation: ".mean(by=['azure_resource_group', 'azure_resource_name', 'remote_ip'])"
 
 signals:
   signal:
