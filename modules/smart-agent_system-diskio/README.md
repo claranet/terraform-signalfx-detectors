@@ -8,6 +8,7 @@
 - [What are the available detectors in this module?](#what-are-the-available-detectors-in-this-module)
 - [How to collect required metrics?](#how-to-collect-required-metrics)
   - [Metrics](#metrics)
+- [Related documentation](#related-documentation)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -56,7 +57,7 @@ Note the following parameters:
 
 These 3 parameters along with all variables defined in [common-variables.tf](common-variables.tf) are common to all
 [modules](../) in this repository. Other variables, specific to this module, are available in
-[variables.tf](variables.tf).
+[variables.tf](variables.tf) and [variables-gen.tf](variables-gen.tf).
 In general, the default configuration "works" but all of these Terraform
 [variables](https://www.terraform.io/language/values/variables) make it possible to
 customize the detectors behavior to better fit your needs.
@@ -77,16 +78,10 @@ This module creates the following SignalFx detectors which could contain one or 
 |System disk io usage|X|-|-|-|-|
 |System disk weighted io usage|X|-|-|-|-|
 
-System disk weighted io usage detector is disabled by default. It may be useful in some specific cases where system disk io usage detector show usage above 100% because of multi-queued IOs due to device or driver, please enable it only if you understand what it implies. See [Linux kernel documentation](https://docs.kernel.org/admin-guide/iostats.html).
-
 ## How to collect required metrics?
 
 This module deploys detectors using metrics reported by the
 [SignalFx Smart Agent Monitors](https://github.com/signalfx/signalfx-agent#monitors).
-
-You must explicitely enable those metrics:
-- system.disk.io_time
-- system.disk.weighted_io_time
 
 Even if the [Smart Agent is deprecated](https://github.com/signalfx/signalfx-agent/blob/main/docs/smartagent-deprecation-notice.md)
 it remains an efficient, lightweight and simple monitoring agent which still works fine.
@@ -107,6 +102,14 @@ As a result:
 - any OpenTelemetry receiver not based on an existing Smart Agent monitor is not available from old agent so related modules in this repository use `otel-collector` as source name.
 
 
+Check the [Related documentation](#related-documentation) section for more detailed and specific information about this module dependencies.
+
+System disk weighted io usage detector is disabled by default. It may be useful in some specific cases where system disk io usage detector show usage above 100% because of multi-queued IOs due to device or driver, please enable it only if you understand what it implies. See [Linux kernel documentation](https://docs.kernel.org/admin-guide/iostats.html).
+
+You must explicitely enable collection of those metrics on Agent:
+- system.disk.io_time
+- system.disk.weighted_io_time
+
 
 ### Metrics
 
@@ -123,3 +126,11 @@ parameter to the corresponding monitor configuration:
         - '!system.disk.weighted_io_time'
 
 ```
+
+
+
+## Related documentation
+
+* [Terraform SignalFx provider](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs)
+* [Terraform SignalFx detector](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector)
+* [Splunk Observability integrations](https://docs.splunk.com/Observability/gdi/get-data-in/integrations.html)
