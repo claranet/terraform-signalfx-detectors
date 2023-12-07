@@ -7,7 +7,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    signal = data('nginx_connections.reading', filter=${local.not_running_vm_filters} and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
+    signal = data('nginx_connections.reading', filter=${local.not_running_vm_filters} and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}${var.heartbeat_transformation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}', auto_resolve_after='${local.heartbeat_auto_resolve_after}').publish('CRIT')
 EOF
 
@@ -35,8 +35,8 @@ resource "signalfx_detector" "dropped_connections" {
 
   program_text = <<-EOF
     signal = data('connections.failed', filter=${module.filtering.signalflow})${var.dropped_connections_aggregation_function}${var.dropped_connections_transformation_function}.publish('signal')
-    detect(when(signal > ${var.dropped_connections_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.dropped_connections_threshold_major}) and (not when(signal > ${var.dropped_connections_threshold_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.dropped_connections_threshold_critical}%{if var.dropped_connections_lasting_duration_critical != null}, lasting='${var.dropped_connections_lasting_duration_critical}', at_least=${var.dropped_connections_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.dropped_connections_threshold_major}%{if var.dropped_connections_lasting_duration_major != null}, lasting='${var.dropped_connections_lasting_duration_major}', at_least=${var.dropped_connections_at_least_percentage_major}%{endif}) and (not when(signal > ${var.dropped_connections_threshold_critical}%{if var.dropped_connections_lasting_duration_critical != null}, lasting='${var.dropped_connections_lasting_duration_critical}', at_least=${var.dropped_connections_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {
