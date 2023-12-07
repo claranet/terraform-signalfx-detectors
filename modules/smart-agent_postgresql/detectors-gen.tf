@@ -7,7 +7,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    signal = data('postgres_database_size', filter=${local.not_running_vm_filters} and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
+    signal = data('postgres_database_size', filter=${local.not_running_vm_filters} and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}${var.heartbeat_transformation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}', auto_resolve_after='${local.heartbeat_auto_resolve_after}').publish('CRIT')
 EOF
 
@@ -35,12 +35,12 @@ resource "signalfx_detector" "deadlocks" {
 
   program_text = <<-EOF
     signal = data('postgres_deadlocks', filter=${module.filtering.signalflow}, rollup='delta')${var.deadlocks_aggregation_function}${var.deadlocks_transformation_function}.publish('signal')
-    detect(when(signal > ${var.deadlocks_threshold_major})).publish('MAJOR')
-    detect(when(signal > ${var.deadlocks_threshold_minor}) and (not when(signal > ${var.deadlocks_threshold_major}))).publish('MINOR')
+    detect(when(signal > ${var.deadlocks_threshold_major}%{if var.deadlocks_lasting_duration_major != null}, lasting='${var.deadlocks_lasting_duration_major}', at_least=${var.deadlocks_at_least_percentage_major}%{endif})).publish('MAJOR')
+    detect(when(signal > ${var.deadlocks_threshold_minor}%{if var.deadlocks_lasting_duration_minor != null}, lasting='${var.deadlocks_lasting_duration_minor}', at_least=${var.deadlocks_at_least_percentage_minor}%{endif}) and (not when(signal > ${var.deadlocks_threshold_major}%{if var.deadlocks_lasting_duration_major != null}, lasting='${var.deadlocks_lasting_duration_major}', at_least=${var.deadlocks_at_least_percentage_major}%{endif}))).publish('MINOR')
 EOF
 
   rule {
-    description           = "are too high > ${var.deadlocks_threshold_major}"
+    description           = "is too high > ${var.deadlocks_threshold_major}"
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.deadlocks_disabled_major, var.deadlocks_disabled, var.detectors_disabled)
@@ -52,7 +52,7 @@ EOF
   }
 
   rule {
-    description           = "are too high > ${var.deadlocks_threshold_minor}"
+    description           = "is too high > ${var.deadlocks_threshold_minor}"
     severity              = "Minor"
     detect_label          = "MINOR"
     disabled              = coalesce(var.deadlocks_disabled_minor, var.deadlocks_disabled, var.detectors_disabled)
@@ -74,9 +74,10 @@ resource "signalfx_detector" "hit_ratio" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('postgres_block_hit_ratio', filter=(not filter('index', '*')) and (not filter('schemaname', '*')) and (not filter('type', '*')) and (not filter('table', '*')) and ${module.filtering.signalflow}, rollup='average').scale(100)${var.hit_ratio_aggregation_function}${var.hit_ratio_transformation_function}.publish('signal')
-    detect(when(signal < ${var.hit_ratio_threshold_minor})).publish('MINOR')
-    detect(when(signal < ${var.hit_ratio_threshold_warning}) and (not when(signal < ${var.hit_ratio_threshold_minor}))).publish('WARN')
+    base_filtering = (not filter('index', '*')) and (not filter('schemaname', '*')) and (not filter('type', '*')) and (not filter('table', '*'))
+    signal = data('postgres_block_hit_ratio', filter=base_filtering and ${module.filtering.signalflow}, rollup='average')${var.hit_ratio_aggregation_function}${var.hit_ratio_transformation_function}.publish('signal')
+    detect(when(signal < ${var.hit_ratio_threshold_minor}%{if var.hit_ratio_lasting_duration_minor != null}, lasting='${var.hit_ratio_lasting_duration_minor}', at_least=${var.hit_ratio_at_least_percentage_minor}%{endif}) and (not when(signal < ${var.hit_ratio_threshold_warning}%{if var.hit_ratio_lasting_duration_warning != null}, lasting='${var.hit_ratio_lasting_duration_warning}', at_least=${var.hit_ratio_at_least_percentage_warning}%{endif}))).publish('MINOR')
+    detect(when(signal < ${var.hit_ratio_threshold_warning}%{if var.hit_ratio_lasting_duration_warning != null}, lasting='${var.hit_ratio_lasting_duration_warning}', at_least=${var.hit_ratio_at_least_percentage_warning}%{endif})).publish('WARN')
 EOF
 
   rule {
@@ -92,7 +93,7 @@ EOF
   }
 
   rule {
-    description           = "is too low > ${var.hit_ratio_threshold_warning}"
+    description           = "is too low < ${var.hit_ratio_threshold_warning}"
     severity              = "Warning"
     detect_label          = "WARN"
     disabled              = coalesce(var.hit_ratio_disabled_warning, var.hit_ratio_disabled, var.detectors_disabled)
@@ -117,8 +118,8 @@ resource "signalfx_detector" "rollbacks" {
     A = data('postgres_xact_rollbacks', filter=${module.filtering.signalflow}, rollup='delta')${var.rollbacks_aggregation_function}${var.rollbacks_transformation_function}
     B = data('postgres_xact_commits', filter=${module.filtering.signalflow}, rollup='delta')${var.rollbacks_aggregation_function}${var.rollbacks_transformation_function}
     signal = (A/B).scale(100).publish('signal')
-    detect(when(signal > ${var.rollbacks_threshold_major})).publish('MAJOR')
-    detect(when(signal > ${var.rollbacks_threshold_minor}) and (not when(signal > ${var.rollbacks_threshold_major}))).publish('MINOR')
+    detect(when(signal > ${var.rollbacks_threshold_major}%{if var.rollbacks_lasting_duration_major != null}, lasting='${var.rollbacks_lasting_duration_major}', at_least=${var.rollbacks_at_least_percentage_major}%{endif})).publish('MAJOR')
+    detect(when(signal > ${var.rollbacks_threshold_minor}%{if var.rollbacks_lasting_duration_minor != null}, lasting='${var.rollbacks_lasting_duration_minor}', at_least=${var.rollbacks_at_least_percentage_minor}%{endif}) and (not when(signal > ${var.rollbacks_threshold_major}%{if var.rollbacks_lasting_duration_major != null}, lasting='${var.rollbacks_lasting_duration_major}', at_least=${var.rollbacks_at_least_percentage_major}%{endif}))).publish('MINOR')
 EOF
 
   rule {
@@ -157,12 +158,12 @@ resource "signalfx_detector" "conflicts" {
 
   program_text = <<-EOF
     signal = data('postgres_conflicts', filter=${module.filtering.signalflow}, rollup='average')${var.conflicts_aggregation_function}${var.conflicts_transformation_function}.publish('signal')
-    detect(when(signal > ${var.conflicts_threshold_major})).publish('MAJOR')
-    detect(when(signal > ${var.conflicts_threshold_minor}) and (not when(signal > ${var.conflicts_threshold_major}))).publish('MINOR')
+    detect(when(signal > ${var.conflicts_threshold_major}%{if var.conflicts_lasting_duration_major != null}, lasting='${var.conflicts_lasting_duration_major}', at_least=${var.conflicts_at_least_percentage_major}%{endif})).publish('MAJOR')
+    detect(when(signal > ${var.conflicts_threshold_minor}%{if var.conflicts_lasting_duration_minor != null}, lasting='${var.conflicts_lasting_duration_minor}', at_least=${var.conflicts_at_least_percentage_minor}%{endif}) and (not when(signal > ${var.conflicts_threshold_major}%{if var.conflicts_lasting_duration_major != null}, lasting='${var.conflicts_lasting_duration_major}', at_least=${var.conflicts_at_least_percentage_major}%{endif}))).publish('MINOR')
 EOF
 
   rule {
-    description           = "are too high > ${var.conflicts_threshold_major}"
+    description           = "is too high > ${var.conflicts_threshold_major}"
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.conflicts_disabled_major, var.conflicts_disabled, var.detectors_disabled)
@@ -174,7 +175,7 @@ EOF
   }
 
   rule {
-    description           = "are too high > ${var.conflicts_threshold_minor}"
+    description           = "is too high > ${var.conflicts_threshold_minor}"
     severity              = "Minor"
     detect_label          = "MINOR"
     disabled              = coalesce(var.conflicts_disabled_minor, var.conflicts_disabled, var.detectors_disabled)
@@ -196,9 +197,9 @@ resource "signalfx_detector" "max_connections" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('postgres_pct_connections', filter=${module.filtering.signalflow}, rollup='average').scale(100)${var.max_connections_aggregation_function}${var.max_connections_transformation_function}.publish('signal')
-    detect(when(signal > ${var.max_connections_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.max_connections_threshold_major}) and (not when(signal > ${var.max_connections_threshold_critical}))).publish('MAJOR')
+    signal = data('postgres_pct_connections', filter=${module.filtering.signalflow}, rollup='average')${var.max_connections_aggregation_function}${var.max_connections_transformation_function}.publish('signal')
+    detect(when(signal > ${var.max_connections_threshold_critical}%{if var.max_connections_lasting_duration_critical != null}, lasting='${var.max_connections_lasting_duration_critical}', at_least=${var.max_connections_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.max_connections_threshold_major}%{if var.max_connections_lasting_duration_major != null}, lasting='${var.max_connections_lasting_duration_major}', at_least=${var.max_connections_at_least_percentage_major}%{endif}) and (not when(signal > ${var.max_connections_threshold_critical}%{if var.max_connections_lasting_duration_critical != null}, lasting='${var.max_connections_lasting_duration_critical}', at_least=${var.max_connections_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {
@@ -236,9 +237,10 @@ resource "signalfx_detector" "replication_lag" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('postgres_replication_lag', filter=${module.filtering.signalflow} and filter('replication_role', 'standby'), rollup='average')${var.replication_lag_aggregation_function}${var.replication_lag_transformation_function}.publish('signal')
-    detect(when(signal > ${var.replication_lag_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.replication_lag_threshold_major}) and (not when(signal > ${var.replication_lag_threshold_critical}))).publish('MAJOR')
+    base_filtering = filter('replication_role', 'standby')
+    signal = data('postgres_replication_lag', filter=base_filtering and ${module.filtering.signalflow}, rollup='average')${var.replication_lag_aggregation_function}${var.replication_lag_transformation_function}.publish('signal')
+    detect(when(signal > ${var.replication_lag_threshold_critical}%{if var.replication_lag_lasting_duration_critical != null}, lasting='${var.replication_lag_lasting_duration_critical}', at_least=${var.replication_lag_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.replication_lag_threshold_major}%{if var.replication_lag_lasting_duration_major != null}, lasting='${var.replication_lag_lasting_duration_major}', at_least=${var.replication_lag_at_least_percentage_major}%{endif}) and (not when(signal > ${var.replication_lag_threshold_critical}%{if var.replication_lag_lasting_duration_critical != null}, lasting='${var.replication_lag_lasting_duration_critical}', at_least=${var.replication_lag_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {
@@ -277,11 +279,11 @@ resource "signalfx_detector" "replication_state" {
 
   program_text = <<-EOF
     signal = data('postgres_replication_state', filter=${module.filtering.signalflow}, rollup='average')${var.replication_state_aggregation_function}${var.replication_state_transformation_function}.publish('signal')
-    detect(when(signal < 1)).publish('CRIT')
+    detect(when(signal < ${var.replication_state_threshold_critical}%{if var.replication_state_lasting_duration_critical != null}, lasting='${var.replication_state_lasting_duration_critical}', at_least=${var.replication_state_at_least_percentage_critical}%{endif})).publish('CRIT')
 EOF
 
   rule {
-    description           = "is not active on slot"
+    description           = "is too low < ${var.replication_state_threshold_critical}"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.replication_state_disabled, var.detectors_disabled)
