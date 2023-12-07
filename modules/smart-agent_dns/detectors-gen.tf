@@ -7,7 +7,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    signal = data('dns.result_code', filter=${local.not_running_vm_filters} and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
+    signal = data('dns.result_code', filter=${local.not_running_vm_filters} and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}${var.heartbeat_transformation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}', auto_resolve_after='${local.heartbeat_auto_resolve_after}').publish('CRIT')
 EOF
 
@@ -34,9 +34,10 @@ resource "signalfx_detector" "dns_query_time" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('dns.query_time_ms', filter=filter('plugin', 'telegraf/dns') and ${module.filtering.signalflow})${var.dns_query_time_aggregation_function}${var.dns_query_time_transformation_function}.publish('signal')
-    detect(when(signal > ${var.dns_query_time_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.dns_query_time_threshold_major}) and (not when(signal > ${var.dns_query_time_threshold_critical}))).publish('MAJOR')
+    base_filtering = filter('plugin', 'telegraf/dns')
+    signal = data('dns.query_time_ms', filter=base_filtering and ${module.filtering.signalflow})${var.dns_query_time_aggregation_function}${var.dns_query_time_transformation_function}.publish('signal')
+    detect(when(signal > ${var.dns_query_time_threshold_critical}%{if var.dns_query_time_lasting_duration_critical != null}, lasting='${var.dns_query_time_lasting_duration_critical}', at_least=${var.dns_query_time_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.dns_query_time_threshold_major}%{if var.dns_query_time_lasting_duration_major != null}, lasting='${var.dns_query_time_lasting_duration_major}', at_least=${var.dns_query_time_at_least_percentage_major}%{endif}) and (not when(signal > ${var.dns_query_time_threshold_critical}%{if var.dns_query_time_lasting_duration_critical != null}, lasting='${var.dns_query_time_lasting_duration_critical}', at_least=${var.dns_query_time_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {
@@ -74,15 +75,16 @@ resource "signalfx_detector" "dns_result_code" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('dns.result_code', filter=filter('plugin', 'telegraf/dns') and ${module.filtering.signalflow})${var.dns_result_code_aggregation_function}${var.dns_result_code_transformation_function}.publish('signal')
-    detect(when(signal > 0)).publish('CRIT')
+    base_filtering = filter('plugin', 'telegraf/dns')
+    signal = data('dns.result_code', filter=base_filtering and ${module.filtering.signalflow})${var.dns_result_code_aggregation_function}${var.dns_result_code_transformation_function}.publish('signal')
+    detect(when(signal > ${var.dns_result_code_threshold_critical}%{if var.dns_result_code_lasting_duration_critical != null}, lasting='${var.dns_result_code_lasting_duration_critical}', at_least=${var.dns_result_code_at_least_percentage_critical}%{endif})).publish('CRIT')
 EOF
 
   rule {
-    description           = "is not successful"
+    description           = "is too high > ${var.dns_result_code_threshold_critical}"
     severity              = "Critical"
     detect_label          = "CRIT"
-    disabled              = coalesce(var.dns_result_code_disabled_critical, var.dns_result_code_disabled, var.detectors_disabled)
+    disabled              = coalesce(var.dns_result_code_disabled, var.detectors_disabled)
     notifications         = try(coalescelist(lookup(var.dns_result_code_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.dns_result_code_runbook_url, var.runbook_url), "")
     tip                   = var.dns_result_code_tip
@@ -92,3 +94,4 @@ EOF
 
   max_delay = var.dns_result_code_max_delay
 }
+
