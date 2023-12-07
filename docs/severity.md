@@ -1042,7 +1042,7 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|Kubernetes API server heartbeat|X|-|-|-|-|
+|Kubernetes API server heartbeat heartbeat|X|-|-|-|-|
 
 
 ## smart-agent_kubernetes-common
