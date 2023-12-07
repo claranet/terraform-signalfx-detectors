@@ -1300,7 +1300,7 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Varnish heartbeat|X|-|-|-|-|
-|Varnish backend Failed|X|-|-|-|-|
+|Varnish backend failed|X|-|-|-|-|
 |Varnish threads number|X|-|-|-|-|
 |Varnish session dropped|X|-|-|-|-|
 |Varnish hit rate|-|X|X|-|-|
