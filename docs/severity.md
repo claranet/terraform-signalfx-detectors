@@ -1204,7 +1204,7 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|RabbitMQ heartbeat|X|-|-|-|-|
+|RabbitMQ Node heartbeat|X|-|-|-|-|
 |RabbitMQ Node file descriptors usage|X|X|-|-|-|
 |RabbitMQ Node process usage|X|X|-|-|-|
 |RabbitMQ Node sockets usage|X|X|-|-|-|

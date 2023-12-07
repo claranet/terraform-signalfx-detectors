@@ -1505,7 +1505,7 @@ variable "field_data_evictions_change_aggregation_function" {
 variable "field_data_evictions_change_transformation_function" {
   description = "Transformation function for field_data_evictions_change detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".mean(over='15m')"
+  default     = ".rateofchange().mean(over='15m')"
 }
 
 variable "field_data_evictions_change_max_delay" {
@@ -1595,7 +1595,7 @@ variable "task_time_in_queue_change_aggregation_function" {
 variable "task_time_in_queue_change_transformation_function" {
   description = "Transformation function for task_time_in_queue_change detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".mean(over='15m')"
+  default     = ".rateofchange().mean(over='15m')"
 }
 
 variable "task_time_in_queue_change_max_delay" {
