@@ -7,7 +7,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    signal = data('gauge.connections.available', filter=${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
+    signal = data('gauge.connections.available', filter=${module.filtering.signalflow})${var.heartbeat_aggregation_function}${var.heartbeat_transformation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}', auto_resolve_after='${local.heartbeat_auto_resolve_after}').publish('CRIT')
 EOF
 
@@ -19,7 +19,7 @@ EOF
     notifications         = try(coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.heartbeat_runbook_url, var.runbook_url), "")
     tip                   = var.heartbeat_tip
-    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_subject = var.message_subject == "" ? local.rule_subject_novalue : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
@@ -35,7 +35,7 @@ resource "signalfx_detector" "page_faults" {
 
   program_text = <<-EOF
     signal = data('counter.extra_info.page_faults', filter=${module.filtering.signalflow})${var.page_faults_aggregation_function}${var.page_faults_transformation_function}.publish('signal')
-    detect(when(signal > ${var.page_faults_threshold_warning})).publish('WARN')
+    detect(when(signal > ${var.page_faults_threshold_warning}%{if var.page_faults_lasting_duration_warning != null}, lasting='${var.page_faults_lasting_duration_warning}', at_least=${var.page_faults_at_least_percentage_warning}%{endif})).publish('WARN')
 EOF
 
   rule {
@@ -64,8 +64,8 @@ resource "signalfx_detector" "max_connections" {
     A = data('gauge.connections.current', filter=${module.filtering.signalflow})${var.max_connections_aggregation_function}${var.max_connections_transformation_function}
     B = data('gauge.connections.available', filter=${module.filtering.signalflow})${var.max_connections_aggregation_function}${var.max_connections_transformation_function}
     signal = (A/(A+B)).scale(100).publish('signal')
-    detect(when(signal > ${var.max_connections_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.max_connections_threshold_major}) and (not when(signal > ${var.max_connections_threshold_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.max_connections_threshold_critical}%{if var.max_connections_lasting_duration_critical != null}, lasting='${var.max_connections_lasting_duration_critical}', at_least=${var.max_connections_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.max_connections_threshold_major}%{if var.max_connections_lasting_duration_major != null}, lasting='${var.max_connections_lasting_duration_major}', at_least=${var.max_connections_at_least_percentage_major}%{endif}) and (not when(signal > ${var.max_connections_threshold_critical}%{if var.max_connections_lasting_duration_critical != null}, lasting='${var.max_connections_lasting_duration_critical}', at_least=${var.max_connections_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {
@@ -106,7 +106,7 @@ resource "signalfx_detector" "asserts" {
     A = data('counter.asserts.regular', filter=${module.filtering.signalflow})${var.asserts_aggregation_function}${var.asserts_transformation_function}
     B = data('counter.asserts.warning', filter=${module.filtering.signalflow})${var.asserts_aggregation_function}${var.asserts_transformation_function}
     signal = (A+B).publish('signal')
-    detect(when(signal > ${var.asserts_threshold_minor})).publish('MINOR')
+    detect(when(signal > ${var.asserts_threshold_minor}%{if var.asserts_lasting_duration_minor != null}, lasting='${var.asserts_lasting_duration_minor}', at_least=${var.asserts_at_least_percentage_minor}%{endif})).publish('MINOR')
 EOF
 
   rule {
@@ -133,11 +133,11 @@ resource "signalfx_detector" "primary" {
 
   program_text = <<-EOF
     signal = data('gauge.repl.is_primary_node', filter=${module.filtering.signalflow})${var.primary_aggregation_function}${var.primary_transformation_function}.publish('signal')
-    detect(when(signal > ${var.primary_threshold_critical})).publish('CRIT')
+    detect(when(signal > ${var.primary_threshold_critical}%{if var.primary_lasting_duration_critical != null}, lasting='${var.primary_lasting_duration_critical}', at_least=${var.primary_at_least_percentage_critical}%{endif})).publish('CRIT')
 EOF
 
   rule {
-    description           = "is missing"
+    description           = "is too high > ${var.primary_threshold_critical}"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.primary_disabled, var.detectors_disabled)
@@ -162,7 +162,7 @@ resource "signalfx_detector" "secondary" {
     A = data('gauge.repl.active_nodes', filter=${module.filtering.signalflow})${var.secondary_aggregation_function}${var.secondary_transformation_function}
     B = data('gauge.repl.is_primary_node', filter=${module.filtering.signalflow})${var.secondary_aggregation_function}${var.secondary_transformation_function}
     signal = (A-B).publish('signal')
-    detect(when(signal < ${var.secondary_threshold_critical})).publish('CRIT')
+    detect(when(signal < ${var.secondary_threshold_critical}%{if var.secondary_lasting_duration_critical != null}, lasting='${var.secondary_lasting_duration_critical}', at_least=${var.secondary_at_least_percentage_critical}%{endif})).publish('CRIT')
 EOF
 
   rule {
@@ -189,8 +189,8 @@ resource "signalfx_detector" "replication_lag" {
 
   program_text = <<-EOF
     signal = data('gauge.repl.max_lag', filter=${module.filtering.signalflow})${var.replication_lag_aggregation_function}${var.replication_lag_transformation_function}.publish('signal')
-    detect(when(signal > ${var.replication_lag_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.replication_lag_threshold_major}) and (not when(signal > ${var.replication_lag_threshold_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.replication_lag_threshold_critical}%{if var.replication_lag_lasting_duration_critical != null}, lasting='${var.replication_lag_lasting_duration_critical}', at_least=${var.replication_lag_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.replication_lag_threshold_major}%{if var.replication_lag_lasting_duration_major != null}, lasting='${var.replication_lag_lasting_duration_major}', at_least=${var.replication_lag_at_least_percentage_major}%{endif}) and (not when(signal > ${var.replication_lag_threshold_critical}%{if var.replication_lag_lasting_duration_critical != null}, lasting='${var.replication_lag_lasting_duration_critical}', at_least=${var.replication_lag_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {

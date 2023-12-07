@@ -12,6 +12,12 @@ variable "heartbeat_aggregation_function" {
   default     = ".mean(by=['cluster'])"
 }
 
+variable "heartbeat_transformation_function" {
+  description = "Transformation function for heartbeat detector (i.e. \".mean(over='5m')\")"
+  type        = string
+  default     = ""
+}
+
 variable "heartbeat_max_delay" {
   description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
   type        = number
@@ -92,6 +98,17 @@ variable "page_faults_threshold_warning" {
   default     = 0
 }
 
+variable "page_faults_lasting_duration_warning" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "page_faults_at_least_percentage_warning" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
 # max_connections detector
 
 variable "max_connections_notifications" {
@@ -154,12 +171,34 @@ variable "max_connections_threshold_critical" {
   default     = 90
 }
 
+variable "max_connections_lasting_duration_critical" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "max_connections_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
 variable "max_connections_threshold_major" {
   description = "Major threshold for max_connections detector"
   type        = number
   default     = 75
 }
 
+variable "max_connections_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "max_connections_at_least_percentage_major" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
 # asserts detector
 
 variable "asserts_notifications" {
@@ -210,6 +249,17 @@ variable "asserts_threshold_minor" {
   default     = 0
 }
 
+variable "asserts_lasting_duration_minor" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "asserts_at_least_percentage_minor" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
 # primary detector
 
 variable "primary_notifications" {
@@ -260,6 +310,17 @@ variable "primary_threshold_critical" {
   default     = 1
 }
 
+variable "primary_lasting_duration_critical" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "primary_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
 # secondary detector
 
 variable "secondary_notifications" {
@@ -310,6 +371,17 @@ variable "secondary_threshold_critical" {
   default     = 2
 }
 
+variable "secondary_lasting_duration_critical" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "secondary_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
 # replication_lag detector
 
 variable "replication_lag_notifications" {
@@ -372,9 +444,31 @@ variable "replication_lag_threshold_critical" {
   default     = 10
 }
 
+variable "replication_lag_lasting_duration_critical" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "replication_lag_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
 variable "replication_lag_threshold_major" {
   description = "Major threshold for replication_lag detector"
   type        = number
   default     = 3
 }
 
+variable "replication_lag_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "replication_lag_at_least_percentage_major" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
