@@ -1,14 +1,15 @@
 resource "signalfx_detector" "heartbeat" {
-  name = format("%s %s", local.detector_name_prefix, "Docker host heartbeat")
+  name = format("%s %s", local.detector_name_prefix, "Docker heartbeat")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-		from signalfx.detectors.not_reporting import not_reporting
-		signal = data('cpu.usage.system', filter=filter('plugin', 'docker') and ${local.not_running_vm_filters} and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
-		not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}', auto_resolve_after='${local.heartbeat_auto_resolve_after}').publish('CRIT')
+    from signalfx.detectors.not_reporting import not_reporting
+    base_filtering = filter('plugin', 'docker')
+    signal = data('cpu.usage.system', filter=${local.not_running_vm_filters} and base_filtering and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}${var.heartbeat_transformation_function}.publish('signal')
+    not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}', auto_resolve_after='${local.heartbeat_auto_resolve_after}').publish('CRIT')
 EOF
 
   rule {
@@ -34,13 +35,14 @@ resource "signalfx_detector" "cpu" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-		signal = data('cpu.percent', filter=filter('plugin', 'docker') and ${module.filtering.signalflow})${var.cpu_aggregation_function}${var.cpu_transformation_function}.publish('signal')
-		detect(when(signal > ${var.cpu_threshold_major})).publish('MAJOR')
-		detect(when(signal > ${var.cpu_threshold_minor}) and (not when(signal > ${var.cpu_threshold_major}))).publish('MINOR')
+    base_filtering = filter('plugin', 'docker')
+    signal = data('cpu.percent', filter=base_filtering and ${module.filtering.signalflow})${var.cpu_aggregation_function}${var.cpu_transformation_function}.publish('signal')
+    detect(when(signal > ${var.cpu_threshold_major}%{if var.cpu_lasting_duration_major != null}, lasting='${var.cpu_lasting_duration_major}', at_least=${var.cpu_at_least_percentage_major}%{endif})).publish('MAJOR')
+    detect(when(signal > ${var.cpu_threshold_minor}%{if var.cpu_lasting_duration_minor != null}, lasting='${var.cpu_lasting_duration_minor}', at_least=${var.cpu_at_least_percentage_minor}%{endif}) and (not when(signal > ${var.cpu_threshold_major}%{if var.cpu_lasting_duration_major != null}, lasting='${var.cpu_lasting_duration_major}', at_least=${var.cpu_at_least_percentage_major}%{endif}))).publish('MINOR')
 EOF
 
   rule {
-    description           = "is too high > ${var.cpu_threshold_major}%"
+    description           = "is too high > ${var.cpu_threshold_major}"
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.cpu_disabled_major, var.cpu_disabled, var.detectors_disabled)
@@ -52,7 +54,7 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.cpu_threshold_minor}%"
+    description           = "is too high > ${var.cpu_threshold_minor}"
     severity              = "Minor"
     detect_label          = "MINOR"
     disabled              = coalesce(var.cpu_disabled_minor, var.cpu_disabled, var.detectors_disabled)
@@ -74,15 +76,16 @@ resource "signalfx_detector" "throttling" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-		A = data('cpu.throttling_data.throttled_time', filter=filter('plugin', 'docker') and ${module.filtering.signalflow}, rollup='delta')${var.throttling_aggregation_function}${var.throttling_transformation_function}
-		B = data('cpu.throttling_data.throttled_time', filter=filter('plugin', 'docker') and ${module.filtering.signalflow}, rollup='delta')${var.throttling_aggregation_function}${var.throttling_transformation_function}
-		signal = (A/B).scale(100).publish('signal')
-		detect(when(signal > ${var.throttling_threshold_major})).publish('MAJOR')
-		detect(when(signal > ${var.throttling_threshold_minor}) and (not when(signal > ${var.throttling_threshold_major}))).publish('MINOR')
+    base_filtering = filter('plugin', 'docker')
+    A = data('cpu.throttling_data.throttled_time', filter=base_filtering and ${module.filtering.signalflow}, rollup='delta')${var.throttling_aggregation_function}${var.throttling_transformation_function}
+    B = data('cpu.throttling_data.throttled_time', filter=base_filtering and ${module.filtering.signalflow}, rollup='delta')${var.throttling_aggregation_function}${var.throttling_transformation_function}
+    signal = (A/B).scale(100).publish('signal')
+    detect(when(signal > ${var.throttling_threshold_major}%{if var.throttling_lasting_duration_major != null}, lasting='${var.throttling_lasting_duration_major}', at_least=${var.throttling_at_least_percentage_major}%{endif})).publish('MAJOR')
+    detect(when(signal > ${var.throttling_threshold_minor}%{if var.throttling_lasting_duration_minor != null}, lasting='${var.throttling_lasting_duration_minor}', at_least=${var.throttling_at_least_percentage_minor}%{endif}) and (not when(signal > ${var.throttling_threshold_major}%{if var.throttling_lasting_duration_major != null}, lasting='${var.throttling_lasting_duration_major}', at_least=${var.throttling_at_least_percentage_major}%{endif}))).publish('MINOR')
 EOF
 
   rule {
-    description           = "is too high > ${var.throttling_threshold_major}ns"
+    description           = "is too high > ${var.throttling_threshold_major}"
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.throttling_disabled_major, var.throttling_disabled, var.detectors_disabled)
@@ -94,7 +97,7 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.throttling_threshold_minor}ns"
+    description           = "is too high > ${var.throttling_threshold_minor}"
     severity              = "Minor"
     detect_label          = "MINOR"
     disabled              = coalesce(var.throttling_disabled_minor, var.throttling_disabled, var.detectors_disabled)
@@ -116,15 +119,16 @@ resource "signalfx_detector" "memory" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-		A = data('memory.usage.total', filter=filter('plugin', 'docker') and ${module.filtering.signalflow})${var.memory_aggregation_function}${var.memory_transformation_function}
-		B = data('memory.usage.limit', filter=filter('plugin', 'docker') and ${module.filtering.signalflow})${var.memory_aggregation_function}${var.memory_transformation_function}
-		signal = (A/B).scale(100).publish('signal')
-		detect(when(signal > ${var.memory_threshold_major})).publish('MAJOR')
-		detect(when(signal > ${var.memory_threshold_minor}) and (not when(signal > ${var.memory_threshold_major}))).publish('MINOR')
+    base_filtering = filter('plugin', 'docker')
+    A = data('memory.usage.total', filter=base_filtering and ${module.filtering.signalflow})${var.memory_aggregation_function}${var.memory_transformation_function}
+    B = data('memory.usage.limit', filter=base_filtering and ${module.filtering.signalflow})${var.memory_aggregation_function}${var.memory_transformation_function}
+    signal = (A/B).scale(100).publish('signal')
+    detect(when(signal > ${var.memory_threshold_major}%{if var.memory_lasting_duration_major != null}, lasting='${var.memory_lasting_duration_major}', at_least=${var.memory_at_least_percentage_major}%{endif})).publish('MAJOR')
+    detect(when(signal > ${var.memory_threshold_minor}%{if var.memory_lasting_duration_minor != null}, lasting='${var.memory_lasting_duration_minor}', at_least=${var.memory_at_least_percentage_minor}%{endif}) and (not when(signal > ${var.memory_threshold_major}%{if var.memory_lasting_duration_major != null}, lasting='${var.memory_lasting_duration_major}', at_least=${var.memory_at_least_percentage_major}%{endif}))).publish('MINOR')
 EOF
 
   rule {
-    description           = "is too high > ${var.memory_threshold_major}%"
+    description           = "is too high > ${var.memory_threshold_major}"
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.memory_disabled_major, var.memory_disabled, var.detectors_disabled)
@@ -136,7 +140,7 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.memory_threshold_minor}%"
+    description           = "is too high > ${var.memory_threshold_minor}"
     severity              = "Minor"
     detect_label          = "MINOR"
     disabled              = coalesce(var.memory_disabled_minor, var.memory_disabled, var.detectors_disabled)

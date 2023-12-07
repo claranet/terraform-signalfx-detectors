@@ -965,7 +965,7 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|Docker host heartbeat|X|-|-|-|-|
+|Docker heartbeat|X|-|-|-|-|
 |Docker container usage of cpu host|-|X|X|-|-|
 |Docker container cpu throttling time|-|X|X|-|-|
 |Docker memory usage|-|X|X|-|-|
