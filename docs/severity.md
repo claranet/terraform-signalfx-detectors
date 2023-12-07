@@ -1130,13 +1130,13 @@
 |MySQL heartbeat|X|-|-|-|-|
 |MySQL number of connections over max capacity|X|X|-|-|-|
 |MySQL slow queries percentage|X|X|-|-|-|
-|MySQL Innodb buffer pool efficiency|-|-|X|X|-|
-|MySQL Innodb buffer pool utilization|-|-|X|X|-|
-|MySQL running threads changed abruptly|X|-|-|-|-|
-|MySQL running queries changed abruptly|X|-|-|-|-|
+|MySQL innodb buffer pool efficiency|-|-|X|X|-|
+|MySQL innodb buffer pool utilization|-|-|X|X|-|
 |MySQL replication lag|X|X|-|-|-|
 |MySQL slave sql status|X|-|-|-|-|
 |MySQL slave io status|X|-|-|-|-|
+|MySQL running threads changed abruptly|X|-|-|-|-|
+|MySQL running queries changed abruptly|X|-|-|-|-|
 
 
 ## smart-agent_nagios-status-check

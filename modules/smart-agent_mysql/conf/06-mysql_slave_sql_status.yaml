@@ -1,0 +1,18 @@
+module: "MySQL"
+name: "Slave sql status"
+id: "mysql_slave_sql_status"
+
+transformation: ".max(over='5m')"
+aggregation: true
+
+
+signals:
+  signal:
+    metric: "mysql_slave_sql_running"
+    rollup: "average"
+
+rules:
+  critical:
+    threshold: 1
+    comparator: "<"
+    
