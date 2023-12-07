@@ -12,6 +12,12 @@ variable "heartbeat_aggregation_function" {
   default     = ""
 }
 
+variable "heartbeat_transformation_function" {
+  description = "Transformation function for heartbeat detector (i.e. \".mean(over='5m')\")"
+  type        = string
+  default     = ""
+}
+
 variable "heartbeat_max_delay" {
   description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
   type        = number
@@ -99,17 +105,39 @@ variable "average_processing_time_disabled_major" {
 }
 
 variable "average_processing_time_threshold_critical" {
-  description = "Critical threshold for average_processing_time detector in ms"
+  description = "Critical threshold for average_processing_time detector"
   type        = number
   default     = 1500
 }
 
+variable "average_processing_time_lasting_duration_critical" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "average_processing_time_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
 variable "average_processing_time_threshold_major" {
-  description = "Major threshold for average_processing_time detector in ms"
+  description = "Major threshold for average_processing_time detector"
   type        = number
   default     = 750
 }
 
+variable "average_processing_time_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "average_processing_time_at_least_percentage_major" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
 # busy_threads_percentage detector
 
 variable "busy_threads_percentage_notifications" {
@@ -172,9 +200,31 @@ variable "busy_threads_percentage_threshold_critical" {
   default     = 95
 }
 
+variable "busy_threads_percentage_lasting_duration_critical" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "busy_threads_percentage_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
 variable "busy_threads_percentage_threshold_major" {
   description = "Major threshold for busy_threads_percentage detector"
   type        = number
   default     = 80
 }
 
+variable "busy_threads_percentage_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "busy_threads_percentage_at_least_percentage_major" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
