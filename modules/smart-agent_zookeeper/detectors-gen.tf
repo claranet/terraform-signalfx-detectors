@@ -7,7 +7,8 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    signal = data('gauge.zk_max_file_descriptor_count', filter=filter('plugin', 'zookeeper') and ${local.not_running_vm_filters} and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
+    base_filtering = filter('plugin', 'zookeeper')
+    signal = data('gauge.zk_max_file_descriptor_count', filter=${local.not_running_vm_filters} and base_filtering and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}${var.heartbeat_transformation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}', auto_resolve_after='${local.heartbeat_auto_resolve_after}').publish('CRIT')
 EOF
 
@@ -34,15 +35,16 @@ resource "signalfx_detector" "zookeeper_health" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('gauge.zk_service_health', filter=filter('plugin', 'zookeeper') and ${module.filtering.signalflow})${var.zookeeper_health_aggregation_function}${var.zookeeper_health_transformation_function}.publish('signal')
-    detect(when(signal != 1)).publish('CRIT')
+    base_filtering = filter('plugin', 'zookeeper')
+    signal = data('gauge.zk_service_health', filter=base_filtering and ${module.filtering.signalflow})${var.zookeeper_health_aggregation_function}${var.zookeeper_health_transformation_function}.publish('signal')
+    detect(when(signal != ${var.zookeeper_health_threshold_critical}%{if var.zookeeper_health_lasting_duration_critical != null}, lasting='${var.zookeeper_health_lasting_duration_critical}', at_least=${var.zookeeper_health_at_least_percentage_critical}%{endif})).publish('CRIT')
 EOF
 
   rule {
-    description           = "is not running"
+    description           = "is != ${var.zookeeper_health_threshold_critical}"
     severity              = "Critical"
     detect_label          = "CRIT"
-    disabled              = coalesce(var.zookeeper_health_disabled_critical, var.zookeeper_health_disabled, var.detectors_disabled)
+    disabled              = coalesce(var.zookeeper_health_disabled, var.detectors_disabled)
     notifications         = try(coalescelist(lookup(var.zookeeper_health_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.zookeeper_health_runbook_url, var.runbook_url), "")
     tip                   = var.zookeeper_health_tip
@@ -61,9 +63,10 @@ resource "signalfx_detector" "zookeeper_latency" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('gauge.zk_avg_latency', filter=filter('plugin', 'zookeeper') and ${module.filtering.signalflow})${var.zookeeper_latency_aggregation_function}${var.zookeeper_latency_transformation_function}.publish('signal')
-    detect(when(signal > ${var.zookeeper_latency_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.zookeeper_latency_threshold_major}) and (not when(signal > ${var.zookeeper_latency_threshold_critical}))).publish('MAJOR')
+    base_filtering = filter('plugin', 'zookeeper')
+    signal = data('gauge.zk_avg_latency', filter=base_filtering and ${module.filtering.signalflow})${var.zookeeper_latency_aggregation_function}${var.zookeeper_latency_transformation_function}.publish('signal')
+    detect(when(signal > ${var.zookeeper_latency_threshold_critical}%{if var.zookeeper_latency_lasting_duration_critical != null}, lasting='${var.zookeeper_latency_lasting_duration_critical}', at_least=${var.zookeeper_latency_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.zookeeper_latency_threshold_major}%{if var.zookeeper_latency_lasting_duration_major != null}, lasting='${var.zookeeper_latency_lasting_duration_major}', at_least=${var.zookeeper_latency_at_least_percentage_major}%{endif}) and (not when(signal > ${var.zookeeper_latency_threshold_critical}%{if var.zookeeper_latency_lasting_duration_critical != null}, lasting='${var.zookeeper_latency_lasting_duration_critical}', at_least=${var.zookeeper_latency_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {
@@ -101,15 +104,16 @@ resource "signalfx_detector" "file_descriptors" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    A = data('gauge.zk_open_file_descriptor_count', filter=filter('plugin', 'zookeeper') and ${module.filtering.signalflow}, rollup='average')${var.file_descriptors_aggregation_function}${var.file_descriptors_transformation_function}
-    B = data('gauge.zk_max_file_descriptor_count', filter=filter('plugin', 'zookeeper') and ${module.filtering.signalflow}, rollup='average')${var.file_descriptors_aggregation_function}${var.file_descriptors_transformation_function}
+    base_filtering = filter('plugin', 'zookeeper')
+    A = data('gauge.zk_open_file_descriptor_count', filter=base_filtering and ${module.filtering.signalflow}, rollup='average')${var.file_descriptors_aggregation_function}${var.file_descriptors_transformation_function}
+    B = data('gauge.zk_max_file_descriptor_count', filter=base_filtering and ${module.filtering.signalflow}, rollup='average')${var.file_descriptors_aggregation_function}${var.file_descriptors_transformation_function}
     signal = (A/B).scale(100).publish('signal')
-    detect(when(signal > ${var.file_descriptors_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.file_descriptors_threshold_major}) and (not when(signal > ${var.file_descriptors_threshold_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.file_descriptors_threshold_critical}%{if var.file_descriptors_lasting_duration_critical != null}, lasting='${var.file_descriptors_lasting_duration_critical}', at_least=${var.file_descriptors_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.file_descriptors_threshold_major}%{if var.file_descriptors_lasting_duration_major != null}, lasting='${var.file_descriptors_lasting_duration_major}', at_least=${var.file_descriptors_at_least_percentage_major}%{endif}) and (not when(signal > ${var.file_descriptors_threshold_critical}%{if var.file_descriptors_lasting_duration_critical != null}, lasting='${var.file_descriptors_lasting_duration_critical}', at_least=${var.file_descriptors_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {
-    description           = "is too high > ${var.file_descriptors_threshold_critical}%"
+    description           = "is too high > ${var.file_descriptors_threshold_critical}"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.file_descriptors_disabled_critical, var.file_descriptors_disabled, var.detectors_disabled)
@@ -121,7 +125,7 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.file_descriptors_threshold_major}%"
+    description           = "is too high > ${var.file_descriptors_threshold_major}"
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.file_descriptors_disabled_major, var.file_descriptors_disabled, var.detectors_disabled)
