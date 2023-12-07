@@ -6,12 +6,13 @@ resource "signalfx_detector" "velero_scheduled_backup_missing" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('velero_backup_success_total', filter=filter('schedule', '*') and ${module.filtering.signalflow}, extrapolation='zero', rollup='delta')${var.velero_scheduled_backup_missing_aggregation_function}${var.velero_scheduled_backup_missing_transformation_function}.publish('signal')
-    detect(when(signal < 1)).publish('MAJOR')
+    base_filtering = filter('schedule', '*')
+    signal = data('velero_backup_success_total', filter=base_filtering and ${module.filtering.signalflow}, rollup='delta', extrapolation='zero')${var.velero_scheduled_backup_missing_aggregation_function}${var.velero_scheduled_backup_missing_transformation_function}.publish('signal')
+    detect(when(signal < ${var.velero_scheduled_backup_missing_threshold_major}%{if var.velero_scheduled_backup_missing_lasting_duration_major != null}, lasting='${var.velero_scheduled_backup_missing_lasting_duration_major}', at_least=${var.velero_scheduled_backup_missing_at_least_percentage_major}%{endif})).publish('MAJOR')
 EOF
 
   rule {
-    description           = "is missing"
+    description           = "is too low < ${var.velero_scheduled_backup_missing_threshold_major}"
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.velero_scheduled_backup_missing_disabled, var.detectors_disabled)
@@ -33,12 +34,13 @@ resource "signalfx_detector" "velero_backup_failure" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('velero_backup_failure_total', filter=filter('schedule', '*') and ${module.filtering.signalflow}, extrapolation='zero', rollup='delta')${var.velero_backup_failure_aggregation_function}${var.velero_backup_failure_transformation_function}.publish('signal')
-    detect(when(signal > 0)).publish('MAJOR')
+    base_filtering = filter('schedule', '*')
+    signal = data('velero_backup_failure_total', filter=base_filtering and ${module.filtering.signalflow}, rollup='delta', extrapolation='zero')${var.velero_backup_failure_aggregation_function}${var.velero_backup_failure_transformation_function}.publish('signal')
+    detect(when(signal > ${var.velero_backup_failure_threshold_major}%{if var.velero_backup_failure_lasting_duration_major != null}, lasting='${var.velero_backup_failure_lasting_duration_major}', at_least=${var.velero_backup_failure_at_least_percentage_major}%{endif})).publish('MAJOR')
 EOF
 
   rule {
-    description           = "found"
+    description           = "is too high > ${var.velero_backup_failure_threshold_major}"
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.velero_backup_failure_disabled, var.detectors_disabled)
@@ -60,12 +62,13 @@ resource "signalfx_detector" "velero_backup_partial_failure" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('velero_backup_partial_failure_total', filter=filter('schedule', '*') and ${module.filtering.signalflow}, extrapolation='zero', rollup='delta')${var.velero_backup_partial_failure_aggregation_function}${var.velero_backup_partial_failure_transformation_function}.publish('signal')
-    detect(when(signal > 0)).publish('MAJOR')
+    base_filtering = filter('schedule', '*')
+    signal = data('velero_backup_partial_failure_total', filter=base_filtering and ${module.filtering.signalflow}, rollup='delta', extrapolation='zero')${var.velero_backup_partial_failure_aggregation_function}${var.velero_backup_partial_failure_transformation_function}.publish('signal')
+    detect(when(signal > ${var.velero_backup_partial_failure_threshold_major}%{if var.velero_backup_partial_failure_lasting_duration_major != null}, lasting='${var.velero_backup_partial_failure_lasting_duration_major}', at_least=${var.velero_backup_partial_failure_at_least_percentage_major}%{endif})).publish('MAJOR')
 EOF
 
   rule {
-    description           = "found"
+    description           = "is too high > ${var.velero_backup_partial_failure_threshold_major}"
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.velero_backup_partial_failure_disabled, var.detectors_disabled)
@@ -87,12 +90,13 @@ resource "signalfx_detector" "velero_backup_deletion_failure" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('velero_backup_deletion_failure_total', filter=filter('schedule', '*') and ${module.filtering.signalflow}, extrapolation='zero', rollup='delta')${var.velero_backup_deletion_failure_aggregation_function}${var.velero_backup_deletion_failure_transformation_function}.publish('signal')
-    detect(when(signal > 0)).publish('MAJOR')
+    base_filtering = filter('schedule', '*')
+    signal = data('velero_backup_deletion_failure_total', filter=base_filtering and ${module.filtering.signalflow}, rollup='delta', extrapolation='zero')${var.velero_backup_deletion_failure_aggregation_function}${var.velero_backup_deletion_failure_transformation_function}.publish('signal')
+    detect(when(signal > ${var.velero_backup_deletion_failure_threshold_major}%{if var.velero_backup_deletion_failure_lasting_duration_major != null}, lasting='${var.velero_backup_deletion_failure_lasting_duration_major}', at_least=${var.velero_backup_deletion_failure_at_least_percentage_major}%{endif})).publish('MAJOR')
 EOF
 
   rule {
-    description           = "found"
+    description           = "is too high > ${var.velero_backup_deletion_failure_threshold_major}"
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.velero_backup_deletion_failure_disabled, var.detectors_disabled)
@@ -114,12 +118,13 @@ resource "signalfx_detector" "velero_volume_snapshot_failure" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('velero_volume_snapshot_failure_total', filter=filter('schedule', '*') and ${module.filtering.signalflow}, extrapolation='zero', rollup='delta')${var.velero_volume_snapshot_failure_aggregation_function}${var.velero_volume_snapshot_failure_transformation_function}.publish('signal')
-    detect(when(signal > 0)).publish('MAJOR')
+    base_filtering = filter('schedule', '*')
+    signal = data('velero_volume_snapshot_failure_total', filter=base_filtering and ${module.filtering.signalflow}, rollup='delta', extrapolation='zero')${var.velero_volume_snapshot_failure_aggregation_function}${var.velero_volume_snapshot_failure_transformation_function}.publish('signal')
+    detect(when(signal > ${var.velero_volume_snapshot_failure_threshold_major}%{if var.velero_volume_snapshot_failure_lasting_duration_major != null}, lasting='${var.velero_volume_snapshot_failure_lasting_duration_major}', at_least=${var.velero_volume_snapshot_failure_at_least_percentage_major}%{endif})).publish('MAJOR')
 EOF
 
   rule {
-    description           = "found"
+    description           = "is too high > ${var.velero_volume_snapshot_failure_threshold_major}"
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.velero_volume_snapshot_failure_disabled, var.detectors_disabled)
