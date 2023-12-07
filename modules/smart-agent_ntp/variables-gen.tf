@@ -1,6 +1,22 @@
-# Module specific
+# heartbeat detector
 
-# Heartbeat detector
+variable "heartbeat_notifications" {
+  description = "Notification recipients list per severity overridden for heartbeat detector"
+  type        = map(list(string))
+  default     = {}
+}
+
+variable "heartbeat_aggregation_function" {
+  description = "Aggregation function and group by for heartbeat detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ""
+}
+
+variable "heartbeat_transformation_function" {
+  description = "Transformation function for heartbeat detector (i.e. \".mean(over='5m')\")"
+  type        = string
+  default     = ""
+}
 
 variable "heartbeat_max_delay" {
   description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
@@ -26,25 +42,31 @@ variable "heartbeat_disabled" {
   default     = null
 }
 
-variable "heartbeat_notifications" {
-  description = "Notification recipients list per severity overridden for heartbeat detector"
-  type        = map(list(string))
-  default     = {}
-}
-
 variable "heartbeat_timeframe" {
   description = "Timeframe for heartbeat detector (i.e. \"10m\")"
   type        = string
   default     = "12h"
 }
 
-variable "heartbeat_aggregation_function" {
-  description = "Aggregation function and group by for heartbeat detector (i.e. \".mean(by=['host'])\")"
+# ntp detector
+
+variable "ntp_notifications" {
+  description = "Notification recipients list per severity overridden for ntp detector"
+  type        = map(list(string))
+  default     = {}
+}
+
+variable "ntp_aggregation_function" {
+  description = "Aggregation function and group by for ntp detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
 }
 
-# ntp detector
+variable "ntp_transformation_function" {
+  description = "Transformation function for ntp detector (i.e. \".mean(over='5m')\")"
+  type        = string
+  default     = ".min(over='5m')"
+}
 
 variable "ntp_max_delay" {
   description = "Enforce max delay for ntp detector (use \"0\" or \"null\" for \"Auto\")"
@@ -70,27 +92,20 @@ variable "ntp_disabled" {
   default     = null
 }
 
-variable "ntp_notifications" {
-  description = "Notification recipients list per severity overridden for ntp detector"
-  type        = map(list(string))
-  default     = {}
-}
-
-variable "ntp_aggregation_function" {
-  description = "Aggregation function and group by for ntp detector (i.e. \".mean(by=['host'])\")"
-  type        = string
-  default     = ""
-}
-
-variable "ntp_transformation_function" {
-  description = "Transformation function for ntp detector (i.e. \".mean(over='5m')\")"
-  type        = string
-  default     = ".min(over='5m')"
-}
-
 variable "ntp_threshold_major" {
   description = "Major threshold for ntp detector"
   type        = number
   default     = 1500
 }
 
+variable "ntp_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "ntp_at_least_percentage_major" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}

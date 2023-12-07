@@ -7,7 +7,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    signal = data('ntp.offset_seconds', filter=${local.not_running_vm_filters} and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
+    signal = data('ntp.offset_seconds', filter=${local.not_running_vm_filters} and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}${var.heartbeat_transformation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}', auto_resolve_after='${local.heartbeat_auto_resolve_after}').publish('CRIT')
 EOF
 
@@ -34,8 +34,8 @@ resource "signalfx_detector" "ntp" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-        signal = data('ntp.offset_seconds', filter=${module.filtering.signalflow})${var.ntp_aggregation_function}${var.ntp_transformation_function}.publish('signal')
-        detect(when(signal > ${var.ntp_threshold_major})).publish('MAJOR')
+    signal = data('ntp.offset_seconds', filter=${module.filtering.signalflow})${var.ntp_aggregation_function}${var.ntp_transformation_function}.publish('signal')
+    detect(when(signal > ${var.ntp_threshold_major}%{if var.ntp_lasting_duration_major != null}, lasting='${var.ntp_lasting_duration_major}', at_least=${var.ntp_at_least_percentage_major}%{endif})).publish('MAJOR')
 EOF
 
   rule {
