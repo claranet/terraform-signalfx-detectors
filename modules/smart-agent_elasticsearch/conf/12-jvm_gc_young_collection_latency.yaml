@@ -1,0 +1,29 @@
+module: "ElasticSearch"
+name: "Young-generation garbage collections latency"
+id: "jvm_gc_young_collection_latency"
+
+transformation: ".mean(over='15m')"
+aggregation: true
+filtering: "filter('plugin', 'elasticsearch')"
+
+signals:
+  A:
+    metric: "elasticsearch.jvm.gc.time"
+    rollup: "delta"
+    extrapolation: "zero"
+  B:
+    metric: "elasticsearch.jvm.gc.count"
+    rollup: "delta"
+    extrapolation: "zero"
+  signal:
+    formula: "(A/B).fill(0)"
+
+rules:
+  major:
+    threshold: 40
+    comparator: ">"
+    
+  minor:
+    threshold: 20
+    comparator: ">"
+    dependency: "major"

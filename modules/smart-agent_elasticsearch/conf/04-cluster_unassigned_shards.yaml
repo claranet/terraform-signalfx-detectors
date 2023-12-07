@@ -1,0 +1,22 @@
+module: "ElasticSearch"
+name: "Cluster unassigned shards"
+id: "cluster_unassigned_shards"
+
+transformation: ".min(over='10m')"
+aggregation: true
+filtering: "filter('plugin', 'elasticsearch')"
+
+signals:
+  signal:
+    metric: "elasticsearch.cluster.unassigned-shards"
+    rollup: "average"
+
+rules:
+  critical:
+    threshold: 0
+    comparator: ">"
+    
+  major:
+    threshold: -1
+    comparator: ">"
+    dependency: "critical"
