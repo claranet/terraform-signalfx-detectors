@@ -7,7 +7,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    signal = data('memcached_items.current', filter=${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
+    signal = data('memcached_items.current', filter=${module.filtering.signalflow})${var.heartbeat_aggregation_function}${var.heartbeat_transformation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}', auto_resolve_after='${local.heartbeat_auto_resolve_after}').publish('CRIT')
 EOF
 
@@ -19,7 +19,7 @@ EOF
     notifications         = try(coalescelist(lookup(var.heartbeat_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.heartbeat_runbook_url, var.runbook_url), "")
     tip                   = var.heartbeat_tip
-    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_subject = var.message_subject == "" ? local.rule_subject_novalue : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
@@ -35,12 +35,12 @@ resource "signalfx_detector" "memcached_max_conn" {
 
   program_text = <<-EOF
     signal = data('total_events.listen_disabled', filter=${module.filtering.signalflow}, rollup='delta')${var.memcached_max_conn_aggregation_function}${var.memcached_max_conn_transformation_function}.publish('signal')
-    detect(when(signal > ${var.memcached_max_conn_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.memcached_max_conn_threshold_major}) and (not when(signal > ${var.memcached_max_conn_threshold_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.memcached_max_conn_threshold_critical}%{if var.memcached_max_conn_lasting_duration_critical != null}, lasting='${var.memcached_max_conn_lasting_duration_critical}', at_least=${var.memcached_max_conn_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.memcached_max_conn_threshold_major}%{if var.memcached_max_conn_lasting_duration_major != null}, lasting='${var.memcached_max_conn_lasting_duration_major}', at_least=${var.memcached_max_conn_at_least_percentage_major}%{endif}) and (not when(signal > ${var.memcached_max_conn_threshold_critical}%{if var.memcached_max_conn_lasting_duration_critical != null}, lasting='${var.memcached_max_conn_lasting_duration_critical}', at_least=${var.memcached_max_conn_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {
-    description           = "has been reached >= ${var.memcached_max_conn_threshold_critical}"
+    description           = "is too high > ${var.memcached_max_conn_threshold_critical}"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.memcached_max_conn_disabled_critical, var.memcached_max_conn_disabled, var.detectors_disabled)
@@ -52,7 +52,7 @@ EOF
   }
 
   rule {
-    description           = "has been reached >= ${var.memcached_max_conn_threshold_major}"
+    description           = "is too high > ${var.memcached_max_conn_threshold_major}"
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.memcached_max_conn_disabled_major, var.memcached_max_conn_disabled, var.detectors_disabled)
@@ -77,8 +77,8 @@ resource "signalfx_detector" "memcached_hit_ratio" {
     A = data('memcached_ops.hits', filter=${module.filtering.signalflow})${var.memcached_hit_ratio_aggregation_function}${var.memcached_hit_ratio_transformation_function}
     B = data('memcached_ops.misses', filter=${module.filtering.signalflow})${var.memcached_hit_ratio_aggregation_function}${var.memcached_hit_ratio_transformation_function}
     signal = (A / (A+B) * 100).publish('signal')
-    detect(when(signal < ${var.memcached_hit_ratio_threshold_major})).publish('MAJOR')
-    detect(when(signal < ${var.memcached_hit_ratio_threshold_minor}) and (not when(signal < ${var.memcached_hit_ratio_threshold_major}))).publish('MINOR')
+    detect(when(signal < ${var.memcached_hit_ratio_threshold_major}%{if var.memcached_hit_ratio_lasting_duration_major != null}, lasting='${var.memcached_hit_ratio_lasting_duration_major}', at_least=${var.memcached_hit_ratio_at_least_percentage_major}%{endif})).publish('MAJOR')
+    detect(when(signal < ${var.memcached_hit_ratio_threshold_minor}%{if var.memcached_hit_ratio_lasting_duration_minor != null}, lasting='${var.memcached_hit_ratio_lasting_duration_minor}', at_least=${var.memcached_hit_ratio_at_least_percentage_minor}%{endif}) and (not when(signal < ${var.memcached_hit_ratio_threshold_major}%{if var.memcached_hit_ratio_lasting_duration_major != null}, lasting='${var.memcached_hit_ratio_lasting_duration_major}', at_least=${var.memcached_hit_ratio_at_least_percentage_major}%{endif}))).publish('MINOR')
 EOF
 
   rule {
@@ -107,3 +107,4 @@ EOF
 
   max_delay = var.memcached_hit_ratio_max_delay
 }
+
