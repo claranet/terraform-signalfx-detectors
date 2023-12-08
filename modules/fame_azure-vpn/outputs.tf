@@ -8,8 +8,8 @@ output "totalflowcount" {
   value       = signalfx_detector.totalflowcount
 }
 
-output "tunnelstatus" {
-  description = "Detector resource for tunnelstatus"
-  value       = signalfx_detector.tunnelstatus
+output "tunnel_status" {
+  description = "Detector resource for tunnel_status"
+  value       = signalfx_detector.tunnel_status
 }
 

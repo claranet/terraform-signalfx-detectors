@@ -53,7 +53,7 @@ EOF
   max_delay = var.totalflowcount_max_delay
 }
 
-resource "signalfx_detector" "tunnelstatus" {
+resource "signalfx_detector" "tunnel_status" {
   name = format("%s %s", local.detector_name_prefix, "Azure VPN ipsec tunnel status")
 
   authorized_writer_teams = var.authorized_writer_teams
@@ -61,22 +61,35 @@ resource "signalfx_detector" "tunnelstatus" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('fame.azure.virtual_network_gateway.tunnel_status', filter=${module.filtering.signalflow})${var.tunnelstatus_aggregation_function}${var.tunnelstatus_transformation_function}.publish('signal')
-    detect(when(signal == ${var.tunnelstatus_threshold_critical}, lasting=%{if var.tunnelstatus_lasting_duration_critical == null}None%{else}'${var.tunnelstatus_lasting_duration_critical}'%{endif}, at_least=${var.tunnelstatus_at_least_percentage_critical})).publish('CRIT')
+    signal = data('fame.azure.virtual_network_gateway.tunnel_status', filter=${module.filtering.signalflow})${var.tunnel_status_aggregation_function}${var.tunnel_status_transformation_function}.publish('signal')
+    detect(when(signal == ${var.tunnel_status_threshold_critical}, lasting=%{if var.tunnel_status_lasting_duration_critical == null}None%{else}'${var.tunnel_status_lasting_duration_critical}'%{endif}, at_least=${var.tunnel_status_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal == ${var.tunnel_status_threshold_major}, lasting=%{if var.tunnel_status_lasting_duration_major == null}None%{else}'${var.tunnel_status_lasting_duration_major}'%{endif}, at_least=${var.tunnel_status_at_least_percentage_major})).publish('MAJOR')
 EOF
 
   rule {
-    description           = "is == ${var.tunnelstatus_threshold_critical}"
+    description           = "is == ${var.tunnel_status_threshold_critical}"
     severity              = "Critical"
     detect_label          = "CRIT"
-    disabled              = coalesce(var.tunnelstatus_disabled, var.detectors_disabled)
-    notifications         = try(coalescelist(lookup(var.tunnelstatus_notifications, "critical", []), var.notifications.critical), null)
-    runbook_url           = try(coalesce(var.tunnelstatus_runbook_url, var.runbook_url), "")
-    tip                   = var.tunnelstatus_tip
+    disabled              = coalesce(var.tunnel_status_disabled_critical, var.tunnel_status_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.tunnel_status_notifications, "critical", []), var.notifications.critical), null)
+    runbook_url           = try(coalesce(var.tunnel_status_runbook_url, var.runbook_url), "")
+    tip                   = var.tunnel_status_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
-  max_delay = var.tunnelstatus_max_delay
+  rule {
+    description           = "is == ${var.tunnel_status_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.tunnel_status_disabled_major, var.tunnel_status_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.tunnel_status_notifications, "major", []), var.notifications.major), null)
+    runbook_url           = try(coalesce(var.tunnel_status_runbook_url, var.runbook_url), "")
+    tip                   = var.tunnel_status_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
+
+  max_delay = var.tunnel_status_max_delay
 }
 

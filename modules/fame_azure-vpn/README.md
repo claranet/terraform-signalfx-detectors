@@ -77,7 +77,7 @@ This module creates the following SignalFx detectors which could contain one or 
 |---|---|---|---|---|---|
 |Azure VPN heartbeat|X|-|-|-|-|
 |Azure VPN total flow count|X|-|-|-|-|
-|Azure VPN ipsec tunnel status|X|-|-|-|-|
+|Azure VPN ipsec tunnel status|X|X|-|-|-|
 
 ## How to collect required metrics?
 
