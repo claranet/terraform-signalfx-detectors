@@ -7,7 +7,8 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    signal = data('ResourceCount', filter=filter('stat', 'mean') and filter('namespace', 'AWS/Kinesis') and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
+    base_filtering = filter('stat', 'mean') and filter('namespace', 'AWS/Kinesis')
+    signal = data('ResourceCount', filter=base_filtering and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}${var.heartbeat_transformation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}', auto_resolve_after='${local.heartbeat_auto_resolve_after}').publish('CRIT')
 EOF
 
@@ -34,13 +35,14 @@ resource "signalfx_detector" "incoming_records" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('IncomingRecords', filter=filter('namespace', 'AWS/Kinesis') and filter('stat', 'lower') and (not filter('ShardId', '*')) and ${module.filtering.signalflow})${var.incoming_records_aggregation_function}${var.incoming_records_transformation_function}.publish('signal')
-    detect(when(signal <= ${var.incoming_records_threshold_critical})).publish('CRIT')
-    detect(when(signal <= ${var.incoming_records_threshold_major}) and (not when(signal <= ${var.incoming_records_threshold_critical}))).publish('MAJOR')
+    base_filtering = filter('namespace', 'AWS/Kinesis') and filter('stat', 'lower') and (not filter('ShardId', '*'))
+    signal = data('IncomingRecords', filter=base_filtering and ${module.filtering.signalflow})${var.incoming_records_aggregation_function}${var.incoming_records_transformation_function}.publish('signal')
+    detect(when(signal <= ${var.incoming_records_threshold_critical}%{if var.incoming_records_lasting_duration_critical != null}, lasting='${var.incoming_records_lasting_duration_critical}', at_least=${var.incoming_records_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal <= ${var.incoming_records_threshold_major}%{if var.incoming_records_lasting_duration_major != null}, lasting='${var.incoming_records_lasting_duration_major}', at_least=${var.incoming_records_at_least_percentage_major}%{endif}) and (not when(signal <= ${var.incoming_records_threshold_critical}%{if var.incoming_records_lasting_duration_critical != null}, lasting='${var.incoming_records_lasting_duration_critical}', at_least=${var.incoming_records_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {
-    description           = "are too low <= ${var.incoming_records_threshold_critical}"
+    description           = "is too low <= ${var.incoming_records_threshold_critical}"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.incoming_records_disabled_critical, var.incoming_records_disabled, var.detectors_disabled)
@@ -52,7 +54,7 @@ EOF
   }
 
   rule {
-    description           = "are too low <= ${var.incoming_records_threshold_major}"
+    description           = "is too low <= ${var.incoming_records_threshold_major}"
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.incoming_records_disabled_major, var.incoming_records_disabled, var.detectors_disabled)
