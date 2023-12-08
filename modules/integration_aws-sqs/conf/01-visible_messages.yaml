@@ -1,0 +1,21 @@
+module: "AWS SQS"
+name: "Visible messages"
+id: "visible_messages"
+
+transformation: ".min(over='30m')"
+aggregation: true
+filtering: "filter('namespace', 'AWS/SQS') and filter('stat', 'upper')"
+
+signals:
+  signal:
+    metric: "ApproximateNumberOfMessagesVisible"
+
+rules:
+  critical:
+    threshold: 2
+    comparator: ">"
+    
+  major:
+    threshold: 1
+    comparator: ">"
+    dependency: "critical"

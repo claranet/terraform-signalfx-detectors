@@ -390,8 +390,8 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |AWS SQS heartbeat|X|-|-|-|-|
-|AWS SQS Visible messages|X|X|-|-|-|
-|AWS SQS Age of the oldest message|X|X|-|-|-|
+|AWS SQS visible messages|X|X|-|-|-|
+|AWS SQS age of the oldest message|X|X|-|-|-|
 
 
 ## integration_aws-vpn
