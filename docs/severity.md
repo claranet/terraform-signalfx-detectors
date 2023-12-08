@@ -741,7 +741,7 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|GCP Cloud SQL failover|-|X|-|-|-|
+|GCP Cloud sql failover unavailable|-|X|-|-|-|
 
 
 ## integration_gcp-cloud-sql-mysql
