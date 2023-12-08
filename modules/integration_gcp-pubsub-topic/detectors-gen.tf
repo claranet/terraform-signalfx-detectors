@@ -6,13 +6,13 @@ resource "signalfx_detector" "sending_operations" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    reserved_topics = (not filter('topic_id', 'container-analysis-occurrences*', 'container-analysis-notes*', 'cloud-builds', 'gcr'))
-    signal = data('topic/send_message_operation_count', filter=filter('monitored_resource', 'pubsub_topic') and reserved_topics and ${module.filtering.signalflow}, extrapolation='zero', rollup='sum')${var.sending_operations_aggregation_function}${var.sending_operations_transformation_function}.publish('signal')
-    detect(when(signal < ${var.sending_operations_threshold_major})).publish('MAJOR')
+    base_filtering = filter('monitored_resource', 'pubsub_topic') and (not filter('topic_id', 'container-analysis-occurrences*', 'container-analysis-notes*', 'cloud-builds', 'gcr'))
+    signal = data('topic/send_message_operation_count', filter=base_filtering and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.sending_operations_aggregation_function}${var.sending_operations_transformation_function}.publish('signal')
+    detect(when(signal < ${var.sending_operations_threshold_major}%{if var.sending_operations_lasting_duration_major != null}, lasting='${var.sending_operations_lasting_duration_major}', at_least=${var.sending_operations_at_least_percentage_major}%{endif})).publish('MAJOR')
 EOF
 
   rule {
-    description           = "are too low < ${var.sending_operations_threshold_major}"
+    description           = "is too low < ${var.sending_operations_threshold_major}"
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.sending_operations_disabled, var.detectors_disabled)
@@ -34,14 +34,14 @@ resource "signalfx_detector" "unavailable_sending_operations" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    reserved_topics = (not filter('topic_id', 'container-analysis-occurrences*', 'container-analysis-notes*', 'cloud-builds', 'gcr'))
-    signal = data('topic/send_message_operation_count', filter=filter('monitored_resource', 'pubsub_topic') and reserved_topics and ${module.filtering.signalflow}, extrapolation='zero', rollup='sum')${var.unavailable_sending_operations_aggregation_function}${var.unavailable_sending_operations_transformation_function}.publish('signal')
-    detect(when(signal > ${var.unavailable_sending_operations_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.unavailable_sending_operations_threshold_major}) and (not when(signal > ${var.unavailable_sending_operations_threshold_critical}))).publish('MAJOR')
+    base_filtering = filter('monitored_resource', 'pubsub_topic') and (not filter('topic_id', 'container-analysis-occurrences*', 'container-analysis-notes*', 'cloud-builds', 'gcr'))
+    signal = data('topic/send_message_operation_count', filter=base_filtering and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.unavailable_sending_operations_aggregation_function}${var.unavailable_sending_operations_transformation_function}.publish('signal')
+    detect(when(signal > ${var.unavailable_sending_operations_threshold_critical}%{if var.unavailable_sending_operations_lasting_duration_critical != null}, lasting='${var.unavailable_sending_operations_lasting_duration_critical}', at_least=${var.unavailable_sending_operations_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.unavailable_sending_operations_threshold_major}%{if var.unavailable_sending_operations_lasting_duration_major != null}, lasting='${var.unavailable_sending_operations_lasting_duration_major}', at_least=${var.unavailable_sending_operations_at_least_percentage_major}%{endif}) and (not when(signal > ${var.unavailable_sending_operations_threshold_critical}%{if var.unavailable_sending_operations_lasting_duration_critical != null}, lasting='${var.unavailable_sending_operations_lasting_duration_critical}', at_least=${var.unavailable_sending_operations_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {
-    description           = "are too high > ${var.unavailable_sending_operations_threshold_critical}"
+    description           = "is too high > ${var.unavailable_sending_operations_threshold_critical}"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.unavailable_sending_operations_disabled_critical, var.unavailable_sending_operations_disabled, var.detectors_disabled)
@@ -53,7 +53,7 @@ EOF
   }
 
   rule {
-    description           = "are too high > ${var.unavailable_sending_operations_threshold_major}"
+    description           = "is too high > ${var.unavailable_sending_operations_threshold_major}"
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.unavailable_sending_operations_disabled_major, var.unavailable_sending_operations_disabled, var.detectors_disabled)
@@ -75,16 +75,15 @@ resource "signalfx_detector" "unavailable_sending_operations_ratio" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    reserved_topics = (not filter('topic_id', 'container-analysis-occurrences*', 'container-analysis-notes*', 'cloud-builds', 'gcr'))
-    A = data('topic/send_message_operation_count', filter=filter('monitored_resource', 'pubsub_topic') and filter('response_code', 'unavailable') and reserved_topics and ${module.filtering.signalflow}, extrapolation='zero', rollup='sum')${var.unavailable_sending_operations_ratio_aggregation_function}${var.unavailable_sending_operations_ratio_transformation_function}
-    B = data('topic/send_message_operation_count', filter=filter('monitored_resource', 'pubsub_topic') and ${module.filtering.signalflow}, extrapolation='zero', rollup='sum')${var.unavailable_sending_operations_ratio_aggregation_function}${var.unavailable_sending_operations_ratio_transformation_function}
+    A = data('topic/send_message_operation_count', filter=filter('monitored_resource', 'pubsub_topic') and filter('response_code', 'unavailable') and (not filter('topic_id', 'container-analysis-occurrences*', 'container-analysis-notes*', 'cloud-builds', 'gcr')) and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.unavailable_sending_operations_ratio_aggregation_function}${var.unavailable_sending_operations_ratio_transformation_function}
+    B = data('topic/send_message_operation_count', filter=filter('monitored_resource', 'pubsub_topic') and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.unavailable_sending_operations_ratio_aggregation_function}${var.unavailable_sending_operations_ratio_transformation_function}
     signal = (A/B).scale(100).fill(value=0).publish('signal')
-    detect(when(signal > ${var.unavailable_sending_operations_ratio_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.unavailable_sending_operations_ratio_threshold_major}) and (not when(signal > ${var.unavailable_sending_operations_ratio_threshold_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.unavailable_sending_operations_ratio_threshold_critical}%{if var.unavailable_sending_operations_ratio_lasting_duration_critical != null}, lasting='${var.unavailable_sending_operations_ratio_lasting_duration_critical}', at_least=${var.unavailable_sending_operations_ratio_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.unavailable_sending_operations_ratio_threshold_major}%{if var.unavailable_sending_operations_ratio_lasting_duration_major != null}, lasting='${var.unavailable_sending_operations_ratio_lasting_duration_major}', at_least=${var.unavailable_sending_operations_ratio_at_least_percentage_major}%{endif}) and (not when(signal > ${var.unavailable_sending_operations_ratio_threshold_critical}%{if var.unavailable_sending_operations_ratio_lasting_duration_critical != null}, lasting='${var.unavailable_sending_operations_ratio_lasting_duration_critical}', at_least=${var.unavailable_sending_operations_ratio_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {
-    description           = "is too high >= ${var.unavailable_sending_operations_ratio_threshold_critical}"
+    description           = "is too high > ${var.unavailable_sending_operations_ratio_threshold_critical}"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.unavailable_sending_operations_ratio_disabled_critical, var.unavailable_sending_operations_ratio_disabled, var.detectors_disabled)
@@ -96,7 +95,7 @@ EOF
   }
 
   rule {
-    description           = "is too high >= ${var.unavailable_sending_operations_ratio_threshold_major}"
+    description           = "is too high > ${var.unavailable_sending_operations_ratio_threshold_major}"
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.unavailable_sending_operations_ratio_disabled_major, var.unavailable_sending_operations_ratio_disabled, var.detectors_disabled)
