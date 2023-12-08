@@ -1,0 +1,21 @@
+module: "New Relic"
+name: "Error rate"
+id: "error_rate"
+
+transformation: ".min(over='5m')"
+aggregation: true
+
+
+signals:
+  signal:
+    metric: "Errors/all/errors_per_minute/*"
+
+rules:
+  critical:
+    threshold: 5
+    comparator: ">"
+    
+  major:
+    threshold: 1
+    comparator: ">"
+    dependency: "critical"
