@@ -1,0 +1,21 @@
+module: "GCP Cloud SQL"
+name: "Memory utilization"
+id: "memory_utilization"
+
+transformation: ".min(over='15m').scale(100)"
+aggregation: true
+
+
+signals:
+  signal:
+    metric: "database/memory/utilization"
+
+rules:
+  critical:
+    threshold: 95
+    comparator: ">"
+    
+  major:
+    threshold: 90
+    comparator: ">"
+    dependency: "critical"

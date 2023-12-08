@@ -1,0 +1,12 @@
+module: "GCP Cloud SQL"
+name: "heartbeat"
+
+transformation: true
+aggregation: ".mean(by=['database_id'])"
+
+
+signals:
+  signal:
+    metric: "database/cpu/usage_time"
+rules:
+  critical:

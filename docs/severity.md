@@ -729,12 +729,12 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|GCP Cloud SQL heartbeat|X|-|-|-|-|
-|GCP Cloud SQL CPU utilization|X|X|-|-|-|
-|GCP Cloud SQL disk utilization|X|X|-|-|-|
 |GCP Cloud SQL disk space is running out|X|-|-|-|-|
-|GCP Cloud SQL memory utilization|X|X|-|-|-|
 |GCP Cloud SQL memory is running out|X|-|-|-|-|
+|GCP Cloud SQL heartbeat|X|-|-|-|-|
+|GCP Cloud SQL cpu utilization|X|X|-|-|-|
+|GCP Cloud SQL disk utilization|X|X|-|-|-|
+|GCP Cloud SQL memory utilization|X|X|-|-|-|
 
 
 ## integration_gcp-cloud-sql-failover
