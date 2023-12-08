@@ -1,0 +1,25 @@
+module: "Azure Service Bus"
+name: "Throttled requests rate"
+id: "throttled_requests"
+
+transformation: ".max(over='5m')"
+aggregation: ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+filtering: "filter('resource_type', 'Microsoft.ServiceBus/namespaces') and filter('primary_aggregation_type', 'true')"
+
+signals:
+  A:
+    metric: "ThrottledRequests"
+  B:
+    metric: "IncomingRequests"
+  signal:
+    formula: "(A/B).scale(100).fill(0)"
+
+rules:
+  critical:
+    threshold: 90
+    comparator: ">"
+    
+  major:
+    threshold: 80
+    comparator: ">"
+    dependency: "critical"
