@@ -101,8 +101,7 @@ Here is the list of required metrics for detectors in this module.
 
 ## Notes
 
-* The NewRelic integration from SignalFx still uses the deprecated [REST API
-v1](https://docs.newrelic.com/docs/apis/rest-api-v1-deprecated/new-relic-rest-api-v1/working-new-relic-rest-api-v1-deprecated/).
+* The NewRelic integration from SignalFx still uses the deprecated REST API v1.
 * It also generate too many metrics all considered as custom which could have a big
 impact in the SignalFx billing so you have to filter as much as possible to avoid that.
 * Sadly, the `errors_per_minute` filter is not available so the `errors` detector will
