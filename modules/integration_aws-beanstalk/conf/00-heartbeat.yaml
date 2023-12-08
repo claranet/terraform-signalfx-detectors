@@ -1,0 +1,12 @@
+module: "AWS Beanstalk"
+name: "heartbeat"
+
+transformation: true
+aggregation: ".mean(by=['EnvironmentName'])"
+filtering: "filter('stat', 'mean') and filter('namespace', 'AWS/ElasticBeanstalk')"
+
+signals:
+  signal:
+    metric: "EnvironmentHealth"
+rules:
+  critical:
