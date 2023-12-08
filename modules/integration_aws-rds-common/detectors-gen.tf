@@ -42,8 +42,8 @@ resource "signalfx_detector" "cpu_usage" {
   program_text = <<-EOF
     base_filtering = filter('namespace', 'AWS/RDS')
     signal = data('CPUUtilization', filter=base_filtering and filter('stat', 'mean') and filter('DBInstanceIdentifier', '*') and ${module.filtering.signalflow})${var.cpu_usage_aggregation_function}${var.cpu_usage_transformation_function}.publish('signal')
-    detect(when(signal > ${var.cpu_usage_threshold_critical}, lasting=%{if var.cpu_usage_lasting_duration_critical == null}None%{else}'${var.cpu_usage_lasting_duration_critical}'%{endif}, at_least=${var.cpu_usage_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal > ${var.cpu_usage_threshold_major}, lasting=%{if var.cpu_usage_lasting_duration_major == null}None%{else}'${var.cpu_usage_lasting_duration_major}'%{endif}, at_least=${var.cpu_usage_at_least_percentage_major}) and (not when(signal > ${var.cpu_usage_threshold_critical}, lasting=%{if var.cpu_usage_lasting_duration_critical == null}None%{else}'${var.cpu_usage_lasting_duration_critical}'%{endif}, at_least=${var.cpu_usage_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.cpu_usage_threshold_critical}%{if var.cpu_usage_lasting_duration_critical != null}, lasting='${var.cpu_usage_lasting_duration_critical}', at_least=${var.cpu_usage_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.cpu_usage_threshold_major}%{if var.cpu_usage_lasting_duration_major != null}, lasting='${var.cpu_usage_lasting_duration_major}', at_least=${var.cpu_usage_at_least_percentage_major}%{endif}) and (not when(signal > ${var.cpu_usage_threshold_critical}%{if var.cpu_usage_lasting_duration_critical != null}, lasting='${var.cpu_usage_lasting_duration_critical}', at_least=${var.cpu_usage_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {
@@ -88,8 +88,8 @@ resource "signalfx_detector" "free_space_low" {
   program_text = <<-EOF
     base_filtering = filter('namespace', 'AWS/RDS')
     signal = data('FreeStorageSpace', filter=base_filtering and filter('stat', 'mean') and filter('DBInstanceIdentifier', '*') and ${module.filtering.signalflow})${var.free_space_low_aggregation_function}${var.free_space_low_transformation_function}.publish('signal')
-    detect(when(signal < ${var.free_space_low_threshold_major}, lasting=%{if var.free_space_low_lasting_duration_major == null}None%{else}'${var.free_space_low_lasting_duration_major}'%{endif}, at_least=${var.free_space_low_at_least_percentage_major}) and (not when(signal < ${var.free_space_low_threshold_critical}, lasting=%{if var.free_space_low_lasting_duration_critical == null}None%{else}'${var.free_space_low_lasting_duration_critical}'%{endif}, at_least=${var.free_space_low_at_least_percentage_critical}))).publish('MAJOR')
-    detect(when(signal < ${var.free_space_low_threshold_critical}, lasting=%{if var.free_space_low_lasting_duration_critical == null}None%{else}'${var.free_space_low_lasting_duration_critical}'%{endif}, at_least=${var.free_space_low_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal < ${var.free_space_low_threshold_major}%{if var.free_space_low_lasting_duration_major != null}, lasting='${var.free_space_low_lasting_duration_major}', at_least=${var.free_space_low_at_least_percentage_major}%{endif}) and (not when(signal < ${var.free_space_low_threshold_critical}%{if var.free_space_low_lasting_duration_critical != null}, lasting='${var.free_space_low_lasting_duration_critical}', at_least=${var.free_space_low_at_least_percentage_critical}%{endif}))).publish('MAJOR')
+    detect(when(signal < ${var.free_space_low_threshold_critical}%{if var.free_space_low_lasting_duration_critical != null}, lasting='${var.free_space_low_lasting_duration_critical}', at_least=${var.free_space_low_at_least_percentage_critical}%{endif})).publish('CRIT')
 EOF
 
   rule {
@@ -129,8 +129,8 @@ resource "signalfx_detector" "replica_lag" {
   program_text = <<-EOF
     base_filtering = filter('namespace', 'AWS/RDS')
     signal = data('ReplicaLag', filter=base_filtering and filter('stat', 'mean') and filter('DBInstanceIdentifier', '*') and ${module.filtering.signalflow})${var.replica_lag_aggregation_function}${var.replica_lag_transformation_function}.publish('signal')
-    detect(when(signal > ${var.replica_lag_threshold_critical}, lasting=%{if var.replica_lag_lasting_duration_critical == null}None%{else}'${var.replica_lag_lasting_duration_critical}'%{endif}, at_least=${var.replica_lag_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal > ${var.replica_lag_threshold_major}, lasting=%{if var.replica_lag_lasting_duration_major == null}None%{else}'${var.replica_lag_lasting_duration_major}'%{endif}, at_least=${var.replica_lag_at_least_percentage_major}) and (not when(signal > ${var.replica_lag_threshold_critical}, lasting=%{if var.replica_lag_lasting_duration_critical == null}None%{else}'${var.replica_lag_lasting_duration_critical}'%{endif}, at_least=${var.replica_lag_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.replica_lag_threshold_critical}%{if var.replica_lag_lasting_duration_critical != null}, lasting='${var.replica_lag_lasting_duration_critical}', at_least=${var.replica_lag_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.replica_lag_threshold_major}%{if var.replica_lag_lasting_duration_major != null}, lasting='${var.replica_lag_lasting_duration_major}', at_least=${var.replica_lag_at_least_percentage_major}%{endif}) and (not when(signal > ${var.replica_lag_threshold_critical}%{if var.replica_lag_lasting_duration_critical != null}, lasting='${var.replica_lag_lasting_duration_critical}', at_least=${var.replica_lag_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {
@@ -170,8 +170,8 @@ resource "signalfx_detector" "dbload" {
   program_text = <<-EOF
     base_filtering = filter('namespace', 'AWS/RDS') and filter('stat', 'mean')
     signal = data('DBLoad', filter=base_filtering and ${module.filtering.signalflow})${var.dbload_aggregation_function}${var.dbload_transformation_function}.publish('signal')
-    detect(when(signal > ${var.dbload_threshold_critical}, lasting=%{if var.dbload_lasting_duration_critical == null}None%{else}'${var.dbload_lasting_duration_critical}'%{endif}, at_least=${var.dbload_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal > ${var.dbload_threshold_major}, lasting=%{if var.dbload_lasting_duration_major == null}None%{else}'${var.dbload_lasting_duration_major}'%{endif}, at_least=${var.dbload_at_least_percentage_major}) and (not when(signal > ${var.dbload_threshold_critical}, lasting=%{if var.dbload_lasting_duration_critical == null}None%{else}'${var.dbload_lasting_duration_critical}'%{endif}, at_least=${var.dbload_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.dbload_threshold_critical}%{if var.dbload_lasting_duration_critical != null}, lasting='${var.dbload_lasting_duration_critical}', at_least=${var.dbload_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.dbload_threshold_major}%{if var.dbload_lasting_duration_major != null}, lasting='${var.dbload_lasting_duration_major}', at_least=${var.dbload_at_least_percentage_major}%{endif}) and (not when(signal > ${var.dbload_threshold_critical}%{if var.dbload_lasting_duration_critical != null}, lasting='${var.dbload_lasting_duration_critical}', at_least=${var.dbload_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {

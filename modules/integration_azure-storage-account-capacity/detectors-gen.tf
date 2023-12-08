@@ -14,8 +14,8 @@ resource "signalfx_detector" "used_capacity" {
     base_filtering = filter('resource_type', 'Microsoft.Storage/storageAccounts') and filter('primary_aggregation_type', 'true')
     capacity = data('UsedCapacity', filter=base_filtering and ${module.filtering.signalflow})${var.used_capacity_aggregation_function}${var.used_capacity_transformation_function}
     signal = capacity.scale(1/1024**3).publish('signal')
-    detect(when(signal > ${var.used_capacity_threshold_critical}, lasting=%{if var.used_capacity_lasting_duration_critical == null}None%{else}'${var.used_capacity_lasting_duration_critical}'%{endif}, at_least=${var.used_capacity_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal > ${var.used_capacity_threshold_major}, lasting=%{if var.used_capacity_lasting_duration_major == null}None%{else}'${var.used_capacity_lasting_duration_major}'%{endif}, at_least=${var.used_capacity_at_least_percentage_major}) and (not when(signal > ${var.used_capacity_threshold_critical}, lasting=%{if var.used_capacity_lasting_duration_critical == null}None%{else}'${var.used_capacity_lasting_duration_critical}'%{endif}, at_least=${var.used_capacity_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.used_capacity_threshold_critical}%{if var.used_capacity_lasting_duration_critical != null}, lasting='${var.used_capacity_lasting_duration_critical}', at_least=${var.used_capacity_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.used_capacity_threshold_major}%{if var.used_capacity_lasting_duration_major != null}, lasting='${var.used_capacity_lasting_duration_major}', at_least=${var.used_capacity_at_least_percentage_major}%{endif}) and (not when(signal > ${var.used_capacity_threshold_critical}%{if var.used_capacity_lasting_duration_critical != null}, lasting='${var.used_capacity_lasting_duration_critical}', at_least=${var.used_capacity_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {

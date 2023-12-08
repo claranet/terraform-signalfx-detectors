@@ -37,7 +37,7 @@ resource "signalfx_detector" "capacity_units" {
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true')
     signal = data('CapacityUnits', filter=base_filtering and ${module.filtering.signalflow})${var.capacity_units_aggregation_function}${var.capacity_units_transformation_function}.publish('signal')
-    detect(when(signal > ${var.capacity_units_threshold_major}, lasting=%{if var.capacity_units_lasting_duration_major == null}None%{else}'${var.capacity_units_lasting_duration_major}'%{endif}, at_least=${var.capacity_units_at_least_percentage_major})).publish('MAJOR')
+    detect(when(signal > ${var.capacity_units_threshold_major}%{if var.capacity_units_lasting_duration_major != null}, lasting='${var.capacity_units_lasting_duration_major}', at_least=${var.capacity_units_at_least_percentage_major}%{endif})).publish('MAJOR')
 EOF
 
   rule {
@@ -65,7 +65,7 @@ resource "signalfx_detector" "total_requests" {
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true')
     signal = data('TotalRequests', filter=base_filtering and ${module.filtering.signalflow})${var.total_requests_aggregation_function}${var.total_requests_transformation_function}.publish('signal')
-    detect(when(signal < ${var.total_requests_threshold_critical}, lasting=%{if var.total_requests_lasting_duration_critical == null}None%{else}'${var.total_requests_lasting_duration_critical}'%{endif}, at_least=${var.total_requests_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal < ${var.total_requests_threshold_critical}%{if var.total_requests_lasting_duration_critical != null}, lasting='${var.total_requests_lasting_duration_critical}', at_least=${var.total_requests_at_least_percentage_critical}%{endif})).publish('CRIT')
 EOF
 
   rule {
@@ -93,8 +93,8 @@ resource "signalfx_detector" "backend_connect_time" {
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true')
     signal = data('BackendConnectTime', filter=base_filtering and ${module.filtering.signalflow})${var.backend_connect_time_aggregation_function}${var.backend_connect_time_transformation_function}.publish('signal')
-    detect(when(signal > ${var.backend_connect_time_threshold_critical}, lasting=%{if var.backend_connect_time_lasting_duration_critical == null}None%{else}'${var.backend_connect_time_lasting_duration_critical}'%{endif}, at_least=${var.backend_connect_time_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal > ${var.backend_connect_time_threshold_major}, lasting=%{if var.backend_connect_time_lasting_duration_major == null}None%{else}'${var.backend_connect_time_lasting_duration_major}'%{endif}, at_least=${var.backend_connect_time_at_least_percentage_major}) and (not when(signal > ${var.backend_connect_time_threshold_critical}, lasting=%{if var.backend_connect_time_lasting_duration_critical == null}None%{else}'${var.backend_connect_time_lasting_duration_critical}'%{endif}, at_least=${var.backend_connect_time_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.backend_connect_time_threshold_critical}%{if var.backend_connect_time_lasting_duration_critical != null}, lasting='${var.backend_connect_time_lasting_duration_critical}', at_least=${var.backend_connect_time_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.backend_connect_time_threshold_major}%{if var.backend_connect_time_lasting_duration_major != null}, lasting='${var.backend_connect_time_lasting_duration_major}', at_least=${var.backend_connect_time_at_least_percentage_major}%{endif}) and (not when(signal > ${var.backend_connect_time_threshold_critical}%{if var.backend_connect_time_lasting_duration_critical != null}, lasting='${var.backend_connect_time_lasting_duration_critical}', at_least=${var.backend_connect_time_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {
@@ -141,8 +141,8 @@ resource "signalfx_detector" "failed_requests" {
     error_stream = data('FailedRequests', filter=base_filtering and ${module.filtering.signalflow}, extrapolation='zero')${var.failed_requests_aggregation_function}${var.failed_requests_transformation_function}
     count_stream = data('TotalRequests', filter=base_filtering and ${module.filtering.signalflow}, extrapolation='zero')${var.failed_requests_aggregation_function}${var.failed_requests_transformation_function}
     signal = (error_stream / count_stream).fill(value=0).scale(100).publish('signal')
-    detect(when(signal > ${var.failed_requests_threshold_critical}, lasting=%{if var.failed_requests_lasting_duration_critical == null}None%{else}'${var.failed_requests_lasting_duration_critical}'%{endif}, at_least=${var.failed_requests_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal > ${var.failed_requests_threshold_major}, lasting=%{if var.failed_requests_lasting_duration_major == null}None%{else}'${var.failed_requests_lasting_duration_major}'%{endif}, at_least=${var.failed_requests_at_least_percentage_major}) and (not when(signal > ${var.failed_requests_threshold_critical}, lasting=%{if var.failed_requests_lasting_duration_critical == null}None%{else}'${var.failed_requests_lasting_duration_critical}'%{endif}, at_least=${var.failed_requests_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.failed_requests_threshold_critical}%{if var.failed_requests_lasting_duration_critical != null}, lasting='${var.failed_requests_lasting_duration_critical}', at_least=${var.failed_requests_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.failed_requests_threshold_major}%{if var.failed_requests_lasting_duration_major != null}, lasting='${var.failed_requests_lasting_duration_major}', at_least=${var.failed_requests_at_least_percentage_major}%{endif}) and (not when(signal > ${var.failed_requests_threshold_critical}%{if var.failed_requests_lasting_duration_critical != null}, lasting='${var.failed_requests_lasting_duration_critical}', at_least=${var.failed_requests_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {
@@ -189,8 +189,8 @@ resource "signalfx_detector" "unhealthy_host_ratio" {
     error_stream = data('UnhealthyHostCount', filter=base_filtering and ${module.filtering.signalflow})${var.unhealthy_host_ratio_aggregation_function}${var.unhealthy_host_ratio_transformation_function}
     ok_stream = data('HealthyHostCount', filter=base_filtering and ${module.filtering.signalflow})${var.unhealthy_host_ratio_aggregation_function}${var.unhealthy_host_ratio_transformation_function}
     signal = (error_stream / (ok_stream + error_stream)).scale(100).publish('signal')
-    detect(when(signal >= ${var.unhealthy_host_ratio_threshold_critical}, lasting=%{if var.unhealthy_host_ratio_lasting_duration_critical == null}None%{else}'${var.unhealthy_host_ratio_lasting_duration_critical}'%{endif}, at_least=${var.unhealthy_host_ratio_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal >= ${var.unhealthy_host_ratio_threshold_major}, lasting=%{if var.unhealthy_host_ratio_lasting_duration_major == null}None%{else}'${var.unhealthy_host_ratio_lasting_duration_major}'%{endif}, at_least=${var.unhealthy_host_ratio_at_least_percentage_major}) and (not when(signal >= ${var.unhealthy_host_ratio_threshold_critical}, lasting=%{if var.unhealthy_host_ratio_lasting_duration_critical == null}None%{else}'${var.unhealthy_host_ratio_lasting_duration_critical}'%{endif}, at_least=${var.unhealthy_host_ratio_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal >= ${var.unhealthy_host_ratio_threshold_critical}%{if var.unhealthy_host_ratio_lasting_duration_critical != null}, lasting='${var.unhealthy_host_ratio_lasting_duration_critical}', at_least=${var.unhealthy_host_ratio_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal >= ${var.unhealthy_host_ratio_threshold_major}%{if var.unhealthy_host_ratio_lasting_duration_major != null}, lasting='${var.unhealthy_host_ratio_lasting_duration_major}', at_least=${var.unhealthy_host_ratio_at_least_percentage_major}%{endif}) and (not when(signal >= ${var.unhealthy_host_ratio_threshold_critical}%{if var.unhealthy_host_ratio_lasting_duration_critical != null}, lasting='${var.unhealthy_host_ratio_lasting_duration_critical}', at_least=${var.unhealthy_host_ratio_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {
@@ -237,9 +237,9 @@ resource "signalfx_detector" "http_4xx_errors" {
     error_stream = data('ResponseStatus', filter=base_filtering and filter('httpstatusgroup', '4xx') and ${module.filtering.signalflow}, extrapolation='zero')${var.http_4xx_errors_aggregation_function}${var.http_4xx_errors_transformation_function}
     count_stream = data('ResponseStatus', filter=base_filtering and ${module.filtering.signalflow}, extrapolation='zero')${var.http_4xx_errors_aggregation_function}${var.http_4xx_errors_transformation_function}
     signal = (error_stream / count_stream).fill(value=0).scale(100).publish('signal')
-    detect(when(signal > ${var.http_4xx_errors_threshold_critical}, lasting=%{if var.http_4xx_errors_lasting_duration_critical == null}None%{else}'${var.http_4xx_errors_lasting_duration_critical}'%{endif}, at_least=${var.http_4xx_errors_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal > ${var.http_4xx_errors_threshold_major}, lasting=%{if var.http_4xx_errors_lasting_duration_major == null}None%{else}'${var.http_4xx_errors_lasting_duration_major}'%{endif}, at_least=${var.http_4xx_errors_at_least_percentage_major}) and (not when(signal > ${var.http_4xx_errors_threshold_critical}, lasting=%{if var.http_4xx_errors_lasting_duration_critical == null}None%{else}'${var.http_4xx_errors_lasting_duration_critical}'%{endif}, at_least=${var.http_4xx_errors_at_least_percentage_critical}))).publish('MAJOR')
-    detect(when(signal > ${var.http_4xx_errors_threshold_minor}, lasting=%{if var.http_4xx_errors_lasting_duration_minor == null}None%{else}'${var.http_4xx_errors_lasting_duration_minor}'%{endif}, at_least=${var.http_4xx_errors_at_least_percentage_minor}) and (not when(signal > ${var.http_4xx_errors_threshold_major}, lasting=%{if var.http_4xx_errors_lasting_duration_major == null}None%{else}'${var.http_4xx_errors_lasting_duration_major}'%{endif}, at_least=${var.http_4xx_errors_at_least_percentage_major}))).publish('MINOR')
+    detect(when(signal > ${var.http_4xx_errors_threshold_critical}%{if var.http_4xx_errors_lasting_duration_critical != null}, lasting='${var.http_4xx_errors_lasting_duration_critical}', at_least=${var.http_4xx_errors_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.http_4xx_errors_threshold_major}%{if var.http_4xx_errors_lasting_duration_major != null}, lasting='${var.http_4xx_errors_lasting_duration_major}', at_least=${var.http_4xx_errors_at_least_percentage_major}%{endif}) and (not when(signal > ${var.http_4xx_errors_threshold_critical}%{if var.http_4xx_errors_lasting_duration_critical != null}, lasting='${var.http_4xx_errors_lasting_duration_critical}', at_least=${var.http_4xx_errors_at_least_percentage_critical}%{endif}))).publish('MAJOR')
+    detect(when(signal > ${var.http_4xx_errors_threshold_minor}%{if var.http_4xx_errors_lasting_duration_minor != null}, lasting='${var.http_4xx_errors_lasting_duration_minor}', at_least=${var.http_4xx_errors_at_least_percentage_minor}%{endif}) and (not when(signal > ${var.http_4xx_errors_threshold_major}%{if var.http_4xx_errors_lasting_duration_major != null}, lasting='${var.http_4xx_errors_lasting_duration_major}', at_least=${var.http_4xx_errors_at_least_percentage_major}%{endif}))).publish('MINOR')
 EOF
 
   rule {
@@ -298,8 +298,8 @@ resource "signalfx_detector" "http_5xx_errors" {
     error_stream = data('ResponseStatus', filter=base_filtering and filter('httpstatusgroup', '5xx') and ${module.filtering.signalflow}, extrapolation='zero')${var.http_5xx_errors_aggregation_function}${var.http_5xx_errors_transformation_function}
     count_stream = data('ResponseStatus', filter=base_filtering and ${module.filtering.signalflow}, extrapolation='zero')${var.http_5xx_errors_aggregation_function}${var.http_5xx_errors_transformation_function}
     signal = (error_stream / count_stream).fill(value=0).scale(100).publish('signal')
-    detect(when(signal > ${var.http_5xx_errors_threshold_critical}, lasting=%{if var.http_5xx_errors_lasting_duration_critical == null}None%{else}'${var.http_5xx_errors_lasting_duration_critical}'%{endif}, at_least=${var.http_5xx_errors_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal > ${var.http_5xx_errors_threshold_major}, lasting=%{if var.http_5xx_errors_lasting_duration_major == null}None%{else}'${var.http_5xx_errors_lasting_duration_major}'%{endif}, at_least=${var.http_5xx_errors_at_least_percentage_major}) and (not when(signal > ${var.http_5xx_errors_threshold_critical}, lasting=%{if var.http_5xx_errors_lasting_duration_critical == null}None%{else}'${var.http_5xx_errors_lasting_duration_critical}'%{endif}, at_least=${var.http_5xx_errors_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.http_5xx_errors_threshold_critical}%{if var.http_5xx_errors_lasting_duration_critical != null}, lasting='${var.http_5xx_errors_lasting_duration_critical}', at_least=${var.http_5xx_errors_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.http_5xx_errors_threshold_major}%{if var.http_5xx_errors_lasting_duration_major != null}, lasting='${var.http_5xx_errors_lasting_duration_major}', at_least=${var.http_5xx_errors_at_least_percentage_major}%{endif}) and (not when(signal > ${var.http_5xx_errors_threshold_critical}%{if var.http_5xx_errors_lasting_duration_critical != null}, lasting='${var.http_5xx_errors_lasting_duration_critical}', at_least=${var.http_5xx_errors_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {
@@ -346,8 +346,8 @@ resource "signalfx_detector" "backend_http_4xx_errors" {
     error_stream = data('BackendResponseStatus', filter=base_filtering and filter('httpstatusgroup', '4xx') and ${module.filtering.signalflow}, extrapolation='zero')${var.backend_http_4xx_errors_aggregation_function}${var.backend_http_4xx_errors_transformation_function}
     count_stream = data('BackendResponseStatus', filter=base_filtering and ${module.filtering.signalflow}, extrapolation='zero')${var.backend_http_4xx_errors_aggregation_function}${var.backend_http_4xx_errors_transformation_function}
     signal = (error_stream / count_stream).fill(value=0).scale(100).publish('signal')
-    detect(when(signal > ${var.backend_http_4xx_errors_threshold_critical}, lasting=%{if var.backend_http_4xx_errors_lasting_duration_critical == null}None%{else}'${var.backend_http_4xx_errors_lasting_duration_critical}'%{endif}, at_least=${var.backend_http_4xx_errors_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal > ${var.backend_http_4xx_errors_threshold_major}, lasting=%{if var.backend_http_4xx_errors_lasting_duration_major == null}None%{else}'${var.backend_http_4xx_errors_lasting_duration_major}'%{endif}, at_least=${var.backend_http_4xx_errors_at_least_percentage_major}) and (not when(signal > ${var.backend_http_4xx_errors_threshold_critical}, lasting=%{if var.backend_http_4xx_errors_lasting_duration_critical == null}None%{else}'${var.backend_http_4xx_errors_lasting_duration_critical}'%{endif}, at_least=${var.backend_http_4xx_errors_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.backend_http_4xx_errors_threshold_critical}%{if var.backend_http_4xx_errors_lasting_duration_critical != null}, lasting='${var.backend_http_4xx_errors_lasting_duration_critical}', at_least=${var.backend_http_4xx_errors_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.backend_http_4xx_errors_threshold_major}%{if var.backend_http_4xx_errors_lasting_duration_major != null}, lasting='${var.backend_http_4xx_errors_lasting_duration_major}', at_least=${var.backend_http_4xx_errors_at_least_percentage_major}%{endif}) and (not when(signal > ${var.backend_http_4xx_errors_threshold_critical}%{if var.backend_http_4xx_errors_lasting_duration_critical != null}, lasting='${var.backend_http_4xx_errors_lasting_duration_critical}', at_least=${var.backend_http_4xx_errors_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {
@@ -394,8 +394,8 @@ resource "signalfx_detector" "backend_http_5xx_errors" {
     error_stream = data('BackendResponseStatus', filter=base_filtering and filter('httpstatusgroup', '5xx') and ${module.filtering.signalflow}, extrapolation='zero')${var.backend_http_5xx_errors_aggregation_function}${var.backend_http_5xx_errors_transformation_function}
     count_stream = data('BackendResponseStatus', filter=base_filtering and ${module.filtering.signalflow}, extrapolation='zero')${var.backend_http_5xx_errors_aggregation_function}${var.backend_http_5xx_errors_transformation_function}
     signal = (error_stream / count_stream).fill(value=0).scale(100).publish('signal')
-    detect(when(signal > ${var.backend_http_5xx_errors_threshold_critical}, lasting=%{if var.backend_http_5xx_errors_lasting_duration_critical == null}None%{else}'${var.backend_http_5xx_errors_lasting_duration_critical}'%{endif}, at_least=${var.backend_http_5xx_errors_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal > ${var.backend_http_5xx_errors_threshold_major}, lasting=%{if var.backend_http_5xx_errors_lasting_duration_major == null}None%{else}'${var.backend_http_5xx_errors_lasting_duration_major}'%{endif}, at_least=${var.backend_http_5xx_errors_at_least_percentage_major}) and (not when(signal > ${var.backend_http_5xx_errors_threshold_critical}, lasting=%{if var.backend_http_5xx_errors_lasting_duration_critical == null}None%{else}'${var.backend_http_5xx_errors_lasting_duration_critical}'%{endif}, at_least=${var.backend_http_5xx_errors_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.backend_http_5xx_errors_threshold_critical}%{if var.backend_http_5xx_errors_lasting_duration_critical != null}, lasting='${var.backend_http_5xx_errors_lasting_duration_critical}', at_least=${var.backend_http_5xx_errors_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.backend_http_5xx_errors_threshold_major}%{if var.backend_http_5xx_errors_lasting_duration_major != null}, lasting='${var.backend_http_5xx_errors_lasting_duration_major}', at_least=${var.backend_http_5xx_errors_at_least_percentage_major}%{endif}) and (not when(signal > ${var.backend_http_5xx_errors_threshold_critical}%{if var.backend_http_5xx_errors_lasting_duration_critical != null}, lasting='${var.backend_http_5xx_errors_lasting_duration_critical}', at_least=${var.backend_http_5xx_errors_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {
