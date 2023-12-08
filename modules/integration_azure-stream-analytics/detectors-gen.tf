@@ -6,11 +6,11 @@ resource "signalfx_detector" "heartbeat" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-        from signalfx.detectors.not_reporting import not_reporting
-        base_filter = filter('resource_type', 'Microsoft.StreamAnalytics/streamingjobs') and filter('primary_aggregation_type', 'true')
-        signal = data('ResourceUtilization', filter=base_filter and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
-        not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}', auto_resolve_after='${local.heartbeat_auto_resolve_after}').publish('CRIT')
-    EOF
+    from signalfx.detectors.not_reporting import not_reporting
+    base_filtering = filter('resource_type', 'Microsoft.StreamAnalytics/streamingjobs') and filter('primary_aggregation_type', 'true')
+    signal = data('ResourceUtilization', filter=base_filtering and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}${var.heartbeat_transformation_function}.publish('signal')
+    not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}', auto_resolve_after='${local.heartbeat_auto_resolve_after}').publish('CRIT')
+EOF
 
   rule {
     description           = "has not reported in ${var.heartbeat_timeframe}"
@@ -35,14 +35,14 @@ resource "signalfx_detector" "su_utilization" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-        base_filter = filter('resource_type', 'Microsoft.StreamAnalytics/streamingjobs') and filter('primary_aggregation_type', 'true') and ${module.filtering.signalflow}
-        signal = data('ResourceUtilization', filter=base_filter)${var.su_utilization_aggregation_function}.publish('signal')
-        detect(when(signal > threshold(${var.su_utilization_threshold_critical}), lasting="${var.su_utilization_lasting_duration_critical}")).publish('CRIT')
-        detect(when(signal > threshold(${var.su_utilization_threshold_major}), lasting="${var.su_utilization_lasting_duration_major}") and (not when(signal > ${var.su_utilization_threshold_critical}, lasting="${var.su_utilization_lasting_duration_critical}"))).publish('MAJOR')
-    EOF
+    base_filtering = filter('resource_type', 'Microsoft.StreamAnalytics/streamingjobs') and filter('primary_aggregation_type', 'true')
+    signal = data('ResourceUtilization', filter=base_filtering and ${module.filtering.signalflow})${var.su_utilization_aggregation_function}${var.su_utilization_transformation_function}.publish('signal')
+    detect(when(signal > ${var.su_utilization_threshold_critical}%{if var.su_utilization_lasting_duration_critical != null}, lasting='${var.su_utilization_lasting_duration_critical}', at_least=${var.su_utilization_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.su_utilization_threshold_major}%{if var.su_utilization_lasting_duration_major != null}, lasting='${var.su_utilization_lasting_duration_major}', at_least=${var.su_utilization_at_least_percentage_major}%{endif}) and (not when(signal > ${var.su_utilization_threshold_critical}%{if var.su_utilization_lasting_duration_critical != null}, lasting='${var.su_utilization_lasting_duration_critical}', at_least=${var.su_utilization_at_least_percentage_critical}%{endif}))).publish('MAJOR')
+EOF
 
   rule {
-    description           = "is too high > ${var.su_utilization_threshold_critical}%"
+    description           = "is too high > ${var.su_utilization_threshold_critical}"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.su_utilization_disabled_critical, var.su_utilization_disabled, var.detectors_disabled)
@@ -54,7 +54,7 @@ resource "signalfx_detector" "su_utilization" {
   }
 
   rule {
-    description           = "is too high > ${var.su_utilization_threshold_major}%"
+    description           = "is too high > ${var.su_utilization_threshold_major}"
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.su_utilization_disabled_major, var.su_utilization_disabled, var.detectors_disabled)
@@ -76,16 +76,16 @@ resource "signalfx_detector" "failed_function_requests" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-        base_filter = filter('resource_type', 'Microsoft.StreamAnalytics/streamingjobs') and filter('primary_aggregation_type', 'true') and ${module.filtering.signalflow}
-        A = data('AMLCalloutFailedRequests', extrapolation='zero', filter=base_filter)${var.failed_function_requests_aggregation_function}
-        B = data('AMLCalloutRequests', extrapolation='zero', filter=base_filter)${var.failed_function_requests_aggregation_function}
-        signal = (A/B).scale(100).fill(0).publish('signal')
-        detect(when(signal > threshold(${var.failed_function_requests_threshold_critical}), lasting="${var.failed_function_requests_lasting_duration_critical}")).publish('CRIT')
-        detect(when(signal > threshold(${var.failed_function_requests_threshold_major}), lasting="${var.failed_function_requests_lasting_duration_major}") and (not when(signal > ${var.failed_function_requests_threshold_critical}, lasting="${var.failed_function_requests_lasting_duration_critical}"))).publish('MAJOR')
-    EOF
+    base_filtering = filter('resource_type', 'Microsoft.StreamAnalytics/streamingjobs') and filter('primary_aggregation_type', 'true')
+    A = data('AMLCalloutFailedRequests', filter=base_filtering and ${module.filtering.signalflow}, extrapolation='zero')${var.failed_function_requests_aggregation_function}${var.failed_function_requests_transformation_function}
+    B = data('AMLCalloutRequests', filter=base_filtering and ${module.filtering.signalflow}, extrapolation='zero')${var.failed_function_requests_aggregation_function}${var.failed_function_requests_transformation_function}
+    signal = (A/B).scale(100).fill(0).publish('signal')
+    detect(when(signal > ${var.failed_function_requests_threshold_critical}%{if var.failed_function_requests_lasting_duration_critical != null}, lasting='${var.failed_function_requests_lasting_duration_critical}', at_least=${var.failed_function_requests_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.failed_function_requests_threshold_major}%{if var.failed_function_requests_lasting_duration_major != null}, lasting='${var.failed_function_requests_lasting_duration_major}', at_least=${var.failed_function_requests_at_least_percentage_major}%{endif}) and (not when(signal > ${var.failed_function_requests_threshold_critical}%{if var.failed_function_requests_lasting_duration_critical != null}, lasting='${var.failed_function_requests_lasting_duration_critical}', at_least=${var.failed_function_requests_at_least_percentage_critical}%{endif}))).publish('MAJOR')
+EOF
 
   rule {
-    description           = "is too high > ${var.failed_function_requests_threshold_critical}%"
+    description           = "is too high > ${var.failed_function_requests_threshold_critical}"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.failed_function_requests_disabled_critical, var.failed_function_requests_disabled, var.detectors_disabled)
@@ -97,7 +97,7 @@ resource "signalfx_detector" "failed_function_requests" {
   }
 
   rule {
-    description           = "is too high > ${var.failed_function_requests_threshold_major}%"
+    description           = "is too high > ${var.failed_function_requests_threshold_major}"
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.failed_function_requests_disabled_major, var.failed_function_requests_disabled, var.detectors_disabled)
@@ -119,14 +119,14 @@ resource "signalfx_detector" "conversion_errors" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-        base_filter = filter('resource_type', 'Microsoft.StreamAnalytics/streamingjobs') and filter('primary_aggregation_type', 'true') and ${module.filtering.signalflow}
-        signal = data('ConversionErrors', filter=base_filter)${var.conversion_errors_aggregation_function}. publish('signal')
-        detect(when(signal > threshold(${var.conversion_errors_threshold_critical}), lasting="${var.conversion_errors_lasting_duration_critical}")).publish('CRIT')
-        detect(when(signal > threshold(${var.conversion_errors_threshold_major}), lasting="${var.conversion_errors_lasting_duration_major}") and (not when(signal > ${var.conversion_errors_threshold_critical}, lasting="${var.conversion_errors_lasting_duration_critical}"))).publish('MAJOR')
-    EOF
+    base_filtering = filter('resource_type', 'Microsoft.StreamAnalytics/streamingjobs') and filter('primary_aggregation_type', 'true')
+    signal = data('ConversionErrors', filter=base_filtering and ${module.filtering.signalflow})${var.conversion_errors_aggregation_function}${var.conversion_errors_transformation_function}.publish('signal')
+    detect(when(signal > ${var.conversion_errors_threshold_critical}%{if var.conversion_errors_lasting_duration_critical != null}, lasting='${var.conversion_errors_lasting_duration_critical}', at_least=${var.conversion_errors_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.conversion_errors_threshold_major}%{if var.conversion_errors_lasting_duration_major != null}, lasting='${var.conversion_errors_lasting_duration_major}', at_least=${var.conversion_errors_at_least_percentage_major}%{endif}) and (not when(signal > ${var.conversion_errors_threshold_critical}%{if var.conversion_errors_lasting_duration_critical != null}, lasting='${var.conversion_errors_lasting_duration_critical}', at_least=${var.conversion_errors_at_least_percentage_critical}%{endif}))).publish('MAJOR')
+EOF
 
   rule {
-    description           = "is too high > ${var.conversion_errors_threshold_critical}%"
+    description           = "is too high > ${var.conversion_errors_threshold_critical}"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.conversion_errors_disabled_critical, var.conversion_errors_disabled, var.detectors_disabled)
@@ -138,7 +138,7 @@ resource "signalfx_detector" "conversion_errors" {
   }
 
   rule {
-    description           = "is too high > ${var.conversion_errors_threshold_major}%"
+    description           = "is too high > ${var.conversion_errors_threshold_major}"
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.conversion_errors_disabled_major, var.conversion_errors_disabled, var.detectors_disabled)
@@ -160,14 +160,14 @@ resource "signalfx_detector" "runtime_errors" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-        base_filter = filter('resource_type', 'Microsoft.StreamAnalytics/streamingjobs') and filter('primary_aggregation_type', 'true') and ${module.filtering.signalflow}
-        signal = data('Errors', filter=base_filter)${var.runtime_errors_aggregation_function}.publish('signal')
-        detect(when(signal > threshold(${var.runtime_errors_threshold_critical}), lasting="${var.runtime_errors_lasting_duration_critical}")).publish('CRIT')
-        detect(when(signal > threshold(${var.runtime_errors_threshold_major}), lasting="${var.runtime_errors_lasting_duration_major}") and (not when(signal > ${var.runtime_errors_threshold_critical}, lasting="${var.runtime_errors_lasting_duration_critical}"))).publish('MAJOR')
-    EOF
+    base_filtering = filter('resource_type', 'Microsoft.StreamAnalytics/streamingjobs') and filter('primary_aggregation_type', 'true')
+    signal = data('Errors', filter=base_filtering and ${module.filtering.signalflow})${var.runtime_errors_aggregation_function}${var.runtime_errors_transformation_function}.publish('signal')
+    detect(when(signal > ${var.runtime_errors_threshold_critical}%{if var.runtime_errors_lasting_duration_critical != null}, lasting='${var.runtime_errors_lasting_duration_critical}', at_least=${var.runtime_errors_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.runtime_errors_threshold_major}%{if var.runtime_errors_lasting_duration_major != null}, lasting='${var.runtime_errors_lasting_duration_major}', at_least=${var.runtime_errors_at_least_percentage_major}%{endif}) and (not when(signal > ${var.runtime_errors_threshold_critical}%{if var.runtime_errors_lasting_duration_critical != null}, lasting='${var.runtime_errors_lasting_duration_critical}', at_least=${var.runtime_errors_at_least_percentage_critical}%{endif}))).publish('MAJOR')
+EOF
 
   rule {
-    description           = "is too high > ${var.runtime_errors_threshold_critical}%"
+    description           = "is too high > ${var.runtime_errors_threshold_critical}"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.runtime_errors_disabled_critical, var.runtime_errors_disabled, var.detectors_disabled)
@@ -179,7 +179,7 @@ resource "signalfx_detector" "runtime_errors" {
   }
 
   rule {
-    description           = "is too high > ${var.runtime_errors_threshold_major}%"
+    description           = "is too high > ${var.runtime_errors_threshold_major}"
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.runtime_errors_disabled_major, var.runtime_errors_disabled, var.detectors_disabled)
@@ -192,3 +192,4 @@ resource "signalfx_detector" "runtime_errors" {
 
   max_delay = var.runtime_errors_max_delay
 }
+
