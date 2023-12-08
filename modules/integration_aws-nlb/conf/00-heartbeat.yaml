@@ -1,0 +1,12 @@
+module: "AWS NLB"
+name: "heartbeat"
+
+transformation: true
+aggregation: ".mean(by=['LoadBalancer'])"
+filtering: "filter('stat', 'mean') and filter('namespace', 'AWS/NetworkELB')"
+
+signals:
+  signal:
+    metric: "ConsumedLCUs"
+rules:
+  critical:
