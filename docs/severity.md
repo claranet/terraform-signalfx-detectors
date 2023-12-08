@@ -669,7 +669,7 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|Azure storage account Used capacity|X|X|-|-|-|
+|Azure Storage Account capacity used|X|X|-|-|-|
 
 
 ## integration_azure-storage-account
