@@ -7,7 +7,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    signal = data('kong_datastore_reachable', filter=${local.not_running_vm_filters} and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
+    signal = data('kong_datastore_reachable', filter=${local.not_running_vm_filters} and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}${var.heartbeat_transformation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}', auto_resolve_after='${local.heartbeat_auto_resolve_after}').publish('CRIT')
 EOF
 
@@ -37,8 +37,8 @@ resource "signalfx_detector" "treatment_limit" {
     A = data('kong_nginx_http_current_connections', filter=filter('state', 'handled') and ${module.filtering.signalflow})${var.treatment_limit_aggregation_function}${var.treatment_limit_transformation_function}
     B = data('kong_nginx_http_current_connections', filter=filter('state', 'accepted') and ${module.filtering.signalflow})${var.treatment_limit_aggregation_function}${var.treatment_limit_transformation_function}
     signal = ((A-B)/A).scale(100).publish('signal')
-    detect(when(signal > ${var.treatment_limit_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.treatment_limit_threshold_major}) and (not when(signal > ${var.treatment_limit_threshold_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.treatment_limit_threshold_critical}%{if var.treatment_limit_lasting_duration_critical != null}, lasting='${var.treatment_limit_lasting_duration_critical}', at_least=${var.treatment_limit_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.treatment_limit_threshold_major}%{if var.treatment_limit_lasting_duration_major != null}, lasting='${var.treatment_limit_lasting_duration_major}', at_least=${var.treatment_limit_at_least_percentage_major}%{endif}) and (not when(signal > ${var.treatment_limit_threshold_critical}%{if var.treatment_limit_lasting_duration_critical != null}, lasting='${var.treatment_limit_lasting_duration_critical}', at_least=${var.treatment_limit_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {
