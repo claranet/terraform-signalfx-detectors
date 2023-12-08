@@ -1,0 +1,25 @@
+module: AWS RDS Common
+id: "cpu_usage"
+name: "Instance CPU"
+
+transformation: true
+aggregation: ".min(over='15m')"
+
+filtering: "filter('namespace', 'AWS/RDS')"
+value_unit: "%"
+
+signals:
+  signal:
+    metric: CPUUtilization
+    filter: "filter('stat', 'mean') and filter('DBInstanceIdentifier', '*')"
+
+rules:
+  critical:
+    threshold: 90
+    comparator: ">"
+    lasting_duration: "15m"
+  major:
+    threshold: 80
+    comparator: ">"
+    lasting_duration: "15m"
+    dependency: critical
