@@ -1,0 +1,18 @@
+module: "PostgreSQL"
+name: "Replication state"
+id: "replication_state"
+
+transformation: ".max(over='5m')"
+aggregation: true
+
+
+signals:
+  signal:
+    metric: "postgres_replication_state"
+    rollup: "average"
+
+rules:
+  critical:
+    threshold: 1
+    comparator: "<"
+    

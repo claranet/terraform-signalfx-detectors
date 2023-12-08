@@ -1,0 +1,21 @@
+module: "Supervisor"
+name: "Process"
+id: "process_state"
+
+transformation: ".min(over='10m')"
+aggregation: true
+
+
+signals:
+  signal:
+    metric: "supervisor.state"
+
+rules:
+  critical:
+    threshold: 20
+    comparator: ">"
+    
+  major:
+    threshold: 10
+    comparator: "<"
+    

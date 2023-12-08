@@ -1,0 +1,29 @@
+module: "ElasticSearch"
+name: "Index flushing to disk latency"
+id: "flush_latency"
+
+transformation: ".mean(over='15m')"
+aggregation: true
+filtering: "filter('plugin', 'elasticsearch') and filter('node_name', '*')"
+
+signals:
+  A:
+    metric: "elasticsearch.indices.flush.total-time"
+    rollup: "delta"
+    extrapolation: "zero"
+  B:
+    metric: "elasticsearch.indices.flush.total"
+    rollup: "delta"
+    extrapolation: "zero"
+  signal:
+    formula: "(A/B).fill(0)"
+
+rules:
+  major:
+    threshold: 150
+    comparator: ">"
+    
+  minor:
+    threshold: 100
+    comparator: ">"
+    dependency: "major"

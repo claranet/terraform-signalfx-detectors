@@ -1,0 +1,27 @@
+module: "Docker"
+name: "Container cpu throttling time"
+id: "throttling"
+
+transformation: ".max(over='5m')"
+aggregation: true
+filtering: "filter('plugin', 'docker')"
+
+signals:
+  A:
+    metric: "cpu.throttling_data.throttled_time"
+    rollup: "delta"
+  B:
+    metric: "cpu.throttling_data.throttled_time"
+    rollup: "delta"
+  signal:
+    formula: "(A/B).scale(100)"
+
+rules:
+  major:
+    threshold: 1000000000
+    comparator: ">"
+    
+  minor:
+    threshold: 1000
+    comparator: ">"
+    dependency: "major"

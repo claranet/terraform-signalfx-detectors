@@ -1,0 +1,21 @@
+module: "MongoDB"
+name: "Asserts (warning and regular) errors"
+id: "asserts"
+
+transformation: ".max(over='30m')"
+aggregation: true
+
+
+signals:
+  A:
+    metric: "counter.asserts.regular"
+  B:
+    metric: "counter.asserts.warning"
+  signal:
+    formula: "(A+B)"
+
+rules:
+  minor:
+    threshold: 0
+    comparator: ">"
+    

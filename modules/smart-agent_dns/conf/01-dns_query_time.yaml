@@ -1,0 +1,21 @@
+module: "DNS"
+name: "Query time"
+id: "dns_query_time"
+
+transformation: ".max(over='15m')"
+aggregation: true
+filtering: "filter('plugin', 'telegraf/dns')"
+
+signals:
+  signal:
+    metric: "dns.query_time_ms"
+
+rules:
+  critical:
+    threshold: 1000
+    comparator: ">"
+    
+  major:
+    threshold: 500
+    comparator: ">"
+    dependency: "critical"

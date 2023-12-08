@@ -1,0 +1,12 @@
+module: "Tomcat"
+name: "heartbeat"
+
+transformation: true
+aggregation: true
+
+
+signals:
+  signal:
+    metric: " gauge.tomcat.ThreadPool.maxThreads "
+rules:
+  critical:

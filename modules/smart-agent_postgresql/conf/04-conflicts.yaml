@@ -1,0 +1,22 @@
+module: "PostgreSQL"
+name: "Conflicts"
+id: "conflicts"
+
+transformation: ".max(over='5m')"
+aggregation: true
+
+
+signals:
+  signal:
+    metric: "postgres_conflicts"
+    rollup: "average"
+
+rules:
+  major:
+    threshold: 1
+    comparator: ">"
+    
+  minor:
+    threshold: 0
+    comparator: ">"
+    dependency: "major"

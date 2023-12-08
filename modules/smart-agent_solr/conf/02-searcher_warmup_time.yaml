@@ -1,0 +1,21 @@
+module: "Apache Solr"
+name: "Searcher warmup time"
+id: "searcher_warmup_time"
+
+transformation: ".max(over='5m')"
+aggregation: true
+
+
+signals:
+  signal:
+    metric: "gauge.solr.searcher_warmup"
+
+rules:
+  critical:
+    threshold: 5000
+    comparator: ">="
+    
+  major:
+    threshold: 2000
+    comparator: ">="
+    dependency: "critical"

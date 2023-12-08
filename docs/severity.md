@@ -965,7 +965,7 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|Docker host heartbeat|X|-|-|-|-|
+|Docker heartbeat|X|-|-|-|-|
 |Docker container usage of cpu host|-|X|X|-|-|
 |Docker container cpu throttling time|-|X|X|-|-|
 |Docker memory usage|-|X|X|-|-|
@@ -979,21 +979,21 @@
 |ElasticSearch cluster status|X|X|-|-|-|
 |ElasticSearch cluster initializing shards|X|X|-|-|-|
 |ElasticSearch cluster relocating shards|X|X|-|-|-|
-|ElasticSearch Cluster unassigned shards|X|X|-|-|-|
-|ElasticSearch Pending tasks|X|X|-|-|-|
-|Elasticsearch CPU usage|X|X|-|-|-|
-|Elasticsearch file descriptors usage|X|X|-|-|-|
-|Elasticsearch JVM heap memory usage|X|X|-|-|-|
-|Elasticsearch JVM memory young usage|-|X|X|-|-|
-|Elasticsearch JVM memory old usage|-|X|X|-|-|
-|Elasticsearch old-generation garbage collections latency|-|X|X|-|-|
-|Elasticsearch young-generation garbage collections latency|-|X|X|-|-|
-|Elasticsearch indexing latency|-|X|X|-|-|
-|Elasticsearch index flushing to disk latency|-|X|X|-|-|
-|Elasticsearch search query latency|-|X|X|-|-|
-|Elasticsearch search fetch latency|-|X|X|-|-|
-|Elasticsearch fielddata cache evictions rate of change|-|X|X|-|-|
-|Elasticsearch max time spent by task in queue rate of change|-|X|X|-|-|
+|ElasticSearch cluster unassigned shards|X|X|-|-|-|
+|ElasticSearch pending tasks|X|X|-|-|-|
+|ElasticSearch cpu usage|X|X|-|-|-|
+|ElasticSearch file descriptors usage|X|X|-|-|-|
+|ElasticSearch jvm heap memory usage|X|X|-|-|-|
+|ElasticSearch jvm memory young usage|-|X|X|-|-|
+|ElasticSearch jvm memory old usage|-|X|X|-|-|
+|ElasticSearch old-generation garbage collections latency|-|X|X|-|-|
+|ElasticSearch young-generation garbage collections latency|-|X|X|-|-|
+|ElasticSearch indexing latency|-|X|X|-|-|
+|ElasticSearch index flushing to disk latency|-|X|X|-|-|
+|ElasticSearch search query latency|-|X|X|-|-|
+|ElasticSearch search fetch latency|-|X|X|-|-|
+|ElasticSearch fielddata cache evictions rate of change|-|X|X|-|-|
+|ElasticSearch max time spent by task in queue rate of change|-|X|X|-|-|
 
 
 ## smart-agent_genericjmx
@@ -1042,7 +1042,7 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|Kubernetes API server heartbeat|X|-|-|-|-|
+|Kubernetes API server heartbeat heartbeat|X|-|-|-|-|
 
 
 ## smart-agent_kubernetes-common
@@ -1130,13 +1130,13 @@
 |MySQL heartbeat|X|-|-|-|-|
 |MySQL number of connections over max capacity|X|X|-|-|-|
 |MySQL slow queries percentage|X|X|-|-|-|
-|MySQL Innodb buffer pool efficiency|-|-|X|X|-|
-|MySQL Innodb buffer pool utilization|-|-|X|X|-|
-|MySQL running threads changed abruptly|X|-|-|-|-|
-|MySQL running queries changed abruptly|X|-|-|-|-|
+|MySQL innodb buffer pool efficiency|-|-|X|X|-|
+|MySQL innodb buffer pool utilization|-|-|X|X|-|
 |MySQL replication lag|X|X|-|-|-|
 |MySQL slave sql status|X|-|-|-|-|
 |MySQL slave io status|X|-|-|-|-|
+|MySQL running threads changed abruptly|X|-|-|-|-|
+|MySQL running queries changed abruptly|X|-|-|-|-|
 
 
 ## smart-agent_nagios-status-check
@@ -1204,7 +1204,7 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|RabbitMQ heartbeat|X|-|-|-|-|
+|RabbitMQ Node heartbeat|X|-|-|-|-|
 |RabbitMQ Node file descriptors usage|X|X|-|-|-|
 |RabbitMQ Node process usage|X|X|-|-|-|
 |RabbitMQ Node sockets usage|X|X|-|-|-|
@@ -1300,7 +1300,7 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Varnish heartbeat|X|-|-|-|-|
-|Varnish backend Failed|X|-|-|-|-|
+|Varnish backend failed|X|-|-|-|-|
 |Varnish threads number|X|-|-|-|-|
 |Varnish session dropped|X|-|-|-|-|
 |Varnish hit rate|-|X|X|-|-|

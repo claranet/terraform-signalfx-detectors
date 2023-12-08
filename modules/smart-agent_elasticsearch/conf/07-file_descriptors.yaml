@@ -1,0 +1,27 @@
+module: "ElasticSearch"
+name: "File descriptors usage"
+id: "file_descriptors"
+
+transformation: ".max(over='15m')"
+aggregation: true
+filtering: "filter('plugin', 'elasticsearch') and filter('node_name', '*')"
+
+signals:
+  A:
+    metric: "elasticsearch.process.open_file_descriptors"
+    rollup: "average"
+  B:
+    metric: "elasticsearch.process.max_file_descriptors"
+    rollup: "average"
+  signal:
+    formula: "(A/B).scale(100)"
+
+rules:
+  critical:
+    threshold: 95
+    comparator: ">"
+    
+  major:
+    threshold: 90
+    comparator: ">"
+    dependency: "critical"
