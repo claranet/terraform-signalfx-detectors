@@ -756,7 +756,7 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |GCP GCE Instance heartbeat|X|-|-|-|-|
-|GCP GCE Instance CPU utilization|X|X|-|-|-|
+|GCP GCE Instance cpu utilization|X|X|-|-|-|
 |GCP GCE Instance disk throttled bps|X|X|-|-|-|
 |GCP GCE Instance disk throttled ops|X|X|-|-|-|
 
