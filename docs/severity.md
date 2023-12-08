@@ -232,18 +232,18 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|AWS ECS heartbeat|X|-|-|-|-|
-|AWS ECS cluster CPU utilization|X|X|-|-|-|
-|AWS ECS cluster memory utilization|X|X|-|-|-|
+|AWS ECS Cluster heartbeat|X|-|-|-|-|
+|AWS ECS Cluster cpu utilization|X|X|-|-|-|
+|AWS ECS Cluster memory utilization|X|X|-|-|-|
 
 
 ## integration_aws-ecs-service
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|AWS ECS heartbeat|X|-|-|-|-|
-|AWS ECS service CPU utilization|X|X|-|-|-|
-|AWS ECS service memory utilization|X|X|-|-|-|
+|AWS ECS Service heartbeat|X|-|-|-|-|
+|AWS ECS Service cpu utilization|X|X|-|-|-|
+|AWS ECS Service memory utilization|X|X|-|-|-|
 
 
 ## integration_aws-efs

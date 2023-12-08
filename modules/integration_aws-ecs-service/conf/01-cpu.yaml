@@ -1,0 +1,22 @@
+module: AWS ECS Service
+name: "CPU utilization"
+
+transformation: ".min(over='5m')"
+aggregation: ".mean(by=['ServiceName'])"
+
+filtering: "filter('namespace', 'AWS/ECS')"
+value_unit: "%"
+
+signals:
+  signal:
+    metric: CPUUtilization
+    filter: "filter('stat', 'mean') and filter('ServiceName', '*')"
+
+rules:
+  critical:
+    threshold: 90
+    comparator: ">"
+  major:
+    threshold: 80
+    comparator: ">"
+    dependency: critical
