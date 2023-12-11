@@ -145,7 +145,6 @@ parameter to the corresponding monitor configuration:
         - '!counter.tomcat.GlobalRequestProcessor.requestCount'
         - '!gauge.tomcat.ThreadPool.currentThreadsBusy'
         - '!gauge.tomcat.ThreadPool.maxThreads'
-        - '! gauge.tomcat.ThreadPool.maxThreads '
 
 ```
 

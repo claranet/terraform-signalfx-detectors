@@ -7,6 +7,6 @@ aggregation: true
 
 signals:
   signal:
-    metric: " gauge.tomcat.ThreadPool.maxThreads "
+    metric: "gauge.tomcat.ThreadPool.maxThreads"
 rules:
   critical:
