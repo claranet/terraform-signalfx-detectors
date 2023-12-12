@@ -126,7 +126,7 @@ variable "tunnel_status_aggregation_function" {
 variable "tunnel_status_transformation_function" {
   description = "Transformation function for tunnel_status detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".fill(duration='30d')"
+  default     = ""
 }
 
 variable "tunnel_status_max_delay" {
