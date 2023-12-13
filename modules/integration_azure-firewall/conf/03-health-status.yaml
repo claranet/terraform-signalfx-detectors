@@ -2,7 +2,7 @@ module: Azure firewall
 name: "Health state"
 
 transformation: true
-aggregation: true
+aggregation: ".max(by=['azure_resource_id', 'azure_resource_group_name', 'azure_region'])"
 
 filtering: "filter('resource_type', 'Microsoft.Network/azureFirewalls') and filter('primary_aggregation_type', 'true')"
 tip: "Firewall Health state is explained here: https://docs.microsoft.com/en-us/azure/firewall/logs-and-metrics#metrics"
