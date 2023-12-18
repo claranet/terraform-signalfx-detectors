@@ -77,7 +77,6 @@ This module creates the following SignalFx detectors which could contain one or 
 |---|---|---|---|---|---|
 |Azure Container Apps heartbeat|X|-|-|-|-|
 |Azure Container Apps restarts|-|-|-|X|-|
-|Azure Container Apps replicas|-|-|-|-|X|
 
 ## How to collect required metrics?
 
@@ -95,7 +94,6 @@ Check the [Related documentation](#related-documentation) section for more detai
 
 Here is the list of required metrics for detectors in this module.
 
-* `Replicas`
 * `RestartCount`
 * `WorkingSetBytes`
 

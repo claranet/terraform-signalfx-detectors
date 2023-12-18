@@ -3,7 +3,7 @@ name: heartbeat
 filtering: "filter('resource_type', 'Microsoft.App/containerApps') and filter('aggregation_type', 'minimum')"
 
 transformation: true
-aggregation: ".mean(by=['azure_resource_id'])"
+aggregation: ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 
 signals:
   signal:
@@ -11,6 +11,3 @@ signals:
 
 rules:
   critical:
-    threshold: 0
-    comparator: "="
-    lasting_duration: 5m

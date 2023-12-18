@@ -479,7 +479,6 @@
 |---|---|---|---|---|---|
 |Azure Container Apps heartbeat|X|-|-|-|-|
 |Azure Container Apps restarts|-|-|-|X|-|
-|Azure Container Apps replicas|-|-|-|-|X|
 
 
 ## integration_azure-container-instance

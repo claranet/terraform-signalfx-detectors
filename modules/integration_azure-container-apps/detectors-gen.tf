@@ -55,31 +55,3 @@ EOF
   max_delay = var.restarts_max_delay
 }
 
-resource "signalfx_detector" "replicas" {
-  name = format("%s %s", local.detector_name_prefix, "Azure Container Apps replicas")
-
-  authorized_writer_teams = var.authorized_writer_teams
-  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
-  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
-
-  program_text = <<-EOF
-    base_filtering = filter('resource_type', 'Microsoft.App/containerApps') and filter('aggregation_type', 'count')
-    signal = data('Replicas', filter=base_filtering and ${module.filtering.signalflow})${var.replicas_transformation_function}.publish('signal')
-    detect(when(signal > ${var.replicas_threshold_info}, lasting=%{if var.replicas_lasting_duration_info == null}None%{else}'${var.replicas_lasting_duration_info}'%{endif}, at_least=${var.replicas_at_least_percentage_info})).publish('INFO')
-EOF
-
-  rule {
-    description           = "is too high > ${var.replicas_threshold_info}"
-    severity              = "Info"
-    detect_label          = "INFO"
-    disabled              = coalesce(var.replicas_disabled, var.detectors_disabled)
-    notifications         = try(coalescelist(lookup(var.replicas_notifications, "info", []), var.notifications.info), null)
-    runbook_url           = try(coalesce(var.replicas_runbook_url, var.runbook_url), "")
-    tip                   = var.replicas_tip
-    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
-    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
-  }
-
-  max_delay = var.replicas_max_delay
-}
-

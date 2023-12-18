@@ -9,7 +9,7 @@ variable "heartbeat_notifications" {
 variable "heartbeat_aggregation_function" {
   description = "Aggregation function and group by for heartbeat detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_resource_id'])"
+  default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
 variable "heartbeat_transformation_function" {
@@ -59,7 +59,7 @@ variable "restarts_notifications" {
 variable "restarts_aggregation_function" {
   description = "Aggregation function and group by for restarts detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['podname'])"
+  default     = ".sum(['azure_resource_name', 'azure_resource_group_name', 'azure_region', 'podname'])"
 }
 
 variable "restarts_transformation_function" {
@@ -105,61 +105,6 @@ variable "restarts_lasting_duration_warning" {
 }
 
 variable "restarts_at_least_percentage_warning" {
-  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
-  type        = number
-  default     = 1
-}
-# replicas detector
-
-variable "replicas_notifications" {
-  description = "Notification recipients list per severity overridden for replicas detector"
-  type        = map(list(string))
-  default     = {}
-}
-
-variable "replicas_transformation_function" {
-  description = "Transformation function for replicas detector (i.e. \".mean(over='5m')\")"
-  type        = string
-  default     = ""
-}
-
-variable "replicas_max_delay" {
-  description = "Enforce max delay for replicas detector (use \"0\" or \"null\" for \"Auto\")"
-  type        = number
-  default     = null
-}
-
-variable "replicas_tip" {
-  description = "Suggested first course of action or any note useful for incident handling"
-  type        = string
-  default     = ""
-}
-
-variable "replicas_runbook_url" {
-  description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
-  type        = string
-  default     = ""
-}
-
-variable "replicas_disabled" {
-  description = "Disable all alerting rules for replicas detector"
-  type        = bool
-  default     = null
-}
-
-variable "replicas_threshold_info" {
-  description = "Info threshold for replicas detector"
-  type        = number
-  default     = 5
-}
-
-variable "replicas_lasting_duration_info" {
-  description = "Minimum duration that conditions must be true before raising alert"
-  type        = string
-  default     = "15m"
-}
-
-variable "replicas_at_least_percentage_info" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1
