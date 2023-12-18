@@ -99,7 +99,7 @@ variable "cdn_origin_health_notifications" {
 variable "cdn_origin_health_aggregation_function" {
   description = "Aggregation function and group by for cdn_origin_health detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".max(by=['Origin', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
 variable "cdn_origin_health_transformation_function" {

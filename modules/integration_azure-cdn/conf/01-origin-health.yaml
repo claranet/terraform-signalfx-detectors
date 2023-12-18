@@ -5,7 +5,7 @@ id: cdn_origin_health
 value_unit: "%"
 
 transformation: true
-aggregation: ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+aggregation: ".max(by=['Origin', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 
 signals:
   signal:
