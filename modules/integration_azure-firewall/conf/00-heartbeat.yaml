@@ -3,7 +3,7 @@ module: Azure firewall
 name: heartbeat
 
 transformation: true
-aggregation: ".max(by=['azure_resource_id', 'azure_resource_group_name', 'azure_region'])"
+aggregation: ".max(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 
 filtering: "filter('resource_type', 'Microsoft.Network/azureFirewalls') and filter('primary_aggregation_type', 'true')"
 

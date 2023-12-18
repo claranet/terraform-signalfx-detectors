@@ -9,7 +9,7 @@ variable "heartbeat_notifications" {
 variable "heartbeat_aggregation_function" {
   description = "Aggregation function and group by for heartbeat detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".max(by=['azure_resource_id', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".max(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
 variable "heartbeat_transformation_function" {
@@ -287,7 +287,7 @@ variable "health_state_notifications" {
 variable "health_state_aggregation_function" {
   description = "Aggregation function and group by for health_state detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".max(by=['azure_resource_id', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".max(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
 variable "health_state_transformation_function" {
