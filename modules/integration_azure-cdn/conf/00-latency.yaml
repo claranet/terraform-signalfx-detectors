@@ -5,7 +5,7 @@ id: cdn_total_latency
 value_unit: ms
 
 transformation: true
-aggregation: true
+aggregation: ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 
 signals:
   signal:

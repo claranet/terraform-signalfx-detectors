@@ -480,7 +480,6 @@
 |Azure Container Apps heartbeat|X|-|-|-|-|
 |Azure Container Apps restarts|-|-|-|X|-|
 
-
 ## integration_azure-container-instance
 
 |Detector|Critical|Major|Minor|Warning|Info|
