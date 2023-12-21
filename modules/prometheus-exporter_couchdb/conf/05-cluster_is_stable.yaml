@@ -1,0 +1,14 @@
+module: couchdb
+name: cluster_is_stable
+
+transformation: false
+aggregation: true
+exclude_not_running_vm: true
+
+signals:
+  signal:
+    metric: couchdb_couch_replicator_cluster_is_stable
+rules:
+  critical:
+    threshold: 1
+    comparator: "<"

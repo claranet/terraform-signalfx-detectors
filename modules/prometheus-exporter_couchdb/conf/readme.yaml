@@ -1,0 +1,34 @@
+documentations:
+  - name: Configuration of Prometheus Endpoint in CouchDB
+    url: https://docs.couchdb.org/en/stable/config/misc.html#configuration-of-prometheus-endpoint
+
+source_doc: |
+  The detectors of this module uses metrics from the [embedded Couchdb exporter](https://docs.couchdb.org/en/stable/config/misc.html#configuration-of-prometheus-endpoint) for Prometheus.
+
+  ### Examples
+
+  Sample OTEL Agent configuration.
+
+  ```yaml
+  ---
+  receivers:
+    prometheus:
+      config:
+        scrape_configs:
+          - job_name: "couchdb-prometheus"
+            scrape_interval: 60s
+            metrics_path: "/_node/_local/_prometheus"
+            basic_auth:
+              username: "{{ couchdb_admin_username }}"
+              password: "{{ couchdb_admin_password }}"
+            static_configs:
+              - targets: ["{{ inventory_hostname }}:5984"]
+                labels:
+                  environment: "{{ splunk_otel_collector_env }}"
+  service:
+    pipelines:
+      metrics:
+        receivers:
+          - prometheus
+  ...
+  ```
