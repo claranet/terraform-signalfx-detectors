@@ -1,7 +1,6 @@
 module: system
 name: "disk space utilization"
 id: disk_space
-transformation: ".max(over='5m')"
 value_unit: "%"
 signals:
   signal:
@@ -11,7 +10,9 @@ rules:
   critical:
     threshold: 90
     comparator: ">"
+    lasting_duration: "5m"
   major:
     threshold: 80
     comparator: ">"
+    lasting_duration: "5m"
     dependency: critical

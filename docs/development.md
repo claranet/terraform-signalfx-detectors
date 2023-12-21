@@ -231,7 +231,7 @@ an example stack and importing all modules. It consists of `make init-stack && t
 * __compliance__: check and lint the terraform code. It consists of `make module-check` which use
 [tflint](https://github.com/terraform-linters/tflint/) tool to check common terraform errors that
 `validate` does not find like [unused
-declarations](https://github.com/terraform-linters/tflint/blob/master/docs/rules/terraform_unused_declarations.md).
+declarations](https://github.com/terraform-linters/tflint-ruleset-terraform/blob/main/docs/rules/terraform_unused_declarations.md).
 
 * __outputs__: regenerates the detectors terraform outputs listing all resources in the modules
 to ensure outputs are up to date. It consists of `make update-module-outputs`.

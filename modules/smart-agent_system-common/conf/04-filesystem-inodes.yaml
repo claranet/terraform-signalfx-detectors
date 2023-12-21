@@ -1,7 +1,6 @@
 module: system
 name: "filesystem inodes utilization"
 id: filesystem_inodes
-transformation: ".max(over='5m')"
 value_unit: "%"
 signals:
   used:
@@ -16,7 +15,9 @@ rules:
   critical:
     threshold: 95
     comparator: ">"
+    lasting_duration: "5m"
   major:
     threshold: 90
     comparator: ">"
+    lasting_duration: "5m"
     dependency: critical

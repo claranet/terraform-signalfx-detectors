@@ -1,0 +1,22 @@
+module: AWS ElastiCache
+id: "evictions_growing"
+name: "Evictions changing rate grows"
+
+transformation: ".mean(over='5m').rateofchange().scale(100)"
+aggregation: true
+
+filtering: "filter('namespace', 'AWS/ElastiCache')"
+
+signals:
+  signal:
+    metric: "Evictions"
+    filter: "filter('stat', 'mean') and filter('CacheNodeId', '*')"
+
+rules:
+  major:
+    threshold: 10
+    comparator: ">"
+    dependency: critical
+  critical:
+    threshold: 30
+    comparator: ">"
