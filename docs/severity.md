@@ -23,6 +23,7 @@
 - [integration_aws-elasticache-redis](#integration_aws-elasticache-redis)
 - [integration_aws-elasticsearch](#integration_aws-elasticsearch)
 - [integration_aws-elb](#integration_aws-elb)
+- [integration_aws-fsx-windows-file-server](#integration_aws-fsx-windows-file-server)
 - [integration_aws-kinesis-firehose](#integration_aws-kinesis-firehose)
 - [integration_aws-lambda](#integration_aws-lambda)
 - [integration_aws-nlb](#integration_aws-nlb)
@@ -317,6 +318,19 @@
 |AWS ELB backend 5xx error rate|X|X|-|-|-|
 |AWS ELB backend 4xx error rate|X|X|X|-|-|
 |AWS ELB healthy instances percentage|X|X|-|-|-|
+
+
+## integration_aws-fsx-windows-file-server
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|AWS FSx heartbeat|X|-|-|-|-|
+|AWS FSx free space|X|X|-|-|-|
+|AWS FSx cpu utilization|X|X|-|-|-|
+|AWS FSx memory utilization|X|X|-|-|-|
+|AWS FSx network throughput utilization|X|X|-|-|-|
+|AWS FSx file server disk throughput utilization|X|X|-|-|-|
+|AWS FSx storage capacity utilization|X|X|-|-|-|
 
 
 ## integration_aws-kinesis-firehose
