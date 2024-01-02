@@ -59,7 +59,7 @@ variable "backend_unhealthy_host_ratio_notifications" {
 variable "backend_unhealthy_host_ratio_aggregation_function" {
   description = "Aggregation function and group by for backend_unhealthy_host_ratio detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['BackendIPAddress', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".max(by=['BackendIPAddress', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
 variable "backend_unhealthy_host_ratio_transformation_function" {
