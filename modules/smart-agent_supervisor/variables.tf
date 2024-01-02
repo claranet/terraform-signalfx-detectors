@@ -109,6 +109,6 @@ variable "process_state_threshold_critical" {
 variable "process_state_threshold_major" {
   description = "Major threshold for process state detector (default to be less then 20 (process has been stopped manually or is starting), see http://supervisord.org/subprocess.html#process-states "
   type        = number
-  default     = 20
+  default     = 10
 }
 
