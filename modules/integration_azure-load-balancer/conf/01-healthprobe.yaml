@@ -2,7 +2,7 @@
 module: "Azure Load Balancer"
 name: backend unhealthy host ratio
 filtering: "filter('resource_type', 'Microsoft.Network/loadBalancers') and filter('primary_aggregation_type', 'true')"
-aggregation: ".mean(by=['BackendIPAddress', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+aggregation: ".max(by=['BackendIPAddress', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 value_unit: "%"
 transformation: true
 signals:
