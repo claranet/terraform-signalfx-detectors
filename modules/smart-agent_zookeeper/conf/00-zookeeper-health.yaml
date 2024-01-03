@@ -1,0 +1,15 @@
+module: zookeeper
+name: zookeeper-health
+transformation: false
+aggregation: true
+exclude_not_running_vm: true
+disabled: true
+signals:
+  signal:
+    metric: "gauge.zk_service_health"
+rules:
+  critical:
+    threshold: 1
+    comparator: "!="
+    description: "is not running"
+    lasting_duration: "15m"
