@@ -8,6 +8,11 @@ output "heartbeat" {
   value       = signalfx_detector.heartbeat
 }
 
+output "zookeeper-health" {
+  description = "Detector resource for zookeeper-health"
+  value       = signalfx_detector.zookeeper-health
+}
+
 output "zookeeper_health" {
   description = "Detector resource for zookeeper_health"
   value       = signalfx_detector.zookeeper_health
