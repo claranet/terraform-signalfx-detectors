@@ -12,5 +12,5 @@ rules:
     threshold: 1
     comparator: "!="
     description: "is not running"
-    lasting_duration: "15m"
+    lasting_duration: "5m"
     health_disabled: "false"

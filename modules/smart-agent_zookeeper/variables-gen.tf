@@ -45,7 +45,7 @@ variable "zookeeper-health_threshold_critical" {
 variable "zookeeper-health_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = "15m"
+  default     = "5m"
 }
 
 variable "zookeeper-health_at_least_percentage_critical" {
