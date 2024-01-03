@@ -79,6 +79,7 @@ This module creates the following SignalFx detectors which could contain one or 
 |---|---|---|---|---|---|
 |Zookeeper zookeeper-health|X|-|-|-|-|
 |Zookeeper heartbeat|X|-|-|-|-|
+|Zookeeper service health|X|-|-|-|-|
 |Zookeeper latency|X|X|-|-|-|
 |Zookeeper file descriptors usage|X|X|-|-|-|
 

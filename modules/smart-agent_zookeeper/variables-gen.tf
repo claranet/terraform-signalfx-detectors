@@ -33,7 +33,7 @@ variable "zookeeper-health_runbook_url" {
 variable "zookeeper-health_disabled" {
   description = "Disable all alerting rules for zookeeper-health detector"
   type        = bool
-  default     = true
+  default     = null
 }
 
 variable "zookeeper-health_threshold_critical" {

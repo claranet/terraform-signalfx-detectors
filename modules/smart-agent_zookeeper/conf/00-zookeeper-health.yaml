@@ -3,7 +3,7 @@ name: zookeeper-health
 transformation: false
 aggregation: true
 exclude_not_running_vm: true
-disabled: true
+disabled: false
 signals:
   signal:
     metric: "gauge.zk_service_health"
@@ -13,3 +13,4 @@ rules:
     comparator: "!="
     description: "is not running"
     lasting_duration: "15m"
+    health_disabled: "false"
