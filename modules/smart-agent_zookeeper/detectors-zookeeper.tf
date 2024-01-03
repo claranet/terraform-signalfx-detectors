@@ -26,7 +26,7 @@ EOF
   max_delay = var.heartbeat_max_delay
 }
 
-resource "signalfx_detector" "zookeeper_health" {
+/*resource "signalfx_detector" "zookeeper_health" {
   name = format("%s %s", local.detector_name_prefix, "Zookeeper service health")
 
   authorized_writer_teams = var.authorized_writer_teams
@@ -51,7 +51,7 @@ EOF
   }
 
   max_delay = var.zookeeper_health_max_delay
-}
+}*/
 
 resource "signalfx_detector" "zookeeper_latency" {
   name = format("%s %s", local.detector_name_prefix, "Zookeeper latency")

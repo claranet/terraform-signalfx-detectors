@@ -13,11 +13,6 @@ output "zookeeper-health" {
   value       = signalfx_detector.zookeeper-health
 }
 
-output "zookeeper_health" {
-  description = "Detector resource for zookeeper_health"
-  value       = signalfx_detector.zookeeper_health
-}
-
 output "zookeeper_latency" {
   description = "Detector resource for zookeeper_latency"
   value       = signalfx_detector.zookeeper_latency

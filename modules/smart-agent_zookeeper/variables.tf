@@ -44,7 +44,7 @@ variable "heartbeat_aggregation_function" {
   default     = ""
 }
 
-# zookeeper_health detector
+/*# zookeeper_health detector
 
 variable "zookeeper_health_max_delay" {
   description = "Enforce max delay for zookeeper_health detector (use \"0\" or \"null\" for \"Auto\")"
@@ -92,7 +92,7 @@ variable "zookeeper_health_transformation_function" {
   description = "Transformation function for zookeeper_health detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='5m')"
-}
+}*/
 
 # zookeeper_latency detector
 
