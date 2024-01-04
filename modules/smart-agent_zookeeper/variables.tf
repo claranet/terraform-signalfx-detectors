@@ -92,7 +92,7 @@ variable "zookeeper_health_transformation_function" {
   description = "Transformation function for zookeeper_health detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='5m')"
-}*/
+}
 
 # zookeeper_latency detector
 
@@ -160,7 +160,7 @@ variable "zookeeper_latency_threshold_major" {
   description = "Major threshold for zookeeper_latency detector"
   type        = number
   default     = 250000
-}
+}*/
 
 # file_descriptors detector
 

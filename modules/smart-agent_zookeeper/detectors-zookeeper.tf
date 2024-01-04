@@ -53,7 +53,7 @@ EOF
   max_delay = var.zookeeper_health_max_delay
 }*/
 
-resource "signalfx_detector" "zookeeper_latency" {
+/*resource "signalfx_detector" "zookeeper_latency" {
   name = format("%s %s", local.detector_name_prefix, "Zookeeper latency")
 
   authorized_writer_teams = var.authorized_writer_teams
@@ -91,7 +91,7 @@ EOF
   }
 
   max_delay = var.zookeeper_latency_max_delay
-}
+}*/
 
 resource "signalfx_detector" "file_descriptors" {
   name = format("%s %s", local.detector_name_prefix, "Zookeeper file descriptors usage")

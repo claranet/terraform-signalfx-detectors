@@ -1,0 +1,22 @@
+module: zookeeper
+name: zookeeper-latency
+transformation: false
+aggregation: true
+exclude_not_running_vm: true
+disabled: false
+signals:
+  signal:
+    metric: "gauge.zk_avg_latency"
+rules:
+  critical:
+    threshold: 300000
+    comparator: ">"
+    description: "is too high"
+    lasting_duration: "5m"
+    latency_disabled: "false"
+  major:
+    threshold: 250000
+    comparator: ">"
+    description: "is too high"
+    lasting_duration: "5m"
+    latency_disabled: "false"
