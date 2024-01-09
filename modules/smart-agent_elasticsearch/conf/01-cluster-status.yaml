@@ -1,0 +1,17 @@
+module: ElasticSearch
+name: "cluster status"
+aggregation: true
+transformation: ".mean(over='5m')"
+signals:
+  signal:
+    metric: "elasticsearch.cluster.status"
+rules:
+  critical:
+    threshold: 1
+    comparator: "=="
+    description: "is red"
+  major:
+    threshold: 2
+    comparator: "=="
+    dependency: critical
+    description: "is yellow"

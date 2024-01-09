@@ -1,0 +1,18 @@
+module: ElasticSearch
+name: "cluster initializing shards"
+aggregation: true
+transformation: ".min(over='15m')"
+signals:
+  signal:
+    metric: "elasticsearch.cluster.initializing-shards"
+    rollup: average
+rules:
+  critical:
+    threshold: 0
+    comparator: ">"
+    description: "is too high"
+  major:
+    threshold: -1
+    comparator: ">"
+    dependency: critical
+    description: "is too high"

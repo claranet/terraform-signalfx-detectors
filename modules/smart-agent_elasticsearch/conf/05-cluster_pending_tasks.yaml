@@ -1,0 +1,18 @@
+module: ElasticSearch
+name: "cluster pending tasks"
+aggregation: true
+transformation: ".min(over='15m')"
+signals:
+  signal:
+    metric: "elasticsearch.cluster.pending-tasks"
+    rollup: average
+rules:
+  critical:
+    threshold: 5
+    comparator: ">"
+    description: "are too high"
+  major:
+    threshold: 0
+    comparator: ">"
+    dependency: critical
+    description: "are too high"

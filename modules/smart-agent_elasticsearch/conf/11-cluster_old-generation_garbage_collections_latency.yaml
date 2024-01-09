@@ -1,0 +1,26 @@
+module: ElasticSearch
+name: "old-generation garbage collections latency"
+aggregation: true
+transformation: ".mean(over='15m')"
+filtering: "filter('node_name', '*')"
+signals:
+    A:
+      metric: "elasticsearch.jvm.gc.old-time"
+      extrapolation: zero
+      rollup: delta
+    B:
+      metric: "elasticsearch.jvm.gc.old-count"
+      extrapolation: zero
+      rollup: delta
+    signal:
+      formula: "(A/B).fill(0)"
+rules:
+  major:
+    threshold: 300
+    comparator: ">"
+    description: "is too high"
+  minor:
+    threshold: 200
+    comparator: ">"
+    description: "is too high"    
+    dependency: major

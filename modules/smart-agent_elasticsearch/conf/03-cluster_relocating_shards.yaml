@@ -1,0 +1,18 @@
+module: ElasticSearch
+name: "cluster relocating shards"
+aggregation: true
+transformation: ".min(over='15m')"
+signals:
+  signal:
+    metric: "elasticsearch.cluster.relocating-shards"
+    rollup: average
+rules:
+  critical:
+    threshold: 1
+    comparator: ">"
+    description: "is too high"
+  major:
+    threshold: 0
+    comparator: ">"
+    dependency: critical
+    description: "is too high"

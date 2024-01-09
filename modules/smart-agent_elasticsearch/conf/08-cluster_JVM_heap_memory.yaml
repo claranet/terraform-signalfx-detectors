@@ -1,0 +1,19 @@
+module: ElasticSearch
+name: "JVM heap memory usage"
+aggregation: true
+transformation: ".mean(over='5m')"
+filtering: "filter('node_name', '*')"
+signals:
+  signal:
+    metric: "elasticsearch.jvm.mem.heap-used-percent"
+    rollup: average
+rules:
+  critical:
+    threshold: 90
+    comparator: ">"
+    description: "is too high"
+  major:
+    threshold: 80
+    comparator: ">"
+    dependency: critical
+    description: "is too high"

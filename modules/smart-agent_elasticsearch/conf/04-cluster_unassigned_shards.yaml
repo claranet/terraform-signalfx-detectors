@@ -1,0 +1,18 @@
+module: ElasticSearch
+name: "cluster unassigned shards"
+aggregation: true
+transformation: ".min(over='10m')"
+signals:
+  signal:
+    metric: "elasticsearch.cluster.unassigned-shards"
+    rollup: average
+rules:
+  critical:
+    threshold: 0
+    comparator: ">"
+    description: "is too high"
+  major:
+    threshold: -1
+    comparator: ">"
+    dependency: critical
+    description: "is too high"

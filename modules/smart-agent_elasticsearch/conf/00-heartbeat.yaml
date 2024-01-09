@@ -1,0 +1,12 @@
+module: Elasticsearch
+name: heartbeat
+
+transformation: false
+aggregation: true
+exclude_not_running_vm: true
+
+signals:
+  signal:
+    metric: elasticsearch.cluster.number-of-nodes
+rules:
+  critical:
