@@ -1,5 +1,5 @@
 module: ElasticSearch
-name: "max time spent by task in queue rate of change"
+name: "task time in queue change"
 aggregation: true
 transformation: ".mean(over='15m')"
 signals:

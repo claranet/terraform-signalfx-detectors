@@ -1,5 +1,5 @@
 module: ElasticSearch
-name: "search fetch latency"
+name: "fetch latency"
 aggregation: true
 transformation: ".min(over='15m')"
 filtering: "filter('node_name', '*')"

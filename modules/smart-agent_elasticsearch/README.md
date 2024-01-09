@@ -82,20 +82,20 @@ This module creates the following SignalFx detectors which could contain one or 
 |ElasticSearch cluster initializing shards|X|X|-|-|-|
 |ElasticSearch cluster relocating shards|X|X|-|-|-|
 |ElasticSearch cluster unassigned shards|X|X|-|-|-|
-|ElasticSearch cluster pending tasks|X|X|-|-|-|
+|ElasticSearch pending tasks|X|X|-|-|-|
 |ElasticSearch cpu usage|X|X|-|-|-|
-|ElasticSearch file descriptors usage|X|X|-|-|-|
+|ElasticSearch file descriptors|X|X|-|-|-|
 |ElasticSearch jvm heap memory usage|X|X|-|-|-|
 |ElasticSearch jvm memory young usage|-|X|X|-|-|
 |ElasticSearch jvm memory old usage|-|X|X|-|-|
-|ElasticSearch old-generation garbage collections latency|-|X|X|-|-|
-|ElasticSearch young-generation garbage collections latency|-|X|X|-|-|
+|ElasticSearch jvm gc old collection latency|-|X|X|-|-|
+|ElasticSearch jvm gc young collection latency|-|X|X|-|-|
 |ElasticSearch indexing latency|-|X|X|-|-|
-|ElasticSearch index flushing to disk latency|-|X|X|-|-|
-|ElasticSearch search query latency|-|X|X|-|-|
-|ElasticSearch search fetch latency|-|X|X|-|-|
-|ElasticSearch fielddata cache evictions rate of change|-|X|X|-|-|
-|ElasticSearch max time spent by task in queue rate of change|-|X|X|-|-|
+|ElasticSearch flushing latency|-|X|X|-|-|
+|ElasticSearch search latency|-|X|X|-|-|
+|ElasticSearch fetch latency|-|X|X|-|-|
+|ElasticSearch field_data evictions change|-|X|X|-|-|
+|ElasticSearch task time in queue change|-|X|X|-|-|
 
 ## How to collect required metrics?
 

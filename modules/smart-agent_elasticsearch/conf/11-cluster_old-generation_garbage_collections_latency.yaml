@@ -1,5 +1,5 @@
 module: ElasticSearch
-name: "old-generation garbage collections latency"
+name: "jvm gc old collection latency"
 aggregation: true
 transformation: ".mean(over='15m')"
 filtering: "filter('node_name', '*')"

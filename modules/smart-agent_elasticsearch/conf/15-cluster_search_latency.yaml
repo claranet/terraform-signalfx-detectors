@@ -1,5 +1,5 @@
 module: ElasticSearch
-name: "search query latency"
+name: "search latency"
 aggregation: true
 transformation: ".min(over='30m')"
 filtering: "filter('node_name', '*')"

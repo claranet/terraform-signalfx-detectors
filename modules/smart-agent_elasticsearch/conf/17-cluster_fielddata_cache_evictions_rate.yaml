@@ -1,5 +1,5 @@
 module: ElasticSearch
-name: "fielddata cache evictions rate of change"
+name: "field_data evictions change"
 aggregation: true
 transformation: ".mean(over='15m')"
 filtering: "filter('node_name', '*')"

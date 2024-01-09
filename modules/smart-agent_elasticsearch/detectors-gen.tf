@@ -74,7 +74,8 @@ resource "signalfx_detector" "cluster_initializing_shards" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('elasticsearch.cluster.initializing-shards', filter=${module.filtering.signalflow}, rollup='average')${var.cluster_initializing_shards_aggregation_function}${var.cluster_initializing_shards_transformation_function}.publish('signal')
+    base_filtering = filter('plugin', 'elasticsearch')
+    signal = data('elasticsearch.cluster.initializing-shards', filter=base_filtering and ${module.filtering.signalflow}, rollup='average')${var.cluster_initializing_shards_aggregation_function}${var.cluster_initializing_shards_transformation_function}.publish('signal')
     detect(when(signal > ${var.cluster_initializing_shards_threshold_critical}, lasting=%{if var.cluster_initializing_shards_lasting_duration_critical == null}None%{else}'${var.cluster_initializing_shards_lasting_duration_critical}'%{endif}, at_least=${var.cluster_initializing_shards_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal > ${var.cluster_initializing_shards_threshold_major}, lasting=%{if var.cluster_initializing_shards_lasting_duration_major == null}None%{else}'${var.cluster_initializing_shards_lasting_duration_major}'%{endif}, at_least=${var.cluster_initializing_shards_at_least_percentage_major}) and (not when(signal > ${var.cluster_initializing_shards_threshold_critical}, lasting=%{if var.cluster_initializing_shards_lasting_duration_critical == null}None%{else}'${var.cluster_initializing_shards_lasting_duration_critical}'%{endif}, at_least=${var.cluster_initializing_shards_at_least_percentage_critical}))).publish('MAJOR')
 EOF
@@ -186,44 +187,44 @@ EOF
   max_delay = var.cluster_unassigned_shards_max_delay
 }
 
-resource "signalfx_detector" "cluster_pending_tasks" {
-  name = format("%s %s", local.detector_name_prefix, "ElasticSearch cluster pending tasks")
+resource "signalfx_detector" "pending_tasks" {
+  name = format("%s %s", local.detector_name_prefix, "ElasticSearch pending tasks")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('elasticsearch.cluster.pending-tasks', filter=${module.filtering.signalflow}, rollup='average')${var.cluster_pending_tasks_aggregation_function}${var.cluster_pending_tasks_transformation_function}.publish('signal')
-    detect(when(signal > ${var.cluster_pending_tasks_threshold_critical}, lasting=%{if var.cluster_pending_tasks_lasting_duration_critical == null}None%{else}'${var.cluster_pending_tasks_lasting_duration_critical}'%{endif}, at_least=${var.cluster_pending_tasks_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal > ${var.cluster_pending_tasks_threshold_major}, lasting=%{if var.cluster_pending_tasks_lasting_duration_major == null}None%{else}'${var.cluster_pending_tasks_lasting_duration_major}'%{endif}, at_least=${var.cluster_pending_tasks_at_least_percentage_major}) and (not when(signal > ${var.cluster_pending_tasks_threshold_critical}, lasting=%{if var.cluster_pending_tasks_lasting_duration_critical == null}None%{else}'${var.cluster_pending_tasks_lasting_duration_critical}'%{endif}, at_least=${var.cluster_pending_tasks_at_least_percentage_critical}))).publish('MAJOR')
+    signal = data('elasticsearch.cluster.pending-tasks', filter=${module.filtering.signalflow}, rollup='average')${var.pending_tasks_aggregation_function}${var.pending_tasks_transformation_function}.publish('signal')
+    detect(when(signal > ${var.pending_tasks_threshold_critical}, lasting=%{if var.pending_tasks_lasting_duration_critical == null}None%{else}'${var.pending_tasks_lasting_duration_critical}'%{endif}, at_least=${var.pending_tasks_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal > ${var.pending_tasks_threshold_major}, lasting=%{if var.pending_tasks_lasting_duration_major == null}None%{else}'${var.pending_tasks_lasting_duration_major}'%{endif}, at_least=${var.pending_tasks_at_least_percentage_major}) and (not when(signal > ${var.pending_tasks_threshold_critical}, lasting=%{if var.pending_tasks_lasting_duration_critical == null}None%{else}'${var.pending_tasks_lasting_duration_critical}'%{endif}, at_least=${var.pending_tasks_at_least_percentage_critical}))).publish('MAJOR')
 EOF
 
   rule {
-    description           = "are too high > ${var.cluster_pending_tasks_threshold_critical}"
+    description           = "are too high > ${var.pending_tasks_threshold_critical}"
     severity              = "Critical"
     detect_label          = "CRIT"
-    disabled              = coalesce(var.cluster_pending_tasks_disabled_critical, var.cluster_pending_tasks_disabled, var.detectors_disabled)
-    notifications         = try(coalescelist(lookup(var.cluster_pending_tasks_notifications, "critical", []), var.notifications.critical), null)
-    runbook_url           = try(coalesce(var.cluster_pending_tasks_runbook_url, var.runbook_url), "")
-    tip                   = var.cluster_pending_tasks_tip
+    disabled              = coalesce(var.pending_tasks_disabled_critical, var.pending_tasks_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.pending_tasks_notifications, "critical", []), var.notifications.critical), null)
+    runbook_url           = try(coalesce(var.pending_tasks_runbook_url, var.runbook_url), "")
+    tip                   = var.pending_tasks_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
   rule {
-    description           = "are too high > ${var.cluster_pending_tasks_threshold_major}"
+    description           = "are too high > ${var.pending_tasks_threshold_major}"
     severity              = "Major"
     detect_label          = "MAJOR"
-    disabled              = coalesce(var.cluster_pending_tasks_disabled_major, var.cluster_pending_tasks_disabled, var.detectors_disabled)
-    notifications         = try(coalescelist(lookup(var.cluster_pending_tasks_notifications, "major", []), var.notifications.major), null)
-    runbook_url           = try(coalesce(var.cluster_pending_tasks_runbook_url, var.runbook_url), "")
-    tip                   = var.cluster_pending_tasks_tip
+    disabled              = coalesce(var.pending_tasks_disabled_major, var.pending_tasks_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.pending_tasks_notifications, "major", []), var.notifications.major), null)
+    runbook_url           = try(coalesce(var.pending_tasks_runbook_url, var.runbook_url), "")
+    tip                   = var.pending_tasks_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
-  max_delay = var.cluster_pending_tasks_max_delay
+  max_delay = var.pending_tasks_max_delay
 }
 
 resource "signalfx_detector" "cpu_usage" {
@@ -267,8 +268,8 @@ EOF
   max_delay = var.cpu_usage_max_delay
 }
 
-resource "signalfx_detector" "file_descriptors_usage" {
-  name = format("%s %s", local.detector_name_prefix, "ElasticSearch file descriptors usage")
+resource "signalfx_detector" "file_descriptors" {
+  name = format("%s %s", local.detector_name_prefix, "ElasticSearch file descriptors")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
@@ -276,38 +277,38 @@ resource "signalfx_detector" "file_descriptors_usage" {
 
   program_text = <<-EOF
     base_filtering = filter('node_name', '*')
-    A = data('elasticsearch.process.open_file_descriptors', filter=base_filtering and ${module.filtering.signalflow}, rollup='average')${var.file_descriptors_usage_aggregation_function}${var.file_descriptors_usage_transformation_function}
-    B = data('elasticsearch.process.max_file_descriptors', filter=base_filtering and ${module.filtering.signalflow}, rollup='average')${var.file_descriptors_usage_aggregation_function}${var.file_descriptors_usage_transformation_function}
+    A = data('elasticsearch.process.open_file_descriptors', filter=base_filtering and ${module.filtering.signalflow}, rollup='average')${var.file_descriptors_aggregation_function}${var.file_descriptors_transformation_function}
+    B = data('elasticsearch.process.max_file_descriptors', filter=base_filtering and ${module.filtering.signalflow}, rollup='average')${var.file_descriptors_aggregation_function}${var.file_descriptors_transformation_function}
     signal = (A/B).scale(100).publish('signal')
-    detect(when(signal > ${var.file_descriptors_usage_threshold_critical}, lasting=%{if var.file_descriptors_usage_lasting_duration_critical == null}None%{else}'${var.file_descriptors_usage_lasting_duration_critical}'%{endif}, at_least=${var.file_descriptors_usage_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal > ${var.file_descriptors_usage_threshold_major}, lasting=%{if var.file_descriptors_usage_lasting_duration_major == null}None%{else}'${var.file_descriptors_usage_lasting_duration_major}'%{endif}, at_least=${var.file_descriptors_usage_at_least_percentage_major}) and (not when(signal > ${var.file_descriptors_usage_threshold_critical}, lasting=%{if var.file_descriptors_usage_lasting_duration_critical == null}None%{else}'${var.file_descriptors_usage_lasting_duration_critical}'%{endif}, at_least=${var.file_descriptors_usage_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.file_descriptors_threshold_critical}, lasting=%{if var.file_descriptors_lasting_duration_critical == null}None%{else}'${var.file_descriptors_lasting_duration_critical}'%{endif}, at_least=${var.file_descriptors_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal > ${var.file_descriptors_threshold_major}, lasting=%{if var.file_descriptors_lasting_duration_major == null}None%{else}'${var.file_descriptors_lasting_duration_major}'%{endif}, at_least=${var.file_descriptors_at_least_percentage_major}) and (not when(signal > ${var.file_descriptors_threshold_critical}, lasting=%{if var.file_descriptors_lasting_duration_critical == null}None%{else}'${var.file_descriptors_lasting_duration_critical}'%{endif}, at_least=${var.file_descriptors_at_least_percentage_critical}))).publish('MAJOR')
 EOF
 
   rule {
-    description           = "is too high > ${var.file_descriptors_usage_threshold_critical}"
+    description           = "is too high > ${var.file_descriptors_threshold_critical}"
     severity              = "Critical"
     detect_label          = "CRIT"
-    disabled              = coalesce(var.file_descriptors_usage_disabled_critical, var.file_descriptors_usage_disabled, var.detectors_disabled)
-    notifications         = try(coalescelist(lookup(var.file_descriptors_usage_notifications, "critical", []), var.notifications.critical), null)
-    runbook_url           = try(coalesce(var.file_descriptors_usage_runbook_url, var.runbook_url), "")
-    tip                   = var.file_descriptors_usage_tip
+    disabled              = coalesce(var.file_descriptors_disabled_critical, var.file_descriptors_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.file_descriptors_notifications, "critical", []), var.notifications.critical), null)
+    runbook_url           = try(coalesce(var.file_descriptors_runbook_url, var.runbook_url), "")
+    tip                   = var.file_descriptors_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
   rule {
-    description           = "is too high > ${var.file_descriptors_usage_threshold_major}"
+    description           = "is too high > ${var.file_descriptors_threshold_major}"
     severity              = "Major"
     detect_label          = "MAJOR"
-    disabled              = coalesce(var.file_descriptors_usage_disabled_major, var.file_descriptors_usage_disabled, var.detectors_disabled)
-    notifications         = try(coalescelist(lookup(var.file_descriptors_usage_notifications, "major", []), var.notifications.major), null)
-    runbook_url           = try(coalesce(var.file_descriptors_usage_runbook_url, var.runbook_url), "")
-    tip                   = var.file_descriptors_usage_tip
+    disabled              = coalesce(var.file_descriptors_disabled_major, var.file_descriptors_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.file_descriptors_notifications, "major", []), var.notifications.major), null)
+    runbook_url           = try(coalesce(var.file_descriptors_runbook_url, var.runbook_url), "")
+    tip                   = var.file_descriptors_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
-  max_delay = var.file_descriptors_usage_max_delay
+  max_delay = var.file_descriptors_max_delay
 }
 
 resource "signalfx_detector" "jvm_heap_memory_usage" {
@@ -437,8 +438,8 @@ EOF
   max_delay = var.jvm_memory_old_usage_max_delay
 }
 
-resource "signalfx_detector" "old-generation_garbage_collections_latency" {
-  name = format("%s %s", local.detector_name_prefix, "ElasticSearch old-generation garbage collections latency")
+resource "signalfx_detector" "jvm_gc_old_collection_latency" {
+  name = format("%s %s", local.detector_name_prefix, "ElasticSearch jvm gc old collection latency")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
@@ -446,42 +447,42 @@ resource "signalfx_detector" "old-generation_garbage_collections_latency" {
 
   program_text = <<-EOF
     base_filtering = filter('node_name', '*')
-    A = data('elasticsearch.jvm.gc.old-time', filter=base_filtering and ${module.filtering.signalflow}, rollup='delta', extrapolation='zero')${var.old-generation_garbage_collections_latency_aggregation_function}${var.old-generation_garbage_collections_latency_transformation_function}
-    B = data('elasticsearch.jvm.gc.old-count', filter=base_filtering and ${module.filtering.signalflow}, rollup='delta', extrapolation='zero')${var.old-generation_garbage_collections_latency_aggregation_function}${var.old-generation_garbage_collections_latency_transformation_function}
+    A = data('elasticsearch.jvm.gc.old-time', filter=base_filtering and ${module.filtering.signalflow}, rollup='delta', extrapolation='zero')${var.jvm_gc_old_collection_latency_aggregation_function}${var.jvm_gc_old_collection_latency_transformation_function}
+    B = data('elasticsearch.jvm.gc.old-count', filter=base_filtering and ${module.filtering.signalflow}, rollup='delta', extrapolation='zero')${var.jvm_gc_old_collection_latency_aggregation_function}${var.jvm_gc_old_collection_latency_transformation_function}
     signal = (A/B).fill(0).publish('signal')
-    detect(when(signal > ${var.old-generation_garbage_collections_latency_threshold_major}, lasting=%{if var.old-generation_garbage_collections_latency_lasting_duration_major == null}None%{else}'${var.old-generation_garbage_collections_latency_lasting_duration_major}'%{endif}, at_least=${var.old-generation_garbage_collections_latency_at_least_percentage_major})).publish('MAJOR')
-    detect(when(signal > ${var.old-generation_garbage_collections_latency_threshold_minor}, lasting=%{if var.old-generation_garbage_collections_latency_lasting_duration_minor == null}None%{else}'${var.old-generation_garbage_collections_latency_lasting_duration_minor}'%{endif}, at_least=${var.old-generation_garbage_collections_latency_at_least_percentage_minor}) and (not when(signal > ${var.old-generation_garbage_collections_latency_threshold_major}, lasting=%{if var.old-generation_garbage_collections_latency_lasting_duration_major == null}None%{else}'${var.old-generation_garbage_collections_latency_lasting_duration_major}'%{endif}, at_least=${var.old-generation_garbage_collections_latency_at_least_percentage_major}))).publish('MINOR')
+    detect(when(signal > ${var.jvm_gc_old_collection_latency_threshold_major}, lasting=%{if var.jvm_gc_old_collection_latency_lasting_duration_major == null}None%{else}'${var.jvm_gc_old_collection_latency_lasting_duration_major}'%{endif}, at_least=${var.jvm_gc_old_collection_latency_at_least_percentage_major})).publish('MAJOR')
+    detect(when(signal > ${var.jvm_gc_old_collection_latency_threshold_minor}, lasting=%{if var.jvm_gc_old_collection_latency_lasting_duration_minor == null}None%{else}'${var.jvm_gc_old_collection_latency_lasting_duration_minor}'%{endif}, at_least=${var.jvm_gc_old_collection_latency_at_least_percentage_minor}) and (not when(signal > ${var.jvm_gc_old_collection_latency_threshold_major}, lasting=%{if var.jvm_gc_old_collection_latency_lasting_duration_major == null}None%{else}'${var.jvm_gc_old_collection_latency_lasting_duration_major}'%{endif}, at_least=${var.jvm_gc_old_collection_latency_at_least_percentage_major}))).publish('MINOR')
 EOF
 
   rule {
-    description           = "is too high > ${var.old-generation_garbage_collections_latency_threshold_major}"
+    description           = "is too high > ${var.jvm_gc_old_collection_latency_threshold_major}"
     severity              = "Major"
     detect_label          = "MAJOR"
-    disabled              = coalesce(var.old-generation_garbage_collections_latency_disabled_major, var.old-generation_garbage_collections_latency_disabled, var.detectors_disabled)
-    notifications         = try(coalescelist(lookup(var.old-generation_garbage_collections_latency_notifications, "major", []), var.notifications.major), null)
-    runbook_url           = try(coalesce(var.old-generation_garbage_collections_latency_runbook_url, var.runbook_url), "")
-    tip                   = var.old-generation_garbage_collections_latency_tip
+    disabled              = coalesce(var.jvm_gc_old_collection_latency_disabled_major, var.jvm_gc_old_collection_latency_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.jvm_gc_old_collection_latency_notifications, "major", []), var.notifications.major), null)
+    runbook_url           = try(coalesce(var.jvm_gc_old_collection_latency_runbook_url, var.runbook_url), "")
+    tip                   = var.jvm_gc_old_collection_latency_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
   rule {
-    description           = "is too high > ${var.old-generation_garbage_collections_latency_threshold_minor}"
+    description           = "is too high > ${var.jvm_gc_old_collection_latency_threshold_minor}"
     severity              = "Minor"
     detect_label          = "MINOR"
-    disabled              = coalesce(var.old-generation_garbage_collections_latency_disabled_minor, var.old-generation_garbage_collections_latency_disabled, var.detectors_disabled)
-    notifications         = try(coalescelist(lookup(var.old-generation_garbage_collections_latency_notifications, "minor", []), var.notifications.minor), null)
-    runbook_url           = try(coalesce(var.old-generation_garbage_collections_latency_runbook_url, var.runbook_url), "")
-    tip                   = var.old-generation_garbage_collections_latency_tip
+    disabled              = coalesce(var.jvm_gc_old_collection_latency_disabled_minor, var.jvm_gc_old_collection_latency_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.jvm_gc_old_collection_latency_notifications, "minor", []), var.notifications.minor), null)
+    runbook_url           = try(coalesce(var.jvm_gc_old_collection_latency_runbook_url, var.runbook_url), "")
+    tip                   = var.jvm_gc_old_collection_latency_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
-  max_delay = var.old-generation_garbage_collections_latency_max_delay
+  max_delay = var.jvm_gc_old_collection_latency_max_delay
 }
 
-resource "signalfx_detector" "young-generation_garbage_collections_latency" {
-  name = format("%s %s", local.detector_name_prefix, "ElasticSearch young-generation garbage collections latency")
+resource "signalfx_detector" "jvm_gc_young_collection_latency" {
+  name = format("%s %s", local.detector_name_prefix, "ElasticSearch jvm gc young collection latency")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
@@ -489,38 +490,38 @@ resource "signalfx_detector" "young-generation_garbage_collections_latency" {
 
   program_text = <<-EOF
     base_filtering = filter('node_name', '*')
-    A = data('elasticsearch.jvm.gc.time', filter=base_filtering and ${module.filtering.signalflow}, rollup='delta', extrapolation='zero')${var.young-generation_garbage_collections_latency_aggregation_function}${var.young-generation_garbage_collections_latency_transformation_function}
-    B = data('elasticsearch.jvm.gc.count', filter=base_filtering and ${module.filtering.signalflow}, rollup='delta', extrapolation='zero')${var.young-generation_garbage_collections_latency_aggregation_function}${var.young-generation_garbage_collections_latency_transformation_function}
+    A = data('elasticsearch.jvm.gc.time', filter=base_filtering and ${module.filtering.signalflow}, rollup='delta', extrapolation='zero')${var.jvm_gc_young_collection_latency_aggregation_function}${var.jvm_gc_young_collection_latency_transformation_function}
+    B = data('elasticsearch.jvm.gc.count', filter=base_filtering and ${module.filtering.signalflow}, rollup='delta', extrapolation='zero')${var.jvm_gc_young_collection_latency_aggregation_function}${var.jvm_gc_young_collection_latency_transformation_function}
     signal = (A/B).fill(0).publish('signal')
-    detect(when(signal > ${var.young-generation_garbage_collections_latency_threshold_major}, lasting=%{if var.young-generation_garbage_collections_latency_lasting_duration_major == null}None%{else}'${var.young-generation_garbage_collections_latency_lasting_duration_major}'%{endif}, at_least=${var.young-generation_garbage_collections_latency_at_least_percentage_major})).publish('MAJOR')
-    detect(when(signal > ${var.young-generation_garbage_collections_latency_threshold_minor}, lasting=%{if var.young-generation_garbage_collections_latency_lasting_duration_minor == null}None%{else}'${var.young-generation_garbage_collections_latency_lasting_duration_minor}'%{endif}, at_least=${var.young-generation_garbage_collections_latency_at_least_percentage_minor}) and (not when(signal > ${var.young-generation_garbage_collections_latency_threshold_major}, lasting=%{if var.young-generation_garbage_collections_latency_lasting_duration_major == null}None%{else}'${var.young-generation_garbage_collections_latency_lasting_duration_major}'%{endif}, at_least=${var.young-generation_garbage_collections_latency_at_least_percentage_major}))).publish('MINOR')
+    detect(when(signal > ${var.jvm_gc_young_collection_latency_threshold_major}, lasting=%{if var.jvm_gc_young_collection_latency_lasting_duration_major == null}None%{else}'${var.jvm_gc_young_collection_latency_lasting_duration_major}'%{endif}, at_least=${var.jvm_gc_young_collection_latency_at_least_percentage_major})).publish('MAJOR')
+    detect(when(signal > ${var.jvm_gc_young_collection_latency_threshold_minor}, lasting=%{if var.jvm_gc_young_collection_latency_lasting_duration_minor == null}None%{else}'${var.jvm_gc_young_collection_latency_lasting_duration_minor}'%{endif}, at_least=${var.jvm_gc_young_collection_latency_at_least_percentage_minor}) and (not when(signal > ${var.jvm_gc_young_collection_latency_threshold_major}, lasting=%{if var.jvm_gc_young_collection_latency_lasting_duration_major == null}None%{else}'${var.jvm_gc_young_collection_latency_lasting_duration_major}'%{endif}, at_least=${var.jvm_gc_young_collection_latency_at_least_percentage_major}))).publish('MINOR')
 EOF
 
   rule {
-    description           = "is too high > ${var.young-generation_garbage_collections_latency_threshold_major}"
+    description           = "is too high > ${var.jvm_gc_young_collection_latency_threshold_major}"
     severity              = "Major"
     detect_label          = "MAJOR"
-    disabled              = coalesce(var.young-generation_garbage_collections_latency_disabled_major, var.young-generation_garbage_collections_latency_disabled, var.detectors_disabled)
-    notifications         = try(coalescelist(lookup(var.young-generation_garbage_collections_latency_notifications, "major", []), var.notifications.major), null)
-    runbook_url           = try(coalesce(var.young-generation_garbage_collections_latency_runbook_url, var.runbook_url), "")
-    tip                   = var.young-generation_garbage_collections_latency_tip
+    disabled              = coalesce(var.jvm_gc_young_collection_latency_disabled_major, var.jvm_gc_young_collection_latency_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.jvm_gc_young_collection_latency_notifications, "major", []), var.notifications.major), null)
+    runbook_url           = try(coalesce(var.jvm_gc_young_collection_latency_runbook_url, var.runbook_url), "")
+    tip                   = var.jvm_gc_young_collection_latency_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
   rule {
-    description           = "is too high > ${var.young-generation_garbage_collections_latency_threshold_minor}"
+    description           = "is too high > ${var.jvm_gc_young_collection_latency_threshold_minor}"
     severity              = "Minor"
     detect_label          = "MINOR"
-    disabled              = coalesce(var.young-generation_garbage_collections_latency_disabled_minor, var.young-generation_garbage_collections_latency_disabled, var.detectors_disabled)
-    notifications         = try(coalescelist(lookup(var.young-generation_garbage_collections_latency_notifications, "minor", []), var.notifications.minor), null)
-    runbook_url           = try(coalesce(var.young-generation_garbage_collections_latency_runbook_url, var.runbook_url), "")
-    tip                   = var.young-generation_garbage_collections_latency_tip
+    disabled              = coalesce(var.jvm_gc_young_collection_latency_disabled_minor, var.jvm_gc_young_collection_latency_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.jvm_gc_young_collection_latency_notifications, "minor", []), var.notifications.minor), null)
+    runbook_url           = try(coalesce(var.jvm_gc_young_collection_latency_runbook_url, var.runbook_url), "")
+    tip                   = var.jvm_gc_young_collection_latency_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
-  max_delay = var.young-generation_garbage_collections_latency_max_delay
+  max_delay = var.jvm_gc_young_collection_latency_max_delay
 }
 
 resource "signalfx_detector" "indexing_latency" {
@@ -566,8 +567,8 @@ EOF
   max_delay = var.indexing_latency_max_delay
 }
 
-resource "signalfx_detector" "index_flushing_to_disk_latency" {
-  name = format("%s %s", local.detector_name_prefix, "ElasticSearch index flushing to disk latency")
+resource "signalfx_detector" "flushing_latency" {
+  name = format("%s %s", local.detector_name_prefix, "ElasticSearch flushing latency")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
@@ -575,42 +576,42 @@ resource "signalfx_detector" "index_flushing_to_disk_latency" {
 
   program_text = <<-EOF
     base_filtering = filter('node_name', '*')
-    A = data('elasticsearch.indices.flush.total-time', filter=base_filtering and ${module.filtering.signalflow}, rollup='delta', extrapolation='zero')${var.index_flushing_to_disk_latency_aggregation_function}${var.index_flushing_to_disk_latency_transformation_function}
-    B = data('elasticsearch.indices.flush.total', filter=base_filtering and ${module.filtering.signalflow}, rollup='delta', extrapolation='zero')${var.index_flushing_to_disk_latency_aggregation_function}${var.index_flushing_to_disk_latency_transformation_function}
+    A = data('elasticsearch.indices.flush.total-time', filter=base_filtering and ${module.filtering.signalflow}, rollup='delta', extrapolation='zero')${var.flushing_latency_aggregation_function}${var.flushing_latency_transformation_function}
+    B = data('elasticsearch.indices.flush.total', filter=base_filtering and ${module.filtering.signalflow}, rollup='delta', extrapolation='zero')${var.flushing_latency_aggregation_function}${var.flushing_latency_transformation_function}
     signal = (A/B).fill(0).publish('signal')
-    detect(when(signal > ${var.index_flushing_to_disk_latency_threshold_major}, lasting=%{if var.index_flushing_to_disk_latency_lasting_duration_major == null}None%{else}'${var.index_flushing_to_disk_latency_lasting_duration_major}'%{endif}, at_least=${var.index_flushing_to_disk_latency_at_least_percentage_major})).publish('MAJOR')
-    detect(when(signal > ${var.index_flushing_to_disk_latency_threshold_minor}, lasting=%{if var.index_flushing_to_disk_latency_lasting_duration_minor == null}None%{else}'${var.index_flushing_to_disk_latency_lasting_duration_minor}'%{endif}, at_least=${var.index_flushing_to_disk_latency_at_least_percentage_minor}) and (not when(signal > ${var.index_flushing_to_disk_latency_threshold_major}, lasting=%{if var.index_flushing_to_disk_latency_lasting_duration_major == null}None%{else}'${var.index_flushing_to_disk_latency_lasting_duration_major}'%{endif}, at_least=${var.index_flushing_to_disk_latency_at_least_percentage_major}))).publish('MINOR')
+    detect(when(signal > ${var.flushing_latency_threshold_major}, lasting=%{if var.flushing_latency_lasting_duration_major == null}None%{else}'${var.flushing_latency_lasting_duration_major}'%{endif}, at_least=${var.flushing_latency_at_least_percentage_major})).publish('MAJOR')
+    detect(when(signal > ${var.flushing_latency_threshold_minor}, lasting=%{if var.flushing_latency_lasting_duration_minor == null}None%{else}'${var.flushing_latency_lasting_duration_minor}'%{endif}, at_least=${var.flushing_latency_at_least_percentage_minor}) and (not when(signal > ${var.flushing_latency_threshold_major}, lasting=%{if var.flushing_latency_lasting_duration_major == null}None%{else}'${var.flushing_latency_lasting_duration_major}'%{endif}, at_least=${var.flushing_latency_at_least_percentage_major}))).publish('MINOR')
 EOF
 
   rule {
-    description           = "is too high > ${var.index_flushing_to_disk_latency_threshold_major}"
+    description           = "is too high > ${var.flushing_latency_threshold_major}"
     severity              = "Major"
     detect_label          = "MAJOR"
-    disabled              = coalesce(var.index_flushing_to_disk_latency_disabled_major, var.index_flushing_to_disk_latency_disabled, var.detectors_disabled)
-    notifications         = try(coalescelist(lookup(var.index_flushing_to_disk_latency_notifications, "major", []), var.notifications.major), null)
-    runbook_url           = try(coalesce(var.index_flushing_to_disk_latency_runbook_url, var.runbook_url), "")
-    tip                   = var.index_flushing_to_disk_latency_tip
+    disabled              = coalesce(var.flushing_latency_disabled_major, var.flushing_latency_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.flushing_latency_notifications, "major", []), var.notifications.major), null)
+    runbook_url           = try(coalesce(var.flushing_latency_runbook_url, var.runbook_url), "")
+    tip                   = var.flushing_latency_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
   rule {
-    description           = "is too high > ${var.index_flushing_to_disk_latency_threshold_minor}"
+    description           = "is too high > ${var.flushing_latency_threshold_minor}"
     severity              = "Minor"
     detect_label          = "MINOR"
-    disabled              = coalesce(var.index_flushing_to_disk_latency_disabled_minor, var.index_flushing_to_disk_latency_disabled, var.detectors_disabled)
-    notifications         = try(coalescelist(lookup(var.index_flushing_to_disk_latency_notifications, "minor", []), var.notifications.minor), null)
-    runbook_url           = try(coalesce(var.index_flushing_to_disk_latency_runbook_url, var.runbook_url), "")
-    tip                   = var.index_flushing_to_disk_latency_tip
+    disabled              = coalesce(var.flushing_latency_disabled_minor, var.flushing_latency_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.flushing_latency_notifications, "minor", []), var.notifications.minor), null)
+    runbook_url           = try(coalesce(var.flushing_latency_runbook_url, var.runbook_url), "")
+    tip                   = var.flushing_latency_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
-  max_delay = var.index_flushing_to_disk_latency_max_delay
+  max_delay = var.flushing_latency_max_delay
 }
 
-resource "signalfx_detector" "search_query_latency" {
-  name = format("%s %s", local.detector_name_prefix, "ElasticSearch search query latency")
+resource "signalfx_detector" "search_latency" {
+  name = format("%s %s", local.detector_name_prefix, "ElasticSearch search latency")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
@@ -618,42 +619,42 @@ resource "signalfx_detector" "search_query_latency" {
 
   program_text = <<-EOF
     base_filtering = filter('node_name', '*')
-    A = data('elasticsearch.indices.search.query-time', filter=base_filtering and ${module.filtering.signalflow}, rollup='delta', extrapolation='zero')${var.search_query_latency_aggregation_function}${var.search_query_latency_transformation_function}
-    B = data('elasticsearch.indices.search.query-total', filter=base_filtering and ${module.filtering.signalflow}, rollup='delta', extrapolation='zero')${var.search_query_latency_aggregation_function}${var.search_query_latency_transformation_function}
+    A = data('elasticsearch.indices.search.query-time', filter=base_filtering and ${module.filtering.signalflow}, rollup='delta', extrapolation='zero')${var.search_latency_aggregation_function}${var.search_latency_transformation_function}
+    B = data('elasticsearch.indices.search.query-total', filter=base_filtering and ${module.filtering.signalflow}, rollup='delta', extrapolation='zero')${var.search_latency_aggregation_function}${var.search_latency_transformation_function}
     signal = (A/B).fill(0).publish('signal')
-    detect(when(signal > ${var.search_query_latency_threshold_major}, lasting=%{if var.search_query_latency_lasting_duration_major == null}None%{else}'${var.search_query_latency_lasting_duration_major}'%{endif}, at_least=${var.search_query_latency_at_least_percentage_major})).publish('MAJOR')
-    detect(when(signal > ${var.search_query_latency_threshold_minor}, lasting=%{if var.search_query_latency_lasting_duration_minor == null}None%{else}'${var.search_query_latency_lasting_duration_minor}'%{endif}, at_least=${var.search_query_latency_at_least_percentage_minor}) and (not when(signal > ${var.search_query_latency_threshold_major}, lasting=%{if var.search_query_latency_lasting_duration_major == null}None%{else}'${var.search_query_latency_lasting_duration_major}'%{endif}, at_least=${var.search_query_latency_at_least_percentage_major}))).publish('MINOR')
+    detect(when(signal > ${var.search_latency_threshold_major}, lasting=%{if var.search_latency_lasting_duration_major == null}None%{else}'${var.search_latency_lasting_duration_major}'%{endif}, at_least=${var.search_latency_at_least_percentage_major})).publish('MAJOR')
+    detect(when(signal > ${var.search_latency_threshold_minor}, lasting=%{if var.search_latency_lasting_duration_minor == null}None%{else}'${var.search_latency_lasting_duration_minor}'%{endif}, at_least=${var.search_latency_at_least_percentage_minor}) and (not when(signal > ${var.search_latency_threshold_major}, lasting=%{if var.search_latency_lasting_duration_major == null}None%{else}'${var.search_latency_lasting_duration_major}'%{endif}, at_least=${var.search_latency_at_least_percentage_major}))).publish('MINOR')
 EOF
 
   rule {
-    description           = "is too high > ${var.search_query_latency_threshold_major}"
+    description           = "is too high > ${var.search_latency_threshold_major}"
     severity              = "Major"
     detect_label          = "MAJOR"
-    disabled              = coalesce(var.search_query_latency_disabled_major, var.search_query_latency_disabled, var.detectors_disabled)
-    notifications         = try(coalescelist(lookup(var.search_query_latency_notifications, "major", []), var.notifications.major), null)
-    runbook_url           = try(coalesce(var.search_query_latency_runbook_url, var.runbook_url), "")
-    tip                   = var.search_query_latency_tip
+    disabled              = coalesce(var.search_latency_disabled_major, var.search_latency_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.search_latency_notifications, "major", []), var.notifications.major), null)
+    runbook_url           = try(coalesce(var.search_latency_runbook_url, var.runbook_url), "")
+    tip                   = var.search_latency_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
   rule {
-    description           = "is too high > ${var.search_query_latency_threshold_minor}"
+    description           = "is too high > ${var.search_latency_threshold_minor}"
     severity              = "Minor"
     detect_label          = "MINOR"
-    disabled              = coalesce(var.search_query_latency_disabled_minor, var.search_query_latency_disabled, var.detectors_disabled)
-    notifications         = try(coalescelist(lookup(var.search_query_latency_notifications, "minor", []), var.notifications.minor), null)
-    runbook_url           = try(coalesce(var.search_query_latency_runbook_url, var.runbook_url), "")
-    tip                   = var.search_query_latency_tip
+    disabled              = coalesce(var.search_latency_disabled_minor, var.search_latency_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.search_latency_notifications, "minor", []), var.notifications.minor), null)
+    runbook_url           = try(coalesce(var.search_latency_runbook_url, var.runbook_url), "")
+    tip                   = var.search_latency_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
-  max_delay = var.search_query_latency_max_delay
+  max_delay = var.search_latency_max_delay
 }
 
-resource "signalfx_detector" "search_fetch_latency" {
-  name = format("%s %s", local.detector_name_prefix, "ElasticSearch search fetch latency")
+resource "signalfx_detector" "fetch_latency" {
+  name = format("%s %s", local.detector_name_prefix, "ElasticSearch fetch latency")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
@@ -661,42 +662,42 @@ resource "signalfx_detector" "search_fetch_latency" {
 
   program_text = <<-EOF
     base_filtering = filter('node_name', '*')
-    A = data('elasticsearch.indices.search.fetch-time', filter=base_filtering and ${module.filtering.signalflow}, rollup='delta', extrapolation='zero')${var.search_fetch_latency_aggregation_function}${var.search_fetch_latency_transformation_function}
-    B = data('elasticsearch.indices.search.fetch-total', filter=base_filtering and ${module.filtering.signalflow}, rollup='delta', extrapolation='zero')${var.search_fetch_latency_aggregation_function}${var.search_fetch_latency_transformation_function}
+    A = data('elasticsearch.indices.search.fetch-time', filter=base_filtering and ${module.filtering.signalflow}, rollup='delta', extrapolation='zero')${var.fetch_latency_aggregation_function}${var.fetch_latency_transformation_function}
+    B = data('elasticsearch.indices.search.fetch-total', filter=base_filtering and ${module.filtering.signalflow}, rollup='delta', extrapolation='zero')${var.fetch_latency_aggregation_function}${var.fetch_latency_transformation_function}
     signal = (A/B).fill(0).publish('signal')
-    detect(when(signal > ${var.search_fetch_latency_threshold_major}, lasting=%{if var.search_fetch_latency_lasting_duration_major == null}None%{else}'${var.search_fetch_latency_lasting_duration_major}'%{endif}, at_least=${var.search_fetch_latency_at_least_percentage_major})).publish('MAJOR')
-    detect(when(signal > ${var.search_fetch_latency_threshold_minor}, lasting=%{if var.search_fetch_latency_lasting_duration_minor == null}None%{else}'${var.search_fetch_latency_lasting_duration_minor}'%{endif}, at_least=${var.search_fetch_latency_at_least_percentage_minor}) and (not when(signal > ${var.search_fetch_latency_threshold_major}, lasting=%{if var.search_fetch_latency_lasting_duration_major == null}None%{else}'${var.search_fetch_latency_lasting_duration_major}'%{endif}, at_least=${var.search_fetch_latency_at_least_percentage_major}))).publish('MINOR')
+    detect(when(signal > ${var.fetch_latency_threshold_major}, lasting=%{if var.fetch_latency_lasting_duration_major == null}None%{else}'${var.fetch_latency_lasting_duration_major}'%{endif}, at_least=${var.fetch_latency_at_least_percentage_major})).publish('MAJOR')
+    detect(when(signal > ${var.fetch_latency_threshold_minor}, lasting=%{if var.fetch_latency_lasting_duration_minor == null}None%{else}'${var.fetch_latency_lasting_duration_minor}'%{endif}, at_least=${var.fetch_latency_at_least_percentage_minor}) and (not when(signal > ${var.fetch_latency_threshold_major}, lasting=%{if var.fetch_latency_lasting_duration_major == null}None%{else}'${var.fetch_latency_lasting_duration_major}'%{endif}, at_least=${var.fetch_latency_at_least_percentage_major}))).publish('MINOR')
 EOF
 
   rule {
-    description           = "is too high > ${var.search_fetch_latency_threshold_major}"
+    description           = "is too high > ${var.fetch_latency_threshold_major}"
     severity              = "Major"
     detect_label          = "MAJOR"
-    disabled              = coalesce(var.search_fetch_latency_disabled_major, var.search_fetch_latency_disabled, var.detectors_disabled)
-    notifications         = try(coalescelist(lookup(var.search_fetch_latency_notifications, "major", []), var.notifications.major), null)
-    runbook_url           = try(coalesce(var.search_fetch_latency_runbook_url, var.runbook_url), "")
-    tip                   = var.search_fetch_latency_tip
+    disabled              = coalesce(var.fetch_latency_disabled_major, var.fetch_latency_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.fetch_latency_notifications, "major", []), var.notifications.major), null)
+    runbook_url           = try(coalesce(var.fetch_latency_runbook_url, var.runbook_url), "")
+    tip                   = var.fetch_latency_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
   rule {
-    description           = "is too high > ${var.search_fetch_latency_threshold_minor}"
+    description           = "is too high > ${var.fetch_latency_threshold_minor}"
     severity              = "Minor"
     detect_label          = "MINOR"
-    disabled              = coalesce(var.search_fetch_latency_disabled_minor, var.search_fetch_latency_disabled, var.detectors_disabled)
-    notifications         = try(coalescelist(lookup(var.search_fetch_latency_notifications, "minor", []), var.notifications.minor), null)
-    runbook_url           = try(coalesce(var.search_fetch_latency_runbook_url, var.runbook_url), "")
-    tip                   = var.search_fetch_latency_tip
+    disabled              = coalesce(var.fetch_latency_disabled_minor, var.fetch_latency_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.fetch_latency_notifications, "minor", []), var.notifications.minor), null)
+    runbook_url           = try(coalesce(var.fetch_latency_runbook_url, var.runbook_url), "")
+    tip                   = var.fetch_latency_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
-  max_delay = var.search_fetch_latency_max_delay
+  max_delay = var.fetch_latency_max_delay
 }
 
-resource "signalfx_detector" "fielddata_cache_evictions_rate_of_change" {
-  name = format("%s %s", local.detector_name_prefix, "ElasticSearch fielddata cache evictions rate of change")
+resource "signalfx_detector" "field_data_evictions_change" {
+  name = format("%s %s", local.detector_name_prefix, "ElasticSearch field_data evictions change")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
@@ -704,77 +705,77 @@ resource "signalfx_detector" "fielddata_cache_evictions_rate_of_change" {
 
   program_text = <<-EOF
     base_filtering = filter('node_name', '*')
-    A = data('elasticsearch.indices.fielddata.evictions', filter=base_filtering and ${module.filtering.signalflow}, rollup='delta', extrapolation='zero')${var.fielddata_cache_evictions_rate_of_change_aggregation_function}${var.fielddata_cache_evictions_rate_of_change_transformation_function}
+    A = data('elasticsearch.indices.fielddata.evictions', filter=base_filtering and ${module.filtering.signalflow}, rollup='delta', extrapolation='zero')${var.field_data_evictions_change_aggregation_function}${var.field_data_evictions_change_transformation_function}
     signal = A.rateofchange().publish('signal')
-    detect(when(signal > ${var.fielddata_cache_evictions_rate_of_change_threshold_major}, lasting=%{if var.fielddata_cache_evictions_rate_of_change_lasting_duration_major == null}None%{else}'${var.fielddata_cache_evictions_rate_of_change_lasting_duration_major}'%{endif}, at_least=${var.fielddata_cache_evictions_rate_of_change_at_least_percentage_major})).publish('MAJOR')
-    detect(when(signal > ${var.fielddata_cache_evictions_rate_of_change_threshold_minor}, lasting=%{if var.fielddata_cache_evictions_rate_of_change_lasting_duration_minor == null}None%{else}'${var.fielddata_cache_evictions_rate_of_change_lasting_duration_minor}'%{endif}, at_least=${var.fielddata_cache_evictions_rate_of_change_at_least_percentage_minor}) and (not when(signal > ${var.fielddata_cache_evictions_rate_of_change_threshold_major}, lasting=%{if var.fielddata_cache_evictions_rate_of_change_lasting_duration_major == null}None%{else}'${var.fielddata_cache_evictions_rate_of_change_lasting_duration_major}'%{endif}, at_least=${var.fielddata_cache_evictions_rate_of_change_at_least_percentage_major}))).publish('MINOR')
+    detect(when(signal > ${var.field_data_evictions_change_threshold_major}, lasting=%{if var.field_data_evictions_change_lasting_duration_major == null}None%{else}'${var.field_data_evictions_change_lasting_duration_major}'%{endif}, at_least=${var.field_data_evictions_change_at_least_percentage_major})).publish('MAJOR')
+    detect(when(signal > ${var.field_data_evictions_change_threshold_minor}, lasting=%{if var.field_data_evictions_change_lasting_duration_minor == null}None%{else}'${var.field_data_evictions_change_lasting_duration_minor}'%{endif}, at_least=${var.field_data_evictions_change_at_least_percentage_minor}) and (not when(signal > ${var.field_data_evictions_change_threshold_major}, lasting=%{if var.field_data_evictions_change_lasting_duration_major == null}None%{else}'${var.field_data_evictions_change_lasting_duration_major}'%{endif}, at_least=${var.field_data_evictions_change_at_least_percentage_major}))).publish('MINOR')
 EOF
 
   rule {
-    description           = "is too high > ${var.fielddata_cache_evictions_rate_of_change_threshold_major}"
+    description           = "is too high > ${var.field_data_evictions_change_threshold_major}"
     severity              = "Major"
     detect_label          = "MAJOR"
-    disabled              = coalesce(var.fielddata_cache_evictions_rate_of_change_disabled_major, var.fielddata_cache_evictions_rate_of_change_disabled, var.detectors_disabled)
-    notifications         = try(coalescelist(lookup(var.fielddata_cache_evictions_rate_of_change_notifications, "major", []), var.notifications.major), null)
-    runbook_url           = try(coalesce(var.fielddata_cache_evictions_rate_of_change_runbook_url, var.runbook_url), "")
-    tip                   = var.fielddata_cache_evictions_rate_of_change_tip
+    disabled              = coalesce(var.field_data_evictions_change_disabled_major, var.field_data_evictions_change_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.field_data_evictions_change_notifications, "major", []), var.notifications.major), null)
+    runbook_url           = try(coalesce(var.field_data_evictions_change_runbook_url, var.runbook_url), "")
+    tip                   = var.field_data_evictions_change_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
   rule {
-    description           = "is too high > ${var.fielddata_cache_evictions_rate_of_change_threshold_minor}"
+    description           = "is too high > ${var.field_data_evictions_change_threshold_minor}"
     severity              = "Minor"
     detect_label          = "MINOR"
-    disabled              = coalesce(var.fielddata_cache_evictions_rate_of_change_disabled_minor, var.fielddata_cache_evictions_rate_of_change_disabled, var.detectors_disabled)
-    notifications         = try(coalescelist(lookup(var.fielddata_cache_evictions_rate_of_change_notifications, "minor", []), var.notifications.minor), null)
-    runbook_url           = try(coalesce(var.fielddata_cache_evictions_rate_of_change_runbook_url, var.runbook_url), "")
-    tip                   = var.fielddata_cache_evictions_rate_of_change_tip
+    disabled              = coalesce(var.field_data_evictions_change_disabled_minor, var.field_data_evictions_change_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.field_data_evictions_change_notifications, "minor", []), var.notifications.minor), null)
+    runbook_url           = try(coalesce(var.field_data_evictions_change_runbook_url, var.runbook_url), "")
+    tip                   = var.field_data_evictions_change_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
-  max_delay = var.fielddata_cache_evictions_rate_of_change_max_delay
+  max_delay = var.field_data_evictions_change_max_delay
 }
 
-resource "signalfx_detector" "max_time_spent_by_task_in_queue_rate_of_change" {
-  name = format("%s %s", local.detector_name_prefix, "ElasticSearch max time spent by task in queue rate of change")
+resource "signalfx_detector" "task_time_in_queue_change" {
+  name = format("%s %s", local.detector_name_prefix, "ElasticSearch task time in queue change")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    A = data('elasticsearch.cluster.task-max-wait-time', filter=${module.filtering.signalflow}, rollup='average')${var.max_time_spent_by_task_in_queue_rate_of_change_aggregation_function}${var.max_time_spent_by_task_in_queue_rate_of_change_transformation_function}
+    A = data('elasticsearch.cluster.task-max-wait-time', filter=${module.filtering.signalflow}, rollup='average')${var.task_time_in_queue_change_aggregation_function}${var.task_time_in_queue_change_transformation_function}
     signal = A.rateofchange().publish('signal')
-    detect(when(signal > ${var.max_time_spent_by_task_in_queue_rate_of_change_threshold_major}, lasting=%{if var.max_time_spent_by_task_in_queue_rate_of_change_lasting_duration_major == null}None%{else}'${var.max_time_spent_by_task_in_queue_rate_of_change_lasting_duration_major}'%{endif}, at_least=${var.max_time_spent_by_task_in_queue_rate_of_change_at_least_percentage_major})).publish('MAJOR')
-    detect(when(signal > ${var.max_time_spent_by_task_in_queue_rate_of_change_threshold_minor}, lasting=%{if var.max_time_spent_by_task_in_queue_rate_of_change_lasting_duration_minor == null}None%{else}'${var.max_time_spent_by_task_in_queue_rate_of_change_lasting_duration_minor}'%{endif}, at_least=${var.max_time_spent_by_task_in_queue_rate_of_change_at_least_percentage_minor}) and (not when(signal > ${var.max_time_spent_by_task_in_queue_rate_of_change_threshold_major}, lasting=%{if var.max_time_spent_by_task_in_queue_rate_of_change_lasting_duration_major == null}None%{else}'${var.max_time_spent_by_task_in_queue_rate_of_change_lasting_duration_major}'%{endif}, at_least=${var.max_time_spent_by_task_in_queue_rate_of_change_at_least_percentage_major}))).publish('MINOR')
+    detect(when(signal > ${var.task_time_in_queue_change_threshold_major}, lasting=%{if var.task_time_in_queue_change_lasting_duration_major == null}None%{else}'${var.task_time_in_queue_change_lasting_duration_major}'%{endif}, at_least=${var.task_time_in_queue_change_at_least_percentage_major})).publish('MAJOR')
+    detect(when(signal > ${var.task_time_in_queue_change_threshold_minor}, lasting=%{if var.task_time_in_queue_change_lasting_duration_minor == null}None%{else}'${var.task_time_in_queue_change_lasting_duration_minor}'%{endif}, at_least=${var.task_time_in_queue_change_at_least_percentage_minor}) and (not when(signal > ${var.task_time_in_queue_change_threshold_major}, lasting=%{if var.task_time_in_queue_change_lasting_duration_major == null}None%{else}'${var.task_time_in_queue_change_lasting_duration_major}'%{endif}, at_least=${var.task_time_in_queue_change_at_least_percentage_major}))).publish('MINOR')
 EOF
 
   rule {
-    description           = "is too high > ${var.max_time_spent_by_task_in_queue_rate_of_change_threshold_major}"
+    description           = "is too high > ${var.task_time_in_queue_change_threshold_major}"
     severity              = "Major"
     detect_label          = "MAJOR"
-    disabled              = coalesce(var.max_time_spent_by_task_in_queue_rate_of_change_disabled_major, var.max_time_spent_by_task_in_queue_rate_of_change_disabled, var.detectors_disabled)
-    notifications         = try(coalescelist(lookup(var.max_time_spent_by_task_in_queue_rate_of_change_notifications, "major", []), var.notifications.major), null)
-    runbook_url           = try(coalesce(var.max_time_spent_by_task_in_queue_rate_of_change_runbook_url, var.runbook_url), "")
-    tip                   = var.max_time_spent_by_task_in_queue_rate_of_change_tip
+    disabled              = coalesce(var.task_time_in_queue_change_disabled_major, var.task_time_in_queue_change_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.task_time_in_queue_change_notifications, "major", []), var.notifications.major), null)
+    runbook_url           = try(coalesce(var.task_time_in_queue_change_runbook_url, var.runbook_url), "")
+    tip                   = var.task_time_in_queue_change_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
   rule {
-    description           = "is too high > ${var.max_time_spent_by_task_in_queue_rate_of_change_threshold_minor}"
+    description           = "is too high > ${var.task_time_in_queue_change_threshold_minor}"
     severity              = "Minor"
     detect_label          = "MINOR"
-    disabled              = coalesce(var.max_time_spent_by_task_in_queue_rate_of_change_disabled_minor, var.max_time_spent_by_task_in_queue_rate_of_change_disabled, var.detectors_disabled)
-    notifications         = try(coalescelist(lookup(var.max_time_spent_by_task_in_queue_rate_of_change_notifications, "minor", []), var.notifications.minor), null)
-    runbook_url           = try(coalesce(var.max_time_spent_by_task_in_queue_rate_of_change_runbook_url, var.runbook_url), "")
-    tip                   = var.max_time_spent_by_task_in_queue_rate_of_change_tip
+    disabled              = coalesce(var.task_time_in_queue_change_disabled_minor, var.task_time_in_queue_change_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.task_time_in_queue_change_notifications, "minor", []), var.notifications.minor), null)
+    runbook_url           = try(coalesce(var.task_time_in_queue_change_runbook_url, var.runbook_url), "")
+    tip                   = var.task_time_in_queue_change_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
-  max_delay = var.max_time_spent_by_task_in_queue_rate_of_change_max_delay
+  max_delay = var.task_time_in_queue_change_max_delay
 }
 

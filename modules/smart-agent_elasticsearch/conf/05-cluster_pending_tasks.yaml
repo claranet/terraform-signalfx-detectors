@@ -1,5 +1,5 @@
 module: ElasticSearch
-name: "cluster pending tasks"
+name: "pending tasks"
 aggregation: true
 transformation: ".min(over='15m')"
 signals:

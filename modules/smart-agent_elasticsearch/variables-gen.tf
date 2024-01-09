@@ -191,7 +191,7 @@ variable "cluster_initializing_shards_disabled_major" {
 variable "cluster_initializing_shards_threshold_critical" {
   description = "Critical threshold for cluster_initializing_shards detector"
   type        = number
-  default     = 0
+  default     = 1
 }
 
 variable "cluster_initializing_shards_lasting_duration_critical" {
@@ -208,7 +208,7 @@ variable "cluster_initializing_shards_at_least_percentage_critical" {
 variable "cluster_initializing_shards_threshold_major" {
   description = "Major threshold for cluster_initializing_shards detector"
   type        = number
-  default     = -1
+  default     = 0
 }
 
 variable "cluster_initializing_shards_lasting_duration_major" {
@@ -402,92 +402,92 @@ variable "cluster_unassigned_shards_at_least_percentage_major" {
   type        = number
   default     = 1
 }
-# cluster_pending_tasks detector
+# pending_tasks detector
 
-variable "cluster_pending_tasks_notifications" {
-  description = "Notification recipients list per severity overridden for cluster_pending_tasks detector"
+variable "pending_tasks_notifications" {
+  description = "Notification recipients list per severity overridden for pending_tasks detector"
   type        = map(list(string))
   default     = {}
 }
 
-variable "cluster_pending_tasks_aggregation_function" {
-  description = "Aggregation function and group by for cluster_pending_tasks detector (i.e. \".mean(by=['host'])\")"
+variable "pending_tasks_aggregation_function" {
+  description = "Aggregation function and group by for pending_tasks detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
 }
 
-variable "cluster_pending_tasks_transformation_function" {
-  description = "Transformation function for cluster_pending_tasks detector (i.e. \".mean(over='5m')\")"
+variable "pending_tasks_transformation_function" {
+  description = "Transformation function for pending_tasks detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='15m')"
 }
 
-variable "cluster_pending_tasks_max_delay" {
-  description = "Enforce max delay for cluster_pending_tasks detector (use \"0\" or \"null\" for \"Auto\")"
+variable "pending_tasks_max_delay" {
+  description = "Enforce max delay for pending_tasks detector (use \"0\" or \"null\" for \"Auto\")"
   type        = number
   default     = null
 }
 
-variable "cluster_pending_tasks_tip" {
+variable "pending_tasks_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
   default     = ""
 }
 
-variable "cluster_pending_tasks_runbook_url" {
+variable "pending_tasks_runbook_url" {
   description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
   type        = string
   default     = ""
 }
 
-variable "cluster_pending_tasks_disabled" {
-  description = "Disable all alerting rules for cluster_pending_tasks detector"
+variable "pending_tasks_disabled" {
+  description = "Disable all alerting rules for pending_tasks detector"
   type        = bool
   default     = null
 }
 
-variable "cluster_pending_tasks_disabled_critical" {
-  description = "Disable critical alerting rule for cluster_pending_tasks detector"
+variable "pending_tasks_disabled_critical" {
+  description = "Disable critical alerting rule for pending_tasks detector"
   type        = bool
   default     = null
 }
 
-variable "cluster_pending_tasks_disabled_major" {
-  description = "Disable major alerting rule for cluster_pending_tasks detector"
+variable "pending_tasks_disabled_major" {
+  description = "Disable major alerting rule for pending_tasks detector"
   type        = bool
   default     = null
 }
 
-variable "cluster_pending_tasks_threshold_critical" {
-  description = "Critical threshold for cluster_pending_tasks detector"
+variable "pending_tasks_threshold_critical" {
+  description = "Critical threshold for pending_tasks detector"
   type        = number
   default     = 5
 }
 
-variable "cluster_pending_tasks_lasting_duration_critical" {
+variable "pending_tasks_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
   default     = null
 }
 
-variable "cluster_pending_tasks_at_least_percentage_critical" {
+variable "pending_tasks_at_least_percentage_critical" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1
 }
-variable "cluster_pending_tasks_threshold_major" {
-  description = "Major threshold for cluster_pending_tasks detector"
+variable "pending_tasks_threshold_major" {
+  description = "Major threshold for pending_tasks detector"
   type        = number
   default     = 0
 }
 
-variable "cluster_pending_tasks_lasting_duration_major" {
+variable "pending_tasks_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
   default     = null
 }
 
-variable "cluster_pending_tasks_at_least_percentage_major" {
+variable "pending_tasks_at_least_percentage_major" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1
@@ -582,92 +582,92 @@ variable "cpu_usage_at_least_percentage_major" {
   type        = number
   default     = 1
 }
-# file_descriptors_usage detector
+# file_descriptors detector
 
-variable "file_descriptors_usage_notifications" {
-  description = "Notification recipients list per severity overridden for file_descriptors_usage detector"
+variable "file_descriptors_notifications" {
+  description = "Notification recipients list per severity overridden for file_descriptors detector"
   type        = map(list(string))
   default     = {}
 }
 
-variable "file_descriptors_usage_aggregation_function" {
-  description = "Aggregation function and group by for file_descriptors_usage detector (i.e. \".mean(by=['host'])\")"
+variable "file_descriptors_aggregation_function" {
+  description = "Aggregation function and group by for file_descriptors detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
 }
 
-variable "file_descriptors_usage_transformation_function" {
-  description = "Transformation function for file_descriptors_usage detector (i.e. \".mean(over='5m')\")"
+variable "file_descriptors_transformation_function" {
+  description = "Transformation function for file_descriptors detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".max(over='15m')"
 }
 
-variable "file_descriptors_usage_max_delay" {
-  description = "Enforce max delay for file_descriptors_usage detector (use \"0\" or \"null\" for \"Auto\")"
+variable "file_descriptors_max_delay" {
+  description = "Enforce max delay for file_descriptors detector (use \"0\" or \"null\" for \"Auto\")"
   type        = number
   default     = null
 }
 
-variable "file_descriptors_usage_tip" {
+variable "file_descriptors_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
   default     = ""
 }
 
-variable "file_descriptors_usage_runbook_url" {
+variable "file_descriptors_runbook_url" {
   description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
   type        = string
   default     = ""
 }
 
-variable "file_descriptors_usage_disabled" {
-  description = "Disable all alerting rules for file_descriptors_usage detector"
+variable "file_descriptors_disabled" {
+  description = "Disable all alerting rules for file_descriptors detector"
   type        = bool
   default     = null
 }
 
-variable "file_descriptors_usage_disabled_critical" {
-  description = "Disable critical alerting rule for file_descriptors_usage detector"
+variable "file_descriptors_disabled_critical" {
+  description = "Disable critical alerting rule for file_descriptors detector"
   type        = bool
   default     = null
 }
 
-variable "file_descriptors_usage_disabled_major" {
-  description = "Disable major alerting rule for file_descriptors_usage detector"
+variable "file_descriptors_disabled_major" {
+  description = "Disable major alerting rule for file_descriptors detector"
   type        = bool
   default     = null
 }
 
-variable "file_descriptors_usage_threshold_critical" {
-  description = "Critical threshold for file_descriptors_usage detector"
+variable "file_descriptors_threshold_critical" {
+  description = "Critical threshold for file_descriptors detector"
   type        = number
   default     = 95
 }
 
-variable "file_descriptors_usage_lasting_duration_critical" {
+variable "file_descriptors_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
   default     = null
 }
 
-variable "file_descriptors_usage_at_least_percentage_critical" {
+variable "file_descriptors_at_least_percentage_critical" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1
 }
-variable "file_descriptors_usage_threshold_major" {
-  description = "Major threshold for file_descriptors_usage detector"
+variable "file_descriptors_threshold_major" {
+  description = "Major threshold for file_descriptors detector"
   type        = number
   default     = 90
 }
 
-variable "file_descriptors_usage_lasting_duration_major" {
+variable "file_descriptors_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
   default     = null
 }
 
-variable "file_descriptors_usage_at_least_percentage_major" {
+variable "file_descriptors_at_least_percentage_major" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1
@@ -942,182 +942,182 @@ variable "jvm_memory_old_usage_at_least_percentage_minor" {
   type        = number
   default     = 1
 }
-# old-generation_garbage_collections_latency detector
+# jvm_gc_old_collection_latency detector
 
-variable "old-generation_garbage_collections_latency_notifications" {
-  description = "Notification recipients list per severity overridden for old-generation_garbage_collections_latency detector"
+variable "jvm_gc_old_collection_latency_notifications" {
+  description = "Notification recipients list per severity overridden for jvm_gc_old_collection_latency detector"
   type        = map(list(string))
   default     = {}
 }
 
-variable "old-generation_garbage_collections_latency_aggregation_function" {
-  description = "Aggregation function and group by for old-generation_garbage_collections_latency detector (i.e. \".mean(by=['host'])\")"
+variable "jvm_gc_old_collection_latency_aggregation_function" {
+  description = "Aggregation function and group by for jvm_gc_old_collection_latency detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
 }
 
-variable "old-generation_garbage_collections_latency_transformation_function" {
-  description = "Transformation function for old-generation_garbage_collections_latency detector (i.e. \".mean(over='5m')\")"
+variable "jvm_gc_old_collection_latency_transformation_function" {
+  description = "Transformation function for jvm_gc_old_collection_latency detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='15m')"
 }
 
-variable "old-generation_garbage_collections_latency_max_delay" {
-  description = "Enforce max delay for old-generation_garbage_collections_latency detector (use \"0\" or \"null\" for \"Auto\")"
+variable "jvm_gc_old_collection_latency_max_delay" {
+  description = "Enforce max delay for jvm_gc_old_collection_latency detector (use \"0\" or \"null\" for \"Auto\")"
   type        = number
   default     = null
 }
 
-variable "old-generation_garbage_collections_latency_tip" {
+variable "jvm_gc_old_collection_latency_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
   default     = ""
 }
 
-variable "old-generation_garbage_collections_latency_runbook_url" {
+variable "jvm_gc_old_collection_latency_runbook_url" {
   description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
   type        = string
   default     = ""
 }
 
-variable "old-generation_garbage_collections_latency_disabled" {
-  description = "Disable all alerting rules for old-generation_garbage_collections_latency detector"
+variable "jvm_gc_old_collection_latency_disabled" {
+  description = "Disable all alerting rules for jvm_gc_old_collection_latency detector"
   type        = bool
   default     = null
 }
 
-variable "old-generation_garbage_collections_latency_disabled_major" {
-  description = "Disable major alerting rule for old-generation_garbage_collections_latency detector"
+variable "jvm_gc_old_collection_latency_disabled_major" {
+  description = "Disable major alerting rule for jvm_gc_old_collection_latency detector"
   type        = bool
   default     = null
 }
 
-variable "old-generation_garbage_collections_latency_disabled_minor" {
-  description = "Disable minor alerting rule for old-generation_garbage_collections_latency detector"
+variable "jvm_gc_old_collection_latency_disabled_minor" {
+  description = "Disable minor alerting rule for jvm_gc_old_collection_latency detector"
   type        = bool
   default     = null
 }
 
-variable "old-generation_garbage_collections_latency_threshold_major" {
-  description = "Major threshold for old-generation_garbage_collections_latency detector"
+variable "jvm_gc_old_collection_latency_threshold_major" {
+  description = "Major threshold for jvm_gc_old_collection_latency detector"
   type        = number
   default     = 300
 }
 
-variable "old-generation_garbage_collections_latency_lasting_duration_major" {
+variable "jvm_gc_old_collection_latency_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
   default     = null
 }
 
-variable "old-generation_garbage_collections_latency_at_least_percentage_major" {
+variable "jvm_gc_old_collection_latency_at_least_percentage_major" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1
 }
-variable "old-generation_garbage_collections_latency_threshold_minor" {
-  description = "Minor threshold for old-generation_garbage_collections_latency detector"
+variable "jvm_gc_old_collection_latency_threshold_minor" {
+  description = "Minor threshold for jvm_gc_old_collection_latency detector"
   type        = number
   default     = 200
 }
 
-variable "old-generation_garbage_collections_latency_lasting_duration_minor" {
+variable "jvm_gc_old_collection_latency_lasting_duration_minor" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
   default     = null
 }
 
-variable "old-generation_garbage_collections_latency_at_least_percentage_minor" {
+variable "jvm_gc_old_collection_latency_at_least_percentage_minor" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1
 }
-# young-generation_garbage_collections_latency detector
+# jvm_gc_young_collection_latency detector
 
-variable "young-generation_garbage_collections_latency_notifications" {
-  description = "Notification recipients list per severity overridden for young-generation_garbage_collections_latency detector"
+variable "jvm_gc_young_collection_latency_notifications" {
+  description = "Notification recipients list per severity overridden for jvm_gc_young_collection_latency detector"
   type        = map(list(string))
   default     = {}
 }
 
-variable "young-generation_garbage_collections_latency_aggregation_function" {
-  description = "Aggregation function and group by for young-generation_garbage_collections_latency detector (i.e. \".mean(by=['host'])\")"
+variable "jvm_gc_young_collection_latency_aggregation_function" {
+  description = "Aggregation function and group by for jvm_gc_young_collection_latency detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
 }
 
-variable "young-generation_garbage_collections_latency_transformation_function" {
-  description = "Transformation function for young-generation_garbage_collections_latency detector (i.e. \".mean(over='5m')\")"
+variable "jvm_gc_young_collection_latency_transformation_function" {
+  description = "Transformation function for jvm_gc_young_collection_latency detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='15m')"
 }
 
-variable "young-generation_garbage_collections_latency_max_delay" {
-  description = "Enforce max delay for young-generation_garbage_collections_latency detector (use \"0\" or \"null\" for \"Auto\")"
+variable "jvm_gc_young_collection_latency_max_delay" {
+  description = "Enforce max delay for jvm_gc_young_collection_latency detector (use \"0\" or \"null\" for \"Auto\")"
   type        = number
   default     = null
 }
 
-variable "young-generation_garbage_collections_latency_tip" {
+variable "jvm_gc_young_collection_latency_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
   default     = ""
 }
 
-variable "young-generation_garbage_collections_latency_runbook_url" {
+variable "jvm_gc_young_collection_latency_runbook_url" {
   description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
   type        = string
   default     = ""
 }
 
-variable "young-generation_garbage_collections_latency_disabled" {
-  description = "Disable all alerting rules for young-generation_garbage_collections_latency detector"
+variable "jvm_gc_young_collection_latency_disabled" {
+  description = "Disable all alerting rules for jvm_gc_young_collection_latency detector"
   type        = bool
   default     = null
 }
 
-variable "young-generation_garbage_collections_latency_disabled_major" {
-  description = "Disable major alerting rule for young-generation_garbage_collections_latency detector"
+variable "jvm_gc_young_collection_latency_disabled_major" {
+  description = "Disable major alerting rule for jvm_gc_young_collection_latency detector"
   type        = bool
   default     = null
 }
 
-variable "young-generation_garbage_collections_latency_disabled_minor" {
-  description = "Disable minor alerting rule for young-generation_garbage_collections_latency detector"
+variable "jvm_gc_young_collection_latency_disabled_minor" {
+  description = "Disable minor alerting rule for jvm_gc_young_collection_latency detector"
   type        = bool
   default     = null
 }
 
-variable "young-generation_garbage_collections_latency_threshold_major" {
-  description = "Major threshold for young-generation_garbage_collections_latency detector"
+variable "jvm_gc_young_collection_latency_threshold_major" {
+  description = "Major threshold for jvm_gc_young_collection_latency detector"
   type        = number
   default     = 40
 }
 
-variable "young-generation_garbage_collections_latency_lasting_duration_major" {
+variable "jvm_gc_young_collection_latency_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
   default     = null
 }
 
-variable "young-generation_garbage_collections_latency_at_least_percentage_major" {
+variable "jvm_gc_young_collection_latency_at_least_percentage_major" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1
 }
-variable "young-generation_garbage_collections_latency_threshold_minor" {
-  description = "Minor threshold for young-generation_garbage_collections_latency detector"
+variable "jvm_gc_young_collection_latency_threshold_minor" {
+  description = "Minor threshold for jvm_gc_young_collection_latency detector"
   type        = number
   default     = 20
 }
 
-variable "young-generation_garbage_collections_latency_lasting_duration_minor" {
+variable "jvm_gc_young_collection_latency_lasting_duration_minor" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
   default     = null
 }
 
-variable "young-generation_garbage_collections_latency_at_least_percentage_minor" {
+variable "jvm_gc_young_collection_latency_at_least_percentage_minor" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1
@@ -1212,452 +1212,452 @@ variable "indexing_latency_at_least_percentage_minor" {
   type        = number
   default     = 1
 }
-# index_flushing_to_disk_latency detector
+# flushing_latency detector
 
-variable "index_flushing_to_disk_latency_notifications" {
-  description = "Notification recipients list per severity overridden for index_flushing_to_disk_latency detector"
+variable "flushing_latency_notifications" {
+  description = "Notification recipients list per severity overridden for flushing_latency detector"
   type        = map(list(string))
   default     = {}
 }
 
-variable "index_flushing_to_disk_latency_aggregation_function" {
-  description = "Aggregation function and group by for index_flushing_to_disk_latency detector (i.e. \".mean(by=['host'])\")"
+variable "flushing_latency_aggregation_function" {
+  description = "Aggregation function and group by for flushing_latency detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
 }
 
-variable "index_flushing_to_disk_latency_transformation_function" {
-  description = "Transformation function for index_flushing_to_disk_latency detector (i.e. \".mean(over='5m')\")"
+variable "flushing_latency_transformation_function" {
+  description = "Transformation function for flushing_latency detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='15m')"
 }
 
-variable "index_flushing_to_disk_latency_max_delay" {
-  description = "Enforce max delay for index_flushing_to_disk_latency detector (use \"0\" or \"null\" for \"Auto\")"
+variable "flushing_latency_max_delay" {
+  description = "Enforce max delay for flushing_latency detector (use \"0\" or \"null\" for \"Auto\")"
   type        = number
   default     = null
 }
 
-variable "index_flushing_to_disk_latency_tip" {
+variable "flushing_latency_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
   default     = ""
 }
 
-variable "index_flushing_to_disk_latency_runbook_url" {
+variable "flushing_latency_runbook_url" {
   description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
   type        = string
   default     = ""
 }
 
-variable "index_flushing_to_disk_latency_disabled" {
-  description = "Disable all alerting rules for index_flushing_to_disk_latency detector"
+variable "flushing_latency_disabled" {
+  description = "Disable all alerting rules for flushing_latency detector"
   type        = bool
   default     = null
 }
 
-variable "index_flushing_to_disk_latency_disabled_major" {
-  description = "Disable major alerting rule for index_flushing_to_disk_latency detector"
+variable "flushing_latency_disabled_major" {
+  description = "Disable major alerting rule for flushing_latency detector"
   type        = bool
   default     = null
 }
 
-variable "index_flushing_to_disk_latency_disabled_minor" {
-  description = "Disable minor alerting rule for index_flushing_to_disk_latency detector"
+variable "flushing_latency_disabled_minor" {
+  description = "Disable minor alerting rule for flushing_latency detector"
   type        = bool
   default     = null
 }
 
-variable "index_flushing_to_disk_latency_threshold_major" {
-  description = "Major threshold for index_flushing_to_disk_latency detector"
+variable "flushing_latency_threshold_major" {
+  description = "Major threshold for flushing_latency detector"
   type        = number
   default     = 150
 }
 
-variable "index_flushing_to_disk_latency_lasting_duration_major" {
+variable "flushing_latency_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
   default     = null
 }
 
-variable "index_flushing_to_disk_latency_at_least_percentage_major" {
+variable "flushing_latency_at_least_percentage_major" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1
 }
-variable "index_flushing_to_disk_latency_threshold_minor" {
-  description = "Minor threshold for index_flushing_to_disk_latency detector"
+variable "flushing_latency_threshold_minor" {
+  description = "Minor threshold for flushing_latency detector"
   type        = number
   default     = 100
 }
 
-variable "index_flushing_to_disk_latency_lasting_duration_minor" {
+variable "flushing_latency_lasting_duration_minor" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
   default     = null
 }
 
-variable "index_flushing_to_disk_latency_at_least_percentage_minor" {
+variable "flushing_latency_at_least_percentage_minor" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1
 }
-# search_query_latency detector
+# search_latency detector
 
-variable "search_query_latency_notifications" {
-  description = "Notification recipients list per severity overridden for search_query_latency detector"
+variable "search_latency_notifications" {
+  description = "Notification recipients list per severity overridden for search_latency detector"
   type        = map(list(string))
   default     = {}
 }
 
-variable "search_query_latency_aggregation_function" {
-  description = "Aggregation function and group by for search_query_latency detector (i.e. \".mean(by=['host'])\")"
+variable "search_latency_aggregation_function" {
+  description = "Aggregation function and group by for search_latency detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
 }
 
-variable "search_query_latency_transformation_function" {
-  description = "Transformation function for search_query_latency detector (i.e. \".mean(over='5m')\")"
+variable "search_latency_transformation_function" {
+  description = "Transformation function for search_latency detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='30m')"
 }
 
-variable "search_query_latency_max_delay" {
-  description = "Enforce max delay for search_query_latency detector (use \"0\" or \"null\" for \"Auto\")"
+variable "search_latency_max_delay" {
+  description = "Enforce max delay for search_latency detector (use \"0\" or \"null\" for \"Auto\")"
   type        = number
   default     = null
 }
 
-variable "search_query_latency_tip" {
+variable "search_latency_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
   default     = ""
 }
 
-variable "search_query_latency_runbook_url" {
+variable "search_latency_runbook_url" {
   description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
   type        = string
   default     = ""
 }
 
-variable "search_query_latency_disabled" {
-  description = "Disable all alerting rules for search_query_latency detector"
+variable "search_latency_disabled" {
+  description = "Disable all alerting rules for search_latency detector"
   type        = bool
   default     = null
 }
 
-variable "search_query_latency_disabled_major" {
-  description = "Disable major alerting rule for search_query_latency detector"
+variable "search_latency_disabled_major" {
+  description = "Disable major alerting rule for search_latency detector"
   type        = bool
   default     = null
 }
 
-variable "search_query_latency_disabled_minor" {
-  description = "Disable minor alerting rule for search_query_latency detector"
+variable "search_latency_disabled_minor" {
+  description = "Disable minor alerting rule for search_latency detector"
   type        = bool
   default     = null
 }
 
-variable "search_query_latency_threshold_major" {
-  description = "Major threshold for search_query_latency detector"
+variable "search_latency_threshold_major" {
+  description = "Major threshold for search_latency detector"
   type        = number
   default     = 20
 }
 
-variable "search_query_latency_lasting_duration_major" {
+variable "search_latency_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
   default     = null
 }
 
-variable "search_query_latency_at_least_percentage_major" {
+variable "search_latency_at_least_percentage_major" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1
 }
-variable "search_query_latency_threshold_minor" {
-  description = "Minor threshold for search_query_latency detector"
+variable "search_latency_threshold_minor" {
+  description = "Minor threshold for search_latency detector"
   type        = number
   default     = 10
 }
 
-variable "search_query_latency_lasting_duration_minor" {
+variable "search_latency_lasting_duration_minor" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
   default     = null
 }
 
-variable "search_query_latency_at_least_percentage_minor" {
+variable "search_latency_at_least_percentage_minor" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1
 }
-# search_fetch_latency detector
+# fetch_latency detector
 
-variable "search_fetch_latency_notifications" {
-  description = "Notification recipients list per severity overridden for search_fetch_latency detector"
+variable "fetch_latency_notifications" {
+  description = "Notification recipients list per severity overridden for fetch_latency detector"
   type        = map(list(string))
   default     = {}
 }
 
-variable "search_fetch_latency_aggregation_function" {
-  description = "Aggregation function and group by for search_fetch_latency detector (i.e. \".mean(by=['host'])\")"
+variable "fetch_latency_aggregation_function" {
+  description = "Aggregation function and group by for fetch_latency detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
 }
 
-variable "search_fetch_latency_transformation_function" {
-  description = "Transformation function for search_fetch_latency detector (i.e. \".mean(over='5m')\")"
+variable "fetch_latency_transformation_function" {
+  description = "Transformation function for fetch_latency detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".min(over='15m')"
 }
 
-variable "search_fetch_latency_max_delay" {
-  description = "Enforce max delay for search_fetch_latency detector (use \"0\" or \"null\" for \"Auto\")"
+variable "fetch_latency_max_delay" {
+  description = "Enforce max delay for fetch_latency detector (use \"0\" or \"null\" for \"Auto\")"
   type        = number
   default     = null
 }
 
-variable "search_fetch_latency_tip" {
+variable "fetch_latency_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
   default     = ""
 }
 
-variable "search_fetch_latency_runbook_url" {
+variable "fetch_latency_runbook_url" {
   description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
   type        = string
   default     = ""
 }
 
-variable "search_fetch_latency_disabled" {
-  description = "Disable all alerting rules for search_fetch_latency detector"
+variable "fetch_latency_disabled" {
+  description = "Disable all alerting rules for fetch_latency detector"
   type        = bool
   default     = null
 }
 
-variable "search_fetch_latency_disabled_major" {
-  description = "Disable major alerting rule for search_fetch_latency detector"
+variable "fetch_latency_disabled_major" {
+  description = "Disable major alerting rule for fetch_latency detector"
   type        = bool
   default     = null
 }
 
-variable "search_fetch_latency_disabled_minor" {
-  description = "Disable minor alerting rule for search_fetch_latency detector"
+variable "fetch_latency_disabled_minor" {
+  description = "Disable minor alerting rule for fetch_latency detector"
   type        = bool
   default     = null
 }
 
-variable "search_fetch_latency_threshold_major" {
-  description = "Major threshold for search_fetch_latency detector"
+variable "fetch_latency_threshold_major" {
+  description = "Major threshold for fetch_latency detector"
   type        = number
   default     = 20
 }
 
-variable "search_fetch_latency_lasting_duration_major" {
+variable "fetch_latency_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
   default     = null
 }
 
-variable "search_fetch_latency_at_least_percentage_major" {
+variable "fetch_latency_at_least_percentage_major" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1
 }
-variable "search_fetch_latency_threshold_minor" {
-  description = "Minor threshold for search_fetch_latency detector"
+variable "fetch_latency_threshold_minor" {
+  description = "Minor threshold for fetch_latency detector"
   type        = number
   default     = 10
 }
 
-variable "search_fetch_latency_lasting_duration_minor" {
+variable "fetch_latency_lasting_duration_minor" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
   default     = null
 }
 
-variable "search_fetch_latency_at_least_percentage_minor" {
+variable "fetch_latency_at_least_percentage_minor" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1
 }
-# fielddata_cache_evictions_rate_of_change detector
+# field_data_evictions_change detector
 
-variable "fielddata_cache_evictions_rate_of_change_notifications" {
-  description = "Notification recipients list per severity overridden for fielddata_cache_evictions_rate_of_change detector"
+variable "field_data_evictions_change_notifications" {
+  description = "Notification recipients list per severity overridden for field_data_evictions_change detector"
   type        = map(list(string))
   default     = {}
 }
 
-variable "fielddata_cache_evictions_rate_of_change_aggregation_function" {
-  description = "Aggregation function and group by for fielddata_cache_evictions_rate_of_change detector (i.e. \".mean(by=['host'])\")"
+variable "field_data_evictions_change_aggregation_function" {
+  description = "Aggregation function and group by for field_data_evictions_change detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
 }
 
-variable "fielddata_cache_evictions_rate_of_change_transformation_function" {
-  description = "Transformation function for fielddata_cache_evictions_rate_of_change detector (i.e. \".mean(over='5m')\")"
+variable "field_data_evictions_change_transformation_function" {
+  description = "Transformation function for field_data_evictions_change detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='15m')"
 }
 
-variable "fielddata_cache_evictions_rate_of_change_max_delay" {
-  description = "Enforce max delay for fielddata_cache_evictions_rate_of_change detector (use \"0\" or \"null\" for \"Auto\")"
+variable "field_data_evictions_change_max_delay" {
+  description = "Enforce max delay for field_data_evictions_change detector (use \"0\" or \"null\" for \"Auto\")"
   type        = number
   default     = null
 }
 
-variable "fielddata_cache_evictions_rate_of_change_tip" {
+variable "field_data_evictions_change_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
   default     = ""
 }
 
-variable "fielddata_cache_evictions_rate_of_change_runbook_url" {
+variable "field_data_evictions_change_runbook_url" {
   description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
   type        = string
   default     = ""
 }
 
-variable "fielddata_cache_evictions_rate_of_change_disabled" {
-  description = "Disable all alerting rules for fielddata_cache_evictions_rate_of_change detector"
+variable "field_data_evictions_change_disabled" {
+  description = "Disable all alerting rules for field_data_evictions_change detector"
   type        = bool
   default     = null
 }
 
-variable "fielddata_cache_evictions_rate_of_change_disabled_major" {
-  description = "Disable major alerting rule for fielddata_cache_evictions_rate_of_change detector"
+variable "field_data_evictions_change_disabled_major" {
+  description = "Disable major alerting rule for field_data_evictions_change detector"
   type        = bool
   default     = null
 }
 
-variable "fielddata_cache_evictions_rate_of_change_disabled_minor" {
-  description = "Disable minor alerting rule for fielddata_cache_evictions_rate_of_change detector"
+variable "field_data_evictions_change_disabled_minor" {
+  description = "Disable minor alerting rule for field_data_evictions_change detector"
   type        = bool
   default     = null
 }
 
-variable "fielddata_cache_evictions_rate_of_change_threshold_major" {
-  description = "Major threshold for fielddata_cache_evictions_rate_of_change detector"
+variable "field_data_evictions_change_threshold_major" {
+  description = "Major threshold for field_data_evictions_change detector"
   type        = number
   default     = 120
 }
 
-variable "fielddata_cache_evictions_rate_of_change_lasting_duration_major" {
+variable "field_data_evictions_change_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
   default     = null
 }
 
-variable "fielddata_cache_evictions_rate_of_change_at_least_percentage_major" {
+variable "field_data_evictions_change_at_least_percentage_major" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1
 }
-variable "fielddata_cache_evictions_rate_of_change_threshold_minor" {
-  description = "Minor threshold for fielddata_cache_evictions_rate_of_change detector"
+variable "field_data_evictions_change_threshold_minor" {
+  description = "Minor threshold for field_data_evictions_change detector"
   type        = number
   default     = 60
 }
 
-variable "fielddata_cache_evictions_rate_of_change_lasting_duration_minor" {
+variable "field_data_evictions_change_lasting_duration_minor" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
   default     = null
 }
 
-variable "fielddata_cache_evictions_rate_of_change_at_least_percentage_minor" {
+variable "field_data_evictions_change_at_least_percentage_minor" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1
 }
-# max_time_spent_by_task_in_queue_rate_of_change detector
+# task_time_in_queue_change detector
 
-variable "max_time_spent_by_task_in_queue_rate_of_change_notifications" {
-  description = "Notification recipients list per severity overridden for max_time_spent_by_task_in_queue_rate_of_change detector"
+variable "task_time_in_queue_change_notifications" {
+  description = "Notification recipients list per severity overridden for task_time_in_queue_change detector"
   type        = map(list(string))
   default     = {}
 }
 
-variable "max_time_spent_by_task_in_queue_rate_of_change_aggregation_function" {
-  description = "Aggregation function and group by for max_time_spent_by_task_in_queue_rate_of_change detector (i.e. \".mean(by=['host'])\")"
+variable "task_time_in_queue_change_aggregation_function" {
+  description = "Aggregation function and group by for task_time_in_queue_change detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
 }
 
-variable "max_time_spent_by_task_in_queue_rate_of_change_transformation_function" {
-  description = "Transformation function for max_time_spent_by_task_in_queue_rate_of_change detector (i.e. \".mean(over='5m')\")"
+variable "task_time_in_queue_change_transformation_function" {
+  description = "Transformation function for task_time_in_queue_change detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ".mean(over='15m')"
 }
 
-variable "max_time_spent_by_task_in_queue_rate_of_change_max_delay" {
-  description = "Enforce max delay for max_time_spent_by_task_in_queue_rate_of_change detector (use \"0\" or \"null\" for \"Auto\")"
+variable "task_time_in_queue_change_max_delay" {
+  description = "Enforce max delay for task_time_in_queue_change detector (use \"0\" or \"null\" for \"Auto\")"
   type        = number
   default     = null
 }
 
-variable "max_time_spent_by_task_in_queue_rate_of_change_tip" {
+variable "task_time_in_queue_change_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
   default     = ""
 }
 
-variable "max_time_spent_by_task_in_queue_rate_of_change_runbook_url" {
+variable "task_time_in_queue_change_runbook_url" {
   description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
   type        = string
   default     = ""
 }
 
-variable "max_time_spent_by_task_in_queue_rate_of_change_disabled" {
-  description = "Disable all alerting rules for max_time_spent_by_task_in_queue_rate_of_change detector"
+variable "task_time_in_queue_change_disabled" {
+  description = "Disable all alerting rules for task_time_in_queue_change detector"
   type        = bool
   default     = null
 }
 
-variable "max_time_spent_by_task_in_queue_rate_of_change_disabled_major" {
-  description = "Disable major alerting rule for max_time_spent_by_task_in_queue_rate_of_change detector"
+variable "task_time_in_queue_change_disabled_major" {
+  description = "Disable major alerting rule for task_time_in_queue_change detector"
   type        = bool
   default     = null
 }
 
-variable "max_time_spent_by_task_in_queue_rate_of_change_disabled_minor" {
-  description = "Disable minor alerting rule for max_time_spent_by_task_in_queue_rate_of_change detector"
+variable "task_time_in_queue_change_disabled_minor" {
+  description = "Disable minor alerting rule for task_time_in_queue_change detector"
   type        = bool
   default     = null
 }
 
-variable "max_time_spent_by_task_in_queue_rate_of_change_threshold_major" {
-  description = "Major threshold for max_time_spent_by_task_in_queue_rate_of_change detector"
+variable "task_time_in_queue_change_threshold_major" {
+  description = "Major threshold for task_time_in_queue_change detector"
   type        = number
   default     = 200
 }
 
-variable "max_time_spent_by_task_in_queue_rate_of_change_lasting_duration_major" {
+variable "task_time_in_queue_change_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
   default     = null
 }
 
-variable "max_time_spent_by_task_in_queue_rate_of_change_at_least_percentage_major" {
+variable "task_time_in_queue_change_at_least_percentage_major" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1
 }
-variable "max_time_spent_by_task_in_queue_rate_of_change_threshold_minor" {
-  description = "Minor threshold for max_time_spent_by_task_in_queue_rate_of_change detector"
+variable "task_time_in_queue_change_threshold_minor" {
+  description = "Minor threshold for task_time_in_queue_change detector"
   type        = number
   default     = 100
 }
 
-variable "max_time_spent_by_task_in_queue_rate_of_change_lasting_duration_minor" {
+variable "task_time_in_queue_change_lasting_duration_minor" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
   default     = null
 }
 
-variable "max_time_spent_by_task_in_queue_rate_of_change_at_least_percentage_minor" {
+variable "task_time_in_queue_change_at_least_percentage_minor" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1
