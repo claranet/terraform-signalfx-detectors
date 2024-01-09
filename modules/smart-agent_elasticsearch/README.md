@@ -59,7 +59,7 @@ Note the following parameters:
 
 These 3 parameters along with all variables defined in [common-variables.tf](common-variables.tf) are common to all
 [modules](../) in this repository. Other variables, specific to this module, are available in
-[variables.tf](variables.tf).
+[variables-gen.tf](variables-gen.tf).
 In general, the default configuration "works" but all of these Terraform
 [variables](https://www.terraform.io/language/values/variables) make it possible to
 customize the detectors behavior to better fit your needs.
@@ -77,25 +77,25 @@ This module creates the following SignalFx detectors which could contain one or 
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|ElasticSearch heartbeat|X|-|-|-|-|
+|Elasticsearch heartbeat|X|-|-|-|-|
 |ElasticSearch cluster status|X|X|-|-|-|
 |ElasticSearch cluster initializing shards|X|X|-|-|-|
 |ElasticSearch cluster relocating shards|X|X|-|-|-|
-|ElasticSearch Cluster unassigned shards|X|X|-|-|-|
-|ElasticSearch Pending tasks|X|X|-|-|-|
-|Elasticsearch CPU usage|X|X|-|-|-|
-|Elasticsearch file descriptors usage|X|X|-|-|-|
-|Elasticsearch JVM heap memory usage|X|X|-|-|-|
-|Elasticsearch JVM memory young usage|-|X|X|-|-|
-|Elasticsearch JVM memory old usage|-|X|X|-|-|
-|Elasticsearch old-generation garbage collections latency|-|X|X|-|-|
-|Elasticsearch young-generation garbage collections latency|-|X|X|-|-|
-|Elasticsearch indexing latency|-|X|X|-|-|
-|Elasticsearch index flushing to disk latency|-|X|X|-|-|
-|Elasticsearch search query latency|-|X|X|-|-|
-|Elasticsearch search fetch latency|-|X|X|-|-|
-|Elasticsearch fielddata cache evictions rate of change|-|X|X|-|-|
-|Elasticsearch max time spent by task in queue rate of change|-|X|X|-|-|
+|ElasticSearch cluster unassigned shards|X|X|-|-|-|
+|ElasticSearch cluster pending tasks|X|X|-|-|-|
+|ElasticSearch cpu usage|X|X|-|-|-|
+|ElasticSearch file descriptors usage|X|X|-|-|-|
+|ElasticSearch jvm heap memory usage|X|X|-|-|-|
+|ElasticSearch jvm memory young usage|-|X|X|-|-|
+|ElasticSearch jvm memory old usage|-|X|X|-|-|
+|ElasticSearch old-generation garbage collections latency|-|X|X|-|-|
+|ElasticSearch young-generation garbage collections latency|-|X|X|-|-|
+|ElasticSearch indexing latency|-|X|X|-|-|
+|ElasticSearch index flushing to disk latency|-|X|X|-|-|
+|ElasticSearch search query latency|-|X|X|-|-|
+|ElasticSearch search fetch latency|-|X|X|-|-|
+|ElasticSearch fielddata cache evictions rate of change|-|X|X|-|-|
+|ElasticSearch max time spent by task in queue rate of change|-|X|X|-|-|
 
 ## How to collect required metrics?
 
