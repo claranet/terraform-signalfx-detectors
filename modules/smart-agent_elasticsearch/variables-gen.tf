@@ -9,7 +9,7 @@ variable "heartbeat_notifications" {
 variable "heartbeat_aggregation_function" {
   description = "Aggregation function and group by for heartbeat detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".mean(by=['cluster'])"
 }
 
 variable "heartbeat_max_delay" {
