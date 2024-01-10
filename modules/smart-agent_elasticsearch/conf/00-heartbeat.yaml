@@ -4,6 +4,7 @@ name: heartbeat
 transformation: false
 aggregation: true
 exclude_not_running_vm: true
+filtering: "filter('plugin', 'elasticsearch')"
 
 signals:
   signal:

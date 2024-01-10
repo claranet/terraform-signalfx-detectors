@@ -38,9 +38,9 @@ output "file_descriptors" {
   value       = signalfx_detector.file_descriptors
 }
 
-output "flushing_latency" {
-  description = "Detector resource for flushing_latency"
-  value       = signalfx_detector.flushing_latency
+output "flush_latency" {
+  description = "Detector resource for flush_latency"
+  value       = signalfx_detector.flush_latency
 }
 
 output "heartbeat" {

@@ -2,16 +2,18 @@ module: ElasticSearch
 name: "cluster status"
 aggregation: true
 transformation: ".mean(over='5m')"
+filtering: "filter('plugin', 'elasticsearch')"
 signals:
   signal:
     metric: "elasticsearch.cluster.status"
 rules:
   critical:
-    threshold: 1
-    comparator: "=="
-    description: "is red"
-  major:
     threshold: 2
     comparator: "=="
-    dependency: critical
+    description: "is red"
+    lasting_duration: '5m'    
+  major:
+    threshold: 1
+    comparator: "=="
     description: "is yellow"
+    lasting_duration: '5m'    

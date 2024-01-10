@@ -989,7 +989,7 @@
 |ElasticSearch jvm gc old collection latency|-|X|X|-|-|
 |ElasticSearch jvm gc young collection latency|-|X|X|-|-|
 |ElasticSearch indexing latency|-|X|X|-|-|
-|ElasticSearch flushing latency|-|X|X|-|-|
+|ElasticSearch flush latency|-|X|X|-|-|
 |ElasticSearch search latency|-|X|X|-|-|
 |ElasticSearch fetch latency|-|X|X|-|-|
 |ElasticSearch field_data evictions change|-|X|X|-|-|

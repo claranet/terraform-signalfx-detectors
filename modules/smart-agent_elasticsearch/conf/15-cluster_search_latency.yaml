@@ -2,7 +2,7 @@ module: ElasticSearch
 name: "search latency"
 aggregation: true
 transformation: ".min(over='30m')"
-filtering: "filter('node_name', '*')"
+filtering: "filter('node_name', '*') and filter('plugin', 'elasticsearch')"
 signals:
     A:
       metric: "elasticsearch.indices.search.query-time"
@@ -19,8 +19,10 @@ rules:
     threshold: 20
     comparator: ">"
     description: "is too high"
+    lasting_duration: '30m'    
   minor:
     threshold: 10
     comparator: ">"
     description: "is too high"    
     dependency: major
+    lasting_duration: '30m'

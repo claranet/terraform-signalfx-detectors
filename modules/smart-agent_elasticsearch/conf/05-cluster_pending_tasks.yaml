@@ -2,6 +2,7 @@ module: ElasticSearch
 name: "pending tasks"
 aggregation: true
 transformation: ".min(over='15m')"
+filtering: "filter('plugin', 'elasticsearch')"
 signals:
   signal:
     metric: "elasticsearch.cluster.pending-tasks"
@@ -11,8 +12,10 @@ rules:
     threshold: 5
     comparator: ">"
     description: "are too high"
+    lasting_duration: '15m'    
   major:
     threshold: 0
     comparator: ">"
     dependency: critical
     description: "are too high"
+    lasting_duration: '15m'

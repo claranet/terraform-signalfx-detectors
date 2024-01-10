@@ -101,13 +101,13 @@ variable "cluster_status_disabled_major" {
 variable "cluster_status_threshold_critical" {
   description = "Critical threshold for cluster_status detector"
   type        = number
-  default     = 1
+  default     = 2
 }
 
 variable "cluster_status_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "5m"
 }
 
 variable "cluster_status_at_least_percentage_critical" {
@@ -118,13 +118,13 @@ variable "cluster_status_at_least_percentage_critical" {
 variable "cluster_status_threshold_major" {
   description = "Major threshold for cluster_status detector"
   type        = number
-  default     = 2
+  default     = 1
 }
 
 variable "cluster_status_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "5m"
 }
 
 variable "cluster_status_at_least_percentage_major" {
@@ -197,7 +197,7 @@ variable "cluster_initializing_shards_threshold_critical" {
 variable "cluster_initializing_shards_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "15m"
 }
 
 variable "cluster_initializing_shards_at_least_percentage_critical" {
@@ -214,7 +214,7 @@ variable "cluster_initializing_shards_threshold_major" {
 variable "cluster_initializing_shards_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "15m"
 }
 
 variable "cluster_initializing_shards_at_least_percentage_major" {
@@ -275,19 +275,19 @@ variable "cluster_relocating_shards_disabled_critical" {
 variable "cluster_relocating_shards_disabled_major" {
   description = "Disable major alerting rule for cluster_relocating_shards detector"
   type        = bool
-  default     = null
+  default     = true
 }
 
 variable "cluster_relocating_shards_threshold_critical" {
   description = "Critical threshold for cluster_relocating_shards detector"
   type        = number
-  default     = 1
+  default     = 0
 }
 
 variable "cluster_relocating_shards_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "15m"
 }
 
 variable "cluster_relocating_shards_at_least_percentage_critical" {
@@ -298,13 +298,13 @@ variable "cluster_relocating_shards_at_least_percentage_critical" {
 variable "cluster_relocating_shards_threshold_major" {
   description = "Major threshold for cluster_relocating_shards detector"
   type        = number
-  default     = 0
+  default     = -1
 }
 
 variable "cluster_relocating_shards_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "15m"
 }
 
 variable "cluster_relocating_shards_at_least_percentage_major" {
@@ -365,7 +365,7 @@ variable "cluster_unassigned_shards_disabled_critical" {
 variable "cluster_unassigned_shards_disabled_major" {
   description = "Disable major alerting rule for cluster_unassigned_shards detector"
   type        = bool
-  default     = null
+  default     = true
 }
 
 variable "cluster_unassigned_shards_threshold_critical" {
@@ -377,7 +377,7 @@ variable "cluster_unassigned_shards_threshold_critical" {
 variable "cluster_unassigned_shards_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "10m"
 }
 
 variable "cluster_unassigned_shards_at_least_percentage_critical" {
@@ -394,7 +394,7 @@ variable "cluster_unassigned_shards_threshold_major" {
 variable "cluster_unassigned_shards_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "10m"
 }
 
 variable "cluster_unassigned_shards_at_least_percentage_major" {
@@ -467,7 +467,7 @@ variable "pending_tasks_threshold_critical" {
 variable "pending_tasks_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "15m"
 }
 
 variable "pending_tasks_at_least_percentage_critical" {
@@ -484,7 +484,7 @@ variable "pending_tasks_threshold_major" {
 variable "pending_tasks_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "15m"
 }
 
 variable "pending_tasks_at_least_percentage_major" {
@@ -557,7 +557,7 @@ variable "cpu_usage_threshold_critical" {
 variable "cpu_usage_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "30m"
 }
 
 variable "cpu_usage_at_least_percentage_critical" {
@@ -574,7 +574,7 @@ variable "cpu_usage_threshold_major" {
 variable "cpu_usage_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "30m"
 }
 
 variable "cpu_usage_at_least_percentage_major" {
@@ -647,7 +647,7 @@ variable "file_descriptors_threshold_critical" {
 variable "file_descriptors_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "15m"
 }
 
 variable "file_descriptors_at_least_percentage_critical" {
@@ -664,7 +664,7 @@ variable "file_descriptors_threshold_major" {
 variable "file_descriptors_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "15m"
 }
 
 variable "file_descriptors_at_least_percentage_major" {
@@ -737,7 +737,7 @@ variable "jvm_heap_memory_usage_threshold_critical" {
 variable "jvm_heap_memory_usage_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "5m"
 }
 
 variable "jvm_heap_memory_usage_at_least_percentage_critical" {
@@ -754,7 +754,7 @@ variable "jvm_heap_memory_usage_threshold_major" {
 variable "jvm_heap_memory_usage_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "5m"
 }
 
 variable "jvm_heap_memory_usage_at_least_percentage_major" {
@@ -827,7 +827,7 @@ variable "jvm_memory_young_usage_threshold_major" {
 variable "jvm_memory_young_usage_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "10m"
 }
 
 variable "jvm_memory_young_usage_at_least_percentage_major" {
@@ -844,7 +844,7 @@ variable "jvm_memory_young_usage_threshold_minor" {
 variable "jvm_memory_young_usage_lasting_duration_minor" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "10m"
 }
 
 variable "jvm_memory_young_usage_at_least_percentage_minor" {
@@ -917,7 +917,7 @@ variable "jvm_memory_old_usage_threshold_major" {
 variable "jvm_memory_old_usage_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "10m"
 }
 
 variable "jvm_memory_old_usage_at_least_percentage_major" {
@@ -934,7 +934,7 @@ variable "jvm_memory_old_usage_threshold_minor" {
 variable "jvm_memory_old_usage_lasting_duration_minor" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "10m"
 }
 
 variable "jvm_memory_old_usage_at_least_percentage_minor" {
@@ -1007,7 +1007,7 @@ variable "jvm_gc_old_collection_latency_threshold_major" {
 variable "jvm_gc_old_collection_latency_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "15m"
 }
 
 variable "jvm_gc_old_collection_latency_at_least_percentage_major" {
@@ -1024,7 +1024,7 @@ variable "jvm_gc_old_collection_latency_threshold_minor" {
 variable "jvm_gc_old_collection_latency_lasting_duration_minor" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "15m"
 }
 
 variable "jvm_gc_old_collection_latency_at_least_percentage_minor" {
@@ -1097,7 +1097,7 @@ variable "jvm_gc_young_collection_latency_threshold_major" {
 variable "jvm_gc_young_collection_latency_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "15m"
 }
 
 variable "jvm_gc_young_collection_latency_at_least_percentage_major" {
@@ -1114,7 +1114,7 @@ variable "jvm_gc_young_collection_latency_threshold_minor" {
 variable "jvm_gc_young_collection_latency_lasting_duration_minor" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "15m"
 }
 
 variable "jvm_gc_young_collection_latency_at_least_percentage_minor" {
@@ -1187,7 +1187,7 @@ variable "indexing_latency_threshold_major" {
 variable "indexing_latency_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "1h"
 }
 
 variable "indexing_latency_at_least_percentage_major" {
@@ -1204,7 +1204,7 @@ variable "indexing_latency_threshold_minor" {
 variable "indexing_latency_lasting_duration_minor" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "1h"
 }
 
 variable "indexing_latency_at_least_percentage_minor" {
@@ -1212,92 +1212,92 @@ variable "indexing_latency_at_least_percentage_minor" {
   type        = number
   default     = 1
 }
-# flushing_latency detector
+# flush_latency detector
 
-variable "flushing_latency_notifications" {
-  description = "Notification recipients list per severity overridden for flushing_latency detector"
+variable "flush_latency_notifications" {
+  description = "Notification recipients list per severity overridden for flush_latency detector"
   type        = map(list(string))
   default     = {}
 }
 
-variable "flushing_latency_aggregation_function" {
-  description = "Aggregation function and group by for flushing_latency detector (i.e. \".mean(by=['host'])\")"
+variable "flush_latency_aggregation_function" {
+  description = "Aggregation function and group by for flush_latency detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
 }
 
-variable "flushing_latency_transformation_function" {
-  description = "Transformation function for flushing_latency detector (i.e. \".mean(over='5m')\")"
+variable "flush_latency_transformation_function" {
+  description = "Transformation function for flush_latency detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".mean(over='15m')"
+  default     = ".mean(over='30m')"
 }
 
-variable "flushing_latency_max_delay" {
-  description = "Enforce max delay for flushing_latency detector (use \"0\" or \"null\" for \"Auto\")"
+variable "flush_latency_max_delay" {
+  description = "Enforce max delay for flush_latency detector (use \"0\" or \"null\" for \"Auto\")"
   type        = number
   default     = null
 }
 
-variable "flushing_latency_tip" {
+variable "flush_latency_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
   default     = ""
 }
 
-variable "flushing_latency_runbook_url" {
+variable "flush_latency_runbook_url" {
   description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
   type        = string
   default     = ""
 }
 
-variable "flushing_latency_disabled" {
-  description = "Disable all alerting rules for flushing_latency detector"
+variable "flush_latency_disabled" {
+  description = "Disable all alerting rules for flush_latency detector"
   type        = bool
   default     = null
 }
 
-variable "flushing_latency_disabled_major" {
-  description = "Disable major alerting rule for flushing_latency detector"
+variable "flush_latency_disabled_major" {
+  description = "Disable major alerting rule for flush_latency detector"
   type        = bool
   default     = null
 }
 
-variable "flushing_latency_disabled_minor" {
-  description = "Disable minor alerting rule for flushing_latency detector"
+variable "flush_latency_disabled_minor" {
+  description = "Disable minor alerting rule for flush_latency detector"
   type        = bool
   default     = null
 }
 
-variable "flushing_latency_threshold_major" {
-  description = "Major threshold for flushing_latency detector"
+variable "flush_latency_threshold_major" {
+  description = "Major threshold for flush_latency detector"
   type        = number
   default     = 150
 }
 
-variable "flushing_latency_lasting_duration_major" {
+variable "flush_latency_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "15m"
 }
 
-variable "flushing_latency_at_least_percentage_major" {
+variable "flush_latency_at_least_percentage_major" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1
 }
-variable "flushing_latency_threshold_minor" {
-  description = "Minor threshold for flushing_latency detector"
+variable "flush_latency_threshold_minor" {
+  description = "Minor threshold for flush_latency detector"
   type        = number
   default     = 100
 }
 
-variable "flushing_latency_lasting_duration_minor" {
+variable "flush_latency_lasting_duration_minor" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "15m"
 }
 
-variable "flushing_latency_at_least_percentage_minor" {
+variable "flush_latency_at_least_percentage_minor" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1
@@ -1367,7 +1367,7 @@ variable "search_latency_threshold_major" {
 variable "search_latency_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "30m"
 }
 
 variable "search_latency_at_least_percentage_major" {
@@ -1384,7 +1384,7 @@ variable "search_latency_threshold_minor" {
 variable "search_latency_lasting_duration_minor" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "30m"
 }
 
 variable "search_latency_at_least_percentage_minor" {
@@ -1457,7 +1457,7 @@ variable "fetch_latency_threshold_major" {
 variable "fetch_latency_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "15m"
 }
 
 variable "fetch_latency_at_least_percentage_major" {
@@ -1474,7 +1474,7 @@ variable "fetch_latency_threshold_minor" {
 variable "fetch_latency_lasting_duration_minor" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "15m"
 }
 
 variable "fetch_latency_at_least_percentage_minor" {
@@ -1547,7 +1547,7 @@ variable "field_data_evictions_change_threshold_major" {
 variable "field_data_evictions_change_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "15m"
 }
 
 variable "field_data_evictions_change_at_least_percentage_major" {
@@ -1564,7 +1564,7 @@ variable "field_data_evictions_change_threshold_minor" {
 variable "field_data_evictions_change_lasting_duration_minor" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "15m"
 }
 
 variable "field_data_evictions_change_at_least_percentage_minor" {
@@ -1637,7 +1637,7 @@ variable "task_time_in_queue_change_threshold_major" {
 variable "task_time_in_queue_change_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "15m"
 }
 
 variable "task_time_in_queue_change_at_least_percentage_major" {
@@ -1654,7 +1654,7 @@ variable "task_time_in_queue_change_threshold_minor" {
 variable "task_time_in_queue_change_lasting_duration_minor" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "15m"
 }
 
 variable "task_time_in_queue_change_at_least_percentage_minor" {
