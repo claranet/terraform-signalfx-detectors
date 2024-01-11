@@ -1312,7 +1312,8 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Zookeeper zookeeper-health|X|-|-|-|-|
-|Zookeeper zookeeper-latency|X|X|-|-|-|
+|Zookeeper cluster-latency|X|-|-|-|-|
+|Zookeeper server-latency|-|X|-|-|-|
 |Zookeeper heartbeat|X|-|-|-|-|
 |Zookeeper service health|X|-|-|-|-|
 |Zookeeper latency|X|X|-|-|-|
