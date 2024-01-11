@@ -1,7 +1,7 @@
 module: zookeeper
 name: cluster-latency
 transformation: false
-aggregation: ".mean(by='env')"
+aggregation: ".mean(by=['env', 'kubernetes_cluster'])"
 disabled: false
 
 signals:

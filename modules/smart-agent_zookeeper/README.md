@@ -81,8 +81,6 @@ This module creates the following SignalFx detectors which could contain one or 
 |Zookeeper cluster-latency|X|-|-|-|-|
 |Zookeeper server-latency|-|X|-|-|-|
 |Zookeeper heartbeat|X|-|-|-|-|
-|Zookeeper service health|X|-|-|-|-|
-|Zookeeper latency|X|X|-|-|-|
 |Zookeeper file descriptors usage|X|X|-|-|-|
 
 ## How to collect required metrics?

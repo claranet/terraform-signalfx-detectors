@@ -1315,8 +1315,6 @@
 |Zookeeper cluster-latency|X|-|-|-|-|
 |Zookeeper server-latency|-|X|-|-|-|
 |Zookeeper heartbeat|X|-|-|-|-|
-|Zookeeper service health|X|-|-|-|-|
-|Zookeeper latency|X|X|-|-|-|
 |Zookeeper file descriptors usage|X|X|-|-|-|
 
 

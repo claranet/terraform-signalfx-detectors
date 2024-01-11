@@ -64,7 +64,7 @@ variable "cluster-latency_notifications" {
 variable "cluster-latency_aggregation_function" {
   description = "Aggregation function and group by for cluster-latency detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by='env')"
+  default     = ".mean(by=['env', 'kubernetes_cluster'])"
 }
 
 variable "cluster-latency_max_delay" {
