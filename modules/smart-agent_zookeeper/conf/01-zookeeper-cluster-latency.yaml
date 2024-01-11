@@ -1,0 +1,17 @@
+module: zookeeper
+name: cluster-latency
+transformation: false
+aggregation: ".mean(by='env')"
+disabled: false
+
+signals:
+  signal:
+    metric: "gauge.zk_avg_latency"
+
+rules:
+  critical:
+    threshold: 300000
+    comparator: ">"
+    description: "Zookeeper global latency is too high"
+    lasting_duration: "5m"
+    latency_disabled: "false"
