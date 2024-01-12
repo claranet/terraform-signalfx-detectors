@@ -1,3 +1,8 @@
+output "cluster-health" {
+  description = "Detector resource for cluster-health"
+  value       = signalfx_detector.cluster-health
+}
+
 output "cluster-latency" {
   description = "Detector resource for cluster-latency"
   value       = signalfx_detector.cluster-latency
@@ -8,14 +13,14 @@ output "file_descriptors" {
   value       = signalfx_detector.file_descriptors
 }
 
-output "health" {
-  description = "Detector resource for health"
-  value       = signalfx_detector.health
-}
-
 output "heartbeat" {
   description = "Detector resource for heartbeat"
   value       = signalfx_detector.heartbeat
+}
+
+output "server-health" {
+  description = "Detector resource for server-health"
+  value       = signalfx_detector.server-health
 }
 
 output "server-latency" {

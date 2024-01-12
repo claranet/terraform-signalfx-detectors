@@ -1,6 +1,6 @@
 module: zookeeper
 name: cluster-latency
-aggregation: ".mean(by=['env', 'kubernetes_cluster'])"
+aggregation: ".mean(by=['kubernetes_cluster'])"
 disabled: false
 signals:
   signal:
@@ -9,6 +9,6 @@ rules:
   critical:
     threshold: 300000
     comparator: ">"
-    description: "Zookeeper global latency is too high"
+    description: "Zookeeper cluster latency is too high"
     lasting_duration: "5m"
     latency_disabled: "false"
