@@ -53,13 +53,13 @@ variable "cluster_status_notifications" {
 variable "cluster_status_aggregation_function" {
   description = "Aggregation function and group by for cluster_status detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".max(by=['cluster'])"
 }
 
 variable "cluster_status_transformation_function" {
   description = "Transformation function for cluster_status detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".mean(over='5m')"
+  default     = ""
 }
 
 variable "cluster_status_max_delay" {
@@ -143,13 +143,13 @@ variable "cluster_initializing_shards_notifications" {
 variable "cluster_initializing_shards_aggregation_function" {
   description = "Aggregation function and group by for cluster_initializing_shards detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".max(by=['cluster'])"
 }
 
 variable "cluster_initializing_shards_transformation_function" {
   description = "Transformation function for cluster_initializing_shards detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".min(over='15m')"
+  default     = ""
 }
 
 variable "cluster_initializing_shards_max_delay" {
@@ -233,13 +233,13 @@ variable "cluster_relocating_shards_notifications" {
 variable "cluster_relocating_shards_aggregation_function" {
   description = "Aggregation function and group by for cluster_relocating_shards detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".max(by=['cluster'])"
 }
 
 variable "cluster_relocating_shards_transformation_function" {
   description = "Transformation function for cluster_relocating_shards detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".min(over='15m')"
+  default     = ""
 }
 
 variable "cluster_relocating_shards_max_delay" {
@@ -266,18 +266,6 @@ variable "cluster_relocating_shards_disabled" {
   default     = null
 }
 
-variable "cluster_relocating_shards_disabled_critical" {
-  description = "Disable critical alerting rule for cluster_relocating_shards detector"
-  type        = bool
-  default     = null
-}
-
-variable "cluster_relocating_shards_disabled_major" {
-  description = "Disable major alerting rule for cluster_relocating_shards detector"
-  type        = bool
-  default     = true
-}
-
 variable "cluster_relocating_shards_threshold_critical" {
   description = "Critical threshold for cluster_relocating_shards detector"
   type        = number
@@ -295,23 +283,6 @@ variable "cluster_relocating_shards_at_least_percentage_critical" {
   type        = number
   default     = 1
 }
-variable "cluster_relocating_shards_threshold_major" {
-  description = "Major threshold for cluster_relocating_shards detector"
-  type        = number
-  default     = -1
-}
-
-variable "cluster_relocating_shards_lasting_duration_major" {
-  description = "Minimum duration that conditions must be true before raising alert"
-  type        = string
-  default     = "15m"
-}
-
-variable "cluster_relocating_shards_at_least_percentage_major" {
-  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
-  type        = number
-  default     = 1
-}
 # cluster_unassigned_shards detector
 
 variable "cluster_unassigned_shards_notifications" {
@@ -323,13 +294,13 @@ variable "cluster_unassigned_shards_notifications" {
 variable "cluster_unassigned_shards_aggregation_function" {
   description = "Aggregation function and group by for cluster_unassigned_shards detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".max(by=['cluster'])"
 }
 
 variable "cluster_unassigned_shards_transformation_function" {
   description = "Transformation function for cluster_unassigned_shards detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".min(over='10m')"
+  default     = ""
 }
 
 variable "cluster_unassigned_shards_max_delay" {
@@ -356,18 +327,6 @@ variable "cluster_unassigned_shards_disabled" {
   default     = null
 }
 
-variable "cluster_unassigned_shards_disabled_critical" {
-  description = "Disable critical alerting rule for cluster_unassigned_shards detector"
-  type        = bool
-  default     = null
-}
-
-variable "cluster_unassigned_shards_disabled_major" {
-  description = "Disable major alerting rule for cluster_unassigned_shards detector"
-  type        = bool
-  default     = true
-}
-
 variable "cluster_unassigned_shards_threshold_critical" {
   description = "Critical threshold for cluster_unassigned_shards detector"
   type        = number
@@ -385,23 +344,6 @@ variable "cluster_unassigned_shards_at_least_percentage_critical" {
   type        = number
   default     = 1
 }
-variable "cluster_unassigned_shards_threshold_major" {
-  description = "Major threshold for cluster_unassigned_shards detector"
-  type        = number
-  default     = -1
-}
-
-variable "cluster_unassigned_shards_lasting_duration_major" {
-  description = "Minimum duration that conditions must be true before raising alert"
-  type        = string
-  default     = "10m"
-}
-
-variable "cluster_unassigned_shards_at_least_percentage_major" {
-  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
-  type        = number
-  default     = 1
-}
 # pending_tasks detector
 
 variable "pending_tasks_notifications" {
@@ -413,13 +355,13 @@ variable "pending_tasks_notifications" {
 variable "pending_tasks_aggregation_function" {
   description = "Aggregation function and group by for pending_tasks detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".max(by=['cluster'])"
 }
 
 variable "pending_tasks_transformation_function" {
   description = "Transformation function for pending_tasks detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".min(over='15m')"
+  default     = ""
 }
 
 variable "pending_tasks_max_delay" {
@@ -503,13 +445,13 @@ variable "cpu_usage_notifications" {
 variable "cpu_usage_aggregation_function" {
   description = "Aggregation function and group by for cpu_usage detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".max(by=['cluster'])"
 }
 
 variable "cpu_usage_transformation_function" {
   description = "Transformation function for cpu_usage detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".min(over='30m')"
+  default     = ""
 }
 
 variable "cpu_usage_max_delay" {
@@ -593,13 +535,13 @@ variable "file_descriptors_notifications" {
 variable "file_descriptors_aggregation_function" {
   description = "Aggregation function and group by for file_descriptors detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".max(by=['cluster'])"
 }
 
 variable "file_descriptors_transformation_function" {
   description = "Transformation function for file_descriptors detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".max(over='15m')"
+  default     = ""
 }
 
 variable "file_descriptors_max_delay" {
@@ -683,13 +625,13 @@ variable "jvm_heap_memory_usage_notifications" {
 variable "jvm_heap_memory_usage_aggregation_function" {
   description = "Aggregation function and group by for jvm_heap_memory_usage detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".max(by=['cluster'])"
 }
 
 variable "jvm_heap_memory_usage_transformation_function" {
   description = "Transformation function for jvm_heap_memory_usage detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".mean(over='5m')"
+  default     = ""
 }
 
 variable "jvm_heap_memory_usage_max_delay" {
@@ -773,13 +715,13 @@ variable "jvm_memory_young_usage_notifications" {
 variable "jvm_memory_young_usage_aggregation_function" {
   description = "Aggregation function and group by for jvm_memory_young_usage detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".max(by=['cluster'])"
 }
 
 variable "jvm_memory_young_usage_transformation_function" {
   description = "Transformation function for jvm_memory_young_usage detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".mean(over='10m')"
+  default     = ""
 }
 
 variable "jvm_memory_young_usage_max_delay" {
@@ -863,13 +805,13 @@ variable "jvm_memory_old_usage_notifications" {
 variable "jvm_memory_old_usage_aggregation_function" {
   description = "Aggregation function and group by for jvm_memory_old_usage detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".max(by=['cluster'])"
 }
 
 variable "jvm_memory_old_usage_transformation_function" {
   description = "Transformation function for jvm_memory_old_usage detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".mean(over='10m')"
+  default     = ""
 }
 
 variable "jvm_memory_old_usage_max_delay" {
@@ -953,13 +895,13 @@ variable "jvm_gc_old_collection_latency_notifications" {
 variable "jvm_gc_old_collection_latency_aggregation_function" {
   description = "Aggregation function and group by for jvm_gc_old_collection_latency detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".max(by=['cluster'])"
 }
 
 variable "jvm_gc_old_collection_latency_transformation_function" {
   description = "Transformation function for jvm_gc_old_collection_latency detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".mean(over='15m')"
+  default     = ""
 }
 
 variable "jvm_gc_old_collection_latency_max_delay" {
@@ -1043,13 +985,13 @@ variable "jvm_gc_young_collection_latency_notifications" {
 variable "jvm_gc_young_collection_latency_aggregation_function" {
   description = "Aggregation function and group by for jvm_gc_young_collection_latency detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".max(by=['cluster'])"
 }
 
 variable "jvm_gc_young_collection_latency_transformation_function" {
   description = "Transformation function for jvm_gc_young_collection_latency detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".mean(over='15m')"
+  default     = ""
 }
 
 variable "jvm_gc_young_collection_latency_max_delay" {
@@ -1133,13 +1075,13 @@ variable "indexing_latency_notifications" {
 variable "indexing_latency_aggregation_function" {
   description = "Aggregation function and group by for indexing_latency detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".max(by=['cluster'])"
 }
 
 variable "indexing_latency_transformation_function" {
   description = "Transformation function for indexing_latency detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".mean(over='15m')"
+  default     = ""
 }
 
 variable "indexing_latency_max_delay" {
@@ -1223,13 +1165,13 @@ variable "flush_latency_notifications" {
 variable "flush_latency_aggregation_function" {
   description = "Aggregation function and group by for flush_latency detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".max(by=['cluster'])"
 }
 
 variable "flush_latency_transformation_function" {
   description = "Transformation function for flush_latency detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".mean(over='30m')"
+  default     = ""
 }
 
 variable "flush_latency_max_delay" {
@@ -1313,13 +1255,13 @@ variable "search_latency_notifications" {
 variable "search_latency_aggregation_function" {
   description = "Aggregation function and group by for search_latency detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".max(by=['cluster'])"
 }
 
 variable "search_latency_transformation_function" {
   description = "Transformation function for search_latency detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".min(over='30m')"
+  default     = ""
 }
 
 variable "search_latency_max_delay" {
@@ -1403,13 +1345,13 @@ variable "fetch_latency_notifications" {
 variable "fetch_latency_aggregation_function" {
   description = "Aggregation function and group by for fetch_latency detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".max(by=['cluster'])"
 }
 
 variable "fetch_latency_transformation_function" {
   description = "Transformation function for fetch_latency detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".min(over='15m')"
+  default     = ""
 }
 
 variable "fetch_latency_max_delay" {
@@ -1493,13 +1435,13 @@ variable "field_data_evictions_change_notifications" {
 variable "field_data_evictions_change_aggregation_function" {
   description = "Aggregation function and group by for field_data_evictions_change detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".max(by=['cluster'])"
 }
 
 variable "field_data_evictions_change_transformation_function" {
   description = "Transformation function for field_data_evictions_change detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".mean(over='15m')"
+  default     = ""
 }
 
 variable "field_data_evictions_change_max_delay" {
@@ -1583,13 +1525,13 @@ variable "task_time_in_queue_change_notifications" {
 variable "task_time_in_queue_change_aggregation_function" {
   description = "Aggregation function and group by for task_time_in_queue_change detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".max(by=['cluster'])"
 }
 
 variable "task_time_in_queue_change_transformation_function" {
   description = "Transformation function for task_time_in_queue_change detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".mean(over='15m')"
+  default     = ""
 }
 
 variable "task_time_in_queue_change_max_delay" {

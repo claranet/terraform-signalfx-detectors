@@ -1,7 +1,6 @@
 module: ElasticSearch
 name: "fetch latency"
-aggregation: true
-transformation: ".min(over='15m')"
+aggregation: ".max(by=['cluster'])"
 filtering: "filter('node_name', '*') and filter('plugin', 'elasticsearch')"
 signals:
     A:
@@ -17,7 +16,7 @@ signals:
 rules:
   major:
     threshold: 20
-    comparator: ">"
+    comparator: ">="
     description: "is too high"
     lasting_duration: '15m'    
   minor:

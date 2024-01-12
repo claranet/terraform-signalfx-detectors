@@ -978,8 +978,8 @@
 |Elasticsearch heartbeat|X|-|-|-|-|
 |ElasticSearch cluster status|X|X|-|-|-|
 |ElasticSearch cluster initializing shards|X|X|-|-|-|
-|ElasticSearch cluster relocating shards|X|X|-|-|-|
-|ElasticSearch cluster unassigned shards|X|X|-|-|-|
+|ElasticSearch cluster relocating shards|X|-|-|-|-|
+|ElasticSearch cluster unassigned shards|X|-|-|-|-|
 |ElasticSearch pending tasks|X|X|-|-|-|
 |ElasticSearch cpu usage|X|X|-|-|-|
 |ElasticSearch file descriptors|X|X|-|-|-|

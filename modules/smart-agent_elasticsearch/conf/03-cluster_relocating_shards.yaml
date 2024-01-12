@@ -1,7 +1,6 @@
 module: ElasticSearch
 name: "cluster relocating shards"
-aggregation: true
-transformation: ".min(over='15m')"
+aggregation: ".max(by=['cluster'])"
 filtering: "filter('plugin', 'elasticsearch')"
 signals:
   signal:
@@ -13,10 +12,3 @@ rules:
     comparator: ">"
     description: "is too high"
     lasting_duration: '15m'
-  major:
-    threshold: -1
-    comparator: ">"
-    dependency: critical
-    description: "is too high"
-    lasting_duration: '15m'
-    disabled: true

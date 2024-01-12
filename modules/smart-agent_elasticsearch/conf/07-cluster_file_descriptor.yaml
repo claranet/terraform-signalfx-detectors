@@ -1,7 +1,6 @@
 module: ElasticSearch
 name: "file descriptors"
-aggregation: true
-transformation: ".max(over='15m')"
+aggregation: ".max(by=['cluster'])"
 filtering: "filter('node_name', '*') and filter('plugin', 'elasticsearch')"
 signals:
     A:
@@ -15,7 +14,7 @@ signals:
 rules:
   critical:
     threshold: 95
-    comparator: ">"
+    comparator: ">="
     description: "is too high"
     lasting_duration: '15m'    
   major:

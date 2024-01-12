@@ -1,7 +1,6 @@
 module: ElasticSearch
 name: "cluster unassigned shards"
-aggregation: true
-transformation: ".min(over='10m')"
+aggregation: ".max(by=['cluster'])"
 filtering: "filter('plugin', 'elasticsearch')"
 signals:
   signal:
@@ -12,11 +11,4 @@ rules:
     threshold: 0
     comparator: ">"
     description: "is too high"
-    lasting_duration: '10m'    
-  major:
-    threshold: -1
-    comparator: ">"
-    dependency: critical
-    description: "is too high"
-    lasting_duration: '10m'    
-    disabled: true
+    lasting_duration: '10m'
