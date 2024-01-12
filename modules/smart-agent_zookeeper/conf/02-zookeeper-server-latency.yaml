@@ -1,18 +1,14 @@
-
 module: zookeeper
 name: server-latency
-transformation: false
 aggregation: false
 disabled: false
-
 signals:
   signal:
     metric: "gauge.zk_avg_latency"
-
 rules:
-   major:
-     threshold: 250000
-     comparator: ">"
-     description: "Zookeeper latency is too high"
-     lasting_duration: "5m"
-     latency_disabled: "false"
+  major:
+    threshold: 250000
+    comparator: ">"
+    description: "Zookeeper server latency is too high"
+    lasting_duration: "5m"
+    latency_disabled: "false"

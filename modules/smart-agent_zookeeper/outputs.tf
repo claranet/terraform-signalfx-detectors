@@ -8,6 +8,11 @@ output "file_descriptors" {
   value       = signalfx_detector.file_descriptors
 }
 
+output "health" {
+  description = "Detector resource for health"
+  value       = signalfx_detector.health
+}
+
 output "heartbeat" {
   description = "Detector resource for heartbeat"
   value       = signalfx_detector.heartbeat
@@ -16,10 +21,5 @@ output "heartbeat" {
 output "server-latency" {
   description = "Detector resource for server-latency"
   value       = signalfx_detector.server-latency
-}
-
-output "zookeeper-health" {
-  description = "Detector resource for zookeeper-health"
-  value       = signalfx_detector.zookeeper-health
 }
 

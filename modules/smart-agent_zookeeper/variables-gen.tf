@@ -1,54 +1,60 @@
-# zookeeper-health detector
+# health detector
 
-variable "zookeeper-health_notifications" {
-  description = "Notification recipients list per severity overridden for zookeeper-health detector"
+variable "health_notifications" {
+  description = "Notification recipients list per severity overridden for health detector"
   type        = map(list(string))
   default     = {}
 }
 
-variable "zookeeper-health_aggregation_function" {
-  description = "Aggregation function and group by for zookeeper-health detector (i.e. \".mean(by=['host'])\")"
+variable "health_aggregation_function" {
+  description = "Aggregation function and group by for health detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
 }
 
-variable "zookeeper-health_max_delay" {
-  description = "Enforce max delay for zookeeper-health detector (use \"0\" or \"null\" for \"Auto\")"
+variable "health_transformation_function" {
+  description = "Transformation function for health detector (i.e. \".mean(over='5m')\")"
+  type        = string
+  default     = ""
+}
+
+variable "health_max_delay" {
+  description = "Enforce max delay for health detector (use \"0\" or \"null\" for \"Auto\")"
   type        = number
   default     = null
 }
 
-variable "zookeeper-health_tip" {
+variable "health_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
   default     = ""
 }
 
-variable "zookeeper-health_runbook_url" {
+variable "health_runbook_url" {
   description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
   type        = string
   default     = ""
 }
 
-variable "zookeeper-health_disabled" {
-  description = "Disable all alerting rules for zookeeper-health detector"
+variable "health_disabled" {
+  description = "Disable all alerting rules for health detector"
   type        = bool
   default     = null
 }
 
-variable "zookeeper-health_threshold_critical" {
-  description = "Critical threshold for zookeeper-health detector"
+variable "health_threshold_critical" {
+  description = "Critical threshold for health detector"
   type        = number
   default     = 1
 }
 
-variable "zookeeper-health_lasting_duration_critical" {
+variable "health_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
   default     = "5m"
 }
 
-variable "zookeeper-health_at_least_percentage_critical" {
+variable "health_at_least_percentage_critical" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1
@@ -65,6 +71,12 @@ variable "cluster-latency_aggregation_function" {
   description = "Aggregation function and group by for cluster-latency detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ".mean(by=['env', 'kubernetes_cluster'])"
+}
+
+variable "cluster-latency_transformation_function" {
+  description = "Transformation function for cluster-latency detector (i.e. \".mean(over='5m')\")"
+  type        = string
+  default     = ""
 }
 
 variable "cluster-latency_max_delay" {
@@ -114,6 +126,12 @@ variable "server-latency_notifications" {
   description = "Notification recipients list per severity overridden for server-latency detector"
   type        = map(list(string))
   default     = {}
+}
+
+variable "server-latency_transformation_function" {
+  description = "Transformation function for server-latency detector (i.e. \".mean(over='5m')\")"
+  type        = string
+  default     = ""
 }
 
 variable "server-latency_max_delay" {

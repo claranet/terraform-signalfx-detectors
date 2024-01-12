@@ -1,13 +1,10 @@
 module: zookeeper
 name: cluster-latency
-transformation: false
 aggregation: ".mean(by=['env', 'kubernetes_cluster'])"
 disabled: false
-
 signals:
   signal:
     metric: "gauge.zk_avg_latency"
-
 rules:
   critical:
     threshold: 300000
