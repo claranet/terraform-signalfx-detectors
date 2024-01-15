@@ -7,8 +7,8 @@ signals:
     metric: "gauge.zk_service_health"
 rules:
   critical:
-    threshold: 1
-    comparator: "!="
+    threshold: 0
+    comparator: "=="
     description: "Zookeeper cluster is not running"
     lasting_duration: "5m"
     health_disabled: "false"

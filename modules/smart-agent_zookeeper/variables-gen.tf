@@ -100,7 +100,7 @@ variable "cluster-health_disabled" {
 variable "cluster-health_threshold_critical" {
   description = "Critical threshold for cluster-health detector"
   type        = number
-  default     = 1
+  default     = 0
 }
 
 variable "cluster-health_lasting_duration_critical" {

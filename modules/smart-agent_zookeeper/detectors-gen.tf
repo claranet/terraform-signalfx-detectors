@@ -34,11 +34,11 @@ resource "signalfx_detector" "cluster-health" {
 
   program_text = <<-EOF
     signal = data('gauge.zk_service_health', filter=${module.filtering.signalflow})${var.cluster-health_aggregation_function}${var.cluster-health_transformation_function}.publish('signal')
-    detect(when(signal != ${var.cluster-health_threshold_critical}, lasting=%{if var.cluster-health_lasting_duration_critical == null}None%{else}'${var.cluster-health_lasting_duration_critical}'%{endif}, at_least=${var.cluster-health_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal == ${var.cluster-health_threshold_critical}, lasting=%{if var.cluster-health_lasting_duration_critical == null}None%{else}'${var.cluster-health_lasting_duration_critical}'%{endif}, at_least=${var.cluster-health_at_least_percentage_critical})).publish('CRIT')
 EOF
 
   rule {
-    description           = "Zookeeper cluster is not running != ${var.cluster-health_threshold_critical}"
+    description           = "Zookeeper cluster is not running == ${var.cluster-health_threshold_critical}"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.cluster-health_disabled, var.detectors_disabled)
