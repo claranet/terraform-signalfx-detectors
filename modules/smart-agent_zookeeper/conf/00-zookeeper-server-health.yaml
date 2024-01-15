@@ -1,6 +1,7 @@
 module: zookeeper
 name: server-health
 disabled: false
+aggregation: false
 signals:
   signal:
     metric: "gauge.zk_service_health"

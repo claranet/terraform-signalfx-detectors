@@ -6,7 +6,7 @@ resource "signalfx_detector" "server-health" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('gauge.zk_service_health', filter=${module.filtering.signalflow})${var.server-health_aggregation_function}${var.server-health_transformation_function}.publish('signal')
+    signal = data('gauge.zk_service_health', filter=${module.filtering.signalflow})${var.server-health_transformation_function}.publish('signal')
     detect(when(signal != ${var.server-health_threshold_major}, lasting=%{if var.server-health_lasting_duration_major == null}None%{else}'${var.server-health_lasting_duration_major}'%{endif}, at_least=${var.server-health_at_least_percentage_major})).publish('MAJOR')
 EOF
 

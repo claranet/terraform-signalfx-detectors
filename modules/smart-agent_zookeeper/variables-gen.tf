@@ -6,12 +6,6 @@ variable "server-health_notifications" {
   default     = {}
 }
 
-variable "server-health_aggregation_function" {
-  description = "Aggregation function and group by for server-health detector (i.e. \".mean(by=['host'])\")"
-  type        = string
-  default     = ""
-}
-
 variable "server-health_transformation_function" {
   description = "Transformation function for server-health detector (i.e. \".mean(over='5m')\")"
   type        = string
