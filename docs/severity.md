@@ -446,7 +446,7 @@
 |Azure Application Gateway 5xx error rate|X|X|-|-|-|
 |Azure Application Gateway backend 4xx error rate|X|X|-|-|-|
 |Azure Application Gateway backend 5xx error rate|X|X|-|-|-|
-|Azure Application Gateway capacity units|-|X|-|-|-|
+|Azure Application Gateway compute units|-|X|-|-|-|
 
 
 ## integration_azure-azure-search
