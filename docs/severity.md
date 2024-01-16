@@ -575,6 +575,7 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Azure Load Balancer heartbeat|X|-|-|-|-|
+|Azure Load Balancer backend unhealthy host ratio|X|X|-|-|-|
 
 
 ## integration_azure-mariadb
