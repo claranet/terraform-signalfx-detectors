@@ -1,0 +1,22 @@
+module: "ElasticSearch"
+name: "Cpu usage"
+id: "cpu_usage"
+
+transformation: ".min(over='30m')"
+aggregation: true
+filtering: "filter('plugin', 'elasticsearch') and filter('node_name', '*')"
+
+signals:
+  signal:
+    metric: "elasticsearch.process.cpu.percent"
+    rollup: "average"
+
+rules:
+  critical:
+    threshold: 95
+    comparator: ">"
+    
+  major:
+    threshold: 85
+    comparator: ">"
+    dependency: "critical"

@@ -1,0 +1,17 @@
+module: "NTP"
+name: "Offset"
+id: "ntp"
+
+transformation: ".min(over='5m')"
+aggregation: true
+
+
+signals:
+  signal:
+    metric: "ntp.offset_seconds"
+
+rules:
+  major:
+    threshold: 1500
+    comparator: ">"
+    

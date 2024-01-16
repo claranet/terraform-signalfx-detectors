@@ -1,0 +1,13 @@
+module: "Zookeeper"
+name: "heartbeat"
+
+transformation: true
+aggregation: true
+filtering: "filter('plugin', 'zookeeper')"
+exclude_not_running_vm: true
+
+signals:
+  signal:
+    metric: "gauge.zk_max_file_descriptor_count"
+rules:
+  critical:

@@ -1,0 +1,13 @@
+module: AWS ECS Service
+name: heartbeat
+
+transformation: false
+aggregation: ".mean(by=['ServiceName'])"
+filtering: "filter('namespace', 'AWS/ECS')"
+
+signals:
+  signal:
+    metric: CPUUtilization
+    filter: "filter('stat', 'mean')"
+rules:
+  critical:

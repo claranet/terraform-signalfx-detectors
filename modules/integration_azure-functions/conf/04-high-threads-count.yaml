@@ -1,0 +1,22 @@
+module: Azure Functions
+name: Thread count
+id: high_threads_count
+
+aggregation: ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+filtering: "filter('resource_type', 'Microsoft.Web/sites') and filter('is_Azure_Function', 'true') and filter('primary_aggregation_type', 'true')"
+
+signals:
+  signal:
+    metric: Threads
+    extrapolation: last_value
+
+rules:
+  critical:
+    threshold: 510
+    comparator: ">"
+    lasting_duration: "5m"
+  major:
+    threshold: 490
+    comparator: ">"
+    lasting_duration: "5m"
+    dependency: critical

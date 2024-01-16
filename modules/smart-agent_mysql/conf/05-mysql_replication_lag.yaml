@@ -1,0 +1,22 @@
+module: "MySQL"
+name: "Replication lag"
+id: "mysql_replication_lag"
+
+transformation: ".min(over='15m')"
+aggregation: true
+
+
+signals:
+  signal:
+    metric: "mysql_seconds_behind_master"
+    rollup: "average"
+
+rules:
+  critical:
+    threshold: 200
+    comparator: ">"
+    
+  major:
+    threshold: 100
+    comparator: ">"
+    dependency: "critical"

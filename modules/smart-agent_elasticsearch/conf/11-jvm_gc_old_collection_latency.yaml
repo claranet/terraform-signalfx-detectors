@@ -1,0 +1,29 @@
+module: "ElasticSearch"
+name: "Old-generation garbage collections latency"
+id: "jvm_gc_old_collection_latency"
+
+transformation: ".mean(over='15m')"
+aggregation: true
+filtering: "filter('plugin', 'elasticsearch') and filter('node_name', '*')"
+
+signals:
+  A:
+    metric: "elasticsearch.jvm.gc.old-time"
+    rollup: "delta"
+    extrapolation: "zero"
+  B:
+    metric: "elasticsearch.jvm.gc.old-count"
+    rollup: "delta"
+    extrapolation: "zero"
+  signal:
+    formula: "(A/B).fill(0)"
+
+rules:
+  major:
+    threshold: 300
+    comparator: ">"
+    
+  minor:
+    threshold: 200
+    comparator: ">"
+    dependency: "major"

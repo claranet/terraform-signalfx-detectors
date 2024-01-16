@@ -1,0 +1,28 @@
+module: "Azure Stream Analytics"
+name: "Failed function requests rate"
+id: "failed_function_requests"
+
+transformation: true
+aggregation: ".mean(by=['logicalname', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+filtering: "filter('resource_type', 'Microsoft.StreamAnalytics/streamingjobs') and filter('primary_aggregation_type', 'true')"
+
+signals:
+  A:
+    metric: "AMLCalloutFailedRequests"
+    extrapolation: "zero"
+  B:
+    metric: "AMLCalloutRequests"
+    extrapolation: "zero"
+  signal:
+    formula: "(A/B).scale(100).fill(0)"
+
+rules:
+  critical:
+    threshold: 10
+    comparator: ">"
+    lasting_duration: "5m"
+  major:
+    threshold: 0
+    comparator: ">"
+    lasting_duration: "5m"
+    dependency: "critical"

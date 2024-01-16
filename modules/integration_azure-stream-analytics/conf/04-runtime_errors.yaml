@@ -1,0 +1,22 @@
+module: "Azure Stream Analytics"
+name: "Runtime errors rate"
+id: "runtime_errors"
+
+transformation: true
+aggregation: ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+filtering: "filter('resource_type', 'Microsoft.StreamAnalytics/streamingjobs') and filter('primary_aggregation_type', 'true')"
+
+signals:
+  signal:
+    metric: "Errors"
+
+rules:
+  critical:
+    threshold: 10
+    comparator: ">"
+    lasting_duration: "5m"
+  major:
+    threshold: 0
+    comparator: ">"
+    lasting_duration: "5m"
+    dependency: "critical"

@@ -1,0 +1,22 @@
+module: "ElasticSearch"
+name: "Cluster relocating shards"
+id: "cluster_relocating_shards"
+
+transformation: ".min(over='15m')"
+aggregation: true
+filtering: "filter('plugin', 'elasticsearch')"
+
+signals:
+  signal:
+    metric: "elasticsearch.cluster.relocating-shards"
+    rollup: "average"
+
+rules:
+  critical:
+    threshold: 0
+    comparator: ">"
+    
+  major:
+    threshold: -1
+    comparator: ">"
+    dependency: "critical"

@@ -61,7 +61,7 @@ Note the following parameters:
 
 These 3 parameters along with all variables defined in [common-variables.tf](common-variables.tf) are common to all
 [modules](../) in this repository. Other variables, specific to this module, are available in
-[variables.tf](variables.tf).
+[variables-gen.tf](variables-gen.tf).
 In general, the default configuration "works" but all of these Terraform
 [variables](https://www.terraform.io/language/values/variables) make it possible to
 customize the detectors behavior to better fit your needs.
@@ -201,4 +201,4 @@ with agent version prior `5.5.5`.
 * [Terraform SignalFx detector](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector)
 * [Splunk Observability integrations](https://docs.splunk.com/Observability/gdi/get-data-in/integrations.html)
 * [Smart Agent monitor](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/prometheus-velero.md)
-* [Splunk Observability integration](https://docs.splunk.com/Observability/gdi/velero/prometheus-velero.html)
+* [Splunk Observability integration](https://docs.splunk.com/observability/en/gdi/monitors-prometheus/prometheus-velero.html)

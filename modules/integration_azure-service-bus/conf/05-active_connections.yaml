@@ -1,0 +1,18 @@
+module: "Azure Service Bus"
+name: "No active connections"
+id: "active_connections"
+
+transformation: true
+aggregation: ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+filtering: "filter('resource_type', 'Microsoft.ServiceBus/namespaces') and filter('primary_aggregation_type', 'true')"
+
+signals:
+  signal:
+    metric: "ActiveConnections"
+
+rules:
+  critical:
+    threshold: 1
+    comparator: "<"
+    lasting_duration: "5m"
+    

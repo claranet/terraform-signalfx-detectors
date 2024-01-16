@@ -1,0 +1,27 @@
+module: "Kong"
+name: "Treatment limit"
+id: "treatment_limit"
+
+transformation: ".min(over='15m')"
+aggregation: true
+
+
+signals:
+  A:
+    metric: "kong_nginx_http_current_connections"
+    filter: "filter('state', 'handled')"
+  B:
+    metric: "kong_nginx_http_current_connections"
+    filter: "filter('state', 'accepted')"
+  signal:
+    formula: "((A-B)/A).scale(100)"
+
+rules:
+  critical:
+    threshold: 20
+    comparator: ">"
+    
+  major:
+    threshold: 0
+    comparator: ">"
+    dependency: "critical"

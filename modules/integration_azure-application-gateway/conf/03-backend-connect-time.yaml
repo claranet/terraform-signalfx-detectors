@@ -1,0 +1,21 @@
+module: "Azure Application Gateway"
+name: Backend connect time
+id: backend_connect_time
+
+aggregation: ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region', 'backendhttpsetting', 'backendpool', 'backendserver'])"
+filtering: "filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true')"
+
+signals:
+  signal:
+    metric: BackendConnectTime
+
+rules:
+  critical:
+    threshold: 50
+    comparator: ">"
+    lasting_duration: "5m"
+  major:
+    threshold: 40
+    comparator: ">"
+    lasting_duration: "5m"
+    dependency: critical

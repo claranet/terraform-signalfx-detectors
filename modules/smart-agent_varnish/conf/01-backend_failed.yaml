@@ -1,0 +1,18 @@
+module: "Varnish"
+name: "Backend failed"
+id: "backend_failed"
+
+transformation: ".min(over='5m')"
+aggregation: true
+filtering: "filter('plugin', 'telegraf/varnish')"
+
+signals:
+  signal:
+    metric: "varnish.backend_fail"
+    rollup: "delta"
+
+rules:
+  critical:
+    threshold: 0
+    comparator: ">"
+    

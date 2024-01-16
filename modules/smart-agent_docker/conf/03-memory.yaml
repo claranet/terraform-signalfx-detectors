@@ -1,0 +1,25 @@
+module: "Docker"
+name: "Memory usage"
+id: "memory"
+
+transformation: ".min(over='15m')"
+aggregation: true
+filtering: "filter('plugin', 'docker')"
+
+signals:
+  A:
+    metric: "memory.usage.total"
+  B:
+    metric: "memory.usage.limit"
+  signal:
+    formula: "(A/B).scale(100)"
+
+rules:
+  major:
+    threshold: 95
+    comparator: ">"
+    
+  minor:
+    threshold: 90
+    comparator: ">"
+    dependency: "major"

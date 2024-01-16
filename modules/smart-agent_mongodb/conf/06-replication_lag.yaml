@@ -1,0 +1,21 @@
+module: "MongoDB"
+name: "Replication lag"
+id: "replication_lag"
+
+transformation: ".mean(over='15m')"
+aggregation: true
+
+
+signals:
+  signal:
+    metric: "gauge.repl.max_lag"
+
+rules:
+  critical:
+    threshold: 10
+    comparator: ">"
+    
+  major:
+    threshold: 3
+    comparator: ">"
+    dependency: "critical"

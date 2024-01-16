@@ -1,0 +1,22 @@
+module: "PostgreSQL"
+name: "Number of connections compared to max"
+id: "max_connections"
+
+transformation: ".scale(100).min(over='1m')"
+aggregation: true
+
+
+signals:
+  signal:
+    metric: "postgres_pct_connections"
+    rollup: "average"
+
+rules:
+  critical:
+    threshold: 90
+    comparator: ">"
+    
+  major:
+    threshold: 80
+    comparator: ">"
+    dependency: "critical"

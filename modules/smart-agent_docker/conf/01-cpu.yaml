@@ -1,0 +1,21 @@
+module: "Docker"
+name: "Container usage of cpu host"
+id: "cpu"
+
+transformation: ".min(over='1h')"
+aggregation: true
+filtering: "filter('plugin', 'docker')"
+
+signals:
+  signal:
+    metric: "cpu.percent"
+
+rules:
+  major:
+    threshold: 75
+    comparator: ">"
+    
+  minor:
+    threshold: 50
+    comparator: ">"
+    dependency: "major"

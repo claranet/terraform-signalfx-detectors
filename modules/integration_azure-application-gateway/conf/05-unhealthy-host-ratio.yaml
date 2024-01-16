@@ -1,0 +1,26 @@
+module: "Azure Application Gateway"
+name: Backend unhealthy host ratio
+id: unhealthy_host_ratio
+
+aggregation: ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region', 'backendsettingspool'])"
+filtering: "filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true')"
+value_unit: "%"
+
+signals:
+  error_stream:
+    metric: UnhealthyHostCount
+  ok_stream:
+    metric: HealthyHostCount
+  signal:
+    formula: "(error_stream / (ok_stream + error_stream)).scale(100)"
+
+rules:
+  critical:
+    threshold: 75
+    comparator: ">="
+    lasting_duration: "5m"
+  major:
+    threshold: 50
+    comparator: ">="
+    lasting_duration: "5m"
+    dependency: critical

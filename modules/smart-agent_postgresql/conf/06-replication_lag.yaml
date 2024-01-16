@@ -1,0 +1,22 @@
+module: "PostgreSQL"
+name: "Replication lag"
+id: "replication_lag"
+
+transformation: ".min(over='5m')"
+aggregation: true
+filtering: "filter('replication_role', 'standby')"
+
+signals:
+  signal:
+    metric: "postgres_replication_lag"
+    rollup: "average"
+
+rules:
+  critical:
+    threshold: 200
+    comparator: ">"
+    
+  major:
+    threshold: 100
+    comparator: ">"
+    dependency: "critical"

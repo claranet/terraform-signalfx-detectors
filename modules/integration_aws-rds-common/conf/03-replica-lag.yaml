@@ -1,0 +1,21 @@
+module: AWS RDS Common
+name: "Replica lag"
+
+transformation: true
+aggregation: ".min(over='5m')"
+
+filtering: "filter('namespace', 'AWS/RDS')"
+
+signals:
+  signal:
+    metric: ReplicaLag
+    filter: "filter('stat', 'mean') and filter('DBInstanceIdentifier', '*')"
+
+rules:
+  critical:
+    threshold: 300
+    comparator: ">"
+  major:
+    threshold: 200
+    comparator: ">"
+    dependency: critical

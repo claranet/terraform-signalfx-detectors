@@ -58,7 +58,7 @@ Note the following parameters:
 
 These 3 parameters along with all variables defined in [common-variables.tf](common-variables.tf) are common to all
 [modules](../) in this repository. Other variables, specific to this module, are available in
-[variables.tf](variables.tf) and [variables-gen.tf](variables-gen.tf).
+[variables-gen.tf](variables-gen.tf).
 In general, the default configuration "works" but all of these Terraform
 [variables](https://www.terraform.io/language/values/variables) make it possible to
 customize the detectors behavior to better fit your needs.
@@ -77,6 +77,7 @@ This module creates the following SignalFx detectors which could contain one or 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Azure Application Gateway heartbeat|X|-|-|-|-|
+|Azure Application Gateway compute units|-|X|-|-|-|
 |Azure Application Gateway has no request|X|-|-|-|-|
 |Azure Application Gateway backend connect time|X|X|-|-|-|
 |Azure Application Gateway failed request rate|X|X|-|-|-|
@@ -85,7 +86,6 @@ This module creates the following SignalFx detectors which could contain one or 
 |Azure Application Gateway 5xx error rate|X|X|-|-|-|
 |Azure Application Gateway backend 4xx error rate|X|X|-|-|-|
 |Azure Application Gateway backend 5xx error rate|X|X|-|-|-|
-|Azure Application Gateway compute units|-|X|-|-|-|
 
 ## How to collect required metrics?
 

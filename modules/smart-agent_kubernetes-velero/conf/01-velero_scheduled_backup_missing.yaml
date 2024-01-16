@@ -1,0 +1,19 @@
+module: "Kubernetes velero"
+name: "Successful backup"
+id: "velero_scheduled_backup_missing"
+
+transformation: ".sum(over='1d')"
+aggregation: ".sum(by=['kubernetes_cluster', 'schedule'])"
+filtering: "filter('schedule', '*')"
+
+signals:
+  signal:
+    metric: "velero_backup_success_total"
+    rollup: "delta"
+    extrapolation: "zero"
+
+rules:
+  major:
+    threshold: 1
+    comparator: "<"
+    

@@ -1,0 +1,13 @@
+module: AWS RDS Common
+name: heartbeat
+
+transformation: false
+aggregation: ".mean(by=['DBInstanceIdentifier'])"
+filtering: "filter('namespace', 'AWS/RDS')"
+
+signals:
+  signal:
+    metric: CPUUtilization
+    filter: "filter('stat', 'mean')"
+rules:
+  critical:

@@ -1,0 +1,13 @@
+module: "Azure Application Gateway"
+name: heartbeat
+
+transformation: true
+aggregation: ".mean(by=['subscription_id'])"
+
+filtering: "filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true')"
+
+signals:
+  signal:
+    metric: "Throughput"
+rules:
+  critical:

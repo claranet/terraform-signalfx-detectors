@@ -1,0 +1,27 @@
+module: "MySQL"
+name: "Innodb buffer pool utilization"
+id: "mysql_pool_utilization"
+
+transformation: ".min(over='1h')"
+aggregation: true
+filtering: "filter('plugin', 'mysql')"
+
+signals:
+  A:
+    metric: "mysql_bpool_pages.free"
+    rollup: "average"
+  B:
+    metric: "mysql_bpool_pages.total"
+    rollup: "average"
+  signal:
+    formula: "((B-A)/B).scale(100)"
+
+rules:
+  minor:
+    threshold: 95
+    comparator: ">"
+    
+  warning:
+    threshold: 80
+    comparator: ">"
+    dependency: "minor"

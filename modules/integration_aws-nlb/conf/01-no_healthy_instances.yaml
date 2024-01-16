@@ -1,0 +1,27 @@
+module: "AWS NLB"
+name: "Healthy instances percentage"
+id: "no_healthy_instances"
+
+transformation: ".min(over='5m')"
+aggregation: true
+filtering: "filter('namespace', 'AWS/NetworkELB') and (not filter('AvailabilityZone', '*'))"
+
+signals:
+  A:
+    metric: "HealthyHostCount"
+    filter: "filter('stat', 'lower')"
+  B:
+    metric: "UnHealthyHostCount"
+    filter: "filter('stat', 'upper')"
+  signal:
+    formula: "(A / (A+B)).scale(100)"
+
+rules:
+  critical:
+    threshold: 1
+    comparator: "<"
+    
+  major:
+    threshold: 100
+    comparator: "<"
+    dependency: "critical"

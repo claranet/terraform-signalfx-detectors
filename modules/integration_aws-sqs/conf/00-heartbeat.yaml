@@ -1,0 +1,12 @@
+module: "AWS SQS"
+name: "heartbeat"
+
+transformation: true
+aggregation: ".mean(by=['QueueName'])"
+filtering: "filter('stat', 'mean') and filter('namespace', 'AWS/SQS')"
+
+signals:
+  signal:
+    metric: "NumberOfMessagesReceived"
+rules:
+  critical:

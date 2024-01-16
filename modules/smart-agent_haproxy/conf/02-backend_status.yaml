@@ -1,0 +1,17 @@
+module: "Haproxy"
+name: "Backend status"
+id: "backend_status"
+
+transformation: ".max(over='5m')"
+aggregation: true
+filtering: "filter('type', '1')"
+
+signals:
+  signal:
+    metric: "haproxy_status"
+
+rules:
+  critical:
+    threshold: 1
+    comparator: "<"
+    

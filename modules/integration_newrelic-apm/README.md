@@ -58,7 +58,7 @@ Note the following parameters:
 
 These 3 parameters along with all variables defined in [common-variables.tf](common-variables.tf) are common to all
 [modules](../) in this repository. Other variables, specific to this module, are available in
-[variables.tf](variables.tf).
+[variables-gen.tf](variables-gen.tf).
 In general, the default configuration "works" but all of these Terraform
 [variables](https://www.terraform.io/language/values/variables) make it possible to
 customize the detectors behavior to better fit your needs.
@@ -101,8 +101,7 @@ Here is the list of required metrics for detectors in this module.
 
 ## Notes
 
-* The NewRelic integration from SignalFx still uses the deprecated [REST API
-v1](https://docs.newrelic.com/docs/apis/rest-api-v1-deprecated/new-relic-rest-api-v1/working-new-relic-rest-api-v1-deprecated/).
+* The NewRelic integration from SignalFx still uses the deprecated REST API v1.
 * It also generate too many metrics all considered as custom which could have a big
 impact in the SignalFx billing so you have to filter as much as possible to avoid that.
 * Sadly, the `errors_per_minute` filter is not available so the `errors` detector will

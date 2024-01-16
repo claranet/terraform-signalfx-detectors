@@ -1,0 +1,12 @@
+module: "Varnish"
+name: "heartbeat"
+
+transformation: true
+aggregation: true
+
+
+signals:
+  signal:
+    metric: "varnish.threads"
+rules:
+  critical:

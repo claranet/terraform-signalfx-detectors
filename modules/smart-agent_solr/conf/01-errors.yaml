@@ -1,0 +1,21 @@
+module: "Apache Solr"
+name: "Errors count"
+id: "errors"
+
+transformation: ".mean(over='5m')"
+aggregation: true
+
+
+signals:
+  signal:
+    metric: "counter.solr.zookeeper_errors"
+
+rules:
+  critical:
+    threshold: 5
+    comparator: ">="
+    
+  major:
+    threshold: 0
+    comparator: ">="
+    dependency: "critical"

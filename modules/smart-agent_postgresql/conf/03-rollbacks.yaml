@@ -1,0 +1,27 @@
+module: "PostgreSQL"
+name: "Rollbacks ratio compared to commits"
+id: "rollbacks"
+
+transformation: ".min(over='10m')"
+aggregation: true
+
+
+signals:
+  A:
+    metric: "postgres_xact_rollbacks"
+    rollup: "delta"
+  B:
+    metric: "postgres_xact_commits"
+    rollup: "delta"
+  signal:
+    formula: "(A/B).scale(100)"
+
+rules:
+  major:
+    threshold: 20
+    comparator: ">"
+    
+  minor:
+    threshold: 10
+    comparator: ">"
+    dependency: "major"

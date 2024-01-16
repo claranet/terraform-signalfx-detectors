@@ -1,0 +1,29 @@
+module: "ElasticSearch"
+name: "Indexing latency"
+id: "indexing_latency"
+
+transformation: ".mean(over='15m')"
+aggregation: true
+filtering: "filter('plugin', 'elasticsearch') and filter('node_name', '*')"
+
+signals:
+  A:
+    metric: "elasticsearch.indices.indexing.index-time"
+    rollup: "delta"
+    extrapolation: "zero"
+  B:
+    metric: "elasticsearch.indices.indexing.index-total"
+    rollup: "delta"
+    extrapolation: "zero"
+  signal:
+    formula: "(A/B).fill(0)"
+
+rules:
+  major:
+    threshold: 30
+    comparator: ">"
+    
+  minor:
+    threshold: 15
+    comparator: ">"
+    dependency: "major"

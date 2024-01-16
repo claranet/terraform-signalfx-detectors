@@ -1,0 +1,27 @@
+module: "ElasticSearch"
+name: "Jvm memory young usage"
+id: "jvm_memory_young_usage"
+
+transformation: ".mean(over='10m')"
+aggregation: true
+filtering: "filter('plugin', 'elasticsearch') and filter('node_name', '*')"
+
+signals:
+  A:
+    metric: "elasticsearch.jvm.mem.pools.young.used_in_bytes"
+    rollup: "average"
+  B:
+    metric: "elasticsearch.jvm.mem.pools.young.max_in_bytes"
+    rollup: "average"
+  signal:
+    formula: "(A/B).fill(0).scale(100)"
+
+rules:
+  major:
+    threshold: 90
+    comparator: ">"
+    
+  minor:
+    threshold: 80
+    comparator: ">"
+    dependency: "major"

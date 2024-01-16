@@ -1,0 +1,17 @@
+module: "AWS VPN"
+name: "Tunnel state"
+id: "vpn_status"
+
+transformation: ".max(over='5m')"
+aggregation: true
+filtering: "filter('namespace', 'AWS/VPN') and filter('stat', 'mean') and filter('VpnId', '*')"
+
+signals:
+  signal:
+    metric: "TunnelState"
+
+rules:
+  critical:
+    threshold: 1
+    comparator: "<"
+    

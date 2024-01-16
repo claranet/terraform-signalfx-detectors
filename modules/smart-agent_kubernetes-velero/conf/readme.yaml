@@ -2,7 +2,7 @@ documentations:
   - name: Smart Agent monitor
     url: 'https://github.com/signalfx/signalfx-agent/blob/main/docs/monitors/prometheus-velero.md'
   - name: Splunk Observability integration
-    url: 'https://docs.splunk.com/Observability/gdi/velero/prometheus-velero.html'
+    url: 'https://docs.splunk.com/observability/en/gdi/monitors-prometheus/prometheus-velero.html'
 
 source_doc: |
   ### Monitors

@@ -1,0 +1,29 @@
+module: "Azure Application Gateway"
+name: Backend 4xx error rate
+id: backend_http_4xx_errors
+
+aggregation: ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region', 'backendhttpsetting', 'backendpool', 'backendserver'])"
+filtering: "filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true')"
+value_unit: "%"
+
+signals:
+  error_stream:
+    metric: BackendResponseStatus
+    filter: "filter('httpstatusgroup', '4xx')"
+    extrapolation: "zero"
+  count_stream:
+    metric: BackendResponseStatus
+    extrapolation: "zero"
+  signal:
+    formula: "(error_stream / count_stream).fill(value=0).scale(100)"
+
+rules:
+  critical:
+    threshold: 95
+    comparator: ">"
+    lasting_duration: "5m"
+  major:
+    threshold: 80
+    comparator: ">"
+    lasting_duration: "5m"
+    dependency: critical

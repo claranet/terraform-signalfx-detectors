@@ -1,0 +1,21 @@
+module: "ElasticSearch"
+name: "Cluster status"
+id: "cluster_status"
+
+transformation: ".mean(over='5m')"
+aggregation: true
+filtering: "filter('plugin', 'elasticsearch')"
+
+signals:
+  signal:
+    metric: "elasticsearch.cluster.status"
+
+rules:
+  major:
+    threshold: 1
+    comparator: "=="
+    
+  critical:
+    threshold: 2
+    comparator: "=="
+    

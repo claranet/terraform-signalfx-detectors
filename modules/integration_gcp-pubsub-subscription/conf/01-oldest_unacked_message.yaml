@@ -1,0 +1,21 @@
+module: "GCP Pub/Sub Subscription"
+name: "Oldest unacknowledged message"
+id: "oldest_unacked_message"
+
+transformation: ".min(over='5m')"
+aggregation: true
+filtering: "filter('monitored_resource', 'pubsub_subscription')"
+
+signals:
+  signal:
+    metric: "subscription/oldest_unacked_message_age"
+
+rules:
+  critical:
+    threshold: 120
+    comparator: ">="
+    
+  major:
+    threshold: 30
+    comparator: ">="
+    dependency: "critical"

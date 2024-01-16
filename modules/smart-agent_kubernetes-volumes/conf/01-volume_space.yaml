@@ -1,0 +1,25 @@
+module: "Kubernetes node volume"
+name: "Space usage"
+id: "volume_space"
+
+transformation: ".min(over='5m')"
+aggregation: true
+filtering: "(((not filter('volume_type', 'configMap', 'secret')) and filter('volume_type', '*')) or ((not filter('k8s.volume.type', 'configMap', 'secret')) and filter('k8s.volume.type', '*')))"
+
+signals:
+  A:
+    metric: "kubernetes.volume_available_bytes"
+  B:
+    metric: "kubernetes.volume_capacity_bytes"
+  signal:
+    formula: "((B-A)/B).scale(100)"
+
+rules:
+  critical:
+    threshold: 95
+    comparator: ">"
+    
+  major:
+    threshold: 90
+    comparator: ">"
+    dependency: "critical"

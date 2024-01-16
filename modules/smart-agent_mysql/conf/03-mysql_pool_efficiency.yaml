@@ -1,0 +1,27 @@
+module: "MySQL"
+name: "Innodb buffer pool efficiency"
+id: "mysql_pool_efficiency"
+
+transformation: ".min(over='1h')"
+aggregation: true
+filtering: "filter('plugin', 'mysql')"
+
+signals:
+  A:
+    metric: "mysql_bpool_counters.reads"
+    rollup: "delta"
+  B:
+    metric: "mysql_bpool_counters.read_requests"
+    rollup: "delta"
+  signal:
+    formula: "(A/B).fill(0).scale(100)"
+
+rules:
+  minor:
+    threshold: 30
+    comparator: ">"
+    
+  warning:
+    threshold: 20
+    comparator: ">"
+    dependency: "minor"

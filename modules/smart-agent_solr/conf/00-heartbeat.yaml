@@ -1,0 +1,13 @@
+module: "Apache Solr"
+name: "heartbeat"
+
+transformation: true
+aggregation: true
+
+exclude_not_running_vm: true
+
+signals:
+  signal:
+    metric: "counter.solr.http_requests"
+rules:
+  critical:

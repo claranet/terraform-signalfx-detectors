@@ -61,7 +61,7 @@ Note the following parameters:
 
 These 3 parameters along with all variables defined in [common-variables.tf](common-variables.tf) are common to all
 [modules](../) in this repository. Other variables, specific to this module, are available in
-[variables.tf](variables.tf).
+[variables.tf](variables.tf) and [variables-gen.tf](variables-gen.tf).
 In general, the default configuration "works" but all of these Terraform
 [variables](https://www.terraform.io/language/values/variables) make it possible to
 customize the detectors behavior to better fit your needs.
@@ -82,13 +82,13 @@ This module creates the following SignalFx detectors which could contain one or 
 |MySQL heartbeat|X|-|-|-|-|
 |MySQL number of connections over max capacity|X|X|-|-|-|
 |MySQL slow queries percentage|X|X|-|-|-|
-|MySQL Innodb buffer pool efficiency|-|-|X|X|-|
-|MySQL Innodb buffer pool utilization|-|-|X|X|-|
-|MySQL running threads changed abruptly|X|-|-|-|-|
-|MySQL running queries changed abruptly|X|-|-|-|-|
+|MySQL innodb buffer pool efficiency|-|-|X|X|-|
+|MySQL innodb buffer pool utilization|-|-|X|X|-|
 |MySQL replication lag|X|X|-|-|-|
 |MySQL slave sql status|X|-|-|-|-|
 |MySQL slave io status|X|-|-|-|-|
+|MySQL running threads changed abruptly|X|-|-|-|-|
+|MySQL running queries changed abruptly|X|-|-|-|-|
 
 ## How to collect required metrics?
 

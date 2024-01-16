@@ -1,0 +1,25 @@
+module: "PHP-FPM"
+name: "Busy workers"
+id: "php_fpm_connect_idle"
+
+transformation: ".mean(over='10m')"
+aggregation: true
+
+
+signals:
+  A:
+    metric: "phpfpm_processes.active"
+  B:
+    metric: "phpfpm_processes.idle"
+  signal:
+    formula: "((A / (A+B)).scale(100))"
+
+rules:
+  critical:
+    threshold: 90
+    comparator: ">"
+    
+  major:
+    threshold: 80
+    comparator: ">"
+    dependency: "critical"

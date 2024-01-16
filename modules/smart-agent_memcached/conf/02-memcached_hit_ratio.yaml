@@ -1,0 +1,25 @@
+module: "Memcached"
+name: "Hit ratio"
+id: "memcached_hit_ratio"
+
+transformation: true
+aggregation: true
+
+
+signals:
+  A:
+    metric: "memcached_ops.hits"
+  B:
+    metric: "memcached_ops.misses"
+  signal:
+    formula: "(A / (A+B) * 100)"
+
+rules:
+  major:
+    threshold: 60
+    comparator: "<"
+    
+  minor:
+    threshold: 80
+    comparator: "<"
+    dependency: "major"

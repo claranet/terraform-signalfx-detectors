@@ -1,0 +1,28 @@
+module: "Azure Service Bus"
+name: "User error rate"
+id: "user_errors"
+
+transformation: true
+aggregation: ".mean(by=['EntityName', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+filtering: "filter('resource_type', 'Microsoft.ServiceBus/namespaces') and filter('primary_aggregation_type', 'true')"
+
+signals:
+  A:
+    metric: "UserErrors"
+    extrapolation: "zero"
+  B:
+    metric: "IncomingRequests"
+    extrapolation: "zero"
+  signal:
+    formula: "(A/B).scale(100).fill(0)"
+
+rules:
+  critical:
+    threshold: 90
+    comparator: ">"
+    lasting_duration: "5m"
+  major:
+    threshold: 50
+    comparator: ">"
+    lasting_duration: "5m"
+    dependency: "critical"

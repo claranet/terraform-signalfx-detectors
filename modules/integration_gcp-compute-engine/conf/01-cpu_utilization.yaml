@@ -1,0 +1,21 @@
+module: "GCP GCE Instance"
+name: "Cpu utilization"
+id: "cpu_utilization"
+
+transformation: ".min(over='1h').scale(100)"
+aggregation: true
+
+
+signals:
+  signal:
+    metric: "instance/cpu/utilization"
+
+rules:
+  critical:
+    threshold: 90
+    comparator: ">"
+    
+  major:
+    threshold: 85
+    comparator: ">"
+    dependency: "critical"

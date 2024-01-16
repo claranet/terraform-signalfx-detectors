@@ -1,0 +1,17 @@
+module: "Zookeeper"
+name: "Service health"
+id: "zookeeper_health"
+
+transformation: ".mean(over='5m')"
+aggregation: true
+filtering: "filter('plugin', 'zookeeper')"
+
+signals:
+  signal:
+    metric: "gauge.zk_service_health"
+
+rules:
+  critical:
+    threshold: 1
+    comparator: "!="
+    

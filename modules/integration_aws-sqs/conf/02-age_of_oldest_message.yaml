@@ -1,0 +1,21 @@
+module: "AWS SQS"
+name: "Age of the oldest message"
+id: "age_of_oldest_message"
+
+transformation: ".min(over='30m')"
+aggregation: true
+filtering: "filter('namespace', 'AWS/SQS') and filter('stat', 'upper')"
+
+signals:
+  signal:
+    metric: "ApproximateAgeOfOldestMessage"
+
+rules:
+  critical:
+    threshold: 600
+    comparator: ">"
+    
+  major:
+    threshold: 300
+    comparator: ">"
+    dependency: "critical"

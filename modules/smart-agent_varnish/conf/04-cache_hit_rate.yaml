@@ -1,0 +1,28 @@
+module: "Varnish"
+name: "Hit rate"
+id: "cache_hit_rate"
+
+transformation: ".min(over='5m')"
+aggregation: true
+filtering: "filter('plugin', 'telegraf/varnish')"
+
+signals:
+  A:
+    metric: "varnish.cache_hit"
+    rollup: "delta"
+  B:
+    metric: "varnish.cache_miss"
+    rollup: "delta"
+  signal:
+    formula: "(A/(A+B)).fill(0).scale(100)"
+
+rules:
+  minor:
+    threshold: 90
+    comparator: "<"
+    dependency: "major"
+    
+  major:
+    threshold: 80
+    comparator: "<"
+    

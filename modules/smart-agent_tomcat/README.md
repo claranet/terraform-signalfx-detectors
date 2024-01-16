@@ -61,7 +61,7 @@ Note the following parameters:
 
 These 3 parameters along with all variables defined in [common-variables.tf](common-variables.tf) are common to all
 [modules](../) in this repository. Other variables, specific to this module, are available in
-[variables.tf](variables.tf).
+[variables-gen.tf](variables-gen.tf).
 In general, the default configuration "works" but all of these Terraform
 [variables](https://www.terraform.io/language/values/variables) make it possible to
 customize the detectors behavior to better fit your needs.
@@ -145,7 +145,6 @@ parameter to the corresponding monitor configuration:
         - '!counter.tomcat.GlobalRequestProcessor.requestCount'
         - '!gauge.tomcat.ThreadPool.currentThreadsBusy'
         - '!gauge.tomcat.ThreadPool.maxThreads'
-        - '! gauge.tomcat.ThreadPool.maxThreads '
 
 ```
 

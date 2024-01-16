@@ -1,0 +1,12 @@
+module: "AWS VPN"
+name: "heartbeat"
+
+transformation: true
+aggregation: ".mean(by=['VpnId'])"
+filtering: "filter('stat', 'mean') and filter('namespace', 'AWS/VPN')"
+
+signals:
+  signal:
+    metric: "TunnelState"
+rules:
+  critical:

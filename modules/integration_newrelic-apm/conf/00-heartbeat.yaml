@@ -1,0 +1,12 @@
+module: "New Relic"
+name: "heartbeat"
+
+transformation: true
+aggregation: true
+
+
+signals:
+  signal:
+    metric: "Apdex/score/*"
+rules:
+  major:
