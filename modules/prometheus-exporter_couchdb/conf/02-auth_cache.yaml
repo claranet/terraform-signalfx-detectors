@@ -1,0 +1,21 @@
+module: couchdb
+name: couchdb_auth_cache
+
+transformation: ".mean(over='10m')"
+aggregation: ".sum(by=['sf_metric'])"
+
+signals:
+  misses_total:
+    metric: couchdb_auth_cache_misses_total
+  request_total:
+    metric: couchdb_auth_cache_requests_total
+  signal:
+    formula: ((misses_total/request_total).scale(100))
+rules:
+  critical:
+    threshold: 10
+    comparator: '>'
+  major:
+    threshold: 5
+    comparator: '>'
+    dependency: critical

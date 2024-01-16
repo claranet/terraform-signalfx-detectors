@@ -1,0 +1,21 @@
+module: couchdb
+name: couchdb_couch_replicator_jobs
+
+transformation: ".mean(over='10m')"
+aggregation: ".sum(by=['sf_metric'])"
+
+signals:
+  jobs_crashed:
+    metric: couchdb_couch_replicator_jobs_crashed
+  jobs_total:
+    metric: couchdb_couch_replicator_jobs_total
+  signal:
+    formula: ((jobs_crashed/jobs_total).scale(100))
+rules:
+  critical:
+    threshold: 10
+    comparator: '>'
+  major:
+    threshold: 5
+    comparator: '>'
+    dependency: critical

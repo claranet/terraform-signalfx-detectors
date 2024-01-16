@@ -78,6 +78,7 @@
 - [organization_usage](#organization_usage)
 - [otel-collector_kubernetes-common](#otel-collector_kubernetes-common)
 - [prometheus-exporter_active-directory](#prometheus-exporter_active-directory)
+- [prometheus-exporter_couchdb](#prometheus-exporter_couchdb)
 - [prometheus-exporter_docker-state](#prometheus-exporter_docker-state)
 - [prometheus-exporter_kong](#prometheus-exporter_kong)
 - [prometheus-exporter_oracledb](#prometheus-exporter_oracledb)
