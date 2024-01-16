@@ -40,6 +40,7 @@
 - [integration_azure-azure-search](#integration_azure-azure-search)
 - [integration_azure-backup](#integration_azure-backup)
 - [integration_azure-cdn](#integration_azure-cdn)
+- [integration_azure-container-apps](#integration_azure-container-apps)
 - [integration_azure-container-instance](#integration_azure-container-instance)
 - [integration_azure-cosmos-db](#integration_azure-cosmos-db)
 - [integration_azure-datafactory](#integration_azure-datafactory)
@@ -470,6 +471,15 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Azure CDN latency|X|X|-|-|-|
+|Azure CDN origin health|X|X|-|-|-|
+
+
+## integration_azure-container-apps
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Azure Container Apps heartbeat|X|-|-|-|-|
+|Azure Container Apps restarts|-|-|-|X|-|
 
 
 ## integration_azure-container-instance
