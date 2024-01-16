@@ -1,4 +1,4 @@
-# AZURE-CDN SignalFx detectors
+# AZURE-CONTAINER-APPS SignalFx detectors
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -20,8 +20,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-integration-azure-cdn" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/integration_azure-cdn?ref={revision}"
+module "signalfx-detectors-integration-azure-container-apps" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/integration_azure-container-apps?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications
@@ -75,8 +75,8 @@ This module creates the following SignalFx detectors which could contain one or 
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|Azure CDN latency|X|X|-|-|-|
-|Azure CDN origin health|X|X|-|-|-|
+|Azure Container Apps heartbeat|X|-|-|-|-|
+|Azure Container Apps restarts|-|-|-|X|-|
 
 ## How to collect required metrics?
 
@@ -94,8 +94,8 @@ Check the [Related documentation](#related-documentation) section for more detai
 
 Here is the list of required metrics for detectors in this module.
 
-* `OriginHealthPercentage`
-* `TotalLatency`
+* `RestartCount`
+* `WorkingSetBytes`
 
 
 

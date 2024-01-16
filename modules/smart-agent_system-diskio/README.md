@@ -1,4 +1,4 @@
-# AZURE-CDN SignalFx detectors
+# SYSTEM-DISKIO SignalFx detectors
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -20,8 +20,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-integration-azure-cdn" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/integration_azure-cdn?ref={revision}"
+module "signalfx-detectors-smart-agent-system-diskio" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/smart-agent_system-diskio?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications
@@ -57,7 +57,7 @@ Note the following parameters:
 
 These 3 parameters along with all variables defined in [common-variables.tf](common-variables.tf) are common to all
 [modules](../) in this repository. Other variables, specific to this module, are available in
-[variables-gen.tf](variables-gen.tf).
+[variables.tf](variables.tf) and [variables-gen.tf](variables-gen.tf).
 In general, the default configuration "works" but all of these Terraform
 [variables](https://www.terraform.io/language/values/variables) make it possible to
 customize the detectors behavior to better fit your needs.
@@ -75,28 +75,57 @@ This module creates the following SignalFx detectors which could contain one or 
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|Azure CDN latency|X|X|-|-|-|
-|Azure CDN origin health|X|X|-|-|-|
+|System disk io usage|X|-|-|-|-|
+|System disk weighted io usage|X|-|-|-|-|
 
 ## How to collect required metrics?
 
 This module deploys detectors using metrics reported by the
-[Azure integration](https://docs.splunk.com/Observability/gdi/get-data-in/connect/azure/azure.html) configurable
-with [this Terraform module](https://github.com/claranet/terraform-signalfx-integrations/tree/master/cloud/azure).
+[SignalFx Smart Agent Monitors](https://github.com/signalfx/signalfx-agent#monitors).
+
+Even if the [Smart Agent is deprecated](https://github.com/signalfx/signalfx-agent/blob/main/docs/smartagent-deprecation-notice.md)
+it remains an efficient, lightweight and simple monitoring agent which still works fine.
+See the [official documentation](https://docs.splunk.com/Observability/gdi/smart-agent/smart-agent-resources.html) for more information
+about this agent.
+You might find the related following documentations useful:
+- the global level [agent configuration](https://github.com/signalfx/signalfx-agent/blob/main/docs/config-schema.md)
+- the [monitor level configuration](https://github.com/signalfx/signalfx-agent/blob/main/docs/monitor-config.md)
+- the internal [agent configuration tips](https://github.com/claranet/terraform-signalfx-detectors/wiki/Guidance#agent-configuration).
+- the full list of [monitors available](https://github.com/signalfx/signalfx-agent/tree/main/docs/monitors) with their own specific documentation.
+
+In addition, all of these monitors are still available in the [Splunk Otel Collector](https://github.com/signalfx/splunk-otel-collector),
+the Splunk [distro of OpenTelemetry Collector](https://opentelemetry.io/docs/concepts/distributions/) which replaces SignalFx Smart Agent,
+thanks to the internal [Smart Agent Receiver](https://github.com/signalfx/splunk-otel-collector/tree/main/pkg/receiver/smartagentreceiver).
+
+As a result:
+- any SignalFx Smart Agent monitor are compatible with the new agent OpenTelemetry Collector and related modules in this repository keep `smart-agent` as source name.
+- any OpenTelemetry receiver not based on an existing Smart Agent monitor is not available from old agent so related modules in this repository use `otel-collector` as source name.
 
 
 Check the [Related documentation](#related-documentation) section for more detailed and specific information about this module dependencies.
 
+System disk weighted io usage detector is disabled by default. It may be useful in some specific cases where system disk io usage detector show usage above 100% because of multi-queued IOs due to device or driver, please enable it only if you understand what it implies. See [Linux kernel documentation](https://docs.kernel.org/admin-guide/iostats.html).
+
+You must explicitely enable collection of those metrics on Agent:
+- system.disk.io_time
+- system.disk.weighted_io_time
 
 
 ### Metrics
 
 
-Here is the list of required metrics for detectors in this module.
+To filter only required metrics for the detectors of this module, add the
+[datapointsToExclude](https://docs.splunk.com/observability/gdi/smart-agent/smart-agent-resources.html#filtering-data-using-the-smart-agent)
+parameter to the corresponding monitor configuration:
 
-* `OriginHealthPercentage`
-* `TotalLatency`
+```yaml
+    datapointsToExclude:
+      - metricNames:
+        - '*'
+        - '!system.disk.io_time'
+        - '!system.disk.weighted_io_time'
 
+```
 
 
 

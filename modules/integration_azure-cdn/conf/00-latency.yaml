@@ -1,11 +1,11 @@
 module: Azure CDN
 name: latency
-filtering: "filter('resource_type', 'microsoft.cdn/profiles') and filter('primary_aggregation_type', 'true')"
+filtering: "filter('resource_type', 'Microsoft.Cdn/profiles') and filter('primary_aggregation_type', 'true')"
 id: cdn_total_latency
 value_unit: ms
 
 transformation: true
-aggregation: true
+aggregation: ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 
 signals:
   signal:
