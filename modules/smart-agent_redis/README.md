@@ -147,6 +147,7 @@ parameter to the corresponding monitor configuration:
         - '!${var.use_otel_receiver ? "redis.keys.evicted" : "counter.evicted_keys"}'
         - '!${var.use_otel_receiver ? "redis.keys.expired" : "counter.expired_keys"}'
         - '!${var.use_otel_receiver ? "redis.keyspace.hits" : "derive.keyspace_hits"}'
+        - '!${var.use_otel_receiver ? "redis.keyspace.misses" : "derive.keyspace_misses"}'
         - '!${var.use_otel_receiver ? "redis.memory.rss" : "bytes.used_memory_rss"}'
         - '!${var.use_otel_receiver ? "redis.memory.used" : "bytes.used_memory"}'
 

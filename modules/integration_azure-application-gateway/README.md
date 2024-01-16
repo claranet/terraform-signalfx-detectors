@@ -8,8 +8,6 @@
 - [What are the available detectors in this module?](#what-are-the-available-detectors-in-this-module)
 - [How to collect required metrics?](#how-to-collect-required-metrics)
   - [Metrics](#metrics)
-- [Notes](#notes)
-  - [Capacity Units](#capacity-units)
 - [Related documentation](#related-documentation)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -25,9 +23,9 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 module "signalfx-detectors-integration-azure-application-gateway" {
   source = "github.com/claranet/terraform-signalfx-detectors.git//modules/integration_azure-application-gateway?ref={revision}"
 
-  environment                    = var.environment
-  notifications                  = local.notifications
-  capacity_units_threshold_major = 42
+  environment                   = var.environment
+  notifications                 = local.notifications
+  compute_units_threshold_major = 42
 }
 ```
 
@@ -87,7 +85,7 @@ This module creates the following SignalFx detectors which could contain one or 
 |Azure Application Gateway 5xx error rate|X|X|-|-|-|
 |Azure Application Gateway backend 4xx error rate|X|X|-|-|-|
 |Azure Application Gateway backend 5xx error rate|X|X|-|-|-|
-|Azure Application Gateway capacity units|-|X|-|-|-|
+|Azure Application Gateway compute units|-|X|-|-|-|
 
 ## How to collect required metrics?
 
@@ -107,7 +105,7 @@ Here is the list of required metrics for detectors in this module.
 
 * `BackendConnectTime`
 * `BackendResponseStatus`
-* `CapacityUnits`
+* `ComputeUnits`
 * `FailedRequests`
 * `HealthyHostCount`
 * `ResponseStatus`
@@ -116,17 +114,6 @@ Here is the list of required metrics for detectors in this module.
 * `UnhealthyHostCount`
 
 
-## Notes
-
-### Capacity Units
-
-To properly calculate the `capacity_units_threshold_major` please refer to the Microsoft documentation about [CapacityUnits](https://docs.microsoft.com/en-us/azure/application-gateway/application-gateway-autoscaling-zone-redundant)
-
-```
-Each instance is roughly equivalent to 10 additional reserved Capacity Units.
-```
-
-If you're enabling autoscaling on your application gateway, default instance count is 20, which means 200 Capacity Units.
 
 
 ## Related documentation
