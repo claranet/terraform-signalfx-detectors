@@ -17,4 +17,4 @@ rules:
     comparator: ">"
     dependency: critical
     description: "is too high"
-    lasting_duration: '15m'    
+    lasting_duration: '15m'

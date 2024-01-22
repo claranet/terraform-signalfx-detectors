@@ -8,7 +8,7 @@ signals:
     extrapolation: zero
     rollup: delta
   signal:
-    formula: A.rateofchange()  
+    formula: A.rateofchange()
 rules:
   major:
     threshold: 120

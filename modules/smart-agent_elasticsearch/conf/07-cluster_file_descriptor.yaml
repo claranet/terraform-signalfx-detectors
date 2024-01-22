@@ -6,9 +6,11 @@ signals:
     A:
       metric: "elasticsearch.process.open_file_descriptors"
       rollup: average
+      extrapolation: zero
     B:
       metric: "elasticsearch.process.max_file_descriptors"
       rollup: average
+      extrapolation: last_value
     signal:
       formula: "(A/B).scale(100)"
 rules:
@@ -16,7 +18,7 @@ rules:
     threshold: 95
     comparator: ">="
     description: "is too high"
-    lasting_duration: '15m'    
+    lasting_duration: '15m'
   major:
     threshold: 90
     comparator: ">"

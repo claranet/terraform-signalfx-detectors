@@ -7,13 +7,13 @@ signals:
     metric: "elasticsearch.cluster.task-max-wait-time"
     rollup: average
   signal:
-    formula: A.rateofchange()  
+    formula: A.rateofchange()
 rules:
   major:
     threshold: 200
     comparator: ">="
     description: "is too high"
-    lasting_duration: '15m'    
+    lasting_duration: '15m'
   minor:
     threshold: 100
     comparator: ">"

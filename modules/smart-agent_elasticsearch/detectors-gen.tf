@@ -256,8 +256,8 @@ resource "signalfx_detector" "file_descriptors" {
 
   program_text = <<-EOF
     base_filtering = filter('node_name', '*') and filter('plugin', 'elasticsearch')
-    A = data('elasticsearch.process.open_file_descriptors', filter=base_filtering and ${module.filtering.signalflow}, rollup='average')${var.file_descriptors_aggregation_function}${var.file_descriptors_transformation_function}
-    B = data('elasticsearch.process.max_file_descriptors', filter=base_filtering and ${module.filtering.signalflow}, rollup='average')${var.file_descriptors_aggregation_function}${var.file_descriptors_transformation_function}
+    A = data('elasticsearch.process.open_file_descriptors', filter=base_filtering and ${module.filtering.signalflow}, rollup='average', extrapolation='zero')${var.file_descriptors_aggregation_function}${var.file_descriptors_transformation_function}
+    B = data('elasticsearch.process.max_file_descriptors', filter=base_filtering and ${module.filtering.signalflow}, rollup='average', extrapolation='last_value')${var.file_descriptors_aggregation_function}${var.file_descriptors_transformation_function}
     signal = (A/B).scale(100).publish('signal')
     detect(when(signal >= ${var.file_descriptors_threshold_critical}, lasting=%{if var.file_descriptors_lasting_duration_critical == null}None%{else}'${var.file_descriptors_lasting_duration_critical}'%{endif}, at_least=${var.file_descriptors_at_least_percentage_critical})).publish('CRIT')
     detect(when(signal > ${var.file_descriptors_threshold_major}, lasting=%{if var.file_descriptors_lasting_duration_major == null}None%{else}'${var.file_descriptors_lasting_duration_major}'%{endif}, at_least=${var.file_descriptors_at_least_percentage_major}) and (not when(signal >= ${var.file_descriptors_threshold_critical}, lasting=%{if var.file_descriptors_lasting_duration_critical == null}None%{else}'${var.file_descriptors_lasting_duration_critical}'%{endif}, at_least=${var.file_descriptors_at_least_percentage_critical}))).publish('MAJOR')
@@ -340,8 +340,8 @@ resource "signalfx_detector" "jvm_memory_young_usage" {
 
   program_text = <<-EOF
     base_filtering = filter('node_name', '*') and filter('plugin', 'elasticsearch')
-    A = data('elasticsearch.jvm.mem.pools.young.used_in_bytes', filter=base_filtering and ${module.filtering.signalflow}, rollup='average')${var.jvm_memory_young_usage_aggregation_function}${var.jvm_memory_young_usage_transformation_function}
-    B = data('elasticsearch.jvm.mem.pools.young.max_in_bytes', filter=base_filtering and ${module.filtering.signalflow}, rollup='average')${var.jvm_memory_young_usage_aggregation_function}${var.jvm_memory_young_usage_transformation_function}
+    A = data('elasticsearch.jvm.mem.pools.young.used_in_bytes', filter=base_filtering and ${module.filtering.signalflow}, rollup='average', extrapolation='zero')${var.jvm_memory_young_usage_aggregation_function}${var.jvm_memory_young_usage_transformation_function}
+    B = data('elasticsearch.jvm.mem.pools.young.max_in_bytes', filter=base_filtering and ${module.filtering.signalflow}, rollup='average', extrapolation='last_value')${var.jvm_memory_young_usage_aggregation_function}${var.jvm_memory_young_usage_transformation_function}
     signal = (A/B).fill(0).scale(100).publish('signal')
     detect(when(signal >= ${var.jvm_memory_young_usage_threshold_major}, lasting=%{if var.jvm_memory_young_usage_lasting_duration_major == null}None%{else}'${var.jvm_memory_young_usage_lasting_duration_major}'%{endif}, at_least=${var.jvm_memory_young_usage_at_least_percentage_major})).publish('MAJOR')
     detect(when(signal > ${var.jvm_memory_young_usage_threshold_minor}, lasting=%{if var.jvm_memory_young_usage_lasting_duration_minor == null}None%{else}'${var.jvm_memory_young_usage_lasting_duration_minor}'%{endif}, at_least=${var.jvm_memory_young_usage_at_least_percentage_minor}) and (not when(signal >= ${var.jvm_memory_young_usage_threshold_major}, lasting=%{if var.jvm_memory_young_usage_lasting_duration_major == null}None%{else}'${var.jvm_memory_young_usage_lasting_duration_major}'%{endif}, at_least=${var.jvm_memory_young_usage_at_least_percentage_major}))).publish('MINOR')
@@ -383,8 +383,8 @@ resource "signalfx_detector" "jvm_memory_old_usage" {
 
   program_text = <<-EOF
     base_filtering = filter('node_name', '*') and filter('plugin', 'elasticsearch')
-    A = data('elasticsearch.jvm.mem.pools.old.used_in_bytes', filter=base_filtering and ${module.filtering.signalflow}, rollup='average')${var.jvm_memory_old_usage_aggregation_function}${var.jvm_memory_old_usage_transformation_function}
-    B = data('elasticsearch.jvm.mem.pools.old.max_in_bytes', filter=base_filtering and ${module.filtering.signalflow}, rollup='average')${var.jvm_memory_old_usage_aggregation_function}${var.jvm_memory_old_usage_transformation_function}
+    A = data('elasticsearch.jvm.mem.pools.old.used_in_bytes', filter=base_filtering and ${module.filtering.signalflow}, rollup='average', extrapolation='zero')${var.jvm_memory_old_usage_aggregation_function}${var.jvm_memory_old_usage_transformation_function}
+    B = data('elasticsearch.jvm.mem.pools.old.max_in_bytes', filter=base_filtering and ${module.filtering.signalflow}, rollup='average', extrapolation='last_value')${var.jvm_memory_old_usage_aggregation_function}${var.jvm_memory_old_usage_transformation_function}
     signal = (A/B).fill(0).scale(100).publish('signal')
     detect(when(signal >= ${var.jvm_memory_old_usage_threshold_major}, lasting=%{if var.jvm_memory_old_usage_lasting_duration_major == null}None%{else}'${var.jvm_memory_old_usage_lasting_duration_major}'%{endif}, at_least=${var.jvm_memory_old_usage_at_least_percentage_major})).publish('MAJOR')
     detect(when(signal > ${var.jvm_memory_old_usage_threshold_minor}, lasting=%{if var.jvm_memory_old_usage_lasting_duration_minor == null}None%{else}'${var.jvm_memory_old_usage_lasting_duration_minor}'%{endif}, at_least=${var.jvm_memory_old_usage_at_least_percentage_minor}) and (not when(signal >= ${var.jvm_memory_old_usage_threshold_major}, lasting=%{if var.jvm_memory_old_usage_lasting_duration_major == null}None%{else}'${var.jvm_memory_old_usage_lasting_duration_major}'%{endif}, at_least=${var.jvm_memory_old_usage_at_least_percentage_major}))).publish('MINOR')
