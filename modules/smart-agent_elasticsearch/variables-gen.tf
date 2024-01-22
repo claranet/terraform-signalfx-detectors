@@ -113,7 +113,7 @@ variable "cluster_status_lasting_duration_critical" {
 variable "cluster_status_at_least_percentage_critical" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
-  default     = 1
+  default     = 0.5
 }
 variable "cluster_status_threshold_major" {
   description = "Major threshold for cluster_status detector"
@@ -130,7 +130,7 @@ variable "cluster_status_lasting_duration_major" {
 variable "cluster_status_at_least_percentage_major" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
-  default     = 1
+  default     = 0.5
 }
 # cluster_initializing_shards detector
 
