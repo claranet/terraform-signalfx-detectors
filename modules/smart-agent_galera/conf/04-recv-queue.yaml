@@ -1,0 +1,18 @@
+module: galera
+name: "Recv queue length"
+transformation: true
+aggregation: true
+disabled: true
+signals:
+  signal:
+    metric: "mysql_wsrep_local_recv_queue_avg"
+rules:
+  major:
+    lasting_duration: 10m
+    threshold: 0.1
+    comparator: ">"
+  minor:
+    lasting_duration: 10m
+    threshold: 0
+    comparator: ">"
+    dependency: major
