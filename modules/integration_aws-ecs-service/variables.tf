@@ -107,8 +107,8 @@ variable "cpu_utilization_threshold_critical" {
 }
 
 variable "cpu_utilization_lasting_duration_critical" {
-  type        = string
-  default     = "30m"
+  type    = string
+  default = "30m"
 }
 
 variable "cpu_utilization_threshold_major" {
@@ -118,8 +118,8 @@ variable "cpu_utilization_threshold_major" {
 }
 
 variable "cpu_utilization_lasting_duration_major" {
-  type        = string
-  default     = "5m"
+  type    = string
+  default = "5m"
 }
 
 # Memory_utilization detector
@@ -185,8 +185,8 @@ variable "memory_utilization_threshold_critical" {
 }
 
 variable "memory_utilization_lasting_duration_critical" {
-  type        = string
-  default     = "30m"
+  type    = string
+  default = "30m"
 }
 
 variable "memory_utilization_threshold_major" {
@@ -196,6 +196,6 @@ variable "memory_utilization_threshold_major" {
 }
 
 variable "memory_utilization_lasting_duration_major" {
-  type        = string
-  default     = "5m"
+  type    = string
+  default = "5m"
 }
