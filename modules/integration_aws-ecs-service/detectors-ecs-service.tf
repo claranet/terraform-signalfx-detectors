@@ -36,8 +36,8 @@ resource "signalfx_detector" "cpu_utilization" {
 
   program_text = <<-EOF
     signal = data('CPUUtilization', filter=filter('namespace', 'AWS/ECS') and filter('stat', 'mean') and filter('ServiceName', '*') and ${module.filtering.signalflow}).mean(by=['ServiceName'])${var.cpu_utilization_aggregation_function}${var.cpu_utilization_transformation_function}.publish('signal')
-    detect(when(signal > ${var.cpu_utilization_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.cpu_utilization_threshold_major}) and (not when(signal > ${var.cpu_utilization_threshold_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.cpu_utilization_threshold_critical}, lasting=%{if var.cpu_utilization_lasting_duration_critical == null}None%{else}'${var.cpu_utilization_lasting_duration_critical}'%{endif})).publish('CRIT')
+    detect(when(signal > ${var.cpu_utilization_threshold_major}, lasting=%{if var.cpu_utilization_lasting_duration_major == null}None%{else}'${var.cpu_utilization_lasting_duration_major}'%{endif}) and (not when(signal > ${var.cpu_utilization_threshold_critical}, lasting=%{if var.cpu_utilization_lasting_duration_critical == null}None%{else}'${var.cpu_utilization_lasting_duration_critical}'%{endif}))).publish('MAJOR')
 EOF
 
   rule {
@@ -76,8 +76,8 @@ resource "signalfx_detector" "memory_utilization" {
 
   program_text = <<-EOF
     signal = data('MemoryUtilization', filter=filter('namespace', 'AWS/ECS') and filter('stat', 'mean') and filter('ServiceName', '*') and ${module.filtering.signalflow}).mean(by=['ServiceName'])${var.memory_utilization_aggregation_function}${var.memory_utilization_transformation_function}.publish('signal')
-    detect(when(signal > ${var.memory_utilization_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.memory_utilization_threshold_major}) and (not when(signal > ${var.memory_utilization_threshold_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.memory_utilization_threshold_critical}, lasting=%{if var.memory_utilization_lasting_duration_critical == null}None%{else}'${var.memory_utilization_lasting_duration_critical}'%{endif})).publish('CRIT')
+    detect(when(signal > ${var.memory_utilization_threshold_major}, lasting=%{if var.memory_utilization_lasting_duration_major == null}None%{else}'${var.memory_utilization_lasting_duration_major}'%{endif}) and (not when(signal > ${var.memory_utilization_threshold_critical}, lasting=%{if var.memory_utilization_lasting_duration_critical == null}None%{else}'${var.memory_utilization_lasting_duration_critical}'%{endif}))).publish('MAJOR')
 EOF
 
   rule {
