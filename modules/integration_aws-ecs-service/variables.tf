@@ -41,7 +41,7 @@ variable "heartbeat_timeframe" {
 variable "heartbeat_aggregation_function" {
   description = "Aggregation function and group by for heartbeat detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['ServiceName'])"
+  default     = ""
 }
 
 # CPU_utilization detector
@@ -97,7 +97,7 @@ variable "cpu_utilization_aggregation_function" {
 variable "cpu_utilization_transformation_function" {
   description = "Transformation function for cpu_utilization detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".min(over='5m')"
+  default     = ""
 }
 
 variable "cpu_utilization_threshold_critical" {
@@ -106,10 +106,20 @@ variable "cpu_utilization_threshold_critical" {
   default     = 90
 }
 
+variable "cpu_utilization_lasting_duration_critical" {
+  type    = string
+  default = "30m"
+}
+
 variable "cpu_utilization_threshold_major" {
   description = "Major threshold for cpu_utilization detector"
   type        = number
   default     = 80
+}
+
+variable "cpu_utilization_lasting_duration_major" {
+  type    = string
+  default = "5m"
 }
 
 # Memory_utilization detector
@@ -165,7 +175,7 @@ variable "memory_utilization_aggregation_function" {
 variable "memory_utilization_transformation_function" {
   description = "Transformation function for memory_utilization detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".min(over='5m')"
+  default     = ""
 }
 
 variable "memory_utilization_threshold_critical" {
@@ -174,9 +184,18 @@ variable "memory_utilization_threshold_critical" {
   default     = 90
 }
 
+variable "memory_utilization_lasting_duration_critical" {
+  type    = string
+  default = "30m"
+}
+
 variable "memory_utilization_threshold_major" {
   description = "Major threshold for memory_utilization detector"
   type        = number
   default     = 85
 }
 
+variable "memory_utilization_lasting_duration_major" {
+  type    = string
+  default = "5m"
+}
