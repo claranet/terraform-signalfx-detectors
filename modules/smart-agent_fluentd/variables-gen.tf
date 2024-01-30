@@ -85,3 +85,10 @@ variable "buffer_lasting_seconds" {
   type        = number
   default     = 300
 }
+
+variable "buffer_auto_resolve_seconds" {
+  description = "Alert duration after NO DATA (in seconds)"
+  type        = number
+  default     = 60
+}
+
