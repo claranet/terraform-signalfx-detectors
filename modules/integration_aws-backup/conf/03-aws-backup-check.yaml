@@ -4,7 +4,6 @@ id: backup_successful
 
 transformation: ".min(over='23h')"
 aggregation: true
-filtering: "filter('namespace', 'AWS/Backup') and filter('stat', 'sum') and filter('BackupVaultName', '*', match_missing=False) and filter('ResourceType', '*', match_missing=False)"
 
 signals:
   created:
