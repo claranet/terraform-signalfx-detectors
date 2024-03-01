@@ -7,5 +7,5 @@
 # and alerts, since CloudWatch returns aggregated metric, and per vault and
 # resource type.
 locals {
-  filters = format("filter('namespace', 'AWS/Backup') and filter('stat', 'sum') and filter('BackupVaultName', '*', match_missing=False) and filter('ResourceType', '*', match_missing=False) and filter('aws_account_id', '%s')", var.aws_account_id)
+  filters = "filter('namespace', 'AWS/Backup') and filter('stat', 'sum') and filter('BackupVaultName', '*', match_missing=False) and filter('ResourceType', '*', match_missing=False)"
 }
