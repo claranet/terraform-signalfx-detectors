@@ -1,6 +1,5 @@
 module: zookeeper
 name: server-health
-disabled: false
 aggregation: false
 signals:
   signal:
@@ -11,4 +10,3 @@ rules:
     comparator: "!="
     description: "Zookeeper server is not running"
     lasting_duration: "5m"
-    health_disabled: "false"

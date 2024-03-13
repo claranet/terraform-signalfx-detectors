@@ -1,6 +1,5 @@
 module: zookeeper
 name: cluster-health
-disabled: false
 aggregation: ".mean(by=['kubernetes_cluster'])"
 signals:
   signal:
@@ -11,4 +10,3 @@ rules:
     comparator: "=="
     description: "Zookeeper cluster is not running"
     lasting_duration: "5m"
-    health_disabled: "false"
