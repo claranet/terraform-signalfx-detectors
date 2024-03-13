@@ -1,0 +1,12 @@
+module: zookeeper
+name: server-health
+aggregation: false
+signals:
+  signal:
+    metric: "gauge.zk_service_health"
+rules:
+  major:
+    threshold: 1
+    comparator: "!="
+    description: "Zookeeper server is not running"
+    lasting_duration: "5m"

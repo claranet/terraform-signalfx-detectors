@@ -1330,9 +1330,11 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
+|Zookeeper server-health|-|X|-|-|-|
+|Zookeeper cluster-health|X|-|-|-|-|
+|Zookeeper server-latency|-|X|-|-|-|
+|Zookeeper cluster-latency|X|-|-|-|-|
 |Zookeeper heartbeat|X|-|-|-|-|
-|Zookeeper service health|X|-|-|-|-|
-|Zookeeper latency|X|X|-|-|-|
 |Zookeeper file descriptors usage|X|X|-|-|-|
 
 

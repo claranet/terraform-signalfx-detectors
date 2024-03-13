@@ -1,0 +1,12 @@
+module: zookeeper
+name: cluster-latency
+aggregation: ".mean(by=['kubernetes_cluster'])"
+signals:
+  signal:
+    metric: "gauge.zk_avg_latency"
+rules:
+  critical:
+    threshold: 300000
+    comparator: ">"
+    description: "Zookeeper cluster latency is too high"
+    lasting_duration: "5m"
