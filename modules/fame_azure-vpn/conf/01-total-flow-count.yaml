@@ -9,6 +9,8 @@ signals:
   signal:
     metric: fame.azure.virtual_network_gateway.total_flow_count
 
+disabled: true
+
 rules:
   critical:
     threshold: 0
