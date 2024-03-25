@@ -89,7 +89,7 @@ variable "totalflowcount_runbook_url" {
 variable "totalflowcount_disabled" {
   description = "Disable all alerting rules for totalflowcount detector"
   type        = bool
-  default     = null
+  default     = true
 }
 
 variable "totalflowcount_threshold_critical" {
