@@ -1,0 +1,14 @@
+module: ElasticSearch
+name: "cluster unassigned shards"
+aggregation: ".max(by=['cluster'])"
+filtering: "filter('plugin', 'elasticsearch')"
+signals:
+  signal:
+    metric: "elasticsearch.cluster.unassigned-shards"
+    rollup: average
+rules:
+  critical:
+    threshold: 0
+    comparator: ">"
+    description: "is too high"
+    lasting_duration: '10m'

@@ -1,0 +1,27 @@
+module: ElasticSearch
+name: "flush latency"
+aggregation: ".max(by=['cluster'])"
+filtering: "filter('node_name', '*') and filter('plugin', 'elasticsearch')"
+signals:
+    A:
+      metric: "elasticsearch.indices.flush.total-time"
+      extrapolation: zero
+      rollup: delta
+    B:
+      metric: "elasticsearch.indices.flush.total"
+      extrapolation: zero
+      rollup: delta
+    signal:
+      formula: "(A/B).fill(0)"
+rules:
+  major:
+    threshold: 150
+    comparator: ">="
+    description: "is too high"
+    lasting_duration: '15m'    
+  minor:
+    threshold: 100
+    comparator: ">"
+    description: "is too high"    
+    dependency: major
+    lasting_duration: '15m'

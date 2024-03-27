@@ -1,0 +1,20 @@
+module: ElasticSearch
+name: "pending tasks"
+aggregation: ".max(by=['cluster'])"
+filtering: "filter('plugin', 'elasticsearch')"
+signals:
+  signal:
+    metric: "elasticsearch.cluster.pending-tasks"
+    rollup: average
+rules:
+  critical:
+    threshold: 5
+    comparator: ">="
+    description: "are too high"
+    lasting_duration: '15m'    
+  major:
+    threshold: 0
+    comparator: ">"
+    dependency: critical
+    description: "are too high"
+    lasting_duration: '15m'

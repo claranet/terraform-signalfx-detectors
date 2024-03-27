@@ -1,0 +1,27 @@
+module: ElasticSearch
+name: "indexing latency"
+aggregation: ".max(by=['cluster'])"
+filtering: "filter('node_name', '*') and filter('plugin', 'elasticsearch')"
+signals:
+    A:
+      metric: "elasticsearch.indices.indexing.index-time"
+      extrapolation: zero
+      rollup: delta
+    B:
+      metric: "elasticsearch.indices.indexing.index-total"
+      extrapolation: zero
+      rollup: delta
+    signal:
+      formula: "(A/B).fill(0)"
+rules:
+  major:
+    threshold: 30
+    comparator: ">="
+    description: "is too high"
+    lasting_duration: '1h'    
+  minor:
+    threshold: 15
+    comparator: ">"
+    description: "is too high"    
+    dependency: major
+    lasting_duration: '1h'

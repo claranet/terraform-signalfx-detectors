@@ -1,0 +1,13 @@
+module: Elasticsearch
+name: heartbeat
+
+transformation: false
+aggregation: ".mean(by=['cluster'])"
+exclude_not_running_vm: true
+filtering: "filter('plugin', 'elasticsearch')"
+
+signals:
+  signal:
+    metric: elasticsearch.cluster.number-of-nodes
+rules:
+  critical:

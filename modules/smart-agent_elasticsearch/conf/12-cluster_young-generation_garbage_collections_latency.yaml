@@ -1,0 +1,27 @@
+module: ElasticSearch
+name: "jvm gc young collection latency"
+aggregation: ".max(by=['cluster'])"
+filtering: "filter('node_name', '*') and filter('plugin', 'elasticsearch')"
+signals:
+    A:
+      metric: "elasticsearch.jvm.gc.time"
+      extrapolation: zero
+      rollup: delta
+    B:
+      metric: "elasticsearch.jvm.gc.count"
+      extrapolation: zero
+      rollup: delta
+    signal:
+      formula: "(A/B).fill(0)"
+rules:
+  major:
+    threshold: 40
+    comparator: ">="
+    description: "is too high"
+    lasting_duration: '15m'    
+  minor:
+    threshold: 20
+    comparator: ">"
+    description: "is too high"    
+    dependency: major
+    lasting_duration: '15m'

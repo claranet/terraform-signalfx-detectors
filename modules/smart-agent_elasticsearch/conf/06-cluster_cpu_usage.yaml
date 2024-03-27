@@ -1,0 +1,20 @@
+module: ElasticSearch
+name: "cpu usage"
+aggregation: ".max(by=['cluster'])"
+filtering: "filter('node_name', '*') and filter('plugin', 'elasticsearch')"
+signals:
+  signal:
+    metric: "elasticsearch.process.cpu.percent"
+    rollup: average
+rules:
+  critical:
+    threshold: 95
+    comparator: ">="
+    description: "is too high"
+    lasting_duration: '30m'
+  major:
+    threshold: 85
+    comparator: ">"
+    dependency: critical
+    description: "is too high"
+    lasting_duration: '30m'

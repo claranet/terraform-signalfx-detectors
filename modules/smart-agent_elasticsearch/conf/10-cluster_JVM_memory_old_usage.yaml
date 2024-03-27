@@ -1,0 +1,25 @@
+module: ElasticSearch
+name: "JVM memory old usage"
+aggregation: ".max(by=['cluster'])"
+filtering: "filter('node_name', '*') and filter('plugin', 'elasticsearch')"
+signals:
+    A:
+      metric: "elasticsearch.jvm.mem.pools.old.used_in_bytes"
+      rollup: average
+    B:
+      metric: "elasticsearch.jvm.mem.pools.old.max_in_bytes"
+      rollup: average
+    signal:
+      formula: "(A/B).fill(0).scale(100)"
+rules:
+  major:
+    threshold: 90
+    comparator: ">="
+    description: "is too high"
+    lasting_duration: '10m'    
+  minor:
+    threshold: 80
+    comparator: ">"
+    description: "is too high"    
+    dependency: major
+    lasting_duration: '10m'
