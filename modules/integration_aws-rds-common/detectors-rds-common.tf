@@ -35,8 +35,8 @@ resource "signalfx_detector" "cpu_90_15min" {
 
   program_text = <<-EOF
     signal = data('CPUUtilization', filter=filter('namespace', 'AWS/RDS') and filter('stat', 'mean') and filter('DBInstanceIdentifier', '*') and ${module.filtering.signalflow})${var.cpu_90_15min_aggregation_function}${var.cpu_90_15min_transformation_function}.publish('signal')
-    detect(when(signal > ${var.cpu_90_15min_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.cpu_90_15min_threshold_major}) and (not when(signal > ${var.cpu_90_15min_threshold_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.cpu_90_15min_threshold_critical}, lasting=%{if var.cpu_90_15min_lasting_duration_critical == null}None%{else}'${var.cpu_90_15min_lasting_duration_critical}'%{endif}, at_least=${var.cpu_90_15min_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal > ${var.cpu_90_15min_threshold_major}, lasting=%{if var.cpu_90_15min_lasting_duration_major == null}None%{else}'${var.cpu_90_15min_lasting_duration_major}'%{endif}, at_least=${var.cpu_90_15min_at_least_percentage_major}) and (not when(signal > ${var.cpu_90_15min_threshold_critical}, lasting=%{if var.cpu_90_15min_lasting_duration_critical == null}None%{else}'${var.cpu_90_15min_lasting_duration_critical}'%{endif}, at_least=${var.cpu_90_15min_at_least_percentage_critical}))).publish('MAJOR')
 EOF
 
   rule {
@@ -81,8 +81,8 @@ resource "signalfx_detector" "free_space_low" {
   program_text = <<-EOF
     free = data('FreeStorageSpace', filter=filter('namespace', 'AWS/RDS') and filter('stat', 'mean') and filter('DBInstanceIdentifier', '*') and ${module.filtering.signalflow})${var.free_space_low_aggregation_function}${var.free_space_low_transformation_function}
     signal = free.scale(1/1024**3).publish('signal') # Bytes to Gibibytes
-    detect(when(signal < ${var.free_space_low_threshold_critical})).publish('CRIT')
-    detect(when(signal < ${var.free_space_low_threshold_major}) and (not when(signal < ${var.free_space_low_threshold_critical}))).publish('MAJOR')
+    detect(when(signal < ${var.free_space_low_threshold_critical}, lasting=%{if var.free_space_low_lasting_duration_critical == null}None%{else}'${var.free_space_low_lasting_duration_critical}'%{endif}, at_least=${var.free_space_low_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal < ${var.free_space_low_threshold_major}, lasting=%{if var.free_space_low_lasting_duration_major == null}None%{else}'${var.free_space_low_lasting_duration_major}'%{endif}, at_least=${var.free_space_low_at_least_percentage_major}) and (not when(signal < ${var.free_space_low_threshold_critical}, lasting=%{if var.free_space_low_lasting_duration_critical == null}None%{else}'${var.free_space_low_lasting_duration_critical}'%{endif}, at_least=${var.free_space_low_at_least_percentage_critical}))).publish('MAJOR')
 EOF
 
   rule {
@@ -121,8 +121,8 @@ resource "signalfx_detector" "replica_lag" {
 
   program_text = <<-EOF
     signal = data('ReplicaLag', filter=filter('namespace', 'AWS/RDS') and filter('stat', 'mean') and filter('DBInstanceIdentifier', '*') and ${module.filtering.signalflow})${var.replica_lag_aggregation_function}${var.replica_lag_transformation_function}.publish('signal')
-    detect(when(signal > ${var.replica_lag_threshold_critical})).publish('CRIT')
-    detect(when(signal > ${var.replica_lag_threshold_major}) and (not when(signal > ${var.replica_lag_threshold_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.replica_lag_threshold_critical}, lasting=%{if var.replica_lag_lasting_duration_critical == null}None%{else}'${var.replica_lag_lasting_duration_critical}'%{endif}, at_least=${var.replica_lag_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal > ${var.replica_lag_threshold_major}, lasting=%{if var.replica_lag_lasting_duration_major == null}None%{else}'${var.replica_lag_lasting_duration_major}'%{endif}, at_least=${var.replica_lag_at_least_percentage_major}) and (not when(signal > ${var.replica_lag_threshold_critical}, lasting=%{if var.replica_lag_lasting_duration_critical == null}None%{else}'${var.replica_lag_lasting_duration_critical}'%{endif}, at_least=${var.replica_lag_at_least_percentage_critical}))).publish('MAJOR')
 EOF
 
   rule {
