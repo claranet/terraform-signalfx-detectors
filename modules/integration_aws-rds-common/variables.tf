@@ -115,7 +115,7 @@ variable "cpu_90_15min_threshold_major" {
 variable "cpu_90_15min_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "cpu_90_15min_at_least_percentage_critical" {
@@ -127,7 +127,7 @@ variable "cpu_90_15min_at_least_percentage_critical" {
 variable "cpu_90_15min_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "cpu_90_15min_at_least_percentage_major" {
@@ -207,7 +207,7 @@ variable "free_space_low_threshold_major" {
 variable "free_space_low_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "free_space_low_at_least_percentage_critical" {
@@ -219,7 +219,7 @@ variable "free_space_low_at_least_percentage_critical" {
 variable "free_space_low_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "free_space_low_at_least_percentage_major" {
@@ -299,7 +299,7 @@ variable "replica_lag_threshold_major" {
 variable "replica_lag_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "replica_lag_at_least_percentage_critical" {
@@ -311,7 +311,7 @@ variable "replica_lag_at_least_percentage_critical" {
 variable "replica_lag_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = ""
+  default     = null
 }
 
 variable "replica_lag_at_least_percentage_major" {
