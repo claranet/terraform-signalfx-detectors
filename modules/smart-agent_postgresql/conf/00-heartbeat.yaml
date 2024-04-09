@@ -1,0 +1,13 @@
+module: "PostgreSQL"
+name: "heartbeat"
+
+transformation: true
+aggregation: true
+
+exclude_not_running_vm: true
+
+signals:
+  signal:
+    metric: "postgres_database_size"
+rules:
+  critical:

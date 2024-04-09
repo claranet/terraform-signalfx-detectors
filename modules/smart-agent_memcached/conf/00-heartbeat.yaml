@@ -1,0 +1,12 @@
+module: "Memcached"
+name: "heartbeat"
+
+transformation: true
+aggregation: true
+
+
+signals:
+  signal:
+    metric: "memcached_items.current"
+rules:
+  critical:

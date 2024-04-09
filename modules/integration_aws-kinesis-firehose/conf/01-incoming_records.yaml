@@ -1,0 +1,21 @@
+module: "AWS Kinesis"
+name: "Incoming records"
+id: "incoming_records"
+
+transformation: ".sum(over='15m')"
+aggregation: true
+filtering: "filter('namespace', 'AWS/Kinesis') and filter('stat', 'lower') and (not filter('ShardId', '*'))"
+
+signals:
+  signal:
+    metric: "IncomingRecords"
+
+rules:
+  critical:
+    threshold: 0
+    comparator: "<="
+    
+  major:
+    threshold: 1
+    comparator: "<="
+    dependency: "critical"

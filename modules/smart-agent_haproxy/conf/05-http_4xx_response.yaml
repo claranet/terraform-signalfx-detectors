@@ -1,0 +1,31 @@
+module: "Haproxy"
+name: "4xx response rate"
+id: "http_4xx_response"
+
+transformation: ".min(over='15m')"
+aggregation: true
+
+
+signals:
+  A:
+    metric: "haproxy_response_4xx"
+    rollup: "delta"
+  B:
+    metric: "haproxy_request_total"
+    rollup: "delta"
+  signal:
+    formula: "(A/B).scale(100)"
+
+rules:
+  critical:
+    threshold: 99
+    comparator: ">"
+    
+  major:
+    threshold: 95
+    comparator: ">"
+    dependency: "critical"
+  minor:
+    threshold: 90
+    comparator: ">"
+    dependency: "major"

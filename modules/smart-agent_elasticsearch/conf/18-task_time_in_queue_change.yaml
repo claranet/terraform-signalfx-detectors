@@ -1,0 +1,22 @@
+module: "ElasticSearch"
+name: "Max time spent by task in queue rate of change"
+id: "task_time_in_queue_change"
+
+transformation: ".rateofchange().mean(over='15m')"
+aggregation: true
+filtering: "filter('plugin', 'elasticsearch')"
+
+signals:
+  signal:
+    metric: "elasticsearch.cluster.task-max-wait-time"
+    rollup: "average"
+
+rules:
+  major:
+    threshold: 200
+    comparator: ">"
+    
+  minor:
+    threshold: 100
+    comparator: ">"
+    dependency: "major"

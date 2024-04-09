@@ -78,7 +78,7 @@ variable "{{ id }}_disabled_{{ severity }}" {
 variable "{{ id }}_timeframe" {
   description = "Timeframe for heartbeat detector (i.e. \"10m\")"
   type        = string
-  default     = "10m"
+  default     = "{{ duration|default("10m") }}"
 }
 
 {% else -%}

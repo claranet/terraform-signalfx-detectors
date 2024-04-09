@@ -1,0 +1,21 @@
+module: "Nginx"
+name: "Dropped connections"
+id: "dropped_connections"
+
+transformation: ".min(over='5m')"
+aggregation: true
+
+
+signals:
+  signal:
+    metric: "connections.failed"
+
+rules:
+  critical:
+    threshold: 1
+    comparator: ">"
+    
+  major:
+    threshold: 0
+    comparator: ">"
+    dependency: "critical"

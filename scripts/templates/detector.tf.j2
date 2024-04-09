@@ -60,7 +60,7 @@ resource "signalfx_detector" "{{ id }}" {
       {%- endif %}
     {%- endfor %}
     {%- macro macro_when(severity, rule) -%}
-          when({{ rule.signal if rule.signal is string else 'signal' }} {{ rule.comparator }} ${var.{{ id }}_threshold_{{ severity }}}, lasting=%{if var.{{ id }}_lasting_duration_{{ severity }} == null}None%{else}'${var.{{ id }}_lasting_duration_{{ severity }}}'%{endif}, at_least=${var.{{ id }}_at_least_percentage_{{ severity }}}){% if rule.append_condition is string %} {{ rule.append_condition }}{% endif %}
+          when({{ rule.signal if rule.signal is string else 'signal' }} {{ rule.comparator }} ${var.{{ id }}_threshold_{{ severity }}}%{if var.{{ id }}_lasting_duration_{{ severity }} != null}, lasting='${var.{{ id }}_lasting_duration_{{ severity }}}', at_least=${var.{{ id }}_at_least_percentage_{{ severity }}}%{endif}){% if rule.append_condition is string %} {{ rule.append_condition }}{% endif %}
     {%- endmacro -%}
     {%- for severity, rule in rules.items() %}
       {%- if type == 'heartbeat' -%}

@@ -1,0 +1,14 @@
+module: "RabbitMQ Node"
+name: "heartbeat"
+
+transformation: true
+aggregation: ".mean(by=['name'])"
+filtering: "filter('plugin', 'rabbitmq')"
+
+exclude_not_running_vm: true
+
+signals:
+  signal:
+    metric: "gauge.node.uptime"
+rules:
+  critical:

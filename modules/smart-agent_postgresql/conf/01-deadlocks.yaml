@@ -1,0 +1,22 @@
+module: "PostgreSQL"
+name: "Deadlocks"
+id: "deadlocks"
+
+transformation: ".max(over='5m')"
+aggregation: true
+
+
+signals:
+  signal:
+    metric: "postgres_deadlocks"
+    rollup: "delta"
+
+rules:
+  major:
+    threshold: 0.1
+    comparator: ">"
+    
+  minor:
+    threshold: 0
+    comparator: ">"
+    dependency: "major"

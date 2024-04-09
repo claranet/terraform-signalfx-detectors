@@ -1,0 +1,12 @@
+module: "MongoDB"
+name: "heartbeat"
+
+transformation: true
+aggregation: ".mean(by=['cluster'])"
+
+
+signals:
+  signal:
+    metric: "gauge.connections.available"
+rules:
+  critical:

@@ -1,0 +1,21 @@
+module: "Zookeeper"
+name: "Latency"
+id: "zookeeper_latency"
+
+transformation: ".mean(over='5m')"
+aggregation: true
+filtering: "filter('plugin', 'zookeeper')"
+
+signals:
+  signal:
+    metric: "gauge.zk_avg_latency"
+
+rules:
+  critical:
+    threshold: 300000
+    comparator: ">"
+    
+  major:
+    threshold: 250000
+    comparator: ">"
+    dependency: "critical"

@@ -1,0 +1,13 @@
+module: "Kubernetes API server heartbeat"
+name: "heartbeat"
+
+transformation: true
+aggregation: true
+
+exclude_not_running_vm: true
+
+signals:
+  signal:
+    metric: "apiserver_request_total"
+rules:
+  critical:

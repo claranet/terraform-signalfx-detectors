@@ -1,0 +1,21 @@
+module: "GCP Cloud SQL MySQL"
+name: "Replication lag"
+id: "replication_lag"
+
+transformation: ".min(over='10m')"
+aggregation: true
+
+
+signals:
+  signal:
+    metric: "database/mysql/replication/seconds_behind_master"
+
+rules:
+  critical:
+    threshold: 180
+    comparator: ">"
+    
+  major:
+    threshold: 90
+    comparator: ">"
+    dependency: "critical"

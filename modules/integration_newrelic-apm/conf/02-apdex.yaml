@@ -1,0 +1,21 @@
+module: "New Relic"
+name: "Apdex score ratio"
+id: "apdex"
+
+transformation: ".mean(over='15m')"
+aggregation: true
+
+
+signals:
+  signal:
+    metric: "Apdex/score/*"
+
+rules:
+  critical:
+    threshold: 0.25
+    comparator: "<"
+    
+  major:
+    threshold: 0.5
+    comparator: "<"
+    dependency: "critical"

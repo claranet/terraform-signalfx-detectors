@@ -1,0 +1,17 @@
+module: "MongoDB"
+name: "Page faults"
+id: "page_faults"
+
+transformation: ".mean(over='5m')"
+aggregation: true
+
+
+signals:
+  signal:
+    metric: "counter.extra_info.page_faults"
+
+rules:
+  warning:
+    threshold: 0
+    comparator: ">"
+    

@@ -1,0 +1,22 @@
+module: "ElasticSearch"
+name: "Pending tasks"
+id: "pending_tasks"
+
+transformation: ".min(over='15m')"
+aggregation: true
+filtering: "filter('plugin', 'elasticsearch')"
+
+signals:
+  signal:
+    metric: "elasticsearch.cluster.pending-tasks"
+    rollup: "average"
+
+rules:
+  critical:
+    threshold: 5
+    comparator: ">"
+    
+  major:
+    threshold: 0
+    comparator: ">"
+    dependency: "critical"
