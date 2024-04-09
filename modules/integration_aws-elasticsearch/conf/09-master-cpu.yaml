@@ -1,6 +1,5 @@
 module: AWS Elasticsearch
-id: "master_cpu"
-name: "Master CPU utilization"
+name: "Master CPU"
 
 transformation: ".min(over='20m')"
 aggregation: ""
