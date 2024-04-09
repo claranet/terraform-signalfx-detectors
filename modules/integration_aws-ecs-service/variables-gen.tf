@@ -9,7 +9,7 @@ variable "heartbeat_notifications" {
 variable "heartbeat_aggregation_function" {
   description = "Aggregation function and group by for heartbeat detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['ServiceName'])"
+  default     = ""
 }
 
 variable "heartbeat_max_delay" {
@@ -53,13 +53,13 @@ variable "cpu_utilization_notifications" {
 variable "cpu_utilization_aggregation_function" {
   description = "Aggregation function and group by for cpu_utilization detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['ServiceName'])"
+  default     = ""
 }
 
 variable "cpu_utilization_transformation_function" {
   description = "Transformation function for cpu_utilization detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".min(over='5m')"
+  default     = ""
 }
 
 variable "cpu_utilization_max_delay" {
@@ -107,7 +107,7 @@ variable "cpu_utilization_threshold_critical" {
 variable "cpu_utilization_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "30m"
 }
 
 variable "cpu_utilization_at_least_percentage_critical" {
@@ -124,7 +124,7 @@ variable "cpu_utilization_threshold_major" {
 variable "cpu_utilization_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "5m"
 }
 
 variable "cpu_utilization_at_least_percentage_major" {
@@ -143,13 +143,13 @@ variable "memory_utilization_notifications" {
 variable "memory_utilization_aggregation_function" {
   description = "Aggregation function and group by for memory_utilization detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['ServiceName'])"
+  default     = ""
 }
 
 variable "memory_utilization_transformation_function" {
   description = "Transformation function for memory_utilization detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".min(over='5m')"
+  default     = ""
 }
 
 variable "memory_utilization_max_delay" {
@@ -197,7 +197,7 @@ variable "memory_utilization_threshold_critical" {
 variable "memory_utilization_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "30m"
 }
 
 variable "memory_utilization_at_least_percentage_critical" {
@@ -214,7 +214,7 @@ variable "memory_utilization_threshold_major" {
 variable "memory_utilization_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "5m"
 }
 
 variable "memory_utilization_at_least_percentage_major" {

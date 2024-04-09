@@ -13,7 +13,7 @@ signals:
     rollup: "max"
 rules:
   critical:
-    threshold: 90
+    threshold: 95
     comparator: ">"
   major:
     threshold: 85

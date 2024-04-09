@@ -1,8 +1,8 @@
 module: AWS ECS Service
 name: "CPU utilization"
 
-transformation: ".min(over='5m')"
-aggregation: ".mean(by=['ServiceName'])"
+transformation: true
+aggregation: true
 
 filtering: "filter('namespace', 'AWS/ECS')"
 value_unit: "%"
@@ -15,8 +15,10 @@ signals:
 rules:
   critical:
     threshold: 90
+    lasting_duration: 30m
     comparator: ">"
   major:
     threshold: 80
     comparator: ">"
+    lasting_duration: 5m
     dependency: critical

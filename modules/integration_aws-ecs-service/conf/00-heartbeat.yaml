@@ -2,7 +2,7 @@ module: AWS ECS Service
 name: heartbeat
 
 transformation: false
-aggregation: ".mean(by=['ServiceName'])"
+aggregation: true
 filtering: "filter('namespace', 'AWS/ECS')"
 
 signals:

@@ -3,6 +3,7 @@ name: "heartbeat"
 
 transformation: true
 aggregation: ".mean(by=['name'])"
+filtering: "filter('plugin', 'rabbitmq')"
 
 exclude_not_running_vm: true
 

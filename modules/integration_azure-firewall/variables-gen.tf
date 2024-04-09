@@ -107,7 +107,7 @@ variable "snat_port_utilization_disabled_major" {
 variable "snat_port_utilization_threshold_critical" {
   description = "Critical threshold for snat_port_utilization detector"
   type        = number
-  default     = 90
+  default     = 95
 }
 
 variable "snat_port_utilization_lasting_duration_critical" {
