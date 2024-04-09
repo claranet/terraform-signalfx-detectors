@@ -305,7 +305,7 @@
 |AWS Elasticsearch free space|X|X|-|-|-|
 |AWS Elasticsearch ultrawarm free space|X|X|-|-|-|
 |AWS Elasticsearch cluster cpu|X|X|-|-|-|
-|AWS Elasticsearch master cpu utilization|X|X|-|-|-|
+|AWS Elasticsearch master cpu|X|X|-|-|-|
 
 
 ## integration_aws-elb
