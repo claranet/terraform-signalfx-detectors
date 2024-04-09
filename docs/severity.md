@@ -234,18 +234,18 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|AWS ECS heartbeat|X|-|-|-|-|
-|AWS ECS cluster CPU utilization|X|X|-|-|-|
-|AWS ECS cluster memory utilization|X|X|-|-|-|
+|AWS ECS Cluster heartbeat|X|-|-|-|-|
+|AWS ECS Cluster cpu utilization|X|X|-|-|-|
+|AWS ECS Cluster memory utilization|X|X|-|-|-|
 
 
 ## integration_aws-ecs-service
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|AWS ECS heartbeat|X|-|-|-|-|
-|AWS ECS service CPU utilization|X|X|-|-|-|
-|AWS ECS service memory utilization|X|X|-|-|-|
+|AWS ECS Service heartbeat|X|-|-|-|-|
+|AWS ECS Service cpu utilization|X|X|-|-|-|
+|AWS ECS Service memory utilization|X|X|-|-|-|
 
 
 ## integration_aws-efs
@@ -266,11 +266,11 @@
 |---|---|---|---|---|---|
 |AWS ElastiCache heartbeat|X|-|-|-|-|
 |AWS ElastiCache evictions|X|X|-|-|-|
-|AWS ElastiCache connections over max allowed|X|-|-|-|-|
-|AWS ElastiCache current connections|X|-|-|-|-|
-|AWS ElastiCache swap usage|X|X|-|-|-|
-|AWS ElastiCache freeable memory|-|X|X|-|-|
-|AWS ElastiCache evictions changing rate grows|X|X|-|-|-|
+|AWS ElastiCache max connection|X|-|-|-|-|
+|AWS ElastiCache no connection|X|-|-|-|-|
+|AWS ElastiCache swap|X|X|-|-|-|
+|AWS ElastiCache free memory|-|X|X|-|-|
+|AWS ElastiCache evictions growing|X|X|-|-|-|
 
 
 ## integration_aws-elasticache-memcached
@@ -302,9 +302,9 @@
 |AWS Elasticsearch 5xx http response|X|X|-|-|-|
 |AWS Elasticsearch shard count|X|X|-|-|-|
 |AWS Elasticsearch cluster status|X|X|-|-|-|
-|AWS Elasticsearch free storage space|X|X|-|-|-|
-|AWS Elasticsearch ultrawarm free storage space|X|X|-|-|-|
-|AWS Elasticsearch cpu utilization|X|X|-|-|-|
+|AWS Elasticsearch free space|X|X|-|-|-|
+|AWS Elasticsearch ultrawarm free space|X|X|-|-|-|
+|AWS Elasticsearch cluster cpu|X|X|-|-|-|
 |AWS Elasticsearch master cpu utilization|X|X|-|-|-|
 
 
@@ -364,11 +364,11 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
+|AWS RDS Common heartbeat|X|-|-|-|-|
+|AWS RDS Common cpu usage|X|X|-|-|-|
+|AWS RDS Common free space|X|X|-|-|-|
+|AWS RDS Common replica lag|X|X|-|-|-|
 |AWS RDS Common db load|X|X|-|-|-|
-|AWS RDS heartbeat|X|-|-|-|-|
-|AWS RDS instance CPU|X|X|-|-|-|
-|AWS RDS instance free space|X|X|-|-|-|
-|AWS RDS replica lag|X|X|-|-|-|
 
 
 ## integration_aws-redshift
@@ -680,7 +680,7 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|Azure storage account Used capacity|X|X|-|-|-|
+|Azure Storage Account capacity used capacity|X|X|-|-|-|
 
 
 ## integration_azure-storage-account
