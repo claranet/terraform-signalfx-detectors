@@ -7,9 +7,9 @@ resource "signalfx_detector" "status_check" {
 
   program_text = <<-EOF
     signal = data('nagios.state', filter=${module.filtering.signalflow})${var.status_check_aggregation_function}${var.status_check_transformation_function}.publish('signal')
-    detect(when(signal == ${var.status_check_threshold_warning}, lasting=%{if var.status_check_lasting_duration_warning == null}None%{else}'${var.status_check_lasting_duration_warning}'%{endif}, at_least=${var.status_check_at_least_percentage_warning})).publish('WARN')
-    detect(when(signal == ${var.status_check_threshold_critical}, lasting=%{if var.status_check_lasting_duration_critical == null}None%{else}'${var.status_check_lasting_duration_critical}'%{endif}, at_least=${var.status_check_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal == ${var.status_check_threshold_major}, lasting=%{if var.status_check_lasting_duration_major == null}None%{else}'${var.status_check_lasting_duration_major}'%{endif}, at_least=${var.status_check_at_least_percentage_major})).publish('MAJOR')
+    detect(when(signal == ${var.status_check_threshold_warning}%{if var.status_check_lasting_duration_warning != null}, lasting='${var.status_check_lasting_duration_warning}', at_least=${var.status_check_at_least_percentage_warning}%{endif})).publish('WARN')
+    detect(when(signal == ${var.status_check_threshold_critical}%{if var.status_check_lasting_duration_critical != null}, lasting='${var.status_check_lasting_duration_critical}', at_least=${var.status_check_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal == ${var.status_check_threshold_major}%{if var.status_check_lasting_duration_major != null}, lasting='${var.status_check_lasting_duration_major}', at_least=${var.status_check_at_least_percentage_major}%{endif})).publish('MAJOR')
 EOF
 
   rule {

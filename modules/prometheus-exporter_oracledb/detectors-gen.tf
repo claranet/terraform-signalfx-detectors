@@ -35,7 +35,7 @@ resource "signalfx_detector" "dbisdown" {
 
   program_text = <<-EOF
     signal = data('oracledb_up', filter=${module.filtering.signalflow})${var.dbisdown_aggregation_function}${var.dbisdown_transformation_function}.publish('signal')
-    detect(when(signal < ${var.dbisdown_threshold_critical}, lasting=%{if var.dbisdown_lasting_duration_critical == null}None%{else}'${var.dbisdown_lasting_duration_critical}'%{endif}, at_least=${var.dbisdown_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal < ${var.dbisdown_threshold_critical}%{if var.dbisdown_lasting_duration_critical != null}, lasting='${var.dbisdown_lasting_duration_critical}', at_least=${var.dbisdown_at_least_percentage_critical}%{endif})).publish('CRIT')
 EOF
 
   rule {

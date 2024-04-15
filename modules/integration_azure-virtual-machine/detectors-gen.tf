@@ -42,8 +42,8 @@ resource "signalfx_detector" "cpu" {
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.Compute/virtualMachines') and filter('primary_aggregation_type', 'true') and (not filter('azure_power_state', 'PowerState/stopping', 'PowerState/stopped', 'PowerState/deallocating', 'PowerState/deallocated'))
     signal = data('Percentage CPU', filter=base_filtering and ${module.filtering.signalflow})${var.cpu_aggregation_function}${var.cpu_transformation_function}.publish('signal')
-    detect(when(signal > ${var.cpu_threshold_critical}, lasting=%{if var.cpu_lasting_duration_critical == null}None%{else}'${var.cpu_lasting_duration_critical}'%{endif}, at_least=${var.cpu_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal > ${var.cpu_threshold_major}, lasting=%{if var.cpu_lasting_duration_major == null}None%{else}'${var.cpu_lasting_duration_major}'%{endif}, at_least=${var.cpu_at_least_percentage_major}) and (not when(signal > ${var.cpu_threshold_critical}, lasting=%{if var.cpu_lasting_duration_critical == null}None%{else}'${var.cpu_lasting_duration_critical}'%{endif}, at_least=${var.cpu_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.cpu_threshold_critical}%{if var.cpu_lasting_duration_critical != null}, lasting='${var.cpu_lasting_duration_critical}', at_least=${var.cpu_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.cpu_threshold_major}%{if var.cpu_lasting_duration_major != null}, lasting='${var.cpu_lasting_duration_major}', at_least=${var.cpu_at_least_percentage_major}%{endif}) and (not when(signal > ${var.cpu_threshold_critical}%{if var.cpu_lasting_duration_critical != null}, lasting='${var.cpu_lasting_duration_critical}', at_least=${var.cpu_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {
@@ -90,8 +90,8 @@ resource "signalfx_detector" "remaining_cpu_credit" {
     remaining = data('CPU Credits Remaining', filter=base_filtering and ${module.filtering.signalflow})${var.remaining_cpu_credit_aggregation_function}${var.remaining_cpu_credit_transformation_function}
     consumed = data('CPU Credits Consumed', filter=base_filtering and ${module.filtering.signalflow})${var.remaining_cpu_credit_aggregation_function}${var.remaining_cpu_credit_transformation_function}
     signal = (remaining/(remaining+consumed)).scale(100).fill(100).publish('signal')
-    detect(when(signal < ${var.remaining_cpu_credit_threshold_critical}, lasting=%{if var.remaining_cpu_credit_lasting_duration_critical == null}None%{else}'${var.remaining_cpu_credit_lasting_duration_critical}'%{endif}, at_least=${var.remaining_cpu_credit_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal < ${var.remaining_cpu_credit_threshold_major}, lasting=%{if var.remaining_cpu_credit_lasting_duration_major == null}None%{else}'${var.remaining_cpu_credit_lasting_duration_major}'%{endif}, at_least=${var.remaining_cpu_credit_at_least_percentage_major}) and (not when(signal < ${var.remaining_cpu_credit_threshold_critical}, lasting=%{if var.remaining_cpu_credit_lasting_duration_critical == null}None%{else}'${var.remaining_cpu_credit_lasting_duration_critical}'%{endif}, at_least=${var.remaining_cpu_credit_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal < ${var.remaining_cpu_credit_threshold_critical}%{if var.remaining_cpu_credit_lasting_duration_critical != null}, lasting='${var.remaining_cpu_credit_lasting_duration_critical}', at_least=${var.remaining_cpu_credit_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal < ${var.remaining_cpu_credit_threshold_major}%{if var.remaining_cpu_credit_lasting_duration_major != null}, lasting='${var.remaining_cpu_credit_lasting_duration_major}', at_least=${var.remaining_cpu_credit_at_least_percentage_major}%{endif}) and (not when(signal < ${var.remaining_cpu_credit_threshold_critical}%{if var.remaining_cpu_credit_lasting_duration_critical != null}, lasting='${var.remaining_cpu_credit_lasting_duration_critical}', at_least=${var.remaining_cpu_credit_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {

@@ -42,8 +42,8 @@ resource "signalfx_detector" "cpu_usage" {
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.DB*orPostgreSQL/servers') and filter('primary_aggregation_type', 'true')
     signal = data('cpu_percent', filter=base_filtering and ${module.filtering.signalflow})${var.cpu_usage_aggregation_function}${var.cpu_usage_transformation_function}.publish('signal')
-    detect(when(signal > ${var.cpu_usage_threshold_critical}, lasting=%{if var.cpu_usage_lasting_duration_critical == null}None%{else}'${var.cpu_usage_lasting_duration_critical}'%{endif}, at_least=${var.cpu_usage_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal > ${var.cpu_usage_threshold_major}, lasting=%{if var.cpu_usage_lasting_duration_major == null}None%{else}'${var.cpu_usage_lasting_duration_major}'%{endif}, at_least=${var.cpu_usage_at_least_percentage_major}) and (not when(signal > ${var.cpu_usage_threshold_critical}, lasting=%{if var.cpu_usage_lasting_duration_critical == null}None%{else}'${var.cpu_usage_lasting_duration_critical}'%{endif}, at_least=${var.cpu_usage_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.cpu_usage_threshold_critical}%{if var.cpu_usage_lasting_duration_critical != null}, lasting='${var.cpu_usage_lasting_duration_critical}', at_least=${var.cpu_usage_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.cpu_usage_threshold_major}%{if var.cpu_usage_lasting_duration_major != null}, lasting='${var.cpu_usage_lasting_duration_major}', at_least=${var.cpu_usage_at_least_percentage_major}%{endif}) and (not when(signal > ${var.cpu_usage_threshold_critical}%{if var.cpu_usage_lasting_duration_critical != null}, lasting='${var.cpu_usage_lasting_duration_critical}', at_least=${var.cpu_usage_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {
@@ -83,7 +83,7 @@ resource "signalfx_detector" "active_connections" {
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.DB*orPostgreSQL/servers') and filter('primary_aggregation_type', 'true')
     signal = data('active_connections', filter=base_filtering and ${module.filtering.signalflow}, extrapolation='zero')${var.active_connections_aggregation_function}${var.active_connections_transformation_function}.publish('signal')
-    detect(when(signal < ${var.active_connections_threshold_critical}, lasting=%{if var.active_connections_lasting_duration_critical == null}None%{else}'${var.active_connections_lasting_duration_critical}'%{endif}, at_least=${var.active_connections_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal < ${var.active_connections_threshold_critical}%{if var.active_connections_lasting_duration_critical != null}, lasting='${var.active_connections_lasting_duration_critical}', at_least=${var.active_connections_at_least_percentage_critical}%{endif})).publish('CRIT')
 EOF
 
   rule {
@@ -116,8 +116,8 @@ resource "signalfx_detector" "storage_usage" {
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.DB*orPostgreSQL/servers') and filter('primary_aggregation_type', 'true')
     signal = data('storage_percent', filter=base_filtering and ${module.filtering.signalflow})${var.storage_usage_aggregation_function}${var.storage_usage_transformation_function}.publish('signal')
-    detect(when(signal > ${var.storage_usage_threshold_critical}, lasting=%{if var.storage_usage_lasting_duration_critical == null}None%{else}'${var.storage_usage_lasting_duration_critical}'%{endif}, at_least=${var.storage_usage_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal > ${var.storage_usage_threshold_major}, lasting=%{if var.storage_usage_lasting_duration_major == null}None%{else}'${var.storage_usage_lasting_duration_major}'%{endif}, at_least=${var.storage_usage_at_least_percentage_major}) and (not when(signal > ${var.storage_usage_threshold_critical}, lasting=%{if var.storage_usage_lasting_duration_critical == null}None%{else}'${var.storage_usage_lasting_duration_critical}'%{endif}, at_least=${var.storage_usage_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.storage_usage_threshold_critical}%{if var.storage_usage_lasting_duration_critical != null}, lasting='${var.storage_usage_lasting_duration_critical}', at_least=${var.storage_usage_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.storage_usage_threshold_major}%{if var.storage_usage_lasting_duration_major != null}, lasting='${var.storage_usage_lasting_duration_major}', at_least=${var.storage_usage_at_least_percentage_major}%{endif}) and (not when(signal > ${var.storage_usage_threshold_critical}%{if var.storage_usage_lasting_duration_critical != null}, lasting='${var.storage_usage_lasting_duration_critical}', at_least=${var.storage_usage_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {
@@ -162,8 +162,8 @@ resource "signalfx_detector" "io_consumption" {
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.DB*orPostgreSQL/servers') and filter('primary_aggregation_type', 'true')
     signal = data('io_consumption_percent', filter=base_filtering and ${module.filtering.signalflow})${var.io_consumption_aggregation_function}${var.io_consumption_transformation_function}.publish('signal')
-    detect(when(signal > ${var.io_consumption_threshold_critical}, lasting=%{if var.io_consumption_lasting_duration_critical == null}None%{else}'${var.io_consumption_lasting_duration_critical}'%{endif}, at_least=${var.io_consumption_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal > ${var.io_consumption_threshold_major}, lasting=%{if var.io_consumption_lasting_duration_major == null}None%{else}'${var.io_consumption_lasting_duration_major}'%{endif}, at_least=${var.io_consumption_at_least_percentage_major}) and (not when(signal > ${var.io_consumption_threshold_critical}, lasting=%{if var.io_consumption_lasting_duration_critical == null}None%{else}'${var.io_consumption_lasting_duration_critical}'%{endif}, at_least=${var.io_consumption_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.io_consumption_threshold_critical}%{if var.io_consumption_lasting_duration_critical != null}, lasting='${var.io_consumption_lasting_duration_critical}', at_least=${var.io_consumption_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.io_consumption_threshold_major}%{if var.io_consumption_lasting_duration_major != null}, lasting='${var.io_consumption_lasting_duration_major}', at_least=${var.io_consumption_at_least_percentage_major}%{endif}) and (not when(signal > ${var.io_consumption_threshold_critical}%{if var.io_consumption_lasting_duration_critical != null}, lasting='${var.io_consumption_lasting_duration_critical}', at_least=${var.io_consumption_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {
@@ -208,8 +208,8 @@ resource "signalfx_detector" "memory_usage" {
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.DB*orPostgreSQL/servers') and filter('primary_aggregation_type', 'true')
     signal = data('memory_percent', filter=base_filtering and ${module.filtering.signalflow})${var.memory_usage_aggregation_function}${var.memory_usage_transformation_function}.publish('signal')
-    detect(when(signal > ${var.memory_usage_threshold_critical}, lasting=%{if var.memory_usage_lasting_duration_critical == null}None%{else}'${var.memory_usage_lasting_duration_critical}'%{endif}, at_least=${var.memory_usage_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal > ${var.memory_usage_threshold_major}, lasting=%{if var.memory_usage_lasting_duration_major == null}None%{else}'${var.memory_usage_lasting_duration_major}'%{endif}, at_least=${var.memory_usage_at_least_percentage_major}) and (not when(signal > ${var.memory_usage_threshold_critical}, lasting=%{if var.memory_usage_lasting_duration_critical == null}None%{else}'${var.memory_usage_lasting_duration_critical}'%{endif}, at_least=${var.memory_usage_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.memory_usage_threshold_critical}%{if var.memory_usage_lasting_duration_critical != null}, lasting='${var.memory_usage_lasting_duration_critical}', at_least=${var.memory_usage_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.memory_usage_threshold_major}%{if var.memory_usage_lasting_duration_major != null}, lasting='${var.memory_usage_lasting_duration_major}', at_least=${var.memory_usage_at_least_percentage_major}%{endif}) and (not when(signal > ${var.memory_usage_threshold_critical}%{if var.memory_usage_lasting_duration_critical != null}, lasting='${var.memory_usage_lasting_duration_critical}', at_least=${var.memory_usage_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {
@@ -254,8 +254,8 @@ resource "signalfx_detector" "serverlog_storage_usage" {
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.DB*orPostgreSQL/servers') and filter('primary_aggregation_type', 'true')
     signal = data('serverlog_storage_percent', filter=base_filtering and ${module.filtering.signalflow})${var.serverlog_storage_usage_aggregation_function}${var.serverlog_storage_usage_transformation_function}.publish('signal')
-    detect(when(signal > ${var.serverlog_storage_usage_threshold_critical}, lasting=%{if var.serverlog_storage_usage_lasting_duration_critical == null}None%{else}'${var.serverlog_storage_usage_lasting_duration_critical}'%{endif}, at_least=${var.serverlog_storage_usage_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal > ${var.serverlog_storage_usage_threshold_major}, lasting=%{if var.serverlog_storage_usage_lasting_duration_major == null}None%{else}'${var.serverlog_storage_usage_lasting_duration_major}'%{endif}, at_least=${var.serverlog_storage_usage_at_least_percentage_major}) and (not when(signal > ${var.serverlog_storage_usage_threshold_critical}, lasting=%{if var.serverlog_storage_usage_lasting_duration_critical == null}None%{else}'${var.serverlog_storage_usage_lasting_duration_critical}'%{endif}, at_least=${var.serverlog_storage_usage_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.serverlog_storage_usage_threshold_critical}%{if var.serverlog_storage_usage_lasting_duration_critical != null}, lasting='${var.serverlog_storage_usage_lasting_duration_critical}', at_least=${var.serverlog_storage_usage_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.serverlog_storage_usage_threshold_major}%{if var.serverlog_storage_usage_lasting_duration_major != null}, lasting='${var.serverlog_storage_usage_lasting_duration_major}', at_least=${var.serverlog_storage_usage_at_least_percentage_major}%{endif}) and (not when(signal > ${var.serverlog_storage_usage_threshold_critical}%{if var.serverlog_storage_usage_lasting_duration_critical != null}, lasting='${var.serverlog_storage_usage_lasting_duration_critical}', at_least=${var.serverlog_storage_usage_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {
