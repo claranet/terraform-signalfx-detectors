@@ -37,8 +37,8 @@ resource "signalfx_detector" "evicted_keys" {
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.Cache/Redis') and filter('primary_aggregation_type', 'true')
     signal = data('evictedkeys', filter=base_filtering and ${module.filtering.signalflow})${var.evicted_keys_aggregation_function}${var.evicted_keys_transformation_function}.publish('signal')
-    detect(when(signal > ${var.evicted_keys_threshold_critical}, lasting=%{if var.evicted_keys_lasting_duration_critical == null}None%{else}'${var.evicted_keys_lasting_duration_critical}'%{endif}, at_least=${var.evicted_keys_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal > ${var.evicted_keys_threshold_major}, lasting=%{if var.evicted_keys_lasting_duration_major == null}None%{else}'${var.evicted_keys_lasting_duration_major}'%{endif}, at_least=${var.evicted_keys_at_least_percentage_major}) and (not when(signal > ${var.evicted_keys_threshold_critical}, lasting=%{if var.evicted_keys_lasting_duration_critical == null}None%{else}'${var.evicted_keys_lasting_duration_critical}'%{endif}, at_least=${var.evicted_keys_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.evicted_keys_threshold_critical}%{if var.evicted_keys_lasting_duration_critical != null}, lasting='${var.evicted_keys_lasting_duration_critical}', at_least=${var.evicted_keys_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.evicted_keys_threshold_major}%{if var.evicted_keys_lasting_duration_major != null}, lasting='${var.evicted_keys_lasting_duration_major}', at_least=${var.evicted_keys_at_least_percentage_major}%{endif}) and (not when(signal > ${var.evicted_keys_threshold_critical}%{if var.evicted_keys_lasting_duration_critical != null}, lasting='${var.evicted_keys_lasting_duration_critical}', at_least=${var.evicted_keys_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {
@@ -83,8 +83,8 @@ resource "signalfx_detector" "processor_time" {
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.Cache/Redis') and filter('primary_aggregation_type', 'true')
     signal = data('percentProcessorTime', filter=base_filtering and ${module.filtering.signalflow})${var.processor_time_aggregation_function}${var.processor_time_transformation_function}.publish('signal')
-    detect(when(signal > ${var.processor_time_threshold_critical}, lasting=%{if var.processor_time_lasting_duration_critical == null}None%{else}'${var.processor_time_lasting_duration_critical}'%{endif}, at_least=${var.processor_time_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal > ${var.processor_time_threshold_major}, lasting=%{if var.processor_time_lasting_duration_major == null}None%{else}'${var.processor_time_lasting_duration_major}'%{endif}, at_least=${var.processor_time_at_least_percentage_major}) and (not when(signal > ${var.processor_time_threshold_critical}, lasting=%{if var.processor_time_lasting_duration_critical == null}None%{else}'${var.processor_time_lasting_duration_critical}'%{endif}, at_least=${var.processor_time_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.processor_time_threshold_critical}%{if var.processor_time_lasting_duration_critical != null}, lasting='${var.processor_time_lasting_duration_critical}', at_least=${var.processor_time_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.processor_time_threshold_major}%{if var.processor_time_lasting_duration_major != null}, lasting='${var.processor_time_lasting_duration_major}', at_least=${var.processor_time_at_least_percentage_major}%{endif}) and (not when(signal > ${var.processor_time_threshold_critical}%{if var.processor_time_lasting_duration_critical != null}, lasting='${var.processor_time_lasting_duration_critical}', at_least=${var.processor_time_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {
@@ -129,8 +129,8 @@ resource "signalfx_detector" "load" {
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.Cache/Redis') and filter('primary_aggregation_type', 'true')
     signal = data('serverLoad', filter=base_filtering and ${module.filtering.signalflow})${var.load_aggregation_function}${var.load_transformation_function}.publish('signal')
-    detect(when(signal > ${var.load_threshold_critical}, lasting=%{if var.load_lasting_duration_critical == null}None%{else}'${var.load_lasting_duration_critical}'%{endif}, at_least=${var.load_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal > ${var.load_threshold_major}, lasting=%{if var.load_lasting_duration_major == null}None%{else}'${var.load_lasting_duration_major}'%{endif}, at_least=${var.load_at_least_percentage_major}) and (not when(signal > ${var.load_threshold_critical}, lasting=%{if var.load_lasting_duration_critical == null}None%{else}'${var.load_lasting_duration_critical}'%{endif}, at_least=${var.load_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.load_threshold_critical}%{if var.load_lasting_duration_critical != null}, lasting='${var.load_lasting_duration_critical}', at_least=${var.load_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.load_threshold_major}%{if var.load_lasting_duration_major != null}, lasting='${var.load_lasting_duration_major}', at_least=${var.load_at_least_percentage_major}%{endif}) and (not when(signal > ${var.load_threshold_critical}%{if var.load_lasting_duration_critical != null}, lasting='${var.load_lasting_duration_critical}', at_least=${var.load_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {

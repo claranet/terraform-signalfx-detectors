@@ -7,8 +7,8 @@ resource "signalfx_detector" "processes" {
 
   program_text = <<-EOF
     signal = data('ps_count.processes', filter=${module.filtering.signalflow})${var.processes_aggregation_function}${var.processes_transformation_function}.publish('signal')
-    detect(when(signal < ${var.processes_threshold_critical}, lasting=%{if var.processes_lasting_duration_critical == null}None%{else}'${var.processes_lasting_duration_critical}'%{endif}, at_least=${var.processes_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal < ${var.processes_threshold_major}, lasting=%{if var.processes_lasting_duration_major == null}None%{else}'${var.processes_lasting_duration_major}'%{endif}, at_least=${var.processes_at_least_percentage_major}) and (not when(signal < ${var.processes_threshold_critical}, lasting=%{if var.processes_lasting_duration_critical == null}None%{else}'${var.processes_lasting_duration_critical}'%{endif}, at_least=${var.processes_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal < ${var.processes_threshold_critical}%{if var.processes_lasting_duration_critical != null}, lasting='${var.processes_lasting_duration_critical}', at_least=${var.processes_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal < ${var.processes_threshold_major}%{if var.processes_lasting_duration_major != null}, lasting='${var.processes_lasting_duration_major}', at_least=${var.processes_at_least_percentage_major}%{endif}) and (not when(signal < ${var.processes_threshold_critical}%{if var.processes_lasting_duration_critical != null}, lasting='${var.processes_lasting_duration_critical}', at_least=${var.processes_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {

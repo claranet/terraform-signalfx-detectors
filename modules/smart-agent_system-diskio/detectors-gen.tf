@@ -14,7 +14,7 @@ resource "signalfx_detector" "disk_io_usage" {
 
   program_text = <<-EOF
     signal = data('system.disk.io_time', filter=${module.filtering.signalflow}, rollup='rate')${var.disk_io_usage_aggregation_function}${var.disk_io_usage_transformation_function}.publish('signal')
-    detect(when(signal > ${var.disk_io_usage_threshold_critical}, lasting=%{if var.disk_io_usage_lasting_duration_critical == null}None%{else}'${var.disk_io_usage_lasting_duration_critical}'%{endif}, at_least=${var.disk_io_usage_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal > ${var.disk_io_usage_threshold_critical}%{if var.disk_io_usage_lasting_duration_critical != null}, lasting='${var.disk_io_usage_lasting_duration_critical}', at_least=${var.disk_io_usage_at_least_percentage_critical}%{endif})).publish('CRIT')
 EOF
 
   rule {
@@ -48,7 +48,7 @@ resource "signalfx_detector" "disk_weighted_io_usage" {
 
   program_text = <<-EOF
     signal = data('system.disk.weighted_io_time', filter=${module.filtering.signalflow}, rollup='rate')${var.disk_weighted_io_usage_aggregation_function}${var.disk_weighted_io_usage_transformation_function}.publish('signal')
-    detect(when(signal > ${var.disk_weighted_io_usage_threshold_critical}, lasting=%{if var.disk_weighted_io_usage_lasting_duration_critical == null}None%{else}'${var.disk_weighted_io_usage_lasting_duration_critical}'%{endif}, at_least=${var.disk_weighted_io_usage_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal > ${var.disk_weighted_io_usage_threshold_critical}%{if var.disk_weighted_io_usage_lasting_duration_critical != null}, lasting='${var.disk_weighted_io_usage_lasting_duration_critical}', at_least=${var.disk_weighted_io_usage_at_least_percentage_critical}%{endif})).publish('CRIT')
 EOF
 
   rule {

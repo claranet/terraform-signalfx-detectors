@@ -15,8 +15,8 @@ resource "signalfx_detector" "api_result_rate" {
     api_success = data('ServiceApiResult', filter=base_filtering and filter('statuscode', '200') and ${module.filtering.signalflow}, extrapolation='zero')${var.api_result_rate_aggregation_function}${var.api_result_rate_transformation_function}
     api_all = data('ServiceApiResult', filter=base_filtering and ${module.filtering.signalflow}, extrapolation='zero')${var.api_result_rate_aggregation_function}${var.api_result_rate_transformation_function}
     signal = (api_success/api_all).scale(100).fill(100).publish('signal')
-    detect(when(signal < ${var.api_result_rate_threshold_critical}, lasting=%{if var.api_result_rate_lasting_duration_critical == null}None%{else}'${var.api_result_rate_lasting_duration_critical}'%{endif}, at_least=${var.api_result_rate_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal < ${var.api_result_rate_threshold_major}, lasting=%{if var.api_result_rate_lasting_duration_major == null}None%{else}'${var.api_result_rate_lasting_duration_major}'%{endif}, at_least=${var.api_result_rate_at_least_percentage_major}) and (not when(signal < ${var.api_result_rate_threshold_critical}, lasting=%{if var.api_result_rate_lasting_duration_critical == null}None%{else}'${var.api_result_rate_lasting_duration_critical}'%{endif}, at_least=${var.api_result_rate_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal < ${var.api_result_rate_threshold_critical}%{if var.api_result_rate_lasting_duration_critical != null}, lasting='${var.api_result_rate_lasting_duration_critical}', at_least=${var.api_result_rate_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal < ${var.api_result_rate_threshold_major}%{if var.api_result_rate_lasting_duration_major != null}, lasting='${var.api_result_rate_lasting_duration_major}', at_least=${var.api_result_rate_at_least_percentage_major}%{endif}) and (not when(signal < ${var.api_result_rate_threshold_critical}%{if var.api_result_rate_lasting_duration_critical != null}, lasting='${var.api_result_rate_lasting_duration_critical}', at_least=${var.api_result_rate_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {
@@ -61,8 +61,8 @@ resource "signalfx_detector" "api_latency" {
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.KeyVault/vaults') and filter('primary_aggregation_type', 'true')
     signal = data('ServiceApiLatency', filter=base_filtering and not filter('activityname', 'secretlist') and ${module.filtering.signalflow}, extrapolation='zero')${var.api_latency_aggregation_function}${var.api_latency_transformation_function}.publish('signal')
-    detect(when(signal > ${var.api_latency_threshold_major}, lasting=%{if var.api_latency_lasting_duration_major == null}None%{else}'${var.api_latency_lasting_duration_major}'%{endif}, at_least=${var.api_latency_at_least_percentage_major})).publish('MAJOR')
-    detect(when(signal > ${var.api_latency_threshold_minor}, lasting=%{if var.api_latency_lasting_duration_minor == null}None%{else}'${var.api_latency_lasting_duration_minor}'%{endif}, at_least=${var.api_latency_at_least_percentage_minor}) and (not when(signal > ${var.api_latency_threshold_major}, lasting=%{if var.api_latency_lasting_duration_major == null}None%{else}'${var.api_latency_lasting_duration_major}'%{endif}, at_least=${var.api_latency_at_least_percentage_major}))).publish('MINOR')
+    detect(when(signal > ${var.api_latency_threshold_major}%{if var.api_latency_lasting_duration_major != null}, lasting='${var.api_latency_lasting_duration_major}', at_least=${var.api_latency_at_least_percentage_major}%{endif})).publish('MAJOR')
+    detect(when(signal > ${var.api_latency_threshold_minor}%{if var.api_latency_lasting_duration_minor != null}, lasting='${var.api_latency_lasting_duration_minor}', at_least=${var.api_latency_at_least_percentage_minor}%{endif}) and (not when(signal > ${var.api_latency_threshold_major}%{if var.api_latency_lasting_duration_major != null}, lasting='${var.api_latency_lasting_duration_major}', at_least=${var.api_latency_at_least_percentage_major}%{endif}))).publish('MINOR')
 EOF
 
   rule {

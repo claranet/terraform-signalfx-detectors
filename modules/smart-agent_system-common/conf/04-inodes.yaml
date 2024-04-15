@@ -5,6 +5,7 @@ value_unit: "%"
 signals:
   signal:
     metric: percent_inodes.used
+    filter: not filter('device', '/dev/loop*')
 rules:
   critical:
     threshold: 95
