@@ -13,8 +13,8 @@ resource "signalfx_detector" "latency" {
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.Search/searchServices') and filter('primary_aggregation_type', 'true')
     signal = data('SearchLatency', filter=base_filtering and ${module.filtering.signalflow})${var.latency_aggregation_function}${var.latency_transformation_function}.publish('signal')
-    detect(when(signal > ${var.latency_threshold_critical}, lasting=%{if var.latency_lasting_duration_critical == null}None%{else}'${var.latency_lasting_duration_critical}'%{endif}, at_least=${var.latency_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal > ${var.latency_threshold_major}, lasting=%{if var.latency_lasting_duration_major == null}None%{else}'${var.latency_lasting_duration_major}'%{endif}, at_least=${var.latency_at_least_percentage_major}) and (not when(signal > ${var.latency_threshold_critical}, lasting=%{if var.latency_lasting_duration_critical == null}None%{else}'${var.latency_lasting_duration_critical}'%{endif}, at_least=${var.latency_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.latency_threshold_critical}%{if var.latency_lasting_duration_critical != null}, lasting='${var.latency_lasting_duration_critical}', at_least=${var.latency_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.latency_threshold_major}%{if var.latency_lasting_duration_major != null}, lasting='${var.latency_lasting_duration_major}', at_least=${var.latency_at_least_percentage_major}%{endif}) and (not when(signal > ${var.latency_threshold_critical}%{if var.latency_lasting_duration_critical != null}, lasting='${var.latency_lasting_duration_critical}', at_least=${var.latency_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {
@@ -59,8 +59,8 @@ resource "signalfx_detector" "throttled_queries_rate" {
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.Search/searchServices') and filter('primary_aggregation_type', 'true')
     signal = data('ThrottledSearchQueriesPercentage', filter=base_filtering and ${module.filtering.signalflow})${var.throttled_queries_rate_aggregation_function}${var.throttled_queries_rate_transformation_function}.publish('signal')
-    detect(when(signal > ${var.throttled_queries_rate_threshold_critical}, lasting=%{if var.throttled_queries_rate_lasting_duration_critical == null}None%{else}'${var.throttled_queries_rate_lasting_duration_critical}'%{endif}, at_least=${var.throttled_queries_rate_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal > ${var.throttled_queries_rate_threshold_major}, lasting=%{if var.throttled_queries_rate_lasting_duration_major == null}None%{else}'${var.throttled_queries_rate_lasting_duration_major}'%{endif}, at_least=${var.throttled_queries_rate_at_least_percentage_major}) and (not when(signal > ${var.throttled_queries_rate_threshold_critical}, lasting=%{if var.throttled_queries_rate_lasting_duration_critical == null}None%{else}'${var.throttled_queries_rate_lasting_duration_critical}'%{endif}, at_least=${var.throttled_queries_rate_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.throttled_queries_rate_threshold_critical}%{if var.throttled_queries_rate_lasting_duration_critical != null}, lasting='${var.throttled_queries_rate_lasting_duration_critical}', at_least=${var.throttled_queries_rate_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.throttled_queries_rate_threshold_major}%{if var.throttled_queries_rate_lasting_duration_major != null}, lasting='${var.throttled_queries_rate_lasting_duration_major}', at_least=${var.throttled_queries_rate_at_least_percentage_major}%{endif}) and (not when(signal > ${var.throttled_queries_rate_threshold_critical}%{if var.throttled_queries_rate_lasting_duration_critical != null}, lasting='${var.throttled_queries_rate_lasting_duration_critical}', at_least=${var.throttled_queries_rate_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {

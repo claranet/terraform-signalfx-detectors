@@ -35,7 +35,7 @@ resource "signalfx_detector" "status" {
 
   program_text = <<-EOF
     signal = data('wallix_bastion_up', filter=${module.filtering.signalflow})${var.status_aggregation_function}${var.status_transformation_function}.publish('signal')
-    detect(when(signal < ${var.status_threshold_critical}, lasting=%{if var.status_lasting_duration_critical == null}None%{else}'${var.status_lasting_duration_critical}'%{endif}, at_least=${var.status_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal < ${var.status_threshold_critical}%{if var.status_lasting_duration_critical != null}, lasting='${var.status_lasting_duration_critical}', at_least=${var.status_at_least_percentage_critical}%{endif})).publish('CRIT')
 EOF
 
   rule {
@@ -62,8 +62,8 @@ resource "signalfx_detector" "current_sessions" {
 
   program_text = <<-EOF
     signal = data('wallix_bastion_sessions', filter=filter('status', 'current') and ${module.filtering.signalflow})${var.current_sessions_aggregation_function}${var.current_sessions_transformation_function}.publish('signal')
-    detect(when(signal > ${var.current_sessions_threshold_major}, lasting=%{if var.current_sessions_lasting_duration_major == null}None%{else}'${var.current_sessions_lasting_duration_major}'%{endif}, at_least=${var.current_sessions_at_least_percentage_major})).publish('MAJOR')
-    detect(when(signal > ${var.current_sessions_threshold_minor}, lasting=%{if var.current_sessions_lasting_duration_minor == null}None%{else}'${var.current_sessions_lasting_duration_minor}'%{endif}, at_least=${var.current_sessions_at_least_percentage_minor}) and (not when(signal > ${var.current_sessions_threshold_major}, lasting=%{if var.current_sessions_lasting_duration_major == null}None%{else}'${var.current_sessions_lasting_duration_major}'%{endif}, at_least=${var.current_sessions_at_least_percentage_major}))).publish('MINOR')
+    detect(when(signal > ${var.current_sessions_threshold_major}%{if var.current_sessions_lasting_duration_major != null}, lasting='${var.current_sessions_lasting_duration_major}', at_least=${var.current_sessions_at_least_percentage_major}%{endif})).publish('MAJOR')
+    detect(when(signal > ${var.current_sessions_threshold_minor}%{if var.current_sessions_lasting_duration_minor != null}, lasting='${var.current_sessions_lasting_duration_minor}', at_least=${var.current_sessions_at_least_percentage_minor}%{endif}) and (not when(signal > ${var.current_sessions_threshold_major}%{if var.current_sessions_lasting_duration_major != null}, lasting='${var.current_sessions_lasting_duration_major}', at_least=${var.current_sessions_at_least_percentage_major}%{endif}))).publish('MINOR')
 EOF
 
   rule {
@@ -103,7 +103,7 @@ resource "signalfx_detector" "encryption_status" {
   program_text = <<-EOF
     status = data('wallix_bastion_encryption_status', filter=${module.filtering.signalflow})${var.encryption_status_aggregation_function}${var.encryption_status_transformation_function}
     signal = status.fill(value=1).publish('signal')
-    detect(when(signal != ${var.encryption_status_threshold_critical}, lasting=%{if var.encryption_status_lasting_duration_critical == null}None%{else}'${var.encryption_status_lasting_duration_critical}'%{endif}, at_least=${var.encryption_status_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal != ${var.encryption_status_threshold_critical}%{if var.encryption_status_lasting_duration_critical != null}, lasting='${var.encryption_status_lasting_duration_critical}', at_least=${var.encryption_status_at_least_percentage_critical}%{endif})).publish('CRIT')
 EOF
 
   rule {
@@ -130,7 +130,7 @@ resource "signalfx_detector" "license" {
 
   program_text = <<-EOF
     signal = data('wallix_bastion_license_is_expired', filter=${module.filtering.signalflow}, extrapolation='zero')${var.license_aggregation_function}${var.license_transformation_function}.publish('signal')
-    detect(when(signal > ${var.license_threshold_critical}, lasting=%{if var.license_lasting_duration_critical == null}None%{else}'${var.license_lasting_duration_critical}'%{endif}, at_least=${var.license_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal > ${var.license_threshold_critical}%{if var.license_lasting_duration_critical != null}, lasting='${var.license_lasting_duration_critical}', at_least=${var.license_at_least_percentage_critical}%{endif})).publish('CRIT')
 EOF
 
   rule {

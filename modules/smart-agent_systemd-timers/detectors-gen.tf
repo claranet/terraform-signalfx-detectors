@@ -37,7 +37,7 @@ resource "signalfx_detector" "execution_delay" {
     A = data('gauge.active_state.active', filter=${module.filtering.signalflow})${var.execution_delay_aggregation_function}${var.execution_delay_transformation_function}
     B = data('gauge.active_state.activating', filter=${module.filtering.signalflow})${var.execution_delay_aggregation_function}${var.execution_delay_transformation_function}
     signal = (A+B).publish('signal')
-    detect(when(signal < ${var.execution_delay_threshold_major}, lasting=%{if var.execution_delay_lasting_duration_major == null}None%{else}'${var.execution_delay_lasting_duration_major}'%{endif}, at_least=${var.execution_delay_at_least_percentage_major})).publish('MAJOR')
+    detect(when(signal < ${var.execution_delay_threshold_major}%{if var.execution_delay_lasting_duration_major != null}, lasting='${var.execution_delay_lasting_duration_major}', at_least=${var.execution_delay_at_least_percentage_major}%{endif})).publish('MAJOR')
 EOF
 
   rule {
@@ -64,7 +64,7 @@ resource "signalfx_detector" "last_execution_state" {
 
   program_text = <<-EOF
     signal = data('gauge.substate.failed', filter=${module.filtering.signalflow})${var.last_execution_state_aggregation_function}${var.last_execution_state_transformation_function}.publish('signal')
-    detect(when(signal > ${var.last_execution_state_threshold_major}, lasting=%{if var.last_execution_state_lasting_duration_major == null}None%{else}'${var.last_execution_state_lasting_duration_major}'%{endif}, at_least=${var.last_execution_state_at_least_percentage_major})).publish('MAJOR')
+    detect(when(signal > ${var.last_execution_state_threshold_major}%{if var.last_execution_state_lasting_duration_major != null}, lasting='${var.last_execution_state_lasting_duration_major}', at_least=${var.last_execution_state_at_least_percentage_major}%{endif})).publish('MAJOR')
 EOF
 
   rule {
