@@ -7,7 +7,7 @@ resource "signalfx_detector" "backup_failed" {
 
   program_text = <<-EOF
     signal = data('NumberOfBackupJobsFailed', filter=${module.filtering.signalflow})${var.backup_failed_aggregation_function}${var.backup_failed_transformation_function}.publish('signal')
-    detect(when(signal > ${var.backup_failed_threshold_critical}, lasting=%{if var.backup_failed_lasting_duration_critical == null}None%{else}'${var.backup_failed_lasting_duration_critical}'%{endif}, at_least=${var.backup_failed_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal > ${var.backup_failed_threshold_critical}%{if var.backup_failed_lasting_duration_critical != null}, lasting='${var.backup_failed_lasting_duration_critical}', at_least=${var.backup_failed_at_least_percentage_critical}%{endif})).publish('CRIT')
 EOF
 
   rule {
@@ -34,7 +34,7 @@ resource "signalfx_detector" "backup_job_expired" {
 
   program_text = <<-EOF
     signal = data('NumberOfBackupJobsExpired', filter=${module.filtering.signalflow}, extrapolation='zero')${var.backup_job_expired_aggregation_function}${var.backup_job_expired_transformation_function}.publish('signal')
-    detect(when(signal > ${var.backup_job_expired_threshold_critical}, lasting=%{if var.backup_job_expired_lasting_duration_critical == null}None%{else}'${var.backup_job_expired_lasting_duration_critical}'%{endif}, at_least=${var.backup_job_expired_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal > ${var.backup_job_expired_threshold_critical}%{if var.backup_job_expired_lasting_duration_critical != null}, lasting='${var.backup_job_expired_lasting_duration_critical}', at_least=${var.backup_job_expired_at_least_percentage_critical}%{endif})).publish('CRIT')
 EOF
 
   rule {
@@ -61,7 +61,7 @@ resource "signalfx_detector" "backup_copy_jobs_failed" {
 
   program_text = <<-EOF
     signal = data('NumberOfCopyJobsFailed', filter=${module.filtering.signalflow})${var.backup_copy_jobs_failed_aggregation_function}${var.backup_copy_jobs_failed_transformation_function}.publish('signal')
-    detect(when(signal > ${var.backup_copy_jobs_failed_threshold_critical}, lasting=%{if var.backup_copy_jobs_failed_lasting_duration_critical == null}None%{else}'${var.backup_copy_jobs_failed_lasting_duration_critical}'%{endif}, at_least=${var.backup_copy_jobs_failed_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal > ${var.backup_copy_jobs_failed_threshold_critical}%{if var.backup_copy_jobs_failed_lasting_duration_critical != null}, lasting='${var.backup_copy_jobs_failed_lasting_duration_critical}', at_least=${var.backup_copy_jobs_failed_at_least_percentage_critical}%{endif})).publish('CRIT')
 EOF
 
   rule {
@@ -90,7 +90,7 @@ resource "signalfx_detector" "backup_successful" {
     created = data('NumberOfBackupJobsCreated', filter=${module.filtering.signalflow}, extrapolation='zero')${var.backup_successful_aggregation_function}${var.backup_successful_transformation_function}
     completed = data('NumberOfBackupJobsCompleted', filter=${module.filtering.signalflow}, extrapolation='zero')${var.backup_successful_aggregation_function}${var.backup_successful_transformation_function}
     signal = (created-completed).publish('signal')
-    detect(when(signal > ${var.backup_successful_threshold_critical}, lasting=%{if var.backup_successful_lasting_duration_critical == null}None%{else}'${var.backup_successful_lasting_duration_critical}'%{endif}, at_least=${var.backup_successful_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal > ${var.backup_successful_threshold_critical}%{if var.backup_successful_lasting_duration_critical != null}, lasting='${var.backup_successful_lasting_duration_critical}', at_least=${var.backup_successful_at_least_percentage_critical}%{endif})).publish('CRIT')
 EOF
 
   rule {
@@ -117,7 +117,7 @@ resource "signalfx_detector" "backup_rp_partial" {
 
   program_text = <<-EOF
     signal = data('NumberOfRecoveryPointsPartial', filter=${module.filtering.signalflow})${var.backup_rp_partial_aggregation_function}${var.backup_rp_partial_transformation_function}.publish('signal')
-    detect(when(signal > ${var.backup_rp_partial_threshold_minor}, lasting=%{if var.backup_rp_partial_lasting_duration_minor == null}None%{else}'${var.backup_rp_partial_lasting_duration_minor}'%{endif}, at_least=${var.backup_rp_partial_at_least_percentage_minor})).publish('MINOR')
+    detect(when(signal > ${var.backup_rp_partial_threshold_minor}%{if var.backup_rp_partial_lasting_duration_minor != null}, lasting='${var.backup_rp_partial_lasting_duration_minor}', at_least=${var.backup_rp_partial_at_least_percentage_minor}%{endif})).publish('MINOR')
 EOF
 
   rule {
@@ -144,7 +144,7 @@ resource "signalfx_detector" "backup_rp_expired" {
 
   program_text = <<-EOF
     signal = data('NumberOfRecoveryPointsExpired', filter=${module.filtering.signalflow})${var.backup_rp_expired_aggregation_function}${var.backup_rp_expired_transformation_function}.publish('signal')
-    detect(when(signal > ${var.backup_rp_expired_threshold_major}, lasting=%{if var.backup_rp_expired_lasting_duration_major == null}None%{else}'${var.backup_rp_expired_lasting_duration_major}'%{endif}, at_least=${var.backup_rp_expired_at_least_percentage_major})).publish('MAJOR')
+    detect(when(signal > ${var.backup_rp_expired_threshold_major}%{if var.backup_rp_expired_lasting_duration_major != null}, lasting='${var.backup_rp_expired_lasting_duration_major}', at_least=${var.backup_rp_expired_at_least_percentage_major}%{endif})).publish('MAJOR')
 EOF
 
   rule {

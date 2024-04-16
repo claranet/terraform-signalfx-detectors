@@ -13,8 +13,8 @@ resource "signalfx_detector" "cdn_total_latency" {
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.Cdn/profiles') and filter('primary_aggregation_type', 'true')
     signal = data('TotalLatency', filter=base_filtering and ${module.filtering.signalflow})${var.cdn_total_latency_aggregation_function}${var.cdn_total_latency_transformation_function}.publish('signal')
-    detect(when(signal > ${var.cdn_total_latency_threshold_critical}, lasting=%{if var.cdn_total_latency_lasting_duration_critical == null}None%{else}'${var.cdn_total_latency_lasting_duration_critical}'%{endif}, at_least=${var.cdn_total_latency_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal > ${var.cdn_total_latency_threshold_major}, lasting=%{if var.cdn_total_latency_lasting_duration_major == null}None%{else}'${var.cdn_total_latency_lasting_duration_major}'%{endif}, at_least=${var.cdn_total_latency_at_least_percentage_major}) and (not when(signal > ${var.cdn_total_latency_threshold_critical}, lasting=%{if var.cdn_total_latency_lasting_duration_critical == null}None%{else}'${var.cdn_total_latency_lasting_duration_critical}'%{endif}, at_least=${var.cdn_total_latency_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.cdn_total_latency_threshold_critical}%{if var.cdn_total_latency_lasting_duration_critical != null}, lasting='${var.cdn_total_latency_lasting_duration_critical}', at_least=${var.cdn_total_latency_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.cdn_total_latency_threshold_major}%{if var.cdn_total_latency_lasting_duration_major != null}, lasting='${var.cdn_total_latency_lasting_duration_major}', at_least=${var.cdn_total_latency_at_least_percentage_major}%{endif}) and (not when(signal > ${var.cdn_total_latency_threshold_critical}%{if var.cdn_total_latency_lasting_duration_critical != null}, lasting='${var.cdn_total_latency_lasting_duration_critical}', at_least=${var.cdn_total_latency_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {
@@ -59,8 +59,8 @@ resource "signalfx_detector" "cdn_origin_health" {
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.Cdn/profiles') and filter('primary_aggregation_type', 'true')
     signal = data('OriginHealthPercentage', filter=base_filtering and ${module.filtering.signalflow})${var.cdn_origin_health_aggregation_function}${var.cdn_origin_health_transformation_function}.publish('signal')
-    detect(when(signal < ${var.cdn_origin_health_threshold_critical}, lasting=%{if var.cdn_origin_health_lasting_duration_critical == null}None%{else}'${var.cdn_origin_health_lasting_duration_critical}'%{endif}, at_least=${var.cdn_origin_health_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal < ${var.cdn_origin_health_threshold_major}, lasting=%{if var.cdn_origin_health_lasting_duration_major == null}None%{else}'${var.cdn_origin_health_lasting_duration_major}'%{endif}, at_least=${var.cdn_origin_health_at_least_percentage_major}) and (not when(signal < ${var.cdn_origin_health_threshold_critical}, lasting=%{if var.cdn_origin_health_lasting_duration_critical == null}None%{else}'${var.cdn_origin_health_lasting_duration_critical}'%{endif}, at_least=${var.cdn_origin_health_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal < ${var.cdn_origin_health_threshold_critical}%{if var.cdn_origin_health_lasting_duration_critical != null}, lasting='${var.cdn_origin_health_lasting_duration_critical}', at_least=${var.cdn_origin_health_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal < ${var.cdn_origin_health_threshold_major}%{if var.cdn_origin_health_lasting_duration_major != null}, lasting='${var.cdn_origin_health_lasting_duration_major}', at_least=${var.cdn_origin_health_at_least_percentage_major}%{endif}) and (not when(signal < ${var.cdn_origin_health_threshold_critical}%{if var.cdn_origin_health_lasting_duration_critical != null}, lasting='${var.cdn_origin_health_lasting_duration_critical}', at_least=${var.cdn_origin_health_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {

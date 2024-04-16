@@ -42,8 +42,8 @@ resource "signalfx_detector" "memory_used" {
     A = data('gauge.bucket.op.mem_used', filter=${module.filtering.signalflow})${var.memory_used_aggregation_function}${var.memory_used_transformation_function}
     B = data('gauge.bucket.op.ep_mem_high_wat', filter=${module.filtering.signalflow})${var.memory_used_aggregation_function}${var.memory_used_transformation_function}
     signal = (A/B).scale(100).fill(0).publish('signal')
-    detect(when(signal > ${var.memory_used_threshold_critical}, lasting=%{if var.memory_used_lasting_duration_critical == null}None%{else}'${var.memory_used_lasting_duration_critical}'%{endif}, at_least=${var.memory_used_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal > ${var.memory_used_threshold_major}, lasting=%{if var.memory_used_lasting_duration_major == null}None%{else}'${var.memory_used_lasting_duration_major}'%{endif}, at_least=${var.memory_used_at_least_percentage_major}) and (not when(signal > ${var.memory_used_threshold_critical}, lasting=%{if var.memory_used_lasting_duration_critical == null}None%{else}'${var.memory_used_lasting_duration_critical}'%{endif}, at_least=${var.memory_used_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.memory_used_threshold_critical}%{if var.memory_used_lasting_duration_critical != null}, lasting='${var.memory_used_lasting_duration_critical}', at_least=${var.memory_used_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.memory_used_threshold_major}%{if var.memory_used_lasting_duration_major != null}, lasting='${var.memory_used_lasting_duration_major}', at_least=${var.memory_used_at_least_percentage_major}%{endif}) and (not when(signal > ${var.memory_used_threshold_critical}%{if var.memory_used_lasting_duration_critical != null}, lasting='${var.memory_used_lasting_duration_critical}', at_least=${var.memory_used_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {
@@ -82,7 +82,7 @@ resource "signalfx_detector" "out_of_memory_errors" {
 
   program_text = <<-EOF
     signal = data('gauge.bucket.op.ep_oom_errors', filter=${module.filtering.signalflow})${var.out_of_memory_errors_aggregation_function}${var.out_of_memory_errors_transformation_function}.publish('signal')
-    detect(when(signal > ${var.out_of_memory_errors_threshold_critical}, lasting=%{if var.out_of_memory_errors_lasting_duration_critical == null}None%{else}'${var.out_of_memory_errors_lasting_duration_critical}'%{endif}, at_least=${var.out_of_memory_errors_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal > ${var.out_of_memory_errors_threshold_critical}%{if var.out_of_memory_errors_lasting_duration_critical != null}, lasting='${var.out_of_memory_errors_lasting_duration_critical}', at_least=${var.out_of_memory_errors_at_least_percentage_critical}%{endif})).publish('CRIT')
 EOF
 
   rule {
@@ -109,8 +109,8 @@ resource "signalfx_detector" "disk_write_queue" {
 
   program_text = <<-EOF
     signal = data('gauge.bucket.op.disk_write_queue', filter=${module.filtering.signalflow})${var.disk_write_queue_aggregation_function}${var.disk_write_queue_transformation_function}.publish('signal')
-    detect(when(signal > ${var.disk_write_queue_threshold_critical}, lasting=%{if var.disk_write_queue_lasting_duration_critical == null}None%{else}'${var.disk_write_queue_lasting_duration_critical}'%{endif}, at_least=${var.disk_write_queue_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal > ${var.disk_write_queue_threshold_major}, lasting=%{if var.disk_write_queue_lasting_duration_major == null}None%{else}'${var.disk_write_queue_lasting_duration_major}'%{endif}, at_least=${var.disk_write_queue_at_least_percentage_major}) and (not when(signal > ${var.disk_write_queue_threshold_critical}, lasting=%{if var.disk_write_queue_lasting_duration_critical == null}None%{else}'${var.disk_write_queue_lasting_duration_critical}'%{endif}, at_least=${var.disk_write_queue_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.disk_write_queue_threshold_critical}%{if var.disk_write_queue_lasting_duration_critical != null}, lasting='${var.disk_write_queue_lasting_duration_critical}', at_least=${var.disk_write_queue_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.disk_write_queue_threshold_major}%{if var.disk_write_queue_lasting_duration_major != null}, lasting='${var.disk_write_queue_lasting_duration_major}', at_least=${var.disk_write_queue_at_least_percentage_major}%{endif}) and (not when(signal > ${var.disk_write_queue_threshold_critical}%{if var.disk_write_queue_lasting_duration_critical != null}, lasting='${var.disk_write_queue_lasting_duration_critical}', at_least=${var.disk_write_queue_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {

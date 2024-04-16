@@ -37,7 +37,7 @@ resource "signalfx_detector" "restarts" {
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.App/containerApps')
     signal = data('RestartCount', filter=base_filtering and ${module.filtering.signalflow})${var.restarts_aggregation_function}${var.restarts_transformation_function}.publish('signal')
-    detect(when(signal > ${var.restarts_threshold_warning}, lasting=%{if var.restarts_lasting_duration_warning == null}None%{else}'${var.restarts_lasting_duration_warning}'%{endif}, at_least=${var.restarts_at_least_percentage_warning})).publish('WARN')
+    detect(when(signal > ${var.restarts_threshold_warning}%{if var.restarts_lasting_duration_warning != null}, lasting='${var.restarts_lasting_duration_warning}', at_least=${var.restarts_at_least_percentage_warning}%{endif})).publish('WARN')
 EOF
 
   rule {
