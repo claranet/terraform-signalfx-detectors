@@ -5,7 +5,7 @@ value_unit: "%"
 signals:
   signal:
     metric: percent_inodes.used
-    filter: not filter('fs_type', 'squashfs'))
+    filter: not filter('fs_type', 'squashfs')
 rules:
   critical:
     threshold: 95

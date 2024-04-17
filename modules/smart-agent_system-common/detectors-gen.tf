@@ -218,7 +218,7 @@ resource "signalfx_detector" "disk_inodes" {
   }
 
   program_text = <<-EOF
-    signal = data('percent_inodes.used', filter=not filter('fs_type', 'squashfs')) and ${module.filtering.signalflow})${var.disk_inodes_aggregation_function}${var.disk_inodes_transformation_function}.publish('signal')
+    signal = data('percent_inodes.used', filter=not filter('fs_type', 'squashfs') and ${module.filtering.signalflow})${var.disk_inodes_aggregation_function}${var.disk_inodes_transformation_function}.publish('signal')
     detect(when(signal > ${var.disk_inodes_threshold_critical}%{if var.disk_inodes_lasting_duration_critical != null}, lasting='${var.disk_inodes_lasting_duration_critical}', at_least=${var.disk_inodes_at_least_percentage_critical}%{endif})).publish('CRIT')
     detect(when(signal > ${var.disk_inodes_threshold_major}%{if var.disk_inodes_lasting_duration_major != null}, lasting='${var.disk_inodes_lasting_duration_major}', at_least=${var.disk_inodes_at_least_percentage_major}%{endif}) and (not when(signal > ${var.disk_inodes_threshold_critical}%{if var.disk_inodes_lasting_duration_critical != null}, lasting='${var.disk_inodes_lasting_duration_critical}', at_least=${var.disk_inodes_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
