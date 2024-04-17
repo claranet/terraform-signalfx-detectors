@@ -27,3 +27,315 @@ EOF
   max_delay = var.heartbeat_max_delay
 }
 
+resource "signalfx_detector" "backend_latency" {
+  name = format("%s %s", local.detector_name_prefix, "AWS ELB backend latency")
+
+  authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
+
+  viz_options {
+    label      = "signal"
+    value_unit = "Second"
+  }
+
+  program_text = <<-EOF
+    base_filtering = filter('namespace', 'AWS/ELB')
+    signal = data('Latency', filter=base_filtering and filter('stat', 'mean') and (not filter('AvailabilityZone', '*')) and filter('LoadBalancerName', '*') and ${module.filtering.signalflow}, rollup='average', extrapolation='zero')${var.backend_latency_aggregation_function}${var.backend_latency_transformation_function}.publish('signal')
+    detect(when(signal > ${var.backend_latency_threshold_critical}%{if var.backend_latency_lasting_duration_critical != null}, lasting='${var.backend_latency_lasting_duration_critical}', at_least=${var.backend_latency_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.backend_latency_threshold_major}%{if var.backend_latency_lasting_duration_major != null}, lasting='${var.backend_latency_lasting_duration_major}', at_least=${var.backend_latency_at_least_percentage_major}%{endif}) and (not when(signal > ${var.backend_latency_threshold_critical}%{if var.backend_latency_lasting_duration_critical != null}, lasting='${var.backend_latency_lasting_duration_critical}', at_least=${var.backend_latency_at_least_percentage_critical}%{endif}))).publish('MAJOR')
+EOF
+
+  rule {
+    description           = "is too high > ${var.backend_latency_threshold_critical}Second"
+    severity              = "Critical"
+    detect_label          = "CRIT"
+    disabled              = coalesce(var.backend_latency_disabled_critical, var.backend_latency_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.backend_latency_notifications, "critical", []), var.notifications.critical), null)
+    runbook_url           = try(coalesce(var.backend_latency_runbook_url, var.runbook_url), "")
+    tip                   = var.backend_latency_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
+
+  rule {
+    description           = "is too high > ${var.backend_latency_threshold_major}Second"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.backend_latency_disabled_major, var.backend_latency_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.backend_latency_notifications, "major", []), var.notifications.major), null)
+    runbook_url           = try(coalesce(var.backend_latency_runbook_url, var.runbook_url), "")
+    tip                   = var.backend_latency_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
+
+  max_delay = var.backend_latency_max_delay
+}
+
+resource "signalfx_detector" "elb_5xx" {
+  name = format("%s %s", local.detector_name_prefix, "AWS ELB 5xx error rate")
+
+  authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
+
+  viz_options {
+    label        = "signal"
+    value_suffix = "%"
+  }
+
+  program_text = <<-EOF
+    base_filtering = filter('namespace', 'AWS/ELB') and filter('stat', 'sum') and (not filter('AvailabilityZone', '*')) and filter('LoadBalancerName', '*')
+    errors = data('HTTPCode_ELB_5XX', filter=base_filtering and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.elb_5xx_aggregation_function}${var.elb_5xx_transformation_function}
+    requests = data('RequestCount', filter=base_filtering and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.elb_5xx_aggregation_function}${var.elb_5xx_transformation_function}
+    signal = (errors/requests).scale(100).fill(value=0).publish('signal')
+    detect(when(signal > ${var.elb_5xx_threshold_critical}%{if var.elb_5xx_lasting_duration_critical != null}, lasting='${var.elb_5xx_lasting_duration_critical}', at_least=${var.elb_5xx_at_least_percentage_critical}%{endif}) and when(requests > ${var.minimum_traffic})).publish('CRIT')
+    detect(when(signal > ${var.elb_5xx_threshold_major}%{if var.elb_5xx_lasting_duration_major != null}, lasting='${var.elb_5xx_lasting_duration_major}', at_least=${var.elb_5xx_at_least_percentage_major}%{endif}) and when(requests > ${var.minimum_traffic}) and (not when(signal > ${var.elb_5xx_threshold_critical}%{if var.elb_5xx_lasting_duration_critical != null}, lasting='${var.elb_5xx_lasting_duration_critical}', at_least=${var.elb_5xx_at_least_percentage_critical}%{endif}) and when(requests > ${var.minimum_traffic}))).publish('MAJOR')
+EOF
+
+  rule {
+    description           = "is too high > ${var.elb_5xx_threshold_critical}%"
+    severity              = "Critical"
+    detect_label          = "CRIT"
+    disabled              = coalesce(var.elb_5xx_disabled_critical, var.elb_5xx_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.elb_5xx_notifications, "critical", []), var.notifications.critical), null)
+    runbook_url           = try(coalesce(var.elb_5xx_runbook_url, var.runbook_url), "")
+    tip                   = var.elb_5xx_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
+
+  rule {
+    description           = "is too high > ${var.elb_5xx_threshold_major}%"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.elb_5xx_disabled_major, var.elb_5xx_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.elb_5xx_notifications, "major", []), var.notifications.major), null)
+    runbook_url           = try(coalesce(var.elb_5xx_runbook_url, var.runbook_url), "")
+    tip                   = var.elb_5xx_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
+
+  max_delay = var.elb_5xx_max_delay
+}
+
+resource "signalfx_detector" "elb_4xx" {
+  name = format("%s %s", local.detector_name_prefix, "AWS ELB 4xx error rate")
+
+  authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
+
+  viz_options {
+    label        = "signal"
+    value_suffix = "%"
+  }
+
+  program_text = <<-EOF
+    base_filtering = filter('namespace', 'AWS/ELB') and filter('stat', 'sum') and (not filter('AvailabilityZone', '*')) and filter('LoadBalancerName', '*')
+    errors = data('HTTPCode_ELB_4XX', filter=base_filtering and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.elb_4xx_aggregation_function}${var.elb_4xx_transformation_function}
+    requests = data('RequestCount', filter=base_filtering and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.elb_4xx_aggregation_function}${var.elb_4xx_transformation_function}
+    signal = (errors/requests).scale(100).fill(value=0).publish('signal')
+    detect(when(signal > ${var.elb_4xx_threshold_critical}%{if var.elb_4xx_lasting_duration_critical != null}, lasting='${var.elb_4xx_lasting_duration_critical}', at_least=${var.elb_4xx_at_least_percentage_critical}%{endif}) and when(requests > ${var.minimum_traffic})).publish('CRIT')
+    detect(when(signal > ${var.elb_4xx_threshold_major}%{if var.elb_4xx_lasting_duration_major != null}, lasting='${var.elb_4xx_lasting_duration_major}', at_least=${var.elb_4xx_at_least_percentage_major}%{endif}) and when(requests > ${var.minimum_traffic}) and (not when(signal > ${var.elb_4xx_threshold_critical}%{if var.elb_4xx_lasting_duration_critical != null}, lasting='${var.elb_4xx_lasting_duration_critical}', at_least=${var.elb_4xx_at_least_percentage_critical}%{endif}) and when(requests > ${var.minimum_traffic}))).publish('MAJOR')
+    detect(when(signal > ${var.elb_4xx_threshold_minor}%{if var.elb_4xx_lasting_duration_minor != null}, lasting='${var.elb_4xx_lasting_duration_minor}', at_least=${var.elb_4xx_at_least_percentage_minor}%{endif}) and when(requests > ${var.minimum_traffic}) and (not when(signal > ${var.elb_4xx_threshold_major}%{if var.elb_4xx_lasting_duration_major != null}, lasting='${var.elb_4xx_lasting_duration_major}', at_least=${var.elb_4xx_at_least_percentage_major}%{endif}) and when(requests > ${var.minimum_traffic}))).publish('MINOR')
+EOF
+
+  rule {
+    description           = "is too high > ${var.elb_4xx_threshold_critical}%"
+    severity              = "Critical"
+    detect_label          = "CRIT"
+    disabled              = coalesce(var.elb_4xx_disabled_critical, var.elb_4xx_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.elb_4xx_notifications, "critical", []), var.notifications.critical), null)
+    runbook_url           = try(coalesce(var.elb_4xx_runbook_url, var.runbook_url), "")
+    tip                   = var.elb_4xx_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
+
+  rule {
+    description           = "is too high > ${var.elb_4xx_threshold_major}%"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.elb_4xx_disabled_major, var.elb_4xx_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.elb_4xx_notifications, "major", []), var.notifications.major), null)
+    runbook_url           = try(coalesce(var.elb_4xx_runbook_url, var.runbook_url), "")
+    tip                   = var.elb_4xx_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
+
+  rule {
+    description           = "is too high > ${var.elb_4xx_threshold_minor}%"
+    severity              = "Minor"
+    detect_label          = "MINOR"
+    disabled              = coalesce(var.elb_4xx_disabled_minor, var.elb_4xx_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.elb_4xx_notifications, "minor", []), var.notifications.minor), null)
+    runbook_url           = try(coalesce(var.elb_4xx_runbook_url, var.runbook_url), "")
+    tip                   = var.elb_4xx_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
+
+  max_delay = var.elb_4xx_max_delay
+}
+
+resource "signalfx_detector" "backend_5xx" {
+  name = format("%s %s", local.detector_name_prefix, "AWS ELB backend 5xx error rate")
+
+  authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
+
+  viz_options {
+    label        = "signal"
+    value_suffix = "%"
+  }
+
+  program_text = <<-EOF
+    base_filtering = filter('namespace', 'AWS/ELB') and filter('stat', 'sum') and (not filter('AvailabilityZone', '*')) and filter('LoadBalancerName', '*')
+    errors = data('HTTPCode_Backend_5XX', filter=base_filtering and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.backend_5xx_aggregation_function}${var.backend_5xx_transformation_function}
+    requests = data('RequestCount', filter=base_filtering and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.backend_5xx_aggregation_function}${var.backend_5xx_transformation_function}
+    signal = (errors/requests).scale(100).fill(value=0).publish('signal')
+    detect(when(signal > ${var.backend_5xx_threshold_critical}%{if var.backend_5xx_lasting_duration_critical != null}, lasting='${var.backend_5xx_lasting_duration_critical}', at_least=${var.backend_5xx_at_least_percentage_critical}%{endif}) and when(requests > ${var.minimum_traffic})).publish('CRIT')
+    detect(when(signal > ${var.backend_5xx_threshold_major}%{if var.backend_5xx_lasting_duration_major != null}, lasting='${var.backend_5xx_lasting_duration_major}', at_least=${var.backend_5xx_at_least_percentage_major}%{endif}) and when(requests > ${var.minimum_traffic}) and (not when(signal > ${var.backend_5xx_threshold_critical}%{if var.backend_5xx_lasting_duration_critical != null}, lasting='${var.backend_5xx_lasting_duration_critical}', at_least=${var.backend_5xx_at_least_percentage_critical}%{endif}) and when(requests > ${var.minimum_traffic}))).publish('MAJOR')
+EOF
+
+  rule {
+    description           = "is too high > ${var.backend_5xx_threshold_critical}%"
+    severity              = "Critical"
+    detect_label          = "CRIT"
+    disabled              = coalesce(var.backend_5xx_disabled_critical, var.backend_5xx_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.backend_5xx_notifications, "critical", []), var.notifications.critical), null)
+    runbook_url           = try(coalesce(var.backend_5xx_runbook_url, var.runbook_url), "")
+    tip                   = var.backend_5xx_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
+
+  rule {
+    description           = "is too high > ${var.backend_5xx_threshold_major}%"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.backend_5xx_disabled_major, var.backend_5xx_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.backend_5xx_notifications, "major", []), var.notifications.major), null)
+    runbook_url           = try(coalesce(var.backend_5xx_runbook_url, var.runbook_url), "")
+    tip                   = var.backend_5xx_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
+
+  max_delay = var.backend_5xx_max_delay
+}
+
+resource "signalfx_detector" "backend_4xx" {
+  name = format("%s %s", local.detector_name_prefix, "AWS ELB backend 4xx error rate")
+
+  authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
+
+  viz_options {
+    label        = "signal"
+    value_suffix = "%"
+  }
+
+  program_text = <<-EOF
+    base_filtering = filter('namespace', 'AWS/ELB') and filter('stat', 'sum') and (not filter('AvailabilityZone', '*')) and filter('LoadBalancerName', '*')
+    errors = data('HTTPCode_Backend_4XX', filter=base_filtering and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.backend_4xx_aggregation_function}${var.backend_4xx_transformation_function}
+    requests = data('RequestCount', filter=base_filtering and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.backend_4xx_aggregation_function}${var.backend_4xx_transformation_function}
+    signal = (errors/requests).scale(100).fill(value=0).publish('signal')
+    detect(when(signal > ${var.backend_4xx_threshold_critical}%{if var.backend_4xx_lasting_duration_critical != null}, lasting='${var.backend_4xx_lasting_duration_critical}', at_least=${var.backend_4xx_at_least_percentage_critical}%{endif}) and when(requests > ${var.minimum_traffic})).publish('CRIT')
+    detect(when(signal > ${var.backend_4xx_threshold_major}%{if var.backend_4xx_lasting_duration_major != null}, lasting='${var.backend_4xx_lasting_duration_major}', at_least=${var.backend_4xx_at_least_percentage_major}%{endif}) and when(requests > ${var.minimum_traffic}) and (not when(signal > ${var.backend_4xx_threshold_critical}%{if var.backend_4xx_lasting_duration_critical != null}, lasting='${var.backend_4xx_lasting_duration_critical}', at_least=${var.backend_4xx_at_least_percentage_critical}%{endif}) and when(requests > ${var.minimum_traffic}))).publish('MAJOR')
+    detect(when(signal > ${var.backend_4xx_threshold_minor}%{if var.backend_4xx_lasting_duration_minor != null}, lasting='${var.backend_4xx_lasting_duration_minor}', at_least=${var.backend_4xx_at_least_percentage_minor}%{endif}) and when(requests > ${var.minimum_traffic}) and (not when(signal > ${var.backend_4xx_threshold_major}%{if var.backend_4xx_lasting_duration_major != null}, lasting='${var.backend_4xx_lasting_duration_major}', at_least=${var.backend_4xx_at_least_percentage_major}%{endif}) and when(requests > ${var.minimum_traffic}))).publish('MINOR')
+EOF
+
+  rule {
+    description           = "is too high > ${var.backend_4xx_threshold_critical}%"
+    severity              = "Critical"
+    detect_label          = "CRIT"
+    disabled              = coalesce(var.backend_4xx_disabled_critical, var.backend_4xx_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.backend_4xx_notifications, "critical", []), var.notifications.critical), null)
+    runbook_url           = try(coalesce(var.backend_4xx_runbook_url, var.runbook_url), "")
+    tip                   = var.backend_4xx_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
+
+  rule {
+    description           = "is too high > ${var.backend_4xx_threshold_major}%"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.backend_4xx_disabled_major, var.backend_4xx_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.backend_4xx_notifications, "major", []), var.notifications.major), null)
+    runbook_url           = try(coalesce(var.backend_4xx_runbook_url, var.runbook_url), "")
+    tip                   = var.backend_4xx_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
+
+  rule {
+    description           = "is too high > ${var.backend_4xx_threshold_minor}%"
+    severity              = "Minor"
+    detect_label          = "MINOR"
+    disabled              = coalesce(var.backend_4xx_disabled_minor, var.backend_4xx_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.backend_4xx_notifications, "minor", []), var.notifications.minor), null)
+    runbook_url           = try(coalesce(var.backend_4xx_runbook_url, var.runbook_url), "")
+    tip                   = var.backend_4xx_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
+
+  max_delay = var.backend_4xx_max_delay
+}
+
+resource "signalfx_detector" "healthy" {
+  name = format("%s %s", local.detector_name_prefix, "AWS ELB healthy instances percentage")
+
+  authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
+
+  viz_options {
+    label        = "signal"
+    value_suffix = "%"
+  }
+
+  program_text = <<-EOF
+    base_filtering = filter('namespace', 'AWS/ELB') and (not filter('AvailabilityZone', '*')) and filter('LoadBalancerName', '*')
+    healthy = data('HealthyHostCount', filter=base_filtering and filter('stat', 'lower') and ${module.filtering.signalflow})${var.healthy_aggregation_function}${var.healthy_transformation_function}
+    unhealthy = data('UnHealthyHostCount', filter=base_filtering and filter('stat', 'upper') and ${module.filtering.signalflow})${var.healthy_aggregation_function}${var.healthy_transformation_function}
+    signal = (healthy / (healthy+unhealthy)).scale(100).publish('signal')
+    detect(when(signal < ${var.healthy_threshold_critical}%{if var.healthy_lasting_duration_critical != null}, lasting='${var.healthy_lasting_duration_critical}', at_least=${var.healthy_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal < ${var.healthy_threshold_major}%{if var.healthy_lasting_duration_major != null}, lasting='${var.healthy_lasting_duration_major}', at_least=${var.healthy_at_least_percentage_major}%{endif}) and (not when(signal < ${var.healthy_threshold_critical}%{if var.healthy_lasting_duration_critical != null}, lasting='${var.healthy_lasting_duration_critical}', at_least=${var.healthy_at_least_percentage_critical}%{endif}))).publish('MAJOR')
+EOF
+
+  rule {
+    description           = "has fallen below critical capacity < ${var.healthy_threshold_critical}%"
+    severity              = "Critical"
+    detect_label          = "CRIT"
+    disabled              = coalesce(var.healthy_disabled_critical, var.healthy_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.healthy_notifications, "critical", []), var.notifications.critical), null)
+    runbook_url           = try(coalesce(var.healthy_runbook_url, var.runbook_url), "")
+    tip                   = var.healthy_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
+
+  rule {
+    description           = "is below nominal capacity < ${var.healthy_threshold_major}%"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.healthy_disabled_major, var.healthy_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.healthy_notifications, "major", []), var.notifications.major), null)
+    runbook_url           = try(coalesce(var.healthy_runbook_url, var.runbook_url), "")
+    tip                   = var.healthy_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
+
+  max_delay = var.healthy_max_delay
+}
+
