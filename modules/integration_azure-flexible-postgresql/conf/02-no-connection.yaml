@@ -2,7 +2,7 @@
 id: no_connection
 module: "Azure PostgreSQL flexible"
 name: "has no connection"
-filtering: "filter('resource_type', 'Microsoft.DB*orPostgreSQL/flexibleServers') and filter('primary_aggregation_type', 'true')"
+filtering: "filter('resource_type', 'Microsoft.DB*orPostgreS*/flexibleServers') and filter('primary_aggregation_type', 'true')"
 aggregation: ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 transformation: true
 signals:
