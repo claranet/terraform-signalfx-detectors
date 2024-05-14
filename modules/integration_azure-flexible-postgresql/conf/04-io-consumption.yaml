@@ -2,7 +2,7 @@
 id: io_consumption
 module: "Azure PostgreSQL flexible"
 name: "disk IOPS consumption"
-filtering: "filter('resource_type', 'Microsoft.DB*orPostgreSQL/flexibleServers') and filter('primary_aggregation_type', 'true')"
+filtering: "filter('resource_type', 'Microsoft.DB*orPostgreS*/flexibleServers') and filter('primary_aggregation_type', 'true')"
 aggregation: ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 value_unit: "%"
 transformation: true
