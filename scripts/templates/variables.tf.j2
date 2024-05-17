@@ -85,7 +85,7 @@ variable "{{ id }}_exclude_not_running_vm" {
 {% endif -%}
 
 variable "{{ id }}_timeframe" {
-  description = "Timeframe for heartbeat detector (i.e. \"25m\"). Must be at least \"25m\" if exclude_not_running_vm is true"
+  description = "Timeframe for heartbeat detector (i.e. \"25m\").{% if exclude_not_running_vm is defined and exclude_not_running_vm %} Must be at least \"25m\" if \"{{ id }}_exclude_not_running_vm\" is true{% endif %}"
   type        = string
   default     = "{{ duration|default("25m") }}"
 }

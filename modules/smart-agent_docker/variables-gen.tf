@@ -49,7 +49,7 @@ variable "heartbeat_exclude_not_running_vm" {
 }
 
 variable "heartbeat_timeframe" {
-  description = "Timeframe for heartbeat detector (i.e. \"25m\"). Must be at least \"25m\" if exclude_not_running_vm is true"
+  description = "Timeframe for heartbeat detector (i.e. \"25m\"). Must be at least \"25m\" if \"heartbeat_exclude_not_running_vm\" is true"
   type        = string
   default     = "25m"
 }
