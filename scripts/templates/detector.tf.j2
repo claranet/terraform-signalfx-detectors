@@ -48,7 +48,7 @@ resource "signalfx_detector" "{{ id }}" {
 
     {%- for key, signal in signals.items() -%}
       {%- if 'metric' in signal %}
-    {{ key }} = data('{{ signal.metric }}', filter={%- if exclude_not_running_vm is defined and exclude_not_running_vm -%}${local.not_running_vm_filters} and {% endif -%}{%- if filtering is defined and filtering -%}{{ filtering_variable }} {{ filtering_operator | default('and') }} {% endif -%}{%- if signal.filter is defined and signal.filter is string -%}{{ signal.filter }} and {% endif -%}${module.filtering.signalflow}{%- if signal.rollup is defined -%}, rollup='{{ signal.rollup }}'{% endif -%}{%- if signal.extrapolation is defined and signal.extrapolation -%}, extrapolation='{{ signal.extrapolation }}'{% endif -%})
+    {{ key }} = data('{{ signal.metric }}', filter={%- if exclude_not_running_vm is defined and exclude_not_running_vm -%}%{ if var.heartbeat_exclude_not_running_vm }${local.not_running_vm_filters} and %{ endif }{% endif -%}{%- if filtering is defined and filtering -%}{{ filtering_variable }} {{ filtering_operator | default('and') }} {% endif -%}{%- if signal.filter is defined and signal.filter is string -%}{{ signal.filter }} and {% endif -%}${module.filtering.signalflow}{%- if signal.rollup is defined -%}, rollup='{{ signal.rollup }}'{% endif -%}{%- if signal.extrapolation is defined and signal.extrapolation -%}, extrapolation='{{ signal.extrapolation }}'{% endif -%})
         {%- if aggregation | default(true) %}${var.{{ id }}_aggregation_function}{%- endif %}
         {%- if transformation | default(true) %}${var.{{ id }}_transformation_function}{%- endif %}
       {%- endif -%}

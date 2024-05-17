@@ -15,7 +15,7 @@ variable "heartbeat_aggregation_function" {
 variable "heartbeat_max_delay" {
   description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
   type        = number
-  default     = 900
+  default     = null
 }
 
 variable "heartbeat_tip" {
@@ -37,8 +37,8 @@ variable "heartbeat_disabled" {
 }
 
 variable "heartbeat_timeframe" {
-  description = "Timeframe for heartbeat detector (i.e. \"10m\")"
+  description = "Timeframe for heartbeat detector (i.e. \"25m\"). Must be at least \"25m\" if exclude_not_running_vm is true"
   type        = string
-  default     = "10m"
+  default     = "25m"
 }
 

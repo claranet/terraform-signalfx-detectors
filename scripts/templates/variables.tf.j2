@@ -39,7 +39,7 @@ variable "{{ id }}_transformation_function" {
 variable "{{ id }}_max_delay" {
   description = "Enforce max delay for {{ id }} detector (use \"0\" or \"null\" for \"Auto\")"
   type        = number
-  default     = {% if max_delay is number %}{{ max_delay }}{% else %}{% if type == 'heartbeat' %}900{% else %}null{% endif %}{% endif %}
+  default     = {% if max_delay is number %}{{ max_delay }}{% else %}null{% endif %}
 }
 
 variable "{{ id }}_tip" {
@@ -75,10 +75,19 @@ variable "{{ id }}_disabled_{{ severity }}" {
 {% endif -%}
 
 {% if type == 'heartbeat' -%}
+{% if exclude_not_running_vm is defined and exclude_not_running_vm -%}
+variable "{{ id }}_exclude_not_running_vm" {
+  description = "Don’t send alerts if associated VM is stopped or stopping (metadata provided by cloud provider integration). Can be useful for ephemeral infrastructure (such as auto scaling groups) as VM will be stopped and started regularly. Note that timeframe must be at least 25 minutes for the metadata to be available to the detector."
+  type        = bool
+  default     = true
+}
+
+{% endif -%}
+
 variable "{{ id }}_timeframe" {
-  description = "Timeframe for heartbeat detector (i.e. \"10m\")"
+  description = "Timeframe for heartbeat detector (i.e. \"25m\"). Must be at least \"25m\" if exclude_not_running_vm is true"
   type        = string
-  default     = "{{ duration|default("10m") }}"
+  default     = "{{ duration|default("25m") }}"
 }
 
 {% else -%}
