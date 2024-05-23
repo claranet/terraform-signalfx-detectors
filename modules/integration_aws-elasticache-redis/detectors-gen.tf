@@ -196,3 +196,43 @@ EOF
   max_delay = var.network_conntrack_allowance_exceeded_max_delay
 }
 
+resource "signalfx_detector" "dabatase_capacity_usage" {
+  name = format("%s %s", local.detector_name_prefix, "AWS ElastiCache Redis Database Capacity Usage")
+
+  authorized_writer_teams = var.authorized_writer_teams
+  teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
+  tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
+
+  program_text = <<-EOF
+    base_filtering = filter('namespace', 'AWS/ElastiCache') and filter('stat', 'upper') and filter('CacheNodeId', '*')
+    signal = data('DatabaseCapacityUsagePercentage', filter=base_filtering and ${module.filtering.signalflow})${var.database_capacity_unit_aggregation_function}${var.database_capacity_unit_transformation_function}.publish('signal')
+    detect(when(signal > ${var.database_capacity_unit_threshold_critical}%{if var.database_capacity_unit_lasting_duration_critical != null}, lasting='${var.database_capacity_unit_lasting_duration_critical}', at_least=${var.database_capacity_unit_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.database_capacity_unit_threshold_major}%{if var.database_capacity_unit_lasting_duration_major != null}, lasting='${var.database_capacity_unit_lasting_duration_major}', at_least=${var.database_capacity_unit_at_least_percentage_major}%{endif}) and (not when(signal > ${var.database_capacity_unit_threshold_critical}%{if var.database_capacity_unit_lasting_duration_critical != null}, lasting='${var.database_capacity_unit_lasting_duration_critical}', at_least=${var.database_capacity_unit_at_least_percentage_critical}%{endif}))).publish('MAJOR')
+EOF
+
+  rule {
+    description           = "is too high > ${var.database_capacity_unit_threshold_critical}%"
+    severity              = "Critical"
+    detect_label          = "CRIT"
+    disabled              = coalesce(var.database_capacity_unit_disabled_critical, var.database_capacity_unit_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.database_capacity_unit_notifications, "critical", []), var.notifications.critical), null)
+    runbook_url           = try(coalesce(var.database_capacity_unit_runbook_url, var.runbook_url), "")
+    tip                   = var.database_capacity_unit_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
+
+  rule {
+    description           = "is too high > ${var.database_capacity_unit_threshold_major}%"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.database_capacity_unit_disabled_major, var.database_capacity_unit_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.database_capacity_unit_notifications, "major", []), var.notifications.major), null)
+    runbook_url           = try(coalesce(var.database_capacity_unit_runbook_url, var.runbook_url), "")
+    tip                   = var.database_capacity_unit_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
+
+  max_delay = var.database_capacity_unit_max_delay
+}
