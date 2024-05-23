@@ -10,8 +10,8 @@ signals:
     metric: DatabaseCapacityUsagePercentage
 
 rules:
-  critical: 90
-    threshold: 
+  critical:
+    threshold: 90 
     comparator: ">"
     lasting_duration: 10m
   major:
