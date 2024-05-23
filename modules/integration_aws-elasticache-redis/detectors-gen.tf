@@ -196,8 +196,8 @@ EOF
   max_delay = var.network_conntrack_allowance_exceeded_max_delay
 }
 
-resource "signalfx_detector" "dabatase_capacity_usage" {
-  name = format("%s %s", local.detector_name_prefix, "AWS ElastiCache Redis Database Capacity Usage")
+resource "signalfx_detector" "database_capacity_usage" {
+  name = format("%s %s", local.detector_name_prefix, "AWS ElastiCache redis Database Capacity Usage")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)

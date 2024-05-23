@@ -399,7 +399,7 @@ variable "database_capacity_unit_notifications" {
   default     = {}
 }
 
-variable "database_capacity_unit_function" {
+variable "database_capacity_unit_aggregation_function" {
   description = "Aggregation function and group by for database_capacity_unit detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
@@ -453,7 +453,7 @@ variable "database_capacity_unit_threshold_critical" {
   default     = 90
 }
 
-variable "database_capacity_unit_duration_critical" {
+variable "database_capacity_unit_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
   default     = "10m"
