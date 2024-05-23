@@ -1,5 +1,5 @@
 module: AWS ElastiCache redis
-name: database capacity unit
+name: database capacity usage
 
 transformation: true
 aggregation: true
@@ -7,7 +7,7 @@ filtering: "filter('namespace', 'AWS/ElastiCache') and filter('stat', 'upper') a
 
 signals:
   signal:
-    metric: DatabaseCapacityUnit
+    metric: DatabaseCapacityUsagePercentage
 
 rules:
   critical: 90

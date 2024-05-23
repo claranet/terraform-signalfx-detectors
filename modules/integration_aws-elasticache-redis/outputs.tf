@@ -23,7 +23,7 @@ output "replication_lag" {
   value       = signalfx_detector.replication_lag
 }
 
-output "database_capacity_unit" {
-  description = "Detector resource for database_capacity_unit"
-  value       = signalfx_detector.database_capacity_unit
+output "database_capacity_usage" {
+  description = "Detector resource for database_capacity_usage"
+  value       = signalfx_detector.database_capacity_usage
 }
