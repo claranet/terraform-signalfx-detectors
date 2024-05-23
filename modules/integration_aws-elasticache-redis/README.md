@@ -80,7 +80,7 @@ This module creates the following SignalFx detectors which could contain one or 
 |AWS ElastiCache redis replication lag|X|X|-|-|-|
 |AWS ElastiCache redis commands|-|X|-|-|-|
 |AWS ElastiCache redis network conntrack allowance exceeded|X|-|-|-|-|
-|AWS ElastiCache redis database capacity unit |X|X|-|-|-|
+|AWS ElastiCache redis database capacity usage |X|X|-|-|-|
 
 ## How to collect required metrics?
 
@@ -105,7 +105,7 @@ Here is the list of required metrics for detectors in this module.
 * `NetworkConntrackAllowanceExceeded`
 * `ReplicationLag`
 * `SetTypeCmds`
-* `DatabaseCapacityUnit`
+* `DatabaseCapacityUsage`
 
 
 
