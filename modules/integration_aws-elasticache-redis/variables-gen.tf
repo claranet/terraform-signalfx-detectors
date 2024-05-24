@@ -390,7 +390,6 @@ variable "network_conntrack_allowance_exceeded_at_least_percentage_critical" {
   type        = number
   default     = 1
 }
-
 # database_capacity_usage detector
 
 variable "database_capacity_usage_notifications" {
@@ -406,7 +405,7 @@ variable "database_capacity_usage_aggregation_function" {
 }
 
 variable "database_capacity_usage_transformation_function" {
-  description = "Transformation function for replication_lag detector (i.e. \".mean(over='5m')\")"
+  description = "Transformation function for database_capacity_usage detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
 }
@@ -448,7 +447,7 @@ variable "database_capacity_usage_disabled_major" {
 }
 
 variable "database_capacity_usage_threshold_critical" {
-  description = "Critical threshold for database_capacity_usage detector in Percentage"
+  description = "Critical threshold for database_capacity_usage detector"
   type        = number
   default     = 90
 }
@@ -465,7 +464,7 @@ variable "database_capacity_usage_at_least_percentage_critical" {
   default     = 1
 }
 variable "database_capacity_usage_threshold_major" {
-  description = "Major threshold for database_capacity_usage detector in Percentage"
+  description = "Major threshold for database_capacity_usage detector"
   type        = number
   default     = 80
 }

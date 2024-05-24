@@ -197,7 +197,7 @@ EOF
 }
 
 resource "signalfx_detector" "database_capacity_usage" {
-  name = format("%s %s", local.detector_name_prefix, "AWS ElastiCache redis Database Capacity Usage")
+  name = format("%s %s", local.detector_name_prefix, "AWS ElastiCache redis database capacity usage")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
@@ -211,7 +211,7 @@ resource "signalfx_detector" "database_capacity_usage" {
 EOF
 
   rule {
-    description           = "is too high > ${var.database_capacity_usage_threshold_critical}%"
+    description           = "is too high > ${var.database_capacity_usage_threshold_critical}"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.database_capacity_usage_disabled_critical, var.database_capacity_usage_disabled, var.detectors_disabled)
@@ -223,7 +223,7 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.database_capacity_usage_threshold_major}%"
+    description           = "is too high > ${var.database_capacity_usage_threshold_major}"
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.database_capacity_usage_disabled_major, var.database_capacity_usage_disabled, var.detectors_disabled)
@@ -236,3 +236,4 @@ EOF
 
   max_delay = var.database_capacity_usage_max_delay
 }
+
