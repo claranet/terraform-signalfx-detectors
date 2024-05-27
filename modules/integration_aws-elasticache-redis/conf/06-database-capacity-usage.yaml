@@ -1,0 +1,21 @@
+module: AWS ElastiCache redis
+name: database capacity usage
+
+transformation: true
+aggregation: true
+filtering: "filter('namespace', 'AWS/ElastiCache') and filter('stat', 'upper') and filter('CacheNodeId', '*')"
+
+signals:
+  signal:
+    metric: DatabaseCapacityUsagePercentage
+
+rules:
+  critical:
+    threshold: 90 
+    comparator: ">"
+    lasting_duration: 10m
+  major:
+    threshold: 80
+    comparator: ">"
+    dependency: critical
+    lasting_duration: 10m
