@@ -59,7 +59,7 @@ variable "snat_port_utilization_notifications" {
 variable "snat_port_utilization_aggregation_function" {
   description = "Aggregation function and group by for snat_port_utilization detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['protocol'])"
+  default     = ".mean(by=['protocol', 'azure_resource_name'])"
 }
 
 variable "snat_port_utilization_transformation_function" {
