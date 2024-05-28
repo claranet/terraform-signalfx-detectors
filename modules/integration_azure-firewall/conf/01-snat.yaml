@@ -3,7 +3,7 @@ module: Azure firewall
 name: "SNAT Port Utilization"
 
 transformation: true
-aggregation: ".mean(by=['protocol', 'azure_resource_name'])"
+aggregation: ".mean(by=['protocol', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 
 filtering: "filter('resource_type', 'Microsoft.Network/azureFirewalls') and filter('primary_aggregation_type', 'true')"
 
