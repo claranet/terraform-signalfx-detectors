@@ -1,0 +1,21 @@
+module: GCP Cloud Functions
+name: pending
+
+transformation: false
+aggregation: true
+
+signals:
+  signal:
+    metric: "function/execution_times"
+    filter: "not filter('status', 'ok')"
+    extrapolation: zero
+    rollup: sum
+rules:
+  minor:
+    threshold: 10
+    comparator: ">"
+    lasting_duration: 5m
+  warning:
+    threshold: 20
+    comparator: ">"
+    lasting_duration: 5m

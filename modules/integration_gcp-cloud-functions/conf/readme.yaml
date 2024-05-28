@@ -1,0 +1,18 @@
+documentations:
+  - name: Stackdriver metrics
+    url: 'https://cloud.google.com/monitoring/api/metrics_gcp#gcp-cloudfunctions'
+
+notes: |
+  Retrieve the number of error invocation of the cloud functions.
+  ```
+  module "signalfx-detectors-cloud-gcp-cloud-functions" {
+    source = "github.com/claranet/terraform-signalfx-detectors.git//cloud/gcp/cloud-functions"
+
+    environment   = var.environment
+    notifications = [local.slack_notification]
+    # Given that the default policy exclude `-replica` we have to override id entirely
+    filtering_append = false
+    # We reuse `project_id` from the default policy but we change the read replica filter
+    filtering_custom = "filter('function_name', '${var.function_id}') and filter('environment', '${var.env}')"
+  }
+  ```
