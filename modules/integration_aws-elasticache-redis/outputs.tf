@@ -13,6 +13,11 @@ output "cpu_high" {
   value       = signalfx_detector.cpu_high
 }
 
+output "database_capacity_usage" {
+  description = "Detector resource for database_capacity_usage"
+  value       = signalfx_detector.database_capacity_usage
+}
+
 output "network_conntrack_allowance_exceeded" {
   description = "Detector resource for network_conntrack_allowance_exceeded"
   value       = signalfx_detector.network_conntrack_allowance_exceeded
