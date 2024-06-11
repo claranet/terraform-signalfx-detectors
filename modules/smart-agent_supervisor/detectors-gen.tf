@@ -27,7 +27,7 @@ EOF
 }
 
 resource "signalfx_detector" "process_state" {
-  name = format("%s %s", local.detector_name_prefix, "Supervisor process")
+  name = format("%s %s", local.detector_name_prefix, "Jobs managed by supervisord")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
