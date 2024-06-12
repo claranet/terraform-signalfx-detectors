@@ -1,0 +1,20 @@
+module: "Azure Storage Account File share"
+name: "IOPS"
+filtering: "filter('resource_type', 'Microsoft.Storage/storageAccounts/fileServices') and filter('primary_aggregation_type', 'true') and not filter('azure_sa_sku', ' Premium_*')"
+aggregation: ".sum(by=['FileShare', 'azure_resource_id'])"
+transformation: ".min(over='15m')"
+value_unit: "%"
+signals:
+  transactions:
+    metric: "Transactions"
+    rollup: "rate"
+  signal:
+    formula: (transactions / 20000).scale(100)
+rules:
+  critical:
+    threshold: 95
+    comparator: ">"
+  major:
+    threshold: 90
+    comparator: ">"
+    dependency: critical
