@@ -1,0 +1,21 @@
+module: couchdb
+name: couchdb_erlang_processes
+
+transformation: ".mean(over='10m')"
+aggregation: ".sum(by=['sf_metric'])"
+
+signals:
+  erlang_processes:
+    metric: couchdb_erlang_processes
+  erlang_process_limit:
+    metric: couchdb_erlang_process_limit
+  signal:
+    formula: ((erlang_processes/erlang_process_limit).scale(100))
+rules:
+  critical:
+    threshold: 90
+    comparator: '>'
+  major:
+    threshold: 80
+    comparator: '>'
+    dependency: critical
