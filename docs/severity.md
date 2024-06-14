@@ -172,6 +172,7 @@
 |---|---|---|---|---|---|
 |Azure VPN heartbeat|X|-|-|-|-|
 |Azure VPN total flow count|X|-|-|-|-|
+|Azure VPN ipsec tunnel status|X|X|-|-|-|
 
 
 ## integration_aws-alb
