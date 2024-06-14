@@ -122,6 +122,7 @@
 - [smart-agent_systemd-timers](#smart-agent_systemd-timers)
 - [smart-agent_tomcat](#smart-agent_tomcat)
 - [smart-agent_varnish](#smart-agent_varnish)
+- [smart-agent_winprocess](#smart-agent_winprocess)
 - [smart-agent_zookeeper](#smart-agent_zookeeper)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -1325,6 +1326,13 @@
 |Varnish session dropped|X|-|-|-|-|
 |Varnish hit rate|-|X|X|-|-|
 |Varnish memory usage|X|X|-|-|-|
+
+
+## smart-agent_winprocess
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Winprocess status|X|-|-|-|-|
 
 
 ## smart-agent_zookeeper
