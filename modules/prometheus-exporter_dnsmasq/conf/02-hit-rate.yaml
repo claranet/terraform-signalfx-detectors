@@ -1,0 +1,24 @@
+module: dnsmasq
+name: Hit Rate
+id: dnsmasq_hit_rate
+
+transformation: ".min(over='5m')"
+aggregation: true
+
+signals:
+  A:
+    metric: dnsmasq_hits
+  B:
+    metric: dnsmasq_misses
+  signal:
+    formula: (A/(A+B)).fill(0).scale(100)
+rules:
+  minor:
+    threshold: 90
+    comparator: "<"
+    lasting_duration: "5m"
+    dependency: major
+  major:
+    threshold: 80
+    comparator: "<="
+    lasting_duration: "5m"
