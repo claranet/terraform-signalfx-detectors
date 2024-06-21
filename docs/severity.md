@@ -903,6 +903,10 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Postfix heartbeat|X|-|-|-|-|
+|Postfix size postfix queue deferred|X|X|-|-|-|
+|Postfix size postfix queue hold|X|X|-|-|-|
+|Postfix size postfix queue maildrop|X|X|-|-|-|
+|Postfix size postfix delivery delay|X|X|-|-|-|
 
 
 ## prometheus-exporter_squid

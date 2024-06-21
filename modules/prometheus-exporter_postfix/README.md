@@ -76,6 +76,10 @@ This module creates the following SignalFx detectors which could contain one or 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Postfix heartbeat|X|-|-|-|-|
+|Postfix size postfix queue deferred|X|X|-|-|-|
+|Postfix size postfix queue hold|X|X|-|-|-|
+|Postfix size postfix queue maildrop|X|X|-|-|-|
+|Postfix size postfix delivery delay|X|X|-|-|-|
 
 ## How to collect required metrics?
 
@@ -101,6 +105,8 @@ Check the [Related documentation](#related-documentation) section for more detai
 
 Here is the list of required metrics for detectors in this module.
 
+* `postfix_showq_message_size_bytes_count`
+* `postfix_smtp_delivery_delay_seconds_count`
 * `postfix_up`
 
 
