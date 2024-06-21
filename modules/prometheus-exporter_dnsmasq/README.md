@@ -21,7 +21,7 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 
 ```hcl
 module "signalfx-detectors-prometheus-exporter-dnsmasq" {
-  source = "github.com/hugueslepesant/terraform-signalfx-detectors.git//modules/prometheus-exporter_dnsmasq?ref={revision}"
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/prometheus-exporter_dnsmasq?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications
