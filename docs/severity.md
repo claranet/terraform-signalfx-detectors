@@ -81,6 +81,7 @@
 - [prometheus-exporter_docker-state](#prometheus-exporter_docker-state)
 - [prometheus-exporter_kong](#prometheus-exporter_kong)
 - [prometheus-exporter_oracledb](#prometheus-exporter_oracledb)
+- [prometheus-exporter_postfix](#prometheus-exporter_postfix)
 - [prometheus-exporter_squid](#prometheus-exporter_squid)
 - [prometheus-exporter_varnish](#prometheus-exporter_varnish)
 - [prometheus-exporter_wallix-bastion](#prometheus-exporter_wallix-bastion)
@@ -887,6 +888,17 @@
 |---|---|---|---|---|---|
 |Oracle heartbeat|X|-|-|-|-|
 |Oracle database status|X|-|-|-|-|
+
+
+## prometheus-exporter_postfix
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Postfix heartbeat|X|-|-|-|-|
+|Postfix size postfix queue deferred|X|X|-|-|-|
+|Postfix size postfix queue hold|X|X|-|-|-|
+|Postfix size postfix queue maildrop|X|X|-|-|-|
+|Postfix size postfix delivery delay|X|X|-|-|-|
 
 
 ## prometheus-exporter_squid
