@@ -5,9 +5,9 @@ value_unit: "%"
 
 signals:
   A:
-    metric: '${var.use_otel_receiver ? "redis.client.blocked" : "gauge.blocked_clients"}'
+    metric: '${var.use_otel_receiver ? "redis.clients.blocked" : "gauge.blocked_clients"}'
   B:
-    metric: '${var.use_otel_receiver ? "redis.client.connected" : "gauge.connected_clients"}'
+    metric: '${var.use_otel_receiver ? "redis.clients.connected" : "gauge.connected_clients"}'
   signal:
     formula: (A/B).scale(100)
 
