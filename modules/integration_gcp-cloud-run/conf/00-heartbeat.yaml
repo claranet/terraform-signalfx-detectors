@@ -1,0 +1,12 @@
+module: "GCP Cloud Run"
+name: "heartbeat"
+
+transformation: true
+aggregation: true
+
+
+signals:
+  signal:
+    metric: "container/instance_count"
+rules:
+  critical:
