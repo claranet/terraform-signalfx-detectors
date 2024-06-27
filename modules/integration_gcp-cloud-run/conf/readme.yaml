@@ -1,0 +1,6 @@
+documentations:
+  - name: Stackdriver metrics for Memorystore for Redis
+    url: https://cloud.google.com/monitoring/api/metrics_gcp#gcp-run
+  - name: Splunk Observability metrics
+    url: https://docs.splunk.com/observability/en/gdi/get-data-in/connect/gcp/gcp.html
+source_doc:
