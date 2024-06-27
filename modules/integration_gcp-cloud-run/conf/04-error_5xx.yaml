@@ -9,7 +9,7 @@ value_unit: "%"
 signals:
   errors:
     metric: "request_count"
-    filter: "filter('response_code_class', '5xx')"
+    filter: "filter('response_code_class', '500')"
     extrapolation: zero
     rollup: sum
   requests:
