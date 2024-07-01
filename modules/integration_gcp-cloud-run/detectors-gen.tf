@@ -150,9 +150,8 @@ resource "signalfx_detector" "error_rate_5xx" {
   }
 
   program_text = <<-EOF
-    base_filtering = filter('service_name', 'response_code_class')
-    errors = data('request_count', filter=base_filtering and filter('response_code_class', '4xx') and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.error_rate_5xx_aggregation_function}${var.error_rate_5xx_transformation_function}
-    requests = data('request_count', filter=base_filtering and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.error_rate_5xx_aggregation_function}${var.error_rate_5xx_transformation_function}
+    errors = data('request_count', filter=filter('response_code_class', '5xx') and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.error_rate_5xx_aggregation_function}${var.error_rate_5xx_transformation_function}
+    requests = data('request_count', filter=filter('response_code_class', '*') and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.error_rate_5xx_aggregation_function}${var.error_rate_5xx_transformation_function}
     signal = (errors/requests).scale(100).fill(value=0).publish('signal')
     detect(when(signal > ${var.error_rate_5xx_threshold_critical}%{if var.error_rate_5xx_lasting_duration_critical != null}, lasting='${var.error_rate_5xx_lasting_duration_critical}', at_least=${var.error_rate_5xx_at_least_percentage_critical}%{endif}) and when(requests > ${var.minimum_traffic})).publish('CRIT')
     detect(when(signal > ${var.error_rate_5xx_threshold_major}%{if var.error_rate_5xx_lasting_duration_major != null}, lasting='${var.error_rate_5xx_lasting_duration_major}', at_least=${var.error_rate_5xx_at_least_percentage_major}%{endif}) and when(requests > ${var.minimum_traffic}) and (not when(signal > ${var.error_rate_5xx_threshold_critical}%{if var.error_rate_5xx_lasting_duration_critical != null}, lasting='${var.error_rate_5xx_lasting_duration_critical}', at_least=${var.error_rate_5xx_at_least_percentage_critical}%{endif}) and when(requests > ${var.minimum_traffic}))).publish('MAJOR')

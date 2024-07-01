@@ -4,17 +4,17 @@ id: error_rate_5xx
 
 transformation: true
 aggregation: ".sum(by=['response_code_class'])"
-filtering: "filter('service_name', 'response_code_class')"
 value_unit: "%"
 
 signals:
   errors:
     metric: "request_count"
-    filter: "filter('response_code_class', '4xx')"
+    filter: "filter('response_code_class', '5xx')"
     extrapolation: zero
     rollup: sum
   requests:
     metric: "request_count"
+    filter: "filter('response_code_class', '*')"
     extrapolation: zero
     rollup: sum
   signal:
