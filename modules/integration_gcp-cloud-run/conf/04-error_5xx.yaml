@@ -3,13 +3,14 @@ name: 5xx error rate on container
 id: error_rate_5xx
 
 transformation: true
-filtering: "filter('resource.service_name', 'metric.response_code_class')"
+aggregation: ".sum(by=['response_code_class'])"
+filtering: "filter('service_name', 'response_code_class')"
 value_unit: "%"
 
 signals:
   errors:
     metric: "request_count"
-    filter: "filter('response_code_class', '500')"
+    filter: "filter('response_code_class', '4xx')"
     extrapolation: zero
     rollup: sum
   requests:

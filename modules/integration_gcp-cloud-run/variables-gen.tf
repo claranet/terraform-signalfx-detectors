@@ -279,7 +279,7 @@ variable "error_rate_5xx_notifications" {
 variable "error_rate_5xx_aggregation_function" {
   description = "Aggregation function and group by for error_rate_5xx detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".sum(by=['response_code_class'])"
 }
 
 variable "error_rate_5xx_transformation_function" {
