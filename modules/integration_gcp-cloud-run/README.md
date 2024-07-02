@@ -8,6 +8,12 @@
 - [What are the available detectors in this module?](#what-are-the-available-detectors-in-this-module)
 - [How to collect required metrics?](#how-to-collect-required-metrics)
   - [Metrics](#metrics)
+- [Notes](#notes)
+  - [Metadata configuration for default filtering](#metadata-configuration-for-default-filtering)
+  - [Cpu usage](#cpu-usage)
+  - [Memory](#memory)
+  - [Connection refused to cloud sql](#connection-refused-to-cloud-sql)
+  - [Error 5xx](#error-5xx)
 - [Related documentation](#related-documentation)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -103,6 +109,162 @@ Here is the list of required metrics for detectors in this module.
 * `request_count`
 
 
+## Notes
+
+
+### Metadata configuration for default filtering
+
+label to use : 
+
+sfx_env = true
+sfx_monitored = true
+
+For example:
+
+via gcloud, at the Cloud Run level:
+```
+gcloud run deploy hello \                                                                                                                                                                                              INT ✘  claranet G  15:34:40  
+--image=us-docker.pkg.dev/cloudrun/container/hello \
+--allow-unauthenticated \
+--port=8080 \
+--service-account=123456789-compute@developer.gserviceaccount.com \
+--region=europe-west9 \
+--project=claranet-425413 \
+--labels=sfx_env=true,sfx_monitored=true
+```
+via terraform, [at the Cloud Run level](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/cloud_run_service#nested_metadata)
+```hcl
+resource "google_cloud_run_service" "hello" {
+  name     = "hello"
+  location = "europe-west9"
+
+  template {
+    spec {
+      containers {
+        image = "us-docker.pkg.dev/cloudrun/container/hello"
+        resources {
+          limits = {
+            cpu    = "1000m"  // adjust based on your needs
+            memory = "512Mi"  // adjust based on your needs
+          }
+        }
+        ports {
+          name           = "http1"   // This name is a standard identifier (http1 or h2c) for the protocol
+          container_port = 8080      
+        }
+      }
+      service_account_name = "123456789-compute@developer.gserviceaccount.com"
+    }
+
+    metadata {
+      annotations = {
+        "run.googleapis.com/launch-stage" = "BETA"  // adjust this according to the launch stage of your application
+      }
+      labels = {
+        sfx_env       = "true"
+        sfx_monitored = "true"
+      }
+    }
+  }
+  autogenerate_revision_name = true
+
+  traffic {
+    percent         = 100
+    latest_revision = true
+  }
+
+  project = "claranet-425413"
+}
+```
+You also **need** to check if those metadata are in the metadata `includeList` in your [SignalFx GCP
+integration](https://dev.splunk.com/observability/docs/integrations/gcp_integration_overview/#Optional-fields).
+
+### Cpu usage
+
+Monitoring the CPU utilization helps in understanding the system's capability and efficiency.
+
+```hcl
+module "signalfx-detectors-integration_gcp-cloud-run" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/integration_gcp-cloud-run"
+
+  environment    = var.environment
+  gcp_project_id = var.project_id
+  notifications  = local.notifications
+
+  # We keep default filtering policy here, we just want to append additional filter to it
+  filtering_append = true
+  # We define the additional filter
+  filtering_custom = "filter('service_name', '*service-name*')"
+  # We can configure the thresholds of the probes
+  cpu_usage_threshold_critical = 85
+  cpu_usage_threshold_major    = 80
+}
+```
+
+### Memory
+
+Accurate tracking of memory usage aids in optimizing and improving performance.
+
+```hcl                                                                                                                                                                                                                                                                                                              
+module "signalfx-detectors-integration_gcp-cloud-run" {                                                                                                                                                                                                                                                             
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/integration_gcp-cloud-run"                                                                                                                                                                                                                
+                                                                                                                                                                                                                                                                                                                    
+  environment    = var.environment                                                                                                                                                                                                                                                                                  
+  gcp_project_id = var.project_id                                                                                                                                                                                                                                                                                   
+  notifications  = local.notifications                                                                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                                                                                    
+  # We keep default filtering policy here, we just want to append additional filter to it                                                                                                                                                                                                                           
+  filtering_append = true                                                                                                                                                                                                                                                                                           
+  # We define the additional filter                                                                                                                                                                                                                                             
+  filtering_custom = "filter('service_name', '*service-name*')"                                                                                                                                                                                                                                                     
+  # We can configure the thresholds of the probes
+  memory_usage_threshold_critical = 85                                                                                                                                                                                                                                                                                 
+  memory_usage_threshold_major    = 80                                                                                                                                                                                                                                                                                 
+}                                                                                                                                                                                                                                                                                                                   
+```
+
+### Connection refused to cloud sql
+
+Keeping track of this ratio is crucial in ensuring smooth and maintained service.
+
+```hcl                                                                                                                                                                                                                                                                                                               
+module "signalfx-detectors-integration_gcp-cloud-run" {                                                                                                                                                                                                                                                             
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/integration_gcp-cloud-run"                                                                                                                                                                                                                
+                                                                                                                                                                                                                                                                                                                    
+  environment    = var.environment                                                                                                                                                                                                                                                                                  
+  gcp_project_id = var.project_id                                                                                                                                                                                                                                                                                   
+  notifications  = local.notifications                                                                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                                                                                    
+  # We keep default filtering policy here, we just want to append additional filter to it                                                                                                                                                                                                                           
+  filtering_append = true                                                                                                                                                                                                                                                                                           
+  # We define the additional filter
+  filtering_custom = "filter('service_name', '*service-name*')"                                                                                                                                                                                                                                                     
+  # We can configure the thresholds of the probes
+  connection_refused_to_sql_ratio_threshold_critical = 85                                                                                                                                                                                                                                                                              
+  connection_refused_to_sql_ratio_threshold_major    = 80                                                                                                                                                                                                                                                                              
+}                                                                                                                                                                                                                                                                                                                   
+```
+### Error 5xx
+
+Monitoring server-side errors to track and rectify system issues.
+
+```hcl                                                                                                                                                                                                                                                                                                              
+module "signalfx-detectors-integration_gcp-cloud-run" {                                                                                                                                                                                                                                                             
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/integration_gcp-cloud-run"                                                                                                                                                                                                                
+                                                                                                                                                                                                                                                                                                                    
+  environment    = var.environment                                                                                                                                                                                                                                                                                  
+  gcp_project_id = var.project_id                                                                                                                                                                                                                                                                                   
+  notifications  = local.notifications                                                                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                                                                                    
+  # We keep default filtering policy here, we just want to append additional filter to it                                                                                                                                                                                                                           
+  filtering_append = true                                                                                                                                                                                                                                                                                           
+  # We define the additional filter
+  filtering_custom = "filter('service_name', '*service-name*')"                                                                                                                                                                                                                                                     
+  # We can configure the thresholds of the probes                                                                                                                                                                                                                                      
+  error_rate_5xx_threshold_critical = 10                                                                                                                                                                                                                                                           
+  error_rate_5xx_threshold_major    = 80                                                                                                                                                                                                                                                           
+}                                                                                                                                                                                                                                                                                                                   
+```
 
 
 ## Related documentation
