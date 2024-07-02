@@ -123,7 +123,7 @@ For example:
 
 via gcloud, at the Cloud Run level:
 ```
-gcloud run deploy hello \                                                                                                                                                                                              INT ✘  claranet G  15:34:40  
+gcloud run deploy hello \
 --image=us-docker.pkg.dev/cloudrun/container/hello \
 --allow-unauthenticated \
 --port=8080 \
