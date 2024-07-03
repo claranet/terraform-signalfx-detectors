@@ -10,8 +10,8 @@
   - [Metrics](#metrics)
 - [Notes](#notes)
   - [Metadata configuration for default filtering](#metadata-configuration-for-default-filtering)
-  - [Cpu usage](#cpu-usage)
-  - [Memory](#memory)
+  - [CPU utilizations](#cpu-utilizations)
+  - [Memory utilizations](#memory-utilizations)
   - [Connection refused to cloud sql](#connection-refused-to-cloud-sql)
   - [Error 5xx](#error-5xx)
 - [Related documentation](#related-documentation)
@@ -82,8 +82,8 @@ This module creates the following SignalFx detectors which could contain one or 
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|GCP Cloud Run cpu usage|X|X|-|-|-|
-|GCP Cloud Run memory usage|X|X|-|-|-|
+|GCP Cloud Run cpu utilizations|X|X|-|-|-|
+|GCP Cloud Run memory utilizations|X|X|-|-|-|
 |GCP Cloud Run connection refused to sql ratio|X|X|-|-|-|
 |GCP Cloud Run 5xx error rate on container|X|X|-|-|-|
 
@@ -179,7 +179,7 @@ resource "google_cloud_run_service" "hello" {
 You also **need** to check if those metadata are in the metadata `includeList` in your [SignalFx GCP
 integration](https://dev.splunk.com/observability/docs/integrations/gcp_integration_overview/#Optional-fields).
 
-### Cpu usage
+### CPU utilizations 
 
 Monitoring the CPU utilization helps in understanding the system's capability and efficiency.
 
@@ -201,7 +201,7 @@ module "signalfx-detectors-integration_gcp-cloud-run" {
 }
 ```
 
-### Memory
+### Memory utilizations
 
 Accurate tracking of memory usage aids in optimizing and improving performance.
 

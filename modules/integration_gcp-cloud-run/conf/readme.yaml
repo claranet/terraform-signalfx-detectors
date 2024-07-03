@@ -72,7 +72,7 @@ notes: |
   You also **need** to check if those metadata are in the metadata `includeList` in your [SignalFx GCP
   integration](https://dev.splunk.com/observability/docs/integrations/gcp_integration_overview/#Optional-fields).
 
-  ### Cpu usage
+  ### CPU utilizations 
 
   Monitoring the CPU utilization helps in understanding the system's capability and efficiency.
 
@@ -94,7 +94,7 @@ notes: |
   }
   ```
 
-  ### Memory
+  ### Memory utilizations
 
   Accurate tracking of memory usage aids in optimizing and improving performance.
 

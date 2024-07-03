@@ -3,9 +3,9 @@ output "connection_refused_to_sql_ratio" {
   value       = signalfx_detector.connection_refused_to_sql_ratio
 }
 
-output "cpu_usage" {
-  description = "Detector resource for cpu_usage"
-  value       = signalfx_detector.cpu_usage
+output "cpu_utilizations" {
+  description = "Detector resource for cpu_utilizations"
+  value       = signalfx_detector.cpu_utilizations
 }
 
 output "error_rate_5xx" {
@@ -13,8 +13,8 @@ output "error_rate_5xx" {
   value       = signalfx_detector.error_rate_5xx
 }
 
-output "memory_usage" {
-  description = "Detector resource for memory_usage"
-  value       = signalfx_detector.memory_usage
+output "memory_utilizations" {
+  description = "Detector resource for memory_utilizations"
+  value       = signalfx_detector.memory_utilizations
 }
 

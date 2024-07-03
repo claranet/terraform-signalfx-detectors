@@ -742,8 +742,8 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|GCP Cloud Run cpu usage|X|X|-|-|-|
-|GCP Cloud Run memory usage|X|X|-|-|-|
+|GCP Cloud Run cpu utilizations|X|X|-|-|-|
+|GCP Cloud Run memory utilizations|X|X|-|-|-|
 |GCP Cloud Run connection refused to sql ratio|X|X|-|-|-|
 |GCP Cloud Run 5xx error rate on container|X|X|-|-|-|
 

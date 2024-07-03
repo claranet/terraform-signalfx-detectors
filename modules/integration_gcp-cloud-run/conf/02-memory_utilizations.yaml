@@ -1,12 +1,12 @@
 module: "GCP Cloud Run"
-name: "Cpu usage"
+name: "Memory utilizations"
 
 value_unit: "%"
 transformation: ".min(over='30m')"
 
 signals:
   signal:
-    metric: "container/cpu/utilizations"
+    metric: "container/memory/utilizations"
 
 signals:
   A:
