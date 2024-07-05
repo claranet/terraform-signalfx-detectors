@@ -1,0 +1,57 @@
+documentations:
+  - name: Official SQL documentation
+    url: https://docs.signalfx.com/en/latest/integrations/integrations-reference/integrations.mysql.html
+  - name: Galera Status variables
+    url: https://galeracluster.com/library/documentation/galera-status-variables.html
+  - name: Galera monitoring
+    url: https://galeracluster.com/library/documentation/monitoring-cluster.html
+  - name: Galera node state
+    url: https://galeracluster.com/library/documentation/node-states.html#node-state-changes
+notes: |
+  To prepare the Mysql server allowing monitoring you can use [this terraform module](https://github.com/claranet/terraform-signalfx-integrations/tree/master/database/mysql).
+
+  This module is usually used in addition with the [MySQL](../smart-agent_galera/) module.
+
+source_doc: |
+  This module is only based on the [sql](https://docs.splunk.com/Observability/gdi/sql/sql.html) monitor.
+  
+  Here is a full configuration example working with these detectors:
+  
+  ```yaml
+    - type: sql
+      dbDriver: mysql
+      host: &mysqlHost localhost
+      port: &mysqlPort 3306
+      extraDimensions:
+        mysql_port: *mysqlPort
+      params:
+        host: *mysqlHost
+        port: *mysqlPort
+        dbname: mysql
+        username: {"#from": "vault:secret/my-database[username]"}
+        password: {"#from": "vault:secret/my-database[password]"}
+      connectionString: '{{.username}}:{{.password}}@tcp({{.host}}:{{.port}})/{{.dbname}}'
+      queries:
+        - query: 'SHOW STATUS LIKE "wsrep_ready";'
+          datapointExpressions:
+            - 'GAUGE("mysql_wsrep_ready", {}, Value== "ON" ? 1: 0)'
+  
+        - query: 'SHOW STATUS LIKE "wsrep_local_state";'
+          metrics:
+            - metricName: "mysql_wsrep_local_state"
+              valueColumn: "Value"
+   
+        - query: 'SHOW STATUS LIKE "wsrep_flow_control_paused";'
+          metrics:
+            - metricName: "mysql_wsrep_flow_control_paused"
+              valueColumn: "Value"
+  
+        - query: 'SHOW STATUS LIKE "wsrep_local_recv_queue_avg";'
+          metrics:
+            - metricName: "mysql_wsrep_local_recv_queue_avg"
+              valueColumn: "Value"
+  ```
+  
+  If you already use the MySQL module, you can just merge the `queries` attribute with the one already present in your configuration.
+  
+
