@@ -178,92 +178,92 @@ variable "memory_utilizations_at_least_percentage_major" {
   type        = number
   default     = 1
 }
-# connection_refused_to_sql_ratio detector
+# cloudsql_connections_refused_to_requests_ratio detector
 
-variable "connection_refused_to_sql_ratio_notifications" {
-  description = "Notification recipients list per severity overridden for connection_refused_to_sql_ratio detector"
+variable "cloudsql_connections_refused_to_requests_ratio_notifications" {
+  description = "Notification recipients list per severity overridden for cloudsql_connections_refused_to_requests_ratio detector"
   type        = map(list(string))
   default     = {}
 }
 
-variable "connection_refused_to_sql_ratio_aggregation_function" {
-  description = "Aggregation function and group by for connection_refused_to_sql_ratio detector (i.e. \".mean(by=['host'])\")"
+variable "cloudsql_connections_refused_to_requests_ratio_aggregation_function" {
+  description = "Aggregation function and group by for cloudsql_connections_refused_to_requests_ratio detector (i.e. \".mean(by=['host'])\")"
+  type        = string
+  default     = ".count(by=['response_code_class'])"
+}
+
+variable "cloudsql_connections_refused_to_requests_ratio_transformation_function" {
+  description = "Transformation function for cloudsql_connections_refused_to_requests_ratio detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
 }
 
-variable "connection_refused_to_sql_ratio_transformation_function" {
-  description = "Transformation function for connection_refused_to_sql_ratio detector (i.e. \".mean(over='5m')\")"
-  type        = string
-  default     = ""
-}
-
-variable "connection_refused_to_sql_ratio_max_delay" {
-  description = "Enforce max delay for connection_refused_to_sql_ratio detector (use \"0\" or \"null\" for \"Auto\")"
+variable "cloudsql_connections_refused_to_requests_ratio_max_delay" {
+  description = "Enforce max delay for cloudsql_connections_refused_to_requests_ratio detector (use \"0\" or \"null\" for \"Auto\")"
   type        = number
   default     = null
 }
 
-variable "connection_refused_to_sql_ratio_tip" {
+variable "cloudsql_connections_refused_to_requests_ratio_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
   default     = ""
 }
 
-variable "connection_refused_to_sql_ratio_runbook_url" {
+variable "cloudsql_connections_refused_to_requests_ratio_runbook_url" {
   description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
   type        = string
   default     = ""
 }
 
-variable "connection_refused_to_sql_ratio_disabled" {
-  description = "Disable all alerting rules for connection_refused_to_sql_ratio detector"
+variable "cloudsql_connections_refused_to_requests_ratio_disabled" {
+  description = "Disable all alerting rules for cloudsql_connections_refused_to_requests_ratio detector"
   type        = bool
   default     = null
 }
 
-variable "connection_refused_to_sql_ratio_disabled_critical" {
-  description = "Disable critical alerting rule for connection_refused_to_sql_ratio detector"
+variable "cloudsql_connections_refused_to_requests_ratio_disabled_critical" {
+  description = "Disable critical alerting rule for cloudsql_connections_refused_to_requests_ratio detector"
   type        = bool
   default     = null
 }
 
-variable "connection_refused_to_sql_ratio_disabled_major" {
-  description = "Disable major alerting rule for connection_refused_to_sql_ratio detector"
+variable "cloudsql_connections_refused_to_requests_ratio_disabled_major" {
+  description = "Disable major alerting rule for cloudsql_connections_refused_to_requests_ratio detector"
   type        = bool
   default     = null
 }
 
-variable "connection_refused_to_sql_ratio_threshold_critical" {
-  description = "Critical threshold for connection_refused_to_sql_ratio detector in %"
+variable "cloudsql_connections_refused_to_requests_ratio_threshold_critical" {
+  description = "Critical threshold for cloudsql_connections_refused_to_requests_ratio detector in %"
   type        = number
   default     = 5
 }
 
-variable "connection_refused_to_sql_ratio_lasting_duration_critical" {
+variable "cloudsql_connections_refused_to_requests_ratio_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
   default     = "1h"
 }
 
-variable "connection_refused_to_sql_ratio_at_least_percentage_critical" {
+variable "cloudsql_connections_refused_to_requests_ratio_at_least_percentage_critical" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 0.5
 }
-variable "connection_refused_to_sql_ratio_threshold_major" {
-  description = "Major threshold for connection_refused_to_sql_ratio detector in %"
+variable "cloudsql_connections_refused_to_requests_ratio_threshold_major" {
+  description = "Major threshold for cloudsql_connections_refused_to_requests_ratio detector in %"
   type        = number
   default     = 0
 }
 
-variable "connection_refused_to_sql_ratio_lasting_duration_major" {
+variable "cloudsql_connections_refused_to_requests_ratio_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
   default     = "1h"
 }
 
-variable "connection_refused_to_sql_ratio_at_least_percentage_major" {
+variable "cloudsql_connections_refused_to_requests_ratio_at_least_percentage_major" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 0.5
@@ -279,7 +279,7 @@ variable "error_rate_5xx_notifications" {
 variable "error_rate_5xx_aggregation_function" {
   description = "Aggregation function and group by for error_rate_5xx detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".sum(by=['response_code_class'])"
+  default     = ".count(by=['response_code_class'])"
 }
 
 variable "error_rate_5xx_transformation_function" {

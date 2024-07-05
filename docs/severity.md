@@ -744,7 +744,7 @@
 |---|---|---|---|---|---|
 |GCP Cloud Run cpu utilizations|X|X|-|-|-|
 |GCP Cloud Run memory utilizations|X|X|-|-|-|
-|GCP Cloud Run connection refused to sql ratio|X|X|-|-|-|
+|GCP Cloud Run cloudsql connections refused to requests ratio|X|X|-|-|-|
 |GCP Cloud Run 5xx error rate on container|X|X|-|-|-|
 
 

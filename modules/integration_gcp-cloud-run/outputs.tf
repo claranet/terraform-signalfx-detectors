@@ -1,6 +1,6 @@
-output "connection_refused_to_sql_ratio" {
-  description = "Detector resource for connection_refused_to_sql_ratio"
-  value       = signalfx_detector.connection_refused_to_sql_ratio
+output "cloudsql_connections_refused_to_requests_ratio" {
+  description = "Detector resource for cloudsql_connections_refused_to_requests_ratio"
+  value       = signalfx_detector.cloudsql_connections_refused_to_requests_ratio
 }
 
 output "cpu_utilizations" {

@@ -1,11 +1,14 @@
 module: GCP Cloud Run
-name: connection refused to sql ratio
+name: CloudSQL connections refused to requests ratio
 
+transformation: true
+aggregation: ".count(by=['response_code_class'])"
 value_unit: "%"
 
 signals:
   A:
     metric: "infrastructure/cloudsql/connection_refused_count"
+    filter: "filter('response_code_class', '5xx')"
   B:
     metric: "infrastructure/cloudsql/connection_request_count"
   signal:

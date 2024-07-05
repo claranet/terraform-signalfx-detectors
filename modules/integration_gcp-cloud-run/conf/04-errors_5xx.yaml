@@ -3,7 +3,7 @@ name: 5xx error rate on container
 id: error_rate_5xx
 
 transformation: true
-aggregation: ".sum(by=['response_code_class'])"
+aggregation: ".count(by=['response_code_class'])"
 value_unit: "%"
 
 signals:
