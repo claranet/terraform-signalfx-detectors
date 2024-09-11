@@ -742,6 +742,7 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
+|GCP Cloud Run heartbeat|X|-|-|-|-|
 |GCP Cloud Run cpu utilizations|X|X|-|-|-|
 |GCP Cloud Run memory utilizations|X|X|-|-|-|
 

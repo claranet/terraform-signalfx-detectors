@@ -6,7 +6,7 @@ transformation: ".min(over='30m')"
 
 signals:
   signal:
-    metric: "container/cpu/utilizations"
+    metric: "container/memory/utilizations"
 
 rules:
   critical:
