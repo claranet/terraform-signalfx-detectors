@@ -80,7 +80,7 @@ This module creates the following SignalFx detectors which could contain one or 
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|GCP Cloud Run heartbeat|X|-|-|-|-|
+|GCP Cloud Run container count|X|-|-|-|-|
 |GCP Cloud Run cpu utilizations|X|X|-|-|-|
 |GCP Cloud Run memory utilizations|X|X|-|-|-|
 

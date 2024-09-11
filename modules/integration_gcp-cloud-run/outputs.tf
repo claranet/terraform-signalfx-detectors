@@ -1,11 +1,11 @@
+output "container_count" {
+  description = "Detector resource for container_count"
+  value       = signalfx_detector.container_count
+}
+
 output "cpu_utilizations" {
   description = "Detector resource for cpu_utilizations"
   value       = signalfx_detector.cpu_utilizations
-}
-
-output "heartbeat" {
-  description = "Detector resource for heartbeat"
-  value       = signalfx_detector.heartbeat
 }
 
 output "memory_utilizations" {

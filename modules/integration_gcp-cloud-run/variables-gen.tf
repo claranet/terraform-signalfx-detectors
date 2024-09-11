@@ -1,53 +1,64 @@
-# heartbeat detector
+# container_count detector
 
-variable "heartbeat_notifications" {
-  description = "Notification recipients list per severity overridden for heartbeat detector"
+variable "container_count_notifications" {
+  description = "Notification recipients list per severity overridden for container_count detector"
   type        = map(list(string))
   default     = {}
 }
 
-variable "heartbeat_aggregation_function" {
-  description = "Aggregation function and group by for heartbeat detector (i.e. \".mean(by=['host'])\")"
+variable "container_count_aggregation_function" {
+  description = "Aggregation function and group by for container_count detector (i.e. \".mean(by=['host'])\")"
   type        = string
   default     = ""
 }
 
-variable "heartbeat_transformation_function" {
-  description = "Transformation function for heartbeat detector (i.e. \".mean(over='5m')\")"
+variable "container_count_transformation_function" {
+  description = "Transformation function for container_count detector (i.e. \".mean(over='5m')\")"
   type        = string
   default     = ""
 }
 
-variable "heartbeat_max_delay" {
-  description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
+variable "container_count_max_delay" {
+  description = "Enforce max delay for container_count detector (use \"0\" or \"null\" for \"Auto\")"
   type        = number
   default     = null
 }
 
-variable "heartbeat_tip" {
+variable "container_count_tip" {
   description = "Suggested first course of action or any note useful for incident handling"
   type        = string
   default     = ""
 }
 
-variable "heartbeat_runbook_url" {
+variable "container_count_runbook_url" {
   description = "URL like SignalFx dashboard or wiki page which can help to troubleshoot the incident cause"
   type        = string
   default     = ""
 }
 
-variable "heartbeat_disabled" {
-  description = "Disable all alerting rules for heartbeat detector"
+variable "container_count_disabled" {
+  description = "Disable all alerting rules for container_count detector"
   type        = bool
   default     = null
 }
 
-variable "heartbeat_timeframe" {
-  description = "Timeframe for heartbeat detector (i.e. \"25m\")."
-  type        = string
-  default     = "25m"
+variable "container_count_threshold_critical" {
+  description = "Critical threshold for container_count detector"
+  type        = number
+  default     = 0
 }
 
+variable "container_count_lasting_duration_critical" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "container_count_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
 # cpu_utilizations detector
 
 variable "cpu_utilizations_notifications" {

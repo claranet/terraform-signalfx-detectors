@@ -1,5 +1,5 @@
 module: "GCP Cloud Run"
-name: "heartbeat"
+name: "Container count"
 
 transformation: true
 aggregation: true
