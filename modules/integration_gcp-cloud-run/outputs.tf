@@ -1,8 +1,3 @@
-output "cloudsql_connections_refused_to_requests_ratio" {
-  description = "Detector resource for cloudsql_connections_refused_to_requests_ratio"
-  value       = signalfx_detector.cloudsql_connections_refused_to_requests_ratio
-}
-
 output "cpu_utilizations" {
   description = "Detector resource for cpu_utilizations"
   value       = signalfx_detector.cpu_utilizations

@@ -5,10 +5,6 @@ value_unit: "%"
 transformation: ".min(over='30m')"
 
 signals:
-  signal:
-    metric: "container/cpu/utilizations"
-
-signals:
   A:
     metric: "container/cpu/utilizations"
     extrapolation: zero

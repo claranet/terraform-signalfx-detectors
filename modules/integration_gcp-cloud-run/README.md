@@ -84,7 +84,6 @@ This module creates the following SignalFx detectors which could contain one or 
 |---|---|---|---|---|---|
 |GCP Cloud Run cpu utilizations|X|X|-|-|-|
 |GCP Cloud Run memory utilizations|X|X|-|-|-|
-|GCP Cloud Run cloudsql connections refused to requests ratio|X|X|-|-|-|
 
 ## How to collect required metrics?
 
@@ -103,8 +102,6 @@ Check the [Related documentation](#related-documentation) section for more detai
 Here is the list of required metrics for detectors in this module.
 
 * `container/cpu/utilizations`
-* `infrastructure/cloudsql/connection_refused_count`
-* `infrastructure/cloudsql/connection_request_count`
 
 
 ## Notes
