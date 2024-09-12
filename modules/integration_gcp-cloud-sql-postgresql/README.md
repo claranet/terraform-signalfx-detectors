@@ -23,8 +23,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 module "signalfx-detectors-integration-gcp-cloud-sql-postgresql" {
   source = "github.com/claranet/terraform-signalfx-detectors.git//modules/integration_gcp-cloud-sql-postgresql?ref={revision}"
 
-  environment   = var.environment
-  notifications = local.notifications
+  environment    = var.environment
+  notifications  = local.notifications
   gcp_project_id = "fillme"
 }
 ```
