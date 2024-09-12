@@ -25,6 +25,7 @@ module "signalfx-detectors-integration-gcp-cloud-sql-postgresql" {
 
   environment   = var.environment
   notifications = local.notifications
+  gcp_project_id = "fillme"
 }
 ```
 
