@@ -70,6 +70,7 @@
 - [integration_gcp-cloud-sql-common](#integration_gcp-cloud-sql-common)
 - [integration_gcp-cloud-sql-failover](#integration_gcp-cloud-sql-failover)
 - [integration_gcp-cloud-sql-mysql](#integration_gcp-cloud-sql-mysql)
+- [integration_gcp-cloud-sql-postgresql](#integration_gcp-cloud-sql-postgresql)
 - [integration_gcp-compute-engine](#integration_gcp-compute-engine)
 - [integration_gcp-load-balancing](#integration_gcp-load-balancing)
 - [integration_gcp-memorystore-redis](#integration_gcp-memorystore-redis)
@@ -773,6 +774,13 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |GCP Cloud SQL MySQL replication lag|X|X|-|-|-|
+
+
+## integration_gcp-cloud-sql-postgresql
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|GCP Cloud SQL PostgreSQL replication lag|X|X|-|-|-|
 
 
 ## integration_gcp-compute-engine
