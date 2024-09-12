@@ -66,6 +66,7 @@
 - [integration_azure-virtual-machine-scaleset](#integration_azure-virtual-machine-scaleset)
 - [integration_azure-virtual-machine](#integration_azure-virtual-machine)
 - [integration_gcp-bigquery](#integration_gcp-bigquery)
+- [integration_gcp-cloud-run](#integration_gcp-cloud-run)
 - [integration_gcp-cloud-sql-common](#integration_gcp-cloud-sql-common)
 - [integration_gcp-cloud-sql-failover](#integration_gcp-cloud-sql-failover)
 - [integration_gcp-cloud-sql-mysql](#integration_gcp-cloud-sql-mysql)
@@ -737,6 +738,15 @@
 |GCP BigQuery table count|X|X|-|-|-|
 |GCP BigQuery uploaded bytes|X|X|-|-|-|
 |GCP BigQuery uploaded bytes billed|X|X|-|-|-|
+
+
+## integration_gcp-cloud-run
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|GCP Cloud Run container count|X|-|-|-|-|
+|GCP Cloud Run cpu utilizations|X|X|-|-|-|
+|GCP Cloud Run memory utilizations|X|X|-|-|-|
 
 
 ## integration_gcp-cloud-sql-common
