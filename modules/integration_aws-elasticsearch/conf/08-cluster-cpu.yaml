@@ -2,7 +2,6 @@ module: AWS Elasticsearch
 id: "cluster_cpu"
 name: "CPU utilization"
 
-transformation: ".min(over='45m')"
 aggregation: ""
 filtering: "filter('namespace', 'AWS/ES') and filter('stat', 'upper') and filter('NodeId', '*')"
 
@@ -20,6 +19,8 @@ rules:
     threshold: 80
     comparator: ">"
     dependency: critical
+    lasting_duration: "45m"
   critical:
     threshold: 90
     comparator: ">"
+    lasting_duration: "45m"

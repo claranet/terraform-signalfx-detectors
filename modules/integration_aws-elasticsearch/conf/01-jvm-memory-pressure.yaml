@@ -1,7 +1,6 @@
 module: AWS Elasticsearch
 name: JVM Memory Pressure
 
-transformation: ".min(over='15m')"
 aggregation: true
 filtering: "filter('namespace', 'AWS/ES') and filter('stat', 'upper') and filter('NodeId', '*')"
 value_unit: "%"
@@ -15,7 +14,9 @@ rules:
   critical:
     threshold: 90
     comparator: ">"
+    lasting_duration: "15m"
   major:
     threshold: 80
     comparator: ">"
     dependency: critical
+    lasting_duration: "15m"
