@@ -1,0 +1,15 @@
+module: "GCP Cloud Run"
+name: "Container count"
+
+transformation: true
+aggregation: true
+
+signals:
+  signal:
+    metric: "container/containers"
+
+rules:
+  critical:
+    threshold: 0
+    comparator: "=="
+

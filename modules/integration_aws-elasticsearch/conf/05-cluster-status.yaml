@@ -1,7 +1,6 @@
 module: AWS Elasticsearch
 name: Cluster status
 
-aggregation: ".min(over='15m')"
 filtering: "filter('namespace', 'AWS/ES') and filter('stat', 'upper')"
 
 signals:
@@ -18,8 +17,10 @@ rules:
     comparator: ">="
     description: "is red"
     signal: red
+    lasting_duration: "15m"
   major:
     threshold: 1
     comparator: ">="
     description: "is yellow"
     signal: yellow
+    lasting_duration: "15m"

@@ -1,0 +1,16 @@
+module: dnsmasq
+name: hits
+id: dnsmasq_hits
+
+transformation: true
+aggregation: true
+
+signals:
+  signal:
+    metric: dnsmasq_hits
+
+rules:
+  critical:
+    threshold: 1
+    comparator: "<="
+    lasting_duration: '5m'
