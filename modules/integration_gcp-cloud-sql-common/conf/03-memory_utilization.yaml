@@ -4,7 +4,7 @@ id: "memory_utilization"
 
 transformation: ".min(over='15m')"
 aggregation: true
-filtering: "filter('project_id', '${var.gcp_project_id}') and filter('component', 'Free')"
+filtering: "filter('component', 'Free')"
 
 signals:
   signal:

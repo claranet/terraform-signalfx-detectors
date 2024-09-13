@@ -114,7 +114,7 @@ resource "signalfx_detector" "memory_utilization" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    base_filtering = filter('project_id', '${var.gcp_project_id}') and filter('component', 'Free')
+    base_filtering = filter('component', 'Free')
     signal = data('database/memory/components', filter=base_filtering and ${module.filtering.signalflow})${var.memory_utilization_aggregation_function}${var.memory_utilization_transformation_function}.publish('signal')
     detect(when(signal < ${var.memory_utilization_threshold_critical}%{if var.memory_utilization_lasting_duration_critical != null}, lasting='${var.memory_utilization_lasting_duration_critical}', at_least=${var.memory_utilization_at_least_percentage_critical}%{endif})).publish('CRIT')
     detect(when(signal < ${var.memory_utilization_threshold_major}%{if var.memory_utilization_lasting_duration_major != null}, lasting='${var.memory_utilization_lasting_duration_major}', at_least=${var.memory_utilization_at_least_percentage_major}%{endif}) and (not when(signal < ${var.memory_utilization_threshold_critical}%{if var.memory_utilization_lasting_duration_critical != null}, lasting='${var.memory_utilization_lasting_duration_critical}', at_least=${var.memory_utilization_at_least_percentage_critical}%{endif}))).publish('MAJOR')
