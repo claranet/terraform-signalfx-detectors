@@ -77,6 +77,7 @@ This module creates the following SignalFx detectors which could contain one or 
 |---|---|---|---|---|---|
 |Azure VPN heartbeat|X|-|-|-|-|
 |Azure VPN total flow count|X|-|-|-|-|
+|Azure VPN ipsec tunnel status|X|X|-|-|-|
 
 ## How to collect required metrics?
 
@@ -97,6 +98,7 @@ Check the [Related documentation](#related-documentation) section for more detai
 Here is the list of required metrics for detectors in this module.
 
 * `fame.azure.virtual_network_gateway.total_flow_count`
+* `fame.azure.virtual_network_gateway.tunnel_status`
 
 
 
