@@ -4,7 +4,7 @@ name: "Connection traffic"
 transformation: true
 aggregation: true
 
-filtering: "filter('namespace', 'AWS/DirectConnect')"
+filtering: "filter('namespace', 'AWS/DX')"
 value_unit: "bytes"
 
 signals:

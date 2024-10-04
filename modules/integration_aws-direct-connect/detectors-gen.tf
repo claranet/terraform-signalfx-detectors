@@ -39,7 +39,7 @@ resource "signalfx_detector" "connection_state" {
   }
 
   program_text = <<-EOF
-    base_filtering = filter('namespace', 'AWS/DirectConnect')
+    base_filtering = filter('namespace', 'AWS/DX')
     signal = data('ConnectionState', filter=base_filtering and filter('stat', 'maximum') and ${module.filtering.signalflow})${var.connection_state_aggregation_function}${var.connection_state_transformation_function}.publish('signal')
     detect(when(signal == ${var.connection_state_threshold_critical}%{if var.connection_state_lasting_duration_critical != null}, lasting='${var.connection_state_lasting_duration_critical}', at_least=${var.connection_state_at_least_percentage_critical}%{endif})).publish('CRIT')
 EOF
@@ -72,7 +72,7 @@ resource "signalfx_detector" "connection_traffic" {
   }
 
   program_text = <<-EOF
-    base_filtering = filter('namespace', 'AWS/DirectConnect')
+    base_filtering = filter('namespace', 'AWS/DX')
     ingress_bps = data('ConnectionBpsIngress', filter=base_filtering and filter('stat', 'sum') and ${module.filtering.signalflow})${var.connection_traffic_aggregation_function}${var.connection_traffic_transformation_function}
     egress_bps = data('ConnectionBpsEgress', filter=base_filtering and filter('stat', 'sum') and ${module.filtering.signalflow})${var.connection_traffic_aggregation_function}${var.connection_traffic_transformation_function}.publish('egress_bps')
     detect(when(ingress_bps == ${var.connection_traffic_threshold_major}%{if var.connection_traffic_lasting_duration_major != null}, lasting='${var.connection_traffic_lasting_duration_major}', at_least=${var.connection_traffic_at_least_percentage_major}%{endif}) and when(egress_bps == 0)).publish('MAJOR')
