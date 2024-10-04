@@ -1,0 +1,25 @@
+module: AWS Direct Connect
+name: "Connection traffic"
+
+transformation: true
+aggregation: true
+
+filtering: "filter('namespace', 'AWS/DirectConnect')"
+value_unit: "bytes"
+
+signals:
+  ingress_bps:
+    metric: ConnectionBpsIngress
+    filter: "filter('stat', 'sum')"
+    
+  egress_bps:
+    metric: ConnectionBpsEgress
+    filter: "filter('stat', 'sum')"
+
+rules:
+  major:
+    threshold: 0
+    comparator: "=="
+    signal: ingress_bps
+    append_condition: and when(egress_bps == 0)
+    description: "No traffic detected"

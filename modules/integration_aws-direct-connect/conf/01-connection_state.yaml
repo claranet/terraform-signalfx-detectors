@@ -1,0 +1,19 @@
+module: AWS Direct Connect
+name: "Connection state"
+
+transformation: true
+aggregation: true
+
+filtering: "filter('namespace', 'AWS/DirectConnect')"
+value_unit: "state"
+
+signals:
+  signal:
+    metric: ConnectionState
+    filter: "filter('stat', 'maximum')"
+
+rules:
+  critical:
+    threshold: 0
+    comparator: "=="
+    description: "Connection is down"
