@@ -10,7 +10,7 @@ value_unit: "state"
 signals:
   signal:
     metric: ConnectionState
-    filter: "filter('stat', 'maximum')"
+    filter: "filter('stat', 'sum')"
 
 rules:
   critical:

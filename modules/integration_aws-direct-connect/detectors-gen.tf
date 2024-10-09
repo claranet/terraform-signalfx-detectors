@@ -40,7 +40,7 @@ resource "signalfx_detector" "connection_state" {
 
   program_text = <<-EOF
     base_filtering = filter('namespace', 'AWS/DX')
-    signal = data('ConnectionState', filter=base_filtering and filter('stat', 'maximum') and ${module.filtering.signalflow})${var.connection_state_aggregation_function}${var.connection_state_transformation_function}.publish('signal')
+    signal = data('ConnectionState', filter=base_filtering and filter('stat', 'sum') and ${module.filtering.signalflow})${var.connection_state_aggregation_function}${var.connection_state_transformation_function}.publish('signal')
     detect(when(signal == ${var.connection_state_threshold_critical}%{if var.connection_state_lasting_duration_critical != null}, lasting='${var.connection_state_lasting_duration_critical}', at_least=${var.connection_state_at_least_percentage_critical}%{endif})).publish('CRIT')
 EOF
 
