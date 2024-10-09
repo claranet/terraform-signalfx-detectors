@@ -1,0 +1,19 @@
+module: "GCP Cloud Run"
+name: "CPU utilizations"
+
+value_unit: "%"
+transformation: ".min(over='30m')"
+
+signals:
+  signal:
+    metric: "container/cpu/utilizations"
+
+rules:
+  critical:
+    threshold: 90
+    comparator: ">"
+
+  major:
+    threshold: 85
+    comparator: ">"
+    dependency: "critical"

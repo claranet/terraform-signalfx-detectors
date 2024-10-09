@@ -1,0 +1,21 @@
+module: postfix
+name: "Size Postfix Delivery Delay"
+id: "postfix_smtp_delivery_delay_seconds_count"
+
+transformation: ".min(over='30m')"
+aggregation: true
+filtering: "filter('queue', 'maildrop')"
+
+signals:
+  signal:
+    metric: "postfix_smtp_delivery_delay_seconds_count"
+
+rules:
+  critical:
+    threshold: 60
+    comparator: ">"
+    
+  major:
+    threshold: 45
+    comparator: ">"
+    dependency: "critical"

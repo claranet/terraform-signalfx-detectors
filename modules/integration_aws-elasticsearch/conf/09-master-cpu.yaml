@@ -2,7 +2,6 @@ module: AWS Elasticsearch
 id: "master_cpu"
 name: "Master CPU utilization"
 
-transformation: ".min(over='20m')"
 aggregation: ""
 filtering: "filter('namespace', 'AWS/ES') and filter('stat', 'upper') and filter('NodeId', '*')"
 
@@ -15,6 +14,8 @@ rules:
     threshold: 60
     comparator: ">"
     dependency: critical
+    lasting_duration: "20m"
   critical:
     threshold: 70
     comparator: ">"
+    lasting_duration: "20m"

@@ -66,9 +66,11 @@
 - [integration_azure-virtual-machine-scaleset](#integration_azure-virtual-machine-scaleset)
 - [integration_azure-virtual-machine](#integration_azure-virtual-machine)
 - [integration_gcp-bigquery](#integration_gcp-bigquery)
+- [integration_gcp-cloud-run](#integration_gcp-cloud-run)
 - [integration_gcp-cloud-sql-common](#integration_gcp-cloud-sql-common)
 - [integration_gcp-cloud-sql-failover](#integration_gcp-cloud-sql-failover)
 - [integration_gcp-cloud-sql-mysql](#integration_gcp-cloud-sql-mysql)
+- [integration_gcp-cloud-sql-postgresql](#integration_gcp-cloud-sql-postgresql)
 - [integration_gcp-compute-engine](#integration_gcp-compute-engine)
 - [integration_gcp-load-balancing](#integration_gcp-load-balancing)
 - [integration_gcp-memorystore-redis](#integration_gcp-memorystore-redis)
@@ -78,9 +80,11 @@
 - [organization_usage](#organization_usage)
 - [otel-collector_kubernetes-common](#otel-collector_kubernetes-common)
 - [prometheus-exporter_active-directory](#prometheus-exporter_active-directory)
+- [prometheus-exporter_dnsmasq](#prometheus-exporter_dnsmasq)
 - [prometheus-exporter_docker-state](#prometheus-exporter_docker-state)
 - [prometheus-exporter_kong](#prometheus-exporter_kong)
 - [prometheus-exporter_oracledb](#prometheus-exporter_oracledb)
+- [prometheus-exporter_postfix](#prometheus-exporter_postfix)
 - [prometheus-exporter_squid](#prometheus-exporter_squid)
 - [prometheus-exporter_varnish](#prometheus-exporter_varnish)
 - [prometheus-exporter_wallix-bastion](#prometheus-exporter_wallix-bastion)
@@ -737,6 +741,15 @@
 |GCP BigQuery uploaded bytes billed|X|X|-|-|-|
 
 
+## integration_gcp-cloud-run
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|GCP Cloud Run container count|X|-|-|-|-|
+|GCP Cloud Run cpu utilizations|X|X|-|-|-|
+|GCP Cloud Run memory utilizations|X|X|-|-|-|
+
+
 ## integration_gcp-cloud-sql-common
 
 |Detector|Critical|Major|Minor|Warning|Info|
@@ -761,6 +774,13 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |GCP Cloud SQL MySQL replication lag|X|X|-|-|-|
+
+
+## integration_gcp-cloud-sql-postgresql
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|GCP Cloud SQL PostgreSQL replication lag|X|X|-|-|-|
 
 
 ## integration_gcp-compute-engine
@@ -863,6 +883,15 @@
 |Active-directory active directory services|X|-|-|-|-|
 
 
+## prometheus-exporter_dnsmasq
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Dnsmasq heartbeat|X|-|-|-|-|
+|Dnsmasq hits|X|-|-|-|-|
+|Dnsmasq hit rate|-|X|X|-|-|
+
+
 ## prometheus-exporter_docker-state
 
 |Detector|Critical|Major|Minor|Warning|Info|
@@ -887,6 +916,17 @@
 |---|---|---|---|---|---|
 |Oracle heartbeat|X|-|-|-|-|
 |Oracle database status|X|-|-|-|-|
+
+
+## prometheus-exporter_postfix
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Postfix heartbeat|X|-|-|-|-|
+|Postfix size postfix queue deferred|X|X|-|-|-|
+|Postfix size postfix queue hold|X|X|-|-|-|
+|Postfix size postfix queue maildrop|X|X|-|-|-|
+|Postfix size postfix delivery delay|X|X|-|-|-|
 
 
 ## prometheus-exporter_squid

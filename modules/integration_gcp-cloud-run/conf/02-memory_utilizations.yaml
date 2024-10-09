@@ -1,0 +1,19 @@
+module: "GCP Cloud Run"
+name: "Memory utilizations"
+
+value_unit: "%"
+transformation: ".min(over='30m')"
+
+signals:
+  signal:
+    metric: "container/memory/utilizations"
+
+rules:
+  critical:
+    threshold: 95
+    comparator: ">"
+
+  major:
+    threshold: 90
+    comparator: ">"
+    dependency: "critical"
