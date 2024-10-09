@@ -10,7 +10,7 @@ value_unit: "state"
 signals:
   signal:
     metric: ConnectionState
-    filter: "filter('stat', 'sum')"
+    filter: "filter('stat', 'lower')"
 
 rules:
   critical:
