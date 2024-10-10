@@ -39,7 +39,7 @@ resource "signalfx_detector" "connection_state" {
   }
 
   program_text = <<-EOF
-    base_filtering = filter('namespace', 'AWS/DX') and filter('ConnectionId', '${var.connection_id}')
+    base_filtering = filter('namespace', 'AWS/DX')
     signal = data('ConnectionState', filter=base_filtering and filter('stat', 'lower') and ${module.filtering.signalflow})${var.connection_state_aggregation_function}${var.connection_state_transformation_function}.publish('signal')
     detect(when(signal == ${var.connection_state_threshold_critical}%{if var.connection_state_lasting_duration_critical != null}, lasting='${var.connection_state_lasting_duration_critical}', at_least=${var.connection_state_at_least_percentage_critical}%{endif})).publish('CRIT')
 EOF
@@ -72,7 +72,7 @@ resource "signalfx_detector" "virtual_interface_traffic" {
   }
 
   program_text = <<-EOF
-    base_filtering = filter('namespace', 'AWS/DX') and filter('ConnectionId', '${var.connection_id}') and filter('VirtualInterfaceId', '${var.virtual_interface_id}')
+    base_filtering = filter('namespace', 'AWS/DX')
     ingress_bps = data('VirtualInterfaceBpsIngress', filter=base_filtering and filter('stat', 'sum') and ${module.filtering.signalflow})${var.virtual_interface_traffic_aggregation_function}${var.virtual_interface_traffic_transformation_function}
     egress_bps = data('VirtualInterfaceBpsEgress', filter=base_filtering and filter('stat', 'sum') and ${module.filtering.signalflow})${var.virtual_interface_traffic_aggregation_function}${var.virtual_interface_traffic_transformation_function}.publish('egress_bps')
     detect(when(ingress_bps == ${var.virtual_interface_traffic_threshold_critical}%{if var.virtual_interface_traffic_lasting_duration_critical != null}, lasting='${var.virtual_interface_traffic_lasting_duration_critical}', at_least=${var.virtual_interface_traffic_at_least_percentage_critical}%{endif}) and when(egress_bps == 0)).publish('CRIT')

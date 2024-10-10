@@ -4,7 +4,7 @@ name: "Virtual Interface traffic"
 transformation: true
 aggregation: true
 
-filtering: "filter('namespace', 'AWS/DX') and filter('ConnectionId', '${var.connection_id}') and filter('VirtualInterfaceId', '${var.virtual_interface_id}')"
+filtering: "filter('namespace', 'AWS/DX')"
 value_unit: "bytes"
 
 signals:

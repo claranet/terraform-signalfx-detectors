@@ -4,7 +4,7 @@ name: "Connection state"
 transformation: true
 aggregation: true
 
-filtering: "filter('namespace', 'AWS/DX') and filter('ConnectionId', '${var.connection_id}')"
+filtering: "filter('namespace', 'AWS/DX')" 
 value_unit: "state"
 
 signals:
