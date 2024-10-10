@@ -59,8 +59,8 @@ EOF
   max_delay = var.connection_state_max_delay
 }
 
-resource "signalfx_detector" "connection_traffic" {
-  name = format("%s %s", local.detector_name_prefix, "AWS Direct Connect connection traffic")
+resource "signalfx_detector" "virtual_interface_traffic" {
+  name = format("%s %s", local.detector_name_prefix, "AWS Direct Connect virtual interface traffic")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
@@ -73,23 +73,23 @@ resource "signalfx_detector" "connection_traffic" {
 
   program_text = <<-EOF
     base_filtering = filter('namespace', 'AWS/DX')
-    ingress_bps = data('ConnectionBpsIngress', filter=base_filtering and filter('stat', 'sum') and ${module.filtering.signalflow})${var.connection_traffic_aggregation_function}${var.connection_traffic_transformation_function}
-    egress_bps = data('ConnectionBpsEgress', filter=base_filtering and filter('stat', 'sum') and ${module.filtering.signalflow})${var.connection_traffic_aggregation_function}${var.connection_traffic_transformation_function}.publish('egress_bps')
-    detect(when(ingress_bps == ${var.connection_traffic_threshold_major}%{if var.connection_traffic_lasting_duration_major != null}, lasting='${var.connection_traffic_lasting_duration_major}', at_least=${var.connection_traffic_at_least_percentage_major}%{endif}) and when(egress_bps == 0)).publish('MAJOR')
+    ingress_bps = data('VirtualInterfaceBpsIngress', filter=base_filtering and filter('stat', 'sum') and ${module.filtering.signalflow})${var.virtual_interface_traffic_aggregation_function}${var.virtual_interface_traffic_transformation_function}
+    egress_bps = data('VirtualInterfaceBpsEgress', filter=base_filtering and filter('stat', 'sum') and ${module.filtering.signalflow})${var.virtual_interface_traffic_aggregation_function}${var.virtual_interface_traffic_transformation_function}.publish('egress_bps')
+    detect(when(ingress_bps == ${var.virtual_interface_traffic_threshold_critical}%{if var.virtual_interface_traffic_lasting_duration_critical != null}, lasting='${var.virtual_interface_traffic_lasting_duration_critical}', at_least=${var.virtual_interface_traffic_at_least_percentage_critical}%{endif}) and when(egress_bps == 0)).publish('CRIT')
 EOF
 
   rule {
-    description           = "No traffic detected == ${var.connection_traffic_threshold_major}bytes"
-    severity              = "Major"
-    detect_label          = "MAJOR"
-    disabled              = coalesce(var.connection_traffic_disabled, var.detectors_disabled)
-    notifications         = try(coalescelist(lookup(var.connection_traffic_notifications, "major", []), var.notifications.major), null)
-    runbook_url           = try(coalesce(var.connection_traffic_runbook_url, var.runbook_url), "")
-    tip                   = var.connection_traffic_tip
+    description           = "No traffic detected on the virtual interface == ${var.virtual_interface_traffic_threshold_critical}bytes"
+    severity              = "Critical"
+    detect_label          = "CRIT"
+    disabled              = coalesce(var.virtual_interface_traffic_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.virtual_interface_traffic_notifications, "critical", []), var.notifications.critical), null)
+    runbook_url           = try(coalesce(var.virtual_interface_traffic_runbook_url, var.runbook_url), "")
+    tip                   = var.virtual_interface_traffic_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
     parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
   }
 
-  max_delay = var.connection_traffic_max_delay
+  max_delay = var.virtual_interface_traffic_max_delay
 }
 

@@ -77,7 +77,7 @@ This module creates the following SignalFx detectors which could contain one or 
 |---|---|---|---|---|---|
 |Aws-direct-connect heartbeat|X|-|-|-|-|
 |AWS Direct Connect connection state|X|-|-|-|-|
-|AWS Direct Connect connection traffic|-|X|-|-|-|
+|AWS Direct Connect virtual interface traffic|X|-|-|-|-|
 
 ## How to collect required metrics?
 
@@ -95,9 +95,9 @@ Check the [Related documentation](#related-documentation) section for more detai
 
 Here is the list of required metrics for detectors in this module.
 
-* `ConnectionBpsEgress`
-* `ConnectionBpsIngress`
 * `ConnectionState`
+* `VirtualInterfaceBpsEgress`
+* `VirtualInterfaceBpsIngress`
 
 
 

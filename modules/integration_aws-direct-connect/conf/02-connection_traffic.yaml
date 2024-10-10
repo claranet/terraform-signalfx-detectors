@@ -1,5 +1,5 @@
 module: AWS Direct Connect
-name: "Connection traffic"
+name: "Virtual Interface traffic"
 
 transformation: true
 aggregation: true
@@ -9,17 +9,16 @@ value_unit: "bytes"
 
 signals:
   ingress_bps:
-    metric: ConnectionBpsIngress
+    metric: VirtualInterfaceBpsIngress
     filter: "filter('stat', 'sum')"
-    
   egress_bps:
-    metric: ConnectionBpsEgress
+    metric: VirtualInterfaceBpsEgress
     filter: "filter('stat', 'sum')"
 
 rules:
-  major:
+  critical:
     threshold: 0
     comparator: "=="
     signal: ingress_bps
     append_condition: and when(egress_bps == 0)
-    description: "No traffic detected"
+    description: "No traffic detected on the virtual interface"

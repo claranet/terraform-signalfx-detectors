@@ -241,7 +241,7 @@
 |---|---|---|---|---|---|
 |Aws-direct-connect heartbeat|X|-|-|-|-|
 |AWS Direct Connect connection state|X|-|-|-|-|
-|AWS Direct Connect connection traffic|-|X|-|-|-|
+|AWS Direct Connect virtual interface traffic|X|-|-|-|-|
 
 
 ## integration_aws-ecs-cluster
