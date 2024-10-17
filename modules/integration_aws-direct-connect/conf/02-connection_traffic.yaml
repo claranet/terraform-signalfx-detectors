@@ -8,9 +8,6 @@ filtering: "filter('namespace', 'AWS/DX')"
 value_unit: "bytes"
 
 signals:
-  ingress_bps:
-    metric: VirtualInterfaceBpsIngress
-    filter: "filter('stat', 'sum')"
   egress_bps:
     metric: VirtualInterfaceBpsEgress
     filter: "filter('stat', 'sum')"
@@ -19,6 +16,5 @@ rules:
   critical:
     threshold: 0
     comparator: "=="
-    signal: ingress_bps
-    append_condition: and when(egress_bps == 0)
+    signal: egress_bps
     description: "No traffic detected on the virtual interface"

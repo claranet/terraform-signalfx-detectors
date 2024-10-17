@@ -97,7 +97,6 @@ Here is the list of required metrics for detectors in this module.
 
 * `ConnectionState`
 * `VirtualInterfaceBpsEgress`
-* `VirtualInterfaceBpsIngress`
 
 
 

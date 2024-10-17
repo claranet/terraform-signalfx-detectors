@@ -73,9 +73,8 @@ resource "signalfx_detector" "virtual_interface_traffic" {
 
   program_text = <<-EOF
     base_filtering = filter('namespace', 'AWS/DX')
-    ingress_bps = data('VirtualInterfaceBpsIngress', filter=base_filtering and filter('stat', 'sum') and ${module.filtering.signalflow})${var.virtual_interface_traffic_aggregation_function}${var.virtual_interface_traffic_transformation_function}
     egress_bps = data('VirtualInterfaceBpsEgress', filter=base_filtering and filter('stat', 'sum') and ${module.filtering.signalflow})${var.virtual_interface_traffic_aggregation_function}${var.virtual_interface_traffic_transformation_function}.publish('egress_bps')
-    detect(when(ingress_bps == ${var.virtual_interface_traffic_threshold_critical}%{if var.virtual_interface_traffic_lasting_duration_critical != null}, lasting='${var.virtual_interface_traffic_lasting_duration_critical}', at_least=${var.virtual_interface_traffic_at_least_percentage_critical}%{endif}) and when(egress_bps == 0)).publish('CRIT')
+    detect(when(egress_bps == ${var.virtual_interface_traffic_threshold_critical}%{if var.virtual_interface_traffic_lasting_duration_critical != null}, lasting='${var.virtual_interface_traffic_lasting_duration_critical}', at_least=${var.virtual_interface_traffic_at_least_percentage_critical}%{endif})).publish('CRIT')
 EOF
 
   rule {
