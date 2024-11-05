@@ -12,6 +12,12 @@ variable "heartbeat_aggregation_function" {
   default     = ""
 }
 
+variable "heartbeat_transformation_function" {
+  description = "Transformation function for heartbeat detector (i.e. \".mean(over='5m')\")"
+  type        = string
+  default     = ""
+}
+
 variable "heartbeat_max_delay" {
   description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
   type        = number
@@ -36,14 +42,8 @@ variable "heartbeat_disabled" {
   default     = null
 }
 
-variable "heartbeat_exclude_not_running_vm" {
-  description = "Don’t send alerts if associated VM is stopped or stopping (metadata provided by cloud provider integration). Can be useful for ephemeral infrastructure (such as auto scaling groups) as VM will be stopped and started regularly. Note that timeframe must be at least 25 minutes for the metadata to be available to the detector."
-  type        = bool
-  default     = true
-}
-
 variable "heartbeat_timeframe" {
-  description = "Timeframe for heartbeat detector (i.e. \"25m\"). Must be at least \"25m\" if \"heartbeat_exclude_not_running_vm\" is true"
+  description = "Timeframe for heartbeat detector (i.e. \"25m\")."
   type        = string
   default     = "25m"
 }

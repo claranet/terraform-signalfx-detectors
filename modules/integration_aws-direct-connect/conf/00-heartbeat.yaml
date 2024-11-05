@@ -1,10 +1,5 @@
-## Example
-module: aws-direct-connect
+module: AWS Direct Connect
 name: heartbeat
-
-transformation: false
-aggregation: true
-exclude_not_running_vm: true
 
 signals:
   signal:

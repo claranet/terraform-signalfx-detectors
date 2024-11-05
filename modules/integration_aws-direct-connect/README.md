@@ -75,7 +75,7 @@ This module creates the following SignalFx detectors which could contain one or 
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|Aws-direct-connect heartbeat|X|-|-|-|-|
+|AWS Direct Connect heartbeat|X|-|-|-|-|
 |AWS Direct Connect connection state|X|-|-|-|-|
 |AWS Direct Connect virtual interface traffic|X|-|-|-|-|
 
