@@ -8,6 +8,7 @@ transformation: true
 signals:
   signal:
     metric: "avg_cpu_percent"
+    rollup: max
 rules:
   critical:
     threshold: 90

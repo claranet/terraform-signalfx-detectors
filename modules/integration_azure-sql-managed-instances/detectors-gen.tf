@@ -12,7 +12,7 @@ resource "signalfx_detector" "cpu" {
 
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.Sql/managedInstances') and filter('primary_aggregation_type', 'true')
-    signal = data('avg_cpu_percent', filter=base_filtering and ${module.filtering.signalflow})${var.cpu_aggregation_function}${var.cpu_transformation_function}.publish('signal')
+    signal = data('avg_cpu_percent', filter=base_filtering and ${module.filtering.signalflow}, rollup='max')${var.cpu_aggregation_function}${var.cpu_transformation_function}.publish('signal')
     detect(when(signal > ${var.cpu_threshold_critical}%{if var.cpu_lasting_duration_critical != null}, lasting='${var.cpu_lasting_duration_critical}', at_least=${var.cpu_at_least_percentage_critical}%{endif})).publish('CRIT')
     detect(when(signal > ${var.cpu_threshold_major}%{if var.cpu_lasting_duration_major != null}, lasting='${var.cpu_lasting_duration_major}', at_least=${var.cpu_at_least_percentage_major}%{endif}) and (not when(signal > ${var.cpu_threshold_critical}%{if var.cpu_lasting_duration_critical != null}, lasting='${var.cpu_lasting_duration_critical}', at_least=${var.cpu_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
