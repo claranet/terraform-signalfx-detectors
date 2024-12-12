@@ -1,0 +1,5 @@
+documentations:
+  - name: Stackdriver metrics for Firebase
+    url: https://cloud.google.com/monitoring/api/metrics_gcp#gcp-firebasedatabase
+  - name: Splunk Observability metrics
+    url: https://docs.splunk.com/observability/en/gdi/get-data-in/connect/gcp/gcp.html

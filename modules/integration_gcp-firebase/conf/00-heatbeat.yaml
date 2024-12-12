@@ -1,0 +1,12 @@
+## Example
+module: webcheck
+name: heartbeat
+
+transformation: false
+aggregation: true
+
+signals:
+  signal:
+    metric: "network/active_connections"
+rules:
+  critical:
