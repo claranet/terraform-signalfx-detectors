@@ -1,0 +1,17 @@
+---
+module: "Azure SQL Managed Instances"
+name: "storage usage"
+filtering: "filter('resource_type', 'Microsoft.Sql/managedInstances') and filter('primary_aggregation_type', 'true')"
+aggregation: ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+value_unit: "Megabyte"
+transformation: true
+signals:
+  signal:
+    metric: "storage_space_used_mb"
+rules:
+  critical:
+    comparator: ">"
+  major:
+    comparator: ">"
+    dependency: critical
+...
