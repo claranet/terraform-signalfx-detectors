@@ -18,3 +18,4 @@ rules:
     threshold: 0
     comparator: "=="
     lasting_duration: '10m'
+    dependency: critical

@@ -62,8 +62,8 @@ resource "signalfx_detector" "tunnel_status" {
 
   program_text = <<-EOF
     signal = data('fame.azure.virtual_network_gateway.tunnel_status', filter=${module.filtering.signalflow})${var.tunnel_status_aggregation_function}${var.tunnel_status_transformation_function}.publish('signal')
-    detect(when(signal == ${var.tunnel_status_threshold_critical}, lasting=%{if var.tunnel_status_lasting_duration_critical == null}None%{else}'${var.tunnel_status_lasting_duration_critical}'%{endif}, at_least=${var.tunnel_status_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal == ${var.tunnel_status_threshold_major}, lasting=%{if var.tunnel_status_lasting_duration_major == null}None%{else}'${var.tunnel_status_lasting_duration_major}'%{endif}, at_least=${var.tunnel_status_at_least_percentage_major})).publish('MAJOR')
+    detect(when(signal == ${var.tunnel_status_threshold_critical}%{if var.tunnel_status_lasting_duration_critical != null}, lasting='${var.tunnel_status_lasting_duration_critical}', at_least=${var.tunnel_status_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal == ${var.tunnel_status_threshold_major}%{if var.tunnel_status_lasting_duration_major != null}, lasting='${var.tunnel_status_lasting_duration_major}', at_least=${var.tunnel_status_at_least_percentage_major}%{endif}) and (not when(signal == ${var.tunnel_status_threshold_critical}%{if var.tunnel_status_lasting_duration_critical != null}, lasting='${var.tunnel_status_lasting_duration_critical}', at_least=${var.tunnel_status_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {
