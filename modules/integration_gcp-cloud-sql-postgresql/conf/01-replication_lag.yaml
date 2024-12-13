@@ -1,0 +1,21 @@
+module: "GCP Cloud SQL PostgreSQL"
+name: "Replication lag"
+id: "replication_lag"
+
+transformation: ".min(over='10m')"
+aggregation: true
+
+
+signals:
+  signal:
+    metric: "database/postgresql/replication/replica_byte_lag"
+
+rules:
+  critical:
+    threshold: 180
+    comparator: ">"
+
+  major:
+    threshold: 90
+    comparator: ">"
+    dependency: "critical"

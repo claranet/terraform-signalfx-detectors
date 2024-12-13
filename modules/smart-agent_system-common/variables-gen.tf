@@ -15,7 +15,7 @@ variable "heartbeat_aggregation_function" {
 variable "heartbeat_max_delay" {
   description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
   type        = number
-  default     = 900
+  default     = null
 }
 
 variable "heartbeat_tip" {
@@ -36,10 +36,16 @@ variable "heartbeat_disabled" {
   default     = null
 }
 
+variable "heartbeat_exclude_not_running_vm" {
+  description = "Don’t send alerts if associated VM is stopped or stopping (metadata provided by cloud provider integration). Can be useful for ephemeral infrastructure (such as auto scaling groups) as VM will be stopped and started regularly. Note that timeframe must be at least 25 minutes for the metadata to be available to the detector."
+  type        = bool
+  default     = true
+}
+
 variable "heartbeat_timeframe" {
-  description = "Timeframe for heartbeat detector (i.e. \"10m\")"
+  description = "Timeframe for heartbeat detector (i.e. \"25m\"). Must be at least \"25m\" if \"heartbeat_exclude_not_running_vm\" is true"
   type        = string
-  default     = "10m"
+  default     = "25m"
 }
 
 # cpu detector
@@ -59,7 +65,7 @@ variable "cpu_aggregation_function" {
 variable "cpu_transformation_function" {
   description = "Transformation function for cpu detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".min(over='1h')"
+  default     = ""
 }
 
 variable "cpu_max_delay" {
@@ -107,7 +113,7 @@ variable "cpu_threshold_critical" {
 variable "cpu_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "1h"
 }
 
 variable "cpu_at_least_percentage_critical" {
@@ -124,7 +130,7 @@ variable "cpu_threshold_major" {
 variable "cpu_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "1h"
 }
 
 variable "cpu_at_least_percentage_major" {
@@ -149,7 +155,7 @@ variable "load_aggregation_function" {
 variable "load_transformation_function" {
   description = "Transformation function for load detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".min(over='30m')"
+  default     = ""
 }
 
 variable "load_max_delay" {
@@ -197,7 +203,7 @@ variable "load_threshold_critical" {
 variable "load_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "30m"
 }
 
 variable "load_at_least_percentage_critical" {
@@ -214,7 +220,7 @@ variable "load_threshold_major" {
 variable "load_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "30m"
 }
 
 variable "load_at_least_percentage_major" {
@@ -239,7 +245,7 @@ variable "disk_space_aggregation_function" {
 variable "disk_space_transformation_function" {
   description = "Transformation function for disk_space detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".max(over='5m')"
+  default     = ""
 }
 
 variable "disk_space_max_delay" {
@@ -287,7 +293,7 @@ variable "disk_space_threshold_critical" {
 variable "disk_space_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "5m"
 }
 
 variable "disk_space_at_least_percentage_critical" {
@@ -304,7 +310,7 @@ variable "disk_space_threshold_major" {
 variable "disk_space_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "5m"
 }
 
 variable "disk_space_at_least_percentage_major" {
@@ -329,7 +335,7 @@ variable "filesystem_inodes_aggregation_function" {
 variable "filesystem_inodes_transformation_function" {
   description = "Transformation function for filesystem_inodes detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".max(over='5m')"
+  default     = ""
 }
 
 variable "filesystem_inodes_max_delay" {
@@ -377,7 +383,7 @@ variable "filesystem_inodes_threshold_critical" {
 variable "filesystem_inodes_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "5m"
 }
 
 variable "filesystem_inodes_at_least_percentage_critical" {
@@ -394,7 +400,7 @@ variable "filesystem_inodes_threshold_major" {
 variable "filesystem_inodes_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "5m"
 }
 
 variable "filesystem_inodes_at_least_percentage_major" {
@@ -419,7 +425,7 @@ variable "disk_inodes_aggregation_function" {
 variable "disk_inodes_transformation_function" {
   description = "Transformation function for disk_inodes detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".max(over='5m')"
+  default     = ""
 }
 
 variable "disk_inodes_max_delay" {
@@ -467,7 +473,7 @@ variable "disk_inodes_threshold_critical" {
 variable "disk_inodes_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "5m"
 }
 
 variable "disk_inodes_at_least_percentage_critical" {
@@ -484,7 +490,7 @@ variable "disk_inodes_threshold_major" {
 variable "disk_inodes_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "5m"
 }
 
 variable "disk_inodes_at_least_percentage_major" {
@@ -509,7 +515,7 @@ variable "memory_aggregation_function" {
 variable "memory_transformation_function" {
   description = "Transformation function for memory detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".min(over='5m')"
+  default     = ""
 }
 
 variable "memory_max_delay" {
@@ -557,7 +563,7 @@ variable "memory_threshold_critical" {
 variable "memory_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "5m"
 }
 
 variable "memory_at_least_percentage_critical" {
@@ -574,7 +580,7 @@ variable "memory_threshold_major" {
 variable "memory_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "5m"
 }
 
 variable "memory_at_least_percentage_major" {

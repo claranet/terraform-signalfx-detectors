@@ -1,0 +1,12 @@
+module: "GCP Pub/Sub Subscription"
+name: "heartbeat"
+
+transformation: true
+aggregation: ".mean(by=['subscription_id'])"
+
+
+signals:
+  signal:
+    metric: "subscription/pull_request_count"
+rules:
+  critical:

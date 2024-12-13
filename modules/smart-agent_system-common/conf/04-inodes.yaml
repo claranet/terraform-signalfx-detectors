@@ -1,16 +1,18 @@
 module: system
 name: "disk inodes utilization"
 id: disk_inodes
-transformation: ".max(over='5m')"
 value_unit: "%"
 signals:
   signal:
     metric: percent_inodes.used
+    filter: (not filter('fs_type', 'squashfs') and not filter('type', 'squashfs'))
 rules:
   critical:
     threshold: 95
     comparator: ">"
+    lasting_duration: "5m"
   major:
     threshold: 90
     comparator: ">"
+    lasting_duration: "5m"
     dependency: critical

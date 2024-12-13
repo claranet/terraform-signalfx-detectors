@@ -1,0 +1,12 @@
+module: "AWS Kinesis"
+name: "heartbeat"
+
+transformation: true
+aggregation: ".mean(by=['StreamName'])"
+filtering: "filter('stat', 'mean') and filter('namespace', 'AWS/Kinesis')"
+
+signals:
+  signal:
+    metric: "ResourceCount"
+rules:
+  critical:

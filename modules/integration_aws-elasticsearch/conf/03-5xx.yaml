@@ -9,22 +9,47 @@ runbook_url: "https://docs.aws.amazon.com/opensearch-service/latest/developergui
 value_unit: "%"
 
 signals:
-  A:
+  error_stream:
     metric: 5xx
-  B:
+  opensearch_stream:
     metric: OpenSearchRequests
-  signal:
-    formula: (A/B*100)
+  elasticsearch_stream:
+    metric: ElasticsearchRequests
+  opensearch_signal:
+    formula: (error_stream/opensearch_stream*100)
+    publish: true
+  elasticsearch_signal:
+    formula: (error_stream/elasticsearch_stream*100)
+    publish: true
 
 rules:
-  critical:
+  opensearch_critical:
     threshold: 10
     comparator: ">"
     lasting_duration: "5m"
     lasting_at_least: 0.9
-  major:
+    signal: opensearch_signal
+    severity: critical
+  opensearch_major:
     threshold: 5
     comparator: ">"
-    dependency: critical
+    dependency: opensearch_critical
     lasting_duration: "5m"
     lasting_at_least: 0.9
+    signal: opensearch_signal
+    severity: major
+  elasticsearch_critical:
+    threshold: 10
+    comparator: ">"
+    lasting_duration: "5m"
+    lasting_at_least: 0.9
+    signal: elasticsearch_signal
+    severity: critical
+  elasticsearch_major:
+    threshold: 5
+    comparator: ">"
+    dependency: elasticsearch_critical
+    lasting_duration: "5m"
+    lasting_at_least: 0.9
+    signal: elasticsearch_signal
+    severity: major

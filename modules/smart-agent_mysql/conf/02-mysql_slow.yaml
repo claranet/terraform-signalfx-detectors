@@ -1,0 +1,27 @@
+module: "MySQL"
+name: "Slow queries percentage"
+id: "mysql_slow"
+
+transformation: ".mean(over='15m')"
+aggregation: true
+filtering: "(not filter('plugin', 'mysql'))"
+
+signals:
+  A:
+    metric: "mysql_slow_queries"
+    rollup: "delta"
+  B:
+    metric: "mysql_queries"
+    rollup: "delta"
+  signal:
+    formula: "(A/B).scale(100)"
+
+rules:
+  critical:
+    threshold: 25
+    comparator: ">"
+    
+  major:
+    threshold: 10
+    comparator: ">"
+    dependency: "critical"

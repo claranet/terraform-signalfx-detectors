@@ -1,0 +1,22 @@
+module: "ElasticSearch"
+name: "Cluster initializing shards"
+id: "cluster_initializing_shards"
+
+transformation: ".min(over='15m')"
+aggregation: true
+filtering: "filter('plugin', 'elasticsearch')"
+
+signals:
+  signal:
+    metric: "elasticsearch.cluster.initializing-shards"
+    rollup: "average"
+
+rules:
+  critical:
+    threshold: 1
+    comparator: ">"
+    
+  major:
+    threshold: 0
+    comparator: ">"
+    dependency: "critical"

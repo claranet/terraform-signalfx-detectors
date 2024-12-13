@@ -1,0 +1,12 @@
+module: "Azure Stream Analytics"
+name: "heartbeat"
+
+transformation: true
+aggregation: ".mean(by=['logicalname', 'azure_resource_name', 'azure_resource_group_name'])"
+filtering: "filter('resource_type', 'Microsoft.StreamAnalytics/streamingjobs') and filter('primary_aggregation_type', 'true')"
+
+signals:
+  signal:
+    metric: "ResourceUtilization"
+rules:
+  critical:

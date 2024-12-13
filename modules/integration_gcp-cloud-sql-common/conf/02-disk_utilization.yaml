@@ -1,0 +1,21 @@
+module: "GCP Cloud SQL"
+name: "Disk utilization"
+id: "disk_utilization"
+
+transformation: ".min(over='10m').scale(100)"
+aggregation: true
+
+
+signals:
+  signal:
+    metric: "database/disk/utilization"
+
+rules:
+  critical:
+    threshold: 95
+    comparator: ">"
+    
+  major:
+    threshold: 86
+    comparator: ">"
+    dependency: "critical"

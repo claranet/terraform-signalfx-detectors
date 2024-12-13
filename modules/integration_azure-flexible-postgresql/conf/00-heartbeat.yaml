@@ -5,7 +5,7 @@ name: heartbeat
 transformation: true
 aggregation: true
 
-filtering: "filter('resource_type', 'Microsoft.DB*orPostgreSQL/flexibleServers') and filter('primary_aggregation_type', 'true')"
+filtering: "filter('resource_type', 'Microsoft.DB*orPostgreS*/flexibleServers') and filter('primary_aggregation_type', 'true')"
 
 signals:
   signal:

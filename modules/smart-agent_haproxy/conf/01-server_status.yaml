@@ -1,0 +1,17 @@
+module: "Haproxy"
+name: "Server status"
+id: "server_status"
+
+transformation: ".max(over='5m')"
+aggregation: true
+filtering: "filter('type', '2')"
+
+signals:
+  signal:
+    metric: "haproxy_status"
+
+rules:
+  critical:
+    threshold: 1
+    comparator: "<"
+    

@@ -1,0 +1,21 @@
+module: postfix
+name: "Size Postfix Queue Maildrop"
+id: "postfix_showq_message_size_bytes_count_maildrop"
+
+transformation: ".min(over='30m')"
+aggregation: true
+filtering: "filter('queue', 'maildrop')"
+
+signals:
+  signal:
+    metric: "postfix_showq_message_size_bytes_count"
+
+rules:
+  critical:
+    threshold: 600
+    comparator: ">"
+    
+  major:
+    threshold: 300
+    comparator: ">"
+    dependency: "critical"

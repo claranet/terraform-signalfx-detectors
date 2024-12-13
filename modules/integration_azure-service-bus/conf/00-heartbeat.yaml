@@ -1,0 +1,12 @@
+module: "Azure Service Bus"
+name: "heartbeat"
+
+transformation: true
+aggregation: ".mean(by=['EntityName', 'azure_resource_name', 'azure_resource_group_name'])"
+filtering: "filter('resource_type', 'Microsoft.ServiceBus/namespaces') and filter('primary_aggregation_type', 'true')"
+
+signals:
+  signal:
+    metric: "Size"
+rules:
+  critical:

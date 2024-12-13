@@ -9,7 +9,7 @@ variable "heartbeat_notifications" {
 variable "heartbeat_aggregation_function" {
   description = "Aggregation function and group by for heartbeat detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+  default     = ".max(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
 variable "heartbeat_transformation_function" {
@@ -21,7 +21,7 @@ variable "heartbeat_transformation_function" {
 variable "heartbeat_max_delay" {
   description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
   type        = number
-  default     = 900
+  default     = null
 }
 
 variable "heartbeat_tip" {
@@ -43,9 +43,9 @@ variable "heartbeat_disabled" {
 }
 
 variable "heartbeat_timeframe" {
-  description = "Timeframe for heartbeat detector (i.e. \"10m\")"
+  description = "Timeframe for heartbeat detector (i.e. \"25m\")."
   type        = string
-  default     = "10m"
+  default     = "25m"
 }
 
 # snat_port_utilization detector
@@ -59,7 +59,7 @@ variable "snat_port_utilization_notifications" {
 variable "snat_port_utilization_aggregation_function" {
   description = "Aggregation function and group by for snat_port_utilization detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".mean(by=['protocol'])"
+  default     = ".mean(by=['protocol', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
 variable "snat_port_utilization_transformation_function" {
@@ -107,7 +107,7 @@ variable "snat_port_utilization_disabled_major" {
 variable "snat_port_utilization_threshold_critical" {
   description = "Critical threshold for snat_port_utilization detector"
   type        = number
-  default     = 85
+  default     = 95
 }
 
 variable "snat_port_utilization_lasting_duration_critical" {
@@ -124,7 +124,7 @@ variable "snat_port_utilization_at_least_percentage_critical" {
 variable "snat_port_utilization_threshold_major" {
   description = "Major threshold for snat_port_utilization detector"
   type        = number
-  default     = 95
+  default     = 85
 }
 
 variable "snat_port_utilization_lasting_duration_major" {
@@ -287,7 +287,7 @@ variable "health_state_notifications" {
 variable "health_state_aggregation_function" {
   description = "Aggregation function and group by for health_state detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ""
+  default     = ".max(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 }
 
 variable "health_state_transformation_function" {

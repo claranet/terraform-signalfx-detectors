@@ -1,11 +1,11 @@
+output "cluster_cpu" {
+  description = "Detector resource for cluster_cpu"
+  value       = signalfx_detector.cluster_cpu
+}
+
 output "cluster_status" {
   description = "Detector resource for cluster_status"
   value       = signalfx_detector.cluster_status
-}
-
-output "cpu_90_15min" {
-  description = "Detector resource for cpu_90_15min"
-  value       = signalfx_detector.cpu_90_15min
 }
 
 output "fivexx_http_response" {
@@ -33,9 +33,9 @@ output "jvm_memory_pressure" {
   value       = signalfx_detector.jvm_memory_pressure
 }
 
-output "master_cpu_90_15min" {
-  description = "Detector resource for master_cpu_90_15min"
-  value       = signalfx_detector.master_cpu_90_15min
+output "master_cpu" {
+  description = "Detector resource for master_cpu"
+  value       = signalfx_detector.master_cpu
 }
 
 output "shard_count" {

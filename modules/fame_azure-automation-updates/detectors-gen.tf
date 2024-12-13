@@ -7,7 +7,7 @@ resource "signalfx_detector" "failed_updates" {
 
   program_text = <<-EOF
     signal = data('fame.azure.automation_update.updates_status', filter=filter('status', 'failed') and ${module.filtering.signalflow}, extrapolation='zero')${var.failed_updates_aggregation_function}${var.failed_updates_transformation_function}.publish('signal')
-    detect(when(signal > ${var.failed_updates_threshold_major}, lasting=%{if var.failed_updates_lasting_duration_major == null}None%{else}'${var.failed_updates_lasting_duration_major}'%{endif}, at_least=${var.failed_updates_at_least_percentage_major})).publish('MAJOR')
+    detect(when(signal > ${var.failed_updates_threshold_major}%{if var.failed_updates_lasting_duration_major != null}, lasting='${var.failed_updates_lasting_duration_major}', at_least=${var.failed_updates_at_least_percentage_major}%{endif})).publish('MAJOR')
 EOF
 
   rule {
@@ -34,7 +34,7 @@ resource "signalfx_detector" "missing_updates" {
 
   program_text = <<-EOF
     signal = data('fame.azure.automation_update.missing_updates', filter=filter('classification', 'security', 'critical') and ${module.filtering.signalflow}, extrapolation='zero')${var.missing_updates_aggregation_function}${var.missing_updates_transformation_function}.publish('signal')
-    detect(when(signal > ${var.missing_updates_threshold_major}, lasting=%{if var.missing_updates_lasting_duration_major == null}None%{else}'${var.missing_updates_lasting_duration_major}'%{endif}, at_least=${var.missing_updates_at_least_percentage_major})).publish('MAJOR')
+    detect(when(signal > ${var.missing_updates_threshold_major}%{if var.missing_updates_lasting_duration_major != null}, lasting='${var.missing_updates_lasting_duration_major}', at_least=${var.missing_updates_at_least_percentage_major}%{endif})).publish('MAJOR')
 EOF
 
   rule {

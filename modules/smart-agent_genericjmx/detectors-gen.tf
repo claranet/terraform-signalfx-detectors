@@ -7,7 +7,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    signal = data('jmx_memory.used', filter=${local.not_running_vm_filters} and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
+    signal = data('jmx_memory.used', filter=%{if var.heartbeat_exclude_not_running_vm}${local.not_running_vm_filters} and %{endif}${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}', auto_resolve_after='${local.heartbeat_auto_resolve_after}').publish('CRIT')
 EOF
 
@@ -43,8 +43,8 @@ resource "signalfx_detector" "memory_heap" {
     A = data('jmx_memory.used', filter=base_filtering and ${module.filtering.signalflow})${var.memory_heap_aggregation_function}${var.memory_heap_transformation_function}
     B = data('jmx_memory.max', filter=base_filtering and ${module.filtering.signalflow})${var.memory_heap_aggregation_function}${var.memory_heap_transformation_function}
     signal = (A/B).scale(100).publish('signal')
-    detect(when(signal > ${var.memory_heap_threshold_critical}, lasting=%{if var.memory_heap_lasting_duration_critical == null}None%{else}'${var.memory_heap_lasting_duration_critical}'%{endif}, at_least=${var.memory_heap_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal > ${var.memory_heap_threshold_major}, lasting=%{if var.memory_heap_lasting_duration_major == null}None%{else}'${var.memory_heap_lasting_duration_major}'%{endif}, at_least=${var.memory_heap_at_least_percentage_major}) and (not when(signal > ${var.memory_heap_threshold_critical}, lasting=%{if var.memory_heap_lasting_duration_critical == null}None%{else}'${var.memory_heap_lasting_duration_critical}'%{endif}, at_least=${var.memory_heap_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.memory_heap_threshold_critical}%{if var.memory_heap_lasting_duration_critical != null}, lasting='${var.memory_heap_lasting_duration_critical}', at_least=${var.memory_heap_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.memory_heap_threshold_major}%{if var.memory_heap_lasting_duration_major != null}, lasting='${var.memory_heap_lasting_duration_major}', at_least=${var.memory_heap_at_least_percentage_major}%{endif}) and (not when(signal > ${var.memory_heap_threshold_critical}%{if var.memory_heap_lasting_duration_critical != null}, lasting='${var.memory_heap_lasting_duration_critical}', at_least=${var.memory_heap_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {
@@ -91,8 +91,8 @@ resource "signalfx_detector" "gc_old_gen" {
     A = data('jmx_memory.used', filter=base_filtering and ${module.filtering.signalflow})${var.gc_old_gen_aggregation_function}${var.gc_old_gen_transformation_function}
     B = data('jmx_memory.max', filter=base_filtering and ${module.filtering.signalflow})${var.gc_old_gen_aggregation_function}${var.gc_old_gen_transformation_function}
     signal = (A/B).scale(100).publish('signal')
-    detect(when(signal > ${var.gc_old_gen_threshold_critical}, lasting=%{if var.gc_old_gen_lasting_duration_critical == null}None%{else}'${var.gc_old_gen_lasting_duration_critical}'%{endif}, at_least=${var.gc_old_gen_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal > ${var.gc_old_gen_threshold_major}, lasting=%{if var.gc_old_gen_lasting_duration_major == null}None%{else}'${var.gc_old_gen_lasting_duration_major}'%{endif}, at_least=${var.gc_old_gen_at_least_percentage_major}) and (not when(signal > ${var.gc_old_gen_threshold_critical}, lasting=%{if var.gc_old_gen_lasting_duration_critical == null}None%{else}'${var.gc_old_gen_lasting_duration_critical}'%{endif}, at_least=${var.gc_old_gen_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.gc_old_gen_threshold_critical}%{if var.gc_old_gen_lasting_duration_critical != null}, lasting='${var.gc_old_gen_lasting_duration_critical}', at_least=${var.gc_old_gen_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.gc_old_gen_threshold_major}%{if var.gc_old_gen_lasting_duration_major != null}, lasting='${var.gc_old_gen_lasting_duration_major}', at_least=${var.gc_old_gen_at_least_percentage_major}%{endif}) and (not when(signal > ${var.gc_old_gen_threshold_critical}%{if var.gc_old_gen_lasting_duration_critical != null}, lasting='${var.gc_old_gen_lasting_duration_critical}', at_least=${var.gc_old_gen_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {

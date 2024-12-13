@@ -7,7 +7,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    signal = data('mem_used_percent', filter=${local.not_running_vm_filters} and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
+    signal = data('mem_used_percent', filter=%{if var.heartbeat_exclude_not_running_vm}${local.not_running_vm_filters} and %{endif}${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}', auto_resolve_after='${local.heartbeat_auto_resolve_after}').publish('CRIT')
 EOF
 
@@ -40,8 +40,8 @@ resource "signalfx_detector" "mem" {
 
   program_text = <<-EOF
     signal = data('mem_used_percent', filter=${module.filtering.signalflow}, extrapolation='zero')${var.mem_aggregation_function}${var.mem_transformation_function}.publish('signal')
-    detect(when(signal > ${var.mem_threshold_critical}, lasting=%{if var.mem_lasting_duration_critical == null}None%{else}'${var.mem_lasting_duration_critical}'%{endif}, at_least=${var.mem_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal > ${var.mem_threshold_major}, lasting=%{if var.mem_lasting_duration_major == null}None%{else}'${var.mem_lasting_duration_major}'%{endif}, at_least=${var.mem_at_least_percentage_major}) and (not when(signal > ${var.mem_threshold_critical}, lasting=%{if var.mem_lasting_duration_critical == null}None%{else}'${var.mem_lasting_duration_critical}'%{endif}, at_least=${var.mem_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.mem_threshold_critical}%{if var.mem_lasting_duration_critical != null}, lasting='${var.mem_lasting_duration_critical}', at_least=${var.mem_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.mem_threshold_major}%{if var.mem_lasting_duration_major != null}, lasting='${var.mem_lasting_duration_major}', at_least=${var.mem_at_least_percentage_major}%{endif}) and (not when(signal > ${var.mem_threshold_critical}%{if var.mem_lasting_duration_critical != null}, lasting='${var.mem_lasting_duration_critical}', at_least=${var.mem_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {
@@ -85,8 +85,8 @@ resource "signalfx_detector" "disk" {
 
   program_text = <<-EOF
     signal = data('disk_used_percent', filter=${module.filtering.signalflow}, extrapolation='zero')${var.disk_aggregation_function}${var.disk_transformation_function}.publish('signal')
-    detect(when(signal > ${var.disk_threshold_critical}, lasting=%{if var.disk_lasting_duration_critical == null}None%{else}'${var.disk_lasting_duration_critical}'%{endif}, at_least=${var.disk_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal > ${var.disk_threshold_major}, lasting=%{if var.disk_lasting_duration_major == null}None%{else}'${var.disk_lasting_duration_major}'%{endif}, at_least=${var.disk_at_least_percentage_major}) and (not when(signal > ${var.disk_threshold_critical}, lasting=%{if var.disk_lasting_duration_critical == null}None%{else}'${var.disk_lasting_duration_critical}'%{endif}, at_least=${var.disk_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.disk_threshold_critical}%{if var.disk_lasting_duration_critical != null}, lasting='${var.disk_lasting_duration_critical}', at_least=${var.disk_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.disk_threshold_major}%{if var.disk_lasting_duration_major != null}, lasting='${var.disk_lasting_duration_major}', at_least=${var.disk_at_least_percentage_major}%{endif}) and (not when(signal > ${var.disk_threshold_critical}%{if var.disk_lasting_duration_critical != null}, lasting='${var.disk_lasting_duration_critical}', at_least=${var.disk_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {
@@ -130,8 +130,8 @@ resource "signalfx_detector" "cpu" {
 
   program_text = <<-EOF
     signal = data('cpu_usage_active', filter=${module.filtering.signalflow}, extrapolation='zero')${var.cpu_aggregation_function}${var.cpu_transformation_function}.publish('signal')
-    detect(when(signal > ${var.cpu_threshold_critical}, lasting=%{if var.cpu_lasting_duration_critical == null}None%{else}'${var.cpu_lasting_duration_critical}'%{endif}, at_least=${var.cpu_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal > ${var.cpu_threshold_major}, lasting=%{if var.cpu_lasting_duration_major == null}None%{else}'${var.cpu_lasting_duration_major}'%{endif}, at_least=${var.cpu_at_least_percentage_major}) and (not when(signal > ${var.cpu_threshold_critical}, lasting=%{if var.cpu_lasting_duration_critical == null}None%{else}'${var.cpu_lasting_duration_critical}'%{endif}, at_least=${var.cpu_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.cpu_threshold_critical}%{if var.cpu_lasting_duration_critical != null}, lasting='${var.cpu_lasting_duration_critical}', at_least=${var.cpu_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.cpu_threshold_major}%{if var.cpu_lasting_duration_major != null}, lasting='${var.cpu_lasting_duration_major}', at_least=${var.cpu_at_least_percentage_major}%{endif}) and (not when(signal > ${var.cpu_threshold_critical}%{if var.cpu_lasting_duration_critical != null}, lasting='${var.cpu_lasting_duration_critical}', at_least=${var.cpu_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {

@@ -1,0 +1,13 @@
+module: Azure Container Apps
+name: heartbeat
+filtering: "filter('resource_type', 'Microsoft.App/containerApps') and filter('aggregation_type', 'minimum')"
+
+transformation: true
+aggregation: ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+
+signals:
+  signal:
+    metric: "WorkingSetBytes"
+
+rules:
+  critical:

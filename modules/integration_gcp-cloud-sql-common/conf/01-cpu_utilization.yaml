@@ -1,0 +1,21 @@
+module: "GCP Cloud SQL"
+name: "Cpu utilization"
+id: "cpu_utilization"
+
+transformation: ".min(over='30m').scale(100)"
+aggregation: true
+
+
+signals:
+  signal:
+    metric: "database/cpu/utilization"
+
+rules:
+  critical:
+    threshold: 95
+    comparator: ">"
+    
+  major:
+    threshold: 80
+    comparator: ">"
+    dependency: "critical"

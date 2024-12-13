@@ -7,7 +7,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    signal = data('http.status_code', filter=${local.not_running_vm_filters} and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
+    signal = data('http.status_code', filter=%{if var.heartbeat_exclude_not_running_vm}${local.not_running_vm_filters} and %{endif}${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}', auto_resolve_after='${local.heartbeat_auto_resolve_after}').publish('CRIT')
 EOF
 
@@ -35,7 +35,7 @@ resource "signalfx_detector" "http_code_matched" {
 
   program_text = <<-EOF
     signal = data('http.code_matched', filter=${module.filtering.signalflow}, rollup='min')${var.http_code_matched_aggregation_function}${var.http_code_matched_transformation_function}.publish('signal')
-    detect(when(signal < ${var.http_code_matched_threshold_critical}, lasting=%{if var.http_code_matched_lasting_duration_critical == null}None%{else}'${var.http_code_matched_lasting_duration_critical}'%{endif}, at_least=${var.http_code_matched_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal < ${var.http_code_matched_threshold_critical}%{if var.http_code_matched_lasting_duration_critical != null}, lasting='${var.http_code_matched_lasting_duration_critical}', at_least=${var.http_code_matched_at_least_percentage_critical}%{endif})).publish('CRIT')
 EOF
 
   rule {
@@ -62,7 +62,7 @@ resource "signalfx_detector" "http_regex_matched" {
 
   program_text = <<-EOF
     signal = data('http.regex_matched', filter=${module.filtering.signalflow}, rollup='min')${var.http_regex_matched_aggregation_function}${var.http_regex_matched_transformation_function}.publish('signal')
-    detect(when(signal < ${var.http_regex_matched_threshold_critical}, lasting=%{if var.http_regex_matched_lasting_duration_critical == null}None%{else}'${var.http_regex_matched_lasting_duration_critical}'%{endif}, at_least=${var.http_regex_matched_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal < ${var.http_regex_matched_threshold_critical}%{if var.http_regex_matched_lasting_duration_critical != null}, lasting='${var.http_regex_matched_lasting_duration_critical}', at_least=${var.http_regex_matched_at_least_percentage_critical}%{endif})).publish('CRIT')
 EOF
 
   rule {
@@ -89,8 +89,8 @@ resource "signalfx_detector" "http_response_time" {
 
   program_text = <<-EOF
     signal = data('http.response_time', filter=${module.filtering.signalflow}, rollup='max')${var.http_response_time_aggregation_function}${var.http_response_time_transformation_function}.publish('signal')
-    detect(when(signal > ${var.http_response_time_threshold_critical}, lasting=%{if var.http_response_time_lasting_duration_critical == null}None%{else}'${var.http_response_time_lasting_duration_critical}'%{endif}, at_least=${var.http_response_time_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal > ${var.http_response_time_threshold_major}, lasting=%{if var.http_response_time_lasting_duration_major == null}None%{else}'${var.http_response_time_lasting_duration_major}'%{endif}, at_least=${var.http_response_time_at_least_percentage_major}) and (not when(signal > ${var.http_response_time_threshold_critical}, lasting=%{if var.http_response_time_lasting_duration_critical == null}None%{else}'${var.http_response_time_lasting_duration_critical}'%{endif}, at_least=${var.http_response_time_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.http_response_time_threshold_critical}%{if var.http_response_time_lasting_duration_critical != null}, lasting='${var.http_response_time_lasting_duration_critical}', at_least=${var.http_response_time_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.http_response_time_threshold_major}%{if var.http_response_time_lasting_duration_major != null}, lasting='${var.http_response_time_lasting_duration_major}', at_least=${var.http_response_time_at_least_percentage_major}%{endif}) and (not when(signal > ${var.http_response_time_threshold_critical}%{if var.http_response_time_lasting_duration_critical != null}, lasting='${var.http_response_time_lasting_duration_critical}', at_least=${var.http_response_time_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {
@@ -134,7 +134,7 @@ resource "signalfx_detector" "http_content_length" {
 
   program_text = <<-EOF
     signal = data('http.content_length', filter=${module.filtering.signalflow}, rollup='min')${var.http_content_length_aggregation_function}${var.http_content_length_transformation_function}.publish('signal')
-    detect(when(signal < ${var.http_content_length_threshold_warning}, lasting=%{if var.http_content_length_lasting_duration_warning == null}None%{else}'${var.http_content_length_lasting_duration_warning}'%{endif}, at_least=${var.http_content_length_at_least_percentage_warning})).publish('WARN')
+    detect(when(signal < ${var.http_content_length_threshold_warning}%{if var.http_content_length_lasting_duration_warning != null}, lasting='${var.http_content_length_lasting_duration_warning}', at_least=${var.http_content_length_at_least_percentage_warning}%{endif})).publish('WARN')
 EOF
 
   rule {
@@ -167,8 +167,8 @@ resource "signalfx_detector" "certificate_expiration_date" {
   program_text = <<-EOF
     expiry = data('http.cert_expiry', filter=${module.filtering.signalflow}, rollup='min')${var.certificate_expiration_date_aggregation_function}${var.certificate_expiration_date_transformation_function}
     signal = (expiry/86400).publish('signal')
-    detect(when(signal < ${var.certificate_expiration_date_threshold_major}, lasting=%{if var.certificate_expiration_date_lasting_duration_major == null}None%{else}'${var.certificate_expiration_date_lasting_duration_major}'%{endif}, at_least=${var.certificate_expiration_date_at_least_percentage_major})).publish('MAJOR')
-    detect(when(signal < ${var.certificate_expiration_date_threshold_minor}, lasting=%{if var.certificate_expiration_date_lasting_duration_minor == null}None%{else}'${var.certificate_expiration_date_lasting_duration_minor}'%{endif}, at_least=${var.certificate_expiration_date_at_least_percentage_minor}) and (not when(signal < ${var.certificate_expiration_date_threshold_major}, lasting=%{if var.certificate_expiration_date_lasting_duration_major == null}None%{else}'${var.certificate_expiration_date_lasting_duration_major}'%{endif}, at_least=${var.certificate_expiration_date_at_least_percentage_major}))).publish('MINOR')
+    detect(when(signal < ${var.certificate_expiration_date_threshold_major}%{if var.certificate_expiration_date_lasting_duration_major != null}, lasting='${var.certificate_expiration_date_lasting_duration_major}', at_least=${var.certificate_expiration_date_at_least_percentage_major}%{endif})).publish('MAJOR')
+    detect(when(signal < ${var.certificate_expiration_date_threshold_minor}%{if var.certificate_expiration_date_lasting_duration_minor != null}, lasting='${var.certificate_expiration_date_lasting_duration_minor}', at_least=${var.certificate_expiration_date_at_least_percentage_minor}%{endif}) and (not when(signal < ${var.certificate_expiration_date_threshold_major}%{if var.certificate_expiration_date_lasting_duration_major != null}, lasting='${var.certificate_expiration_date_lasting_duration_major}', at_least=${var.certificate_expiration_date_at_least_percentage_major}%{endif}))).publish('MINOR')
 EOF
 
   rule {
@@ -212,7 +212,7 @@ resource "signalfx_detector" "invalid_tls_certificate" {
 
   program_text = <<-EOF
     signal = data('http.cert_valid', filter=${module.filtering.signalflow}, rollup='min')${var.invalid_tls_certificate_aggregation_function}${var.invalid_tls_certificate_transformation_function}.publish('signal')
-    detect(when(signal < ${var.invalid_tls_certificate_threshold_critical}, lasting=%{if var.invalid_tls_certificate_lasting_duration_critical == null}None%{else}'${var.invalid_tls_certificate_lasting_duration_critical}'%{endif}, at_least=${var.invalid_tls_certificate_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal < ${var.invalid_tls_certificate_threshold_critical}%{if var.invalid_tls_certificate_lasting_duration_critical != null}, lasting='${var.invalid_tls_certificate_lasting_duration_critical}', at_least=${var.invalid_tls_certificate_at_least_percentage_critical}%{endif})).publish('CRIT')
 EOF
 
   rule {

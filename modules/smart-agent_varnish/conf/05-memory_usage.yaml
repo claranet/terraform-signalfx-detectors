@@ -1,0 +1,26 @@
+module: "Varnish"
+name: "Memory usage"
+id: "memory_usage"
+
+transformation: ".min(over='5m')"
+aggregation: true
+filtering: "filter('plugin', 'telegraf/varnish')"
+
+signals:
+  A:
+    metric: "varnish.s0.g_bytes"
+  B:
+    metric: "varnish.s0.g_space"
+  signal:
+    formula: "(A / (A+B)).scale(100).fill(0)"
+
+rules:
+  critical:
+    threshold: 90
+    comparator: ">"
+    
+  major:
+    threshold: 80
+    comparator: ">"
+    dependency: "critical"
+    

@@ -1,0 +1,18 @@
+module: AWS ElastiCache
+id: "no_connection"
+name: "Current connections"
+
+transformation: ".min(over='5m')"
+aggregation: true
+
+filtering: "filter('namespace', 'AWS/ElastiCache')"
+
+signals:
+  signal:
+    metric: "CurrConnections"
+    filter: "filter('stat', 'lower') and filter('CacheNodeId', '*')"
+
+rules:
+  critical:
+    threshold: 0
+    comparator: "<="
