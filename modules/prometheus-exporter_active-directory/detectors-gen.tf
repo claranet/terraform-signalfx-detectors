@@ -7,7 +7,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    signal = data('windows_ad_replication_sync_requests_total', filter=${local.not_running_vm_filters} and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}${var.heartbeat_transformation_function}.publish('signal')
+    signal = data('windows_ad_replication_sync_requests_total', filter=%{if var.heartbeat_exclude_not_running_vm}${local.not_running_vm_filters} and %{endif}${module.filtering.signalflow})${var.heartbeat_aggregation_function}${var.heartbeat_transformation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}', auto_resolve_after='${local.heartbeat_auto_resolve_after}').publish('CRIT')
 EOF
 
@@ -37,8 +37,8 @@ resource "signalfx_detector" "replication_errors" {
     A = data('windows_ad_replication_sync_requests_success_total', filter=${module.filtering.signalflow}, extrapolation='zero')${var.replication_errors_aggregation_function}${var.replication_errors_transformation_function}
     B = data('windows_ad_replication_sync_requests_total', filter=${module.filtering.signalflow}, extrapolation='zero')${var.replication_errors_aggregation_function}${var.replication_errors_transformation_function}
     signal = (A/B).scale(100).fill(0).publish('signal')
-    detect(when(signal < ${var.replication_errors_threshold_critical}, lasting=%{if var.replication_errors_lasting_duration_critical == null}None%{else}'${var.replication_errors_lasting_duration_critical}'%{endif}, at_least=${var.replication_errors_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal <= ${var.replication_errors_threshold_major}, lasting=%{if var.replication_errors_lasting_duration_major == null}None%{else}'${var.replication_errors_lasting_duration_major}'%{endif}, at_least=${var.replication_errors_at_least_percentage_major}) and (not when(signal < ${var.replication_errors_threshold_critical}, lasting=%{if var.replication_errors_lasting_duration_critical == null}None%{else}'${var.replication_errors_lasting_duration_critical}'%{endif}, at_least=${var.replication_errors_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal < ${var.replication_errors_threshold_critical}%{if var.replication_errors_lasting_duration_critical != null}, lasting='${var.replication_errors_lasting_duration_critical}', at_least=${var.replication_errors_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal <= ${var.replication_errors_threshold_major}%{if var.replication_errors_lasting_duration_major != null}, lasting='${var.replication_errors_lasting_duration_major}', at_least=${var.replication_errors_at_least_percentage_major}%{endif}) and (not when(signal < ${var.replication_errors_threshold_critical}%{if var.replication_errors_lasting_duration_critical != null}, lasting='${var.replication_errors_lasting_duration_critical}', at_least=${var.replication_errors_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {
@@ -78,7 +78,7 @@ resource "signalfx_detector" "active_directory_services" {
   program_text = <<-EOF
     base_filtering = filter('state', 'running') and filter('name','kdc', 'adws', 'dfs', 'dfsr', 'dns', 'ismserv', 'lanmanserver', 'lanmanworkstation', 'netlogon', 'ntds', 'w32time')
     signal = data('windows_service_state', filter=base_filtering and ${module.filtering.signalflow})${var.active_directory_services_aggregation_function}${var.active_directory_services_transformation_function}.publish('signal')
-    detect(when(signal < ${var.active_directory_services_threshold_critical}, lasting=%{if var.active_directory_services_lasting_duration_critical == null}None%{else}'${var.active_directory_services_lasting_duration_critical}'%{endif}, at_least=${var.active_directory_services_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal < ${var.active_directory_services_threshold_critical}%{if var.active_directory_services_lasting_duration_critical != null}, lasting='${var.active_directory_services_lasting_duration_critical}', at_least=${var.active_directory_services_at_least_percentage_critical}%{endif})).publish('CRIT')
 EOF
 
   rule {

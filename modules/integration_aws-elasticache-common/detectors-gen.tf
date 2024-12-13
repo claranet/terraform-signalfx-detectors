@@ -37,8 +37,8 @@ resource "signalfx_detector" "evictions" {
   program_text = <<-EOF
     base_filtering = filter('namespace', 'AWS/ElastiCache')
     signal = data('Evictions', filter=base_filtering and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filtering.signalflow})${var.evictions_aggregation_function}${var.evictions_transformation_function}.publish('signal')
-    detect(when(signal > ${var.evictions_threshold_major}, lasting=%{if var.evictions_lasting_duration_major == null}None%{else}'${var.evictions_lasting_duration_major}'%{endif}, at_least=${var.evictions_at_least_percentage_major}) and (not when(signal > ${var.evictions_threshold_critical}, lasting=%{if var.evictions_lasting_duration_critical == null}None%{else}'${var.evictions_lasting_duration_critical}'%{endif}, at_least=${var.evictions_at_least_percentage_critical}))).publish('MAJOR')
-    detect(when(signal > ${var.evictions_threshold_critical}, lasting=%{if var.evictions_lasting_duration_critical == null}None%{else}'${var.evictions_lasting_duration_critical}'%{endif}, at_least=${var.evictions_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal > ${var.evictions_threshold_major}%{if var.evictions_lasting_duration_major != null}, lasting='${var.evictions_lasting_duration_major}', at_least=${var.evictions_at_least_percentage_major}%{endif}) and (not when(signal > ${var.evictions_threshold_critical}%{if var.evictions_lasting_duration_critical != null}, lasting='${var.evictions_lasting_duration_critical}', at_least=${var.evictions_at_least_percentage_critical}%{endif}))).publish('MAJOR')
+    detect(when(signal > ${var.evictions_threshold_critical}%{if var.evictions_lasting_duration_critical != null}, lasting='${var.evictions_lasting_duration_critical}', at_least=${var.evictions_at_least_percentage_critical}%{endif})).publish('CRIT')
 EOF
 
   rule {
@@ -78,7 +78,7 @@ resource "signalfx_detector" "max_connection" {
   program_text = <<-EOF
     base_filtering = filter('namespace', 'AWS/ElastiCache')
     signal = data('CurrConnections', filter=base_filtering and filter('stat', 'upper') and filter('CacheNodeId', '*') and ${module.filtering.signalflow})${var.max_connection_aggregation_function}${var.max_connection_transformation_function}.publish('signal')
-    detect(when(signal > ${var.max_connection_threshold_critical}, lasting=%{if var.max_connection_lasting_duration_critical == null}None%{else}'${var.max_connection_lasting_duration_critical}'%{endif}, at_least=${var.max_connection_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal > ${var.max_connection_threshold_critical}%{if var.max_connection_lasting_duration_critical != null}, lasting='${var.max_connection_lasting_duration_critical}', at_least=${var.max_connection_at_least_percentage_critical}%{endif})).publish('CRIT')
 EOF
 
   rule {
@@ -106,7 +106,7 @@ resource "signalfx_detector" "no_connection" {
   program_text = <<-EOF
     base_filtering = filter('namespace', 'AWS/ElastiCache')
     signal = data('CurrConnections', filter=base_filtering and filter('stat', 'lower') and filter('CacheNodeId', '*') and ${module.filtering.signalflow})${var.no_connection_aggregation_function}${var.no_connection_transformation_function}.publish('signal')
-    detect(when(signal <= ${var.no_connection_threshold_critical}, lasting=%{if var.no_connection_lasting_duration_critical == null}None%{else}'${var.no_connection_lasting_duration_critical}'%{endif}, at_least=${var.no_connection_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal <= ${var.no_connection_threshold_critical}%{if var.no_connection_lasting_duration_critical != null}, lasting='${var.no_connection_lasting_duration_critical}', at_least=${var.no_connection_at_least_percentage_critical}%{endif})).publish('CRIT')
 EOF
 
   rule {
@@ -134,8 +134,8 @@ resource "signalfx_detector" "swap" {
   program_text = <<-EOF
     base_filtering = filter('namespace', 'AWS/ElastiCache')
     signal = data('SwapUsage', filter=base_filtering and filter('stat', 'upper') and filter('CacheNodeId', '*') and ${module.filtering.signalflow})${var.swap_aggregation_function}${var.swap_transformation_function}.publish('signal')
-    detect(when(signal > ${var.swap_threshold_major}, lasting=%{if var.swap_lasting_duration_major == null}None%{else}'${var.swap_lasting_duration_major}'%{endif}, at_least=${var.swap_at_least_percentage_major}) and (not when(signal > ${var.swap_threshold_critical}, lasting=%{if var.swap_lasting_duration_critical == null}None%{else}'${var.swap_lasting_duration_critical}'%{endif}, at_least=${var.swap_at_least_percentage_critical}))).publish('MAJOR')
-    detect(when(signal > ${var.swap_threshold_critical}, lasting=%{if var.swap_lasting_duration_critical == null}None%{else}'${var.swap_lasting_duration_critical}'%{endif}, at_least=${var.swap_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal > ${var.swap_threshold_major}%{if var.swap_lasting_duration_major != null}, lasting='${var.swap_lasting_duration_major}', at_least=${var.swap_at_least_percentage_major}%{endif}) and (not when(signal > ${var.swap_threshold_critical}%{if var.swap_lasting_duration_critical != null}, lasting='${var.swap_lasting_duration_critical}', at_least=${var.swap_at_least_percentage_critical}%{endif}))).publish('MAJOR')
+    detect(when(signal > ${var.swap_threshold_critical}%{if var.swap_lasting_duration_critical != null}, lasting='${var.swap_lasting_duration_critical}', at_least=${var.swap_at_least_percentage_critical}%{endif})).publish('CRIT')
 EOF
 
   rule {
@@ -175,8 +175,8 @@ resource "signalfx_detector" "free_memory" {
   program_text = <<-EOF
     base_filtering = filter('namespace', 'AWS/ElastiCache')
     signal = data('FreeableMemory', filter=base_filtering and filter('stat', 'lower') and filter('CacheNodeId', '*') and ${module.filtering.signalflow})${var.free_memory_aggregation_function}${var.free_memory_transformation_function}.publish('signal')
-    detect(when(signal < ${var.free_memory_threshold_minor}, lasting=%{if var.free_memory_lasting_duration_minor == null}None%{else}'${var.free_memory_lasting_duration_minor}'%{endif}, at_least=${var.free_memory_at_least_percentage_minor}) and (not when(signal < ${var.free_memory_threshold_major}, lasting=%{if var.free_memory_lasting_duration_major == null}None%{else}'${var.free_memory_lasting_duration_major}'%{endif}, at_least=${var.free_memory_at_least_percentage_major}))).publish('MINOR')
-    detect(when(signal < ${var.free_memory_threshold_major}, lasting=%{if var.free_memory_lasting_duration_major == null}None%{else}'${var.free_memory_lasting_duration_major}'%{endif}, at_least=${var.free_memory_at_least_percentage_major})).publish('MAJOR')
+    detect(when(signal < ${var.free_memory_threshold_minor}%{if var.free_memory_lasting_duration_minor != null}, lasting='${var.free_memory_lasting_duration_minor}', at_least=${var.free_memory_at_least_percentage_minor}%{endif}) and (not when(signal < ${var.free_memory_threshold_major}%{if var.free_memory_lasting_duration_major != null}, lasting='${var.free_memory_lasting_duration_major}', at_least=${var.free_memory_at_least_percentage_major}%{endif}))).publish('MINOR')
+    detect(when(signal < ${var.free_memory_threshold_major}%{if var.free_memory_lasting_duration_major != null}, lasting='${var.free_memory_lasting_duration_major}', at_least=${var.free_memory_at_least_percentage_major}%{endif})).publish('MAJOR')
 EOF
 
   rule {
@@ -216,8 +216,8 @@ resource "signalfx_detector" "evictions_growing" {
   program_text = <<-EOF
     base_filtering = filter('namespace', 'AWS/ElastiCache')
     signal = data('Evictions', filter=base_filtering and filter('stat', 'mean') and filter('CacheNodeId', '*') and ${module.filtering.signalflow})${var.evictions_growing_aggregation_function}${var.evictions_growing_transformation_function}.publish('signal')
-    detect(when(signal > ${var.evictions_growing_threshold_major}, lasting=%{if var.evictions_growing_lasting_duration_major == null}None%{else}'${var.evictions_growing_lasting_duration_major}'%{endif}, at_least=${var.evictions_growing_at_least_percentage_major}) and (not when(signal > ${var.evictions_growing_threshold_critical}, lasting=%{if var.evictions_growing_lasting_duration_critical == null}None%{else}'${var.evictions_growing_lasting_duration_critical}'%{endif}, at_least=${var.evictions_growing_at_least_percentage_critical}))).publish('MAJOR')
-    detect(when(signal > ${var.evictions_growing_threshold_critical}, lasting=%{if var.evictions_growing_lasting_duration_critical == null}None%{else}'${var.evictions_growing_lasting_duration_critical}'%{endif}, at_least=${var.evictions_growing_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal > ${var.evictions_growing_threshold_major}%{if var.evictions_growing_lasting_duration_major != null}, lasting='${var.evictions_growing_lasting_duration_major}', at_least=${var.evictions_growing_at_least_percentage_major}%{endif}) and (not when(signal > ${var.evictions_growing_threshold_critical}%{if var.evictions_growing_lasting_duration_critical != null}, lasting='${var.evictions_growing_lasting_duration_critical}', at_least=${var.evictions_growing_at_least_percentage_critical}%{endif}))).publish('MAJOR')
+    detect(when(signal > ${var.evictions_growing_threshold_critical}%{if var.evictions_growing_lasting_duration_critical != null}, lasting='${var.evictions_growing_lasting_duration_critical}', at_least=${var.evictions_growing_at_least_percentage_critical}%{endif})).publish('CRIT')
 EOF
 
   rule {

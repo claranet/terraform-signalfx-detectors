@@ -42,8 +42,8 @@ resource "signalfx_detector" "cpu" {
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.Web/serverFarms') and filter('primary_aggregation_type', 'true')
     signal = data('CpuPercentage', filter=base_filtering and ${module.filtering.signalflow})${var.cpu_aggregation_function}${var.cpu_transformation_function}.publish('signal')
-    detect(when(signal > ${var.cpu_threshold_critical}, lasting=%{if var.cpu_lasting_duration_critical == null}None%{else}'${var.cpu_lasting_duration_critical}'%{endif}, at_least=${var.cpu_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal > ${var.cpu_threshold_major}, lasting=%{if var.cpu_lasting_duration_major == null}None%{else}'${var.cpu_lasting_duration_major}'%{endif}, at_least=${var.cpu_at_least_percentage_major}) and (not when(signal > ${var.cpu_threshold_critical}, lasting=%{if var.cpu_lasting_duration_critical == null}None%{else}'${var.cpu_lasting_duration_critical}'%{endif}, at_least=${var.cpu_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.cpu_threshold_critical}%{if var.cpu_lasting_duration_critical != null}, lasting='${var.cpu_lasting_duration_critical}', at_least=${var.cpu_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.cpu_threshold_major}%{if var.cpu_lasting_duration_major != null}, lasting='${var.cpu_lasting_duration_major}', at_least=${var.cpu_at_least_percentage_major}%{endif}) and (not when(signal > ${var.cpu_threshold_critical}%{if var.cpu_lasting_duration_critical != null}, lasting='${var.cpu_lasting_duration_critical}', at_least=${var.cpu_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {
@@ -88,8 +88,8 @@ resource "signalfx_detector" "memory" {
   program_text = <<-EOF
     base_filtering = filter('resource_type', 'Microsoft.Web/serverFarms') and filter('primary_aggregation_type', 'true')
     signal = data('MemoryPercentage', filter=base_filtering and ${module.filtering.signalflow})${var.memory_aggregation_function}${var.memory_transformation_function}.publish('signal')
-    detect(when(signal > ${var.memory_threshold_critical}, lasting=%{if var.memory_lasting_duration_critical == null}None%{else}'${var.memory_lasting_duration_critical}'%{endif}, at_least=${var.memory_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal > ${var.memory_threshold_major}, lasting=%{if var.memory_lasting_duration_major == null}None%{else}'${var.memory_lasting_duration_major}'%{endif}, at_least=${var.memory_at_least_percentage_major}) and (not when(signal > ${var.memory_threshold_critical}, lasting=%{if var.memory_lasting_duration_critical == null}None%{else}'${var.memory_lasting_duration_critical}'%{endif}, at_least=${var.memory_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.memory_threshold_critical}%{if var.memory_lasting_duration_critical != null}, lasting='${var.memory_lasting_duration_critical}', at_least=${var.memory_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.memory_threshold_major}%{if var.memory_lasting_duration_major != null}, lasting='${var.memory_lasting_duration_major}', at_least=${var.memory_at_least_percentage_major}%{endif}) and (not when(signal > ${var.memory_threshold_critical}%{if var.memory_lasting_duration_critical != null}, lasting='${var.memory_lasting_duration_critical}', at_least=${var.memory_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {

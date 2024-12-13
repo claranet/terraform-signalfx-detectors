@@ -8,7 +8,7 @@ resource "signalfx_detector" "vm_backup" {
   program_text = <<-EOF
     backup = data('fame.azure.backup.vm', filter=${module.filtering.signalflow}, rollup='max')${var.vm_backup_aggregation_function}${var.vm_backup_transformation_function}
     signal = backup.max(over='1d').publish('signal')
-    detect(when(signal < ${var.vm_backup_threshold_critical}, lasting=%{if var.vm_backup_lasting_duration_critical == null}None%{else}'${var.vm_backup_lasting_duration_critical}'%{endif}, at_least=${var.vm_backup_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal < ${var.vm_backup_threshold_critical}%{if var.vm_backup_lasting_duration_critical != null}, lasting='${var.vm_backup_lasting_duration_critical}', at_least=${var.vm_backup_at_least_percentage_critical}%{endif})).publish('CRIT')
 EOF
 
   rule {

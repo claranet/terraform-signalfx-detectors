@@ -1,0 +1,24 @@
+module: Azure CDN
+name: origin health
+filtering: "filter('resource_type', 'Microsoft.Cdn/profiles') and filter('primary_aggregation_type', 'true')"
+id: cdn_origin_health
+value_unit: "%"
+
+transformation: true
+aggregation: ".max(by=['Origin', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+
+signals:
+  signal:
+    metric: "OriginHealthPercentage"
+
+rules:
+  critical:
+    threshold: 1
+    comparator: "<"
+    lasting_duration: 5m
+
+  major:
+    threshold: 100
+    comparator: "<"
+    dependency: critical
+    lasting_duration: 10m

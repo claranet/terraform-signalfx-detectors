@@ -1,0 +1,23 @@
+module: "ElasticSearch"
+name: "Fielddata cache evictions rate of change"
+id: "field_data_evictions_change"
+
+transformation: ".rateofchange().mean(over='15m')"
+aggregation: true
+filtering: "filter('plugin', 'elasticsearch') and filter('node_name', '*')"
+
+signals:
+  signal:
+    metric: "elasticsearch.indices.fielddata.evictions"
+    rollup: "delta"
+    extrapolation: "zero"
+
+rules:
+  major:
+    threshold: 120
+    comparator: ">"
+    
+  minor:
+    threshold: 60
+    comparator: ">"
+    dependency: "major"

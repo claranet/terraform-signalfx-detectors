@@ -1,0 +1,19 @@
+module: "Kubernetes velero"
+name: "Failed backup deletion"
+id: "velero_backup_deletion_failure"
+
+transformation: ".sum(over='1d')"
+aggregation: ".sum(by=['kubernetes_cluster', 'schedule'])"
+filtering: "filter('schedule', '*')"
+
+signals:
+  signal:
+    metric: "velero_backup_deletion_failure_total"
+    rollup: "delta"
+    extrapolation: "zero"
+
+rules:
+  major:
+    threshold: 0
+    comparator: ">"
+    

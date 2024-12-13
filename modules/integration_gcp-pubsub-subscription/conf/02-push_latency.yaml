@@ -1,0 +1,23 @@
+module: "GCP Pub/Sub Subscription"
+name: "Latency on push endpoint"
+id: "push_latency"
+
+transformation: ".min(over='15m')"
+aggregation: true
+filtering: "filter('monitored_resource', 'pubsub_subscription')"
+
+signals:
+  signal:
+    metric: "subscription/push_request_latencies"
+    rollup: "average"
+    extrapolation: "zero"
+
+rules:
+  critical:
+    threshold: 5000000
+    comparator: ">="
+    
+  major:
+    threshold: 1000000
+    comparator: ">="
+    dependency: "critical"

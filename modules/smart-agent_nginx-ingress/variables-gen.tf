@@ -57,7 +57,7 @@ variable "latency_disabled_major" {
 variable "latency_threshold_critical" {
   description = "Critical threshold for latency detector in Second"
   type        = number
-  default     = 1
+  default     = 3
 }
 
 variable "latency_lasting_duration_critical" {
@@ -74,7 +74,7 @@ variable "latency_at_least_percentage_critical" {
 variable "latency_threshold_major" {
   description = "Major threshold for latency detector in Second"
   type        = number
-  default     = 3
+  default     = 1
 }
 
 variable "latency_lasting_duration_major" {

@@ -1,0 +1,17 @@
+module: "MongoDB"
+name: "Primary in replicaset"
+id: "primary"
+
+transformation: ".min(over='1m')"
+aggregation: ".max(by=['cluster'])"
+
+
+signals:
+  signal:
+    metric: "gauge.repl.is_primary_node"
+
+rules:
+  critical:
+    threshold: 1
+    comparator: ">"
+    

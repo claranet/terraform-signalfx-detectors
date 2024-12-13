@@ -1,0 +1,13 @@
+module: "Haproxy"
+name: "heartbeat"
+
+transformation: true
+aggregation: true
+
+exclude_not_running_vm: true
+
+signals:
+  signal:
+    metric: "haproxy_session_current"
+rules:
+  critical:

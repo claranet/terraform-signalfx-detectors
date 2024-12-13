@@ -8,8 +8,8 @@ resource "signalfx_detector" "messages_ready" {
   program_text = <<-EOF
     base_filtering = filter('namespace', 'AWS/AmazonMQ') and filter('stat', 'upper')
     signal = data('MessageReadyCount', filter=base_filtering and ${module.filtering.signalflow})${var.messages_ready_aggregation_function}${var.messages_ready_transformation_function}.publish('signal')
-    detect(when(signal > ${var.messages_ready_threshold_critical}, lasting=%{if var.messages_ready_lasting_duration_critical == null}None%{else}'${var.messages_ready_lasting_duration_critical}'%{endif}, at_least=${var.messages_ready_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal > ${var.messages_ready_threshold_major}, lasting=%{if var.messages_ready_lasting_duration_major == null}None%{else}'${var.messages_ready_lasting_duration_major}'%{endif}, at_least=${var.messages_ready_at_least_percentage_major}) and (not when(signal > ${var.messages_ready_threshold_critical}, lasting=%{if var.messages_ready_lasting_duration_critical == null}None%{else}'${var.messages_ready_lasting_duration_critical}'%{endif}, at_least=${var.messages_ready_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.messages_ready_threshold_critical}%{if var.messages_ready_lasting_duration_critical != null}, lasting='${var.messages_ready_lasting_duration_critical}', at_least=${var.messages_ready_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.messages_ready_threshold_major}%{if var.messages_ready_lasting_duration_major != null}, lasting='${var.messages_ready_lasting_duration_major}', at_least=${var.messages_ready_at_least_percentage_major}%{endif}) and (not when(signal > ${var.messages_ready_threshold_critical}%{if var.messages_ready_lasting_duration_critical != null}, lasting='${var.messages_ready_lasting_duration_critical}', at_least=${var.messages_ready_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {
@@ -49,8 +49,8 @@ resource "signalfx_detector" "messages_unacknowledged" {
   program_text = <<-EOF
     base_filtering = filter('namespace', 'AWS/AmazonMQ') and filter('stat', 'upper')
     signal = data('MessageUnacknowledgedCount', filter=base_filtering and ${module.filtering.signalflow})${var.messages_unacknowledged_aggregation_function}${var.messages_unacknowledged_transformation_function}.publish('signal')
-    detect(when(signal > ${var.messages_unacknowledged_threshold_critical}, lasting=%{if var.messages_unacknowledged_lasting_duration_critical == null}None%{else}'${var.messages_unacknowledged_lasting_duration_critical}'%{endif}, at_least=${var.messages_unacknowledged_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal > ${var.messages_unacknowledged_threshold_major}, lasting=%{if var.messages_unacknowledged_lasting_duration_major == null}None%{else}'${var.messages_unacknowledged_lasting_duration_major}'%{endif}, at_least=${var.messages_unacknowledged_at_least_percentage_major}) and (not when(signal > ${var.messages_unacknowledged_threshold_critical}, lasting=%{if var.messages_unacknowledged_lasting_duration_critical == null}None%{else}'${var.messages_unacknowledged_lasting_duration_critical}'%{endif}, at_least=${var.messages_unacknowledged_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.messages_unacknowledged_threshold_critical}%{if var.messages_unacknowledged_lasting_duration_critical != null}, lasting='${var.messages_unacknowledged_lasting_duration_critical}', at_least=${var.messages_unacknowledged_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.messages_unacknowledged_threshold_major}%{if var.messages_unacknowledged_lasting_duration_major != null}, lasting='${var.messages_unacknowledged_lasting_duration_major}', at_least=${var.messages_unacknowledged_at_least_percentage_major}%{endif}) and (not when(signal > ${var.messages_unacknowledged_threshold_critical}%{if var.messages_unacknowledged_lasting_duration_critical != null}, lasting='${var.messages_unacknowledged_lasting_duration_critical}', at_least=${var.messages_unacknowledged_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {
@@ -91,8 +91,8 @@ resource "signalfx_detector" "messages_ack_rate" {
     base_filtering = filter('namespace', 'AWS/AmazonMQ') and filter('stat', 'upper')
     msg = data('MessageCount', filter=base_filtering and ${module.filtering.signalflow})${var.messages_ack_rate_aggregation_function}${var.messages_ack_rate_transformation_function}
     signal = data('AckRate', filter=base_filtering and ${module.filtering.signalflow})${var.messages_ack_rate_aggregation_function}${var.messages_ack_rate_transformation_function}.publish('signal')
-    detect(when(signal <= ${var.messages_ack_rate_threshold_critical}, lasting=%{if var.messages_ack_rate_lasting_duration_critical == null}None%{else}'${var.messages_ack_rate_lasting_duration_critical}'%{endif}, at_least=${var.messages_ack_rate_at_least_percentage_critical}) and when(signal >= 0) and when(msg > 0)).publish('CRIT')
-    detect(when(signal <= ${var.messages_ack_rate_threshold_major}, lasting=%{if var.messages_ack_rate_lasting_duration_major == null}None%{else}'${var.messages_ack_rate_lasting_duration_major}'%{endif}, at_least=${var.messages_ack_rate_at_least_percentage_major}) and when(signal >= 0) and when(msg > 0) and (not when(signal <= ${var.messages_ack_rate_threshold_critical}, lasting=%{if var.messages_ack_rate_lasting_duration_critical == null}None%{else}'${var.messages_ack_rate_lasting_duration_critical}'%{endif}, at_least=${var.messages_ack_rate_at_least_percentage_critical}) and when(signal >= 0) and when(msg > 0))).publish('MAJOR')
+    detect(when(signal <= ${var.messages_ack_rate_threshold_critical}%{if var.messages_ack_rate_lasting_duration_critical != null}, lasting='${var.messages_ack_rate_lasting_duration_critical}', at_least=${var.messages_ack_rate_at_least_percentage_critical}%{endif}) and when(signal >= 0) and when(msg > 0)).publish('CRIT')
+    detect(when(signal <= ${var.messages_ack_rate_threshold_major}%{if var.messages_ack_rate_lasting_duration_major != null}, lasting='${var.messages_ack_rate_lasting_duration_major}', at_least=${var.messages_ack_rate_at_least_percentage_major}%{endif}) and when(signal >= 0) and when(msg > 0) and (not when(signal <= ${var.messages_ack_rate_threshold_critical}%{if var.messages_ack_rate_lasting_duration_critical != null}, lasting='${var.messages_ack_rate_lasting_duration_critical}', at_least=${var.messages_ack_rate_at_least_percentage_critical}%{endif}) and when(signal >= 0) and when(msg > 0))).publish('MAJOR')
 EOF
 
   rule {
@@ -139,8 +139,8 @@ resource "signalfx_detector" "memory_used" {
     A = data('RabbitMQMemUsed', filter=base_filtering and ${module.filtering.signalflow})${var.memory_used_aggregation_function}${var.memory_used_transformation_function}
     B = data('RabbitMQMemLimit', filter=base_filtering and ${module.filtering.signalflow})${var.memory_used_aggregation_function}${var.memory_used_transformation_function}
     signal = ((A / B).scale(100)).publish('signal')
-    detect(when(signal > ${var.memory_used_threshold_critical}, lasting=%{if var.memory_used_lasting_duration_critical == null}None%{else}'${var.memory_used_lasting_duration_critical}'%{endif}, at_least=${var.memory_used_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal > ${var.memory_used_threshold_major}, lasting=%{if var.memory_used_lasting_duration_major == null}None%{else}'${var.memory_used_lasting_duration_major}'%{endif}, at_least=${var.memory_used_at_least_percentage_major}) and (not when(signal > ${var.memory_used_threshold_critical}, lasting=%{if var.memory_used_lasting_duration_critical == null}None%{else}'${var.memory_used_lasting_duration_critical}'%{endif}, at_least=${var.memory_used_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.memory_used_threshold_critical}%{if var.memory_used_lasting_duration_critical != null}, lasting='${var.memory_used_lasting_duration_critical}', at_least=${var.memory_used_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.memory_used_threshold_major}%{if var.memory_used_lasting_duration_major != null}, lasting='${var.memory_used_lasting_duration_major}', at_least=${var.memory_used_at_least_percentage_major}%{endif}) and (not when(signal > ${var.memory_used_threshold_critical}%{if var.memory_used_lasting_duration_critical != null}, lasting='${var.memory_used_lasting_duration_critical}', at_least=${var.memory_used_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {
@@ -187,8 +187,8 @@ resource "signalfx_detector" "disk_free" {
     A = data('RabbitMQDiskFree', filter=base_filtering and ${module.filtering.signalflow})${var.disk_free_aggregation_function}${var.disk_free_transformation_function}
     B = data('RabbitMQDiskFreeLimit', filter=base_filtering and ${module.filtering.signalflow})${var.disk_free_aggregation_function}${var.disk_free_transformation_function}
     signal = ((A - B)/1024**3).publish('signal')
-    detect(when(signal < ${var.disk_free_threshold_critical}, lasting=%{if var.disk_free_lasting_duration_critical == null}None%{else}'${var.disk_free_lasting_duration_critical}'%{endif}, at_least=${var.disk_free_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal < ${var.disk_free_threshold_major}, lasting=%{if var.disk_free_lasting_duration_major == null}None%{else}'${var.disk_free_lasting_duration_major}'%{endif}, at_least=${var.disk_free_at_least_percentage_major}) and (not when(signal < ${var.disk_free_threshold_critical}, lasting=%{if var.disk_free_lasting_duration_critical == null}None%{else}'${var.disk_free_lasting_duration_critical}'%{endif}, at_least=${var.disk_free_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal < ${var.disk_free_threshold_critical}%{if var.disk_free_lasting_duration_critical != null}, lasting='${var.disk_free_lasting_duration_critical}', at_least=${var.disk_free_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal < ${var.disk_free_threshold_major}%{if var.disk_free_lasting_duration_major != null}, lasting='${var.disk_free_lasting_duration_major}', at_least=${var.disk_free_at_least_percentage_major}%{endif}) and (not when(signal < ${var.disk_free_threshold_critical}%{if var.disk_free_lasting_duration_critical != null}, lasting='${var.disk_free_lasting_duration_critical}', at_least=${var.disk_free_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {

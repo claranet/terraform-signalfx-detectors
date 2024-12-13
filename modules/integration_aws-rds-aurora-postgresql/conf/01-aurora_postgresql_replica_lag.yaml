@@ -1,0 +1,21 @@
+module: "AWS RDS Aurora PostgreSQL"
+name: "Replica lag"
+id: "aurora_postgresql_replica_lag"
+
+transformation: ".min(over='5m')"
+aggregation: true
+filtering: "filter('namespace', 'AWS/RDS') and filter('stat', 'mean') and filter('DBInstanceIdentifier', '*')"
+
+signals:
+  signal:
+    metric: "RDSToAuroraPostgreSQLReplicaLag"
+
+rules:
+  critical:
+    threshold: 200
+    comparator: ">"
+    
+  major:
+    threshold: 100
+    comparator: ">"
+    dependency: "critical"

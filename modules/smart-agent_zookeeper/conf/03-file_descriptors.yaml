@@ -1,0 +1,27 @@
+module: "Zookeeper"
+name: "File descriptors usage"
+id: "file_descriptors"
+
+transformation: ".max(over='15m')"
+aggregation: true
+filtering: "filter('plugin', 'zookeeper')"
+
+signals:
+  A:
+    metric: "gauge.zk_open_file_descriptor_count"
+    rollup: "average"
+  B:
+    metric: "gauge.zk_max_file_descriptor_count"
+    rollup: "average"
+  signal:
+    formula: "(A/B).scale(100)"
+
+rules:
+  critical:
+    threshold: 95
+    comparator: ">"
+    
+  major:
+    threshold: 90
+    comparator: ">"
+    dependency: "critical"

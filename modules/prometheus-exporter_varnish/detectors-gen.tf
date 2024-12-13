@@ -8,7 +8,7 @@ resource "signalfx_detector" "heartbeat" {
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
     base_filtering = filter('system.type', 'prometheus-exporter')
-    signal = data('varnish_main_threads', filter=${local.not_running_vm_filters} and base_filtering and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
+    signal = data('varnish_main_threads', filter=%{if var.heartbeat_exclude_not_running_vm}${local.not_running_vm_filters} and %{endif}base_filtering and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}', auto_resolve_after='${local.heartbeat_auto_resolve_after}').publish('CRIT')
 EOF
 
@@ -37,7 +37,7 @@ resource "signalfx_detector" "backend_failed" {
   program_text = <<-EOF
     base_filtering = filter('system.type', 'prometheus-exporter')
     signal = data('varnish_backend_fail', filter=base_filtering and ${module.filtering.signalflow}, rollup='delta')${var.backend_failed_aggregation_function}${var.backend_failed_transformation_function}.publish('signal')
-    detect(when(signal > ${var.backend_failed_threshold_critical}, lasting=%{if var.backend_failed_lasting_duration_critical == null}None%{else}'${var.backend_failed_lasting_duration_critical}'%{endif}, at_least=${var.backend_failed_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal > ${var.backend_failed_threshold_critical}%{if var.backend_failed_lasting_duration_critical != null}, lasting='${var.backend_failed_lasting_duration_critical}', at_least=${var.backend_failed_at_least_percentage_critical}%{endif})).publish('CRIT')
 EOF
 
   rule {
@@ -65,7 +65,7 @@ resource "signalfx_detector" "thread_number" {
   program_text = <<-EOF
     base_filtering = filter('system.type', 'prometheus-exporter')
     signal = data('varnish_main_threads', filter=base_filtering and ${module.filtering.signalflow})${var.thread_number_aggregation_function}${var.thread_number_transformation_function}.publish('signal')
-    detect(when(signal < ${var.thread_number_threshold_critical}, lasting=%{if var.thread_number_lasting_duration_critical == null}None%{else}'${var.thread_number_lasting_duration_critical}'%{endif}, at_least=${var.thread_number_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal < ${var.thread_number_threshold_critical}%{if var.thread_number_lasting_duration_critical != null}, lasting='${var.thread_number_lasting_duration_critical}', at_least=${var.thread_number_at_least_percentage_critical}%{endif})).publish('CRIT')
 EOF
 
   rule {
@@ -93,7 +93,7 @@ resource "signalfx_detector" "dropped_sessions" {
   program_text = <<-EOF
     base_filtering = filter('system.type', 'prometheus-exporter')
     signal = data('varnish_main_sessions', filter=base_filtering and filter('type', 'dropped') and ${module.filtering.signalflow}, rollup='delta')${var.dropped_sessions_aggregation_function}${var.dropped_sessions_transformation_function}.publish('signal')
-    detect(when(signal > ${var.dropped_sessions_threshold_critical}, lasting=%{if var.dropped_sessions_lasting_duration_critical == null}None%{else}'${var.dropped_sessions_lasting_duration_critical}'%{endif}, at_least=${var.dropped_sessions_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal > ${var.dropped_sessions_threshold_critical}%{if var.dropped_sessions_lasting_duration_critical != null}, lasting='${var.dropped_sessions_lasting_duration_critical}', at_least=${var.dropped_sessions_at_least_percentage_critical}%{endif})).publish('CRIT')
 EOF
 
   rule {
@@ -123,8 +123,8 @@ resource "signalfx_detector" "hit_rate" {
     A = data('varnish_main_cache_hit', filter=base_filtering and ${module.filtering.signalflow})${var.hit_rate_aggregation_function}${var.hit_rate_transformation_function}
     B = data('varnish_main_cache_miss', filter=base_filtering and ${module.filtering.signalflow})${var.hit_rate_aggregation_function}${var.hit_rate_transformation_function}
     signal = (A/(A+B)).fill(0).scale(100).publish('signal')
-    detect(when(signal < ${var.hit_rate_threshold_minor}, lasting=%{if var.hit_rate_lasting_duration_minor == null}None%{else}'${var.hit_rate_lasting_duration_minor}'%{endif}, at_least=${var.hit_rate_at_least_percentage_minor})).publish('MINOR')
-    detect(when(signal <= ${var.hit_rate_threshold_major}, lasting=%{if var.hit_rate_lasting_duration_major == null}None%{else}'${var.hit_rate_lasting_duration_major}'%{endif}, at_least=${var.hit_rate_at_least_percentage_major}) and (not when(signal < ${var.hit_rate_threshold_minor}, lasting=%{if var.hit_rate_lasting_duration_minor == null}None%{else}'${var.hit_rate_lasting_duration_minor}'%{endif}, at_least=${var.hit_rate_at_least_percentage_minor}))).publish('MAJOR')
+    detect(when(signal < ${var.hit_rate_threshold_minor}%{if var.hit_rate_lasting_duration_minor != null}, lasting='${var.hit_rate_lasting_duration_minor}', at_least=${var.hit_rate_at_least_percentage_minor}%{endif}) and (not when(signal <= ${var.hit_rate_threshold_major}%{if var.hit_rate_lasting_duration_major != null}, lasting='${var.hit_rate_lasting_duration_major}', at_least=${var.hit_rate_at_least_percentage_major}%{endif}))).publish('MINOR')
+    detect(when(signal <= ${var.hit_rate_threshold_major}%{if var.hit_rate_lasting_duration_major != null}, lasting='${var.hit_rate_lasting_duration_major}', at_least=${var.hit_rate_at_least_percentage_major}%{endif})).publish('MAJOR')
 EOF
 
   rule {
@@ -166,8 +166,8 @@ resource "signalfx_detector" "memory_usage" {
     A = data('varnish_sma_g_bytes', filter=base_filtering and filter('type', 's0') and ${module.filtering.signalflow})${var.memory_usage_aggregation_function}${var.memory_usage_transformation_function}
     B = data('varnish_sma_g_space', filter=base_filtering and filter('type', 's0') and ${module.filtering.signalflow})${var.memory_usage_aggregation_function}${var.memory_usage_transformation_function}
     signal = (A / (A+B)).scale(100).fill(0).publish('signal')
-    detect(when(signal > ${var.memory_usage_threshold_critical}, lasting=%{if var.memory_usage_lasting_duration_critical == null}None%{else}'${var.memory_usage_lasting_duration_critical}'%{endif}, at_least=${var.memory_usage_at_least_percentage_critical})).publish('CRIT')
-    detect(when(signal > ${var.memory_usage_threshold_major}, lasting=%{if var.memory_usage_lasting_duration_major == null}None%{else}'${var.memory_usage_lasting_duration_major}'%{endif}, at_least=${var.memory_usage_at_least_percentage_major}) and (not when(signal > ${var.memory_usage_threshold_critical}, lasting=%{if var.memory_usage_lasting_duration_critical == null}None%{else}'${var.memory_usage_lasting_duration_critical}'%{endif}, at_least=${var.memory_usage_at_least_percentage_critical}))).publish('MAJOR')
+    detect(when(signal > ${var.memory_usage_threshold_critical}%{if var.memory_usage_lasting_duration_critical != null}, lasting='${var.memory_usage_lasting_duration_critical}', at_least=${var.memory_usage_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.memory_usage_threshold_major}%{if var.memory_usage_lasting_duration_major != null}, lasting='${var.memory_usage_lasting_duration_major}', at_least=${var.memory_usage_at_least_percentage_major}%{endif}) and (not when(signal > ${var.memory_usage_threshold_critical}%{if var.memory_usage_lasting_duration_critical != null}, lasting='${var.memory_usage_lasting_duration_critical}', at_least=${var.memory_usage_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {

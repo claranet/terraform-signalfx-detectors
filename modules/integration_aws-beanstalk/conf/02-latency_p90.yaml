@@ -1,0 +1,21 @@
+module: "AWS Beanstalk"
+name: "Application latency p90"
+id: "latency_p90"
+
+transformation: ".min(over='15m')"
+aggregation: true
+filtering: "filter('namespace', 'AWS/ElasticBeanstalk') and filter('stat', 'lower') and (not filter('InstanceId', '*'))"
+
+signals:
+  signal:
+    metric: "ApplicationLatencyP90"
+
+rules:
+  critical:
+    threshold: 0.5
+    comparator: ">="
+    
+  major:
+    threshold: 0.3
+    comparator: ">="
+    dependency: "critical"

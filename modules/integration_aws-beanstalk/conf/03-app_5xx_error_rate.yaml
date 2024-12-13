@@ -1,0 +1,25 @@
+module: "AWS Beanstalk"
+name: "Application 5xx error rate"
+id: "app_5xx_error_rate"
+
+transformation: ".sum(over='15m')"
+aggregation: true
+filtering: "filter('namespace', 'AWS/ElasticBeanstalk') and filter('stat', 'sum') and (not filter('InstanceId', '*'))"
+
+signals:
+  A:
+    metric: "ApplicationRequests5xx"
+  B:
+    metric: "ApplicationRequestsTotal"
+  signal:
+    formula: "(A/B).scale(100)"
+
+rules:
+  critical:
+    threshold: 5
+    comparator: ">"
+    
+  major:
+    threshold: 3
+    comparator: ">"
+    dependency: "critical"

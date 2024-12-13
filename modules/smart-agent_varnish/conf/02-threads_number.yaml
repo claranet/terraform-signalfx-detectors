@@ -1,0 +1,17 @@
+module: "Varnish"
+name: "Threads number"
+id: "threads_number"
+
+transformation: ".min(over='5m')"
+aggregation: true
+filtering: "filter('plugin', 'telegraf/varnish')"
+
+signals:
+  signal:
+    metric: "varnish.threads"
+
+rules:
+  critical:
+    threshold: 1
+    comparator: "<"
+    

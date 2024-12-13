@@ -1,0 +1,17 @@
+module: "GCP Cloud sql failover"
+name: "Unavailable"
+id: "failover_unavailable"
+
+transformation: ".max(over='10m')"
+aggregation: true
+
+
+signals:
+  signal:
+    metric: "database/available_for_failover"
+
+rules:
+  major:
+    threshold: 1
+    comparator: "<"
+    
