@@ -177,6 +177,7 @@
 |---|---|---|---|---|---|
 |Azure VPN heartbeat|X|-|-|-|-|
 |Azure VPN total flow count|X|-|-|-|-|
+|Azure VPN ipsec tunnel status|X|X|-|-|-|
 
 
 ## integration_aws-alb
@@ -601,6 +602,7 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Azure Load Balancer heartbeat|X|-|-|-|-|
+|Azure Load Balancer backend unhealthy host ratio|X|X|-|-|-|
 
 
 ## integration_azure-mariadb

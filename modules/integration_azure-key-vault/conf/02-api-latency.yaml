@@ -15,9 +15,11 @@ rules:
     threshold: 500
     comparator: ">"
     lasting_duration: '1h'
+    disabled: true
   minor:
     threshold: 500
     comparator: ">"
     lasting_duration: '30m'
     dependency: major
+    disabled: true
 ...
