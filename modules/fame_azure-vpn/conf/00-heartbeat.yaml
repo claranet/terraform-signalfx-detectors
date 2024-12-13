@@ -6,7 +6,7 @@ aggregation: true
 
 signals:
   signal:
-    metric: fame.azure.virtual_network_gateway.total_flow_count
+    metric: fame.azure.virtual_network_gateway.tunnel_status
 
 rules:
   critical:
