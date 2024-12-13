@@ -1,0 +1,22 @@
+module: "PostgreSQL"
+name: "Hit ratio"
+id: "hit_ratio"
+
+transformation: ".scale(100).max(over='1h')"
+aggregation: true
+filtering: "(not filter('index', '*')) and (not filter('schemaname', '*')) and (not filter('type', '*')) and (not filter('table', '*'))"
+
+signals:
+  signal:
+    metric: "postgres_block_hit_ratio"
+    rollup: "average"
+
+rules:
+  minor:
+    threshold: 75
+    comparator: "<"
+    dependency: "warning"
+    
+  warning:
+    threshold: 50
+    comparator: "<"

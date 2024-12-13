@@ -1,0 +1,21 @@
+module: "AWS Beanstalk"
+name: "Environment health"
+id: "health"
+
+transformation: ".min(over='10m')"
+aggregation: true
+filtering: "filter('namespace', 'AWS/ElasticBeanstalk') and filter('stat', 'upper')"
+
+signals:
+  signal:
+    metric: "EnvironmentHealth"
+
+rules:
+  critical:
+    threshold: 20
+    comparator: ">="
+    
+  major:
+    threshold: 15
+    comparator: ">="
+    dependency: "critical"

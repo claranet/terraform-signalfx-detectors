@@ -1,0 +1,17 @@
+module: "Varnish"
+name: "Session dropped"
+id: "session_dropped"
+
+transformation: ".min(over='5m')"
+aggregation: true
+filtering: "filter('plugin', 'telegraf/varnish')"
+
+signals:
+  signal:
+    metric: "varnish.sess_dropped"
+
+rules:
+  critical:
+    threshold: 0
+    comparator: ">"
+    

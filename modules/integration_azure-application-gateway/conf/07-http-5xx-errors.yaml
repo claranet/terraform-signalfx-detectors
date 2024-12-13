@@ -1,0 +1,29 @@
+module: "Azure Application Gateway"
+name: 5xx error rate
+id: http_5xx_errors
+
+aggregation: ".sum(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+filtering: "filter('resource_type', 'Microsoft.Network/applicationGateways') and filter('primary_aggregation_type', 'true')"
+value_unit: "%"
+
+signals:
+  error_stream:
+    metric: ResponseStatus
+    filter: "filter('httpstatusgroup', '5xx')"
+    extrapolation: "zero"
+  count_stream:
+    metric: ResponseStatus
+    extrapolation: "zero"
+  signal:
+    formula: "(error_stream / count_stream).fill(value=0).scale(100)"
+
+rules:
+  critical:
+    threshold: 95
+    comparator: ">"
+    lasting_duration: "5m"
+  major:
+    threshold: 80
+    comparator: ">"
+    lasting_duration: "5m"
+    dependency: critical

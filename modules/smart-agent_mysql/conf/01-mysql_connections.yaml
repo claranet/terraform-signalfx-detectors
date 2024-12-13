@@ -1,0 +1,27 @@
+module: "MySQL"
+name: "Number of connections over max capacity"
+id: "mysql_connections"
+
+transformation: ".min(over='1m')"
+aggregation: true
+
+
+signals:
+  A:
+    metric: "mysql_threads_connected"
+    rollup: "average"
+  B:
+    metric: "mysql_max_connections"
+    rollup: "average"
+  signal:
+    formula: "(A/B).scale(100)"
+
+rules:
+  critical:
+    threshold: 90
+    comparator: ">"
+    
+  major:
+    threshold: 70
+    comparator: ">"
+    dependency: "critical"

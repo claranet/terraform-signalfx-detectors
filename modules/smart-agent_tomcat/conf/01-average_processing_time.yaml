@@ -1,0 +1,27 @@
+module: "Tomcat"
+name: "Average processing time"
+id: "average_processing_time"
+
+transformation: ".min(over='10m')"
+aggregation: true
+
+
+signals:
+  A:
+    metric: "counter.tomcat.GlobalRequestProcessor.processingTime"
+    rollup: "delta"
+  B:
+    metric: "counter.tomcat.GlobalRequestProcessor.requestCount"
+    rollup: "delta"
+  signal:
+    formula: "(A/B).fill(0)"
+
+rules:
+  critical:
+    threshold: 1500
+    comparator: ">"
+    
+  major:
+    threshold: 750
+    comparator: ">"
+    dependency: "critical"

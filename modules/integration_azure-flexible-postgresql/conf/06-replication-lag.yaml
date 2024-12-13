@@ -1,7 +1,7 @@
 ---
 module: "Azure PostgreSQL flexible"
 name: "replication lag"
-filtering: "filter('resource_type', 'Microsoft.DB*orPostgreSQL/flexibleServers') and filter('primary_aggregation_type', 'true')"
+filtering: "filter('resource_type', 'Microsoft.DB*orPostgreS*/flexibleServers') and filter('primary_aggregation_type', 'true')"
 aggregation: ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
 value_unit: s
 transformation: ".max(over='15m')"

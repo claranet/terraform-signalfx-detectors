@@ -1,0 +1,31 @@
+module: "GCP Pub/Sub Topic sending"
+name: "Unavailable messages ratio"
+id: "unavailable_sending_operations_ratio"
+
+transformation: ".sum(over='15m')"
+aggregation: true
+
+
+signals:
+  A:
+    metric: "topic/send_message_operation_count"
+    rollup: "sum"
+    extrapolation: "zero"
+    filter: "filter('monitored_resource', 'pubsub_topic') and filter('response_code', 'unavailable') and (not filter('topic_id', 'container-analysis-occurrences*', 'container-analysis-notes*', 'cloud-builds', 'gcr'))"
+  B:
+    metric: "topic/send_message_operation_count"
+    rollup: "sum"
+    extrapolation: "zero"
+    filter: "filter('monitored_resource', 'pubsub_topic')"
+  signal:
+    formula: "(A/B).scale(100).fill(value=0)"
+
+rules:
+  critical:
+    threshold: 20
+    comparator: ">"
+    
+  major:
+    threshold: 0
+    comparator: ">"
+    dependency: "critical"

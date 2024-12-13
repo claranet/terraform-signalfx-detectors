@@ -6,9 +6,8 @@ resource "signalfx_detector" "backup_failed" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    base_filtering = filter('namespace', 'AWS/Backup') and filter('stat', 'sum')
-    signal = data('NumberOfBackupJobsFailed', filter=base_filtering and ${module.filtering.signalflow})${var.backup_failed_aggregation_function}${var.backup_failed_transformation_function}.publish('signal')
-    detect(when(signal > ${var.backup_failed_threshold_critical}, lasting=%{if var.backup_failed_lasting_duration_critical == null}None%{else}'${var.backup_failed_lasting_duration_critical}'%{endif}, at_least=${var.backup_failed_at_least_percentage_critical})).publish('CRIT')
+    signal = data('NumberOfBackupJobsFailed', filter=${module.filtering.signalflow})${var.backup_failed_aggregation_function}${var.backup_failed_transformation_function}.publish('signal')
+    detect(when(signal > ${var.backup_failed_threshold_critical}%{if var.backup_failed_lasting_duration_critical != null}, lasting='${var.backup_failed_lasting_duration_critical}', at_least=${var.backup_failed_at_least_percentage_critical}%{endif})).publish('CRIT')
 EOF
 
   rule {
@@ -34,9 +33,8 @@ resource "signalfx_detector" "backup_job_expired" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    base_filtering = filter('namespace', 'AWS/Backup') and filter('stat', 'sum')
-    signal = data('NumberOfBackupJobsExpired', filter=base_filtering and ${module.filtering.signalflow}, extrapolation='zero')${var.backup_job_expired_aggregation_function}${var.backup_job_expired_transformation_function}.publish('signal')
-    detect(when(signal > ${var.backup_job_expired_threshold_critical}, lasting=%{if var.backup_job_expired_lasting_duration_critical == null}None%{else}'${var.backup_job_expired_lasting_duration_critical}'%{endif}, at_least=${var.backup_job_expired_at_least_percentage_critical})).publish('CRIT')
+    signal = data('NumberOfBackupJobsExpired', filter=${module.filtering.signalflow}, extrapolation='zero')${var.backup_job_expired_aggregation_function}${var.backup_job_expired_transformation_function}.publish('signal')
+    detect(when(signal > ${var.backup_job_expired_threshold_critical}%{if var.backup_job_expired_lasting_duration_critical != null}, lasting='${var.backup_job_expired_lasting_duration_critical}', at_least=${var.backup_job_expired_at_least_percentage_critical}%{endif})).publish('CRIT')
 EOF
 
   rule {
@@ -62,9 +60,8 @@ resource "signalfx_detector" "backup_copy_jobs_failed" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    base_filtering = filter('namespace', 'AWS/Backup') and filter('stat', 'sum')
-    signal = data('NumberOfCopyJobsFailed', filter=base_filtering and ${module.filtering.signalflow})${var.backup_copy_jobs_failed_aggregation_function}${var.backup_copy_jobs_failed_transformation_function}.publish('signal')
-    detect(when(signal > ${var.backup_copy_jobs_failed_threshold_critical}, lasting=%{if var.backup_copy_jobs_failed_lasting_duration_critical == null}None%{else}'${var.backup_copy_jobs_failed_lasting_duration_critical}'%{endif}, at_least=${var.backup_copy_jobs_failed_at_least_percentage_critical})).publish('CRIT')
+    signal = data('NumberOfCopyJobsFailed', filter=${module.filtering.signalflow})${var.backup_copy_jobs_failed_aggregation_function}${var.backup_copy_jobs_failed_transformation_function}.publish('signal')
+    detect(when(signal > ${var.backup_copy_jobs_failed_threshold_critical}%{if var.backup_copy_jobs_failed_lasting_duration_critical != null}, lasting='${var.backup_copy_jobs_failed_lasting_duration_critical}', at_least=${var.backup_copy_jobs_failed_at_least_percentage_critical}%{endif})).publish('CRIT')
 EOF
 
   rule {
@@ -90,11 +87,10 @@ resource "signalfx_detector" "backup_successful" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    base_filtering = filter('namespace', 'AWS/Backup') and filter('stat', 'sum')
-    created = data('NumberOfBackupJobsCreated', filter=base_filtering and ${module.filtering.signalflow}, extrapolation='zero')${var.backup_successful_aggregation_function}${var.backup_successful_transformation_function}
-    completed = data('NumberOfBackupJobsCompleted', filter=base_filtering and ${module.filtering.signalflow}, extrapolation='zero')${var.backup_successful_aggregation_function}${var.backup_successful_transformation_function}
+    created = data('NumberOfBackupJobsCreated', filter=${module.filtering.signalflow}, extrapolation='zero')${var.backup_successful_aggregation_function}${var.backup_successful_transformation_function}
+    completed = data('NumberOfBackupJobsCompleted', filter=${module.filtering.signalflow}, extrapolation='zero')${var.backup_successful_aggregation_function}${var.backup_successful_transformation_function}
     signal = (created-completed).publish('signal')
-    detect(when(signal > ${var.backup_successful_threshold_critical}, lasting=%{if var.backup_successful_lasting_duration_critical == null}None%{else}'${var.backup_successful_lasting_duration_critical}'%{endif}, at_least=${var.backup_successful_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal > ${var.backup_successful_threshold_critical}%{if var.backup_successful_lasting_duration_critical != null}, lasting='${var.backup_successful_lasting_duration_critical}', at_least=${var.backup_successful_at_least_percentage_critical}%{endif})).publish('CRIT')
 EOF
 
   rule {
@@ -120,9 +116,8 @@ resource "signalfx_detector" "backup_rp_partial" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    base_filtering = filter('namespace', 'AWS/Backup') and filter('stat', 'sum')
-    signal = data('NumberOfRecoveryPointsPartial', filter=base_filtering and ${module.filtering.signalflow})${var.backup_rp_partial_aggregation_function}${var.backup_rp_partial_transformation_function}.publish('signal')
-    detect(when(signal > ${var.backup_rp_partial_threshold_minor}, lasting=%{if var.backup_rp_partial_lasting_duration_minor == null}None%{else}'${var.backup_rp_partial_lasting_duration_minor}'%{endif}, at_least=${var.backup_rp_partial_at_least_percentage_minor})).publish('MINOR')
+    signal = data('NumberOfRecoveryPointsPartial', filter=${module.filtering.signalflow})${var.backup_rp_partial_aggregation_function}${var.backup_rp_partial_transformation_function}.publish('signal')
+    detect(when(signal > ${var.backup_rp_partial_threshold_minor}%{if var.backup_rp_partial_lasting_duration_minor != null}, lasting='${var.backup_rp_partial_lasting_duration_minor}', at_least=${var.backup_rp_partial_at_least_percentage_minor}%{endif})).publish('MINOR')
 EOF
 
   rule {
@@ -148,9 +143,8 @@ resource "signalfx_detector" "backup_rp_expired" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    base_filtering = filter('namespace', 'AWS/Backup') and filter('stat', 'sum')
-    signal = data('NumberOfRecoveryPointsExpired', filter=base_filtering and ${module.filtering.signalflow})${var.backup_rp_expired_aggregation_function}${var.backup_rp_expired_transformation_function}.publish('signal')
-    detect(when(signal > ${var.backup_rp_expired_threshold_major}, lasting=%{if var.backup_rp_expired_lasting_duration_major == null}None%{else}'${var.backup_rp_expired_lasting_duration_major}'%{endif}, at_least=${var.backup_rp_expired_at_least_percentage_major})).publish('MAJOR')
+    signal = data('NumberOfRecoveryPointsExpired', filter=${module.filtering.signalflow})${var.backup_rp_expired_aggregation_function}${var.backup_rp_expired_transformation_function}.publish('signal')
+    detect(when(signal > ${var.backup_rp_expired_threshold_major}%{if var.backup_rp_expired_lasting_duration_major != null}, lasting='${var.backup_rp_expired_lasting_duration_major}', at_least=${var.backup_rp_expired_at_least_percentage_major}%{endif})).publish('MAJOR')
 EOF
 
   rule {

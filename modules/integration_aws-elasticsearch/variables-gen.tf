@@ -15,7 +15,7 @@ variable "heartbeat_aggregation_function" {
 variable "heartbeat_max_delay" {
   description = "Enforce max delay for heartbeat detector (use \"0\" or \"null\" for \"Auto\")"
   type        = number
-  default     = 900
+  default     = null
 }
 
 variable "heartbeat_tip" {
@@ -37,9 +37,9 @@ variable "heartbeat_disabled" {
 }
 
 variable "heartbeat_timeframe" {
-  description = "Timeframe for heartbeat detector (i.e. \"10m\")"
+  description = "Timeframe for heartbeat detector (i.e. \"25m\")."
   type        = string
-  default     = "10m"
+  default     = "25m"
 }
 
 # jvm_memory_pressure detector
@@ -59,7 +59,7 @@ variable "jvm_memory_pressure_aggregation_function" {
 variable "jvm_memory_pressure_transformation_function" {
   description = "Transformation function for jvm_memory_pressure detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".min(over='15m')"
+  default     = ""
 }
 
 variable "jvm_memory_pressure_max_delay" {
@@ -109,7 +109,7 @@ variable "jvm_memory_pressure_threshold_critical" {
 variable "jvm_memory_pressure_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "15m"
 }
 
 variable "jvm_memory_pressure_at_least_percentage_critical" {
@@ -126,7 +126,7 @@ variable "jvm_memory_pressure_threshold_major" {
 variable "jvm_memory_pressure_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "15m"
 }
 
 variable "jvm_memory_pressure_at_least_percentage_major" {
@@ -467,7 +467,7 @@ variable "cluster_status_notifications" {
 variable "cluster_status_aggregation_function" {
   description = "Aggregation function and group by for cluster_status detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".min(over='15m')"
+  default     = ""
 }
 
 variable "cluster_status_transformation_function" {
@@ -521,7 +521,7 @@ variable "cluster_status_threshold_critical" {
 variable "cluster_status_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "15m"
 }
 
 variable "cluster_status_at_least_percentage_critical" {
@@ -538,7 +538,7 @@ variable "cluster_status_threshold_major" {
 variable "cluster_status_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "15m"
 }
 
 variable "cluster_status_at_least_percentage_major" {
@@ -725,7 +725,7 @@ variable "cluster_cpu_notifications" {
 variable "cluster_cpu_transformation_function" {
   description = "Transformation function for cluster_cpu detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".min(over='45m')"
+  default     = ""
 }
 
 variable "cluster_cpu_max_delay" {
@@ -773,7 +773,7 @@ variable "cluster_cpu_threshold_major" {
 variable "cluster_cpu_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "45m"
 }
 
 variable "cluster_cpu_at_least_percentage_major" {
@@ -790,7 +790,7 @@ variable "cluster_cpu_threshold_critical" {
 variable "cluster_cpu_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "45m"
 }
 
 variable "cluster_cpu_at_least_percentage_critical" {
@@ -809,7 +809,7 @@ variable "master_cpu_notifications" {
 variable "master_cpu_transformation_function" {
   description = "Transformation function for master_cpu detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".min(over='20m')"
+  default     = ""
 }
 
 variable "master_cpu_max_delay" {
@@ -857,7 +857,7 @@ variable "master_cpu_threshold_major" {
 variable "master_cpu_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "20m"
 }
 
 variable "master_cpu_at_least_percentage_major" {
@@ -874,7 +874,7 @@ variable "master_cpu_threshold_critical" {
 variable "master_cpu_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "20m"
 }
 
 variable "master_cpu_at_least_percentage_critical" {

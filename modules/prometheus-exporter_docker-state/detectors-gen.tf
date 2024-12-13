@@ -7,7 +7,7 @@ resource "signalfx_detector" "heartbeat" {
 
   program_text = <<-EOF
     from signalfx.detectors.not_reporting import not_reporting
-    signal = data('container_state_status', filter=${local.not_running_vm_filters} and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
+    signal = data('container_state_status', filter=%{if var.heartbeat_exclude_not_running_vm}${local.not_running_vm_filters} and %{endif}${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
     not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}', auto_resolve_after='${local.heartbeat_auto_resolve_after}').publish('CRIT')
 EOF
 
@@ -36,7 +36,7 @@ resource "signalfx_detector" "state_health_status" {
   program_text = <<-EOF
     base_filtering = filter('service.name', 'docker-state-exporter') and filter('status', 'unhealthy')
     signal = data('container_state_health_status', filter=base_filtering and ${module.filtering.signalflow})${var.state_health_status_aggregation_function}${var.state_health_status_transformation_function}.publish('signal')
-    detect(when(signal > ${var.state_health_status_threshold_critical}, lasting=%{if var.state_health_status_lasting_duration_critical == null}None%{else}'${var.state_health_status_lasting_duration_critical}'%{endif}, at_least=${var.state_health_status_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal > ${var.state_health_status_threshold_critical}%{if var.state_health_status_lasting_duration_critical != null}, lasting='${var.state_health_status_lasting_duration_critical}', at_least=${var.state_health_status_at_least_percentage_critical}%{endif})).publish('CRIT')
 EOF
 
   rule {
@@ -64,7 +64,7 @@ resource "signalfx_detector" "state_status" {
   program_text = <<-EOF
     base_filtering = filter('service.name', 'docker-state-exporter') and not filter('status', 'running')
     signal = data('container_state_status', filter=base_filtering and ${module.filtering.signalflow})${var.state_status_aggregation_function}${var.state_status_transformation_function}.publish('signal')
-    detect(when(signal > ${var.state_status_threshold_critical}, lasting=%{if var.state_status_lasting_duration_critical == null}None%{else}'${var.state_status_lasting_duration_critical}'%{endif}, at_least=${var.state_status_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal > ${var.state_status_threshold_critical}%{if var.state_status_lasting_duration_critical != null}, lasting='${var.state_status_lasting_duration_critical}', at_least=${var.state_status_at_least_percentage_critical}%{endif})).publish('CRIT')
 EOF
 
   rule {
@@ -92,7 +92,7 @@ resource "signalfx_detector" "state_oom_killed" {
   program_text = <<-EOF
     base_filtering = filter('service.name', 'docker-state-exporter')
     signal = data('container_state_oomkilled', filter=base_filtering and ${module.filtering.signalflow})${var.state_oom_killed_aggregation_function}${var.state_oom_killed_transformation_function}.publish('signal')
-    detect(when(signal > ${var.state_oom_killed_threshold_critical}, lasting=%{if var.state_oom_killed_lasting_duration_critical == null}None%{else}'${var.state_oom_killed_lasting_duration_critical}'%{endif}, at_least=${var.state_oom_killed_at_least_percentage_critical})).publish('CRIT')
+    detect(when(signal > ${var.state_oom_killed_threshold_critical}%{if var.state_oom_killed_lasting_duration_critical != null}, lasting='${var.state_oom_killed_lasting_duration_critical}', at_least=${var.state_oom_killed_at_least_percentage_critical}%{endif})).publish('CRIT')
 EOF
 
   rule {

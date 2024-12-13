@@ -33,4 +33,4 @@ rules:
     threshold: 3072
     comparator: ">="
     lasting_duration: "300s"
-    dependency: warning
+    dependency: minor

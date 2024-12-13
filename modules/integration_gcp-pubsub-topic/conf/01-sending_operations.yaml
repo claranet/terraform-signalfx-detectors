@@ -1,0 +1,19 @@
+module: "GCP Pub/Sub Topic sending"
+name: "Messages operations"
+id: "sending_operations"
+
+transformation: ".sum(over='30m')"
+aggregation: true
+filtering: "filter('monitored_resource', 'pubsub_topic') and (not filter('topic_id', 'container-analysis-occurrences*', 'container-analysis-notes*', 'cloud-builds', 'gcr'))"
+
+signals:
+  signal:
+    metric: "topic/send_message_operation_count"
+    rollup: "sum"
+    extrapolation: "zero"
+
+rules:
+  major:
+    threshold: 1
+    comparator: "<"
+    

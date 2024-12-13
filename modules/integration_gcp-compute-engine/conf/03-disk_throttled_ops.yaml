@@ -1,0 +1,29 @@
+module: "GCP GCE Instance"
+name: "Disk throttled ops"
+id: "disk_throttled_ops"
+
+transformation: ".min(over='15m')"
+aggregation: ".sum(by=['instance_name', 'device_name'])"
+
+
+signals:
+  A:
+    metric: "instance/disk/throttled_read_ops_count"
+  B:
+    metric: "instance/disk/throttled_write_ops_count"
+  C:
+    metric: "instance/disk/read_ops_count"
+  D:
+    metric: "instance/disk/write_ops_count"
+  signal:
+    formula: "((A+B) / (C+D)).scale(100)"
+
+rules:
+  critical:
+    threshold: 50
+    comparator: ">"
+    
+  major:
+    threshold: 30
+    comparator: ">"
+    dependency: "critical"

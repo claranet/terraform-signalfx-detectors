@@ -1,0 +1,21 @@
+module: "MongoDB"
+name: "Secondary members count in replicaset"
+id: "secondary"
+
+transformation: ".min(over='5m')"
+aggregation: ".max(by=['cluster'])"
+
+
+signals:
+  A:
+    metric: "gauge.repl.active_nodes"
+  B:
+    metric: "gauge.repl.is_primary_node"
+  signal:
+    formula: "(A-B)"
+
+rules:
+  critical:
+    threshold: 2
+    comparator: "<"
+    

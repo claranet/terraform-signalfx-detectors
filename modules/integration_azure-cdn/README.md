@@ -76,6 +76,7 @@ This module creates the following SignalFx detectors which could contain one or 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Azure CDN latency|X|X|-|-|-|
+|Azure CDN origin health|X|X|-|-|-|
 
 ## How to collect required metrics?
 
@@ -93,6 +94,7 @@ Check the [Related documentation](#related-documentation) section for more detai
 
 Here is the list of required metrics for detectors in this module.
 
+* `OriginHealthPercentage`
 * `TotalLatency`
 
 

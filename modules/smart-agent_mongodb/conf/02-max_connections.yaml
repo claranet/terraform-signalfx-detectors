@@ -1,0 +1,25 @@
+module: "MongoDB"
+name: "Number of connections over max capacity"
+id: "max_connections"
+
+transformation: ".mean(over='5m')"
+aggregation: true
+
+
+signals:
+  A:
+    metric: "gauge.connections.current"
+  B:
+    metric: "gauge.connections.available"
+  signal:
+    formula: "(A/(A+B)).scale(100)"
+
+rules:
+  critical:
+    threshold: 90
+    comparator: ">"
+    
+  major:
+    threshold: 75
+    comparator: ">"
+    dependency: "critical"

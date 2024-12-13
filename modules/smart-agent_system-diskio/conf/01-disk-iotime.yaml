@@ -1,0 +1,16 @@
+module: system
+name: "Disk IO usage"
+id: disk_io_usage
+value_unit: "%"
+condition: "var.disk_io_usage_enabled"
+transformation: ".scale(100)"
+
+signals:
+  signal:
+    metric: system.disk.io_time
+    rollup: rate
+rules:
+  critical:
+    threshold: 90
+    comparator: ">"
+    lasting_duration: "30m"

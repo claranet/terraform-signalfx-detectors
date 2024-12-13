@@ -40,6 +40,7 @@
 - [integration_azure-azure-search](#integration_azure-azure-search)
 - [integration_azure-backup](#integration_azure-backup)
 - [integration_azure-cdn](#integration_azure-cdn)
+- [integration_azure-container-apps](#integration_azure-container-apps)
 - [integration_azure-container-instance](#integration_azure-container-instance)
 - [integration_azure-cosmos-db](#integration_azure-cosmos-db)
 - [integration_azure-datafactory](#integration_azure-datafactory)
@@ -65,9 +66,11 @@
 - [integration_azure-virtual-machine-scaleset](#integration_azure-virtual-machine-scaleset)
 - [integration_azure-virtual-machine](#integration_azure-virtual-machine)
 - [integration_gcp-bigquery](#integration_gcp-bigquery)
+- [integration_gcp-cloud-run](#integration_gcp-cloud-run)
 - [integration_gcp-cloud-sql-common](#integration_gcp-cloud-sql-common)
 - [integration_gcp-cloud-sql-failover](#integration_gcp-cloud-sql-failover)
 - [integration_gcp-cloud-sql-mysql](#integration_gcp-cloud-sql-mysql)
+- [integration_gcp-cloud-sql-postgresql](#integration_gcp-cloud-sql-postgresql)
 - [integration_gcp-compute-engine](#integration_gcp-compute-engine)
 - [integration_gcp-load-balancing](#integration_gcp-load-balancing)
 - [integration_gcp-memorystore-redis](#integration_gcp-memorystore-redis)
@@ -77,9 +80,11 @@
 - [organization_usage](#organization_usage)
 - [otel-collector_kubernetes-common](#otel-collector_kubernetes-common)
 - [prometheus-exporter_active-directory](#prometheus-exporter_active-directory)
+- [prometheus-exporter_dnsmasq](#prometheus-exporter_dnsmasq)
 - [prometheus-exporter_docker-state](#prometheus-exporter_docker-state)
 - [prometheus-exporter_kong](#prometheus-exporter_kong)
 - [prometheus-exporter_oracledb](#prometheus-exporter_oracledb)
+- [prometheus-exporter_postfix](#prometheus-exporter_postfix)
 - [prometheus-exporter_squid](#prometheus-exporter_squid)
 - [prometheus-exporter_varnish](#prometheus-exporter_varnish)
 - [prometheus-exporter_wallix-bastion](#prometheus-exporter_wallix-bastion)
@@ -116,6 +121,7 @@
 - [smart-agent_solr](#smart-agent_solr)
 - [smart-agent_supervisor](#smart-agent_supervisor)
 - [smart-agent_system-common](#smart-agent_system-common)
+- [smart-agent_system-diskio](#smart-agent_system-diskio)
 - [smart-agent_systemd-services](#smart-agent_systemd-services)
 - [smart-agent_systemd-timers](#smart-agent_systemd-timers)
 - [smart-agent_tomcat](#smart-agent_tomcat)
@@ -232,18 +238,18 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|AWS ECS heartbeat|X|-|-|-|-|
-|AWS ECS cluster CPU utilization|X|X|-|-|-|
-|AWS ECS cluster memory utilization|X|X|-|-|-|
+|AWS ECS Cluster heartbeat|X|-|-|-|-|
+|AWS ECS Cluster cpu utilization|X|X|-|-|-|
+|AWS ECS Cluster memory utilization|X|X|-|-|-|
 
 
 ## integration_aws-ecs-service
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|AWS ECS heartbeat|X|-|-|-|-|
-|AWS ECS service CPU utilization|X|X|-|-|-|
-|AWS ECS service memory utilization|X|X|-|-|-|
+|AWS ECS Service heartbeat|X|-|-|-|-|
+|AWS ECS Service cpu utilization|X|X|-|-|-|
+|AWS ECS Service memory utilization|X|X|-|-|-|
 
 
 ## integration_aws-efs
@@ -288,6 +294,7 @@
 |AWS ElastiCache redis replication lag|X|X|-|-|-|
 |AWS ElastiCache redis commands|-|X|-|-|-|
 |AWS ElastiCache redis network conntrack allowance exceeded|X|-|-|-|-|
+|AWS ElastiCache redis database capacity usage|X|X|-|-|-|
 
 
 ## integration_aws-elasticsearch
@@ -362,11 +369,11 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
+|AWS RDS Common heartbeat|X|-|-|-|-|
+|AWS RDS Common instance cpu|X|X|-|-|-|
+|AWS RDS Common instance free space|X|X|-|-|-|
+|AWS RDS Common replica lag|X|X|-|-|-|
 |AWS RDS Common db load|X|X|-|-|-|
-|AWS RDS heartbeat|X|-|-|-|-|
-|AWS RDS instance CPU|X|X|-|-|-|
-|AWS RDS instance free space|X|X|-|-|-|
-|AWS RDS replica lag|X|X|-|-|-|
 
 
 ## integration_aws-redshift
@@ -390,8 +397,8 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |AWS SQS heartbeat|X|-|-|-|-|
-|AWS SQS Visible messages|X|X|-|-|-|
-|AWS SQS Age of the oldest message|X|X|-|-|-|
+|AWS SQS visible messages|X|X|-|-|-|
+|AWS SQS age of the oldest message|X|X|-|-|-|
 
 
 ## integration_aws-vpn
@@ -437,6 +444,7 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Azure Application Gateway heartbeat|X|-|-|-|-|
+|Azure Application Gateway compute units|-|X|-|-|-|
 |Azure Application Gateway has no request|X|-|-|-|-|
 |Azure Application Gateway backend connect time|X|X|-|-|-|
 |Azure Application Gateway failed request rate|X|X|-|-|-|
@@ -445,7 +453,6 @@
 |Azure Application Gateway 5xx error rate|X|X|-|-|-|
 |Azure Application Gateway backend 4xx error rate|X|X|-|-|-|
 |Azure Application Gateway backend 5xx error rate|X|X|-|-|-|
-|Azure Application Gateway capacity units|-|X|-|-|-|
 
 
 ## integration_azure-azure-search
@@ -469,6 +476,15 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Azure CDN latency|X|X|-|-|-|
+|Azure CDN origin health|X|X|-|-|-|
+
+
+## integration_azure-container-apps
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Azure Container Apps heartbeat|X|-|-|-|-|
+|Azure Container Apps restarts|-|-|-|X|-|
 
 
 ## integration_azure-container-instance
@@ -556,10 +572,10 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Azure Functions heartbeat|X|-|-|-|-|
-|Azure Functions HTTP 5xx error rate|X|X|-|-|-|
+|Azure Functions wrapper errors|X|X|-|-|-|
+|Azure Functions http 5xx error rate|X|X|-|-|-|
 |Azure Functions connections count|X|X|-|-|-|
 |Azure Functions thread count|X|X|-|-|-|
-|Azure Functions wrapper errors|X|X|-|-|-|
 
 
 ## integration_azure-key-vault
@@ -629,12 +645,12 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|Azure Service Bus deadlettered messages count|X|X|-|-|-|
 |Azure Service Bus heartbeat|X|-|-|-|-|
-|Azure Service Bus no active connections|X|-|-|-|-|
+|Azure Service Bus deadlettered messages count|X|X|-|-|-|
 |Azure Service Bus user error rate|X|X|-|-|-|
 |Azure Service Bus server error rate|X|X|-|-|-|
 |Azure Service Bus throttled requests rate|X|X|-|-|-|
+|Azure Service Bus no active connections|X|-|-|-|-|
 
 
 ## integration_azure-sql-database
@@ -670,7 +686,7 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|Azure storage account Used capacity|X|X|-|-|-|
+|Azure Storage Account capacity used|X|X|-|-|-|
 
 
 ## integration_azure-storage-account
@@ -726,23 +742,32 @@
 |GCP BigQuery uploaded bytes billed|X|X|-|-|-|
 
 
+## integration_gcp-cloud-run
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|GCP Cloud Run container count|X|-|-|-|-|
+|GCP Cloud Run cpu utilizations|X|X|-|-|-|
+|GCP Cloud Run memory utilizations|X|X|-|-|-|
+
+
 ## integration_gcp-cloud-sql-common
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|GCP Cloud SQL heartbeat|X|-|-|-|-|
-|GCP Cloud SQL CPU utilization|X|X|-|-|-|
-|GCP Cloud SQL disk utilization|X|X|-|-|-|
 |GCP Cloud SQL disk space is running out|X|-|-|-|-|
-|GCP Cloud SQL memory utilization|X|X|-|-|-|
 |GCP Cloud SQL memory is running out|X|-|-|-|-|
+|GCP Cloud SQL heartbeat|X|-|-|-|-|
+|GCP Cloud SQL cpu utilization|X|X|-|-|-|
+|GCP Cloud SQL disk utilization|X|X|-|-|-|
+|GCP Cloud SQL memory utilization|X|X|-|-|-|
 
 
 ## integration_gcp-cloud-sql-failover
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|GCP Cloud SQL failover|-|X|-|-|-|
+|GCP Cloud sql failover unavailable|-|X|-|-|-|
 
 
 ## integration_gcp-cloud-sql-mysql
@@ -752,12 +777,19 @@
 |GCP Cloud SQL MySQL replication lag|X|X|-|-|-|
 
 
+## integration_gcp-cloud-sql-postgresql
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|GCP Cloud SQL PostgreSQL replication lag|X|X|-|-|-|
+
+
 ## integration_gcp-compute-engine
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |GCP GCE Instance heartbeat|X|-|-|-|-|
-|GCP GCE Instance CPU utilization|X|X|-|-|-|
+|GCP GCE Instance cpu utilization|X|X|-|-|-|
 |GCP GCE Instance disk throttled bps|X|X|-|-|-|
 |GCP GCE Instance disk throttled ops|X|X|-|-|-|
 
@@ -852,6 +884,15 @@
 |Active-directory active directory services|X|-|-|-|-|
 
 
+## prometheus-exporter_dnsmasq
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Dnsmasq heartbeat|X|-|-|-|-|
+|Dnsmasq hits|X|-|-|-|-|
+|Dnsmasq hit rate|-|X|X|-|-|
+
+
 ## prometheus-exporter_docker-state
 
 |Detector|Critical|Major|Minor|Warning|Info|
@@ -876,6 +917,17 @@
 |---|---|---|---|---|---|
 |Oracle heartbeat|X|-|-|-|-|
 |Oracle database status|X|-|-|-|-|
+
+
+## prometheus-exporter_postfix
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Postfix heartbeat|X|-|-|-|-|
+|Postfix size postfix queue deferred|X|X|-|-|-|
+|Postfix size postfix queue hold|X|X|-|-|-|
+|Postfix size postfix queue maildrop|X|X|-|-|-|
+|Postfix size postfix delivery delay|X|X|-|-|-|
 
 
 ## prometheus-exporter_squid
@@ -966,7 +1018,7 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|Docker host heartbeat|X|-|-|-|-|
+|Docker heartbeat|X|-|-|-|-|
 |Docker container usage of cpu host|-|X|X|-|-|
 |Docker container cpu throttling time|-|X|X|-|-|
 |Docker memory usage|-|X|X|-|-|
@@ -980,21 +1032,21 @@
 |ElasticSearch cluster status|X|X|-|-|-|
 |ElasticSearch cluster initializing shards|X|X|-|-|-|
 |ElasticSearch cluster relocating shards|X|X|-|-|-|
-|ElasticSearch Cluster unassigned shards|X|X|-|-|-|
-|ElasticSearch Pending tasks|X|X|-|-|-|
-|Elasticsearch CPU usage|X|X|-|-|-|
-|Elasticsearch file descriptors usage|X|X|-|-|-|
-|Elasticsearch JVM heap memory usage|X|X|-|-|-|
-|Elasticsearch JVM memory young usage|-|X|X|-|-|
-|Elasticsearch JVM memory old usage|-|X|X|-|-|
-|Elasticsearch old-generation garbage collections latency|-|X|X|-|-|
-|Elasticsearch young-generation garbage collections latency|-|X|X|-|-|
-|Elasticsearch indexing latency|-|X|X|-|-|
-|Elasticsearch index flushing to disk latency|-|X|X|-|-|
-|Elasticsearch search query latency|-|X|X|-|-|
-|Elasticsearch search fetch latency|-|X|X|-|-|
-|Elasticsearch fielddata cache evictions rate of change|-|X|X|-|-|
-|Elasticsearch max time spent by task in queue rate of change|-|X|X|-|-|
+|ElasticSearch cluster unassigned shards|X|X|-|-|-|
+|ElasticSearch pending tasks|X|X|-|-|-|
+|ElasticSearch cpu usage|X|X|-|-|-|
+|ElasticSearch file descriptors usage|X|X|-|-|-|
+|ElasticSearch jvm heap memory usage|X|X|-|-|-|
+|ElasticSearch jvm memory young usage|-|X|X|-|-|
+|ElasticSearch jvm memory old usage|-|X|X|-|-|
+|ElasticSearch old-generation garbage collections latency|-|X|X|-|-|
+|ElasticSearch young-generation garbage collections latency|-|X|X|-|-|
+|ElasticSearch indexing latency|-|X|X|-|-|
+|ElasticSearch index flushing to disk latency|-|X|X|-|-|
+|ElasticSearch search query latency|-|X|X|-|-|
+|ElasticSearch search fetch latency|-|X|X|-|-|
+|ElasticSearch fielddata cache evictions rate of change|-|X|X|-|-|
+|ElasticSearch max time spent by task in queue rate of change|-|X|X|-|-|
 
 
 ## smart-agent_genericjmx
@@ -1043,7 +1095,7 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|Kubernetes API server heartbeat|X|-|-|-|-|
+|Kubernetes API server heartbeat heartbeat|X|-|-|-|-|
 
 
 ## smart-agent_kubernetes-common
@@ -1131,13 +1183,13 @@
 |MySQL heartbeat|X|-|-|-|-|
 |MySQL number of connections over max capacity|X|X|-|-|-|
 |MySQL slow queries percentage|X|X|-|-|-|
-|MySQL Innodb buffer pool efficiency|-|-|X|X|-|
-|MySQL Innodb buffer pool utilization|-|-|X|X|-|
-|MySQL running threads changed abruptly|X|-|-|-|-|
-|MySQL running queries changed abruptly|X|-|-|-|-|
+|MySQL innodb buffer pool efficiency|-|-|X|X|-|
+|MySQL innodb buffer pool utilization|-|-|X|X|-|
 |MySQL replication lag|X|X|-|-|-|
 |MySQL slave sql status|X|-|-|-|-|
 |MySQL slave io status|X|-|-|-|-|
+|MySQL running threads changed abruptly|X|-|-|-|-|
+|MySQL running queries changed abruptly|X|-|-|-|-|
 
 
 ## smart-agent_nagios-status-check
@@ -1205,7 +1257,7 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|RabbitMQ heartbeat|X|-|-|-|-|
+|RabbitMQ Node heartbeat|X|-|-|-|-|
 |RabbitMQ Node file descriptors usage|X|X|-|-|-|
 |RabbitMQ Node process usage|X|X|-|-|-|
 |RabbitMQ Node sockets usage|X|X|-|-|-|
@@ -1271,6 +1323,14 @@
 |System disk space running out|-|X|-|-|-|
 
 
+## smart-agent_system-diskio
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|System disk io usage|X|-|-|-|-|
+|System disk weighted io usage|X|-|-|-|-|
+
+
 ## smart-agent_systemd-services
 
 |Detector|Critical|Major|Minor|Warning|Info|
@@ -1301,7 +1361,7 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Varnish heartbeat|X|-|-|-|-|
-|Varnish backend Failed|X|-|-|-|-|
+|Varnish backend failed|X|-|-|-|-|
 |Varnish threads number|X|-|-|-|-|
 |Varnish session dropped|X|-|-|-|-|
 |Varnish hit rate|-|X|X|-|-|
