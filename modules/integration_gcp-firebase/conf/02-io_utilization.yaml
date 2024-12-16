@@ -1,7 +1,7 @@
 module: "GCP Firebase database"
-name: "Firebase database IO utilization"
+name: "IO utilization"
 
-transformation: ".min(over='30m')"
+transformation: true 
 
 signals:
   signal:
@@ -11,8 +11,10 @@ rules:
   critical:
     threshold: 10
     comparator: ">"
+    lasting_duration: '30m'
 
   major:
     threshold: 5
     comparator: ">"
+    lasting_duration: '30m'
     dependency: "critical"
