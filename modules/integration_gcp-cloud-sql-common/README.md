@@ -84,7 +84,7 @@ This module creates the following SignalFx detectors which could contain one or 
 |GCP Cloud SQL heartbeat|X|-|-|-|-|
 |GCP Cloud SQL cpu utilization|X|X|-|-|-|
 |GCP Cloud SQL disk utilization|X|X|-|-|-|
-|GCP Cloud SQL memory utilization|X|X|-|-|-|
+|GCP Cloud SQL memory left|X|X|-|-|-|
 
 ## How to collect required metrics?
 
@@ -105,6 +105,7 @@ Here is the list of required metrics for detectors in this module.
 * `database/cpu/usage_time`
 * `database/cpu/utilization`
 * `database/disk/utilization`
+* `database/memory/components`
 * `database/memory/utilization`
 
 
