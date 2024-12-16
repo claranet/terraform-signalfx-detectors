@@ -12,11 +12,9 @@ rules:
     threshold: 10
     comparator: ">"
     lasting_duration: '30m'
-    lasting_duration: '30m'
 
   major:
     threshold: 5
     comparator: ">"
-    lasting_duration: '30m'
     lasting_duration: '30m'
     dependency: "critical"
