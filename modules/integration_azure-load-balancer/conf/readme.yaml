@@ -1,3 +1,8 @@
 documentations:
   - name: Azure Monitor metrics
     url: 'https://learn.microsoft.com/en-us/azure/azure-monitor/reference/supported-metrics/microsoft-network-loadbalancers-metrics'
+
+notes: |
+  ### About Healthprobe detector
+
+  Healthprobe detector is only available for loadbalancer with a standard SKU. See [documentation](https://learn.microsoft.com/en-us/azure/load-balancer/skus).

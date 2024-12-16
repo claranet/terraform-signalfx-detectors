@@ -1,0 +1,8 @@
+module: AWS Direct Connect
+name: heartbeat
+
+signals:
+  signal:
+    metric: "ConnectionState"
+rules:
+  critical:

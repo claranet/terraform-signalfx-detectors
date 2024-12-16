@@ -135,13 +135,13 @@ variable "api_latency_disabled" {
 variable "api_latency_disabled_major" {
   description = "Disable major alerting rule for api_latency detector"
   type        = bool
-  default     = null
+  default     = true
 }
 
 variable "api_latency_disabled_minor" {
   description = "Disable minor alerting rule for api_latency detector"
   type        = bool
-  default     = null
+  default     = true
 }
 
 variable "api_latency_threshold_major" {

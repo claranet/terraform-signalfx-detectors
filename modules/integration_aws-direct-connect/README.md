@@ -1,4 +1,4 @@
-# AZURE-VPN SignalFx detectors
+# AWS-DIRECT-CONNECT SignalFx detectors
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -20,8 +20,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 `module` configuration and setting its `source` parameter to URL of this folder:
 
 ```hcl
-module "signalfx-detectors-fame-azure-vpn" {
-  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/fame_azure-vpn?ref={revision}"
+module "signalfx-detectors-integration-aws-direct-connect" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/integration_aws-direct-connect?ref={revision}"
 
   environment   = var.environment
   notifications = local.notifications
@@ -75,17 +75,15 @@ This module creates the following SignalFx detectors which could contain one or 
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|Azure VPN heartbeat|X|-|-|-|-|
-|Azure VPN total flow count|X|-|-|-|-|
-|Azure VPN ipsec tunnel status|X|X|-|-|-|
+|AWS Direct Connect heartbeat|X|-|-|-|-|
+|AWS Direct Connect connection state|X|-|-|-|-|
+|AWS Direct Connect virtual interface traffic|X|-|-|-|-|
 
 ## How to collect required metrics?
 
 This module deploys detectors using metrics reported by the
-the [Function for Azure Monitoring Extension](https://github.com/claranet/fame), an Azure Function App written in Python by Claranet
-which allows to run Log Analytics queries and send result to Splunk Observability as metrics.
-
-More information available in the [dedicated readme](https://github.com/claranet/fame/blob/master/README.md).
+[AWS integration](https://docs.splunk.com/Observability/gdi/get-data-in/connect/aws/aws.html) configurable
+with [this Terraform module](https://github.com/claranet/terraform-signalfx-integrations/tree/master/cloud/aws).
 
 
 Check the [Related documentation](#related-documentation) section for more detailed and specific information about this module dependencies.
@@ -97,8 +95,8 @@ Check the [Related documentation](#related-documentation) section for more detai
 
 Here is the list of required metrics for detectors in this module.
 
-* `fame.azure.virtual_network_gateway.total_flow_count`
-* `fame.azure.virtual_network_gateway.tunnel_status`
+* `ConnectionState`
+* `VirtualInterfaceBpsEgress`
 
 
 
@@ -108,5 +106,3 @@ Here is the list of required metrics for detectors in this module.
 * [Terraform SignalFx provider](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs)
 * [Terraform SignalFx detector](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector)
 * [Splunk Observability integrations](https://docs.splunk.com/Observability/gdi/get-data-in/integrations.html)
-* [FAME](https://github.com/claranet/terraform-azurerm-run-common/tree/master/modules/monitoring_function)
-* [run-common](https://github.com/claranet/terraform-azurerm-run-common)

@@ -1,0 +1,20 @@
+module: AWS Direct Connect
+name: "Virtual Interface traffic"
+
+transformation: true
+aggregation: true
+
+filtering: "filter('namespace', 'AWS/DX')"
+value_unit: "bytes"
+
+signals:
+  egress_bps:
+    metric: VirtualInterfaceBpsEgress
+    filter: "filter('stat', 'sum')"
+
+rules:
+  critical:
+    threshold: 0
+    comparator: "=="
+    signal: egress_bps
+    description: "No traffic detected on the virtual interface"

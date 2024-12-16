@@ -15,6 +15,7 @@
 - [integration_aws-apigateway](#integration_aws-apigateway)
 - [integration_aws-backup](#integration_aws-backup)
 - [integration_aws-beanstalk](#integration_aws-beanstalk)
+- [integration_aws-direct-connect](#integration_aws-direct-connect)
 - [integration_aws-ecs-cluster](#integration_aws-ecs-cluster)
 - [integration_aws-ecs-service](#integration_aws-ecs-service)
 - [integration_aws-efs](#integration_aws-efs)
@@ -177,6 +178,7 @@
 |---|---|---|---|---|---|
 |Azure VPN heartbeat|X|-|-|-|-|
 |Azure VPN total flow count|X|-|-|-|-|
+|Azure VPN ipsec tunnel status|X|X|-|-|-|
 
 
 ## integration_aws-alb
@@ -233,6 +235,15 @@
 |AWS Beanstalk application latency p90|X|X|-|-|-|
 |AWS Beanstalk application 5xx error rate|X|X|-|-|-|
 |AWS Beanstalk instance root filesystem usage|X|X|-|-|-|
+
+
+## integration_aws-direct-connect
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|AWS Direct Connect heartbeat|X|-|-|-|-|
+|AWS Direct Connect connection state|X|-|-|-|-|
+|AWS Direct Connect virtual interface traffic|X|-|-|-|-|
 
 
 ## integration_aws-ecs-cluster
@@ -592,6 +603,7 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Azure Load Balancer heartbeat|X|-|-|-|-|
+|Azure Load Balancer backend unhealthy host ratio|X|X|-|-|-|
 
 
 ## integration_azure-mariadb
