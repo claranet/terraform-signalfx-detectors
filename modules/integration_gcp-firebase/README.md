@@ -80,7 +80,7 @@ This module creates the following SignalFx detectors which could contain one or 
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|Webcheck heartbeat|X|-|-|-|-|
+|GCP Firebase database heartbeat|X|-|-|-|-|
 |GCP Firebase database firebase database load|X|X|-|-|-|
 |GCP Firebase database firebase database io utilization|X|X|-|-|-|
 

@@ -1,5 +1,5 @@
 ## Example
-module: webcheck
+module: GCP Firebase database
 name: heartbeat
 
 transformation: false

@@ -1,5 +1,5 @@
 resource "signalfx_detector" "heartbeat" {
-  name = format("%s %s", local.detector_name_prefix, "Webcheck heartbeat")
+  name = format("%s %s", local.detector_name_prefix, "GCP Firebase database heartbeat")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)

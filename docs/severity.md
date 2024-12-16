@@ -810,7 +810,7 @@
 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
-|Webcheck heartbeat|X|-|-|-|-|
+|GCP Firebase database heartbeat|X|-|-|-|-|
 |GCP Firebase database firebase database load|X|X|-|-|-|
 |GCP Firebase database firebase database io utilization|X|X|-|-|-|
 
