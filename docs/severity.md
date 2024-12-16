@@ -811,8 +811,8 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |GCP Firebase database heartbeat|X|-|-|-|-|
-|GCP Firebase database firebase database load|X|X|-|-|-|
-|GCP Firebase database firebase database io utilization|X|X|-|-|-|
+|GCP Firebase database load|X|X|-|-|-|
+|GCP Firebase database io utilization|X|X|-|-|-|
 
 
 ## integration_gcp-load-balancing
