@@ -8,6 +8,10 @@
 - [What are the available detectors in this module?](#what-are-the-available-detectors-in-this-module)
 - [How to collect required metrics?](#how-to-collect-required-metrics)
   - [Metrics](#metrics)
+- [Notes](#notes)
+  - [Metadata configuration for default filtering](#metadata-configuration-for-default-filtering)
+  - [Database load](#database-load)
+  - [Database IO](#database-io)
 - [Related documentation](#related-documentation)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -101,6 +105,59 @@ Here is the list of required metrics for detectors in this module.
 * `network/active_connections`
 
 
+## Notes
+
+
+### Metadata configuration for default filtering
+
+label to use : 
+
+sfx_env = true
+sfx_monitored = true
+
+### Database load
+
+Monitoring the CPU utilization helps in understanding the system's capability and efficiency.
+
+```hcl
+module "signalfx-detectors-integration_gcp-cloud-run" {
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/integration_gcp-firebase"
+
+  environment    = var.environment
+  gcp_project_id = var.project_id
+  notifications  = local.notifications
+
+  # We keep default filtering policy here, we just want to append additional filter to it
+  filtering_append = true
+  # We define the additional filter
+  filtering_custom = "filter('service_name', '*service-name*')"
+  # We can configure the thresholds of the probes
+  firebase_database_load_threshold_critical = 5
+  firebase_database_load_threshold_major    = 3
+}
+```
+
+### Database IO
+
+Monitoring the IO of the database helps in understanding the system's capability and efficiency.
+
+```hcl                                                                                                                                                                                                                                                                                                              
+module "signalfx-detectors-integration_gcp-cloud-run" {                                                                                                                                                                                                                                                             
+  source = "github.com/claranet/terraform-signalfx-detectors.git//modules/integration_gcp-firebase"                                                                                                                                                                                                                 
+                                                                                                                                                                                                                                                                                                                    
+  environment    = var.environment                                                                                                                                                                                                                                                                                  
+  gcp_project_id = var.project_id                                                                                                                                                                                                                                                                                   
+  notifications  = local.notifications                                                                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                                                                                    
+  # We keep default filtering policy here, we just want to append additional filter to it                                                                                                                                                                                                                           
+  filtering_append = true                                                                                                                                                                                                                                                                                           
+  # We define the additional filter                                                                                                                                                                                                                                                                                 
+  filtering_custom = "filter('service_name', '*service-name*')"                                                                                                                                                                                                                                                     
+  # We can configure the thresholds of the probes                                                                                                                                                                                                                                                                   
+  firebase_database_io_utilization_threshold_critical = 5                                                                                                                                                                                                                                                                     
+  firebase_database_io_utilization_threshold_major    = 3                                                                                                                                                                                                                                                                     
+}                                                                                                                                                                                                                                                                                                                   
+```  
 
 
 ## Related documentation
