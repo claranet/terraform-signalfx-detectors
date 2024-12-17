@@ -1,0 +1,57 @@
+documentations:
+  - name: Stackdriver metrics for Firebase
+    url: https://cloud.google.com/monitoring/api/metrics_gcp#gcp-firebasedatabase
+  - name: Splunk Observability metrics
+    url: https://docs.splunk.com/observability/en/gdi/get-data-in/connect/gcp/gcp.html
+notes: |
+
+  ### Metadata configuration for default filtering
+
+  label to use : 
+
+  sfx_env = true
+  sfx_monitored = true
+
+  ### Database load
+
+  Monitoring the CPU utilization helps in understanding the system's capability and efficiency.
+
+  ```hcl
+  module "signalfx-detectors-integration_gcp-cloud-run" {
+    source = "github.com/claranet/terraform-signalfx-detectors.git//modules/integration_gcp-firebase"
+
+    environment    = var.environment
+    gcp_project_id = var.project_id
+    notifications  = local.notifications
+
+    # We keep default filtering policy here, we just want to append additional filter to it
+    filtering_append = true
+    # We define the additional filter
+    filtering_custom = "filter('service_name', '*service-name*')"
+    # We can configure the thresholds of the probes
+    firebase_database_load_threshold_critical = 5
+    firebase_database_load_threshold_major    = 3
+  }
+  ```
+
+  ### Database IO
+
+  Monitoring the IO of the database helps in understanding the system's capability and efficiency.
+
+  ```hcl                                                                                                                                                                                                                                                                                                              
+  module "signalfx-detectors-integration_gcp-cloud-run" {                                                                                                                                                                                                                                                             
+    source = "github.com/claranet/terraform-signalfx-detectors.git//modules/integration_gcp-firebase"                                                                                                                                                                                                                 
+                                                                                                                                                                                                                                                                                                                      
+    environment    = var.environment                                                                                                                                                                                                                                                                                  
+    gcp_project_id = var.project_id                                                                                                                                                                                                                                                                                   
+    notifications  = local.notifications                                                                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                                                                                                      
+    # We keep default filtering policy here, we just want to append additional filter to it                                                                                                                                                                                                                           
+    filtering_append = true                                                                                                                                                                                                                                                                                           
+    # We define the additional filter                                                                                                                                                                                                                                                                                 
+    filtering_custom = "filter('service_name', '*service-name*')"                                                                                                                                                                                                                                                     
+    # We can configure the thresholds of the probes                                                                                                                                                                                                                                                                   
+    firebase_database_io_utilization_threshold_critical = 5                                                                                                                                                                                                                                                                     
+    firebase_database_io_utilization_threshold_major    = 3                                                                                                                                                                                                                                                                     
+  }                                                                                                                                                                                                                                                                                                                   
+  ```  

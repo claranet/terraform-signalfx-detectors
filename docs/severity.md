@@ -73,6 +73,7 @@
 - [integration_gcp-cloud-sql-mysql](#integration_gcp-cloud-sql-mysql)
 - [integration_gcp-cloud-sql-postgresql](#integration_gcp-cloud-sql-postgresql)
 - [integration_gcp-compute-engine](#integration_gcp-compute-engine)
+- [integration_gcp-firebase](#integration_gcp-firebase)
 - [integration_gcp-load-balancing](#integration_gcp-load-balancing)
 - [integration_gcp-memorystore-redis](#integration_gcp-memorystore-redis)
 - [integration_gcp-pubsub-subscription](#integration_gcp-pubsub-subscription)
@@ -803,6 +804,15 @@
 |GCP GCE Instance cpu utilization|X|X|-|-|-|
 |GCP GCE Instance disk throttled bps|X|X|-|-|-|
 |GCP GCE Instance disk throttled ops|X|X|-|-|-|
+
+
+## integration_gcp-firebase
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|GCP Firebase database heartbeat|X|-|-|-|-|
+|GCP Firebase database load|X|X|-|-|-|
+|GCP Firebase database io utilization|X|X|-|-|-|
 
 
 ## integration_gcp-load-balancing
