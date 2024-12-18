@@ -1234,7 +1234,6 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Nginx heartbeat|X|-|-|-|-|
-|Nginx dropped connections|X|X|-|-|-|
 
 
 ## smart-agent_ntp

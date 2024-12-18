@@ -76,7 +76,6 @@ This module creates the following SignalFx detectors which could contain one or 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |Nginx heartbeat|X|-|-|-|-|
-|Nginx dropped connections|X|X|-|-|-|
 
 ## How to collect required metrics?
 
@@ -117,8 +116,7 @@ parameter to the corresponding monitor configuration:
     datapointsToExclude:
       - metricNames:
         - '*'
-        - '!connections.failed'
-        - '!nginx_connections.reading'
+        - '!nginx.connections_current'
 
 ```
 
