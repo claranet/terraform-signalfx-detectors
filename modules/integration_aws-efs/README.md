@@ -87,11 +87,11 @@ This module creates the following SignalFx detectors which could contain one or 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |AWS EFS used space|X|X|-|-|-|
-|AWS EFS percent of io limit|-|X|X|-|-|
-|AWS EFS percent of read throughput|-|-|X|X|-|
-|AWS EFS percent of write throughput|-|-|X|X|-|
-|AWS EFS percent of permitted throughput|-|X|X|-|-|
-|AWS EFS burst credit balance|-|X|-|-|-|
+|AWS EFS percent of io limit|X|X|-|-|-|
+|AWS EFS percent of read throughput|X|X|-|-|-|
+|AWS EFS percent of write throughput|X|X|-|-|-|
+|AWS EFS percent of permitted throughput|X|X|-|-|-|
+|AWS EFS burst credit balance|X|-|-|-|-|
 
 ## How to collect required metrics?
 

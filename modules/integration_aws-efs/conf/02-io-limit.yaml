@@ -10,12 +10,12 @@ signals:
     metric: "PercentIOLimit"
     filter: "filter('stat', 'mean')"
 rules:
-  major:
+  critical:
     comparator: ">"
     threshold: 90
     lasting_duration: "30m"
-  minor:
+  major:
     comparator: ">"
-    dependency: major
+    dependency: critical
     threshold: 80
     lasting_duration: "30m"

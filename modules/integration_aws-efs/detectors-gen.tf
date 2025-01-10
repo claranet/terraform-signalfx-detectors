@@ -64,16 +64,16 @@ resource "signalfx_detector" "io_limit" {
   program_text = <<-EOF
     base_filtering = filter('namespace', 'AWS/EFS')
     signal = data('PercentIOLimit', filter=base_filtering and filter('stat', 'mean') and ${module.filtering.signalflow})${var.io_limit_aggregation_function}${var.io_limit_transformation_function}.publish('signal')
-    detect(when(signal > ${var.io_limit_threshold_major}%{if var.io_limit_lasting_duration_major != null}, lasting='${var.io_limit_lasting_duration_major}', at_least=${var.io_limit_at_least_percentage_major}%{endif})).publish('MAJOR')
-    detect(when(signal > ${var.io_limit_threshold_minor}%{if var.io_limit_lasting_duration_minor != null}, lasting='${var.io_limit_lasting_duration_minor}', at_least=${var.io_limit_at_least_percentage_minor}%{endif}) and (not when(signal > ${var.io_limit_threshold_major}%{if var.io_limit_lasting_duration_major != null}, lasting='${var.io_limit_lasting_duration_major}', at_least=${var.io_limit_at_least_percentage_major}%{endif}))).publish('MINOR')
+    detect(when(signal > ${var.io_limit_threshold_critical}%{if var.io_limit_lasting_duration_critical != null}, lasting='${var.io_limit_lasting_duration_critical}', at_least=${var.io_limit_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.io_limit_threshold_major}%{if var.io_limit_lasting_duration_major != null}, lasting='${var.io_limit_lasting_duration_major}', at_least=${var.io_limit_at_least_percentage_major}%{endif}) and (not when(signal > ${var.io_limit_threshold_critical}%{if var.io_limit_lasting_duration_critical != null}, lasting='${var.io_limit_lasting_duration_critical}', at_least=${var.io_limit_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {
-    description           = "is too high > ${var.io_limit_threshold_major}%"
-    severity              = "Major"
-    detect_label          = "MAJOR"
-    disabled              = coalesce(var.io_limit_disabled_major, var.io_limit_disabled, var.detectors_disabled)
-    notifications         = try(coalescelist(lookup(var.io_limit_notifications, "major", []), var.notifications.major), null)
+    description           = "is too high > ${var.io_limit_threshold_critical}%"
+    severity              = "Critical"
+    detect_label          = "CRIT"
+    disabled              = coalesce(var.io_limit_disabled_critical, var.io_limit_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.io_limit_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.io_limit_runbook_url, var.runbook_url), "")
     tip                   = var.io_limit_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -81,11 +81,11 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.io_limit_threshold_minor}%"
-    severity              = "Minor"
-    detect_label          = "MINOR"
-    disabled              = coalesce(var.io_limit_disabled_minor, var.io_limit_disabled, var.detectors_disabled)
-    notifications         = try(coalescelist(lookup(var.io_limit_notifications, "minor", []), var.notifications.minor), null)
+    description           = "is too high > ${var.io_limit_threshold_major}%"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.io_limit_disabled_major, var.io_limit_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.io_limit_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.io_limit_runbook_url, var.runbook_url), "")
     tip                   = var.io_limit_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -114,16 +114,16 @@ resource "signalfx_detector" "read_throughput" {
     read = data('DataReadIOBytes', filter=base_filtering and filter('stat', 'sum') and ${module.filtering.signalflow})${var.read_throughput_aggregation_function}${var.read_throughput_transformation_function}
     total = data('TotalIOBytes', filter=base_filtering and filter('stat', 'sum') and ${module.filtering.signalflow})${var.read_throughput_aggregation_function}${var.read_throughput_transformation_function}
     signal = (read/total).scale(100).publish('signal')
-    detect(when(signal > ${var.read_throughput_threshold_minor}%{if var.read_throughput_lasting_duration_minor != null}, lasting='${var.read_throughput_lasting_duration_minor}', at_least=${var.read_throughput_at_least_percentage_minor}%{endif})).publish('MINOR')
-    detect(when(signal > ${var.read_throughput_threshold_warning}%{if var.read_throughput_lasting_duration_warning != null}, lasting='${var.read_throughput_lasting_duration_warning}', at_least=${var.read_throughput_at_least_percentage_warning}%{endif}) and (not when(signal > ${var.read_throughput_threshold_minor}%{if var.read_throughput_lasting_duration_minor != null}, lasting='${var.read_throughput_lasting_duration_minor}', at_least=${var.read_throughput_at_least_percentage_minor}%{endif}))).publish('WARN')
+    detect(when(signal > ${var.read_throughput_threshold_critical}%{if var.read_throughput_lasting_duration_critical != null}, lasting='${var.read_throughput_lasting_duration_critical}', at_least=${var.read_throughput_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.read_throughput_threshold_major}%{if var.read_throughput_lasting_duration_major != null}, lasting='${var.read_throughput_lasting_duration_major}', at_least=${var.read_throughput_at_least_percentage_major}%{endif}) and (not when(signal > ${var.read_throughput_threshold_critical}%{if var.read_throughput_lasting_duration_critical != null}, lasting='${var.read_throughput_lasting_duration_critical}', at_least=${var.read_throughput_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {
-    description           = "is too high > ${var.read_throughput_threshold_minor}%"
-    severity              = "Minor"
-    detect_label          = "MINOR"
-    disabled              = coalesce(var.read_throughput_disabled_minor, var.read_throughput_disabled, var.detectors_disabled)
-    notifications         = try(coalescelist(lookup(var.read_throughput_notifications, "minor", []), var.notifications.minor), null)
+    description           = "is too high > ${var.read_throughput_threshold_critical}%"
+    severity              = "Critical"
+    detect_label          = "CRIT"
+    disabled              = coalesce(var.read_throughput_disabled_critical, var.read_throughput_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.read_throughput_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.read_throughput_runbook_url, var.runbook_url), "")
     tip                   = var.read_throughput_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -131,11 +131,11 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.read_throughput_threshold_warning}%"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.read_throughput_disabled_warning, var.read_throughput_disabled, var.detectors_disabled)
-    notifications         = try(coalescelist(lookup(var.read_throughput_notifications, "warning", []), var.notifications.warning), null)
+    description           = "is too high > ${var.read_throughput_threshold_major}%"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.read_throughput_disabled_major, var.read_throughput_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.read_throughput_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.read_throughput_runbook_url, var.runbook_url), "")
     tip                   = var.read_throughput_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -164,16 +164,16 @@ resource "signalfx_detector" "write_throughput" {
     write = data('DataWriteIOBytes', filter=base_filtering and filter('stat', 'sum') and ${module.filtering.signalflow})${var.write_throughput_aggregation_function}${var.write_throughput_transformation_function}
     total = data('TotalIOBytes', filter=base_filtering and filter('stat', 'sum') and ${module.filtering.signalflow})${var.write_throughput_aggregation_function}${var.write_throughput_transformation_function}
     signal = (write/total).scale(100).publish('signal')
-    detect(when(signal > ${var.write_throughput_threshold_minor}%{if var.write_throughput_lasting_duration_minor != null}, lasting='${var.write_throughput_lasting_duration_minor}', at_least=${var.write_throughput_at_least_percentage_minor}%{endif})).publish('MINOR')
-    detect(when(signal > ${var.write_throughput_threshold_warning}%{if var.write_throughput_lasting_duration_warning != null}, lasting='${var.write_throughput_lasting_duration_warning}', at_least=${var.write_throughput_at_least_percentage_warning}%{endif}) and (not when(signal > ${var.write_throughput_threshold_minor}%{if var.write_throughput_lasting_duration_minor != null}, lasting='${var.write_throughput_lasting_duration_minor}', at_least=${var.write_throughput_at_least_percentage_minor}%{endif}))).publish('WARN')
+    detect(when(signal > ${var.write_throughput_threshold_critical}%{if var.write_throughput_lasting_duration_critical != null}, lasting='${var.write_throughput_lasting_duration_critical}', at_least=${var.write_throughput_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.write_throughput_threshold_major}%{if var.write_throughput_lasting_duration_major != null}, lasting='${var.write_throughput_lasting_duration_major}', at_least=${var.write_throughput_at_least_percentage_major}%{endif}) and (not when(signal > ${var.write_throughput_threshold_critical}%{if var.write_throughput_lasting_duration_critical != null}, lasting='${var.write_throughput_lasting_duration_critical}', at_least=${var.write_throughput_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {
-    description           = "is too high > ${var.write_throughput_threshold_minor}%"
-    severity              = "Minor"
-    detect_label          = "MINOR"
-    disabled              = coalesce(var.write_throughput_disabled_minor, var.write_throughput_disabled, var.detectors_disabled)
-    notifications         = try(coalescelist(lookup(var.write_throughput_notifications, "minor", []), var.notifications.minor), null)
+    description           = "is too high > ${var.write_throughput_threshold_critical}%"
+    severity              = "Critical"
+    detect_label          = "CRIT"
+    disabled              = coalesce(var.write_throughput_disabled_critical, var.write_throughput_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.write_throughput_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.write_throughput_runbook_url, var.runbook_url), "")
     tip                   = var.write_throughput_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -181,11 +181,11 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.write_throughput_threshold_warning}%"
-    severity              = "Warning"
-    detect_label          = "WARN"
-    disabled              = coalesce(var.write_throughput_disabled_warning, var.write_throughput_disabled, var.detectors_disabled)
-    notifications         = try(coalescelist(lookup(var.write_throughput_notifications, "warning", []), var.notifications.warning), null)
+    description           = "is too high > ${var.write_throughput_threshold_major}%"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.write_throughput_disabled_major, var.write_throughput_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.write_throughput_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.write_throughput_runbook_url, var.runbook_url), "")
     tip                   = var.write_throughput_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -214,16 +214,16 @@ resource "signalfx_detector" "percent_of_permitted_throughput" {
     metered = data('MeteredIOBytes', filter=base_filtering and filter('stat', 'sum') and ${module.filtering.signalflow})${var.percent_of_permitted_throughput_aggregation_function}${var.percent_of_permitted_throughput_transformation_function}
     permitted = data('PermittedThroughput', filter=base_filtering and filter('stat', 'sum') and ${module.filtering.signalflow})${var.percent_of_permitted_throughput_aggregation_function}${var.percent_of_permitted_throughput_transformation_function}
     signal = (metered/permitted.scale(60)).scale(100).publish('signal')
-    detect(when(signal > ${var.percent_of_permitted_throughput_threshold_major}%{if var.percent_of_permitted_throughput_lasting_duration_major != null}, lasting='${var.percent_of_permitted_throughput_lasting_duration_major}', at_least=${var.percent_of_permitted_throughput_at_least_percentage_major}%{endif})).publish('MAJOR')
-    detect(when(signal > ${var.percent_of_permitted_throughput_threshold_minor}%{if var.percent_of_permitted_throughput_lasting_duration_minor != null}, lasting='${var.percent_of_permitted_throughput_lasting_duration_minor}', at_least=${var.percent_of_permitted_throughput_at_least_percentage_minor}%{endif}) and (not when(signal > ${var.percent_of_permitted_throughput_threshold_major}%{if var.percent_of_permitted_throughput_lasting_duration_major != null}, lasting='${var.percent_of_permitted_throughput_lasting_duration_major}', at_least=${var.percent_of_permitted_throughput_at_least_percentage_major}%{endif}))).publish('MINOR')
+    detect(when(signal > ${var.percent_of_permitted_throughput_threshold_critical}%{if var.percent_of_permitted_throughput_lasting_duration_critical != null}, lasting='${var.percent_of_permitted_throughput_lasting_duration_critical}', at_least=${var.percent_of_permitted_throughput_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal > ${var.percent_of_permitted_throughput_threshold_major}%{if var.percent_of_permitted_throughput_lasting_duration_major != null}, lasting='${var.percent_of_permitted_throughput_lasting_duration_major}', at_least=${var.percent_of_permitted_throughput_at_least_percentage_major}%{endif}) and (not when(signal > ${var.percent_of_permitted_throughput_threshold_critical}%{if var.percent_of_permitted_throughput_lasting_duration_critical != null}, lasting='${var.percent_of_permitted_throughput_lasting_duration_critical}', at_least=${var.percent_of_permitted_throughput_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {
-    description           = "is too high > ${var.percent_of_permitted_throughput_threshold_major}%"
-    severity              = "Major"
-    detect_label          = "MAJOR"
-    disabled              = coalesce(var.percent_of_permitted_throughput_disabled_major, var.percent_of_permitted_throughput_disabled, var.detectors_disabled)
-    notifications         = try(coalescelist(lookup(var.percent_of_permitted_throughput_notifications, "major", []), var.notifications.major), null)
+    description           = "is too high > ${var.percent_of_permitted_throughput_threshold_critical}%"
+    severity              = "Critical"
+    detect_label          = "CRIT"
+    disabled              = coalesce(var.percent_of_permitted_throughput_disabled_critical, var.percent_of_permitted_throughput_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.percent_of_permitted_throughput_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.percent_of_permitted_throughput_runbook_url, var.runbook_url), "")
     tip                   = var.percent_of_permitted_throughput_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -231,11 +231,11 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.percent_of_permitted_throughput_threshold_minor}%"
-    severity              = "Minor"
-    detect_label          = "MINOR"
-    disabled              = coalesce(var.percent_of_permitted_throughput_disabled_minor, var.percent_of_permitted_throughput_disabled, var.detectors_disabled)
-    notifications         = try(coalescelist(lookup(var.percent_of_permitted_throughput_notifications, "minor", []), var.notifications.minor), null)
+    description           = "is too high > ${var.percent_of_permitted_throughput_threshold_major}%"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.percent_of_permitted_throughput_disabled_major, var.percent_of_permitted_throughput_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.percent_of_permitted_throughput_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.percent_of_permitted_throughput_runbook_url, var.runbook_url), "")
     tip                   = var.percent_of_permitted_throughput_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
@@ -262,15 +262,15 @@ resource "signalfx_detector" "burst_credit_balance" {
   program_text = <<-EOF
     base_filtering = filter('namespace', 'AWS/EFS')
     signal = data('BurstCreditBalance', filter=base_filtering and filter('stat', 'lower') and ${module.filtering.signalflow})${var.burst_credit_balance_aggregation_function}${var.burst_credit_balance_transformation_function}.publish('signal')
-    detect(when(signal < ${var.burst_credit_balance_threshold_major}%{if var.burst_credit_balance_lasting_duration_major != null}, lasting='${var.burst_credit_balance_lasting_duration_major}', at_least=${var.burst_credit_balance_at_least_percentage_major}%{endif})).publish('MAJOR')
+    detect(when(signal < ${var.burst_credit_balance_threshold_critical}%{if var.burst_credit_balance_lasting_duration_critical != null}, lasting='${var.burst_credit_balance_lasting_duration_critical}', at_least=${var.burst_credit_balance_at_least_percentage_critical}%{endif})).publish('CRIT')
 EOF
 
   rule {
-    description           = "is too low < ${var.burst_credit_balance_threshold_major}credits"
-    severity              = "Major"
-    detect_label          = "MAJOR"
+    description           = "is too low < ${var.burst_credit_balance_threshold_critical}credits"
+    severity              = "Critical"
+    detect_label          = "CRIT"
     disabled              = coalesce(var.burst_credit_balance_disabled, var.detectors_disabled)
-    notifications         = try(coalescelist(lookup(var.burst_credit_balance_notifications, "major", []), var.notifications.major), null)
+    notifications         = try(coalescelist(lookup(var.burst_credit_balance_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.burst_credit_balance_runbook_url, var.runbook_url), "")
     tip                   = var.burst_credit_balance_tip
     parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject

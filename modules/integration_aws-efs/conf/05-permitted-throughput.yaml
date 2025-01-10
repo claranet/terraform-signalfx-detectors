@@ -14,12 +14,12 @@ signals:
   signal:
     formula: (metered/permitted.scale(60)).scale(100)
 rules:
-  major:
+  critical:
     comparator: ">"
     threshold: 90
     lasting_duration: "30m"
-  minor:
+  major:
     comparator: ">"
-    dependency: major
+    dependency: critical
     threshold: 80
     lasting_duration: "30m"

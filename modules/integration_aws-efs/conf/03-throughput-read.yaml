@@ -16,10 +16,10 @@ signals:
     formula:
       (read/total).scale(100)
 rules:
-  minor:
+  critical:
     comparator: ">"
     lasting_duration: "15m"
-  warning:
+  major:
     lasting_duration: "15m"
     comparator: ">"
-    dependency: minor
+    dependency: critical

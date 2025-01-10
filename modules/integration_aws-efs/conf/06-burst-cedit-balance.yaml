@@ -9,7 +9,7 @@ signals:
     metric: "BurstCreditBalance"
     filter: "filter('stat', 'lower')"
 rules:
-  major:
+  critical:
     comparator: "<"
     threshold: 1
     lasting_duration: "5m"

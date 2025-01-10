@@ -269,11 +269,11 @@
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |AWS EFS used space|X|X|-|-|-|
-|AWS EFS percent of io limit|-|X|X|-|-|
-|AWS EFS percent of read throughput|-|-|X|X|-|
-|AWS EFS percent of write throughput|-|-|X|X|-|
-|AWS EFS percent of permitted throughput|-|X|X|-|-|
-|AWS EFS burst credit balance|-|X|-|-|-|
+|AWS EFS percent of io limit|X|X|-|-|-|
+|AWS EFS percent of read throughput|X|X|-|-|-|
+|AWS EFS percent of write throughput|X|X|-|-|-|
+|AWS EFS percent of permitted throughput|X|X|-|-|-|
+|AWS EFS burst credit balance|X|-|-|-|-|
 
 
 ## integration_aws-elasticache-common
