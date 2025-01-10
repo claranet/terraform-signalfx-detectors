@@ -2,9 +2,6 @@ module: AWS RDS Common
 id: "cpu_usage"
 name: "Instance CPU"
 
-transformation: true
-aggregation: ".min(over='15m')"
-
 filtering: "filter('namespace', 'AWS/RDS')"
 value_unit: "%"
 condition: "var.cpu_usage_detector_enabled"

@@ -2,8 +2,6 @@ module: AWS RDS Common
 id: dbload
 name: "DB Load"
 
-transformation: true
-aggregation: true
 filtering: "filter('namespace', 'AWS/RDS') and filter('stat', 'mean')"
 condition: "var.dbload_detector_enabled"
 
