@@ -17,8 +17,10 @@ signals:
 rules:
   critical:
     comparator: ">"
+    threshold: 90
     lasting_duration: "15m"
   major:
     lasting_duration: "15m"
     comparator: ">"
+    threshold: 80
     dependency: critical

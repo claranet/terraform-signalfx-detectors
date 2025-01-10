@@ -28,14 +28,10 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 module "signalfx-detectors-integration-aws-efs" {
   source = "github.com/claranet/terraform-signalfx-detectors.git//modules/integration_aws-efs?ref={revision}"
 
-  environment                        = var.environment
-  notifications                      = local.notifications
-  used_space_threshold_major         = 42
-  write_throughput_threshold_minor   = 42
-  read_throughput_threshold_minor    = 42
-  read_throughput_threshold_warning  = 42
-  write_throughput_threshold_warning = 42
-  used_space_threshold_critical      = 42
+  environment                   = var.environment
+  notifications                 = local.notifications
+  used_space_threshold_major    = 42
+  used_space_threshold_critical = 42
 }
 ```
 

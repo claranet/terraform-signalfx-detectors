@@ -237,6 +237,7 @@ variable "read_throughput_disabled_major" {
 variable "read_throughput_threshold_critical" {
   description = "Critical threshold for read_throughput detector in %"
   type        = number
+  default     = 90
 }
 
 variable "read_throughput_lasting_duration_critical" {
@@ -253,6 +254,7 @@ variable "read_throughput_at_least_percentage_critical" {
 variable "read_throughput_threshold_major" {
   description = "Major threshold for read_throughput detector in %"
   type        = number
+  default     = 80
 }
 
 variable "read_throughput_lasting_duration_major" {
@@ -325,6 +327,7 @@ variable "write_throughput_disabled_major" {
 variable "write_throughput_threshold_critical" {
   description = "Critical threshold for write_throughput detector in %"
   type        = number
+  default     = 90
 }
 
 variable "write_throughput_lasting_duration_critical" {
@@ -341,6 +344,7 @@ variable "write_throughput_at_least_percentage_critical" {
 variable "write_throughput_threshold_major" {
   description = "Major threshold for write_throughput detector in %"
   type        = number
+  default     = 80
 }
 
 variable "write_throughput_lasting_duration_major" {
