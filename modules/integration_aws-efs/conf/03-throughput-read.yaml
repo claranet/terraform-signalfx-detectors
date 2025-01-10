@@ -3,7 +3,6 @@ name: "Percent of read throughput"
 id: "read_throughput"
 filtering: "filter('namespace', 'AWS/EFS')"
 value_unit: "%"
-transformation: ".max(over='15m')"
 disabled: true
 signals:
   read:
@@ -18,6 +17,8 @@ signals:
 rules:
   minor:
     comparator: ">"
+    lasting_duration: "15m"
   warning:
+    lasting_duration: "15m"
     comparator: ">"
     dependency: minor

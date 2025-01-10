@@ -3,7 +3,6 @@ name: "Percent of write throughput"
 id: "write_throughput"
 filtering: "filter('namespace', 'AWS/EFS')"
 value_unit: "%"
-transformation: ".max(over='15m')"
 disabled: true
 signals:
   write:
@@ -18,6 +17,8 @@ signals:
 rules:
   minor:
     comparator: ">"
+    lasting_duration: "15m"
   warning:
     comparator: ">"
     dependency: minor
+    lasting_duration: "15m"

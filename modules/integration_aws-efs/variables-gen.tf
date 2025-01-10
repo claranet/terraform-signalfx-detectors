@@ -15,7 +15,7 @@ variable "used_space_aggregation_function" {
 variable "used_space_transformation_function" {
   description = "Transformation function for used_space detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".max(over='15m')"
+  default     = ""
 }
 
 variable "used_space_max_delay" {
@@ -62,7 +62,7 @@ variable "used_space_threshold_critical" {
 variable "used_space_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "15m"
 }
 
 variable "used_space_at_least_percentage_critical" {
@@ -78,7 +78,7 @@ variable "used_space_threshold_major" {
 variable "used_space_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "15m"
 }
 
 variable "used_space_at_least_percentage_major" {
@@ -103,7 +103,7 @@ variable "io_limit_aggregation_function" {
 variable "io_limit_transformation_function" {
   description = "Transformation function for io_limit detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".mean(over='30m')"
+  default     = ""
 }
 
 variable "io_limit_max_delay" {
@@ -153,7 +153,7 @@ variable "io_limit_threshold_major" {
 variable "io_limit_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "30m"
 }
 
 variable "io_limit_at_least_percentage_major" {
@@ -170,7 +170,7 @@ variable "io_limit_threshold_minor" {
 variable "io_limit_lasting_duration_minor" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "30m"
 }
 
 variable "io_limit_at_least_percentage_minor" {
@@ -195,7 +195,7 @@ variable "read_throughput_aggregation_function" {
 variable "read_throughput_transformation_function" {
   description = "Transformation function for read_throughput detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".max(over='15m')"
+  default     = ""
 }
 
 variable "read_throughput_max_delay" {
@@ -242,7 +242,7 @@ variable "read_throughput_threshold_minor" {
 variable "read_throughput_lasting_duration_minor" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "15m"
 }
 
 variable "read_throughput_at_least_percentage_minor" {
@@ -258,7 +258,7 @@ variable "read_throughput_threshold_warning" {
 variable "read_throughput_lasting_duration_warning" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "15m"
 }
 
 variable "read_throughput_at_least_percentage_warning" {
@@ -283,7 +283,7 @@ variable "write_throughput_aggregation_function" {
 variable "write_throughput_transformation_function" {
   description = "Transformation function for write_throughput detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".max(over='15m')"
+  default     = ""
 }
 
 variable "write_throughput_max_delay" {
@@ -330,7 +330,7 @@ variable "write_throughput_threshold_minor" {
 variable "write_throughput_lasting_duration_minor" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "15m"
 }
 
 variable "write_throughput_at_least_percentage_minor" {
@@ -346,7 +346,7 @@ variable "write_throughput_threshold_warning" {
 variable "write_throughput_lasting_duration_warning" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "15m"
 }
 
 variable "write_throughput_at_least_percentage_warning" {
@@ -371,7 +371,7 @@ variable "percent_of_permitted_throughput_aggregation_function" {
 variable "percent_of_permitted_throughput_transformation_function" {
   description = "Transformation function for percent_of_permitted_throughput detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".mean(over='30m')"
+  default     = ""
 }
 
 variable "percent_of_permitted_throughput_max_delay" {
@@ -421,7 +421,7 @@ variable "percent_of_permitted_throughput_threshold_major" {
 variable "percent_of_permitted_throughput_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "30m"
 }
 
 variable "percent_of_permitted_throughput_at_least_percentage_major" {
@@ -438,7 +438,7 @@ variable "percent_of_permitted_throughput_threshold_minor" {
 variable "percent_of_permitted_throughput_lasting_duration_minor" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "30m"
 }
 
 variable "percent_of_permitted_throughput_at_least_percentage_minor" {
@@ -463,7 +463,7 @@ variable "burst_credit_balance_aggregation_function" {
 variable "burst_credit_balance_transformation_function" {
   description = "Transformation function for burst_credit_balance detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".mean(over='5m')"
+  default     = ""
 }
 
 variable "burst_credit_balance_max_delay" {
@@ -501,7 +501,7 @@ variable "burst_credit_balance_threshold_major" {
 variable "burst_credit_balance_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "5m"
 }
 
 variable "burst_credit_balance_at_least_percentage_major" {

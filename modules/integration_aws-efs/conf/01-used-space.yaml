@@ -2,7 +2,6 @@ module: "AWS EFS"
 name: "Used Space"
 filtering: "filter('namespace', 'AWS/EFS')"
 value_unit: "Gibibyte"
-transformation: ".max(over='15m')"
 signals:
   used_space:
     metric: "StorageBytes"
@@ -13,6 +12,8 @@ signals:
 rules:
   critical:
     comparator: ">"
+    lasting_duration: "15m"
   major:
     comparator: ">"
+    lasting_duration: "15m"
     dependency: critical
