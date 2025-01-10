@@ -2,6 +2,7 @@ module: "AWS EFS"
 name: "Percent of permitted throughput"
 filtering: "filter('namespace', 'AWS/EFS')"
 value_unit: "%"
+condition: "var.permitted_throughput_detector_enabled"
 tip: "You are consuming the entire amount of throughput allocated to your file system, In this situation, you might consider changing the file system's throughput mode to Provisioned Throughput to get higher throughput."
 signals:
   metered:

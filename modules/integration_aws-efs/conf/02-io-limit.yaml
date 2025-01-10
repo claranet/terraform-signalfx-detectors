@@ -3,6 +3,7 @@ name: "Percent of IO Limit"
 id: "io_limit"
 filtering: "filter('namespace', 'AWS/EFS')"
 value_unit: "%"
+condition: "var.io_limit_detector_enabled"
 tip: "If you reach too often the limit with current General Purpose mode, consider moving your application to a file system using the Max I/O performance mode."
 signals:
   signal:

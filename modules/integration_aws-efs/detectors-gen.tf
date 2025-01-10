@@ -1,4 +1,6 @@
 resource "signalfx_detector" "used_space" {
+  count = (var.used_space_detector_enabled) ? 1 : 0
+
   name = format("%s %s", local.detector_name_prefix, "AWS EFS used space")
 
   authorized_writer_teams = var.authorized_writer_teams
@@ -46,6 +48,8 @@ EOF
 }
 
 resource "signalfx_detector" "io_limit" {
+  count = (var.io_limit_detector_enabled) ? 1 : 0
+
   name = format("%s %s", local.detector_name_prefix, "AWS EFS percent of io limit")
 
   authorized_writer_teams = var.authorized_writer_teams
@@ -92,6 +96,8 @@ EOF
 }
 
 resource "signalfx_detector" "read_throughput" {
+  count = (var.read_throughput_detector_enabled) ? 1 : 0
+
   name = format("%s %s", local.detector_name_prefix, "AWS EFS percent of read throughput")
 
   authorized_writer_teams = var.authorized_writer_teams
@@ -140,6 +146,8 @@ EOF
 }
 
 resource "signalfx_detector" "write_throughput" {
+  count = (var.write_throughput_detector_enabled) ? 1 : 0
+
   name = format("%s %s", local.detector_name_prefix, "AWS EFS percent of write throughput")
 
   authorized_writer_teams = var.authorized_writer_teams
@@ -188,6 +196,8 @@ EOF
 }
 
 resource "signalfx_detector" "percent_of_permitted_throughput" {
+  count = (var.permitted_throughput_detector_enabled) ? 1 : 0
+
   name = format("%s %s", local.detector_name_prefix, "AWS EFS percent of permitted throughput")
 
   authorized_writer_teams = var.authorized_writer_teams
@@ -236,6 +246,8 @@ EOF
 }
 
 resource "signalfx_detector" "burst_credit_balance" {
+  count = (var.burst_credit_balance_detector_enabled) ? 1 : 0
+
   name = format("%s %s", local.detector_name_prefix, "AWS EFS burst credit balance")
 
   authorized_writer_teams = var.authorized_writer_teams

@@ -2,6 +2,7 @@ module: "AWS EFS"
 name: "Used Space"
 filtering: "filter('namespace', 'AWS/EFS')"
 value_unit: "Gibibyte"
+condition: "var.used_space_detector_enabled"
 signals:
   used_space:
     metric: "StorageBytes"
