@@ -4,7 +4,6 @@ id: "write_throughput"
 filtering: "filter('namespace', 'AWS/EFS')"
 value_unit: "%"
 condition: "var.write_throughput_detector_enabled"
-disabled: true
 signals:
   write:
     metric: "DataWriteIOBytes"

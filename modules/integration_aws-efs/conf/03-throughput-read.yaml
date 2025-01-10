@@ -4,7 +4,6 @@ id: "read_throughput"
 filtering: "filter('namespace', 'AWS/EFS')"
 value_unit: "%"
 condition: "var.read_throughput_detector_enabled"
-disabled: true
 signals:
   read:
     metric: "DataReadIOBytes"

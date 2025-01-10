@@ -219,7 +219,7 @@ variable "read_throughput_runbook_url" {
 variable "read_throughput_disabled" {
   description = "Disable all alerting rules for read_throughput detector"
   type        = bool
-  default     = true
+  default     = null
 }
 
 variable "read_throughput_disabled_critical" {
@@ -307,7 +307,7 @@ variable "write_throughput_runbook_url" {
 variable "write_throughput_disabled" {
   description = "Disable all alerting rules for write_throughput detector"
   type        = bool
-  default     = true
+  default     = null
 }
 
 variable "write_throughput_disabled_critical" {
