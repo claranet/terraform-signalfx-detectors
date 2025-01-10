@@ -5,6 +5,7 @@ transformation: true
 aggregation: ".min(over='5m')"
 
 filtering: "filter('namespace', 'AWS/RDS')"
+condition: "var.replica_lag_detector_enabled"
 
 signals:
   signal:
