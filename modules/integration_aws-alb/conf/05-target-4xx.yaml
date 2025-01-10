@@ -6,6 +6,7 @@ transformation: true
 aggregation: true
 filtering: "filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and filter('TargetGroup', '*') and (not filter('AvailabilityZone', '*'))"
 value_unit: "%"
+condition: "var.target_4xx_detector_enabled"
 
 signals:
   errors:

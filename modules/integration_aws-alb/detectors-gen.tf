@@ -1,4 +1,6 @@
 resource "signalfx_detector" "heartbeat" {
+  count = (var.heartbeat_detector_enabled) ? 1 : 0
+
   name = format("%s %s", local.detector_name_prefix, "AWS ALB heartbeat")
 
   authorized_writer_teams = var.authorized_writer_teams
@@ -28,6 +30,8 @@ EOF
 }
 
 resource "signalfx_detector" "latency" {
+  count = (var.latency_detector_enabled) ? 1 : 0
+
   name = format("%s %s", local.detector_name_prefix, "AWS ALB target response time")
 
   authorized_writer_teams = var.authorized_writer_teams
@@ -74,6 +78,8 @@ EOF
 }
 
 resource "signalfx_detector" "alb_5xx" {
+  count = (var.lb_5xx_detector_enabled) ? 1 : 0
+
   name = format("%s %s", local.detector_name_prefix, "AWS ALB 5xx error rate")
 
   authorized_writer_teams = var.authorized_writer_teams
@@ -122,6 +128,8 @@ EOF
 }
 
 resource "signalfx_detector" "alb_4xx" {
+  count = (var.lb_4xx_detector_enabled) ? 1 : 0
+
   name = format("%s %s", local.detector_name_prefix, "AWS ALB 4xx error rate")
 
   authorized_writer_teams = var.authorized_writer_teams
@@ -183,6 +191,8 @@ EOF
 }
 
 resource "signalfx_detector" "target_5xx" {
+  count = (var.target_5xx_detector_enabled) ? 1 : 0
+
   name = format("%s %s", local.detector_name_prefix, "AWS ALB target 5xx error rate")
 
   authorized_writer_teams = var.authorized_writer_teams
@@ -231,6 +241,8 @@ EOF
 }
 
 resource "signalfx_detector" "target_4xx" {
+  count = (var.target_4xx_detector_enabled) ? 1 : 0
+
   name = format("%s %s", local.detector_name_prefix, "AWS ALB target 4xx error rate")
 
   authorized_writer_teams = var.authorized_writer_teams
@@ -292,6 +304,8 @@ EOF
 }
 
 resource "signalfx_detector" "healthy" {
+  count = (var.healthy_detector_enabled) ? 1 : 0
+
   name = format("%s %s", local.detector_name_prefix, "AWS ALB healthy instances percentage")
 
   authorized_writer_teams = var.authorized_writer_teams
