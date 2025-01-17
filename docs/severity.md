@@ -772,7 +772,7 @@
 |GCP Cloud SQL heartbeat|X|-|-|-|-|
 |GCP Cloud SQL cpu utilization|X|X|-|-|-|
 |GCP Cloud SQL disk utilization|X|X|-|-|-|
-|GCP Cloud SQL memory utilization|X|X|-|-|-|
+|GCP Cloud SQL memory left|X|X|-|-|-|
 
 
 ## integration_gcp-cloud-sql-failover

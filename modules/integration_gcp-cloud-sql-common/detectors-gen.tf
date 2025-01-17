@@ -107,20 +107,21 @@ EOF
 }
 
 resource "signalfx_detector" "memory_utilization" {
-  name = format("%s %s", local.detector_name_prefix, "GCP Cloud SQL memory utilization")
+  name = format("%s %s", local.detector_name_prefix, "GCP Cloud SQL memory left")
 
   authorized_writer_teams = var.authorized_writer_teams
   teams                   = try(coalescelist(var.teams, var.authorized_writer_teams), null)
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    signal = data('database/memory/utilization', filter=${module.filtering.signalflow})${var.memory_utilization_aggregation_function}${var.memory_utilization_transformation_function}.publish('signal')
-    detect(when(signal > ${var.memory_utilization_threshold_critical}%{if var.memory_utilization_lasting_duration_critical != null}, lasting='${var.memory_utilization_lasting_duration_critical}', at_least=${var.memory_utilization_at_least_percentage_critical}%{endif})).publish('CRIT')
-    detect(when(signal > ${var.memory_utilization_threshold_major}%{if var.memory_utilization_lasting_duration_major != null}, lasting='${var.memory_utilization_lasting_duration_major}', at_least=${var.memory_utilization_at_least_percentage_major}%{endif}) and (not when(signal > ${var.memory_utilization_threshold_critical}%{if var.memory_utilization_lasting_duration_critical != null}, lasting='${var.memory_utilization_lasting_duration_critical}', at_least=${var.memory_utilization_at_least_percentage_critical}%{endif}))).publish('MAJOR')
+    base_filtering = filter('component', 'Free')
+    signal = data('database/memory/components', filter=base_filtering and ${module.filtering.signalflow})${var.memory_utilization_aggregation_function}${var.memory_utilization_transformation_function}.publish('signal')
+    detect(when(signal < ${var.memory_utilization_threshold_critical}%{if var.memory_utilization_lasting_duration_critical != null}, lasting='${var.memory_utilization_lasting_duration_critical}', at_least=${var.memory_utilization_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal < ${var.memory_utilization_threshold_major}%{if var.memory_utilization_lasting_duration_major != null}, lasting='${var.memory_utilization_lasting_duration_major}', at_least=${var.memory_utilization_at_least_percentage_major}%{endif}) and (not when(signal < ${var.memory_utilization_threshold_critical}%{if var.memory_utilization_lasting_duration_critical != null}, lasting='${var.memory_utilization_lasting_duration_critical}', at_least=${var.memory_utilization_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {
-    description           = "is too high > ${var.memory_utilization_threshold_critical}"
+    description           = "is too low < ${var.memory_utilization_threshold_critical}"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.memory_utilization_disabled_critical, var.memory_utilization_disabled, var.detectors_disabled)
@@ -132,7 +133,7 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.memory_utilization_threshold_major}"
+    description           = "is too low < ${var.memory_utilization_threshold_major}"
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.memory_utilization_disabled_major, var.memory_utilization_disabled, var.detectors_disabled)
