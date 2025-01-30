@@ -65,7 +65,7 @@ variable "no_healthy_instances_aggregation_function" {
 variable "no_healthy_instances_transformation_function" {
   description = "Transformation function for no_healthy_instances detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".min(over='5m')"
+  default     = ""
 }
 
 variable "no_healthy_instances_max_delay" {
@@ -113,7 +113,7 @@ variable "no_healthy_instances_threshold_critical" {
 variable "no_healthy_instances_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "5min"
 }
 
 variable "no_healthy_instances_at_least_percentage_critical" {
@@ -130,7 +130,7 @@ variable "no_healthy_instances_threshold_major" {
 variable "no_healthy_instances_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "5min"
 }
 
 variable "no_healthy_instances_at_least_percentage_major" {

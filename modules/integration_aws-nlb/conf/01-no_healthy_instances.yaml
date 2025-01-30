@@ -2,7 +2,6 @@ module: "AWS NLB"
 name: "Healthy instances percentage"
 id: "no_healthy_instances"
 
-transformation: ".min(over='5m')"
 aggregation: true
 filtering: "filter('namespace', 'AWS/NetworkELB') and (not filter('AvailabilityZone', '*'))"
 condition: "var.healthy_instances_detector_enabled"
@@ -21,8 +20,10 @@ rules:
   critical:
     threshold: 1
     comparator: "<"
-    
+    lasting_duration: "5min"
+
   major:
     threshold: 100
     comparator: "<"
     dependency: "critical"
+    lasting_duration: "5min"
