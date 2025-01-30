@@ -4,6 +4,7 @@ name: "heartbeat"
 transformation: true
 aggregation: ".mean(by=['LoadBalancer'])"
 filtering: "filter('stat', 'mean') and filter('namespace', 'AWS/NetworkELB')"
+condition: "var.heartbeat_detector_enabled"
 
 signals:
   signal:

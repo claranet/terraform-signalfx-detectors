@@ -5,6 +5,7 @@ id: "no_healthy_instances"
 transformation: ".min(over='5m')"
 aggregation: true
 filtering: "filter('namespace', 'AWS/NetworkELB') and (not filter('AvailabilityZone', '*'))"
+condition: "var.healthy_instances_detector_enabled"
 
 signals:
   A:
