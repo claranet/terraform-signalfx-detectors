@@ -6,6 +6,7 @@ transformation: true
 aggregation: true
 
 filtering: "filter('resource_type', 'Microsoft.DB*orPostgreS*/flexibleServers') and filter('primary_aggregation_type', 'true')"
+heartbeat_aggregation_function: ".mean(by='azure_resource_id')"
 
 signals:
   signal:
