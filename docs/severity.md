@@ -429,6 +429,7 @@
 |Azure API Management Service capacity|X|X|-|-|-|
 |Azure API Management Service duration of gateway request|X|X|-|-|-|
 |Azure API Management Service duration of backend request|X|X|-|-|-|
+|Azure API Management Service cpu percentage of gateway|X|X|-|-|-|
 
 
 ## integration_azure-app-service-plan

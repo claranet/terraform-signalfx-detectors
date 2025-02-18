@@ -79,6 +79,7 @@ This module creates the following SignalFx detectors which could contain one or 
 |Azure API Management Service capacity|X|X|-|-|-|
 |Azure API Management Service duration of gateway request|X|X|-|-|-|
 |Azure API Management Service duration of backend request|X|X|-|-|-|
+|Azure API Management Service cpu percentage of gateway|X|X|-|-|-|
 
 ## How to collect required metrics?
 
@@ -98,6 +99,7 @@ Here is the list of required metrics for detectors in this module.
 
 * `BackendDuration`
 * `Capacity`
+* `CpuPercent_Gateway`
 * `Duration`
 * `NetworkConnectivity`
 
