@@ -23,10 +23,8 @@ existing [stack](https://github.com/claranet/terraform-signalfx-detectors/wiki/G
 module "signalfx-detectors-integration-azure-sql-managed-instances" {
   source = "github.com/claranet/terraform-signalfx-detectors.git//modules/integration_azure-sql-managed-instances?ref={revision}"
 
-  environment                      = var.environment
-  notifications                    = local.notifications
-  storage_usage_threshold_critical = 42
-  storage_usage_threshold_major    = 42
+  environment   = var.environment
+  notifications = local.notifications
 }
 ```
 
@@ -97,6 +95,7 @@ Check the [Related documentation](#related-documentation) section for more detai
 Here is the list of required metrics for detectors in this module.
 
 * `avg_cpu_percent`
+* `reserved_storage_mb`
 * `storage_space_used_mb`
 
 

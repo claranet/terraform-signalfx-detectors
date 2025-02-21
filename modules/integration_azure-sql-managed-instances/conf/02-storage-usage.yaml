@@ -6,12 +6,19 @@ aggregation: ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azu
 value_unit: "Megabyte"
 transformation: true
 signals:
-  signal:
+  A:
     metric: "storage_space_used_mb"
+  B:
+    metric: "reserved_storage_mb"
+  signal:
+    formula: "(A/B).scale(100)"
+    description: "Percentage of storage used"
 rules:
   critical:
+    threshold: 90
     comparator: ">"
   major:
+    threshold: 80
     comparator: ">"
     dependency: critical
 ...
