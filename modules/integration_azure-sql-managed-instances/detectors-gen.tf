@@ -53,7 +53,7 @@ resource "signalfx_detector" "storage_usage" {
 
   viz_options {
     label        = "signal"
-    value_suffix = "Megabyte"
+    value_suffix = "%"
   }
 
   program_text = <<-EOF
@@ -66,7 +66,7 @@ resource "signalfx_detector" "storage_usage" {
 EOF
 
   rule {
-    description           = "is too high > ${var.storage_usage_threshold_critical}Megabyte"
+    description           = "is too high > ${var.storage_usage_threshold_critical}%"
     severity              = "Critical"
     detect_label          = "CRIT"
     disabled              = coalesce(var.storage_usage_disabled_critical, var.storage_usage_disabled, var.detectors_disabled)
@@ -78,7 +78,7 @@ EOF
   }
 
   rule {
-    description           = "is too high > ${var.storage_usage_threshold_major}Megabyte"
+    description           = "is too high > ${var.storage_usage_threshold_major}%"
     severity              = "Major"
     detect_label          = "MAJOR"
     disabled              = coalesce(var.storage_usage_disabled_major, var.storage_usage_disabled, var.detectors_disabled)

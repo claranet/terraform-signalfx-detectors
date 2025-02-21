@@ -3,7 +3,7 @@ module: "Azure SQL Managed Instances"
 name: "storage usage"
 filtering: "filter('resource_type', 'Microsoft.Sql/managedInstances') and filter('primary_aggregation_type', 'true')"
 aggregation: ".mean(by=['azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
-value_unit: "Megabyte"
+value_unit: "%"
 transformation: true
 signals:
   A:

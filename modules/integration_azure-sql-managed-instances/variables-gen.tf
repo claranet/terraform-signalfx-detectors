@@ -145,7 +145,7 @@ variable "storage_usage_disabled_major" {
 }
 
 variable "storage_usage_threshold_critical" {
-  description = "Critical threshold for storage_usage detector in Megabyte"
+  description = "Critical threshold for storage_usage detector in %"
   type        = number
   default     = 90
 }
@@ -162,7 +162,7 @@ variable "storage_usage_at_least_percentage_critical" {
   default     = 1
 }
 variable "storage_usage_threshold_major" {
-  description = "Major threshold for storage_usage detector in Megabyte"
+  description = "Major threshold for storage_usage detector in %"
   type        = number
   default     = 80
 }
