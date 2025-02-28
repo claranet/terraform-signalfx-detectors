@@ -109,3 +109,21 @@ variable "vpn_status_at_least_percentage_critical" {
   type        = number
   default     = 1
 }
+
+variable "vpn_status_threshold_major" {
+  description = "Major threshold for vpn_status detector"
+  type        = number
+  default     = 1
+}
+
+variable "vpn_status_lasting_duration_major" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = null
+}
+
+variable "vpn_status_at_least_percentage_major" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}

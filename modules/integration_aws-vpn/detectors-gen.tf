@@ -38,7 +38,20 @@ resource "signalfx_detector" "vpn_status" {
     base_filtering = filter('namespace', 'AWS/VPN') and filter('stat', 'mean') and filter('VpnId', '*')
     signal = data('TunnelState', filter=base_filtering and ${module.filtering.signalflow})${var.vpn_status_aggregation_function}${var.vpn_status_transformation_function}.publish('signal')
     detect(when(signal < ${var.vpn_status_threshold_critical}%{if var.vpn_status_lasting_duration_critical != null}, lasting='${var.vpn_status_lasting_duration_critical}', at_least=${var.vpn_status_at_least_percentage_critical}%{endif})).publish('CRIT')
+    detect(when(signal < ${var.vpn_status_threshold_major}%{if var.vpn_status_lasting_duration_major != null}, lasting='${var.vpn_status_lasting_duration_major}', at_least=${var.vpn_status_at_least_percentage_major}%{endif})).publish('MAJ')
 EOF
+
+  rule {
+    description           = "is too low < ${var.vpn_status_threshold_major}"
+    severity              = "Major"
+    detect_label          = "MAJOR"
+    disabled              = coalesce(var.vpn_status_disabled, var.detectors_disabled)
+    notifications         = try(coalescelist(lookup(var.vpn_status_notifications, "major", []), var.notifications.major), null)
+    runbook_url           = try(coalesce(var.vpn_status_runbook_url, var.runbook_url), "")
+    tip                   = var.vpn_status_tip
+    parameterized_subject = var.message_subject == "" ? local.rule_subject : var.message_subject
+    parameterized_body    = var.message_body == "" ? local.rule_body : var.message_body
+  }
 
   rule {
     description           = "is too low < ${var.vpn_status_threshold_critical}"
