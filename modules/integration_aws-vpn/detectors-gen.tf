@@ -38,7 +38,7 @@ resource "signalfx_detector" "vpn_status" {
     base_filtering = filter('namespace', 'AWS/VPN') and filter('stat', 'mean') and filter('VpnId', '*')
     signal = data('TunnelState', filter=base_filtering and ${module.filtering.signalflow})${var.vpn_status_aggregation_function}${var.vpn_status_transformation_function}.publish('signal')
     detect(when(signal < ${var.vpn_status_threshold_critical}%{if var.vpn_status_lasting_duration_critical != null}, lasting='${var.vpn_status_lasting_duration_critical}', at_least=${var.vpn_status_at_least_percentage_critical}%{endif})).publish('CRIT')
-    detect(when(signal < ${var.vpn_status_threshold_major}%{if var.vpn_status_lasting_duration_major != null}, lasting='${var.vpn_status_lasting_duration_major}', at_least=${var.vpn_status_at_least_percentage_major}%{endif})).publish('MAJOR')
+    detect(when(signal < ${var.vpn_status_threshold_major}%{if var.vpn_status_lasting_duration_major != null}, lasting='${var.vpn_status_lasting_duration_major}', at_least=${var.vpn_status_at_least_percentage_major}%{endif}) and  (not when(signal < ${var.vpn_status_threshold_critical}%{if var.vpn_status_lasting_duration_critical != null}, lasting='${var.vpn_status_lasting_duration_critical}', at_least=${var.vpn_status_at_least_percentage_critical}%{endif} ))).publish('MAJOR')
 EOF
 
   rule {
