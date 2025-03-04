@@ -45,7 +45,7 @@ EOF
     description           = "is too low < ${var.vpn_status_threshold_major}"
     severity              = "Major"
     detect_label          = "MAJOR"
-    disabled              = coalesce(var.vpn_status_disabled, var.detectors_disabled)
+    disabled              = coalesce(var.vpn_status_disabled_major, var.vpn_status_disabled, var.detectors_disabled)
     notifications         = try(coalescelist(lookup(var.vpn_status_notifications, "major", []), var.notifications.major), null)
     runbook_url           = try(coalesce(var.vpn_status_runbook_url, var.runbook_url), "")
     tip                   = var.vpn_status_tip
@@ -57,7 +57,7 @@ EOF
     description           = "is too low < ${var.vpn_status_threshold_critical}"
     severity              = "Critical"
     detect_label          = "CRIT"
-    disabled              = coalesce(var.vpn_status_disabled, var.detectors_disabled)
+    disabled              = coalesce(var.vpn_status_disabled_critical, var.vpn_status_disabled, var.detectors_disabled)
     notifications         = try(coalescelist(lookup(var.vpn_status_notifications, "critical", []), var.notifications.critical), null)
     runbook_url           = try(coalesce(var.vpn_status_runbook_url, var.runbook_url), "")
     tip                   = var.vpn_status_tip
