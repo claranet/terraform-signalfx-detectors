@@ -95,7 +95,7 @@ variable "vpn_status_disabled" {
 variable "vpn_status_threshold_critical" {
   description = "Critical threshold for vpn_status detector"
   type        = number
-  default     = 0.5 
+  default     = 0.5
 }
 
 variable "vpn_status_lasting_duration_critical" {
