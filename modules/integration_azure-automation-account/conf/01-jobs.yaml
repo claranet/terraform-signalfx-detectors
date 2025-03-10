@@ -1,0 +1,22 @@
+## Example
+module: Azure Automation Account
+name: "failed jobs"
+
+transformation: ".max(over='1h')"
+aggregation: ".mean(by=['runbook'])"
+
+filtering: "filter('resource_type', 'Microsoft.Automation/automationAccounts') and filter('primary_aggregation_type', 'true')"
+
+signals:
+  success:
+    metric: "TotalJob"
+    filter: "filter('status', 'Completed')"
+  failed:
+    metric: "TotalJob"
+    filter: "filter('status', 'Failed')"
+  signal:
+    formula: (failed.fill(0) - success.fill(0))
+rules:
+  critical:
+    threshold: 0
+    comparator: ">"

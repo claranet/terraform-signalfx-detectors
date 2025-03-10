@@ -1,0 +1,4 @@
+documentations:
+    - name: 'Azure Monitor'
+      url: 'https://learn.microsoft.com/en-us/azure/azure-monitor/essentials/metrics-supported#microsoftautomationautomationaccounts'
+source_doc:
