@@ -97,6 +97,7 @@
 - [smart-agent_dns](#smart-agent_dns)
 - [smart-agent_docker](#smart-agent_docker)
 - [smart-agent_elasticsearch](#smart-agent_elasticsearch)
+- [smart-agent_galera](#smart-agent_galera)
 - [smart-agent_genericjmx](#smart-agent_genericjmx)
 - [smart-agent_haproxy](#smart-agent_haproxy)
 - [smart-agent_health-checker](#smart-agent_health-checker)
@@ -1068,6 +1069,16 @@
 |ElasticSearch search fetch latency|-|X|X|-|-|
 |ElasticSearch fielddata cache evictions rate of change|-|X|X|-|-|
 |ElasticSearch max time spent by task in queue rate of change|-|X|X|-|-|
+
+
+## smart-agent_galera
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Galera node|X|-|-|-|-|
+|Galera node state|X|-|-|-|-|
+|Galera replication paused ratio|-|X|X|-|-|
+|Galera recv queue length|-|X|X|-|-|
 
 
 ## smart-agent_genericjmx
