@@ -1,0 +1,15 @@
+module: winprocess 
+name: status
+
+transformation: ".mean(over='15m')"
+aggregation: true
+
+signals:
+  A:
+    metric: win_services.state
+  signal:
+    formula: A
+rules:
+  critical:
+    threshold: 4 
+    comparator: '<'
