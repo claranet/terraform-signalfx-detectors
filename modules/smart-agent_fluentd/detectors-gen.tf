@@ -8,9 +8,10 @@ resource "signalfx_detector" "heartbeat" {
   max_delay = 900
 
   program_text = <<-EOF
-    from signalfx.detectors.not_reporting import not_reporting
-    signal = data('fluentd_output_status_buffer_queue_length', filter=${local.not_running_vm_filters} and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
-    not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}', auto_resolve_after='${local.heartbeat_auto_resolve_after}').publish('MAJOR')
+    fluentd_signal = data('fluentd_output_status_buffer_queue_length', filter=${local.not_running_vm_filters} and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}
+    cpu_signal = data('cpu.utilization', filter=${local.not_running_vm_filters} and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}
+    no_fluentd_data = (count(fluentd_signal) == 0 and count(cpu_signal) > 0).publish("no_fluentd_data")
+    detect(when(no_fluentd_data, lasting="300s"), auto_resolve_after="60s").publish('MAJOR')
 EOF
 
   rule {
