@@ -8,10 +8,10 @@ resource "signalfx_detector" "heartbeat" {
   max_delay = 900
 
   program_text = <<-EOF
-    from signalfx.detectors.not_reporting import not_reporting
-    base_filtering = (not filter('name', 'pm2-metrics'))
-    signal = data('pm2_up', filter=${local.not_running_vm_filters} and base_filtering and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}.publish('signal')
-    not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}', auto_resolve_after='${local.heartbeat_auto_resolve_after}').publish('CRIT')
+    pm2_signal = data('pm2_up', filter=${local.not_running_vm_filters} and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}
+    cpu_signal = data('cpu.utilization', filter=${local.not_running_vm_filters} and ${module.filtering.signalflow})${var.heartbeat_aggregation_function}
+    no_pm2_data = (count(fluentd_signal) == 0 and count(cpu_signal) > 0).publish("no_pm2_data")
+    detect(when(no_fluentd_data, lasting="${var.heartbeat_timeframe}"), auto_resolve_after="${local.heartbeat_auto_resolve_after}").publish('MAJOR')
 EOF
 
   rule {
