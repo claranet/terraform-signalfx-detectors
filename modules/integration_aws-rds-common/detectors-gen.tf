@@ -1,4 +1,6 @@
 resource "signalfx_detector" "heartbeat" {
+  count = (var.heartbeat_detector_enabled) ? 1 : 0
+
   name = format("%s %s", local.detector_name_prefix, "AWS RDS Common heartbeat")
 
   authorized_writer_teams = var.authorized_writer_teams
@@ -28,6 +30,8 @@ EOF
 }
 
 resource "signalfx_detector" "cpu_usage" {
+  count = (var.cpu_usage_detector_enabled) ? 1 : 0
+
   name = format("%s %s", local.detector_name_prefix, "AWS RDS Common instance cpu")
 
   authorized_writer_teams = var.authorized_writer_teams
@@ -74,6 +78,8 @@ EOF
 }
 
 resource "signalfx_detector" "free_space_low" {
+  count = (var.free_space_detector_enabled) ? 1 : 0
+
   name = format("%s %s", local.detector_name_prefix, "AWS RDS Common instance free space")
 
   authorized_writer_teams = var.authorized_writer_teams
@@ -120,6 +126,8 @@ EOF
 }
 
 resource "signalfx_detector" "replica_lag" {
+  count = (var.replica_lag_detector_enabled) ? 1 : 0
+
   name = format("%s %s", local.detector_name_prefix, "AWS RDS Common replica lag")
 
   authorized_writer_teams = var.authorized_writer_teams
@@ -161,6 +169,8 @@ EOF
 }
 
 resource "signalfx_detector" "dbload" {
+  count = (var.dbload_detector_enabled) ? 1 : 0
+
   name = format("%s %s", local.detector_name_prefix, "AWS RDS Common db load")
 
   authorized_writer_teams = var.authorized_writer_teams

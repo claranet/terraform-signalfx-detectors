@@ -4,6 +4,7 @@ name: heartbeat
 transformation: false
 aggregation: ".mean(by=['DBInstanceIdentifier'])"
 filtering: "filter('namespace', 'AWS/RDS')"
+condition: "var.heartbeat_detector_enabled"
 
 signals:
   signal:
