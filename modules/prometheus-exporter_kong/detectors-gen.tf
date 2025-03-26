@@ -6,9 +6,10 @@ resource "signalfx_detector" "heartbeat" {
   tags                    = compact(concat(local.common_tags, local.tags, var.extra_tags))
 
   program_text = <<-EOF
-    from signalfx.detectors.not_reporting import not_reporting
-    signal = data('kong_datastore_reachable', filter=%{if var.heartbeat_exclude_not_running_vm}${local.not_running_vm_filters} and %{endif}${module.filtering.signalflow})${var.heartbeat_aggregation_function}${var.heartbeat_transformation_function}.publish('signal')
-    not_reporting.detector(stream=signal, resource_identifier=None, duration='${var.heartbeat_timeframe}', auto_resolve_after='${local.heartbeat_auto_resolve_after}').publish('CRIT')
+    kong_signal = data('kong_datastore_reachable', filter=%{if var.heartbeat_exclude_not_running_vm}${local.not_running_vm_filters} and %{endif}${module.filtering.signalflow})${var.heartbeat_aggregation_function}${var.heartbeat_transformation_function}
+    cpu_signal = data('cpu.utilization', filter=%{if var.heartbeat_exclude_not_running_vm}${local.not_running_vm_filters} and %{endif}${module.filtering.signalflow})${var.heartbeat_aggregation_function}${var.heartbeat_transformation_function}
+    no_kong_data = (count(kong_signal) == 0 and count(cpu_signal) > 0).publish("no_kong_data")
+    detect(when(no_kong_data, lasting="${var.heartbeat_timeframe}"), auto_resolve_after="${local.heartbeat_auto_resolve_after}").publish('CRIT')
 EOF
 
   rule {
