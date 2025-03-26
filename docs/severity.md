@@ -60,6 +60,7 @@
 - [integration_azure-service-bus](#integration_azure-service-bus)
 - [integration_azure-sql-database](#integration_azure-sql-database)
 - [integration_azure-sql-elastic-pool](#integration_azure-sql-elastic-pool)
+- [integration_azure-sql-managed-instances](#integration_azure-sql-managed-instances)
 - [integration_azure-storage-account-blob](#integration_azure-storage-account-blob)
 - [integration_azure-storage-account-capacity](#integration_azure-storage-account-capacity)
 - [integration_azure-storage-account](#integration_azure-storage-account)
@@ -684,6 +685,14 @@
 |Azure SQL Elastic Pool cpu|X|X|-|-|-|
 |Azure SQL Elastic Pool storage usage|X|X|-|-|-|
 |Azure SQL Elastic Pool dtu consumption|X|X|-|-|-|
+
+
+## integration_azure-sql-managed-instances
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Azure SQL Managed Instances cpu|X|X|-|-|-|
+|Azure SQL Managed Instances storage usage|X|X|-|-|-|
 
 
 ## integration_azure-storage-account-blob

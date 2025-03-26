@@ -1,0 +1,5 @@
+documentations:
+  - name: Azure Monitor metrics
+    url: 'https://learn.microsoft.com/en-us/azure/azure-monitor/reference/supported-metrics/microsoft-sql-managedinstances-metrics'
+  - name: Splunk Observability metrics
+    url: 'https://docs.splunk.com/observability/en/gdi/get-data-in/connect/azure/azure-metrics.html#azure-sql-managedinstances-metrics'
