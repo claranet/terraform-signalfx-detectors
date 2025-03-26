@@ -1,6 +1,29 @@
 source_doc: |
   System disk weighted io usage detector is disabled by default. It may be useful in some specific cases where system disk io usage detector show usage above 100% because of multi-queued IOs due to device or driver, please enable it only if you understand what it implies. See [Linux kernel documentation](https://docs.kernel.org/admin-guide/iostats.html).
 
-  You must explicitely enable collection of those metrics on Agent:
-  - system.disk.io_time
-  - system.disk.weighted_io_time
+  You must explicitely enable collection of those metrics on your agent:
+  - disk io_time (when using IO usage detector)
+  - disk weighted_io_time (when using weighted IO usage detector which is disabled by default)
+
+  Otel Collector example: edit agent_config.yaml such as:
+  ```
+  receivers:
+  [...]
+    # <hostmetrics> is the receiver producing system.disk.io_time and system.disk.weighted_io_time metrics
+    hostmetrics:
+    collection_interval: 10s
+    scrapers:
+      disk:
+  [...]
+  exporters:
+    [...]
+    include_metrics:
+      - metric_name: system.disk.io_time
+      - metric_name: system.disk.weighted_io_time
+  [...]
+  service:
+  pipelines:
+    metrics:
+      receivers: [hostmetrics, ...]
+      [...]
+  ```
