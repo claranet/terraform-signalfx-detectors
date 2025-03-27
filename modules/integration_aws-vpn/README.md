@@ -76,7 +76,7 @@ This module creates the following SignalFx detectors which could contain one or 
 |Detector|Critical|Major|Minor|Warning|Info|
 |---|---|---|---|---|---|
 |AWS VPN heartbeat|X|-|-|-|-|
-|AWS VPN tunnel state|X|-|-|-|-|
+|AWS VPN tunnel state|X|X|-|-|-|
 
 ## How to collect required metrics?
 
