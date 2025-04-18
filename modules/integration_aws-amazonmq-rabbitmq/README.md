@@ -4,7 +4,6 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 :link: **Contents**
 
-- [AWS-AMAZONMQ-RABBITMQ SignalFx detectors](#aws-amazonmq-rabbitmq-signalfx-detectors)
   - [How to use this module?](#how-to-use-this-module)
   - [What are the available detectors in this module?](#what-are-the-available-detectors-in-this-module)
   - [How to collect required metrics?](#how-to-collect-required-metrics)
