@@ -4,11 +4,12 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 :link: **Contents**
 
-- [How to use this module?](#how-to-use-this-module)
-- [What are the available detectors in this module?](#what-are-the-available-detectors-in-this-module)
-- [How to collect required metrics?](#how-to-collect-required-metrics)
-  - [Metrics](#metrics)
-- [Related documentation](#related-documentation)
+- [AWS-AMAZONMQ-RABBITMQ SignalFx detectors](#aws-amazonmq-rabbitmq-signalfx-detectors)
+  - [How to use this module?](#how-to-use-this-module)
+  - [What are the available detectors in this module?](#what-are-the-available-detectors-in-this-module)
+  - [How to collect required metrics?](#how-to-collect-required-metrics)
+    - [Metrics](#metrics)
+  - [Related documentation](#related-documentation)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -25,7 +26,6 @@ module "signalfx-detectors-integration-aws-amazonmq-rabbitmq" {
 
   environment    = var.environment
   notifications  = local.notifications
-  aws_account_id = "fillme"
 }
 ```
 
