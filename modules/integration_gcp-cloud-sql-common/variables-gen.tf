@@ -245,7 +245,7 @@ variable "memory_utilization_aggregation_function" {
 variable "memory_utilization_transformation_function" {
   description = "Transformation function for memory_utilization detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".min(over='15m').scale(100)"
+  default     = ".min(over='15m')"
 }
 
 variable "memory_utilization_max_delay" {
@@ -287,7 +287,7 @@ variable "memory_utilization_disabled_major" {
 variable "memory_utilization_threshold_critical" {
   description = "Critical threshold for memory_utilization detector"
   type        = number
-  default     = 95
+  default     = 10
 }
 
 variable "memory_utilization_lasting_duration_critical" {
@@ -304,7 +304,7 @@ variable "memory_utilization_at_least_percentage_critical" {
 variable "memory_utilization_threshold_major" {
   description = "Major threshold for memory_utilization detector"
   type        = number
-  default     = 90
+  default     = 20
 }
 
 variable "memory_utilization_lasting_duration_major" {

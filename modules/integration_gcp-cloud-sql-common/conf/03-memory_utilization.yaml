@@ -1,21 +1,21 @@
 module: "GCP Cloud SQL"
-name: "Memory utilization"
+name: "Memory left"
 id: "memory_utilization"
 
-transformation: ".min(over='15m').scale(100)"
+transformation: ".min(over='15m')"
 aggregation: true
-
+filtering: "filter('component', 'Free')"
 
 signals:
   signal:
-    metric: "database/memory/utilization"
+    metric: "database/memory/components"
 
 rules:
   critical:
-    threshold: 95
-    comparator: ">"
+    threshold: 10
+    comparator: "<"
     
   major:
-    threshold: 90
-    comparator: ">"
+    threshold: 20
+    comparator: "<"
     dependency: "critical"
