@@ -1,5 +1,3 @@
-# messages_ready detector
-
-variable "aws_account_id" {
+variable "aws_unique_id" {
   type = string
 }

@@ -1,4 +1,3 @@
 locals {
-  filters = "filter('aws_account_id', '${var.aws_account_id}')"
+  filters = "filter('AWSUniqueId', '${var.aws_unique_id}')"
 }
-
