@@ -25,7 +25,7 @@ module "signalfx-detectors-integration-aws-amazonmq-rabbitmq" {
 
   environment    = var.environment
   notifications  = local.notifications
-  aws_account_id = "fillme"
+  aws_unique_id = "arn:aws:mq:<cluster_region>:<aws_account_id>:<cluster_name>"
 }
 ```
 
