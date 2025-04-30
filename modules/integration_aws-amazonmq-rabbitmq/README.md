@@ -25,6 +25,7 @@ module "signalfx-detectors-integration-aws-amazonmq-rabbitmq" {
 
   environment    = var.environment
   notifications  = local.notifications
+  aws_account_id = "fillme"
 }
 ```
 
@@ -56,7 +57,8 @@ Note the following parameters:
   documentation to understand the recommended role of each severity.
 
 These 3 parameters along with all variables defined in [common-variables.tf](common-variables.tf) are common to all
-[modules](../) in this repository. Other variables, specific to this module, are available in [variables-gen.tf](variables-gen.tf).
+[modules](../) in this repository. Other variables, specific to this module, are available in
+[variables.tf](variables.tf) and [variables-gen.tf](variables-gen.tf).
 In general, the default configuration "works" but all of these Terraform
 [variables](https://www.terraform.io/language/values/variables) make it possible to
 customize the detectors behavior to better fit your needs.
@@ -114,3 +116,4 @@ Here is the list of required metrics for detectors in this module.
 * [Terraform SignalFx detector](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector)
 * [Splunk Observability integrations](https://docs.splunk.com/Observability/gdi/get-data-in/integrations.html)
 * [AWS documentation: Monitoring Amazon MQ brokers](https://docs.aws.amazon.com/amazon-mq/latest/developer-guide/security-logging-monitoring-cloudwatch.html#rabbitmq-logging-monitoring)
+
