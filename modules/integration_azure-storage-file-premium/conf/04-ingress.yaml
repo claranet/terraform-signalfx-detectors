@@ -1,0 +1,25 @@
+module: "Azure Storage Account File share"
+name: "ingress"
+filtering: "filter('resource_type', 'Microsoft.Storage/storageAccounts/fileServices') and filter('primary_aggregation_type', 'true') and filter('azure_sa_sku', ' Premium_*')"
+aggregation: ".sum(by=['FileShare', 'azure_resource_id'])"
+transformation: ".min(over='15m')"
+value_unit: "%"
+signals:
+  ingress:
+    metric: "Ingress"
+    rollup: rate
+  size_quota:
+    # Do not have tags dimension for filtering and use `renames` because of sfx buggy implementation
+    formula:  data('FileShareCapacityQuota', filter=base_filtering, extrapolation='last_value').dimensions(renames={'FileShare':'fileshare'}).sum(by=['FileShare', 'azure_resource_id']).min(over='15m')
+  signal:
+    formula:
+      # Scale ingress to MiB & size to GiB
+      (ingress.scale(0.00000095367431640625) / (40 + 0.04 * size_quota.scale(0.0000000009313225746154785)) )
+rules:
+  critical:
+    threshold: 95
+    comparator: ">"
+  major:
+    threshold: 90
+    comparator: ">"
+    dependency: critical
