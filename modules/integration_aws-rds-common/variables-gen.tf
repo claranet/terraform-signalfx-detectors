@@ -53,7 +53,7 @@ variable "cpu_usage_notifications" {
 variable "cpu_usage_aggregation_function" {
   description = "Aggregation function and group by for cpu_usage detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".min(over='15m')"
+  default     = ""
 }
 
 variable "cpu_usage_transformation_function" {
@@ -143,7 +143,7 @@ variable "free_space_low_notifications" {
 variable "free_space_low_aggregation_function" {
   description = "Aggregation function and group by for free_space_low detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".min(over='15m')"
+  default     = ""
 }
 
 variable "free_space_low_transformation_function" {
@@ -233,7 +233,7 @@ variable "replica_lag_notifications" {
 variable "replica_lag_aggregation_function" {
   description = "Aggregation function and group by for replica_lag detector (i.e. \".mean(by=['host'])\")"
   type        = string
-  default     = ".min(over='5m')"
+  default     = ""
 }
 
 variable "replica_lag_transformation_function" {

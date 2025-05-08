@@ -269,7 +269,7 @@ variable "alb_4xx_disabled" {
 variable "alb_4xx_disabled_critical" {
   description = "Disable critical alerting rule for alb_4xx detector"
   type        = bool
-  default     = true
+  default     = null
 }
 
 variable "alb_4xx_disabled_major" {
@@ -472,7 +472,7 @@ variable "target_4xx_disabled" {
 variable "target_4xx_disabled_critical" {
   description = "Disable critical alerting rule for target_4xx detector"
   type        = bool
-  default     = true
+  default     = null
 }
 
 variable "target_4xx_disabled_major" {

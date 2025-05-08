@@ -1,4 +1,6 @@
 resource "signalfx_detector" "heartbeat" {
+  count = (var.heartbeat_detector_enabled) ? 1 : 0
+
   name = format("%s %s", local.detector_name_prefix, "AWS NLB heartbeat")
 
   authorized_writer_teams = var.authorized_writer_teams
@@ -28,6 +30,8 @@ EOF
 }
 
 resource "signalfx_detector" "no_healthy_instances" {
+  count = (var.healthy_instances_detector_enabled) ? 1 : 0
+
   name = format("%s %s", local.detector_name_prefix, "AWS NLB healthy instances percentage")
 
   authorized_writer_teams = var.authorized_writer_teams
