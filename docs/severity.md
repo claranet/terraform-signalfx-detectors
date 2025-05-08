@@ -10,6 +10,7 @@
 - [fame_azure-update-center](#fame_azure-update-center)
 - [fame_azure-vm-backup](#fame_azure-vm-backup)
 - [fame_azure-vpn](#fame_azure-vpn)
+- [hostmetrics-process](#hostmetrics-process)
 - [integration_aws-alb](#integration_aws-alb)
 - [integration_aws-amazonmq-rabbitmq](#integration_aws-amazonmq-rabbitmq)
 - [integration_aws-apigateway](#integration_aws-apigateway)
@@ -179,6 +180,13 @@
 |Azure VPN heartbeat|X|-|-|-|-|
 |Azure VPN total flow count|X|-|-|-|-|
 |Azure VPN ipsec tunnel status|X|X|-|-|-|
+
+
+## hostmetrics-process
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Process heartbeat|X|-|-|-|-|
 
 
 ## integration_aws-alb
