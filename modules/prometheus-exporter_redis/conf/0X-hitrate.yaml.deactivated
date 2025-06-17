@@ -1,0 +1,32 @@
+module: redis
+name: hitrate
+aggregation: ".sum(by=['k8s.workload.name', 'k8s.namespace.name', 'k8s.cluster.name'], allow_missing=True)"
+
+value_unit: "%"
+
+signals:
+  A:
+    metric: redis_keyspace_hits_total
+    rollup: delta
+  B:
+    metric: redis_keyspace_misses_total
+    rollup: delta
+  signal:
+    formula: (A/(A+B)).scale(100)
+
+rules:
+  critical:
+    threshold: 0
+    comparator: '<'
+    lasting_duration: 5m
+    disabled: true
+  major:
+    threshold: 10
+    comparator: '<'
+    lasting_duration: 5m
+    dependency: critical
+  minor:
+    threshold: 30
+    comparator: '<'
+    lasting_duration: 5m
+    dependency: major
