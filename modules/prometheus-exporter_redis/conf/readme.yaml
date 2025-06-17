@@ -1,0 +1,6 @@
+documentations:
+  - name: Prometheus Exporter for Redis
+    url: https://github.com/oliver006/redis_exporter
+
+source_doc: |
+  The detectors of this module uses metrics from the [prometheus redis exporter](https://github.com/oliver006/redis_exporter) plugin for Prometheus.

@@ -1,0 +1,20 @@
+module: redis
+name: rejected connections
+tip: maxclient reached
+aggregation: ".sum(by=['k8s.workload.name', 'k8s.namespace.name', 'k8s.cluster.name'], allow_missing=True)"
+
+signals:
+  signal:
+    metric: redis_rejected_connections_total
+    rollup: delta
+
+transformation: ".sum(over='5m')"
+
+rules:
+  critical:
+    threshold: 5
+    comparator: '>'
+  major:
+    threshold: 0
+    comparator: '>'
+    dependency: critical

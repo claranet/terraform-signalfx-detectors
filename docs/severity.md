@@ -87,6 +87,7 @@
 - [prometheus-exporter_kong](#prometheus-exporter_kong)
 - [prometheus-exporter_oracledb](#prometheus-exporter_oracledb)
 - [prometheus-exporter_postfix](#prometheus-exporter_postfix)
+- [prometheus-exporter_redis](#prometheus-exporter_redis)
 - [prometheus-exporter_squid](#prometheus-exporter_squid)
 - [prometheus-exporter_varnish](#prometheus-exporter_varnish)
 - [prometheus-exporter_wallix-bastion](#prometheus-exporter_wallix-bastion)
@@ -139,7 +140,6 @@
 |AWS CWAgent heartbeat|X|-|-|-|-|
 |AWS CWAgent memory used|X|X|-|-|-|
 |AWS CWAgent disk used|X|X|-|-|-|
-|AWS CWAgent cpu usage active|X|X|-|-|-|
 
 
 ## fame_azure-automation-updates
@@ -949,6 +949,17 @@
 |Postfix size postfix queue hold|X|X|-|-|-|
 |Postfix size postfix queue maildrop|X|X|-|-|-|
 |Postfix size postfix delivery delay|X|X|-|-|-|
+
+
+## prometheus-exporter_redis
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Redis heartbeat|X|-|-|-|-|
+|Redis blocked over connected clients ratio|X|X|-|-|-|
+|Redis evicted keys change rate|X|X|-|-|-|
+|Redis expired keys change rate|X|X|-|-|-|
+|Redis rejected connections|X|X|-|-|-|
 
 
 ## prometheus-exporter_squid

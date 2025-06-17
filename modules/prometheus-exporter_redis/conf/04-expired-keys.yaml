@@ -1,0 +1,23 @@
+module: redis
+name: expired keys change rate
+aggregation: ".sum(by=['k8s.workload.name', 'k8s.namespace.name', 'k8s.cluster.name'], allow_missing=True)"
+
+signals:
+  A:
+    metric: redis_expired_keys_total
+    rollup: delta
+  signal:
+    formula: A.rateofchange()
+
+rules:
+  critical:
+    threshold: 100
+    comparator: '>'
+    lasting_duration: 15m
+    lasting_at_least: 0.5
+  major:
+    threshold: 50
+    comparator: '>'
+    lasting_duration: 15m
+    lasting_at_least: 0.5
+    dependency: critical
