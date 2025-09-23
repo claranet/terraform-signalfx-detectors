@@ -60,7 +60,7 @@ resource "signalfx_detector" "hit_ratio" {
     base_filtering = filter('namespace', 'AWS/ElastiCache') and filter('CacheNodeId', '*') and filter('stat', 'mean')
     hits = data('GetHits', filter=base_filtering and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.hit_ratio_aggregation_function}${var.hit_ratio_transformation_function}
     misses = data('GetMisses', filter=base_filtering and ${module.filtering.signalflow}, rollup='sum', extrapolation='zero')${var.hit_ratio_aggregation_function}${var.hit_ratio_transformation_function}
-    signal = (hits/(hits+misses)).scale(100).fill(value=0).publish('signal')
+    signal = (hits/(hits+misses)).fill(value=1).scale(100).publish('signal')
     detect(when(signal < ${var.hit_ratio_threshold_major}%{if var.hit_ratio_lasting_duration_major != null}, lasting='${var.hit_ratio_lasting_duration_major}', at_least=${var.hit_ratio_at_least_percentage_major}%{endif})).publish('MAJOR')
     detect(when(signal < ${var.hit_ratio_threshold_minor}%{if var.hit_ratio_lasting_duration_minor != null}, lasting='${var.hit_ratio_lasting_duration_minor}', at_least=${var.hit_ratio_at_least_percentage_minor}%{endif}) and (not when(signal < ${var.hit_ratio_threshold_major}%{if var.hit_ratio_lasting_duration_major != null}, lasting='${var.hit_ratio_lasting_duration_major}', at_least=${var.hit_ratio_at_least_percentage_major}%{endif}))).publish('MINOR')
 EOF

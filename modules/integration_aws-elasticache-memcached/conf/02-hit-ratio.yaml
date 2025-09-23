@@ -16,7 +16,7 @@ signals:
     extrapolation: zero
     rollup: sum
   signal:
-    formula: (hits/(hits+misses)).scale(100).fill(value=0)
+    formula: (hits/(hits+misses)).fill(value=1).scale(100)
 rules:
   major:
     threshold: 60
