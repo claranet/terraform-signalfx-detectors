@@ -41,6 +41,7 @@
 - [integration_azure-azure-search](#integration_azure-azure-search)
 - [integration_azure-backup](#integration_azure-backup)
 - [integration_azure-cdn](#integration_azure-cdn)
+- [integration_azure-cognitive-services](#integration_azure-cognitive-services)
 - [integration_azure-container-apps](#integration_azure-container-apps)
 - [integration_azure-container-instance](#integration_azure-container-instance)
 - [integration_azure-cosmos-db](#integration_azure-cosmos-db)
@@ -489,6 +490,13 @@
 |---|---|---|---|---|---|
 |Azure CDN latency|X|X|-|-|-|
 |Azure CDN origin health|X|X|-|-|-|
+
+
+## integration_azure-cognitive-services
+
+|Detector|Critical|Major|Minor|Warning|Info|
+|---|---|---|---|---|---|
+|Azure Cognitive Services success rate|-|X|-|-|-|
 
 
 ## integration_azure-container-apps

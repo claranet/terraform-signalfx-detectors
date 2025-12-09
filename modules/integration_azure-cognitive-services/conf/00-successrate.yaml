@@ -1,0 +1,17 @@
+---
+module: "Azure Cognitive Services"
+name: "success rate"
+filtering: "filter('resource_type', 'Microsoft.CognitiveServices/accounts') and filter('primary_aggregation_type', 'true')"
+aggregation: ".sum(by=['ratelimitkey', 'azure_resource_name', 'azure_resource_group_name', 'azure_region'])"
+
+signals:
+  signal:
+    metric: SuccessRate
+    extrapolation: last_value
+
+rules:
+  major:
+    threshold: 10
+    comparator: "<"
+    lasting_duration: '60m'
+
