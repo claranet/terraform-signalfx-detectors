@@ -3,8 +3,7 @@ name: "Percent of write throughput"
 id: "write_throughput"
 filtering: "filter('namespace', 'AWS/EFS')"
 value_unit: "%"
-transformation: ".max(over='15m')"
-disabled: true
+condition: "var.write_throughput_detector_enabled"
 signals:
   write:
     metric: "DataWriteIOBytes"
@@ -16,8 +15,12 @@ signals:
     formula:
       (write/total).scale(100)
 rules:
-  minor:
+  critical:
     comparator: ">"
-  warning:
+    threshold: 90
+    lasting_duration: "15m"
+  major:
     comparator: ">"
-    dependency: minor
+    threshold: 80
+    dependency: critical
+    lasting_duration: "15m"

@@ -15,7 +15,7 @@ variable "used_space_aggregation_function" {
 variable "used_space_transformation_function" {
   description = "Transformation function for used_space detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".max(over='15m')"
+  default     = ""
 }
 
 variable "used_space_max_delay" {
@@ -62,7 +62,7 @@ variable "used_space_threshold_critical" {
 variable "used_space_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "15m"
 }
 
 variable "used_space_at_least_percentage_critical" {
@@ -78,7 +78,7 @@ variable "used_space_threshold_major" {
 variable "used_space_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "15m"
 }
 
 variable "used_space_at_least_percentage_major" {
@@ -103,7 +103,7 @@ variable "io_limit_aggregation_function" {
 variable "io_limit_transformation_function" {
   description = "Transformation function for io_limit detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".mean(over='30m')"
+  default     = ""
 }
 
 variable "io_limit_max_delay" {
@@ -132,48 +132,48 @@ variable "io_limit_disabled" {
   default     = null
 }
 
+variable "io_limit_disabled_critical" {
+  description = "Disable critical alerting rule for io_limit detector"
+  type        = bool
+  default     = null
+}
+
 variable "io_limit_disabled_major" {
   description = "Disable major alerting rule for io_limit detector"
   type        = bool
   default     = null
 }
 
-variable "io_limit_disabled_minor" {
-  description = "Disable minor alerting rule for io_limit detector"
-  type        = bool
-  default     = null
+variable "io_limit_threshold_critical" {
+  description = "Critical threshold for io_limit detector in %"
+  type        = number
+  default     = 90
 }
 
+variable "io_limit_lasting_duration_critical" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "30m"
+}
+
+variable "io_limit_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
 variable "io_limit_threshold_major" {
   description = "Major threshold for io_limit detector in %"
   type        = number
-  default     = 90
+  default     = 80
 }
 
 variable "io_limit_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "30m"
 }
 
 variable "io_limit_at_least_percentage_major" {
-  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
-  type        = number
-  default     = 1
-}
-variable "io_limit_threshold_minor" {
-  description = "Minor threshold for io_limit detector in %"
-  type        = number
-  default     = 80
-}
-
-variable "io_limit_lasting_duration_minor" {
-  description = "Minimum duration that conditions must be true before raising alert"
-  type        = string
-  default     = null
-}
-
-variable "io_limit_at_least_percentage_minor" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1
@@ -195,7 +195,7 @@ variable "read_throughput_aggregation_function" {
 variable "read_throughput_transformation_function" {
   description = "Transformation function for read_throughput detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".max(over='15m')"
+  default     = ""
 }
 
 variable "read_throughput_max_delay" {
@@ -219,49 +219,51 @@ variable "read_throughput_runbook_url" {
 variable "read_throughput_disabled" {
   description = "Disable all alerting rules for read_throughput detector"
   type        = bool
-  default     = true
+  default     = null
 }
 
-variable "read_throughput_disabled_minor" {
-  description = "Disable minor alerting rule for read_throughput detector"
+variable "read_throughput_disabled_critical" {
+  description = "Disable critical alerting rule for read_throughput detector"
   type        = bool
   default     = null
 }
 
-variable "read_throughput_disabled_warning" {
-  description = "Disable warning alerting rule for read_throughput detector"
+variable "read_throughput_disabled_major" {
+  description = "Disable major alerting rule for read_throughput detector"
   type        = bool
   default     = null
 }
 
-variable "read_throughput_threshold_minor" {
-  description = "Minor threshold for read_throughput detector in %"
+variable "read_throughput_threshold_critical" {
+  description = "Critical threshold for read_throughput detector in %"
   type        = number
+  default     = 90
 }
 
-variable "read_throughput_lasting_duration_minor" {
+variable "read_throughput_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "15m"
 }
 
-variable "read_throughput_at_least_percentage_minor" {
+variable "read_throughput_at_least_percentage_critical" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1
 }
-variable "read_throughput_threshold_warning" {
-  description = "Warning threshold for read_throughput detector in %"
+variable "read_throughput_threshold_major" {
+  description = "Major threshold for read_throughput detector in %"
   type        = number
+  default     = 80
 }
 
-variable "read_throughput_lasting_duration_warning" {
+variable "read_throughput_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "15m"
 }
 
-variable "read_throughput_at_least_percentage_warning" {
+variable "read_throughput_at_least_percentage_major" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1
@@ -283,7 +285,7 @@ variable "write_throughput_aggregation_function" {
 variable "write_throughput_transformation_function" {
   description = "Transformation function for write_throughput detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".max(over='15m')"
+  default     = ""
 }
 
 variable "write_throughput_max_delay" {
@@ -307,49 +309,51 @@ variable "write_throughput_runbook_url" {
 variable "write_throughput_disabled" {
   description = "Disable all alerting rules for write_throughput detector"
   type        = bool
-  default     = true
+  default     = null
 }
 
-variable "write_throughput_disabled_minor" {
-  description = "Disable minor alerting rule for write_throughput detector"
+variable "write_throughput_disabled_critical" {
+  description = "Disable critical alerting rule for write_throughput detector"
   type        = bool
   default     = null
 }
 
-variable "write_throughput_disabled_warning" {
-  description = "Disable warning alerting rule for write_throughput detector"
+variable "write_throughput_disabled_major" {
+  description = "Disable major alerting rule for write_throughput detector"
   type        = bool
   default     = null
 }
 
-variable "write_throughput_threshold_minor" {
-  description = "Minor threshold for write_throughput detector in %"
+variable "write_throughput_threshold_critical" {
+  description = "Critical threshold for write_throughput detector in %"
   type        = number
+  default     = 90
 }
 
-variable "write_throughput_lasting_duration_minor" {
+variable "write_throughput_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "15m"
 }
 
-variable "write_throughput_at_least_percentage_minor" {
+variable "write_throughput_at_least_percentage_critical" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1
 }
-variable "write_throughput_threshold_warning" {
-  description = "Warning threshold for write_throughput detector in %"
+variable "write_throughput_threshold_major" {
+  description = "Major threshold for write_throughput detector in %"
   type        = number
+  default     = 80
 }
 
-variable "write_throughput_lasting_duration_warning" {
+variable "write_throughput_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "15m"
 }
 
-variable "write_throughput_at_least_percentage_warning" {
+variable "write_throughput_at_least_percentage_major" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1
@@ -371,7 +375,7 @@ variable "percent_of_permitted_throughput_aggregation_function" {
 variable "percent_of_permitted_throughput_transformation_function" {
   description = "Transformation function for percent_of_permitted_throughput detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".mean(over='30m')"
+  default     = ""
 }
 
 variable "percent_of_permitted_throughput_max_delay" {
@@ -400,48 +404,48 @@ variable "percent_of_permitted_throughput_disabled" {
   default     = null
 }
 
+variable "percent_of_permitted_throughput_disabled_critical" {
+  description = "Disable critical alerting rule for percent_of_permitted_throughput detector"
+  type        = bool
+  default     = null
+}
+
 variable "percent_of_permitted_throughput_disabled_major" {
   description = "Disable major alerting rule for percent_of_permitted_throughput detector"
   type        = bool
   default     = null
 }
 
-variable "percent_of_permitted_throughput_disabled_minor" {
-  description = "Disable minor alerting rule for percent_of_permitted_throughput detector"
-  type        = bool
-  default     = null
+variable "percent_of_permitted_throughput_threshold_critical" {
+  description = "Critical threshold for percent_of_permitted_throughput detector in %"
+  type        = number
+  default     = 90
 }
 
+variable "percent_of_permitted_throughput_lasting_duration_critical" {
+  description = "Minimum duration that conditions must be true before raising alert"
+  type        = string
+  default     = "30m"
+}
+
+variable "percent_of_permitted_throughput_at_least_percentage_critical" {
+  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
+  type        = number
+  default     = 1
+}
 variable "percent_of_permitted_throughput_threshold_major" {
   description = "Major threshold for percent_of_permitted_throughput detector in %"
   type        = number
-  default     = 90
+  default     = 80
 }
 
 variable "percent_of_permitted_throughput_lasting_duration_major" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "30m"
 }
 
 variable "percent_of_permitted_throughput_at_least_percentage_major" {
-  description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
-  type        = number
-  default     = 1
-}
-variable "percent_of_permitted_throughput_threshold_minor" {
-  description = "Minor threshold for percent_of_permitted_throughput detector in %"
-  type        = number
-  default     = 80
-}
-
-variable "percent_of_permitted_throughput_lasting_duration_minor" {
-  description = "Minimum duration that conditions must be true before raising alert"
-  type        = string
-  default     = null
-}
-
-variable "percent_of_permitted_throughput_at_least_percentage_minor" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1
@@ -463,7 +467,7 @@ variable "burst_credit_balance_aggregation_function" {
 variable "burst_credit_balance_transformation_function" {
   description = "Transformation function for burst_credit_balance detector (i.e. \".mean(over='5m')\")"
   type        = string
-  default     = ".mean(over='5m')"
+  default     = ""
 }
 
 variable "burst_credit_balance_max_delay" {
@@ -492,19 +496,19 @@ variable "burst_credit_balance_disabled" {
   default     = null
 }
 
-variable "burst_credit_balance_threshold_major" {
-  description = "Major threshold for burst_credit_balance detector in credits"
+variable "burst_credit_balance_threshold_critical" {
+  description = "Critical threshold for burst_credit_balance detector in credits"
   type        = number
   default     = 1
 }
 
-variable "burst_credit_balance_lasting_duration_major" {
+variable "burst_credit_balance_lasting_duration_critical" {
   description = "Minimum duration that conditions must be true before raising alert"
   type        = string
-  default     = null
+  default     = "5m"
 }
 
-variable "burst_credit_balance_at_least_percentage_major" {
+variable "burst_credit_balance_at_least_percentage_critical" {
   description = "Percentage of lasting that conditions must be true before raising alert (>= 0.0 and <= 1.0)"
   type        = number
   default     = 1

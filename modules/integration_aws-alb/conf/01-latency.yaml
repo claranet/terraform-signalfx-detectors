@@ -6,6 +6,7 @@ transformation: true
 aggregation: true
 filtering: "filter('namespace', 'AWS/ApplicationELB')"
 value_unit: "Second"
+condition: "var.latency_detector_enabled"
 
 signals:
   signal:

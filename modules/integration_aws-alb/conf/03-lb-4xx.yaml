@@ -6,6 +6,7 @@ transformation: true
 aggregation: true
 filtering: "filter('namespace', 'AWS/ApplicationELB') and filter('stat', 'sum') and (not filter('AvailabilityZone', '*'))"
 value_unit: "%"
+condition: "var.lb_4xx_detector_enabled"
 
 signals:
   errors:
@@ -25,7 +26,6 @@ rules:
     lasting_duration: 15m
     lasting_at_least: 0.9
     append_condition: and when(requests > ${var.minimum_traffic})
-    disabled: true
   major:
     threshold: 95
     comparator: ">"

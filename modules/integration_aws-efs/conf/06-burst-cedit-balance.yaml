@@ -2,13 +2,14 @@ module: "AWS EFS"
 name: "Burst Credit Balance"
 filtering: "filter('namespace', 'AWS/EFS')"
 value_unit: "credits"
-transformation: ".mean(over='5m')"
+condition: "var.burst_credit_balance_detector_enabled"
 tip: "See https://docs.aws.amazon.com/efs/latest/ug/performance.html#bursting"
 signals:
   signal:
     metric: "BurstCreditBalance"
     filter: "filter('stat', 'lower')"
 rules:
-  major:
+  critical:
     comparator: "<"
     threshold: 1
+    lasting_duration: "5m"

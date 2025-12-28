@@ -3,10 +3,9 @@ id: "free_space_low"
 name: "Instance free space"
 
 transformation: ".scale(1/1024**3)"
-aggregation: ".min(over='15m')"
-
 filtering: "filter('namespace', 'AWS/RDS')"
 value_unit: "Gibibyte"
+condition: "var.free_space_detector_enabled"
 
 signals:
   signal:

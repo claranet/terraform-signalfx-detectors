@@ -3,8 +3,7 @@ name: "Percent of read throughput"
 id: "read_throughput"
 filtering: "filter('namespace', 'AWS/EFS')"
 value_unit: "%"
-transformation: ".max(over='15m')"
-disabled: true
+condition: "var.read_throughput_detector_enabled"
 signals:
   read:
     metric: "DataReadIOBytes"
@@ -16,8 +15,12 @@ signals:
     formula:
       (read/total).scale(100)
 rules:
-  minor:
+  critical:
     comparator: ">"
-  warning:
+    threshold: 90
+    lasting_duration: "15m"
+  major:
+    lasting_duration: "15m"
     comparator: ">"
-    dependency: minor
+    threshold: 80
+    dependency: critical
