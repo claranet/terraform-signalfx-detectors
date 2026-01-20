@@ -1,0 +1,1 @@
+../../common/module/variables.tf
