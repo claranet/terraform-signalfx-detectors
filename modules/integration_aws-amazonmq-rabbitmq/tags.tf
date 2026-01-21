@@ -1,3 +1,3 @@
 locals {
-  tags = ["integration", "aws-elasticache-common"]
+  tags = ["integration", "aws-amazonmq-rabbitmq"]
 }

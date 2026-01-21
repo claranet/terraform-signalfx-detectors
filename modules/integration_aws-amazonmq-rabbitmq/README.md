@@ -25,7 +25,7 @@ module "signalfx-detectors-integration-aws-amazonmq-rabbitmq" {
 
   environment    = var.environment
   notifications  = local.notifications
-  aws_account_id = "fillme"
+  aws_unique_id = "arn:aws:mq:<cluster_region>:<aws_account_id>:<cluster_name>"
 }
 ```
 
@@ -116,3 +116,4 @@ Here is the list of required metrics for detectors in this module.
 * [Terraform SignalFx detector](https://registry.terraform.io/providers/splunk-terraform/signalfx/latest/docs/resources/detector)
 * [Splunk Observability integrations](https://docs.splunk.com/Observability/gdi/get-data-in/integrations.html)
 * [AWS documentation: Monitoring Amazon MQ brokers](https://docs.aws.amazon.com/amazon-mq/latest/developer-guide/security-logging-monitoring-cloudwatch.html#rabbitmq-logging-monitoring)
+
