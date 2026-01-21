@@ -1,0 +1,12 @@
+module: redis
+name: heartbeat
+aggregation: ".sum(by=['k8s.workload.name', 'k8s.namespace.name', 'k8s.cluster.name'], allow_missing=True)"
+
+transformation: false
+exclude_not_running_vm: true
+
+signals:
+  signal:
+    metric: redis_memory_used_bytes
+rules:
+  critical:

@@ -1,0 +1,3 @@
+detect:
+  metric:
+    - redis_memory_used_bytes

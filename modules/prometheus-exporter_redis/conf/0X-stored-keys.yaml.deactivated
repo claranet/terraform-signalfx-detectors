@@ -1,0 +1,17 @@
+module: redis
+name: stored keys change rate
+tip: no change on keyspace over a long period can indicate it is full. if you don't use redis as cache but as queue broker or database so it can be normal to not see any activity depending on your application and you should disable this detector
+disable: true
+aggregation: ".sum(by=['k8s.workload.name', 'k8s.namespace.name', 'k8s.cluster.name'], allow_missing=True)"
+
+signals:
+  A:
+    metric: redis_db_keys
+  signal:
+    formula: A.rateofchange().abs()
+
+rules:
+  major:
+    threshold: 0
+    comparator: '=='
+    lasting_duration: 1h
