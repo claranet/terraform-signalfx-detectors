@@ -1,0 +1,14 @@
+---
+documentations:
+  - name: Host metrics receiver
+    url: 'https://docs.splunk.com/observability/en/gdi/opentelemetry/components/host-metrics-receiver.html#process'
+  - name: Splunk Observability integration
+    url: 'https://docs.splunk.com/Observability/gdi/processes/processes.html'
+
+notes: |
+  By default, only `critical` rule is enabled. This allows the detector to check if the service has, at least,
+  one process running.
+
+  Optionally, this is possible to enable `warning` rule to check if the service has a minimal amount of process
+  running (i.e. I need 5 "foo" processes for my api to run correctly, so I will update
+  `processes_threshold_warning` to `5` and `processes_disabled_warning` to `null`).
