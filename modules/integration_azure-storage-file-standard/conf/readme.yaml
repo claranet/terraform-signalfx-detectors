@@ -1,0 +1,10 @@
+notes: |
+  * Capacity default threshold value is set for Storage Account without "large file shares" enabled
+
+documentations:
+  - name: Azure Monitor metrics for Storage Accounts
+    url: 'https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-supported#microsoftstoragestorageaccounts'
+  - name: Azure Storage File scalability
+    url: 'https://docs.microsoft.com/en-us/azure/storage/files/storage-files-scale-targets'
+  - name: Troubleshoot Azure file shares performance issues
+    url: 'https://docs.microsoft.com/en-us/azure/storage/files/storage-troubleshooting-files-performance'

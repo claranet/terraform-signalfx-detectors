@@ -1,0 +1,24 @@
+module: "Azure Storage Account File share"
+name: "throughput"
+filtering: "filter('resource_type', 'Microsoft.Storage/storageAccounts/fileServices') and filter('primary_aggregation_type', 'true') and not filter('azure_sa_sku', ' Premium_*')"
+aggregation: ".sum(by=['FileShare', 'azure_resource_id'])"
+transformation: ".min(over='15m')"
+value_unit: "%"
+signals:
+  ingress:
+    metric: "Ingress"
+    rollup: rate
+  egress:
+    metric: "Egress"
+    rollup: rate
+  signal:
+    formula:
+      ((ingress + egress).scale(0.00000095367431640625) / 300).scale(100) # Scale to MiB unit
+rules:
+  critical:
+    threshold: 95
+    comparator: ">"
+  major:
+    threshold: 90
+    comparator: ">"
+    dependency: critical

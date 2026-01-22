@@ -1,0 +1,13 @@
+module: "Azure Storage Account File share"
+name: "no snapshots"
+filtering: "filter('resource_type', 'Microsoft.Storage/storageAccounts/fileServices') and filter('primary_aggregation_type', 'true') and not filter('azure_sa_sku', ' Premium_*')"
+aggregation: false
+transformation: false
+signals:
+  signal:
+    # Do not have tags dimension for filtering because of sfx buggy implementation
+    formula: data('FileShareSnapshotCount', filter=base_filtering ).fill(None, duration='1d').sum(by=['fileshare', 'azure_resource_id']).max(over='1d')
+rules:
+  major:
+    threshold: 1
+    comparator: "<"

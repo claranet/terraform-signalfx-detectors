@@ -1,0 +1,23 @@
+module: "Azure Storage Account File share"
+name: "IOPS"
+filtering: "filter('resource_type', 'Microsoft.Storage/storageAccounts/fileServices') and filter('primary_aggregation_type', 'true') and filter('azure_sa_sku', ' Premium_*')"
+aggregation: ".sum(by=['FileShare', 'azure_resource_id'])"
+transformation: ".min(over='15m')"
+value_unit: "%"
+signals:
+  transactions:
+    metric: "Transactions"
+    rollup: "rate"
+  limit:
+    # Do not use have tags dimension for filtering and use rename because of sfx buggy implementation
+    formula:  data('FileShareProvisionedIOPS', filter=base_filtering, extrapolation='last_value').dimensions(renames={'FileShare':'fileshare'}).sum(by=['FileShare', 'azure_resource_id']).min(over='15m')
+  signal:
+    formula: (transactions / limit).scale(100)
+rules:
+  critical:
+    threshold: 95
+    comparator: ">"
+  major:
+    threshold: 90
+    comparator: ">"
+    dependency: critical
