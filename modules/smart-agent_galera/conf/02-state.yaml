@@ -1,0 +1,14 @@
+module: galera
+name: "node state"
+transformation: true
+aggregation: true
+disable: true
+signals:
+  signal:
+    metric: "mysql_wsrep_local_state"
+rules:
+  critical:
+    lasting_duration: 10m
+    description: "is not Synced"
+    threshold: 4
+    comparator: "!="

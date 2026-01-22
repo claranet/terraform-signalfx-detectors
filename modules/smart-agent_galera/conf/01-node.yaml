@@ -1,0 +1,13 @@
+module: galera
+name: "node"
+transformation: true
+aggregation: true
+signals:
+  signal:
+    metric: "mysql_wsrep_ready"
+rules:
+  critical:
+    lasting_duration: 10m
+    description: "is not ready"
+    threshold: 1
+    comparator: "<"
