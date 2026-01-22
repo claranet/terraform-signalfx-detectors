@@ -3,6 +3,11 @@ output "capacity" {
   value       = signalfx_detector.capacity
 }
 
+output "cpu_percentage_of_gateway" {
+  description = "Detector resource for cpu_percentage_of_gateway"
+  value       = signalfx_detector.cpu_percentage_of_gateway
+}
+
 output "duration_of_backend_request" {
   description = "Detector resource for duration_of_backend_request"
   value       = signalfx_detector.duration_of_backend_request
