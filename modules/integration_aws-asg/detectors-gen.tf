@@ -15,8 +15,8 @@ resource "signalfx_detector" "max_capacity" {
     desired_capacity = data('GroupDesiredCapacity', filter=base_filtering and ${module.filtering.signalflow}, rollup='sum', extrapolation='last_value')${var.max_capacity_aggregation_function}${var.max_capacity_transformation_function}
     max_capacity = data('GroupMaxSize', filter=base_filtering and ${module.filtering.signalflow}, rollup='sum', extrapolation='last_value')${var.max_capacity_aggregation_function}${var.max_capacity_transformation_function}.above(${var.max_capacity_above_filter})
     signal = (desired_capacity/max_capacity).scale(100).publish('signal')
-    detect(when(signal < ${var.max_capacity_threshold_critical}%{if var.max_capacity_lasting_duration_critical != null}, lasting='${var.max_capacity_lasting_duration_critical}', at_least=${var.max_capacity_at_least_percentage_critical}%{endif})).publish('CRITICAL')
-    detect(when(signal < ${var.max_capacity_threshold_major}%{if var.max_capacity_lasting_duration_major != null}, lasting='${var.max_capacity_lasting_duration_major}', at_least=${var.max_capacity_at_least_percentage_major}%{endif}) and (not when(signal < ${var.max_capacity_threshold_critical}%{if var.max_capacity_lasting_duration_critical != null}, lasting='${var.max_capacity_lasting_duration_critical}', at_least=${var.max_capacity_at_least_percentage_critical}%{endif}))).publish('MAJOR')
+    detect(when(signal > ${var.max_capacity_threshold_critical}%{if var.max_capacity_lasting_duration_critical != null}, lasting='${var.max_capacity_lasting_duration_critical}', at_least=${var.max_capacity_at_least_percentage_critical}%{endif})).publish('CRITICAL')
+    detect(when(signal > ${var.max_capacity_threshold_major}%{if var.max_capacity_lasting_duration_major != null}, lasting='${var.max_capacity_lasting_duration_major}', at_least=${var.max_capacity_at_least_percentage_major}%{endif}) and (not when(signal < ${var.max_capacity_threshold_critical}%{if var.max_capacity_lasting_duration_critical != null}, lasting='${var.max_capacity_lasting_duration_critical}', at_least=${var.max_capacity_at_least_percentage_critical}%{endif}))).publish('MAJOR')
 EOF
 
   rule {
